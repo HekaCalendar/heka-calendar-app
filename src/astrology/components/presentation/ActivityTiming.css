@@ -1,0 +1,111 @@
+.activity-timing {
+  padding: 8px 0;
+}
+
+.at-intro {
+  margin-bottom: 24px;
+}
+
+.at-intro h2 {
+  font-size: 24px;
+  font-weight: 700;
+  color: #f8f7f5;
+  margin: 0 0 8px 0;
+}
+
+.at-intro p {
+  font-size: 15px;
+  color: #71717a;
+  margin: 0;
+}
+
+.at-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.at-activity-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+  padding: 16px 20px;
+  background: #16161a;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  color: #f8f7f5;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-align: left;
+}
+
+.at-activity-btn:hover {
+  border-color: rgba(212, 175, 55, 0.3);
+  background: rgba(212, 175, 55, 0.05);
+}
+
+.at-activity-btn.active {
+  border-color: #d4af37;
+  background: rgba(212, 175, 55, 0.1);
+}
+
+.at-activity-name {
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.at-activity-planet {
+  font-size: 12px;
+  color: #71717a;
+  text-transform: capitalize;
+}
+
+.at-result {
+  background: #16161a;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  padding: 24px;
+}
+
+.at-result h3 {
+  font-size: 20px;
+  font-weight: 700;
+  color: #f8f7f5;
+  margin: 0 0 16px 0;
+}
+
+.at-timing {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 14px 16px;
+  border-radius: 10px;
+  margin-bottom: 12px;
+}
+
+.at-timing.good {
+  background: rgba(34, 197, 94, 0.1);
+  border-left: 3px solid #22c55e;
+}
+
+.at-timing.bad {
+  background: rgba(239, 68, 68, 0.1);
+  border-left: 3px solid #ef4444;
+}
+
+.at-label {
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.at-timing.good .at-label {
+  color: #22c55e;
+}
+
+.at-timing.bad .at-label {
+  color: #ef4444;
+}

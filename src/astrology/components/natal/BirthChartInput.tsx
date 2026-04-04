@@ -1,0 +1,684 @@
+/**
+ * ═══════════════════════════════════════════════════════════════════════════════
+ * BIRTH CHART INPUT COMPONENT
+ * ═══════════════════════════════════════════════════════════════════════════════
+ * 
+ * Capture and calculate natal chart from birth data.
+ * ═══════════════════════════════════════════════════════════════════════════════
+ */
+
+import React, { useState, useEffect } from 'react';
+import type { BirthData, NatalChart, NatalPlanet } from '../../services/natal/natalChart';
+import { 
+  saveNatalChart, 
+  calculateElementalBalance,
+  calculateModalityBalance,
+  getDignity,
+} from '../../services/natal/natalChart';
+import { profileManager } from '../../services/natal/profileManager';
+import { calculateCurrentSky, calculateLocalHouses } from '../../services/calculations/swissCalculations';
+import { getZodiacSystemPreference } from '../../services/natal/zodiacHelpers';
+
+interface BirthChartInputProps {
+  onChartCalculated: (chart: NatalChart) => void;
+  onCancel: () => void;
+  existingChart?: NatalChart | null;
+}
+
+interface FormData {
+  name: string;
+  birthDate: string;
+  birthTime: string;
+  latitude: string;
+  longitude: string;
+  timezone: string;
+  locationName: string;
+}
+
+const styles: Record<string, React.CSSProperties> = {
+  container: {
+    background: 'linear-gradient(135deg, rgba(20, 20, 40, 0.98) 0%, rgba(40, 30, 60, 0.98) 100%)',
+    borderRadius: '20px',
+    padding: '32px',
+    color: '#fff',
+    maxWidth: '600px',
+    margin: '0 auto',
+    boxShadow: '0 25px 80px rgba(0, 0, 0, 0.5)',
+    border: '1px solid rgba(255, 255, 255, 0.1)',
+  },
+  header: {
+    textAlign: 'center' as const,
+    marginBottom: '28px',
+  },
+  title: {
+    fontSize: '1.75rem',
+    fontWeight: 300,
+    margin: '0 0 8px 0',
+    background: 'linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%)',
+    WebkitBackgroundClip: 'text',
+    WebkitTextFillColor: 'transparent',
+    backgroundClip: 'text',
+  },
+  subtitle: {
+    fontSize: '0.95rem',
+    color: 'rgba(255, 255, 255, 0.6)',
+    lineHeight: 1.5,
+  },
+  form: {
+    display: 'flex',
+    flexDirection: 'column' as const,
+    gap: '20px',
+  },
+  inputGroup: {
+    display: 'flex',
+    flexDirection: 'column' as const,
+    gap: '6px',
+  },
+  label: {
+    fontSize: '0.85rem',
+    fontWeight: 500,
+    color: 'rgba(255, 255, 255, 0.8)',
+    textTransform: 'uppercase' as const,
+    letterSpacing: '0.5px',
+  },
+  input: {
+    padding: '14px 16px',
+    borderRadius: '10px',
+    border: '1px solid rgba(255, 255, 255, 0.15)',
+    background: 'rgba(255, 255, 255, 0.05)',
+    color: '#fff',
+    fontSize: '1rem',
+    outline: 'none',
+    transition: 'all 0.2s ease',
+  },
+  row: {
+    display: 'grid',
+    gridTemplateColumns: '1fr 1fr',
+    gap: '16px',
+  },
+  timezoneSelect: {
+    padding: '14px 16px',
+    borderRadius: '10px',
+    border: '1px solid rgba(255, 255, 255, 0.15)',
+    background: 'rgba(255, 255, 255, 0.05)',
+    color: '#fff',
+    fontSize: '1rem',
+    outline: 'none',
+    cursor: 'pointer',
+  },
+  buttonGroup: {
+    display: 'flex',
+    gap: '12px',
+    marginTop: '12px',
+  },
+  primaryButton: {
+    flex: 1,
+    padding: '16px 24px',
+    borderRadius: '12px',
+    border: 'none',
+    background: 'linear-gradient(135deg, #9333ea 0%, #7c3aed 100%)',
+    color: '#fff',
+    fontSize: '1rem',
+    fontWeight: 500,
+    cursor: 'pointer',
+    transition: 'all 0.2s ease',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: '8px',
+  },
+  secondaryButton: {
+    padding: '16px 24px',
+    borderRadius: '12px',
+    border: '1px solid rgba(255, 255, 255, 0.2)',
+    background: 'transparent',
+    color: 'rgba(255, 255, 255, 0.7)',
+    fontSize: '1rem',
+    cursor: 'pointer',
+    transition: 'all 0.2s ease',
+  },
+  privacyNote: {
+    fontSize: '0.8rem',
+    color: 'rgba(255, 255, 255, 0.5)',
+    textAlign: 'center' as const,
+    marginTop: '8px',
+    fontStyle: 'italic',
+  },
+  error: {
+    background: 'rgba(239, 68, 68, 0.15)',
+    color: '#fca5a5',
+    padding: '12px 16px',
+    borderRadius: '10px',
+    fontSize: '0.9rem',
+    borderLeft: '3px solid #ef4444',
+  },
+  loading: {
+    display: 'flex',
+    flexDirection: 'column' as const,
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: '40px',
+    gap: '16px',
+  },
+  spinner: {
+    width: '48px',
+    height: '48px',
+    border: '3px solid rgba(147, 51, 234, 0.3)',
+    borderTopColor: '#9333ea',
+    borderRadius: '50%',
+    animation: 'spin 1s linear infinite',
+  },
+  loadingText: {
+    color: 'rgba(255, 255, 255, 0.7)',
+    fontSize: '1rem',
+  },
+  resultCard: {
+    background: 'linear-gradient(135deg, rgba(147, 51, 234, 0.15) 0%, rgba(59, 130, 246, 0.15) 100%)',
+    borderRadius: '16px',
+    padding: '24px',
+    marginTop: '20px',
+    border: '1px solid rgba(147, 51, 234, 0.3)',
+  },
+  resultTitle: {
+    fontSize: '1.2rem',
+    fontWeight: 600,
+    color: '#e9d5ff',
+    marginBottom: '16px',
+    textAlign: 'center' as const,
+  },
+  planetGrid: {
+    display: 'grid',
+    gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))',
+    gap: '12px',
+  },
+  planetCard: {
+    background: 'rgba(255, 255, 255, 0.05)',
+    borderRadius: '10px',
+    padding: '12px',
+    textAlign: 'center' as const,
+  },
+  planetName: {
+    fontSize: '0.8rem',
+    textTransform: 'uppercase' as const,
+    letterSpacing: '1px',
+    color: 'rgba(255, 255, 255, 0.6)',
+    marginBottom: '4px',
+  },
+  planetSign: {
+    fontSize: '1.1rem',
+    fontWeight: 500,
+    color: '#fbbf24',
+  },
+  planetDegree: {
+    fontSize: '0.75rem',
+    color: 'rgba(255, 255, 255, 0.5)',
+  },
+  elementBar: {
+    display: 'flex',
+    gap: '8px',
+    marginTop: '16px',
+    padding: '12px',
+    background: 'rgba(255, 255, 255, 0.03)',
+    borderRadius: '10px',
+  },
+  elementItem: {
+    flex: 1,
+    textAlign: 'center' as const,
+  },
+  elementLabel: {
+    fontSize: '0.7rem',
+    textTransform: 'uppercase' as const,
+    color: 'rgba(255, 255, 255, 0.5)',
+  },
+  elementValue: {
+    fontSize: '1.2rem',
+    fontWeight: 600,
+  },
+};
+
+// Planet symbols
+const PLANET_SYMBOLS: Record<string, string> = {
+  sun: '☉', moon: '☽', mercury: '☿', venus: '♀', mars: '♂',
+  jupiter: '♃', saturn: '♄', uranus: '⛢', neptune: '♆', pluto: '♇',
+};
+
+// Element colors
+const ELEMENT_COLORS: Record<string, string> = {
+  fire: '#ef4444',
+  earth: '#22c55e',
+  air: '#3b82f6',
+  water: '#8b5cf6',
+};
+
+// Timezone options
+const TIMEZONES = [
+  { value: 'UTC', label: 'UTC (Universal)' },
+  { value: 'America/New_York', label: 'Eastern Time (ET)' },
+  { value: 'America/Chicago', label: 'Central Time (CT)' },
+  { value: 'America/Denver', label: 'Mountain Time (MT)' },
+  { value: 'America/Los_Angeles', label: 'Pacific Time (PT)' },
+  { value: 'Europe/London', label: 'London (GMT)' },
+  { value: 'Europe/Paris', label: 'Paris (CET)' },
+  { value: 'Europe/Berlin', label: 'Berlin (CET)' },
+  { value: 'Asia/Tokyo', label: 'Tokyo (JST)' },
+  { value: 'Asia/Shanghai', label: 'Shanghai (CST)' },
+  { value: 'Asia/Dubai', label: 'Dubai (GST)' },
+  { value: 'Australia/Sydney', label: 'Sydney (AEST)' },
+  { value: 'Australia/Melbourne', label: 'Melbourne (AEST)' },
+  { value: 'Pacific/Auckland', label: 'Auckland (NZST)' },
+];
+
+export const BirthChartInput: React.FC<BirthChartInputProps> = ({
+  onChartCalculated,
+  onCancel,
+  existingChart,
+}) => {
+  const [formData, setFormData] = useState<FormData>({
+    name: existingChart?.name || '',
+    birthDate: existingChart?.birthData.date || '',
+    birthTime: existingChart?.birthData.time || '',
+    latitude: existingChart?.birthData.latitude.toString() || '',
+    longitude: existingChart?.birthData.longitude.toString() || '',
+    timezone: existingChart?.birthData.timezone || Intl.DateTimeFormat().resolvedOptions().timeZone,
+    locationName: existingChart?.birthData.locationName || '',
+  });
+  
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [calculatedChart, setCalculatedChart] = useState<NatalChart | null>(null);
+  
+  // Try to get user's location
+  useEffect(() => {
+    if (!formData.latitude && !formData.longitude && navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          setFormData(prev => ({
+            ...prev,
+            latitude: position.coords.latitude.toFixed(6),
+            longitude: position.coords.longitude.toFixed(6),
+          }));
+        },
+        () => {
+          // Silently fail - user can enter manually
+        }
+      );
+    }
+  }, []);
+  
+  const handleChange = (field: keyof FormData, value: string) => {
+    setFormData(prev => ({ ...prev, [field]: value }));
+    setError(null);
+  };
+  
+  const calculateNatalPositions = async (birthData: BirthData): Promise<Record<string, NatalPlanet>> => {
+    const date = new Date(`${birthData.date}T${birthData.time}`);
+    
+    // Validate date
+    if (isNaN(date.getTime())) {
+      throw new Error('Invalid birth date or time');
+    }
+    
+    // Calculate positions using Swiss Ephemeris
+    let skyData;
+    try {
+      skyData = await calculateCurrentSky(date);
+    } catch (err) {
+      console.error('[BirthChartInput] Swiss Ephemeris calculation error:', err);
+      throw new Error('Failed to calculate planetary positions. Please try again.');
+    }
+    
+    if (!skyData || !skyData.positions) {
+      throw new Error('No planetary data returned from calculation');
+    }
+    
+    const positions = skyData.positions;
+    
+    // Calculate houses
+    let houses;
+    try {
+      houses = await calculateLocalHouses(date, birthData.latitude, birthData.longitude);
+    } catch (err) {
+      console.error('[BirthChartInput] House calculation error:', err);
+      throw new Error('Failed to calculate house positions. Please check your coordinates.');
+    }
+    
+    if (!houses || !houses.cusps) {
+      throw new Error('Invalid house data returned');
+    }
+    
+    // Transform to NatalPlanet format with house placements
+    const natalPlanets: Record<string, NatalPlanet> = {};
+    
+    Object.entries(positions).forEach(([planetId, position]) => {
+      const house = getHouseFromLongitude(position.longitude, houses);
+      natalPlanets[planetId] = {
+        ...position,
+        house,
+        dignity: getDignity(planetId, position.sign),
+      };
+    });
+    
+    return natalPlanets;
+  };
+  
+  const getHouseFromLongitude = (longitude: number, houses: any): number => {
+    const cusps = houses.cusps;
+    for (let i = 1; i <= 12; i++) {
+      const houseStart = cusps[i];
+      const houseEnd = cusps[(i % 12) + 1];
+      
+      if (houseStart > houseEnd) {
+        if (longitude >= houseStart || longitude < houseEnd) return i;
+      } else {
+        if (longitude >= houseStart && longitude < houseEnd) return i;
+      }
+    }
+    return 1;
+  };
+  
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setError(null);
+    
+    // Validate
+    if (!formData.name.trim()) {
+      setError('Please enter your name');
+      return;
+    }
+    if (!formData.birthDate) {
+      setError('Please enter your birth date');
+      return;
+    }
+    if (!formData.birthTime) {
+      setError('Please enter your birth time');
+      return;
+    }
+    if (!formData.latitude || !formData.longitude) {
+      setError('Please enter your birth location coordinates');
+      return;
+    }
+    
+    setIsLoading(true);
+    
+    try {
+      const birthData: BirthData = {
+        date: formData.birthDate,
+        time: formData.birthTime,
+        latitude: parseFloat(formData.latitude),
+        longitude: parseFloat(formData.longitude),
+        timezone: formData.timezone,
+        locationName: formData.locationName,
+      };
+      
+      // Calculate natal positions
+      const planets = await calculateNatalPositions(birthData);
+      
+      // Calculate houses with error handling
+      const date = new Date(`${birthData.date}T${birthData.time}`);
+      let houseData;
+      try {
+        houseData = await calculateLocalHouses(date, birthData.latitude, birthData.longitude);
+      } catch (houseErr) {
+        console.error('[BirthChartInput] House calculation error:', houseErr);
+        throw new Error('Failed to calculate house positions. Please check your coordinates.');
+      }
+      
+      if (!houseData || !houseData.cusps) {
+        throw new Error('Invalid house data returned from calculation');
+      }
+      
+      const houses = {
+        type: 'placidus' as const,
+        cusps: houseData.cusps as any,
+        ascendant: houseData.ascendant as any,
+        mc: houseData.mc as any,
+        ic: houseData.ic as any,
+        dsc: houseData.descendant as any,
+      };
+      
+      // Calculate elemental and modality balance
+      const elements = calculateElementalBalance(planets);
+      const modalities = calculateModalityBalance(planets);
+      
+      // Get first planet as placeholders for ascendant/mc
+      const firstPlanet = Object.values(planets)[0];
+      
+      const chart: NatalChart = {
+        id: `natal-${Date.now()}`,
+        name: formData.name,
+        birthData,
+        planets,
+        houses,
+        ascendant: firstPlanet,
+        midheaven: firstPlanet,
+        elements,
+        modalities,
+        calculatedAt: new Date(),
+        zodiacSystem: getZodiacSystemPreference(),
+      };
+      
+      // Debug birth data
+      console.log('[BirthChartInput] Birth data:', birthData);
+      
+      // Save to storage using profile manager (creates both profile and chart)
+      try {
+        const newProfile = await profileManager.createProfile(formData.name, birthData, {
+          makeDefault: true,
+        });
+        console.log('[BirthChartInput] Profile created:', newProfile.id);
+      } catch (profileErr) {
+        console.error('[BirthChartInput] Profile creation error:', profileErr);
+        // Fallback: save natal chart directly
+        try {
+          saveNatalChart(chart);
+          console.log('[BirthChartInput] Chart saved directly as fallback');
+        } catch (saveErr) {
+          console.error('[BirthChartInput] Direct save also failed:', saveErr);
+        }
+      }
+      
+      setCalculatedChart(chart);
+      onChartCalculated(chart);
+    } catch (err) {
+      console.error('[BirthChartInput] Chart calculation failed:', err);
+      const errorMessage = err instanceof Error ? err.message : 'Failed to calculate chart. Please check your input data.';
+      setError(errorMessage);
+      setIsLoading(false);
+      return;
+    }
+    
+    setIsLoading(false);
+  };
+  
+  if (isLoading) {
+    return (
+      <div style={styles.container}>
+        <div style={styles.loading}>
+          <div style={styles.spinner} />
+          <p style={styles.loadingText}>Calculating your celestial blueprint...</p>
+        </div>
+      </div>
+    );
+  }
+  
+  return (
+    <div style={styles.container}>
+      <header style={styles.header}>
+        <h1 style={styles.title}>Your Birth Chart</h1>
+        <p style={styles.subtitle}>
+          Enter your birth details to unlock personalized guidance based on your unique celestial blueprint.
+        </p>
+      </header>
+      
+      {error && <div style={styles.error}>{error}</div>}
+      
+      <form onSubmit={handleSubmit} style={styles.form}>
+        <div style={styles.inputGroup}>
+          <label style={styles.label}>Your Name</label>
+          <input
+            type="text"
+            autoComplete="off"
+            autoCorrect="off"
+            autoCapitalize="words"
+            value={formData.name}
+            onChange={(e) => handleChange('name', e.target.value)}
+            placeholder="Enter your name"
+            style={styles.input}
+          />
+        </div>
+        
+        <div style={styles.row}>
+          <div style={styles.inputGroup}>
+            <label style={styles.label}>Birth Date</label>
+            <input
+              type="date"
+              autoComplete="off"
+              value={formData.birthDate}
+              onChange={(e) => handleChange('birthDate', e.target.value)}
+              style={styles.input}
+            />
+          </div>
+          
+          <div style={styles.inputGroup}>
+            <label style={styles.label}>Birth Time</label>
+            <input
+              type="time"
+              autoComplete="off"
+              value={formData.birthTime}
+              onChange={(e) => handleChange('birthTime', e.target.value)}
+              style={styles.input}
+            />
+          </div>
+        </div>
+        
+        <div style={styles.row}>
+          <div style={styles.inputGroup}>
+            <label style={styles.label}>Latitude</label>
+            <input
+              type="number"
+              step="0.000001"
+              autoComplete="off"
+              inputMode="decimal"
+              value={formData.latitude}
+              onChange={(e) => handleChange('latitude', e.target.value)}
+              placeholder="e.g., 40.7128"
+              style={styles.input}
+            />
+          </div>
+          
+          <div style={styles.inputGroup}>
+            <label style={styles.label}>Longitude</label>
+            <input
+              type="number"
+              step="0.000001"
+              autoComplete="off"
+              inputMode="decimal"
+              value={formData.longitude}
+              onChange={(e) => handleChange('longitude', e.target.value)}
+              placeholder="e.g., -74.0060"
+              style={styles.input}
+            />
+          </div>
+        </div>
+        
+        <div style={styles.inputGroup}>
+          <label style={styles.label}>Timezone</label>
+          <select
+            value={formData.timezone}
+            onChange={(e) => handleChange('timezone', e.target.value)}
+            style={styles.timezoneSelect}
+          >
+            {TIMEZONES.map(tz => (
+              <option key={tz.value} value={tz.value} style={{ background: '#1a1a2e', color: '#fff' }}>
+                {tz.label}
+              </option>
+            ))}
+          </select>
+        </div>
+        
+        <div style={styles.inputGroup}>
+          <label style={styles.label}>Location Name (optional)</label>
+          <input
+            type="text"
+            autoComplete="off"
+            autoCorrect="off"
+            value={formData.locationName}
+            onChange={(e) => handleChange('locationName', e.target.value)}
+            placeholder="e.g., New York, NY"
+            style={styles.input}
+          />
+        </div>
+        
+        <div style={styles.buttonGroup}>
+          <button
+            type="submit"
+            style={styles.primaryButton}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.transform = 'translateY(-2px)';
+              e.currentTarget.style.boxShadow = '0 8px 24px rgba(147, 51, 234, 0.4)';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.transform = 'translateY(0)';
+              e.currentTarget.style.boxShadow = 'none';
+            }}
+          >
+            <span>✨</span>
+            Calculate My Chart
+          </button>
+          <button
+            type="button"
+            onClick={onCancel}
+            style={styles.secondaryButton}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.background = 'rgba(255, 255, 255, 0.1)';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.background = 'transparent';
+            }}
+          >
+            Cancel
+          </button>
+        </div>
+      </form>
+      
+      <p style={styles.privacyNote}>
+        🔒 Your birth data is stored only on your device and used solely for chart calculations.
+      </p>
+      
+      {/* Result Preview */}
+      {calculatedChart && (
+        <div style={styles.resultCard}>
+          <h3 style={styles.resultTitle}>Your Celestial Blueprint</h3>
+          <div style={styles.planetGrid}>
+            {Object.entries(calculatedChart.planets).slice(0, 8).map(([planet, data]) => (
+              <div key={planet} style={styles.planetCard}>
+                <div style={styles.planetName}>
+                  {PLANET_SYMBOLS[planet]} {planet}
+                </div>
+                <div style={styles.planetSign}>
+                  {data.sign.charAt(0).toUpperCase() + data.sign.slice(1)}
+                </div>
+                <div style={styles.planetDegree}>
+                  House {data.house} • {data.dignity !== 'neutral' && data.dignity}
+                </div>
+              </div>
+            ))}
+          </div>
+          
+          <div style={styles.elementBar}>
+            {Object.entries(calculatedChart.elements).map(([element, count]) => (
+              <div key={element} style={styles.elementItem}>
+                <div style={styles.elementLabel}>{element}</div>
+                <div style={{...styles.elementValue, color: ELEMENT_COLORS[element]}}>
+                  {count}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default BirthChartInput;

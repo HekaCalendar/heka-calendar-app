@@ -1,0 +1,168 @@
+/* Week Symmetry Visual */
+.ws-visual {
+  padding: 20px;
+  margin: 16px 0;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.5) 0%, rgba(30, 30, 63, 0.6) 100%);
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Main Equation */
+.ws-equation {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  margin-bottom: 20px;
+  padding: 16px;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 12px;
+}
+
+.ws-part {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 12px 20px;
+  background: rgba(201, 162, 39, 0.1);
+  border-radius: 10px;
+  border: 1px solid rgba(201, 162, 39, 0.3);
+}
+
+.ws-part.result {
+  background: rgba(34, 197, 94, 0.1);
+  border-color: rgba(34, 197, 94, 0.3);
+}
+
+.ws-number {
+  font-size: 32px;
+  font-weight: 800;
+  color: #c9a227;
+}
+
+.ws-part.result .ws-number {
+  color: #22c55e;
+}
+
+.ws-label {
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.6);
+  text-transform: uppercase;
+}
+
+.ws-operator {
+  font-size: 24px;
+  color: rgba(255, 255, 255, 0.4);
+  font-weight: 300;
+}
+
+/* Benefits */
+.ws-benefits {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.ws-benefit {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 12px;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+  min-width: 100px;
+}
+
+.ws-icon {
+  font-size: 24px;
+}
+
+.ws-text {
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.7);
+  text-align: center;
+}
+
+/* Quarters */
+.ws-quarters {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.ws-quarter {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 12px 6px;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+  border-top: 3px solid;
+}
+
+.ws-quarter.q1 { border-color: #dc2626; }
+.ws-quarter.q2 { border-color: #16a34a; }
+.ws-quarter.q3 { border-color: #3b82f6; }
+.ws-quarter.q4 { border-color: #a855f7; }
+
+.ws-quarter.q4.extended {
+  background: rgba(168, 85, 247, 0.15);
+  border: 1px solid rgba(168, 85, 247, 0.4);
+  border-top: 3px solid #a855f7;
+}
+
+.ws-q-num {
+  font-size: 14px;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.9);
+  margin-bottom: 4px;
+}
+
+.ws-q-range {
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.6);
+  margin-bottom: 2px;
+}
+
+.ws-q-days {
+  font-size: 10px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.ws-quarter.q4.extended .ws-q-days {
+  color: #c9a227;
+}
+
+/* Q4 Note */
+.ws-q4-note {
+  text-align: center;
+  padding: 10px;
+  background: rgba(201, 162, 39, 0.1);
+  border-radius: 8px;
+  border: 1px solid rgba(201, 162, 39, 0.2);
+}
+
+.ws-q4-note span {
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+  .ws-equation {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  
+  .ws-number {
+    font-size: 24px;
+  }
+  
+  .ws-quarters {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}

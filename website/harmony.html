@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Harmony | HEKA</title>
+    <meta name="description" content="HEKA does not replace the Gregorian calendar. It overlays it. Two systems, two purposes, both valid.">
+    
+    <link rel="stylesheet" href="assets/css/sacred.css">
+    <style>
+        .philosophy-hero {
+            background: linear-gradient(180deg, rgba(212, 175, 55, 0.05) 0%, transparent 100%);
+            padding: 100px 0;
+            text-align: center;
+        }
+        
+        .philosophy-hero h1 {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            margin-bottom: 24px;
+        }
+        
+        .philosophy-hero p {
+            font-family: var(--font-wisdom);
+            font-size: 1.4rem;
+            color: var(--light-secondary);
+            max-width: 700px;
+            margin: 0 auto;
+            line-height: 1.8;
+            font-style: italic;
+        }
+        
+        .calendars-unison {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            gap: 48px;
+            align-items: center;
+            margin: var(--space-3xl) 0;
+        }
+        
+        @media (max-width: 900px) {
+            .calendars-unison {
+                grid-template-columns: 1fr;
+                gap: 32px;
+            }
+            
+            .calendars-unison .unison-connector {
+                transform: rotate(90deg);
+            }
+        }
+        
+        .calendar-card {
+            background: linear-gradient(180deg, var(--altar) 0%, var(--temple) 100%);
+            border: 1px solid var(--veil);
+            padding: 48px;
+            text-align: center;
+            position: relative;
+        }
+        
+        .calendar-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+        }
+        
+        .calendar-card.heka::before {
+            background: var(--gold);
+        }
+        
+        .calendar-card.gregorian::before {
+            background: #3b82f6;
+        }
+        
+        .calendar-icon {
+            font-size: 3rem;
+            margin-bottom: 16px;
+        }
+        
+        .calendar-name {
+            font-family: var(--font-ritual);
+            font-size: 2rem;
+            margin-bottom: 8px;
+        }
+        
+        .calendar-card.heka .calendar-name {
+            color: var(--gold);
+        }
+        
+        .calendar-card.gregorian .calendar-name {
+            color: #3b82f6;
+        }
+        
+        .calendar-purpose {
+            font-size: 1rem;
+            color: var(--light-secondary);
+            margin-bottom: 24px;
+        }
+        
+        .calendar-trait {
+            font-size: 0.9rem;
+            color: var(--light-tertiary);
+            padding: 8px 0;
+            border-bottom: 1px solid var(--veil);
+        }
+        
+        .calendar-trait:last-child {
+            border-bottom: none;
+        }
+        
+        .unison-connector {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 16px;
+        }
+        
+        .unison-line {
+            width: 2px;
+            height: 60px;
+            background: linear-gradient(180deg, var(--veil), var(--gold), var(--veil));
+        }
+        
+        .unison-symbol {
+            width: 64px;
+            height: 64px;
+            border: 2px solid var(--gold);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--font-ritual);
+            font-size: 1.5rem;
+            color: var(--gold);
+        }
+        
+        .historical-timeline {
+            position: relative;
+            padding-left: 40px;
+            margin: var(--space-2xl) 0;
+        }
+        
+        .historical-timeline::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(180deg, #ef4444, #22c55e, #a855f7);
+        }
+        
+        .timeline-era {
+            position: relative;
+            padding-bottom: var(--space-2xl);
+        }
+        
+        .timeline-era::before {
+            content: '';
+            position: absolute;
+            left: -44px;
+            top: 0;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--void);
+            border: 3px solid;
+        }
+        
+        .timeline-era.rome::before { border-color: #ef4444; }
+        .timeline-era.transition::before { border-color: #f59e0b; }
+        .timeline-era.modern::before { border-color: #a855f7; }
+        
+        .timeline-date {
+            font-family: var(--font-ritual);
+            font-size: 0.8rem;
+            letter-spacing: 0.2em;
+            margin-bottom: 8px;
+        }
+        
+        .timeline-era.rome .timeline-date { color: #ef4444; }
+        .timeline-era.transition .timeline-date { color: #f59e0b; }
+        .timeline-era.modern .timeline-date { color: #a855f7; }
+        
+        .insight-box {
+            background: linear-gradient(135deg, var(--temple) 0%, var(--altar) 100%);
+            border: 1px solid var(--veil);
+            padding: 48px;
+            margin: var(--space-2xl) 0;
+            position: relative;
+        }
+        
+        .insight-box::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: var(--gold);
+        }
+        
+        .insight-quote {
+            font-family: var(--font-wisdom);
+            font-size: 1.4rem;
+            color: var(--light-primary);
+            line-height: 1.7;
+            font-style: italic;
+            margin-bottom: 24px;
+        }
+        
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: var(--space-2xl) 0;
+        }
+        
+        .comparison-table th,
+        .comparison-table td {
+            padding: 24px;
+            text-align: left;
+            border-bottom: 1px solid var(--veil);
+        }
+        
+        .comparison-table th {
+            font-family: var(--font-ritual);
+            font-size: 0.75rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--light-tertiary);
+            background: var(--temple);
+        }
+        
+        .comparison-table tr:hover td {
+            background: rgba(212, 175, 55, 0.03);
+        }
+        
+        .dual-purpose {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1px;
+            background: var(--veil);
+            margin: var(--space-2xl) 0;
+        }
+        
+        @media (max-width: 768px) {
+            .dual-purpose {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .purpose-side {
+            background: var(--temple);
+            padding: 48px;
+        }
+        
+        .purpose-side.heka-side {
+            background: linear-gradient(180deg, rgba(212, 175, 55, 0.05) 0%, var(--temple) 100%);
+        }
+        
+        .purpose-side.gregorian-side {
+            background: linear-gradient(180deg, rgba(59, 130, 246, 0.05) 0%, var(--temple) 100%);
+        }
+        
+        .purpose-title {
+            font-family: var(--font-ritual);
+            font-size: 1.5rem;
+            margin-bottom: 16px;
+        }
+        
+        .purpose-side.heka-side .purpose-title {
+            color: var(--gold);
+        }
+        
+        .purpose-side.gregorian-side .purpose-title {
+            color: #3b82f6;
+        }
+        
+        .purpose-desc {
+            color: var(--light-secondary);
+            line-height: 1.8;
+            margin-bottom: 24px;
+        }
+        
+        .purpose-effect {
+            font-family: var(--font-wisdom);
+            font-size: 1.1rem;
+            color: var(--light-primary);
+            font-style: italic;
+            padding: 16px;
+            background: var(--void);
+            border-left: 3px solid;
+        }
+        
+        .purpose-side.heka-side .purpose-effect {
+            border-color: var(--gold);
+        }
+        
+        .purpose-side.gregorian-side .purpose-effect {
+            border-color: #3b82f6;
+        }
+    </style>
+</head>
+<body class="bg-sacred page-harmony">
+    <nav class="navbar">
+        <div class="container navbar-inner">
+            <a href="index.html" class="navbar-brand">
+                <div class="brand-symbol symbol-sun"></div>
+                <span class="brand-text">HEKA</span>
+            </a>
+            <button class="navbar-toggle" onclick="toggleNav()" aria-label="Toggle navigation">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <div class="navbar-menu">
+                <a href="structure.html" class="navbar-link">Structure</a>
+                <a href="experience.html" class="navbar-link">Experience</a>
+                <a href="precision.html" class="navbar-link">Precision</a>
+                <a href="harmony.html" class="navbar-link">Harmony</a>
+                <a href="features.html" class="navbar-link">Features</a>
+                <a href="temporal.html" class="navbar-link">Temporal</a>
+                <a href="index.html#download" class="navbar-cta" style="border-color: var(--copper); color: var(--copper);">Download</a>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <!-- Hero -->
+        <div class="philosophy-hero">
+            <div class="container">
+                <span class="section-number section-number-wisdom">PHILOSOPHY</span>
+                <h1 class="hero-title-wisdom" style="font-size: clamp(2.5rem, 5vw, 4rem); margin-bottom: 24px;">Two Calendars, One Sky</h1>
+                <p>
+                    "HEKA does not seek to replace the Gregorian calendar. It overlays it. Both systems measure the same solar year. Both place their correction in the month before the new year begins. Both are valid. Both serve different purposes."
+                </p>
+            </div>
+        </div>
+
+        <div class="container">
+            <!-- The Shared Structure -->
+            <section class="section">
+                <div class="section-header reveal">
+                    <span class="section-number section-number-wisdom">I. SHARED WISDOM</span>
+                    <h2 class="section-title">The Same Ancient Pattern</h2>
+                    <p class="section-subtitle">
+                        Look closely, and you will see that HEKA and Gregorian are not opponents. They are cousins, descended from the same Roman root, diverging only in how they handle the inevitable: the solar year does not divide evenly into days.
+                    </p>
+                </div>
+                
+                <div class="calendars-unison">
+                    <div class="calendar-card heka">
+                        <div class="calendar-icon">☉</div>
+                        <div class="calendar-name">HEKA</div>
+                        <div class="calendar-purpose">Intentional & Knowable</div>
+                        <div class="calendar-trait">Correction in March</div>
+                        <div class="calendar-trait">New year in April</div>
+                        <div class="calendar-trait">Regular structure</div>
+                        <div class="calendar-trait">Predictable planning</div>
+                    </div>
+                    
+                    <div class="unison-connector">
+                        <div class="unison-line"></div>
+                        <div class="unison-symbol">&</div>
+                        <div class="unison-line"></div>
+                    </div>
+                    
+                    <div class="calendar-card gregorian">
+                        <div class="calendar-icon"><span class="symbol-globe"></span></div>
+                        <div class="calendar-name">Gregorian</div>
+                        <div class="calendar-purpose">Dynamic & Surprising</div>
+                        <div class="calendar-trait">Correction in February</div>
+                        <div class="calendar-trait">New year in January</div>
+                        <div class="calendar-trait">Irregular structure</div>
+                        <div class="calendar-trait">Mental agility</div>
+                    </div>
+                </div>
+                
+                <div class="insight-box">
+                    <p class="insight-quote">
+                        "Both calendars place their leap day in the final month before the new year. For HEKA, this is March. For Gregorian, this is February. The pattern is ancient: the adjustment comes at the threshold, preparing the way for what comes next."
+                    </p>
+                </div>
+            </section>
+
+            <!-- Historical Journey -->
+            <section class="section section-alt">
+                <div class="section-header reveal" style="text-align: left;">
+                    <span class="section-number section-number-wisdom">II. THE JOURNEY</span>
+                    <h2 class="section-title">How The Months Wandered</h2>
+                </div>
+                
+                <p style="color: var(--light-secondary); max-width: 800px; margin-bottom: 48px; line-height: 1.8;">
+                    To understand why these calendars differ, we look to Roman tradition. According to legend, the original Roman calendar began in March. Martius, named for Mars, the god of war and spring. This aligned with Aries, the first sign of the zodiac. The year began when nature awakened.
+                </p>
+                
+                <div class="historical-timeline">
+                    <div class="timeline-era rome">
+                        <span class="timeline-date">Traditional Account</span>
+                        <h3 style="font-size: 1.5rem; margin-bottom: 16px;">The Original Order</h3>
+                        <p style="color: var(--light-secondary); line-height: 1.8; margin-bottom: 16px;">
+                            According to Roman tradition, the year began in March. The months made sense numerically: September was the 7th month (septem = seven), October the 8th (octo = eight), November the 9th (novem = nine), December the 10th (decem = ten). The year had ten months, with winter as an uncounted period.
+                        </p>
+                        <p style="color: var(--light-tertiary); font-size: 0.9rem; line-height: 1.7;">
+                            March (Martius) → April → May → June → Quintilis → Sextilis → September → October → November → December
+                        </p>
+                    </div>
+                    
+                    <div class="timeline-era transition">
+                        <span class="timeline-date">713 BCE</span>
+                        <h3 style="font-size: 1.5rem; margin-bottom: 16px;">The Disruption</h3>
+                        <p style="color: var(--light-secondary); line-height: 1.8; margin-bottom: 16px;">
+                            The legendary King Numa Pompilius is said to have added January and February to the beginning of the year. This was practical. Winter needed accounting. But it had a profound consequence: the numerical names no longer matched their positions. September became the 9th month, though its name means seven.
+                        </p>
+                        <p style="color: var(--light-tertiary); font-size: 0.9rem; line-height: 1.7;">
+                            The calendar became irregular not by accident, but by adaptation. January and February were inserted, shifting everything.
+                        </p>
+                    </div>
+                    
+                    <div class="timeline-era modern">
+                        <span class="timeline-date">2026 CE</span>
+                        <h3 style="font-size: 1.5rem; margin-bottom: 16px;">The Restoration</h3>
+                        <p style="color: var(--light-secondary); line-height: 1.8; margin-bottom: 16px;">
+                            HEKA creates new numerical alignment. With the year beginning in April, December becomes month 10—matching its name (decem = ten). September aligns with 7, October with 8, and November with 9. The correction remains in March. It is still the month before the new year, as it was in ancient Rome.
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="insight-box" style="margin-top: 48px;">
+                    <p class="insight-quote">
+                        "The Gregorian calendar preserves the distortion. HEKA restores the alignment. Neither is wrong. The Gregorian carries history in its very confusion. HEKA returns to first principles. Both tell a story."
+                    </p>
+                </div>
+            </section>
+
+            <!-- Two Purposes -->
+            <section class="section">
+                <div class="section-header reveal">
+                    <span class="section-number section-number-wisdom">III. TWO PURPOSES</span>
+                    <h2 class="section-title">Why Both Exist</h2>
+                    <p class="section-subtitle">
+                        The Gregorian calendar's irregularity is not a flaw. It is a feature. The HEKA calendar's regularity is not superiority. It is a different choice. Each serves the human mind in a different way.
+                    </p>
+                </div>
+                
+                <div class="dual-purpose">
+                    <div class="purpose-side heka-side">
+                        <div class="purpose-title">Intentional & Knowable</div>
+                        <p class="purpose-desc">
+                            When the calendar is predictable, the mind relaxes. You know where you are in the year. You feel the structure. Planning becomes effortless because the tool is reliable. The same date is always the same weekday, month after month. This creates cognitive ease, freeing mental resources for creative and meaningful work.
+                        </p>
+                        <div class="purpose-effect">
+                            "HEKA makes every day feel intentional. The calendar becomes a space you inhabit with confidence."
+                        </div>
+                    </div>
+                    
+                    <div class="purpose-side gregorian-side">
+                        <div class="purpose-title">Dynamic & Surprising</div>
+                        <p class="purpose-desc">
+                            When the calendar shifts and changes, the mind stays alert. You must pay attention. The 15th might be Monday or Thursday. You have to check. This unpredictability keeps the mind agile, prevents complacency, and makes each month feel fresh and new. The slight cognitive friction keeps you present.
+                        </p>
+                        <div class="purpose-effect">
+                            "Gregorian makes every day feel new. The calendar keeps you awake, alert, and adaptable."
+                        </div>
+                    </div>
+                </div>
+                
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Aspect</th>
+                            <th>HEKA Approach</th>
+                            <th>Gregorian Approach</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Structure</strong></td>
+                            <td>Regular, predictable, knowable</td>
+                            <td>Irregular, dynamic, surprising</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Mental Effect</strong></td>
+                            <td>Cognitive ease, flow, intentionality</td>
+                            <td>Cognitive agility, alertness, presence</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Planning</strong></td>
+                            <td>Effortless. Dates align perfectly</td>
+                            <td>Attentive. Requires checking each month</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Experience of Time</strong></td>
+                            <td>Inhabiting a known space</td>
+                            <td>Navigating a changing landscape</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Best For</strong></td>
+                            <td>Long-term planning, routine work, clarity</td>
+                            <td>Adaptability, spontaneity, staying present</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <!-- The Overlay -->
+            <section class="section section-alt">
+                <div class="section-header reveal" style="text-align: left;">
+                    <span class="section-number section-number-wisdom">IV. THE OVERLAY</span>
+                    <h2 class="section-title">Using Both Together</h2>
+                </div>
+                
+                <p style="color: var(--light-secondary); max-width: 800px; margin-bottom: 48px; line-height: 1.8;">
+                    HEKA is designed as an overlay, not a replacement. Your civil appointments, legal deadlines, and social events remain in the Gregorian system, exactly where they belong. HEKA provides a clearer lens for personal planning, while the Gregorian maintains coordination with the wider world.
+                </p>
+                
+                <div class="grid-2">
+                    <div class="tablet">
+                        <div style="padding: 32px; border-bottom: 1px solid var(--veil);">
+                            <div style="font-family: var(--font-ritual); font-size: 0.75rem; letter-spacing: 0.2em; color: var(--gold); margin-bottom: 8px;">HEKA FOR</div>
+                            <h3 style="font-size: 1.4rem;">Personal Planning</h3>
+                        </div>
+                        <div style="padding: 32px;">
+                            <ul style="list-style: none; color: var(--light-secondary);">
+                                <li style="padding: 12px 0; border-bottom: 1px solid var(--veil);">✦ Long-term goal setting</li>
+                                <li style="padding: 12px 0; border-bottom: 1px solid var(--veil);">✦ Routine and habit tracking</li>
+                                <li style="padding: 12px 0; border-bottom: 1px solid var(--veil);">✦ Project milestones</li>
+                                <li style="padding: 12px 0; border-bottom: 1px solid var(--veil);">✦ Personal journaling</li>
+                                <li style="padding: 12px 0;">✦ Reflective practice</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="tablet">
+                        <div style="padding: 32px; border-bottom: 1px solid var(--veil);">
+                            <div style="font-family: var(--font-ritual); font-size: 0.75rem; letter-spacing: 0.2em; color: #3b82f6; margin-bottom: 8px;">GREGORIAN FOR</div>
+                            <h3 style="font-size: 1.4rem;">Civil Coordination</h3>
+                        </div>
+                        <div style="padding: 32px;">
+                            <ul style="list-style: none; color: var(--light-secondary);">
+                                <li style="padding: 12px 0; border-bottom: 1px solid var(--veil);">✦ Business appointments</li>
+                                <li style="padding: 12px 0; border-bottom: 1px solid var(--veil);">✦ Legal deadlines</li>
+                                <li style="padding: 12px 0; border-bottom: 1px solid var(--veil);">✦ Social events</li>
+                                <li style="padding: 12px 0; border-bottom: 1px solid var(--veil);">✦ Public holidays</li>
+                                <li style="padding: 12px 0;">✦ Shared references</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="insight-box" style="margin-top: 48px;">
+                    <p class="insight-quote">
+                        "You do not abandon the Gregorian calendar by using HEKA. You gain a second lens. Use Gregorian for coordination with the world. Use HEKA for coordination with yourself. Both are tools. Both serve."
+                    </p>
+                </div>
+            </section>
+
+            <!-- Final Synthesis -->
+            <section class="section">
+                <div style="text-align: center; max-width: 800px; margin: 0 auto;">
+                    <span class="section-number section-number-wisdom">V. SYNTHESIS</span>
+                    <h2 class="section-title">The Choice Is Yours</h2>
+                    <p style="font-family: var(--font-wisdom); font-size: 1.3rem; color: var(--light-secondary); line-height: 1.8; margin-bottom: 32px;">
+                        "There are not good calendars and bad calendars. There are only calendars that serve different aspects of the human experience. The Gregorian calendar, with its beautiful chaos, keeps the mind sharp. The HEKA calendar, with its elegant order, gives the mind rest. Use the one you need, when you need it. Or better yet: use both."
+                    </p>
+                    <a href="index.html#download" class="btn btn-primary" style="padding: 20px 40px;">Begin With HEKA</a>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div>
+                    <div class="footer-sigil">
+                        <div class="footer-sigil-symbol symbol-sun"></div>
+                        <span class="footer-sigil-text">HEKA</span>
+                    </div>
+                    <p class="footer-mantra">
+                        Time is the structure we live inside. What if it fit better?
+                    </p>
+                </div>
+                <div class="footer-links">
+                    <div>
+                        <h4 class="footer-column-title">Learn</h4>
+                        <a href="structure.html" class="footer-link">Structure</a>
+                        <a href="experience.html" class="footer-link">Experience</a>
+                        <a href="precision.html" class="footer-link">Precision</a>
+                        <a href="harmony.html" class="footer-link">Harmony</a>
+                    </div>
+                    <div>
+                        <h4 class="footer-column-title">Product</h4>
+                        <a href="features.html" class="footer-link">Features</a>
+                        <a href="temporal.html" class="footer-link">Temporal</a>
+                        <a href="privacy.html" class="footer-link">Privacy</a>
+                        <a href="terms.html" class="footer-link">Terms of Service</a>
+                    </div>
+                    <div>
+                        <h4 class="footer-column-title">Connect</h4>
+                        <a href="mailto:hekacalendar@gmail.com" class="footer-link">Contact</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-base">
+                <p class="footer-copyright">© 2026 HEKA Calendar</p>
+                <p class="footer-precision">Thirteen months. Fifty-two weeks. One harmonious year.</p>
+            </div>
+        </div>
+    </footer>
+<script>
+function toggleNav() {
+    document.querySelector('.navbar-menu').classList.toggle('active');
+    document.querySelector('.navbar-toggle').classList.toggle('active');
+}
+</script>
+<script>
+// Scroll-triggered reveal animations
+const observerOptions = {
+    root: null,
+    rootMargin: '0px',
+    threshold: 0.1
+};
+
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add('active');
+        }
+    });
+}, observerOptions);
+
+document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale').forEach(el => {
+    observer.observe(el);
+});
+</script>
+</body>
+</html>
+
+
+
+

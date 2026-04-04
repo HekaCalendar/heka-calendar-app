@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Debug Swiss Ephemeris</title>
+</head>
+<body>
+  <h1>Swiss Ephemeris WASM Debug</h1>
+  <pre id="output"></pre>
+  <script>
+    const output = document.getElementById('output');
+    
+    async function test() {
+      try {
+        output.textContent = 'Loading Swiss Ephemeris...\n';
+        
+        // Load the module
+        const swissephModule = await import('/wsam/swisseph.js');
+        output.textContent += 'Module imported\n';
+        output.textContent += `Module keys: ${Object.keys(swissephModule).join(', ')}\n\n`;
+        
+        // Initialize
+        const Module = await swissephModule.default({
+          locateFile: (path) => {
+            if (path.endsWith('.wasm')) return '/wsam/swisseph.wasm';
+            if (path.endsWith('.data')) return '/wsam/swisseph.data';
+            return path;
+          }
+        });
+        
+        output.textContent += 'Module initialized\n';
+        output.textContent += `Module calledRun: ${Module.calledRun}\n\n`;
+        
+        // List all properties
+        const allProps = Object.keys(Module).sort();
+        output.textContent += `All properties (${allProps.length}):\n`;
+        output.textContent += allProps.join(', ') + '\n\n';
+        
+        // Check for specific functions
+        const keyFunctions = [
+          'julday', '_julday', 'calc_ut', '_calc_ut', 'houses_ex', '_houses_ex',
+          'swe_julday', '_swe_julday', 'swe_calc_ut', '_swe_calc_ut', 'swe_houses_ex', '_swe_houses_ex',
+          'ccall', 'cwrap', 'SE_GREG_CAL', '_SE_GREG_CAL'
+        ];
+        
+        output.textContent += 'Checking key functions:\n';
+        for (const fn of keyFunctions) {
+          const type = typeof Module[fn];
+          if (type !== 'undefined') {
+            output.textContent += `  ${fn}: ${type}\n`;
+          }
+        }
+        
+        // Check asm object
+        if (Module.asm) {
+          output.textContent += '\nasm object keys (first 50):\n';
+          output.textContent += Object.keys(Module.asm).slice(0, 50).join(', ') + '\n';
+        }
+        
+        // Check for ccall
+        if (Module.ccall) {
+          output.textContent += '\nccall available\n';
+        }
+        
+        // Test calc if available
+        if (Module.julday) {
+          output.textContent += '\njulday test: ' + Module.julday(2024, 1, 1, 12, 1) + '\n';
+        }
+        
+      } catch (e) {
+        output.textContent += `\nError: ${e.message}\n${e.stack}`;
+      }
+    }
+    
+    test();
+  </script>
+</body>
+</html>

@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="description" content="HEKA Calendar v2.2.0 - NEW ASTROLOGY" />
+  <meta name="theme-color" content="#0c0c0f" />
+  
+  <!-- NO CACHE -->
+  <meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
+  
+  <title>HEKA Calendar v2.2.0</title>
+  
+  <!-- INLINE KILL SWITCH - Cannot be cached separately -->
+  <script>
+    (function() {
+      var VERSION = '2.2.0';
+      var KEY = 'heka-v220-loaded';
+      
+      // Check if we already loaded this version
+      if (sessionStorage.getItem(KEY)) {
+        return; // Already processed
+      }
+      
+      var storedVersion = localStorage.getItem('heka-version');
+      console.log('[KILL] Version check:', storedVersion, '->', VERSION);
+      
+      if (storedVersion !== VERSION) {
+        console.log('[KILL] Clearing caches...');
+        
+        // Unregister SWs
+        if ('serviceWorker' in navigator) {
+          navigator.serviceWorker.getRegistrations().then(function(regs) {
+            regs.forEach(function(r) { r.unregister(); });
+          });
+        }
+        
+        // Clear caches
+        if ('caches' in window) {
+          caches.keys().then(function(names) {
+            names.forEach(function(n) { caches.delete(n); });
+          });
+        }
+        
+        // Update version
+        localStorage.setItem('heka-version', VERSION);
+        sessionStorage.setItem(KEY, 'true');
+        
+        // Reload with cache busting
+        var url = new URL(window.location.href);
+        url.searchParams.set('v', VERSION);
+        url.searchParams.set('_cb', Date.now());
+        window.location.replace(url.toString());
+      } else {
+        sessionStorage.setItem(KEY, 'true');
+      }
+    })();
+  </script>
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  
+  <!-- Icons -->
+  <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+  
+  <style>
+    html, body { 
+      background-color: #0c0c0f; 
+      margin: 0;
+      font-family: system-ui, -apple-system, sans-serif;
+    }
+    #root { min-height: 100vh; }
+    .loading {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      color: #f5f5f5;
+      background: #0c0c0f;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    .loading::after {
+      content: '';
+      width: 40px;
+      height: 40px;
+      border: 3px solid rgba(255,255,255,0.1);
+      border-top-color: #caa24a;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .version-badge {
+      position: fixed;
+      bottom: 8px;
+      right: 8px;
+      font-size: 12px;
+      color: rgba(255,255,255,0.5);
+      font-family: monospace;
+      background: rgba(201, 162, 39, 0.2);
+      padding: 4px 10px;
+      border-radius: 4px;
+      border: 1px solid rgba(201, 162, 39, 0.3);
+    }
+  </style>
+</head>
+<body>
+  <div id="root">
+    <div class="loading">HEKA v2.1.5</div>
+  </div>
+
+  
+  <!-- Android Scroll Fix -->
+  <script src="/scroll-fix.js"></script>
+  
+  <!-- Main script -->
+  <script type="module" src="/src/main.tsx"></script>
+</body>
+</html>

@@ -1,0 +1,207 @@
+/* New Year Resolutions Visual - Dual Hemisphere */
+.nyr-visual {
+  padding: 16px;
+  margin: 12px 0;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.5) 0%, rgba(30, 30, 63, 0.6) 100%);
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Dual Hemispheres */
+.nyr-hemispheres {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.nyr-hemi {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  flex: 1;
+  padding: 12px 8px;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.nyr-hemi.northern {
+  border-left: 2px solid rgba(59, 130, 246, 0.5);
+}
+
+.nyr-hemi.southern {
+  border-left: 2px solid rgba(245, 158, 11, 0.5);
+}
+
+.nyr-hemi-icon {
+  font-size: 24px;
+}
+
+.nyr-hemi-label {
+  font-size: 11px;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.9);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.nyr-hemi-desc {
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.6);
+  text-align: center;
+}
+
+.nyr-hemi-divider {
+  font-size: 16px;
+  color: rgba(255, 255, 255, 0.3);
+}
+
+/* Survival Banner */
+.nyr-survival-banner {
+  text-align: center;
+  padding: 10px;
+  background: rgba(239, 68, 68, 0.1);
+  border-radius: 8px;
+  border: 1px solid rgba(239, 68, 68, 0.2);
+  margin-bottom: 12px;
+}
+
+.nyr-survival-banner span {
+  font-size: 12px;
+  font-weight: 600;
+  color: rgba(239, 68, 68, 0.9);
+}
+
+/* VS Section */
+.nyr-vs-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+  padding: 12px;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+}
+
+.nyr-vs-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.nyr-vs-icon {
+  font-size: 28px;
+}
+
+.nyr-vs-text {
+  font-size: 13px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.nyr-vs-arrow {
+  font-size: 11px;
+  color: rgba(239, 68, 68, 0.8);
+  font-style: italic;
+}
+
+/* Energy Row */
+.nyr-energy-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+  padding: 10px;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+}
+
+.nyr-energy-label {
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.6);
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.nyr-energy-track {
+  flex: 1;
+  height: 8px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.nyr-energy-fill {
+  height: 100%;
+  border-radius: 4px;
+}
+
+.nyr-energy-fill.low {
+  width: 15%;
+  background: linear-gradient(90deg, #ef4444, #f87171);
+}
+
+.nyr-energy-value {
+  font-size: 12px;
+  font-weight: 700;
+  color: #ef4444;
+  min-width: 30px;
+  text-align: right;
+}
+
+/* Solution */
+.nyr-solution {
+  padding: 12px;
+  background: rgba(34, 197, 94, 0.1);
+  border-radius: 10px;
+  border: 1px solid rgba(34, 197, 94, 0.2);
+  text-align: center;
+}
+
+.nyr-solution-label {
+  display: block;
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.5);
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+
+.nyr-april-start {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.nyr-april-icon {
+  font-size: 20px;
+}
+
+.nyr-april-text {
+  font-size: 12px;
+  font-weight: 600;
+  color: #22c55e;
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+  .nyr-visual {
+    padding: 12px;
+  }
+  
+  .nyr-hemi-icon {
+    font-size: 20px;
+  }
+  
+  .nyr-hemi-label {
+    font-size: 10px;
+  }
+  
+  .nyr-hemi-desc {
+    font-size: 9px;
+  }
+}

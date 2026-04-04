@@ -1,0 +1,288 @@
+/**
+ * Insight Display Styles
+ * Beautiful celestial guidance visualization
+ */
+
+.insight-card {
+  background: linear-gradient(
+    135deg,
+    rgba(202, 162, 74, 0.08) 0%,
+    rgba(147, 112, 219, 0.05) 100%
+  );
+  border: 1px solid rgba(202, 162, 74, 0.2);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  margin: var(--space-4) 0;
+  animation: insightAppear 0.5s ease;
+}
+
+@keyframes insightAppear {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Header */
+.insight-header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-4);
+  cursor: pointer;
+  transition: background 0.2s;
+  user-select: none;
+}
+
+.insight-header:hover {
+  background: rgba(202, 162, 74, 0.05);
+}
+
+.insight-icon {
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(
+    135deg,
+    rgba(202, 162, 74, 0.2),
+    rgba(147, 112, 219, 0.15)
+  );
+  border-radius: var(--radius-md);
+  font-size: 1.25rem;
+  animation: iconShimmer 3s ease-in-out infinite;
+}
+
+@keyframes iconShimmer {
+  0%, 100% { opacity: 0.8; }
+  50% { opacity: 1; }
+}
+
+.insight-meta {
+  flex: 1;
+}
+
+.insight-title {
+  font-size: var(--text-sm);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--color-gold);
+  margin: 0 0 0.25rem;
+}
+
+.insight-strength {
+  font-size: var(--text-xs);
+  font-weight: 500;
+}
+
+.insight-toggle {
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-text-muted);
+  font-size: 0.75rem;
+  transition: transform 0.3s;
+}
+
+.insight-card.expanded .insight-toggle {
+  transform: rotate(0deg);
+}
+
+.insight-card.collapsed .insight-toggle {
+  transform: rotate(-90deg);
+}
+
+/* Content */
+.insight-content {
+  padding: 0 var(--space-4) var(--space-4);
+}
+
+.insight-text {
+  font-size: var(--text-base);
+  line-height: 1.7;
+  color: var(--color-text);
+  margin: 0 0 var(--space-4);
+  font-style: italic;
+}
+
+/* Celestial Context */
+.insight-context {
+  margin-bottom: var(--space-4);
+  padding: var(--space-3);
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: var(--radius-md);
+}
+
+.insight-context-title {
+  font-size: var(--text-xs);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--color-gold);
+  margin: 0 0 var(--space-2);
+}
+
+.insight-context-items {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.insight-context-item {
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+  padding: 0.25rem 0.75rem;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 100px;
+}
+
+/* Archetype Tags */
+.insight-archetypes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin-bottom: var(--space-4);
+}
+
+.insight-tag {
+  font-size: var(--text-xs);
+  color: var(--color-gold);
+  padding: 0.25rem 0.75rem;
+  background: rgba(202, 162, 74, 0.1);
+  border: 1px solid rgba(202, 162, 74, 0.2);
+  border-radius: 100px;
+}
+
+/* Strength Meter */
+.insight-strength-meter {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.insight-strength-bar {
+  flex: 1;
+  height: 6px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.insight-strength-fill {
+  height: 100%;
+  border-radius: 3px;
+  transition: width 0.5s ease;
+}
+
+.insight-strength-score {
+  font-size: var(--text-xs);
+  font-weight: 600;
+  color: var(--color-text-muted);
+  min-width: 48px;
+  text-align: right;
+}
+
+/* Actions */
+.insight-actions {
+  padding: var(--space-3) var(--space-4);
+  border-top: 1px solid rgba(202, 162, 74, 0.1);
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.insight-actions-label {
+  display: block;
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-3);
+}
+
+.insight-rating-buttons {
+  display: flex;
+  gap: var(--space-2);
+}
+
+.insight-btn {
+  flex: 1;
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid;
+  border-radius: var(--radius-md);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.insight-btn-resonated {
+  background: rgba(34, 197, 94, 0.1);
+  border-color: rgba(34, 197, 94, 0.3);
+  color: #86efac;
+}
+
+.insight-btn-resonated:hover {
+  background: rgba(34, 197, 94, 0.2);
+  border-color: rgba(34, 197, 94, 0.5);
+  box-shadow: 0 0 12px rgba(34, 197, 94, 0.2);
+}
+
+.insight-btn-neutral {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.1);
+  color: var(--color-text-muted);
+}
+
+.insight-btn-neutral:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.insight-btn-dismissed {
+  background: rgba(239, 68, 68, 0.1);
+  border-color: rgba(239, 68, 68, 0.3);
+  color: #fca5a5;
+}
+
+.insight-btn-dismissed:hover {
+  background: rgba(239, 68, 68, 0.2);
+  border-color: rgba(239, 68, 68, 0.5);
+}
+
+/* Thanks State */
+.insight-thanks {
+  padding: var(--space-3) var(--space-4);
+  border-top: 1px solid rgba(202, 162, 74, 0.1);
+  background: rgba(34, 197, 94, 0.05);
+  text-align: center;
+}
+
+.insight-thanks span {
+  font-size: var(--text-sm);
+  color: #86efac;
+}
+
+/* Collapsed State */
+.insight-card.collapsed {
+  opacity: 0.8;
+}
+
+.insight-card.collapsed .insight-header {
+  padding: var(--space-3) var(--space-4);
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+  .insight-rating-buttons {
+    flex-direction: column;
+  }
+  
+  .insight-btn {
+    padding: var(--space-3);
+  }
+}

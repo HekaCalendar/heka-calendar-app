@@ -1,0 +1,403 @@
+/**
+ * Shared Modal Styles - Landscape Optimizations
+ * Info Modal, Community Holidays, Stats Modal, etc.
+ */
+
+/* ═══════════════════════════════════════════════════════════════════════════════
+   INFO MODAL - Landscape
+   ═══════════════════════════════════════════════════════════════════════════════ */
+
+@media (orientation: landscape) and (max-height: 600px) {
+  
+  .info-modal-overlay {
+    padding: 0 !important;
+    align-items: flex-start !important;
+    overflow-y: auto !important;
+  }
+  
+  .info-modal {
+    max-height: none !important;
+    height: auto !important;
+    min-height: 100vh !important;
+    border-radius: 0 !important;
+    max-width: none !important;
+  }
+  
+  .info-modal__header {
+    padding: 12px 16px !important;
+    position: sticky !important;
+    top: 0 !important;
+    z-index: 10 !important;
+  }
+  
+  .info-modal__title {
+    font-size: 1.1rem !important;
+  }
+  
+  .info-modal__content {
+    padding: 16px !important;
+  }
+  
+  /* Tab navigation horizontal scroll */
+  .info-modal__tabs {
+    flex-wrap: nowrap !important;
+    overflow-x: auto !important;
+    scrollbar-width: none !important;
+    gap: 8px !important;
+    padding-bottom: 8px !important;
+  }
+  
+  .info-modal__tabs::-webkit-scrollbar {
+    display: none !important;
+  }
+  
+  .info-modal__tab {
+    white-space: nowrap !important;
+    flex-shrink: 0 !important;
+    padding: 8px 14px !important;
+    font-size: 0.85rem !important;
+  }
+  
+  /* Content sections */
+  .info-section h3 {
+    font-size: 1rem !important;
+    margin-bottom: 12px !important;
+  }
+  
+  .info-section p {
+    font-size: 0.85rem !important;
+    line-height: 1.5 !important;
+  }
+  
+  /* Feature cards grid */
+  .feature-cards {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 12px !important;
+  }
+  
+  .feature-card {
+    padding: 12px !important;
+  }
+  
+  .feature-card__icon {
+    font-size: 1.5rem !important;
+    margin-bottom: 8px !important;
+  }
+  
+  .feature-card__title {
+    font-size: 0.85rem !important;
+  }
+  
+  .feature-card__desc {
+    font-size: 0.75rem !important;
+  }
+}
+
+@media (orientation: landscape) and (min-height: 601px) {
+  .info-modal-overlay {
+    padding: 24px !important;
+  }
+  
+  .info-modal {
+    max-height: calc(100vh - 48px) !important;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════════
+   COMMUNITY HOLIDAYS MODAL - Landscape
+   ═══════════════════════════════════════════════════════════════════════════════ */
+
+@media (orientation: landscape) and (max-height: 600px) {
+  
+  .modal-overlay {
+    padding: 0 !important;
+    align-items: flex-start !important;
+    overflow-y: auto !important;
+  }
+  
+  .modal {
+    max-width: none !important;
+    width: 100% !important;
+    height: auto !important;
+    min-height: 100vh !important;
+    border-radius: 0 !important;
+    max-height: none !important;
+  }
+  
+  .modal__header {
+    padding: 12px 16px !important;
+    position: sticky !important;
+    top: 0 !important;
+    z-index: 10 !important;
+  }
+  
+  .modal__title {
+    font-size: 1.1rem !important;
+  }
+  
+  .community-intro {
+    padding: 12px 16px !important;
+    font-size: 0.85rem !important;
+  }
+  
+  /* Form compact */
+  .suggestion-form {
+    padding: 12px 16px !important;
+  }
+  
+  .form-group {
+    margin-bottom: 12px !important;
+  }
+  
+  .form-group label {
+    font-size: 0.85rem !important;
+    margin-bottom: 4px !important;
+  }
+  
+  .form-group input,
+  .form-group textarea {
+    padding: 8px 12px !important;
+    font-size: 0.9rem !important;
+  }
+  
+  /* Holidays list */
+  .holidays-list {
+    padding: 0 16px 16px !important;
+  }
+  
+  .holiday-item {
+    padding: 12px !important;
+  }
+  
+  .holiday-name {
+    font-size: 0.95rem !important;
+  }
+  
+  .holiday-date {
+    font-size: 0.8rem !important;
+  }
+  
+  .holiday-description {
+    font-size: 0.8rem !important;
+  }
+}
+
+@media (orientation: landscape) and (min-height: 601px) and (max-height: 800px) {
+  .modal-overlay {
+    padding: 20px !important;
+  }
+  
+  .modal {
+    max-height: calc(100vh - 40px) !important;
+    max-width: 700px !important;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════════
+   STATS MODAL - Landscape
+   ═══════════════════════════════════════════════════════════════════════════════ */
+
+@media (orientation: landscape) and (max-height: 600px) {
+  
+  .stats-modal-overlay {
+    padding: 0 !important;
+    align-items: flex-start !important;
+    overflow-y: auto !important;
+  }
+  
+  .stats-modal {
+    max-width: none !important;
+    width: 100% !important;
+    height: auto !important;
+    min-height: 100vh !important;
+    border-radius: 0 !important;
+    max-height: none !important;
+  }
+  
+  .stats-modal__header {
+    padding: 12px 16px !important;
+    position: sticky !important;
+    top: 0 !important;
+    z-index: 10 !important;
+  }
+  
+  .stats-modal__title {
+    font-size: 1.1rem !important;
+  }
+  
+  .stats-modal__content {
+    padding: 16px !important;
+  }
+  
+  /* Stats grid */
+  .stats-grid {
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 12px !important;
+  }
+  
+  .stat-card {
+    padding: 12px !important;
+  }
+  
+  .stat-value {
+    font-size: 1.5rem !important;
+  }
+  
+  .stat-label {
+    font-size: 0.7rem !important;
+  }
+  
+  /* Charts compact */
+  .stats-chart {
+    height: 150px !important;
+  }
+  
+  .stats-section {
+    margin-bottom: 16px !important;
+  }
+  
+  .stats-section-title {
+    font-size: 0.9rem !important;
+    margin-bottom: 12px !important;
+  }
+}
+
+@media (orientation: landscape) and (min-height: 601px) {
+  .stats-modal-overlay {
+    padding: 24px !important;
+  }
+  
+  .stats-modal {
+    max-height: calc(100vh - 48px) !important;
+    max-width: 900px !important;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════════
+   YEAR MODAL - Landscape
+   ═══════════════════════════════════════════════════════════════════════════════ */
+
+@media (orientation: landscape) and (max-height: 600px) {
+  
+  .year-modal-overlay {
+    padding: 0 !important;
+    overflow-y: auto !important;
+  }
+  
+  .year-modal {
+    max-width: none !important;
+    width: 100% !important;
+    height: auto !important;
+    min-height: 100vh !important;
+    border-radius: 0 !important;
+    max-height: none !important;
+  }
+  
+  .year-modal__header {
+    padding: 12px 16px !important;
+    position: sticky !important;
+    top: 0 !important;
+    z-index: 10 !important;
+  }
+  
+  .year-modal__content {
+    padding: 12px !important;
+    grid-template-columns: repeat(4, 1fr) !important;
+    gap: 8px !important;
+  }
+  
+  .year-month-card {
+    padding: 8px !important;
+  }
+  
+  .year-month-name {
+    font-size: 0.8rem !important;
+  }
+  
+  .year-month-days {
+    grid-template-columns: repeat(7, 1fr) !important;
+    gap: 1px !important;
+  }
+  
+  .year-day {
+    font-size: 0.65rem !important;
+    padding: 2px !important;
+  }
+}
+
+@media (orientation: landscape) and (min-height: 601px) and (max-height: 800px) {
+  .year-modal__content {
+    grid-template-columns: repeat(4, 1fr) !important;
+  }
+}
+
+@media (orientation: landscape) and (min-height: 801px) {
+  .year-modal__content {
+    grid-template-columns: repeat(6, 1fr) !important;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════════
+   SEARCH MODAL - Landscape
+   ═══════════════════════════════════════════════════════════════════════════════ */
+
+@media (orientation: landscape) and (max-height: 600px) {
+  
+  .search-modal-overlay {
+    padding: 0 !important;
+    align-items: flex-start !important;
+    overflow-y: auto !important;
+  }
+  
+  .search-modal {
+    max-width: none !important;
+    width: 100% !important;
+    height: auto !important;
+    min-height: 100vh !important;
+    border-radius: 0 !important;
+    max-height: none !important;
+  }
+  
+  .search-modal__header {
+    padding: 12px 16px !important;
+    position: sticky !important;
+    top: 0 !important;
+    z-index: 10 !important;
+  }
+  
+  .search-input-wrapper {
+    margin: 12px 16px !important;
+  }
+  
+  .search-input {
+    padding: 10px 14px !important;
+    font-size: 0.95rem !important;
+  }
+  
+  .search-results {
+    padding: 0 16px 16px !important;
+  }
+  
+  .search-result-item {
+    padding: 10px !important;
+  }
+  
+  .search-result-date {
+    font-size: 0.8rem !important;
+  }
+  
+  .search-result-preview {
+    font-size: 0.85rem !important;
+  }
+}
+
+@media (orientation: landscape) and (min-height: 601px) {
+  .search-modal-overlay {
+    padding: 24px !important;
+  }
+  
+  .search-modal {
+    max-height: calc(100vh - 48px) !important;
+    max-width: 700px !important;
+  }
+}

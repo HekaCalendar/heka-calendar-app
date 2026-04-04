@@ -1,0 +1,360 @@
+/**
+ * Month Structure V2 Styles
+ * Stunning 13-month grid visualization
+ */
+
+.month-structure-v2 {
+  padding: 20px;
+  margin: 16px 0;
+  background: linear-gradient(180deg, rgba(30, 30, 63, 0.6) 0%, rgba(15, 15, 35, 0.8) 100%);
+  border-radius: 20px;
+  border: 1px solid rgba(201, 162, 39, 0.2);
+}
+
+/* Header Stats */
+.structure-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  margin-bottom: 20px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  opacity: 0;
+  transform: translateY(-20px);
+  transition: all 0.6s ease;
+}
+
+.structure-header.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.structure-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.stat-number {
+  font-size: 36px;
+  font-weight: 800;
+  background: linear-gradient(135deg, #c9a227, #f0d878);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  line-height: 1;
+}
+
+.stat-label {
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.5);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.structure-divider {
+  width: 1px;
+  height: 40px;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+/* Arc Legend */
+.arc-legend {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  opacity: 0;
+  transition: opacity 0.6s ease 0.2s;
+}
+
+.arc-legend.show {
+  opacity: 1;
+}
+
+.arc-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 20px;
+}
+
+.arc-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+.arc-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.arc-name {
+  font-size: 12px;
+  font-weight: 600;
+  color: #fff;
+}
+
+.arc-desc {
+  font-size: 9px;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+/* Month Grid */
+.month-grid-v2 {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 6px;
+  margin-bottom: 20px;
+  opacity: 0;
+  transition: opacity 0.6s ease 0.3s;
+}
+
+.month-grid-v2.show {
+  opacity: 1;
+}
+
+.month-card-v2 {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  padding: 8px 4px;
+  text-align: center;
+  opacity: 0;
+  transform: scale(0.8) rotateY(-10deg);
+  animation: cardEnter 0.4s ease forwards;
+  transition: all 0.3s ease;
+}
+
+@keyframes cardEnter {
+  to {
+    opacity: 1;
+    transform: scale(1) rotateY(0);
+  }
+}
+
+.month-card-v2.opening {
+  background: rgba(239, 68, 68, 0.1);
+  border-color: rgba(239, 68, 68, 0.3);
+}
+
+.month-card-v2.core {
+  background: rgba(34, 197, 94, 0.1);
+  border-color: rgba(34, 197, 94, 0.3);
+}
+
+.month-card-v2.closing {
+  background: rgba(168, 85, 247, 0.1);
+  border-color: rgba(168, 85, 247, 0.3);
+}
+
+.month-card-v2.special {
+  background: rgba(201, 162, 39, 0.25);
+  border-color: #c9a227;
+  box-shadow: 0 0 15px rgba(201, 162, 39, 0.3);
+}
+
+.month-card-v2.highlight {
+  animation: cardEnter 0.4s ease forwards, cardPulse 2s ease-in-out infinite 0.5s;
+}
+
+@keyframes cardPulse {
+  0%, 100% { box-shadow: 0 0 10px rgba(34, 197, 94, 0.3); }
+  50% { box-shadow: 0 0 20px rgba(34, 197, 94, 0.5); }
+}
+
+.month-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  margin-bottom: 4px;
+}
+
+.month-num {
+  font-size: 10px;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.month-leap {
+  font-size: 8px;
+  background: #c9a227;
+  color: #000;
+  padding: 1px 3px;
+  border-radius: 3px;
+  font-weight: 700;
+}
+
+.month-name {
+  font-size: 10px;
+  font-weight: 600;
+  color: #fff;
+  margin-bottom: 2px;
+}
+
+.month-days {
+  font-size: 9px;
+  color: rgba(255, 255, 255, 0.5);
+  margin-bottom: 6px;
+}
+
+/* Week Pattern */
+.week-pattern {
+  display: flex;
+  justify-content: center;
+  gap: 2px;
+}
+
+.week-dot {
+  width: 4px;
+  height: 4px;
+  background: rgba(201, 162, 39, 0.6);
+  border-radius: 50%;
+}
+
+/* Pattern Explanation */
+.pattern-explanation {
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 16px;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.6s ease;
+}
+
+.pattern-explanation.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.pattern-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin: 12px 0;
+}
+
+.pattern-demo {
+  flex-shrink: 0;
+}
+
+.demo-months {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.demo-month {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.demo-label {
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.demo-days {
+  padding: 4px 8px;
+  background: rgba(201, 162, 39, 0.15);
+  border-radius: 6px;
+}
+
+.demo-day {
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.demo-day.highlight {
+  color: #c9a227;
+  font-weight: 600;
+}
+
+.demo-arrow {
+  font-size: 14px;
+  color: rgba(201, 162, 39, 0.6);
+}
+
+.pattern-text {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+/* Week bars pattern */
+.week-bars {
+  display: flex;
+  gap: 3px;
+}
+
+.week-bar {
+  width: 24px;
+  height: 12px;
+  background: linear-gradient(90deg, #c9a227, #f0d878);
+  border-radius: 2px;
+}
+
+/* Annual Shift Note */
+.annual-shift {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  background: rgba(201, 162, 39, 0.1);
+  border: 1px solid rgba(201, 162, 39, 0.3);
+  border-radius: 10px;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.6s ease;
+}
+
+.annual-shift.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.shift-icon {
+  font-size: 24px;
+}
+
+.shift-text {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.8);
+  line-height: 1.5;
+}
+
+.shift-text strong {
+  color: #c9a227;
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+  .month-grid-v2 {
+    grid-template-columns: repeat(5, 1fr);
+    gap: 4px;
+  }
+  
+  .month-card-v2 {
+    padding: 6px 2px;
+  }
+  
+  .month-name {
+    font-size: 9px;
+  }
+  
+  .stat-number {
+    font-size: 28px;
+  }
+  
+  .arc-legend {
+    gap: 8px;
+  }
+}

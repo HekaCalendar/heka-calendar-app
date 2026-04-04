@@ -1,0 +1,1304 @@
+/**
+ * Tutorial Spotlight Styles - Enterprise Grade
+ * Animated guides, pulsing effects, and interactive indicators
+ */
+
+/* ═══════════════════════════════════════════════════════════════════════════════
+   BASE OVERLAY
+   ═══════════════════════════════════════════════════════════════════════════════ */
+
+.tutorial-spotlight {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 9999;
+  pointer-events: none;
+}
+
+.spotlight-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.tutorial-center-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.85);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  pointer-events: auto;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════════
+   WELCOME & MODAL BASE
+   ═══════════════════════════════════════════════════════════════════════════════ */
+
+.tutorial-welcome-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+  padding: 20px;
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.tutorial-welcome-content {
+  background: linear-gradient(145deg, #1e1e3f 0%, #16162c 100%);
+  border: 1px solid rgba(201, 162, 39, 0.3);
+  border-radius: 24px;
+  padding: 48px;
+  max-width: 480px;
+  width: 100%;
+  text-align: center;
+  box-shadow: 
+    0 25px 80px rgba(0, 0, 0, 0.6),
+    0 0 0 1px rgba(201, 162, 39, 0.1);
+  animation: slideUp 0.4s ease;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+}
+
+.tutorial-welcome-icon {
+  font-size: 72px;
+  margin-bottom: 24px;
+  animation: bounce 2s ease infinite;
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+.tutorial-welcome-title {
+  font-size: 28px;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0 0 16px 0;
+  line-height: 1.2;
+}
+
+.tutorial-welcome-text {
+  font-size: 15px;
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.8);
+  margin-bottom: 32px;
+  white-space: pre-line;
+}
+
+.tutorial-welcome-button {
+  background: linear-gradient(135deg, #c9a227 0%, #f0d878 100%);
+  color: #1a1a2e;
+  border: none;
+  border-radius: 12px;
+  padding: 16px 32px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.tutorial-welcome-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(201, 162, 39, 0.4);
+}
+
+/* Back Button */
+.tutorial-back-button {
+  background: transparent;
+  color: rgba(255, 255, 255, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
+  padding: 14px 24px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.tutorial-back-button:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.9);
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════════
+   CELEBRATION MODAL
+   ═══════════════════════════════════════════════════════════════════════════════ */
+
+.tutorial-celebration {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+  overflow: hidden;
+}
+
+.tutorial-celebration__content {
+  background: linear-gradient(145deg, #2a1a4a 0%, #1a1a3e 100%);
+  border: 2px solid rgba(201, 162, 39, 0.5);
+  border-radius: 32px;
+  padding: 60px 48px;
+  max-width: 520px;
+  text-align: center;
+  position: relative;
+  z-index: 2;
+  box-shadow: 
+    0 30px 100px rgba(0, 0, 0, 0.5),
+    0 0 60px rgba(201, 162, 39, 0.2);
+  animation: celebrationAppear 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes celebrationAppear {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.tutorial-celebration__icon {
+  font-size: 80px;
+  margin-bottom: 24px;
+  animation: celebrationBounce 1s ease infinite;
+}
+
+@keyframes celebrationBounce {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.2); }
+}
+
+.tutorial-celebration__title {
+  font-size: 32px;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0 0 16px 0;
+}
+
+.tutorial-celebration__text {
+  font-size: 16px;
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.85);
+  margin-bottom: 32px;
+}
+
+/* Confetti Animation */
+.confetti-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.confetti {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  top: -20px;
+  animation: confettiFall linear forwards;
+  border-radius: 2px;
+}
+
+@keyframes confettiFall {
+  0% {
+    transform: translateY(0) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(100vh) rotate(720deg);
+    opacity: 0;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════════
+   TARGET ELEMENT Z-INDEX MANAGEMENT
+   These classes are added to the actual target element to ensure it's clickable
+   ═══════════════════════════════════════════════════════════════════════════════ */
+
+.tutorial-target-active {
+  position: relative !important;
+  z-index: 10000 !important;
+  pointer-events: auto !important;
+  /* Ensure the target is truly clickable by forcing visibility */
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+.tutorial-target-parent {
+  position: relative !important;
+  z-index: 9999 !important;
+  pointer-events: auto !important;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════════
+   TARGET HIGHLIGHT EFFECTS
+   ═══════════════════════════════════════════════════════════════════════════════ */
+
+.target-highlight {
+  box-sizing: border-box;
+  transition: all 0.3s ease;
+  pointer-events: none !important; /* Allow clicks to pass through to actual element */
+}
+
+.target-highlight.is-active {
+  box-shadow: 0 0 0 3px rgba(201, 162, 39, 0.5);
+}
+
+.target-highlight.is-success {
+  animation: successPulse 0.6s ease;
+}
+
+/* Pulse Ring Animation */
+.pulse-ring {
+  position: absolute;
+  top: -4px;
+  left: -4px;
+  right: -4px;
+  bottom: -4px;
+  border: 3px solid #c9a227;
+  border-radius: 16px;
+  animation: pulseRing 2s ease-out infinite;
+  opacity: 0;
+}
+
+.pulse-ring.delay-1 {
+  animation-delay: 0.5s;
+}
+
+.pulse-ring.delay-2 {
+  animation-delay: 1s;
+}
+
+@keyframes pulseRing {
+  0% {
+    transform: scale(1);
+    opacity: 0.8;
+  }
+  100% {
+    transform: scale(1.15);
+    opacity: 0;
+  }
+}
+
+/* Glow Effect */
+.glow-effect {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: 12px;
+  animation: glowPulse 2s ease-in-out infinite;
+}
+
+@keyframes glowPulse {
+  0%, 100% { opacity: 0.5; }
+  50% { opacity: 1; }
+}
+
+/* Bounce Arrow */
+.bounce-arrow {
+  position: absolute;
+  width: 48px;
+  height: 48px;
+  bottom: -60px;
+  left: 50%;
+  transform: translateX(-50%);
+  animation: bounceArrow 1s ease-in-out infinite;
+}
+
+.bounce-arrow svg {
+  width: 100%;
+  height: 100%;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+}
+
+@keyframes bounceArrow {
+  0%, 100% { transform: translateX(-50%) translateY(0); }
+  50% { transform: translateX(-50%) translateY(-10px); }
+}
+
+/* Ripple Effect */
+.ripple-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.ripple {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border: 2px solid #c9a227;
+  border-radius: 12px;
+  animation: rippleEffect 2s ease-out infinite;
+  opacity: 0;
+}
+
+.ripple.delay-1 {
+  animation-delay: 1s;
+}
+
+@keyframes rippleEffect {
+  0% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0.6;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1.5);
+    opacity: 0;
+  }
+}
+
+/* Success Animation */
+.success-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(34, 197, 94, 0.3);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: successFade 0.5s ease;
+}
+
+.success-check {
+  width: 60px;
+  height: 60px;
+  background: #22c55e;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 32px;
+  color: white;
+  animation: successPop 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes successFade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes successPop {
+  from { transform: scale(0); }
+  to { transform: scale(1); }
+}
+
+@keyframes successPulse {
+  0% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.8); }
+  70% { box-shadow: 0 0 0 20px rgba(34, 197, 94, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0); }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════════
+   BADGE
+   ═══════════════════════════════════════════════════════════════════════════════ */
+
+.tutorial-badge {
+  background: linear-gradient(135deg, #c9a227 0%, #f0d878 100%);
+  color: #1a1a2e;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 6px 12px;
+  border-radius: 20px;
+  white-space: nowrap;
+  animation: badgeBounce 1s ease-in-out infinite;
+  box-shadow: 0 4px 12px rgba(201, 162, 39, 0.4);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+@keyframes badgeBounce {
+  0%, 100% { transform: translateX(-50%) translateY(0); }
+  50% { transform: translateX(-50%) translateY(-5px); }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════════
+   TOOLTIP
+   ═══════════════════════════════════════════════════════════════════════════════ */
+
+.tutorial-tooltip {
+  position: fixed;
+  max-width: 380px;
+  background: linear-gradient(145deg, #1e1e3f 0%, #16162c 100%);
+  border: 1px solid rgba(201, 162, 39, 0.3);
+  border-radius: 20px;
+  padding: 24px;
+  box-shadow: 
+    0 20px 60px rgba(0, 0, 0, 0.5),
+    0 0 0 1px rgba(201, 162, 39, 0.1);
+  z-index: 10001;
+  pointer-events: auto;
+  animation: tooltipAppear 0.3s ease;
+}
+
+.tutorial-tooltip--center {
+  position: relative;
+  max-width: 420px;
+  animation: tooltipAppearCenter 0.4s ease;
+}
+
+@keyframes tooltipAppear {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes tooltipAppearCenter {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Tooltip Tone Variants */
+.tutorial-tooltip--friendly { border-color: rgba(201, 162, 39, 0.3); }
+.tutorial-tooltip--excited {
+  border-color: rgba(236, 72, 153, 0.4);
+  background: linear-gradient(145deg, #3d1f3d 0%, #1e1e3f 100%);
+}
+.tutorial-tooltip--mysterious {
+  border-color: rgba(139, 92, 246, 0.4);
+  background: linear-gradient(145deg, #1e1e3f 0%, #0f0f23 100%);
+}
+.tutorial-tooltip--calm {
+  border-color: rgba(59, 130, 246, 0.3);
+  background: linear-gradient(145deg, #1e2a4a 0%, #16162c 100%);
+}
+
+/* Header */
+.tutorial-tooltip__header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.tutorial-tooltip__icon {
+  width: 44px;
+  height: 44px;
+  background: rgba(201, 162, 39, 0.15);
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  flex-shrink: 0;
+}
+
+.tutorial-tooltip__title {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+  color: #ffffff;
+  flex: 1;
+  line-height: 1.3;
+}
+
+/* Content */
+.tutorial-tooltip__content {
+  font-size: 14px;
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.85);
+  margin-bottom: 16px;
+}
+
+.tutorial-tooltip__content strong {
+  color: #c9a227;
+  font-weight: 600;
+}
+
+/* Action Required Indicator */
+.tutorial-tooltip__action-required {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(201, 162, 39, 0.1);
+  border: 1px dashed rgba(201, 162, 39, 0.4);
+  border-radius: 12px;
+  padding: 14px 16px;
+  margin-bottom: 16px;
+  font-size: 13px;
+  color: #c9a227;
+  font-weight: 600;
+}
+
+.action-pulse {
+  width: 10px;
+  height: 10px;
+  background: #c9a227;
+  border-radius: 50%;
+  animation: actionPulse 1.5s ease-in-out infinite;
+  flex-shrink: 0;
+}
+
+@keyframes actionPulse {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(201, 162, 39, 0.7);
+  }
+  50% {
+    opacity: 0.7;
+    transform: scale(1.1);
+    box-shadow: 0 0 0 8px rgba(201, 162, 39, 0);
+  }
+}
+
+/* Hint Display */
+.tutorial-tooltip__hint {
+  background: rgba(59, 130, 246, 0.1);
+  border: 1px solid rgba(59, 130, 246, 0.3);
+  border-radius: 12px;
+  padding: 14px 16px;
+  margin-bottom: 16px;
+  animation: hintAppear 0.3s ease;
+}
+
+@keyframes hintAppear {
+  from {
+    opacity: 0;
+    transform: translateX(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.hint-label {
+  font-size: 11px;
+  font-weight: 700;
+  color: #60a5fa;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 6px;
+}
+
+.hint-text {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.9);
+  line-height: 1.5;
+}
+
+/* Actions */
+.tutorial-tooltip__actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+}
+
+.tutorial-tooltip__action {
+  background: linear-gradient(135deg, #c9a227 0%, #f0d878 100%);
+  color: #1a1a2e;
+  border: none;
+  border-radius: 10px;
+  padding: 10px 20px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.tutorial-tooltip__action:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(201, 162, 39, 0.4);
+}
+
+.tutorial-tooltip__skip {
+  background: transparent;
+  color: rgba(255, 255, 255, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 10px;
+  padding: 10px 16px;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.tutorial-tooltip__skip:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.tutorial-tooltip__hint-btn {
+  background: rgba(59, 130, 246, 0.15);
+  color: #60a5fa;
+  border: 1px solid rgba(59, 130, 246, 0.3);
+  border-radius: 10px;
+  padding: 8px 14px;
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.tutorial-tooltip__hint-btn:hover {
+  background: rgba(59, 130, 246, 0.25);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════════
+   GUIDED TASK OVERLAY
+   ═══════════════════════════════════════════════════════════════════════════════ */
+
+.guided-task-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 10001;
+  pointer-events: none;
+}
+
+.guided-task-panel {
+  position: fixed;
+  top: 100px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: linear-gradient(145deg, #1e1e3f 0%, #16162c 100%);
+  border: 1px solid rgba(201, 162, 39, 0.4);
+  border-radius: 20px;
+  padding: 24px 32px;
+  min-width: 320px;
+  max-width: 480px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+  pointer-events: auto;
+  animation: slideDown 0.4s ease;
+}
+
+.guided-task-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.guided-task-header h3 {
+  margin: 0;
+  font-size: 16px;
+  color: #ffffff;
+}
+
+.substep-progress {
+  font-size: 12px;
+  color: #c9a227;
+  font-weight: 600;
+}
+
+.guided-task-instruction {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.85);
+  margin-bottom: 16px;
+  line-height: 1.5;
+}
+
+.substep-indicator {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+}
+
+.substep-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+  transition: all 0.3s ease;
+}
+
+.substep-dot.active {
+  background: #c9a227;
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+.substep-dot.completed {
+  background: #22c55e;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.2); }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════════
+   CHOICE MODAL
+   ═══════════════════════════════════════════════════════════════════════════════ */
+
+.choice-options {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+.choice-option {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  padding: 20px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: left;
+  width: 100%;
+  color: inherit;
+}
+
+.choice-option:hover {
+  background: rgba(201, 162, 39, 0.1);
+  border-color: rgba(201, 162, 39, 0.3);
+  transform: translateY(-2px);
+}
+
+.choice-icon {
+  font-size: 32px;
+  margin-bottom: 4px;
+}
+
+.choice-label {
+  font-size: 16px;
+  font-weight: 600;
+  color: #ffffff;
+}
+
+.choice-description {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════════
+   CHECKPOINT MODAL
+   ═══════════════════════════════════════════════════════════════════════════════ */
+
+.checkpoint-question {
+  font-size: 16px;
+  font-weight: 600;
+  color: #ffffff;
+  margin: 20px 0;
+  padding: 16px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+}
+
+.checkpoint-options {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.checkpoint-option {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 16px 20px;
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.9);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: left;
+}
+
+.checkpoint-option:hover {
+  background: rgba(201, 162, 39, 0.1);
+  border-color: rgba(201, 162, 39, 0.3);
+}
+
+.checkpoint-feedback {
+  padding: 20px;
+  border-radius: 16px;
+  margin-top: 20px;
+  animation: feedbackAppear 0.3s ease;
+}
+
+.checkpoint-feedback.correct {
+  background: rgba(34, 197, 94, 0.15);
+  border: 1px solid rgba(34, 197, 94, 0.3);
+}
+
+.checkpoint-feedback.incorrect {
+  background: rgba(59, 130, 246, 0.15);
+  border: 1px solid rgba(59, 130, 246, 0.3);
+}
+
+@keyframes feedbackAppear {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.feedback-icon {
+  font-size: 48px;
+  margin-bottom: 12px;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════════
+   CLICK BLOCKER
+   Blocks all clicks EXCEPT on the highlighted target (using clip-path hole)
+   The clip-path creates a "hole" where the target is, allowing clicks through
+   ═══════════════════════════════════════════════════════════════════════════════ */
+
+.tutorial-click-blocker {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 9997; /* Below target highlight (10002) and tooltip (10001) */
+  background: transparent;
+  cursor: not-allowed;
+  pointer-events: auto;
+}
+
+/* Visual feedback when clicking the blocker (clicking outside target) */
+.tutorial-click-blocker:active {
+  background: rgba(255, 255, 255, 0.02);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════════
+   TARGET INTERACTION
+   These z-index values are critical for proper click-through behavior:
+   
+   - tutorial-target-active (z-index: 10000): The actual DOM element being targeted
+   - tutorial-target-parent (z-index: 9999): Parent containers to ensure clickability
+   - target-highlight (z-index: 10002): Visual effects overlay (no pointer events)
+   - tutorial-tooltip (z-index: 10001): The instruction card
+   - tutorial-click-blocker (z-index: 9997): Blocks clicks outside target
+   ═══════════════════════════════════════════════════════════════════════════════ */
+
+/* ═══════════════════════════════════════════════════════════════════════════════
+   TUTORIAL HEADER PANEL - Fixed at top for interactive steps
+   ═══════════════════════════════════════════════════════════════════════════════ */
+
+.tutorial-header-panel {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 10003;
+  padding: 16px 20px;
+  padding-top: calc(16px + env(safe-area-inset-top, 0px));
+  background: linear-gradient(180deg, rgba(30, 30, 63, 0.98) 0%, rgba(30, 30, 63, 0.95) 100%);
+  border-bottom: 1px solid rgba(201, 162, 39, 0.2);
+  backdrop-filter: blur(20px);
+  animation: slideDownHeader 0.4s ease;
+}
+
+@keyframes slideDownHeader {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.tutorial-header-panel__inner {
+  max-width: 600px;
+  margin: 0 auto;
+  position: relative;
+}
+
+.tutorial-header-panel__header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+
+.tutorial-header-panel__icon {
+  width: 40px;
+  height: 40px;
+  background: rgba(201, 162, 39, 0.15);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  flex-shrink: 0;
+}
+
+.tutorial-header-panel__title {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+  color: #ffffff;
+  line-height: 1.3;
+}
+
+.tutorial-header-panel__content {
+  font-size: 14px;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.85);
+  padding-left: 52px; /* Align with title */
+  padding-right: 60px; /* Make room for skip button */
+}
+
+.tutorial-header-panel__skip {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  padding: 6px 12px;
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.tutorial-header-panel__skip:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.8);
+}
+
+/* Large variant for first step */
+.tutorial-header-panel--large {
+  padding: 24px 32px;
+  padding-top: calc(24px + env(safe-area-inset-top, 0px));
+}
+
+.tutorial-header-panel--large .tutorial-header-panel__inner {
+  max-width: 700px;
+}
+
+.tutorial-header-panel--large .tutorial-header-panel__title {
+  font-size: 26px;
+  font-weight: 700;
+}
+
+.tutorial-header-panel--large .tutorial-header-panel__content {
+  font-size: 17px;
+  line-height: 1.7;
+  padding-left: 60px;
+  padding-right: 70px;
+}
+
+.tutorial-header-panel--large .tutorial-header-panel__icon {
+  width: 48px;
+  height: 48px;
+  font-size: 24px;
+}
+
+.tutorial-header-panel--large .tutorial-header-panel__header {
+  margin-bottom: 12px;
+}
+
+/* Tone variants for header panel */
+.tutorial-header-panel--excited {
+  border-color: rgba(236, 72, 153, 0.3);
+  background: linear-gradient(180deg, rgba(61, 31, 61, 0.98) 0%, rgba(30, 30, 63, 0.95) 100%);
+}
+
+.tutorial-header-panel--mysterious {
+  border-color: rgba(139, 92, 246, 0.3);
+  background: linear-gradient(180deg, rgba(15, 15, 35, 0.98) 0%, rgba(30, 30, 63, 0.95) 100%);
+}
+
+.tutorial-header-panel--calm {
+  border-color: rgba(59, 130, 246, 0.3);
+  background: linear-gradient(180deg, rgba(30, 42, 74, 0.98) 0%, rgba(30, 30, 63, 0.95) 100%);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════════
+   COMPACT TOOLTIP - For interactive steps (action card only)
+   ═══════════════════════════════════════════════════════════════════════════════ */
+
+.tutorial-tooltip--compact {
+  max-width: 320px;
+  padding: 16px;
+  margin-bottom: 100px; /* Room for progress bar */
+}
+
+/* First step specific - positioned lower since header is larger */
+.tutorial-tooltip--first-step {
+  margin-top: 40px; /* Push down from the calendar grid */
+  margin-bottom: 120px; /* More room at bottom */
+}
+
+.tutorial-tooltip--compact .tutorial-tooltip__action-required {
+  margin-bottom: 12px;
+}
+
+.tutorial-tooltip--compact .tutorial-tooltip__hint {
+  margin-bottom: 12px;
+}
+
+.tutorial-tooltip--compact .tutorial-tooltip__actions {
+  justify-content: center;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════════
+   PROGRESS INDICATOR
+   ═══════════════════════════════════════════════════════════════════════════════ */
+
+.tutorial-progress {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(30, 30, 63, 0.95);
+  border: 1px solid rgba(201, 162, 39, 0.2);
+  border-radius: 16px;
+  padding: 12px 20px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  z-index: 10002;
+  backdrop-filter: blur(10px);
+}
+
+/* Ensure tooltips don't get cut off by progress bar */
+.tutorial-tooltip {
+  z-index: 10001;
+}
+
+.tutorial-progress__bar {
+  width: 100px;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.tutorial-progress__fill {
+  height: 100%;
+  background: linear-gradient(90deg, #c9a227 0%, #f0d878 100%);
+  border-radius: 2px;
+  transition: width 0.3s ease;
+}
+
+.tutorial-progress__dots {
+  display: flex;
+  gap: 6px;
+}
+
+.tutorial-progress__dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+  transition: all 0.3s ease;
+}
+
+.tutorial-progress__dot--active {
+  background: #c9a227;
+  transform: scale(1.3);
+}
+
+.tutorial-progress__dot--completed {
+  background: #22c55e;
+}
+
+.tutorial-progress__text {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.6);
+  font-weight: 500;
+  min-width: 50px;
+  text-align: right;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════════
+   SHAKE ANIMATION (for wrong clicks)
+   ═══════════════════════════════════════════════════════════════════════════════ */
+
+.tutorial-shake {
+  animation: shake 0.5s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+}
+
+@keyframes shake {
+  10%, 90% { transform: translate3d(-1px, 0, 0); }
+  20%, 80% { transform: translate3d(2px, 0, 0); }
+  30%, 50%, 70% { transform: translate3d(-4px, 0, 0); }
+  40%, 60% { transform: translate3d(4px, 0, 0); }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════════
+   RESPONSIVE
+   ═══════════════════════════════════════════════════════════════════════════════ */
+
+@media (max-width: 640px) {
+  .tutorial-welcome-content {
+    padding: 32px 24px;
+    margin: 16px;
+  }
+  
+  .tutorial-welcome-title {
+    font-size: 24px;
+  }
+  
+  .tutorial-tooltip {
+    max-width: calc(100vw - 40px);
+    left: 20px !important;
+    right: 20px !important;
+    padding: 20px;
+  }
+  
+  .tutorial-tooltip__actions {
+    flex-direction: column-reverse;
+    align-items: stretch;
+  }
+  
+  .tutorial-tooltip__action,
+  .tutorial-tooltip__skip,
+  .tutorial-tooltip__hint-btn {
+    width: 100%;
+    text-align: center;
+  }
+  
+  .guided-task-panel {
+    left: 16px;
+    right: 16px;
+    transform: none;
+    min-width: auto;
+  }
+  
+  .tutorial-progress {
+    left: 16px;
+    right: 16px;
+    transform: none;
+    justify-content: space-between;
+  }
+  
+  .tutorial-progress__bar {
+    flex: 1;
+  }
+  
+  /* Header panel responsive */
+  .tutorial-header-panel {
+    padding: 12px 16px;
+    padding-top: calc(12px + env(safe-area-inset-top, 0px));
+  }
+  
+  .tutorial-header-panel__title {
+    font-size: 16px;
+  }
+  
+  .tutorial-header-panel__content {
+    font-size: 13px;
+    padding-left: 0;
+    padding-right: 50px;
+    line-height: 1.5;
+  }
+  
+  .tutorial-header-panel__icon {
+    width: 36px;
+    height: 36px;
+    font-size: 18px;
+  }
+  
+  .tutorial-header-panel__header {
+    margin-bottom: 6px;
+  }
+  
+  /* Large header panel responsive (first step) */
+  .tutorial-header-panel--large {
+    padding: 16px 20px;
+    padding-top: calc(16px + env(safe-area-inset-top, 0px));
+  }
+  
+  .tutorial-header-panel--large .tutorial-header-panel__title {
+    font-size: 20px;
+  }
+  
+  .tutorial-header-panel--large .tutorial-header-panel__content {
+    font-size: 14px;
+    padding-left: 0;
+    padding-right: 55px;
+  }
+  
+  .tutorial-header-panel--large .tutorial-header-panel__icon {
+    width: 40px;
+    height: 40px;
+    font-size: 20px;
+  }
+  
+  /* Compact tooltip responsive */
+  .tutorial-tooltip--compact {
+    max-width: calc(100vw - 32px);
+    left: 16px !important;
+    right: 16px !important;
+    padding: 14px;
+    margin-bottom: 90px;
+  }
+}

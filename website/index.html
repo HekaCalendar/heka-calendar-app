@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HEKA | A Better Way to Experience Time</title>
+    <meta name="description" content="Thirteen months of four weeks each. The year begins in spring, not winter. A calendar designed for how humans actually live.">
+    
+    <link rel="stylesheet" href="assets/css/sacred.css">
+</head>
+<body class="bg-sacred page-structure">
+    <nav class="navbar">
+        <div class="container navbar-inner">
+            <a href="index.html" class="navbar-brand">
+                <div class="brand-symbol symbol-sun"></div>
+                <span class="brand-text">HEKA</span>
+            </a>
+            <button class="navbar-toggle" onclick="toggleNav()" aria-label="Toggle navigation">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <div class="navbar-menu">
+                <a href="structure.html" class="navbar-link">Structure</a>
+                <a href="experience.html" class="navbar-link">Experience</a>
+                <a href="precision.html" class="navbar-link">Precision</a>
+                <a href="harmony.html" class="navbar-link">Harmony</a>
+                <a href="features.html" class="navbar-link">Features</a>
+                <a href="temporal.html" class="navbar-link">Temporal</a>
+                <a href="#download" class="navbar-cta" style="border-color: var(--copper); color: var(--copper);">Download</a>
+            </div>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="container hero-content">
+            <div>
+                <div class="hero-kicker">The Calendar Redesigned</div>
+                <h1 class="hero-title hero-title-elevated">
+                    Time That<br>
+                    <em>Actually Fits</em>
+                </h1>
+                <p class="hero-lead">
+                    Every month has exactly four weeks. Every date falls on the same day of the week, all year long. The year begins in April when seasons are in transition, not at their extremes. HEKA is a calendar designed for clarity.
+                </p>
+                
+                <div class="hero-seal float-gentle">
+                    <div class="seal-cell">
+                        <span class="seal-number">13</span>
+                        <span class="seal-label">Months</span>
+                    </div>
+                    <div class="seal-cell">
+                        <span class="seal-number">28</span>
+                        <span class="seal-label">Days Each</span>
+                    </div>
+                    <div class="seal-cell">
+                        <span class="seal-number">52</span>
+                        <span class="seal-label">Regular Weeks</span>
+                    </div>
+                </div>
+                
+                <div class="hero-actions">
+                    <a href="structure.html" class="btn btn-primary">See How It Works</a>
+                    <a href="#download" class="btn btn-secondary">Download Free</a>
+                </div>
+                <p style="margin-top: var(--space-lg); font-size: 0.9rem;">
+                    <a href="traversal.html" style="color: var(--gold); text-decoration: none; border-bottom: 1px solid var(--gold-mist);">
+                        <a href="temporal.html" style="color: var(--copper); text-decoration: none; border-bottom: 1px solid var(--copper);">Experience the Temporal Test →</a>
+                    </a>
+                </p>
+            </div>
+            
+            <div class="tablet tablet-gold float-gentle float-delay-1" style="transform: rotate(-2deg);">
+                <div class="tablet-header">
+                    <div>
+                        <div style="font-family: var(--font-ritual); font-size: 0.65rem; letter-spacing: 0.2em; color: var(--gold-dim); margin-bottom: 4px;">MONTH 1 OF 13</div>
+                        <div style="font-family: var(--font-ritual); font-size: 1.5rem; color: var(--gold);">April</div>
+                    </div>
+                    <div style="text-align: right;">
+                        <div style="font-family: var(--font-clean); font-size: 0.65rem; letter-spacing: 0.15em; color: var(--light-tertiary);">ARC</div>
+                        <div style="font-family: var(--font-wisdom); font-style: italic; color: #ef4444; margin-top: 4px;">Opening</div>
+                    </div>
+                </div>
+                <div class="tablet-body">
+                    <div style="display: grid; grid-template-columns: repeat(7, 1fr); gap: 8px; margin-bottom: 16px;">
+                        <div style="text-align: center; font-family: var(--font-clean); font-size: 0.6rem; letter-spacing: 0.1em; color: var(--light-tertiary); padding: 8px 0;">Sat</div>
+                        <div style="text-align: center; font-family: var(--font-clean); font-size: 0.6rem; letter-spacing: 0.1em; color: var(--light-tertiary); padding: 8px 0;">Sun</div>
+                        <div style="text-align: center; font-family: var(--font-clean); font-size: 0.6rem; letter-spacing: 0.1em; color: var(--light-tertiary); padding: 8px 0;">Mon</div>
+                        <div style="text-align: center; font-family: var(--font-clean); font-size: 0.6rem; letter-spacing: 0.1em; color: var(--light-tertiary); padding: 8px 0;">Tue</div>
+                        <div style="text-align: center; font-family: var(--font-clean); font-size: 0.6rem; letter-spacing: 0.1em; color: var(--light-tertiary); padding: 8px 0;">Wed</div>
+                        <div style="text-align: center; font-family: var(--font-clean); font-size: 0.6rem; letter-spacing: 0.1em; color: var(--light-tertiary); padding: 8px 0;">Thu</div>
+                        <div style="text-align: center; font-family: var(--font-clean); font-size: 0.6rem; letter-spacing: 0.1em; color: var(--light-tertiary); padding: 8px 0;">Fri</div>
+                    </div>
+                    <div style="display: grid; grid-template-columns: repeat(7, 1fr); gap: 8px;">
+                        <script>
+                            for(let i = 1; i <= 28; i++) {
+                                document.write(`<div style="aspect-ratio: 1; display: flex; align-items: center; justify-content: center; background: var(--void); border: 1px solid var(--veil); font-family: var(--font-wisdom); font-size: 1rem; color: var(--light-secondary); ${i === 5 ? 'background: rgba(212, 175, 55, 0.1); border-color: var(--gold-mist); color: var(--gold);' : ''}">${i}</div>`);
+                            }
+                        </script>
+                    </div>
+                    <div style="margin-top: 24px; padding-top: 16px; border-top: 1px solid var(--veil); display: flex; justify-content: space-between; align-items: center;">
+                        <span style="font-family: var(--font-clean); font-size: 0.65rem; letter-spacing: 0.15em; color: var(--light-tertiary);">In standard configuration, April 1 is Saturday</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section section-alt">
+        <div class="container">
+            <div class="section-header reveal">
+                <span class="section-number section-number-copper">THE PROBLEM</span>
+                <h2 class="section-title">The Calendar You Inherited</h2>
+                <p class="section-subtitle">
+                    The Gregorian calendar is a stack of historical patches. Roman politics, religious councils, astronomical fixes added centuries apart. It was never designed as a coherent system.
+                </p>
+            </div>
+            
+            <div class="pillars">
+                <div class="tablet">
+                    <div class="pillar-header reveal-scale">
+                        <div class="pillar-name">Gregorian</div>
+                        <div class="pillar-subtitle">The Civil Standard</div>
+                    </div>
+                    <div class="tablet-body">
+                        <div class="pillar-metric">
+                            <span class="pillar-value secondary">28–31</span>
+                            <span class="pillar-label">Days per month</span>
+                        </div>
+                        <div class="pillar-drift negative">
+                            <strong style="display: block; margin-bottom: 4px;">STRUCTURE</strong>
+                            Irregular, unplanned
+                        </div>
+                        <ul class="pillar-list">
+                            <li><span class="pillar-icon">✦</span> Months of varying lengths</li>
+                            <li><span class="pillar-icon">✦</span> Quarters of unequal days</li>
+                            <li><span class="pillar-icon">✦</span> No week-month alignment</li>
+                            <li><span class="pillar-icon">✦</span> Year starts mid-winter</li>
+                            <li><span class="pillar-icon">✦</span> Cognitive friction daily</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="pillar-divider">
+                    <div class="pillar-line"></div>
+                    <div class="pillar-symbol">VS</div>
+                    <div class="pillar-line"></div>
+                </div>
+                
+                <div class="tablet tablet-gold">
+                    <div class="pillar-header reveal-scale">
+                        <div class="pillar-name" style="color: var(--gold);">HEKA</div>
+                        <div class="pillar-subtitle">The Natural Standard</div>
+                    </div>
+                    <div class="tablet-body">
+                        <div class="pillar-metric" style="background: rgba(212, 175, 55, 0.05);">
+                            <span class="pillar-value gold">28</span>
+                            <span class="pillar-label">Days per month</span>
+                        </div>
+                        <div class="pillar-drift positive">
+                            <strong style="display: block; margin-bottom: 4px;">STRUCTURE</strong>
+                            Intentionally designed
+                        </div>
+                        <ul class="pillar-list">
+                            <li><span class="pillar-icon" style="color: var(--gold);">✦</span> Thirteen equal months</li>
+                            <li><span class="pillar-icon" style="color: var(--gold);">✦</span> Four perfect quarters</li>
+                            <li><span class="pillar-icon" style="color: var(--gold);">✦</span> Weeks align with months</li>
+                            <li><span class="pillar-icon" style="color: var(--gold);">✦</span> Year starts in spring</li>
+                            <li><span class="pillar-icon" style="color: var(--gold);">✦</span> Cognitive flow daily</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="section-header reveal">
+                <span class="section-number section-number-opening">THE STRUCTURE</span>
+                <h2 class="section-title">Thirteen Months, Three Movements</h2>
+                <p class="section-subtitle">
+                    The HEKA year flows through three distinct arcs, each serving a different purpose in the rhythm of work and rest.
+                </p>
+            </div>
+            
+            <div class="arc-container">
+                <div class="arc-card card-opening reveal-scale stagger-1" style="border-top-color: #ef4444;">
+                    <div class="arc-name" style="color: #ef4444;">Opening Arc</div>
+                    <div class="arc-months">April</div>
+                    <div class="arc-energy">New Beginnings</div>
+                    <p style="margin-top: 16px; font-size: 0.9rem; color: var(--light-secondary);">
+                        The year begins with spring. New projects, new intentions, new growth. The threshold month.
+                    </p>
+                </div>
+                <div class="arc-card card-core reveal-scale stagger-2" style="border-top-color: #22c55e;">
+                    <div class="arc-name" style="color: #22c55e;">Core Arc</div>
+                    <div class="arc-months">May – December</div>
+                    <div class="arc-energy">Stable Rhythm</div>
+                    <p style="margin-top: 16px; font-size: 0.9rem; color: var(--light-secondary);">
+                        Eight months of perfectly regular structure. Build momentum. Plan with confidence. This is where the work happens.
+                    </p>
+                </div>
+                <div class="arc-card card-closing reveal-scale stagger-3" style="border-top-color: #a855f7;">
+                    <div class="arc-name" style="color: #a855f7;">Closing Arc</div>
+                    <div class="arc-months">January – March</div>
+                    <div class="arc-energy">Completion</div>
+                    <p style="margin-top: 16px; font-size: 0.9rem; color: var(--light-secondary);">
+                        Bring the year to resolution. Finish what you started. Prepare for the next opening.
+                    </p>
+                </div>
+            </div>
+            
+            <div style="text-align: center; margin-top: 48px;">
+                <a href="structure.html" class="btn btn-copper">Explore The Full Structure</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="section section-alt" id="download">
+        <div class="container" style="text-align: center;">
+            <span class="section-number">BEGIN</span>
+            <h2 class="section-title" style="font-size: 3rem;">Start Using HEKA Today</h2>
+            <p style="font-family: var(--font-wisdom); font-size: 1.3rem; color: var(--light-secondary); max-width: 600px; margin: 0 auto 48px;">
+                You don't need institutions to change. You don't need permission. Simply use a better tool. Your civil dates remain visible. Nothing is lost. Clarity is gained.
+            </p>
+            
+            <div style="display: flex; justify-content: center; gap: 24px; margin-bottom: 32px; flex-wrap: wrap;">
+                <a href="#download" class="btn btn-primary" style="padding: 20px 40px;">
+                    <span>Download for Android</span>
+                </a>
+                <button class="btn btn-gold" style="padding: 20px 40px; opacity: 0.6; cursor: not-allowed;" disabled>
+                    <span>iOS Coming Soon</span>
+                </button>
+            </div>
+            
+            <p style="font-size: 0.9rem; color: var(--light-tertiary);">
+                Also available as web application • No installation required
+            </p>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div>
+                    <div class="footer-sigil">
+                        <div class="footer-sigil-symbol symbol-sun"></div>
+                        <span class="footer-sigil-text">HEKA</span>
+                    </div>
+                    <p class="footer-mantra">
+                        Time is the structure we live inside. What if it fit better?
+                    </p>
+                </div>
+                <div class="footer-links">
+                    <div>
+                        <h4 class="footer-column-title">Learn</h4>
+                        <a href="structure.html" class="footer-link">Structure</a>
+                        <a href="experience.html" class="footer-link">Experience</a>
+                        <a href="precision.html" class="footer-link">Precision</a>
+                        <a href="harmony.html" class="footer-link">Harmony</a>
+                    </div>
+                    <div>
+                        <h4 class="footer-column-title">Product</h4>
+                        <a href="features.html" class="footer-link">Features</a>
+                        <a href="temporal.html" class="footer-link">Temporal</a>
+                        <a href="privacy.html" class="footer-link">Privacy</a>
+                        <a href="terms.html" class="footer-link">Terms of Service</a>
+                    </div>
+                    <div>
+                        <h4 class="footer-column-title">Connect</h4>
+                        <a href="mailto:hekacalendar@gmail.com" class="footer-link">Contact</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-base">
+                <p class="footer-copyright">© 2026 HEKA Calendar</p>
+                <p class="footer-precision">Thirteen months. Fifty-two weeks. One harmonious year.</p>
+            </div>
+        </div>
+    </footer>
+<script>
+function toggleNav() {
+    document.querySelector('.navbar-menu').classList.toggle('active');
+    document.querySelector('.navbar-toggle').classList.toggle('active');
+}
+</script>
+<script>
+// Scroll-triggered reveal animations
+const observerOptions = {
+    root: null,
+    rootMargin: '0px',
+    threshold: 0.1
+};
+
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add('active');
+        }
+    });
+}, observerOptions);
+
+document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale').forEach(el => {
+    observer.observe(el);
+});
+</script>
+</body>
+</html>
+
+
+
+
+

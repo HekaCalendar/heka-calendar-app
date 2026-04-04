@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Features | HEKA</title>
+    <meta name="description" content="HEKA Calendar features. A complete timekeeping system.">
+    
+    <link rel="stylesheet" href="assets/css/sacred.css">
+    <style>
+        .feature-hero {
+            background: linear-gradient(180deg, rgba(212, 175, 55, 0.05) 0%, transparent 100%);
+            padding: 80px 0;
+            text-align: center;
+        }
+        
+        .feature-showcase {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0;
+            margin: var(--space-3xl) 0;
+            background: var(--temple);
+            border: 1px solid var(--veil);
+        }
+        
+        @media (max-width: 900px) {
+            .feature-showcase {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .feature-visual-side {
+            background: linear-gradient(135deg, var(--altar) 0%, var(--temple) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 64px;
+            min-height: 400px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .feature-visual-side::before {
+            content: '';
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            border: 1px solid var(--gold-veil);
+            border-radius: 50%;
+            opacity: 0.5;
+        }
+        
+        .feature-visual-side::after {
+            content: '';
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            border: 1px solid var(--veil);
+            border-radius: 50%;
+        }
+        
+        .feature-icon-large {
+            font-size: 6rem;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .feature-content-side {
+            padding: 64px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        
+        .feature-tag {
+            font-family: var(--font-ritual);
+            font-size: 0.7rem;
+            letter-spacing: 0.3em;
+            color: var(--gold);
+            margin-bottom: 16px;
+            text-transform: uppercase;
+        }
+        
+        .feature-title-large {
+            font-size: 2.5rem;
+            margin-bottom: 24px;
+            line-height: 1.2;
+        }
+        
+        .feature-desc-large {
+            color: var(--light-secondary);
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 32px;
+        }
+        
+        .feature-list-clean {
+            list-style: none;
+        }
+        
+        .feature-list-clean li {
+            padding: 12px 0;
+            padding-left: 28px;
+            position: relative;
+            color: var(--light-secondary);
+        }
+        
+        .feature-list-clean li::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 8px;
+            height: 8px;
+            background: var(--gold);
+            border-radius: 50%;
+        }
+        
+        /* Feature Cards Grid */
+        .features-grid-elite {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            margin: var(--space-3xl) 0;
+        }
+        
+        @media (max-width: 900px) {
+            .features-grid-elite {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media (max-width: 600px) {
+            .features-grid-elite {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .feature-tile {
+            background: var(--temple);
+            border: 1px solid var(--veil);
+            padding: 40px 32px;
+            text-align: center;
+            transition: all 0.4s ease;
+            position: relative;
+        }
+        
+        .feature-tile::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--veil);
+            transition: all 0.4s ease;
+        }
+        
+        .feature-tile:hover {
+            transform: translateY(-8px);
+            border-color: var(--gold-mist);
+        }
+        
+        .feature-tile:hover::before {
+            background: var(--gold);
+        }
+        
+        .feature-tile-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            display: block;
+        }
+        
+        .feature-tile-title {
+            font-family: var(--font-ritual);
+            font-size: 1.2rem;
+            margin-bottom: 12px;
+            color: var(--light-primary);
+        }
+        
+        .feature-tile-desc {
+            font-size: 0.9rem;
+            color: var(--light-secondary);
+            line-height: 1.6;
+        }
+        
+        /* Category Headers */
+        .category-header {
+            text-align: center;
+            margin: var(--space-3xl) 0 var(--space-xl);
+            padding-top: var(--space-xl);
+            border-top: 1px solid var(--veil);
+        }
+        
+        .category-icon {
+            font-size: 2.5rem;
+            margin-bottom: 16px;
+        }
+        
+        .category-title {
+            font-size: 1.8rem;
+            margin-bottom: 12px;
+        }
+        
+        .category-subtitle {
+            color: var(--light-secondary);
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        
+        /* Visual Stats */
+        .visual-stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1px;
+            background: var(--veil);
+            margin: var(--space-2xl) 0;
+        }
+        
+        @media (max-width: 768px) {
+            .visual-stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        .visual-stat {
+            background: var(--temple);
+            padding: 40px 24px;
+            text-align: center;
+        }
+        
+        .visual-stat-number {
+            font-family: var(--font-ritual);
+            font-size: 2.5rem;
+            font-weight: 600;
+            color: var(--gold);
+            line-height: 1;
+        }
+        
+        .visual-stat-label {
+            font-size: 0.75rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--light-tertiary);
+            margin-top: 12px;
+        }
+    </style>
+</head>
+<body class="bg-sacred page-features">
+    <nav class="navbar">
+        <div class="container navbar-inner">
+            <a href="index.html" class="navbar-brand">
+                <div class="brand-symbol">☉</div>
+                <span class="brand-text">HEKA</span>
+            </a>
+            <button class="navbar-toggle" onclick="toggleNav()" aria-label="Toggle navigation">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <div class="navbar-menu">
+                <a href="structure.html" class="navbar-link">Structure</a>
+                <a href="experience.html" class="navbar-link">Experience</a>
+                <a href="precision.html" class="navbar-link">Precision</a>
+                <a href="harmony.html" class="navbar-link">Harmony</a>
+                <a href="features.html" class="navbar-link">Features</a>
+                <a href="temporal.html" class="navbar-link">Temporal</a>
+                <a href="index.html#download" class="navbar-cta" style="border-color: var(--copper); color: var(--copper);" style="border-color: var(--copper); color: var(--copper);">Download</a>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <!-- Hero -->
+        <div class="feature-hero">
+            <div class="container">
+                <span class="section-number section-number-copper">CAPABILITIES</span>
+                <h1 class="hero-title-elevated" style="font-size: clamp(2.5rem, 5vw, 4rem); margin-bottom: 24px;">Features</h1>
+                <p style="font-family: var(--font-wisdom); font-size: 1.3rem; color: var(--light-secondary); max-width: 600px; margin: 0 auto; line-height: 1.8;">
+                    More than a calendar. A complete timekeeping system.
+                </p>
+            </div>
+        </div>
+
+        <div class="container">
+            <!-- Main Feature: Calendar -->
+            <div class="feature-showcase">
+                <div class="feature-visual-side">
+                    <span class="feature-icon-large symbol-sun"></span>
+                </div>
+                <div class="feature-content-side">
+                    <span class="feature-tag">Foundation</span>
+                    <h2 class="feature-title-large">The 13-Month Calendar</h2>
+                    <p class="feature-desc-large">
+                        The core HEKA experience. Thirteen months of twenty-eight days. Three arcs. March bears the correction. Civil dates overlay for coordination.
+                    </p>
+                    <ul class="feature-list-clean">
+                        <li>Year view with all thirteen months</li>
+                        <li>Civil date overlay toggle</li>
+                        <li>Moon phase display</li>
+                        <li>Location-aware holidays</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Main Feature: Notes -->
+            <div class="feature-showcase">
+                <div class="feature-content-side">
+                    <span class="feature-tag">Organization</span>
+                    <h2 class="feature-title-large">Daily Notes</h2>
+                    <p class="feature-desc-large">
+                        Add color-coded notes to any day. Track work, personal tasks, health, or spiritual practice. Visual indicators show which days have notes at a glance.
+                    </p>
+                    <ul class="feature-list-clean">
+                        <li>Color-coded categories</li>
+                        <li>Search dates (HEKA & civil)</li>
+                        <li>Edit and delete anytime</li>
+                        <li>Private and local</li>
+                    </ul>
+                </div>
+                <div class="feature-visual-side">
+                    <span class="feature-icon-large symbol-scroll"></span>
+                </div>
+            </div>
+
+            <!-- Stats Bar -->
+            <div class="visual-stats">
+                <div class="visual-stat">
+                    <div class="visual-stat-number">13</div>
+                    <div class="visual-stat-label">Months</div>
+                </div>
+                <div class="visual-stat">
+                    <div class="visual-stat-number">28</div>
+                    <div class="visual-stat-label">Days Each</div>
+                </div>
+                <div class="visual-stat">
+                    <div class="visual-stat-number">52</div>
+                    <div class="visual-stat-label">Weeks</div>
+                </div>
+                <div class="visual-stat">
+                    <div class="visual-stat-number">∞</div>
+                    <div class="visual-stat-label">Possibilities</div>
+                </div>
+            </div>
+
+            <!-- Category: Journaling -->
+            <div class="category-header">
+                <span class="category-icon symbol-star"></span>
+                <h2 class="category-title">Oracle Journal</h2>
+                <p class="category-subtitle">Your private space for deeper reflection. Mood tracking. Pattern recognition. Everything stays on your device.</p>
+            </div>
+
+            <div class="features-grid-elite">
+                <div class="feature-tile card-wisdom category-oracle">
+                    <span class="feature-tile-icon symbol-scroll" style="color: var(--amethyst);"></span>
+                    <h3 class="feature-tile-title">Rich Entries</h3>
+                    <p class="feature-tile-desc">Daily entries with full text formatting. Record thoughts, dreams, and insights.</p>
+                </div>
+                <div class="feature-tile card-wisdom category-oracle">
+                    <span class="feature-tile-icon symbol-sun" style="color: var(--amethyst);"></span>
+                    <h3 class="feature-tile-title">Community Energy</h3>
+                    <p class="feature-tile-desc">Vote on the day's collective energy (1-10). See how others worldwide are feeling.</p>
+                </div>
+                <div class="feature-tile card-wisdom category-oracle">
+                    <span class="feature-tile-icon symbol-search" style="color: var(--amethyst);"></span>
+                    <h3 class="feature-tile-title">Search Everything</h3>
+                    <p class="feature-tile-desc">Full-text search across all entries. Find that insight from months ago instantly.</p>
+                </div>
+            </div>
+
+            <!-- Category: Stars Hub -->
+            <div class="category-header">
+                <span class="category-icon symbol-moon"></span>
+                <h2 class="category-title">Stars Hub</h2>
+                <p class="category-subtitle">Precise astronomical calculations powered by Swiss Ephemeris. Birth charts. Daily transits. Personalized guidance.</p>
+            </div>
+
+            <div class="features-grid-elite">
+                <div class="feature-tile card-sapphire category-stars">
+                    <span class="feature-tile-icon symbol-star" style="color: #3b82f6;"></span>
+                    <h3 class="feature-tile-title">Birth Charts</h3>
+                    <p class="feature-tile-desc">Calculate precise birth charts for any date. Planets, houses, aspects. All accurate to the arc-second.</p>
+                </div>
+                <div class="feature-tile card-sapphire category-stars">
+                    <span class="feature-tile-icon symbol-moon" style="color: #3b82f6;"></span>
+                    <h3 class="feature-tile-title">Daily Transits</h3>
+                    <p class="feature-tile-desc">Current planetary positions and how they interact with your birth chart.</p>
+                </div>
+                <div class="feature-tile card-sapphire category-stars">
+                    <span class="feature-tile-icon symbol-circle" style="color: #3b82f6;"></span>
+                    <h3 class="feature-tile-title">Multiple Profiles</h3>
+                    <p class="feature-tile-desc">Store charts for family and friends. Compare transits. All data stays on your device.</p>
+                </div>
+            </div>
+
+            <!-- Main Feature: Print -->
+            <div class="feature-showcase" style="margin-top: var(--space-3xl);">
+                <div class="feature-visual-side">
+                    <span class="feature-icon-large symbol-print"></span>
+                </div>
+                <div class="feature-content-side">
+                    <span class="feature-tag">Physical</span>
+                    <h2 class="feature-title-large">Print & Export</h2>
+                    <p class="feature-desc-large">
+                        Generate beautiful PDF calendars. Export your data anytime. Your information belongs to you completely.
+                    </p>
+                    <ul class="feature-list-clean">
+                        <li>Month and year view templates</li>
+                        <li>A4, Letter, A3 sizes</li>
+                        <li>JSON data export</li>
+                        <li>GDPR compliant</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Category: Customization -->
+            <div class="category-header">
+                <span class="category-icon symbol-palette"></span>
+                <h2 class="category-title">Make It Yours</h2>
+                <p class="category-subtitle">Themes. Location. Notifications. Configure everything to match how you work.</p>
+            </div>
+
+            <div class="features-grid-elite">
+                <div class="feature-tile">
+                    <span class="feature-tile-icon symbol-palette"></span>
+                    <h3 class="feature-tile-title">Themes</h3>
+                    <p class="feature-tile-desc">Multiple color schemes. Light and dark modes. Choose what resonates.</p>
+                </div>
+                <div class="feature-tile">
+                    <span class="feature-tile-icon symbol-location"></span>
+                    <h3 class="feature-tile-title">Location</h3>
+                    <p class="feature-tile-desc">Set your location for accurate moon phases, sunrise times, and local holidays.</p>
+                </div>
+                <div class="feature-tile">
+                    <span class="feature-tile-icon symbol-bell"></span>
+                    <h3 class="feature-tile-title">Notifications</h3>
+                    <p class="feature-tile-desc">Daily reminders. Moon phase alerts. Transit notifications. Only what you want.</p>
+                </div>
+                <div class="feature-tile">
+                    <span class="feature-tile-icon symbol-lightning"></span>
+                    <h3 class="feature-tile-title">SYNC / TRUE</h3>
+                    <p class="feature-tile-desc">Choose coordination with Gregorian or pure astronomical precision. Switch anytime.</p>
+                </div>
+                <div class="feature-tile">
+                    <span class="feature-tile-icon symbol-lock"></span>
+                    <h3 class="feature-tile-title">Private</h3>
+                    <p class="feature-tile-desc">Everything stays on your device. Optional encrypted cloud sync. You control everything.</p>
+                </div>
+                <div class="feature-tile">
+                    <span class="feature-tile-icon symbol-globe"></span>
+                    <h3 class="feature-tile-title">Offline</h3>
+                    <p class="feature-tile-desc">Full functionality without internet. All calculations happen on your device.</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div>
+                    <div class="footer-sigil">
+                        <div class="footer-sigil-symbol">☉</div>
+                        <span class="footer-sigil-text">HEKA</span>
+                    </div>
+                    <p class="footer-mantra">
+                        Time is the structure we live inside. What if it fit better?
+                    </p>
+                </div>
+                <div class="footer-links">
+                    <div>
+                        <h4 class="footer-column-title">Learn</h4>
+                        <a href="structure.html" class="footer-link">Structure</a>
+                        <a href="experience.html" class="footer-link">Experience</a>
+                        <a href="precision.html" class="footer-link">Precision</a>
+                        <a href="harmony.html" class="footer-link">Harmony</a>
+                    </div>
+                    <div>
+                        <h4 class="footer-column-title">Product</h4>
+                        <a href="features.html" class="footer-link">Features</a>
+                        <a href="temporal.html" class="footer-link">Temporal</a>
+                        <a href="privacy.html" class="footer-link">Privacy</a>
+                        <a href="terms.html" class="footer-link">Terms of Service</a>
+                    </div>
+                    <div>
+                        <h4 class="footer-column-title">Connect</h4>
+                        <a href="mailto:hekacalendar@gmail.com" class="footer-link">Contact</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-base">
+                <p class="footer-copyright">© 2026 HEKA Calendar</p>
+                <p class="footer-precision">Thirteen months. Fifty-two weeks. One harmonious year.</p>
+            </div>
+        </div>
+    </footer>
+<script>
+function toggleNav() {
+    document.querySelector('.navbar-menu').classList.toggle('active');
+    document.querySelector('.navbar-toggle').classList.toggle('active');
+}
+</script>
+<script>
+// Scroll-triggered reveal animations
+const observerOptions = {
+    root: null,
+    rootMargin: '0px',
+    threshold: 0.1
+};
+
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add('active');
+        }
+    });
+}, observerOptions);
+
+document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale').forEach(el => {
+    observer.observe(el);
+});
+</script>
+</body>
+</html>
+
+

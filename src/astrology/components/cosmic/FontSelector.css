@@ -1,0 +1,199 @@
+/**
+ * Font Selector Styles
+ * Dropdown font picker matching ThemeSelector pattern
+ */
+
+.ci-font-selector {
+  position: relative;
+  width: 100%;
+}
+
+/* Trigger Button */
+.ci-font-trigger {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding: 14px 18px;
+  background: var(--ci-glass-bg, rgba(124, 58, 237, 0.08));
+  border: 1px solid var(--ci-glass-border, rgba(168, 85, 247, 0.2));
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+}
+
+.ci-font-trigger:hover {
+  border-color: var(--ci-primary, #a855f7);
+  box-shadow: 0 0 20px var(--ci-glow-primary, rgba(168, 85, 247, 0.2));
+}
+
+.ci-font-emoji {
+  font-size: 20px;
+}
+
+.ci-font-name {
+  flex: 1;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ci-text-primary, #fafafa);
+  text-align: left;
+}
+
+.ci-font-arrow {
+  font-size: 12px;
+  color: var(--ci-text-muted, #7c3aed);
+  transition: transform 0.3s ease;
+}
+
+.ci-font-arrow.open {
+  transform: rotate(180deg);
+}
+
+/* Backdrop */
+.ci-font-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+}
+
+/* Dropdown - Absolute position within container */
+.ci-font-dropdown {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  right: 0;
+  z-index: 101;
+  background: rgba(5, 5, 8, 0.98);
+  border: 1px solid var(--ci-glass-border, rgba(168, 85, 247, 0.2));
+  border-radius: 16px;
+  padding: 20px;
+  box-shadow: 
+    0 20px 50px rgba(0, 0, 0, 0.5),
+    0 0 0 1px rgba(168, 85, 247, 0.1),
+    0 0 40px rgba(168, 85, 247, 0.2);
+  backdrop-filter: blur(20px);
+  animation: dropdown-in 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes dropdown-in {
+  from {
+    opacity: 0;
+    transform: translateY(-10px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Header */
+.ci-font-header {
+  margin-bottom: 16px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--ci-glass-border, rgba(168, 85, 247, 0.1));
+}
+
+.ci-font-header h4 {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--ci-text-primary, #fafafa);
+  margin: 0 0 4px 0;
+}
+
+.ci-font-header p {
+  font-size: 12px;
+  color: var(--ci-text-muted, #7c3aed);
+  margin: 0;
+}
+
+/* Font Grid */
+.ci-font-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+
+.ci-font-option {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid transparent;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-align: left;
+}
+
+.ci-font-option:hover {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: var(--ci-glass-border, rgba(168, 85, 247, 0.2));
+}
+
+.ci-font-option.active {
+  background: rgba(168, 85, 247, 0.15);
+  border-color: var(--ci-primary, #a855f7);
+}
+
+.ci-font-preview {
+  position: relative;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.ci-font-preview-emoji {
+  font-size: 20px;
+}
+
+.ci-font-check {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  width: 18px;
+  height: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--ci-primary, #a855f7);
+  border-radius: 50%;
+  font-size: 10px;
+  color: white;
+  box-shadow: 0 0 10px var(--ci-glow-primary, rgba(168, 85, 247, 0.5));
+}
+
+.ci-font-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex: 1;
+  min-width: 0;
+}
+
+.ci-font-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ci-text-primary, #fafafa);
+}
+
+.ci-font-sample {
+  font-size: 11px;
+  color: var(--ci-text-secondary, #c4b5fd);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .ci-font-grid {
+    grid-template-columns: 1fr;
+  }
+}

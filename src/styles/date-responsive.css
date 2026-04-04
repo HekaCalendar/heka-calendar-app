@@ -1,0 +1,95 @@
+/**
+ * Date-Responsive Celestial Panel Styles
+ * Shows contextual information based on selected date
+ */
+
+/* Date Context Label */
+.celestial-date-context {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  padding: 2px 8px;
+  border-radius: var(--radius-full);
+  margin-left: var(--space-2);
+}
+
+.celestial-date-context:contains("📜") {
+  background: rgba(196, 181, 253, 0.15);
+  color: #c4b5fd;
+  border: 1px solid rgba(196, 181, 253, 0.3);
+}
+
+.celestial-date-context:contains("🔮") {
+  background: rgba(251, 191, 36, 0.15);
+  color: #fbbf24;
+  border: 1px solid rgba(251, 191, 36, 0.3);
+}
+
+/* Selected Date Info Card */
+.selected-date-info {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+/* Moon Phase Display */
+.moon-phase-display {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  padding: var(--space-4);
+  background: rgba(196, 181, 253, 0.05);
+  border: 1px solid rgba(196, 181, 253, 0.2);
+  border-radius: var(--radius-md);
+  margin-bottom: var(--space-3);
+}
+
+.moon-phase-glyph {
+  font-size: var(--text-4xl);
+}
+
+.moon-phase-details {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.moon-phase-name {
+  font-size: var(--text-lg);
+  font-weight: 600;
+  color: #c4b5fd;
+}
+
+.moon-illumination,
+.moon-age {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+}
+
+/* Historical/Future View Styling */
+.celestial-expandable-card[data-view="historical"] {
+  border-color: rgba(196, 181, 253, 0.3);
+}
+
+.celestial-expandable-card[data-view="future"] {
+  border-color: rgba(251, 191, 36, 0.3);
+}
+
+/* Contextual badge colors */
+.celestial-badge--past {
+  background: rgba(196, 181, 253, 0.1);
+  border-color: rgba(196, 181, 253, 0.3);
+  color: #c4b5fd;
+}
+
+.celestial-badge--future {
+  background: rgba(251, 191, 36, 0.1);
+  border-color: rgba(251, 191, 36, 0.3);
+  color: #fbbf24;
+}
+
+.celestial-badge--today {
+  background: rgba(134, 239, 172, 0.1);
+  border-color: rgba(134, 239, 172, 0.3);
+  color: #86efac;
+}

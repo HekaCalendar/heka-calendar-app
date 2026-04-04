@@ -1,0 +1,354 @@
+/**
+ * HEKA Calendar - v1 Inspired Vibrant Theme
+ * Rich, warm colors with mode-specific atmospheres
+ */
+
+:root {
+  /* Rich Base Colors */
+  --color-bg: #0a0a0f;
+  --color-bg-elevated: #12121a;
+  --color-bg-card: #1a1a26;
+  --color-bg-hover: #252536;
+  
+  /* Vibrant Gold */
+  --color-gold: #c9a227;
+  --color-gold-light: #e8c97a;
+  --color-gold-dark: #9a7b1a;
+  --color-gold-muted: rgba(201, 162, 39, 0.15);
+  --color-gold-glow: rgba(201, 162, 39, 0.35);
+  
+  /* Crisp Text */
+  --color-text: #f5f3ef;
+  --color-text-secondary: #c4c0b8;
+  --color-text-muted: #8a8580;
+  --color-text-subtle: #5c5850;
+  
+  /* Strong Borders */
+  --color-border: rgba(201, 162, 39, 0.15);
+  --color-border-hover: rgba(201, 162, 39, 0.4);
+  --color-border-strong: rgba(201, 162, 39, 0.25);
+  
+  /* Arc Colors - Vibrant */
+  --color-opening: #e85a5a;
+  --color-opening-bg: rgba(232, 90, 90, 0.15);
+  --color-opening-glow: rgba(232, 90, 90, 0.3);
+  
+  --color-core: #5ae88a;
+  --color-core-bg: rgba(90, 232, 138, 0.15);
+  --color-core-glow: rgba(90, 232, 138, 0.3);
+  
+  --color-closing: #a85af5;
+  --color-closing-bg: rgba(168, 90, 245, 0.15);
+  --color-closing-glow: rgba(168, 90, 245, 0.3);
+  
+  /* Mode-Specific Gradients - Applied to body */
+  --gradient-sync: linear-gradient(135deg, 
+    rgba(10, 10, 15, 1) 0%, 
+    rgba(20, 25, 40, 1) 50%, 
+    rgba(15, 20, 35, 1) 100%
+  );
+  
+  --gradient-true: linear-gradient(135deg, 
+    rgba(25, 20, 10, 1) 0%, 
+    rgba(40, 30, 15, 1) 50%, 
+    rgba(35, 25, 10, 1) 100%
+  );
+  
+  /* Mode Accent Colors */
+  --color-sync-accent: #6ab4e8;
+  --color-sync-bg: rgba(106, 180, 232, 0.15);
+  --color-true-accent: #e8b46a;
+  --color-true-bg: rgba(232, 180, 106, 0.15);
+}
+
+/* Mode-Based Body Backgrounds */
+body.mode-sync {
+  background: var(--gradient-sync);
+  background-attachment: fixed;
+}
+
+body.mode-true {
+  background: var(--gradient-true);
+  background-attachment: fixed;
+}
+
+/* App Container */
+.app {
+  background: transparent;
+  min-height: 100vh;
+}
+
+/* App Header - Glassmorphism */
+.app-header {
+  background: rgba(10, 10, 15, 0.8);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--color-gold);
+  box-shadow: 0 4px 30px rgba(201, 162, 39, 0.15);
+}
+
+.app-title {
+  color: var(--color-gold);
+  text-shadow: 
+    0 0 20px rgba(201, 162, 39, 0.5),
+    0 0 40px rgba(201, 162, 39, 0.3);
+  letter-spacing: 0.15em;
+}
+
+/* Mode Indicator - Enhanced */
+.mode-indicator {
+  background: linear-gradient(135deg, rgba(0,0,0,0.4), rgba(0,0,0,0.2));
+  border: 2px solid;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  padding: 6px 14px;
+  border-radius: 999px;
+}
+
+.mode-indicator--sync {
+  border-color: var(--color-sync-accent);
+  color: var(--color-sync-accent);
+  box-shadow: 
+    0 0 20px rgba(106, 180, 232, 0.3),
+    inset 0 0 20px rgba(106, 180, 232, 0.1);
+}
+
+.mode-indicator--true {
+  border-color: var(--color-true-accent);
+  color: var(--color-true-accent);
+  box-shadow: 
+    0 0 20px rgba(232, 180, 106, 0.3),
+    inset 0 0 20px rgba(232, 180, 106, 0.1);
+}
+
+/* Settings Panel - Mode Aware */
+body.mode-sync .settings-panel {
+  background: linear-gradient(180deg, 
+    rgba(20, 25, 40, 0.95) 0%, 
+    rgba(15, 20, 35, 0.95) 100%
+  );
+  border: 1px solid rgba(106, 180, 232, 0.3);
+  box-shadow: 0 8px 32px rgba(106, 180, 232, 0.1);
+}
+
+body.mode-true .settings-panel {
+  background: linear-gradient(180deg, 
+    rgba(40, 30, 15, 0.95) 0%, 
+    rgba(35, 25, 10, 0.95) 100%
+  );
+  border: 1px solid rgba(232, 180, 106, 0.3);
+  box-shadow: 0 8px 32px rgba(232, 180, 106, 0.1);
+}
+
+.settings-panel__title {
+  color: var(--color-gold);
+  text-shadow: 0 0 10px rgba(201, 162, 39, 0.3);
+}
+
+/* Month Header - Mode Aware */
+body.mode-sync .month-header {
+  background: rgba(20, 25, 40, 0.6);
+  border: 1px solid rgba(106, 180, 232, 0.2);
+}
+
+body.mode-true .month-header {
+  background: rgba(40, 30, 15, 0.6);
+  border: 1px solid rgba(232, 180, 106, 0.2);
+}
+
+.month-header__name {
+  color: var(--color-gold);
+  text-shadow: 0 0 15px rgba(201, 162, 39, 0.4);
+}
+
+/* Arc Indicators - Vibrant */
+.month-header__arc[data-arc="OPENING"] {
+  background: linear-gradient(135deg, var(--color-opening-bg), transparent) !important;
+  border-color: var(--color-opening) !important;
+  color: var(--color-opening) !important;
+  box-shadow: 
+    0 0 20px var(--color-opening-glow),
+    inset 0 0 20px var(--color-opening-glow) !important;
+  text-shadow: 0 0 10px var(--color-opening-glow);
+}
+
+.month-header__arc[data-arc="CORE"] {
+  background: linear-gradient(135deg, var(--color-core-bg), transparent) !important;
+  border-color: var(--color-core) !important;
+  color: var(--color-core) !important;
+  box-shadow: 
+    0 0 20px var(--color-core-glow),
+    inset 0 0 20px var(--color-core-glow) !important;
+  text-shadow: 0 0 10px var(--color-core-glow);
+}
+
+.month-header__arc[data-arc="CLOSING"] {
+  background: linear-gradient(135deg, var(--color-closing-bg), transparent) !important;
+  border-color: var(--color-closing) !important;
+  color: var(--color-closing) !important;
+  box-shadow: 
+    0 0 20px var(--color-closing-glow),
+    inset 0 0 20px var(--color-closing-glow) !important;
+  text-shadow: 0 0 10px var(--color-closing-glow);
+}
+
+/* Buttons - Rich Styling */
+.btn {
+  background: rgba(201, 162, 39, 0.1);
+  border: 1px solid rgba(201, 162, 39, 0.3);
+  color: var(--color-text-secondary);
+  transition: all 0.2s ease;
+}
+
+.btn:hover {
+  background: rgba(201, 162, 39, 0.2);
+  border-color: var(--color-gold);
+  color: var(--color-text);
+  box-shadow: 0 0 20px rgba(201, 162, 39, 0.2);
+}
+
+.btn--primary {
+  background: linear-gradient(135deg, var(--color-gold), var(--color-gold-dark));
+  border-color: var(--color-gold-light);
+  color: #000;
+  font-weight: 600;
+}
+
+.btn--primary:hover {
+  background: linear-gradient(135deg, var(--color-gold-light), var(--color-gold));
+  box-shadow: 0 0 30px var(--color-gold-glow);
+}
+
+.btn--active {
+  background: var(--color-gold-muted);
+  border-color: var(--color-gold);
+  color: var(--color-gold-light);
+  box-shadow: 
+    0 0 15px rgba(201, 162, 39, 0.2),
+    inset 0 0 10px rgba(201, 162, 39, 0.1);
+}
+
+/* Day Cells - Enhanced */
+.day-cell {
+  background: rgba(26, 26, 38, 0.6);
+  border: 1px solid rgba(201, 162, 39, 0.1);
+  transition: all 0.2s ease;
+}
+
+.day-cell:hover {
+  background: rgba(201, 162, 39, 0.1);
+  border-color: rgba(201, 162, 39, 0.4);
+  box-shadow: 0 0 20px rgba(201, 162, 39, 0.15);
+  transform: translateY(-2px);
+}
+
+.day-cell--selected {
+  background: rgba(201, 162, 39, 0.15);
+  border-color: var(--color-gold);
+  box-shadow: 
+    0 0 0 1px var(--color-gold),
+    0 0 30px rgba(201, 162, 39, 0.25),
+    inset 0 0 20px rgba(201, 162, 39, 0.1);
+}
+
+.day-cell--today {
+  background: linear-gradient(135deg, 
+    rgba(59, 130, 246, 0.18) 0%, 
+    rgba(59, 130, 246, 0.05) 100%
+  );
+  border-color: #3b82f6;
+  box-shadow: 
+    0 0 0 1px #3b82f6,
+    0 0 25px rgba(59, 130, 246, 0.3),
+    inset 0 0 20px rgba(59, 130, 246, 0.08);
+}
+
+/* Celestial Panel - Mode Aware */
+body.mode-sync .celestial-panel {
+  background: linear-gradient(135deg, 
+    rgba(20, 25, 40, 0.8) 0%, 
+    rgba(10, 10, 15, 0.9) 100%
+  );
+  border: 1px solid rgba(106, 180, 232, 0.2);
+}
+
+body.mode-true .celestial-panel {
+  background: linear-gradient(135deg, 
+    rgba(40, 30, 15, 0.8) 0%, 
+    rgba(10, 10, 15, 0.9) 100%
+  );
+  border: 1px solid rgba(232, 180, 106, 0.2);
+}
+
+.celestial-card {
+  background: rgba(26, 26, 38, 0.8);
+  border: 1px solid rgba(201, 162, 39, 0.2);
+  backdrop-filter: blur(10px);
+}
+
+.celestial-card:hover {
+  border-color: rgba(201, 162, 39, 0.4);
+  box-shadow: 0 8px 32px rgba(201, 162, 39, 0.15);
+}
+
+/* Scrollbar - Gold Theme */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(201, 162, 39, 0.05);
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, var(--color-gold), var(--color-gold-dark));
+  border-radius: 5px;
+  border: 2px solid var(--color-bg);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, var(--color-gold-light), var(--color-gold));
+}
+
+/* Modals - Glassmorphism */
+.modal-overlay {
+  background: rgba(10, 10, 15, 0.85);
+  backdrop-filter: blur(20px);
+}
+
+.modal {
+  background: linear-gradient(180deg, 
+    rgba(26, 26, 38, 0.95) 0%, 
+    rgba(18, 18, 26, 0.95) 100%
+  );
+  border: 1px solid var(--color-gold);
+  box-shadow: 
+    0 25px 50px rgba(0, 0, 0, 0.5),
+    0 0 50px rgba(201, 162, 39, 0.1);
+}
+
+.modal__title {
+  color: var(--color-gold);
+  text-shadow: 0 0 10px rgba(201, 162, 39, 0.3);
+}
+
+/* Install Button */
+.install-btn {
+  background: linear-gradient(135deg, var(--color-gold), var(--color-gold-dark)) !important;
+  color: #000 !important;
+  font-weight: 600;
+  box-shadow: 0 4px 15px rgba(201, 162, 39, 0.3);
+  animation: gold-pulse 2s infinite;
+}
+
+@keyframes gold-pulse {
+  0%, 100% {
+    box-shadow: 0 4px 15px rgba(201, 162, 39, 0.3);
+  }
+  50% {
+    box-shadow: 0 4px 25px rgba(201, 162, 39, 0.5);
+  }
+}

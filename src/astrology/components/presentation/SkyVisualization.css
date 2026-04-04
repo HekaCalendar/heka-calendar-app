@@ -1,0 +1,168 @@
+.sky-viz {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  align-items: center;
+  padding: 24px;
+}
+
+.sv-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  padding: 60px;
+  color: #71717a;
+}
+
+.sv-loading-spinner {
+  width: 48px;
+  height: 48px;
+  border: 3px solid rgba(255, 255, 255, 0.1);
+  border-top-color: #d4af37;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.sv-wheel {
+  width: 400px;
+  height: 400px;
+  border-radius: 50%;
+  position: relative;
+  background: radial-gradient(circle, rgba(212, 175, 55, 0.05) 0%, transparent 70%);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.sv-sign-segment {
+  position: absolute;
+  width: 50%;
+  height: 2px;
+  top: 50%;
+  left: 50%;
+  transform-origin: left center;
+  border-top: 1px dashed;
+  opacity: 0.4;
+}
+
+.sv-sign-label {
+  position: absolute;
+  right: 8px;
+  top: -10px;
+  font-size: 16px;
+  background: #16161a;
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+.sv-planets {
+  position: absolute;
+  top: -8px;
+  left: 0;
+  right: 0;
+  height: 16px;
+}
+
+.sv-planet {
+  position: absolute;
+  font-size: 14px;
+  background: #16161a;
+  padding: 2px 4px;
+  border-radius: 4px;
+  white-space: nowrap;
+  transform: translateX(-50%);
+}
+
+.sv-retro {
+  font-size: 8px;
+  color: #ef4444;
+  margin-left: 2px;
+}
+
+.sv-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: #16161a;
+  border: 2px solid rgba(212, 175, 55, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sv-center-sun {
+  font-size: 32px;
+  color: #d4af37;
+}
+
+.sv-list {
+  width: 100%;
+  max-width: 500px;
+  background: #16161a;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  padding: 20px;
+}
+
+.sv-list h3 {
+  font-size: 14px;
+  font-weight: 600;
+  color: #d4af37;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin: 0 0 16px 0;
+}
+
+.sv-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  font-size: 14px;
+}
+
+.sv-item:last-child {
+  border-bottom: none;
+}
+
+.sv-item-symbol {
+  font-size: 18px;
+  width: 24px;
+  text-align: center;
+}
+
+.sv-item-name {
+  width: 80px;
+  color: #f8f7f5;
+  text-transform: capitalize;
+}
+
+.sv-item-sign {
+  flex: 1;
+  text-transform: capitalize;
+}
+
+.sv-item-degree {
+  color: #71717a;
+  font-family: monospace;
+}
+
+.sv-item-retro {
+  color: #ef4444;
+  font-size: 12px;
+}
+
+@media (max-width: 600px) {
+  .sv-wheel {
+    width: 300px;
+    height: 300px;
+  }
+}

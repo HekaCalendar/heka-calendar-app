@@ -1,0 +1,155 @@
+/* Civil vs Natural Time - Enterprise Visual */
+.cvn-visual {
+  padding: 20px;
+  margin: 16px 0;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.5) 0%, rgba(30, 30, 63, 0.6) 100%);
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Comparison Layout */
+.cvn-comparison {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.cvn-side {
+  flex: 1;
+  padding: 16px;
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.cvn-side.civil {
+  background: rgba(100, 116, 139, 0.1);
+  border-color: rgba(100, 116, 139, 0.3);
+}
+
+.cvn-side.natural {
+  background: rgba(34, 197, 94, 0.1);
+  border-color: rgba(34, 197, 94, 0.3);
+}
+
+/* Headers */
+.cvn-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.cvn-icon {
+  font-size: 24px;
+}
+
+.cvn-title {
+  font-size: 14px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.cvn-side.civil .cvn-title {
+  color: rgba(148, 163, 184, 0.9);
+}
+
+.cvn-side.natural .cvn-title {
+  color: #22c55e;
+}
+
+/* Uses List */
+.cvn-uses {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.cvn-use-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.cvn-check {
+  color: #22c55e;
+  font-weight: 700;
+}
+
+/* Month Boxes */
+.cvn-january-box,
+.cvn-april-box {
+  padding: 12px;
+  border-radius: 10px;
+  text-align: center;
+}
+
+.cvn-january-box {
+  background: rgba(100, 116, 139, 0.2);
+  border: 1px solid rgba(100, 116, 139, 0.3);
+}
+
+.cvn-april-box {
+  background: rgba(34, 197, 94, 0.2);
+  border: 1px solid rgba(34, 197, 94, 0.3);
+}
+
+.cvn-month {
+  display: block;
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.cvn-january-box .cvn-month {
+  color: rgba(148, 163, 184, 0.9);
+}
+
+.cvn-april-box .cvn-month {
+  color: #22c55e;
+}
+
+.cvn-hemispheres {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+/* Bottom Message */
+.cvn-message {
+  text-align: center;
+  padding: 12px;
+  background: rgba(201, 162, 39, 0.1);
+  border-radius: 10px;
+  border: 1px solid rgba(201, 162, 39, 0.2);
+}
+
+.cvn-message span {
+  font-size: 13px;
+  font-weight: 600;
+  color: #c9a227;
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+  .cvn-comparison {
+    flex-direction: column;
+    gap: 12px;
+  }
+  
+  .cvn-side {
+    padding: 12px;
+  }
+  
+  .cvn-hemispheres {
+    flex-direction: column;
+    gap: 4px;
+  }
+}

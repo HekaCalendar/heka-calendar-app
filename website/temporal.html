@@ -1,0 +1,796 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Days in Month | HEKA</title>
+    <meta name="description" content="How many days? The question you ask yourself every month, answered instantly in one calendar.">
+    
+    <link rel="stylesheet" href="assets/css/sacred.css">
+    <style>
+        .temporal-hero {
+            min-height: 50vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 140px 40px 40px;
+            background: radial-gradient(ellipse 80% 50% at 50% 0%, rgba(212, 175, 55, 0.08) 0%, transparent 50%);
+        }
+        
+        .temporal-title {
+            font-size: clamp(2rem, 4vw, 3.5rem);
+            margin-bottom: 16px;
+        }
+        
+        .temporal-subtitle {
+            font-family: var(--font-wisdom);
+            font-size: 1.2rem;
+            color: var(--light-secondary);
+            max-width: 500px;
+            font-style: italic;
+        }
+        
+        .game-stage {
+            padding: 40px 20px;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        .mode-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 0;
+            margin-bottom: 32px;
+            border-bottom: 1px solid var(--veil);
+        }
+        
+        .mode-tab {
+            padding: 14px 32px;
+            font-family: var(--font-ritual);
+            font-size: 0.75rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            background: transparent;
+            border: none;
+            border-bottom: 3px solid transparent;
+            color: var(--light-tertiary);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .mode-tab:hover { color: var(--light-secondary); }
+        .mode-tab.active.heka { color: var(--gold); border-bottom-color: var(--gold); }
+        .mode-tab.active.gregorian { color: #ef4444; border-bottom-color: #ef4444; }
+        
+        .game-sanctum {
+            background: linear-gradient(180deg, var(--altar) 0%, var(--temple) 100%);
+            border: 1px solid var(--veil);
+            padding: 32px;
+        }
+        
+        .start-screen {
+            text-align: center;
+            padding: 48px 32px;
+        }
+        
+        .start-screen h2 {
+            margin-bottom: 12px;
+            font-size: 1.8rem;
+        }
+        
+        .start-screen p {
+            color: var(--light-secondary);
+            max-width: 380px;
+            margin: 0 auto 24px;
+            line-height: 1.7;
+        }
+        
+        .game-active {
+            display: none;
+        }
+        
+        .game-active.active {
+            display: block;
+        }
+        
+        .question-banner {
+            text-align: center;
+            padding: 24px;
+            background: var(--void);
+            border: 1px solid var(--veil);
+            margin-bottom: 32px;
+        }
+        
+        .question-label {
+            font-size: 0.8rem;
+            color: var(--light-tertiary);
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            margin-bottom: 12px;
+        }
+        
+        .month-display {
+            font-family: var(--font-ritual);
+            font-size: 2.5rem;
+            color: var(--gold);
+            letter-spacing: 0.08em;
+        }
+        
+        .answer-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        
+        .answer-btn {
+            padding: 28px 16px;
+            background: var(--void);
+            border: 2px solid var(--veil);
+            font-family: var(--font-ritual);
+            font-size: 1.5rem;
+            color: var(--light-secondary);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .answer-btn:hover {
+            border-color: var(--gold-mist);
+            color: var(--light-primary);
+            transform: translateY(-2px);
+        }
+        
+        .answer-btn.correct {
+            background: rgba(34, 197, 94, 0.15);
+            border-color: #22c55e;
+            color: #22c55e;
+        }
+        
+        .answer-btn.wrong {
+            background: rgba(239, 68, 68, 0.1);
+            border-color: rgba(239, 68, 68, 0.4);
+            opacity: 0.6;
+        }
+        
+        .answer-btn.heka-answer {
+            background: rgba(212, 175, 55, 0.1);
+            border-color: var(--gold-mist);
+        }
+        
+        .timer-display {
+            text-align: center;
+            margin-top: 24px;
+            font-family: var(--font-mono);
+            font-size: 1.3rem;
+            color: var(--gold);
+            letter-spacing: 0.1em;
+        }
+        
+        .progress-track {
+            display: flex;
+            justify-content: center;
+            gap: 6px;
+            margin-top: 28px;
+            flex-wrap: wrap;
+        }
+        
+        .progress-node {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            border: 2px solid var(--veil);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.65rem;
+            color: var(--light-tertiary);
+            transition: all 0.3s;
+        }
+        
+        .progress-node.active {
+            border-color: var(--gold);
+            color: var(--gold);
+            box-shadow: 0 0 12px var(--gold-glow);
+        }
+        
+        .progress-node.correct {
+            background: #22c55e;
+            border-color: #22c55e;
+            color: var(--void);
+        }
+        
+        .progress-node.wrong {
+            background: #ef4444;
+            border-color: #ef4444;
+            color: white;
+        }
+        
+        .results-panel {
+            display: none;
+            max-width: 700px;
+            margin: 32px auto;
+            padding: 40px 32px;
+            background: var(--void);
+            border: 1px solid var(--gold-mist);
+            text-align: center;
+        }
+        
+        .results-panel.active {
+            display: block;
+        }
+        
+        .results-title {
+            font-size: 1.8rem;
+            color: var(--gold);
+            margin-bottom: 32px;
+        }
+        
+        .stats-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 32px;
+            margin-bottom: 32px;
+        }
+        
+        @media (max-width: 500px) {
+            .stats-row { grid-template-columns: 1fr; gap: 16px; }
+        }
+        
+        .stat-box {
+            background: var(--temple);
+            padding: 24px;
+        }
+        
+        .stat-box.heka { border-top: 3px solid var(--gold); }
+        .stat-box.gregorian { border-top: 3px solid #ef4444; }
+        
+        .stat-value {
+            font-size: 2.5rem;
+            font-family: var(--font-ritual);
+            margin-bottom: 8px;
+        }
+        
+        .stat-box.heka .stat-value { color: var(--gold); }
+        .stat-box.gregorian .stat-value { color: #ef4444; }
+        
+        .stat-label {
+            font-size: 0.7rem;
+            letter-spacing: 0.12em;
+            color: var(--light-tertiary);
+            text-transform: uppercase;
+        }
+        
+        .insight-box {
+            font-family: var(--font-wisdom);
+            font-size: 1.15rem;
+            color: var(--light-secondary);
+            font-style: italic;
+            line-height: 1.7;
+            margin: 32px 0;
+            padding: 24px;
+            background: var(--temple);
+            border-left: 3px solid var(--gold);
+        }
+        
+        .explanation {
+            max-width: 700px;
+            margin: 60px auto;
+            padding: 0 20px;
+        }
+        
+        .info-card {
+            background: var(--temple);
+            border: 1px solid var(--veil);
+            padding: 28px;
+            margin-bottom: 20px;
+        }
+        
+        .info-card h3 {
+            margin-bottom: 12px;
+            font-size: 1.1rem;
+        }
+        
+        .info-card p {
+            color: var(--light-secondary);
+            line-height: 1.7;
+            font-size: 0.95rem;
+        }
+        
+        .days-comparison {
+            display: flex;
+            justify-content: center;
+            gap: 24px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+        
+        .days-box {
+            text-align: center;
+            padding: 20px 32px;
+            background: var(--void);
+            border: 1px solid var(--veil);
+        }
+        
+        .days-box.heka { border-color: var(--gold-mist); }
+        .days-box.greg { border-color: rgba(239, 68, 68, 0.3); }
+        
+        .days-number {
+            font-size: 2rem;
+            font-family: var(--font-ritual);
+            margin-bottom: 4px;
+        }
+        
+        .days-box.heka .days-number { color: var(--gold); }
+        .days-box.greg .days-number { color: #ef4444; }
+        
+        .days-label {
+            font-size: 0.7rem;
+            color: var(--light-tertiary);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+    </style>
+</head>
+<body class="bg-sacred page-temporal">
+    <nav class="navbar">
+        <div class="container navbar-inner">
+            <a href="index.html" class="navbar-brand">
+                <div class="brand-symbol symbol-sun"></div>
+                <span class="brand-text">HEKA</span>
+            </a>
+            <button class="navbar-toggle" onclick="toggleNav()" aria-label="Toggle navigation">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <div class="navbar-menu">
+                <a href="structure.html" class="navbar-link">Structure</a>
+                <a href="experience.html" class="navbar-link">Experience</a>
+                <a href="precision.html" class="navbar-link">Precision</a>
+                <a href="harmony.html" class="navbar-link">Harmony</a>
+                <a href="features.html" class="navbar-link">Features</a>
+                <a href="temporal.html" class="navbar-link" style="color: var(--gold);">Temporal</a>
+                <a href="index.html#download" class="navbar-cta" style="border-color: var(--copper); color: var(--copper);">Download</a>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <section class="temporal-hero">
+            <span class="section-number section-number-wisdom">THE QUESTION</span>
+            <h1 class="temporal-title hero-title-elevated">How Many Days?</h1>
+            <p class="temporal-subtitle">
+                The question you ask yourself every month.<br>
+                One calendar always gives the same answer.
+            </p>
+        </section>
+
+        <section class="explanation" style="margin-top: 40px;">
+            <div class="info-card">
+                <h3 style="color: var(--gold);">HEKA Structure</h3>
+                <p>Twelve months have exactly 28 days. March (the 13th month) has 29 days—or 30 in leap years. Hexa sits between August and September. Simple, predictable, with the irregularity isolated to one month.</p>
+                <div class="days-comparison">
+                    <div class="days-box heka">
+                        <div class="days-number">28</div>
+                        <div class="days-label">12 Months</div>
+                    </div>
+                    <div class="days-box heka">
+                        <div class="days-number">29</div>
+                        <div class="days-label">March Only</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="info-card">
+                <h3 style="color: #ef4444;">Gregorian Structure</h3>
+                <p>Months vary between 28, 30, and 31 days. You must remember: "Thirty days hath September, April, June, and November..." or calculate fresh each time.</p>
+                <div class="days-comparison">
+                    <div class="days-box greg">
+                        <div class="days-number">28</div>
+                        <div class="days-label">February</div>
+                    </div>
+                    <div class="days-box greg">
+                        <div class="days-number">30</div>
+                        <div class="days-label">4 Months</div>
+                    </div>
+                    <div class="days-box greg">
+                        <div class="days-number">31</div>
+                        <div class="days-label">7 Months</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="info-card">
+                <h3>The Cognitive Difference</h3>
+                <p>This test isolates a question you ask yourself unconsciously every month: "How many days do I have?" In one calendar, the answer is automatic. In the other, it requires memory or calculation. This friction, repeated monthly, compounds into significant cognitive load over a year.</p>
+            </div>
+        </section>
+
+        <section class="game-stage">
+            <div class="mode-tabs">
+                <button class="mode-tab heka active" id="hekaTab" onclick="switchMode('heka')">HEKA: 28 Days</button>
+                <button class="mode-tab gregorian" id="gregTab" onclick="switchMode('gregorian')">Gregorian: Variable</button>
+            </div>
+
+            <div class="game-sanctum">
+                <!-- Start -->
+                <div class="start-screen" id="startScreen">
+                    <h2>The Days Test</h2>
+                    <p>Part 1: Gregorian calendar<br>How many days in each month?<br>Click as fast as you can.</p>
+                    <button class="btn btn-primary" onclick="startGame()" style="padding: 14px 40px;">Begin</button>
+                </div>
+
+                <!-- Game -->
+                <div class="game-active" id="gameScreen">
+                    <div class="question-banner">
+                        <div class="question-label">How many days in</div>
+                        <div class="month-display" id="monthName">April</div>
+                    </div>
+
+                    <div class="answer-grid" id="answerGrid">
+                        <!-- Generated by JS -->
+                    </div>
+
+                    <div class="timer-display" id="timerDisplay">0.0s</div>
+                    <div class="progress-track" id="progressTrack"></div>
+                </div>
+            </div>
+
+            <!-- Results -->
+            <div class="results-panel" id="resultsPanel">
+                <h2 class="results-title">Test Complete</h2>
+                
+                <div class="stats-row">
+                    <div class="stat-box heka">
+                        <div class="stat-value" id="hekaTime">-</div>
+                        <div class="stat-label">HEKA Time</div>
+                    </div>
+                    <div class="stat-box gregorian">
+                        <div class="stat-value" id="gregTime">-</div>
+                        <div class="stat-label">Gregorian Time</div>
+                    </div>
+                </div>
+
+                <div class="insight-box" id="insightText"></div>
+
+                <button class="btn btn-gold" onclick="resetGame()" style="padding: 14px 32px;">Test Again</button>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div>
+                    <div class="footer-sigil">
+                        <div class="footer-sigil-symbol symbol-sun"></div>
+                        <span class="footer-sigil-text">HEKA</span>
+                    </div>
+                    <p class="footer-mantra">Time is the structure we live inside. What if it fit better?</p>
+                </div>
+                <div class="footer-links">
+                    <div>
+                        <h4 class="footer-column-title">Learn</h4>
+                        <a href="structure.html" class="footer-link">Structure</a>
+                        <a href="experience.html" class="footer-link">Experience</a>
+                        <a href="precision.html" class="footer-link">Precision</a>
+                        <a href="harmony.html" class="footer-link">Harmony</a>
+                    </div>
+                    <div>
+                        <h4 class="footer-column-title">Product</h4>
+                        <a href="features.html" class="footer-link">Features</a>
+                        <a href="temporal.html" class="footer-link">Temporal</a>
+                        <a href="privacy.html" class="footer-link">Privacy</a>
+                        <a href="terms.html" class="footer-link">Terms of Service</a>
+                    </div>
+                    <div>
+                        <h4 class="footer-column-title">Connect</h4>
+                        <a href="mailto:hekacalendar@gmail.com" class="footer-link">Contact</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-base">
+                <p class="footer-copyright">© 2026 HEKA Calendar</p>
+                <p class="footer-precision">Thirteen months. Fifty-two weeks. One harmonious year.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Data
+        // HEKA: April start, with Hexa between August and September
+        const hekaMonths = ['April', 'May', 'June', 'July', 'August', 'Hexa', 'September', 'October', 'November', 'December', 'January', 'February', 'March'];
+        const hekaDays = [28, 28, 28, 28, 28, 28, 28, 28, 28, 28, 28, 28, 29]; // March has 29
+        
+        const gregMonths = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+        const gregDays = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+        
+        // State - Store both times properly
+        let mode = 'heka';
+        let currentMonth = 0;
+        let startTime = 0;
+        let timerInterval = null;
+        let gameState = 'waiting'; // waiting, playing, results
+        
+        // Store times for both modes
+        let hekaTime = null;
+        let gregTime = null;
+        
+        function generateAnswerButtons() {
+            const grid = document.getElementById('answerGrid');
+            grid.innerHTML = '';
+            
+            if (mode === 'heka') {
+                // HEKA: Two answers - 28 for most months, 29 for March
+                const btn28 = document.createElement('button');
+                btn28.className = 'answer-btn heka-answer';
+                btn28.textContent = '28';
+                btn28.onclick = () => makeGuess(28);
+                grid.appendChild(btn28);
+                
+                const btn29 = document.createElement('button');
+                btn29.className = 'answer-btn';
+                btn29.textContent = '29';
+                btn29.onclick = () => makeGuess(29);
+                grid.appendChild(btn29);
+            } else {
+                // Gregorian: Three options
+                [28, 30, 31].forEach(days => {
+                    const btn = document.createElement('button');
+                    btn.className = 'answer-btn';
+                    btn.textContent = days;
+                    btn.onclick = () => makeGuess(days);
+                    grid.appendChild(btn);
+                });
+            }
+        }
+        
+        function generateProgressNodes() {
+            const track = document.getElementById('progressTrack');
+            track.innerHTML = '';
+            const months = mode === 'heka' ? hekaMonths : gregMonths;
+            
+            months.forEach((_, i) => {
+                const node = document.createElement('div');
+                node.className = 'progress-node';
+                node.id = `node-${i}`;
+                node.textContent = i + 1;
+                track.appendChild(node);
+            });
+        }
+        
+        function startGame() {
+            document.getElementById('startScreen').style.display = 'none';
+            document.getElementById('gameScreen').classList.add('active');
+            document.getElementById('resultsPanel').classList.remove('active');
+            
+            currentMonth = 0;
+            gameState = 'playing';
+            startTime = Date.now();
+            
+            generateAnswerButtons();
+            generateProgressNodes();
+            updateDisplay();
+            highlightNode();
+            startTimer();
+        }
+        
+        function startTimer() {
+            if (timerInterval) clearInterval(timerInterval);
+            timerInterval = setInterval(() => {
+                const elapsed = (Date.now() - startTime) / 1000;
+                document.getElementById('timerDisplay').textContent = elapsed.toFixed(1) + 's';
+            }, 100);
+        }
+        
+        function updateDisplay() {
+            const months = mode === 'heka' ? hekaMonths : gregMonths;
+            document.getElementById('monthName').textContent = months[currentMonth];
+        }
+        
+        function highlightNode() {
+            document.querySelectorAll('.progress-node').forEach((node, i) => {
+                node.classList.remove('active', 'correct', 'wrong');
+                if (i === currentMonth) {
+                    node.classList.add('active');
+                }
+            });
+        }
+        
+        function markNode(correct) {
+            const node = document.getElementById(`node-${currentMonth}`);
+            if (node) {
+                node.classList.remove('active');
+                node.classList.add(correct ? 'correct' : 'wrong');
+            }
+        }
+        
+        function makeGuess(days) {
+            if (gameState !== 'playing') return;
+            
+            const correctDays = mode === 'heka' ? hekaDays[currentMonth] : gregDays[currentMonth];
+            const buttons = document.querySelectorAll('.answer-btn');
+            
+            if (days === correctDays) {
+                // Correct
+                buttons.forEach(btn => {
+                    if (btn.textContent == days) btn.classList.add('correct');
+                });
+                markNode(true);
+                
+                currentMonth++;
+                const months = mode === 'heka' ? hekaMonths : gregMonths;
+                
+                if (currentMonth >= months.length) {
+                    completeMode();
+                } else {
+                    setTimeout(() => {
+                        buttons.forEach(btn => btn.classList.remove('correct', 'wrong'));
+                        updateDisplay();
+                        highlightNode();
+                    }, 250);
+                }
+            } else {
+                // Wrong
+                buttons.forEach(btn => {
+                    if (btn.textContent == days) btn.classList.add('wrong');
+                });
+                markNode(false);
+                
+                setTimeout(() => {
+                    buttons.forEach(btn => btn.classList.remove('wrong'));
+                }, 400);
+            }
+        }
+        
+        function completeMode() {
+            gameState = 'complete';
+            clearInterval(timerInterval);
+            
+            const elapsed = (Date.now() - startTime) / 1000;
+            
+            // Store time for current mode
+            if (mode === 'heka') {
+                hekaTime = elapsed;
+            } else {
+                gregTime = elapsed;
+            }
+            
+            // Check if we should show results or switch modes
+            if (mode === 'gregorian' && hekaTime === null) {
+                // Finished Gregorian first, need to do HEKA
+                setTimeout(() => {
+                    const msg = `Part 1 complete: ${elapsed.toFixed(1)}s\n\nNow Part 2: HEKA mode with consistent 28-day months.`;
+                    alert(msg);
+                    switchMode('heka');
+                    startGame();
+                }, 500);
+            } else if (mode === 'heka' && gregTime === null) {
+                // Finished HEKA, need to do Gregorian (if started with HEKA somehow)
+                setTimeout(() => {
+                    const msg = `Part 2 complete: ${elapsed.toFixed(1)}s\n\nNow Part 1: Gregorian mode with variable month lengths.`;
+                    alert(msg);
+                    switchMode('gregorian');
+                    startGame();
+                }, 500);
+            } else {
+                // Both completed - show results
+                showResults();
+            }
+        }
+        
+        function showResults() {
+            document.getElementById('gameScreen').classList.remove('active');
+            document.getElementById('resultsPanel').classList.add('active');
+            
+            // Display both times (no more "-")
+            document.getElementById('hekaTime').textContent = hekaTime ? hekaTime.toFixed(1) + 's' : 'N/A';
+            document.getElementById('gregTime').textContent = gregTime ? gregTime.toFixed(1) + 's' : 'N/A';
+            
+            const insightEl = document.getElementById('insightText');
+            
+            if (hekaTime && gregTime) {
+                const diff = Math.abs(gregTime - hekaTime);
+                const faster = hekaTime < gregTime ? 'HEKA' : 'Gregorian';
+                const percent = ((diff / Math.min(hekaTime, gregTime)) * 100).toFixed(0);
+                
+                if (hekaTime < gregTime) {
+                    insightEl.innerHTML = `You were <strong>${percent}% faster</strong> with HEKA.<br><br>
+                        Consider: you traversed <strong>13 months</strong> in HEKA versus only <strong>12 months</strong> in Gregorian—and you were still faster.<br><br>
+                        In HEKA, you answered "28" twelve times and "29" just once. Two possible answers, with irregularity isolated to one month.<br><br>
+                        In Gregorian, each month required a fresh decision between three options. The structure itself created friction.`;
+                } else {
+                    insightEl.innerHTML = `Your Gregorian time was faster this round.<br><br>
+                        You likely have strong memory for the traditional rhyme or found a rhythm with the three options.<br><br>
+                        <strong>Try the test again.</strong> Now that you have the hang of it, see if the pattern holds—or if HEKA's consistency reveals its advantage with practice.<br><br>
+                        Remember: in HEKA, a child could learn the answer in one second. The ease is structural.`;
+            }
+        }
+        
+        function switchMode(newMode) {
+            mode = newMode;
+            
+            document.getElementById('hekaTab').classList.toggle('active', mode === 'heka');
+            document.getElementById('hekaTab').classList.toggle('heka', mode === 'heka');
+            document.getElementById('gregTab').classList.toggle('active', mode === 'gregorian');
+            document.getElementById('gregTab').classList.toggle('gregorian', mode === 'gregorian');
+            
+            // If switching manually, reset to start screen but keep stored times
+            document.getElementById('startScreen').style.display = 'block';
+            document.getElementById('gameScreen').classList.remove('active');
+            document.getElementById('resultsPanel').classList.remove('active');
+            
+            if (timerInterval) clearInterval(timerInterval);
+            currentMonth = 0;
+            gameState = 'waiting';
+            
+            generateAnswerButtons();
+            generateProgressNodes();
+            updateDisplay();
+        }
+        
+        function resetGame() {
+            // Full reset - clear both times
+            hekaTime = null;
+            gregTime = null;
+            currentMonth = 0;
+            gameState = 'waiting';
+            
+            if (timerInterval) clearInterval(timerInterval);
+            
+            document.getElementById('startScreen').style.display = 'block';
+            document.getElementById('gameScreen').classList.remove('active');
+            document.getElementById('resultsPanel').classList.remove('active');
+            document.getElementById('timerDisplay').textContent = '0.0s';
+            
+            // Reset to Gregorian mode for fresh start (Part 1)
+            mode = 'gregorian';
+            document.getElementById('hekaTab').classList.remove('active', 'heka');
+            document.getElementById('gregTab').classList.add('active', 'gregorian');
+            
+            generateAnswerButtons();
+            generateProgressNodes();
+            updateDisplay();
+        }
+        
+        // Init - Start with Gregorian mode
+        mode = 'gregorian';
+        document.getElementById('hekaTab').classList.remove('active', 'heka');
+        document.getElementById('gregTab').classList.add('active', 'gregorian');
+        generateAnswerButtons();
+        generateProgressNodes();
+        updateDisplay();
+    </script>
+<script>
+function toggleNav() {
+    document.querySelector('.navbar-menu').classList.toggle('active');
+    document.querySelector('.navbar-toggle').classList.toggle('active');
+}
+</script>
+<script>
+// Scroll-triggered reveal animations
+const observerOptions = {
+    root: null,
+    rootMargin: '0px',
+    threshold: 0.1
+};
+
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add('active');
+        }
+    });
+}, observerOptions);
+
+document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale').forEach(el => {
+    observer.observe(el);
+});
+</script>
+</body>
+</html>
+
+

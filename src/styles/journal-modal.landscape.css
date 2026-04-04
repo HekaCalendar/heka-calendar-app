@@ -1,0 +1,191 @@
+/**
+ * Journal Modal - Landscape Optimizations
+ * Entry editing modal in landscape orientation
+ */
+
+/* ═══════════════════════════════════════════════════════════════════════════════
+   SMALL LANDSCAPE (<600px height)
+   ═══════════════════════════════════════════════════════════════════════════════ */
+
+@media (orientation: landscape) and (max-height: 600px) {
+  
+  .journal-modal-overlay {
+    padding: 0 !important;
+    align-items: flex-start !important;
+    overflow-y: auto !important;
+  }
+  
+  .journal-modal {
+    height: auto !important;
+    min-height: 100vh !important;
+    max-height: none !important;
+    border-radius: 0 !important;
+    display: grid !important;
+    grid-template-columns: 200px 1fr !important;
+    grid-template-rows: auto 1fr auto !important;
+    grid-template-areas: 
+      "header header"
+      "sidebar content"
+      "footer footer" !important;
+  }
+  
+  .journal-modal__header {
+    grid-area: header !important;
+    padding: 10px 16px !important;
+  }
+  
+  .journal-modal__title {
+    font-size: 1.1rem !important;
+  }
+  
+  /* Sidebar on left */
+  .journal-sidebar {
+    grid-area: sidebar !important;
+    border-right: 1px solid rgba(0,0,0,0.1) !important;
+    border-bottom: none !important;
+    padding: 12px !important;
+    overflow-y: auto !important;
+  }
+  
+  .journal-metadata {
+    gap: 8px !important;
+  }
+  
+  .journal-meta-item {
+    padding: 6px !important;
+  }
+  
+  /* Content area */
+  .journal-modal__content {
+    grid-area: content !important;
+    padding: 12px !important;
+    overflow-y: auto !important;
+  }
+  
+  /* Compact form */
+  .journal-form {
+    gap: 12px !important;
+  }
+  
+  .journal-title-input {
+    font-size: 1.1rem !important;
+    padding: 10px 12px !important;
+  }
+  
+  .journal-toolbar {
+    flex-wrap: wrap !important;
+    gap: 4px !important;
+  }
+  
+  .journal-toolbar button {
+    padding: 6px 10px !important;
+    font-size: 0.8rem !important;
+  }
+  
+  .journal-textarea {
+    min-height: 120px !important;
+    padding: 12px !important;
+  }
+  
+  /* Footer */
+  .journal-modal__footer {
+    grid-area: footer !important;
+    padding: 10px 16px !important;
+  }
+  
+  .journal-actions {
+    gap: 8px !important;
+  }
+  
+  .journal-actions button {
+    padding: 8px 16px !important;
+    font-size: 0.85rem !important;
+  }
+  
+  /* Mood selector compact */
+  .journal-mood-selector {
+    gap: 6px !important;
+  }
+  
+  .mood-option {
+    padding: 6px !important;
+    font-size: 1.2rem !important;
+  }
+  
+  /* Tags compact */
+  .journal-tags {
+    gap: 6px !important;
+  }
+  
+  .journal-tag {
+    padding: 4px 8px !important;
+    font-size: 0.75rem !important;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════════
+   MEDIUM LANDSCAPE (600-800px height)
+   ═══════════════════════════════════════════════════════════════════════════════ */
+
+@media (orientation: landscape) and (min-height: 601px) and (max-height: 800px) {
+  
+  .journal-modal-overlay {
+    padding: 20px !important;
+  }
+  
+  .journal-modal {
+    max-height: calc(100vh - 40px) !important;
+    display: grid !important;
+    grid-template-columns: 240px 1fr !important;
+    grid-template-rows: auto 1fr auto !important;
+    grid-template-areas: 
+      "header header"
+      "sidebar content"
+      "footer footer" !important;
+  }
+  
+  .journal-sidebar {
+    grid-area: sidebar !important;
+    border-right: 1px solid rgba(0,0,0,0.1) !important;
+    border-bottom: none !important;
+    padding: 16px !important;
+  }
+  
+  .journal-modal__content {
+    grid-area: content !important;
+    padding: 16px !important;
+  }
+  
+  .journal-textarea {
+    min-height: 200px !important;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════════
+   LARGE LANDSCAPE (>800px height)
+   ═══════════════════════════════════════════════════════════════════════════════ */
+
+@media (orientation: landscape) and (min-height: 801px) {
+  
+  .journal-modal {
+    max-width: 1000px !important;
+    display: grid !important;
+    grid-template-columns: 280px 1fr !important;
+    grid-template-rows: auto 1fr auto !important;
+    grid-template-areas: 
+      "header header"
+      "sidebar content"
+      "footer footer" !important;
+  }
+  
+  .journal-sidebar {
+    grid-area: sidebar !important;
+    border-right: 1px solid rgba(0,0,0,0.1) !important;
+    padding: 20px !important;
+  }
+  
+  .journal-modal__content {
+    grid-area: content !important;
+    padding: 20px !important;
+  }
+}

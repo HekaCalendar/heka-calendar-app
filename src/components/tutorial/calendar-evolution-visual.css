@@ -1,0 +1,168 @@
+/* Calendar Evolution Visual - Timeline */
+.cev-visual {
+  padding: 20px;
+  margin: 16px 0;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.5) 0%, rgba(30, 30, 63, 0.6) 100%);
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Timeline Layout */
+.cev-timeline {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.cev-era {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.cev-date {
+  font-size: 11px;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.5);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.cev-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 14px;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 12px;
+  border: 1px solid rgba(201, 162, 39, 0.3);
+  min-width: 100px;
+  text-align: center;
+}
+
+.cev-card.shift {
+  border-color: rgba(168, 85, 247, 0.3);
+}
+
+.cev-card.dual {
+  border-color: rgba(34, 197, 94, 0.3);
+}
+
+.cev-icon {
+  font-size: 28px;
+  margin-bottom: 6px;
+}
+
+.cev-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: #c9a227;
+  margin-bottom: 2px;
+}
+
+.cev-card.shift .cev-title {
+  color: #a855f7;
+}
+
+.cev-card.dual .cev-title {
+  color: #22c55e;
+}
+
+.cev-subtitle {
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.6);
+  margin-bottom: 8px;
+}
+
+.cev-numbers {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4px;
+  font-size: 9px;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.cev-shift-detail {
+  font-size: 9px;
+  color: rgba(168, 85, 247, 0.8);
+  padding: 4px 8px;
+  background: rgba(168, 85, 247, 0.1);
+  border-radius: 4px;
+}
+
+.cev-dual-options {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.cev-civil,
+.cev-natural {
+  font-size: 10px;
+  padding: 4px 8px;
+  border-radius: 4px;
+}
+
+.cev-civil {
+  color: rgba(148, 163, 184, 0.9);
+  background: rgba(100, 116, 139, 0.2);
+}
+
+.cev-natural {
+  color: #22c55e;
+  background: rgba(34, 197, 94, 0.2);
+}
+
+/* Arrow */
+.cev-arrow {
+  font-size: 20px;
+  color: rgba(255, 255, 255, 0.3);
+  animation: pulse-arrow 2s ease infinite;
+}
+
+@keyframes pulse-arrow {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 0.8; }
+}
+
+/* April Fools */
+.cev-fools {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px;
+  background: rgba(201, 162, 39, 0.1);
+  border-radius: 8px;
+  border: 1px solid rgba(201, 162, 39, 0.2);
+}
+
+.cev-fools-icon {
+  font-size: 18px;
+}
+
+.cev-fools-text {
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.7);
+  font-style: italic;
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+  .cev-timeline {
+    flex-direction: column;
+    gap: 8px;
+  }
+  
+  .cev-arrow {
+    transform: rotate(90deg);
+  }
+  
+  .cev-card {
+    min-width: 140px;
+    padding: 12px;
+  }
+}

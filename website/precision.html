@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Precision | HEKA</title>
+    <meta name="description" content="SYNC mode and TRUE mode explained. The mathematics behind the HEKA calendar's astronomical precision.">
+    
+    <link rel="stylesheet" href="assets/css/sacred.css">
+</head>
+<body class="bg-sacred page-precision">
+    <nav class="navbar">
+        <div class="container navbar-inner">
+            <a href="index.html" class="navbar-brand">
+                <div class="brand-symbol symbol-sun"></div>
+                <span class="brand-text">HEKA</span>
+            </a>
+            <button class="navbar-toggle" onclick="toggleNav()" aria-label="Toggle navigation">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <div class="navbar-menu">
+                <a href="structure.html" class="navbar-link">Structure</a>
+                <a href="experience.html" class="navbar-link">Experience</a>
+                <a href="precision.html" class="navbar-link">Precision</a>
+                <a href="harmony.html" class="navbar-link">Harmony</a>
+                <a href="features.html" class="navbar-link">Features</a>
+                <a href="temporal.html" class="navbar-link">Temporal</a>
+                <a href="index.html#download" class="navbar-cta" style="border-color: var(--copper); color: var(--copper);">Download</a>
+            </div>
+        </div>
+    </nav>
+
+    <main style="padding-top: 120px;">
+        <div class="container">
+            <div style="max-width: 800px; margin-bottom: 64px;">
+                <span class="section-number">PRECISION</span>
+                <h1 class="hero-title-duality" style="font-size: clamp(2.5rem, 5vw, 4rem); margin-bottom: 24px;">Two Paths To Accuracy</h1>
+                <p style="font-family: var(--font-wisdom); font-size: 1.3rem; color: var(--light-secondary); line-height: 1.8;">
+                    Every solar calendar must correct for the mismatch between day-cycles and year-cycles. HEKA offers two approaches: one for coordination, one for astronomical purity.
+                </p>
+            </div>
+
+            <section class="section">
+                <div class="section-header reveal" style="text-align: left;">
+                    <span class="section-number section-number-wisdom">I. THE TWO MODES</span>
+                    <h2 class="section-title">SYNC vs TRUE</h2>
+                </div>
+                
+                <div class="grid-2">
+                    <div class="tablet card-sapphire" style="border-top: 3px solid #3b82f6;">
+                        <div style="padding: 24px; border-bottom: 1px solid var(--veil);">
+                            <div style="font-family: var(--font-ritual); font-size: 0.75rem; letter-spacing: 0.2em; color: #3b82f6; margin-bottom: 8px;">COORDINATION</div>
+                            <h3 style="font-size: 1.8rem; color: #3b82f6;">SYNC Mode</h3>
+                            <p style="color: var(--light-secondary); margin-top: 8px;">Aligns with Gregorian leap years</p>
+                        </div>
+                        <div style="padding: 24px;">
+                            <p style="color: var(--light-secondary); line-height: 1.8; margin-bottom: 16px;">
+                                March has 30 days when the Gregorian calendar has a leap year (Feb 29). HEKA April 1st realigns with Gregorian April 1st every year. Perfect for coordinating with the civil world.
+                            </p>
+                            
+                            <div style="background: var(--void); padding: 16px; margin: 16px 0;">
+                                <div style="font-family: var(--font-mono); font-size: 0.9rem; color: var(--light-secondary);">
+                                    Leap March when:<br>
+                                    <span style="color: #3b82f6;">Gregorian year is leap</span><br><br>
+                                    Realignment:<br>
+                                    <span style="color: #3b82f6;">April 1st, annually</span>
+                                </div>
+                            </div>
+                            
+                            <ul style="list-style: none; color: var(--light-secondary); font-size: 0.9rem;">
+                                <li style="padding: 8px 0;">✓ Matches civil calendar exactly</li>
+                                <li style="padding: 8px 0;">✓ April 1st always aligned</li>
+                                <li style="padding: 8px 0;">✓ Recommended for most users</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="tablet tablet-gold card-wisdom" style="border-top: 3px solid var(--gold);">
+                        <div style="padding: 24px; border-bottom: 1px solid var(--veil);">
+                            <div style="font-family: var(--font-ritual); font-size: 0.75rem; letter-spacing: 0.2em; color: var(--gold); margin-bottom: 8px;">ASTRONOMICAL</div>
+                            <h3 style="font-size: 1.8rem; color: var(--gold);">TRUE Mode</h3>
+                            <p style="color: var(--light-secondary); margin-top: 8px;">Follows pure astronomical precision</p>
+                        </div>
+                        <div style="padding: 24px;">
+                            <p style="color: var(--light-secondary); line-height: 1.8; margin-bottom: 16px;">
+                                Uses the "4-year, except 128th" rule. March has 30 days every 4 years, except every 128th year which has 29.
+                            </p>
+                            
+                            <div style="background: var(--void); padding: 16px; margin: 16px 0;">
+                                <div style="font-family: var(--font-mono); font-size: 0.9rem; color: var(--light-secondary);">
+                                    Leap March when:<br>
+                                    <span style="color: var(--gold);">Year ÷ 4 = whole</span><br>
+                                    <span style="color: var(--light-tertiary);">EXCEPT year ÷ 128</span>
+                                </div>
+                            </div>
+                            
+                            <ul style="list-style: none; color: var(--light-secondary); font-size: 0.9rem;">
+                                <li style="padding: 8px 0;">✓ Astronomical precision</li>
+                                <li style="padding: 8px 0;">✓ Mean year: 365.242188 days</li>
+                                <li style="padding: 8px 0;">✓ For purists and long-term</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div style="background: var(--temple); border: 1px solid var(--veil); padding: 32px; margin-top: 48px;">
+                    <h4 style="font-size: 1.2rem; margin-bottom: 16px; color: var(--gold);">The Difference Over Time</h4>
+                    <p style="color: var(--light-secondary); line-height: 1.8;">
+                        In daily life, you won't notice the difference between SYNC and TRUE. Over centuries, TRUE mode drifts from the Gregorian calendar by a tiny amount, about 1 day every 450,000 years. For most users, SYNC mode provides the best balance of astronomical accuracy and civil coordination.
+                    </p>
+                </div>
+            </section>
+
+            <section class="section section-alt">
+                <div class="section-header reveal" style="text-align: left;">
+                    <span class="section-number section-number-wisdom">II. THE MATHEMATICS</span>
+                    <h2 class="section-title">Why 365.242188 Days?</h2>
+                </div>
+                
+                <div class="formula-sanctum shimmer-effect">
+                    <div class="formula-main">
+                        <span class="formula-number">365</span>
+                        <span class="formula-op">+</span>
+                        <span class="formula-frac">
+                            <span class="formula-frac-top">1</span>
+                            <span class="formula-frac-bot">4</span>
+                        </span>
+                        <span class="formula-op">−</span>
+                        <span class="formula-frac">
+                            <span class="formula-frac-top">1</span>
+                            <span class="formula-frac-bot">128</span>
+                        </span>
+                        <span class="formula-equals">=</span>
+                        <span class="formula-result">365.242188</span>
+                    </div>
+                    <p class="formula-explanation">
+                        This expression yields exactly 365 + 31/128, matching the tropical year (the time from one vernal equinox to the next).
+                    </p>
+                </div>
+                
+                <div class="grid-2" style="margin-top: 48px;">
+                    <div class="tablet">
+                        <div style="padding: 24px; border-bottom: 1px solid var(--veil);">
+                            <h4 style="font-size: 1.2rem;">The Components</h4>
+                        </div>
+                        <div style="padding: 24px;">
+                            <div style="margin-bottom: 16px;">
+                                <div style="color: var(--gold); font-weight: 600;">365 days</div>
+                                <div style="color: var(--light-tertiary); font-size: 0.9rem;">Base year (12 months × 28 + March 29)</div>
+                            </div>
+                            <div style="margin-bottom: 16px;">
+                                <div style="color: var(--gold); font-weight: 600;">+ 0.25 days</div>
+                                <div style="color: var(--light-tertiary); font-size: 0.9rem;">The Julian correction (1 day every 4 years)</div>
+                            </div>
+                            <div>
+                                <div style="color: var(--gold); font-weight: 600;">− 0.0078 days</div>
+                                <div style="color: var(--light-tertiary); font-size: 0.9rem;">The precision term (skip every 128th)</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="tablet">
+                        <div style="padding: 24px; border-bottom: 1px solid var(--veil);">
+                            <h4 style="font-size: 1.2rem;">The Result</h4>
+                        </div>
+                        <div style="padding: 24px;">
+                            <div style="text-align: center; margin-bottom: 24px;">
+                                <div style="font-family: var(--font-ritual); font-size: 3rem; color: var(--gold);">365.242188</div>
+                                <div style="color: var(--light-tertiary); font-size: 0.9rem; margin-top: 8px;">Mean year length</div>
+                            </div>
+                            <p style="color: var(--light-secondary); font-size: 0.9rem; line-height: 1.7;">
+                                The tropical year is approximately 365.24219 days. HEKA's TRUE mode achieves 365.24219, a difference of less than 0.00001 days per year.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section">
+                <div class="section-header reveal" style="text-align: left;">
+                    <span class="section-number">III. COMPARISON</span>
+                    <h2 class="section-title">How Calendars Measure Up</h2>
+                </div>
+                
+                <!-- Visual Comparison Cards -->
+                <div class="comparison-grid">
+                    <!-- Julian -->
+                    <div class="comparison-card">
+                        <div class="comparison-header">
+                            <span class="comparison-era">45 BCE</span>
+                            <h3 class="comparison-name">Julian</h3>
+                            <span class="comparison-tag tag-legacy">Roman</span>
+                        </div>
+                        <div class="comparison-body">
+                            <div class="comparison-stat">
+                                <span class="stat-value">365.250000</span>
+                                <span class="stat-label">days/year</span>
+                            </div>
+                            <div class="drift-meter">
+                                <div class="drift-track">
+                                    <div class="drift-fill" style="width: 100%; background: linear-gradient(90deg, #ef4444, #dc2626);"></div>
+                                </div>
+                                <span class="drift-label">Drift: 128 years</span>
+                            </div>
+                            <div class="error-badge error-high">+0.0078 day error</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Gregorian -->
+                    <div class="comparison-card">
+                        <div class="comparison-header">
+                            <span class="comparison-era">1582 CE</span>
+                            <h3 class="comparison-name">Gregorian</h3>
+                            <span class="comparison-tag tag-civil">Civil</span>
+                        </div>
+                        <div class="comparison-body">
+                            <div class="comparison-stat">
+                                <span class="stat-value">365.242500</span>
+                                <span class="stat-label">days/year</span>
+                            </div>
+                            <div class="drift-meter">
+                                <div class="drift-track">
+                                    <div class="drift-fill" style="width: 15%; background: linear-gradient(90deg, #f59e0b, #d97706);"></div>
+                                </div>
+                                <span class="drift-label">Drift: 3,216 years</span>
+                            </div>
+                            <div class="error-badge error-med">+0.0003 day error</div>
+                        </div>
+                    </div>
+                    
+                    <!-- HEKA -->
+                    <div class="comparison-card card-heka">
+                        <div class="comparison-header">
+                            <span class="comparison-era">Now</span>
+                            <h3 class="comparison-name">HEKA</h3>
+                            <span class="comparison-tag tag-heka">TRUE Mode</span>
+                        </div>
+                        <div class="comparison-body">
+                            <div class="comparison-stat">
+                                <span class="stat-value stat-heka">365.242188</span>
+                                <span class="stat-label">days/year</span>
+                            </div>
+                            <div class="drift-meter">
+                                <div class="drift-track">
+                                    <div class="drift-fill" style="width: 0.1%; background: linear-gradient(90deg, var(--gold), #b8941f);"></div>
+                                </div>
+                                <span class="drift-label drift-heka">Drift: ~450,000 years</span>
+                            </div>
+                            <div class="error-badge error-low">−0.0000022 day error</div>
+                        </div>
+                        <div class="heka-accent"></div>
+                    </div>
+                </div>
+                
+                <!-- Reference Note -->
+                <div class="comparison-reference">
+                    <div class="ref-symbol">◈</div>
+                    <p>Tropical year: <strong>365.2421897 days</strong> (IAU 2000 standard)</p>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div>
+                    <div class="footer-sigil">
+                        <div class="footer-sigil-symbol symbol-sun"></div>
+                        <span class="footer-sigil-text">HEKA</span>
+                    </div>
+                    <p class="footer-mantra">
+                        Time is the structure we live inside. What if it fit better?
+                    </p>
+                </div>
+                <div class="footer-links">
+                    <div>
+                        <h4 class="footer-column-title">Learn</h4>
+                        <a href="structure.html" class="footer-link">Structure</a>
+                        <a href="experience.html" class="footer-link">Experience</a>
+                        <a href="precision.html" class="footer-link">Precision</a>
+                        <a href="harmony.html" class="footer-link">Harmony</a>
+                    </div>
+                    <div>
+                        <h4 class="footer-column-title">Product</h4>
+                        <a href="features.html" class="footer-link">Features</a>
+                        <a href="temporal.html" class="footer-link">Temporal</a>
+                        <a href="privacy.html" class="footer-link">Privacy</a>
+                        <a href="terms.html" class="footer-link">Terms of Service</a>
+                    </div>
+                    <div>
+                        <h4 class="footer-column-title">Connect</h4>
+                        <a href="mailto:hekacalendar@gmail.com" class="footer-link">Contact</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-base">
+                <p class="footer-copyright">© 2026 HEKA Calendar</p>
+                <p class="footer-precision">Thirteen months. Fifty-two weeks. One harmonious year.</p>
+            </div>
+        </div>
+    </footer>
+<script>
+function toggleNav() {
+    document.querySelector('.navbar-menu').classList.toggle('active');
+    document.querySelector('.navbar-toggle').classList.toggle('active');
+}
+</script>
+<script>
+// Scroll-triggered reveal animations
+const observerOptions = {
+    root: null,
+    rootMargin: '0px',
+    threshold: 0.1
+};
+
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add('active');
+        }
+    });
+}, observerOptions);
+
+document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale').forEach(el => {
+    observer.observe(el);
+});
+</script>
+</body>
+</html>
+
+
+
+

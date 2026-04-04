@@ -1,0 +1,77 @@
+/**
+ * ═══════════════════════════════════════════════════════════════════════════════
+ * ZODIAC SYSTEM HELPERS
+ * ═══════════════════════════════════════════════════════════════════════════════
+ */
+
+import type { NatalPlanet } from './natalChart';
+
+/**
+ * Get current zodiac system preference from store
+ */
+export function getZodiacSystemPreference(): '12-sign' | '13-sign' {
+  try {
+    const persistedState = localStorage.getItem('heka-calendar-state');
+    if (persistedState) {
+      const state = JSON.parse(persistedState);
+      // Note: persisted state is the calendar state directly (not wrapped in calendar property)
+      return state.astroPreferences?.zodiacSystem || '12-sign';
+    }
+  } catch (e) {
+    console.warn('[ZodiacHelpers] Could not read zodiac preference:', e);
+  }
+  return '12-sign';
+}
+
+/**
+ * Calculate elemental balance with custom element map
+ */
+export function calculateElementalBalanceWithSystem(
+  planets: Record<string, NatalPlanet>,
+  elementMap: Record<string, string>
+): { fire: number; earth: number; air: number; water: number } {
+  const elements = { fire: 0, earth: 0, air: 0, water: 0 };
+  
+  Object.values(planets).forEach((planet) => {
+    const element = elementMap[planet.sign];
+    if (element && elements[element as keyof typeof elements] !== undefined) {
+      elements[element as keyof typeof elements]++;
+    }
+  });
+  
+  return elements;
+}
+
+/**
+ * Calculate modality balance with 13-sign support
+ */
+export function calculateModalityBalanceWithSystem(
+  planets: Record<string, NatalPlanet>,
+  use13Signs: boolean
+): { cardinal: number; fixed: number; mutable: number } {
+  const modalities = { cardinal: 0, fixed: 0, mutable: 0 };
+  
+  // 12-sign modalities
+  const modal12: Record<string, string> = {
+    aries: 'cardinal', cancer: 'cardinal', libra: 'cardinal', capricorn: 'cardinal',
+    taurus: 'fixed', leo: 'fixed', scorpio: 'fixed', aquarius: 'fixed',
+    gemini: 'mutable', virgo: 'mutable', sagittarius: 'mutable', pisces: 'mutable',
+  };
+  
+  // 13-sign modalities (Ophiuchus is fixed)
+  const modal13: Record<string, string> = {
+    ...modal12,
+    ophiuchus: 'fixed',
+  };
+  
+  const modalMap = use13Signs ? modal13 : modal12;
+  
+  Object.values(planets).forEach((planet) => {
+    const modality = modalMap[planet.sign];
+    if (modality && modalities[modality as keyof typeof modalities] !== undefined) {
+      modalities[modality as keyof typeof modalities]++;
+    }
+  });
+  
+  return modalities;
+}

@@ -1,0 +1,231 @@
+/**
+ * Oracle Journal - Landscape Optimizations
+ * Full-screen journal experience in landscape orientation
+ */
+
+/* ═══════════════════════════════════════════════════════════════════════════════
+   SMALL LANDSCAPE (<600px height) - Phones in landscape
+   ═══════════════════════════════════════════════════════════════════════════════ */
+
+@media (orientation: landscape) and (max-height: 600px) {
+  
+  .oracle-journal-overlay {
+    overflow-y: auto !important;
+  }
+  
+  /* Side-by-side layout for small landscape */
+  .oracle-journal {
+    max-width: none !important;
+    height: auto !important;
+    min-height: 100vh !important;
+    display: grid !important;
+    grid-template-columns: 280px 1fr !important;
+    grid-template-rows: auto 1fr !important;
+    grid-template-areas: 
+      "header header"
+      "sidebar content" !important;
+  }
+  
+  /* Header spans full width */
+  .oracle-header {
+    grid-area: header !important;
+    padding: 8px 16px !important;
+    flex-direction: row !important;
+    align-items: center !important;
+  }
+  
+  .oracle-logo-text h1 {
+    font-size: 1rem !important;
+  }
+  
+  .oracle-subtitle {
+    display: none !important;
+  }
+  
+  /* Compact mode nav */
+  .oracle-mode-nav {
+    flex-direction: column !important;
+    gap: 4px !important;
+  }
+  
+  .oracle-mode-btn {
+    padding: 6px 10px !important;
+    font-size: 0.75rem !important;
+  }
+  
+  /* Sidebar on left */
+  .oracle-sidebar {
+    grid-area: sidebar !important;
+    border-right: 1px solid var(--oj-border-subtle) !important;
+    border-bottom: none !important;
+    padding: 12px !important;
+    overflow-y: auto !important;
+    max-height: calc(100vh - 60px) !important;
+  }
+  
+  /* Content area */
+  .oracle-content {
+    grid-area: content !important;
+    padding: 12px !important;
+    overflow-y: auto !important;
+  }
+  
+  /* Stats grid compact */
+  .oracle-stats-grid {
+    grid-template-columns: 1fr !important;
+    gap: 6px !important;
+  }
+  
+  .oracle-stat-card {
+    padding: 8px !important;
+  }
+  
+  .oracle-stat-value {
+    font-size: 1.25rem !important;
+  }
+  
+  /* Hero section compact */
+  .oracle-hero {
+    padding: 16px !important;
+  }
+  
+  .hero-content h2 {
+    font-size: 1.1rem !important;
+  }
+  
+  .hero-content p {
+    font-size: 0.8rem !important;
+  }
+  
+  /* Entries list */
+  .entries-list {
+    max-height: none !important;
+  }
+  
+  .entry-item {
+    padding: 10px !important;
+  }
+  
+  /* Editor compact */
+  .journal-editor {
+    padding: 12px !important;
+  }
+  
+  .editor-header {
+    margin-bottom: 12px !important;
+  }
+  
+  .editor-title-input {
+    font-size: 1.1rem !important;
+  }
+  
+  .editor-toolbar {
+    flex-wrap: wrap !important;
+    gap: 4px !important;
+  }
+  
+  .editor-textarea {
+    min-height: 150px !important;
+    padding: 12px !important;
+  }
+  
+  /* Transits panel */
+  .transits-panel {
+    position: fixed !important;
+    right: 0 !important;
+    top: 60px !important;
+    bottom: 0 !important;
+    width: 300px !important;
+    z-index: 100 !important;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════════
+   MEDIUM LANDSCAPE (600-800px height) - Large phones, small tablets
+   ═══════════════════════════════════════════════════════════════════════════════ */
+
+@media (orientation: landscape) and (min-height: 601px) and (max-height: 800px) {
+  
+  .oracle-journal {
+    max-width: 100% !important;
+    display: grid !important;
+    grid-template-columns: 320px 1fr !important;
+    grid-template-rows: auto 1fr !important;
+    grid-template-areas: 
+      "header header"
+      "sidebar content" !important;
+  }
+  
+  .oracle-header {
+    grid-area: header !important;
+    padding: 12px 20px !important;
+  }
+  
+  .oracle-sidebar {
+    grid-area: sidebar !important;
+    padding: 16px !important;
+    overflow-y: auto !important;
+  }
+  
+  .oracle-content {
+    grid-area: content !important;
+    padding: 16px !important;
+  }
+  
+  .oracle-stats-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════════
+   LARGE LANDSCAPE (>800px height) - Tablets, desktops
+   ═══════════════════════════════════════════════════════════════════════════════ */
+
+@media (orientation: landscape) and (min-height: 801px) {
+  
+  .oracle-journal {
+    max-width: 1200px !important;
+    display: grid !important;
+    grid-template-columns: 360px 1fr !important;
+    grid-template-rows: auto 1fr !important;
+    grid-template-areas: 
+      "header header"
+      "sidebar content" !important;
+  }
+  
+  .oracle-header {
+    grid-area: header !important;
+  }
+  
+  .oracle-sidebar {
+    grid-area: sidebar !important;
+  }
+  
+  .oracle-content {
+    grid-area: content !important;
+  }
+  
+  .oracle-stats-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 12px !important;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════════
+   WIDE LANDSCAPE (>1200px width) - Extra wide screens
+   ═══════════════════════════════════════════════════════════════════════════════ */
+
+@media (orientation: landscape) and (min-width: 1200px) {
+  .oracle-journal {
+    max-width: 1400px !important;
+    grid-template-columns: 400px 1fr !important;
+  }
+  
+  .oracle-sidebar {
+    padding: 24px !important;
+  }
+  
+  .oracle-content {
+    padding: 24px !important;
+  }
+}

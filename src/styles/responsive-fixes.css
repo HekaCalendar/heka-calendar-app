@@ -1,0 +1,394 @@
+/**
+ * Responsive Layout Fixes
+ * Prevents pills from being cut off on smaller screens
+ * Includes landscape orientation optimizations
+ */
+
+/* Settings Panel Header */
+.settings-panel__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--space-4);
+  padding-bottom: var(--space-3);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.settings-panel__title {
+  margin: 0;
+}
+
+/* Month Header - Responsive */
+.month-header {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  align-items: center;
+  padding: var(--space-3) var(--space-4);
+}
+
+.month-header__left {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-2);
+}
+
+.month-header__title {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--space-2);
+  flex: 1 1 auto;
+  min-width: 200px;
+}
+
+.month-header__name {
+  font-size: var(--text-xl);
+  font-weight: 600;
+}
+
+.month-header__controls {
+  display: flex;
+  align-items: stretch;
+  gap: var(--space-3);
+  flex: 1 1 auto;
+  justify-content: center;
+}
+
+/* Column layout for header controls */
+.month-header__column {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  flex-shrink: 0;
+}
+
+.month-header__column--controls {
+  align-items: flex-start;
+}
+
+.month-header__column--features {
+  align-items: flex-start;
+}
+
+.month-header__row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  flex-wrap: nowrap;
+  white-space: nowrap;
+}
+
+.month-header__row .btn {
+  flex-shrink: 0;
+}
+
+.month-header__divider {
+  width: 2px;
+  min-height: 80px;
+  align-self: center;
+  background: linear-gradient(
+    180deg,
+    transparent 0%,
+    var(--color-gold) 20%,
+    var(--color-gold) 80%,
+    transparent 100%
+  );
+  opacity: 0.4;
+  margin: 0 var(--space-3);
+  flex-shrink: 0;
+  border-radius: 1px;
+}
+
+/* Settings Panel Grid - Better wrapping */
+.settings-panel__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: var(--space-4);
+}
+
+/* Settings Group Controls - Wrap properly */
+.settings-group__control {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.settings-group__control .btn {
+  flex: 0 1 auto;
+  min-width: fit-content;
+  white-space: nowrap;
+}
+
+/* Responsive breakpoints */
+@media (max-width: 1024px) {
+  .month-header {
+    padding: var(--space-3);
+  }
+  
+  .month-header__title {
+    min-width: 150px;
+  }
+  
+  .month-header__controls {
+    justify-content: center;
+    flex-wrap: nowrap;
+  }
+  
+  .month-header__row {
+    flex-wrap: nowrap;
+  }
+
+@media (max-width: 768px) {
+  .app {
+    padding: var(--space-3);
+  }
+  
+  .month-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .month-header__title {
+    width: 100%;
+    min-width: auto;
+  }
+  
+  .month-header__controls {
+    width: 100%;
+    justify-content: center;
+    gap: var(--space-2);
+    flex-wrap: nowrap;
+  }
+  
+  .month-header__column {
+    gap: var(--space-1);
+    flex-shrink: 0;
+  }
+  
+  .month-header__row {
+    gap: var(--space-1);
+    flex-wrap: nowrap;
+  }
+  
+  .month-header__row .btn {
+    padding: var(--space-1) var(--space-2);
+    font-size: var(--text-xs);
+    flex-shrink: 0;
+  }
+  
+  .month-header__divider {
+    margin: 0 var(--space-1);
+    min-height: 50px;
+  }
+  
+  .settings-panel__grid {
+    grid-template-columns: 1fr;
+  }
+  
+  /* Install button smaller on mobile */
+  .install-btn {
+    padding: var(--space-2) var(--space-3) !important;
+    font-size: var(--text-sm) !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .month-header__name {
+    font-size: var(--text-lg);
+  }
+  
+  .month-header__controls {
+    gap: var(--space-1);
+    justify-content: center;
+    flex-wrap: nowrap;
+  }
+  
+  .month-header__column {
+    flex-shrink: 0;
+  }
+  
+  .month-header__row {
+    flex-wrap: nowrap;
+    gap: 4px;
+  }
+  
+  .month-header__controls .btn {
+    padding: 4px 6px;
+    font-size: 10px;
+    flex-shrink: 0;
+  }
+  
+  .month-header__divider {
+    margin: 0 4px;
+    min-height: 40px;
+  }
+}
+
+/* Year Modal Responsive */
+@media (max-width: 768px) {
+  .year-modal__content {
+    grid-template-columns: repeat(2, 1fr);
+    padding: var(--space-4);
+  }
+}
+
+@media (max-width: 480px) {
+  .year-modal__content {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Calendar Container Responsive */
+@media (max-width: 1024px) {
+  .calendar-container {
+    flex-direction: column;
+  }
+  
+  .day-panel {
+    width: 100%;
+    border-left: none;
+    border-top: 1px solid var(--color-border);
+    /* FIXED: Let content expand naturally for page scroll */
+    max-height: none;
+    overflow: visible;
+    /* Ensure proper touch behavior */
+    touch-action: pan-y;
+  }
+}
+
+/* Celestial Panel Responsive */
+@media (max-width: 768px) {
+  .celestial-panel > * {
+    width: 85vw;
+    min-width: 280px;
+  }
+}
+
+/* Modal Responsive */
+@media (max-width: 768px) {
+  .modal {
+    width: 95vw;
+    max-height: 90vh;
+  }
+  
+  .journal-container {
+    flex-direction: column;
+  }
+  
+  .journal-sidebar {
+    width: 100%;
+    border-right: none;
+    border-bottom: 1px solid var(--color-border);
+    max-height: 200px;
+  }
+}
+
+/* Print Preview Responsive */
+@media (max-width: 768px) {
+  .print-preview {
+    padding: var(--space-4);
+  }
+  
+  .radio-group,
+  .checkbox-group {
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+}
+
+/* Day Cell Responsive */
+@media (max-width: 768px) {
+  .day-cell {
+    min-height: 60px;
+    padding: var(--space-1);
+  }
+  
+  .day-cell__heka-num {
+    font-size: var(--text-sm);
+  }
+  
+  .day-cell__civil {
+    font-size: 0.65rem;
+  }
+  
+  .day-cell__note-preview {
+    font-size: 0.6rem;
+  }
+}
+
+/* Ensure text doesn't overflow */
+.btn, .day-cell, .month-header__name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Settings Panel Header Responsive */
+@media (max-width: 480px) {
+  .settings-panel__header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-2);
+  }
+}
+
+/* ==========================================================================
+   Landscape Orientation - Size Constraints
+   ========================================================================== */
+
+/* Landscape phones - match the global.css landscape fixes */
+@media (orientation: landscape) and (max-height: 600px) {
+  .month-header__name {
+    font-size: var(--text-lg);
+  }
+  
+  .month-header__controls {
+    justify-content: center;
+    flex-wrap: nowrap;
+  }
+  
+  .month-header__row {
+    flex-wrap: nowrap;
+  }
+  
+  .month-header__controls .btn {
+    padding: var(--space-1) var(--space-2);
+    font-size: var(--text-xs);
+    flex-shrink: 0;
+  }
+  
+  /* Keep cells compact */
+  .day-cell {
+    min-height: 55px;
+  }
+  
+  .day-cell__heka-num {
+    font-size: 0.8rem;
+  }
+  
+  /* Smaller text in notes */
+  .day-cell__note-preview {
+    font-size: 0.55rem;
+  }
+}
+
+/* Ultra-wide landscape - full width with proper spacing */
+@media (orientation: landscape) and (min-aspect-ratio: 2/1) {
+  .calendar-grid {
+    max-width: 100%;
+    width: 100%;
+  }
+  
+  /* Ensure day cells distribute evenly */
+  .calendar-grid__week {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    width: 100%;
+  }
+  
+  /* Day cells expand to fill available space */
+  .day-cell {
+    min-height: 80px;
+  }
+}

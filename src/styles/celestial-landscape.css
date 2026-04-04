@@ -1,0 +1,459 @@
+/**
+ * CELESTIAL CARDS - LANDSCAPE MODE
+ * Complete mirror of portrait styles to ensure identical appearance
+ */
+
+@media (orientation: landscape) {
+  /* ═══════════════════════════════════════════════════════════════════════════════
+     BASE CELESTIAL PANEL
+     ═══════════════════════════════════════════════════════════════════════════════ */
+  
+  .celestial-panel {
+    background: linear-gradient(135deg, rgba(201, 162, 39, 0.05) 0%, rgba(20, 20, 30, 0.8) 100%) !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    border-radius: var(--radius-lg) !important;
+    padding: var(--space-4) !important;
+    padding-bottom: var(--space-6) !important;
+    display: flex !important;
+    gap: var(--space-4) !important;
+    overflow-x: auto !important;
+    overflow-y: visible !important;
+    scroll-behavior: smooth !important;
+    -webkit-overflow-scrolling: touch !important;
+    overscroll-behavior-x: contain !important;
+    /* CRITICAL: Allow both horizontal swipe for cards AND vertical page scroll */
+    touch-action: pan-x pan-y !important;
+  }
+
+  .celestial-panel::-webkit-scrollbar {
+    height: 12px !important;
+  }
+
+  .celestial-panel::-webkit-scrollbar-track {
+    background: rgba(201, 162, 39, 0.05) !important;
+    border-radius: 6px !important;
+    margin: 0 var(--space-4) !important;
+  }
+
+  .celestial-panel::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, var(--color-gold), var(--color-gold-dark)) !important;
+    border-radius: 6px !important;
+    border: 3px solid transparent !important;
+    background-clip: content-box !important;
+  }
+
+  /* ═══════════════════════════════════════════════════════════════════════════════
+     EXPANDABLE CARDS
+     ═══════════════════════════════════════════════════════════════════════════════ */
+  
+  .celestial-panel .celestial-expandable-card {
+    background: rgba(26, 26, 38, 0.8) !important;
+    border: 1px solid rgba(201, 162, 39, 0.2) !important;
+    border-radius: var(--radius-md) !important;
+    min-width: 280px !important;
+    max-width: 320px !important;
+    flex-shrink: 0 !important;
+    overflow-x: visible !important;
+    overflow-y: visible !important;
+    transition: all 0.3s ease !important;
+    box-sizing: border-box !important;
+  }
+
+  .celestial-panel .celestial-expandable-card:hover {
+    border-color: rgba(201, 162, 39, 0.4) !important;
+    box-shadow: 0 8px 32px rgba(201, 162, 39, 0.1) !important;
+  }
+
+  .celestial-panel .celestial-expandable-card.expanded {
+    border-color: var(--accent-color, var(--color-gold)) !important;
+    box-shadow: 0 8px 32px rgba(201, 162, 39, 0.15) !important;
+  }
+
+  .celestial-panel .celestial-expandable-card__header {
+    display: flex !important;
+    align-items: center !important;
+    gap: var(--space-3) !important;
+    padding: var(--space-4) !important;
+    cursor: pointer !important;
+    transition: background 0.2s ease !important;
+    /* CRITICAL: Allow vertical scroll to pass through */
+    touch-action: pan-y !important;
+    user-select: none !important;
+  }
+
+  .celestial-panel .celestial-expandable-card__header:hover {
+    background: rgba(201, 162, 39, 0.05) !important;
+  }
+
+  .celestial-panel .celestial-expandable-card__icon {
+    font-size: var(--text-2xl) !important;
+    flex-shrink: 0 !important;
+  }
+
+  .celestial-panel .celestial-expandable-card__title-group {
+    flex: 1 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 2px !important;
+  }
+
+  .celestial-panel .celestial-expandable-card__title {
+    font-weight: 600 !important;
+    color: var(--color-text) !important;
+    font-size: var(--text-base) !important;
+  }
+
+  .celestial-panel .celestial-expandable-card__subtitle {
+    font-size: var(--text-xs) !important;
+    color: var(--color-text-muted) !important;
+    font-family: var(--font-mono) !important;
+  }
+
+  .celestial-panel .celestial-expandable-card__chevron {
+    font-size: var(--text-xs) !important;
+    color: var(--color-gold) !important;
+    transition: transform 0.3s ease !important;
+  }
+
+  .celestial-panel .celestial-expandable-card__chevron.rotated {
+    transform: rotate(180deg) !important;
+  }
+
+  .celestial-panel .celestial-expandable-card__content {
+    padding: 0 var(--space-4) var(--space-4) !important;
+    animation: expand-in 0.3s ease !important;
+  }
+
+  @keyframes expand-in {
+    from {
+      opacity: 0 !important;
+      transform: translateY(-10px) !important;
+    }
+    to {
+      opacity: 1 !important;
+      transform: translateY(0) !important;
+    }
+  }
+
+  /* ═══════════════════════════════════════════════════════════════════════════════
+     INFO SECTIONS
+     ═══════════════════════════════════════════════════════════════════════════════ */
+  
+  .celestial-panel .celestial-info-section {
+    margin-top: var(--space-4) !important;
+    padding-top: var(--space-3) !important;
+    border-top: 1px solid var(--color-border) !important;
+  }
+
+  .celestial-panel .celestial-info-section__title {
+    font-family: var(--font-mono) !important;
+    font-size: var(--text-xs) !important;
+    color: var(--color-gold) !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.1em !important;
+    margin-bottom: var(--space-2) !important;
+  }
+
+  .celestial-panel .celestial-info-section__content {
+    color: var(--color-text-secondary) !important;
+    font-size: var(--text-sm) !important;
+    line-height: 1.6 !important;
+  }
+
+  .celestial-panel .celestial-info-section__content p {
+    margin: 0 !important;
+  }
+
+  /* ═══════════════════════════════════════════════════════════════════════════════
+     INFO LISTS
+     ═══════════════════════════════════════════════════════════════════════════════ */
+  
+  .celestial-panel .celestial-info-list {
+    margin: 0 !important;
+    padding-left: var(--space-4) !important;
+  }
+
+  .celestial-panel .celestial-info-list__item {
+    margin-bottom: var(--space-1) !important;
+    font-size: var(--text-sm) !important;
+    color: var(--color-text-secondary) !important;
+    line-height: 1.5 !important;
+  }
+
+  .celestial-panel .celestial-info-list__item::marker {
+    color: var(--color-gold) !important;
+  }
+
+  /* ═══════════════════════════════════════════════════════════════════════════════
+     INFO BADGES
+     ═══════════════════════════════════════════════════════════════════════════════ */
+  
+  .celestial-panel .celestial-info-badge {
+    display: inline-flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    padding: var(--space-2) var(--space-3) !important;
+    background: rgba(255, 255, 255, 0.03) !important;
+    border: 1px solid var(--color-border) !important;
+    border-radius: var(--radius-md) !important;
+    margin-right: var(--space-2) !important;
+    margin-bottom: var(--space-2) !important;
+  }
+
+  .celestial-panel .celestial-info-badge__label {
+    font-family: var(--font-mono) !important;
+    font-size: var(--text-xs) !important;
+    color: var(--color-text-muted) !important;
+    text-transform: uppercase !important;
+  }
+
+  .celestial-panel .celestial-info-badge__value {
+    font-weight: 600 !important;
+    color: var(--color-gold) !important;
+    font-size: var(--text-sm) !important;
+  }
+
+  /* ═══════════════════════════════════════════════════════════════════════════════
+     SOLAR NOON DISPLAY
+     ═══════════════════════════════════════════════════════════════════════════════ */
+  
+  .celestial-panel .solar-noon-display {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: var(--space-2) !important;
+    padding: var(--space-3) !important;
+    background: rgba(251, 191, 36, 0.05) !important;
+    border: 1px solid rgba(251, 191, 36, 0.2) !important;
+    border-radius: var(--radius-md) !important;
+  }
+
+  .celestial-panel .solar-noon-time {
+    font-size: var(--text-xl) !important;
+    font-weight: 700 !important;
+    color: #fbbf24 !important;
+    font-family: var(--font-mono) !important;
+  }
+
+  .celestial-panel .solar-noon-elevation {
+    font-size: var(--text-sm) !important;
+    color: var(--color-text-secondary) !important;
+  }
+
+  .celestial-panel .lunar-month-display {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    gap: var(--space-2) !important;
+    margin-bottom: var(--space-3) !important;
+  }
+
+  /* ═══════════════════════════════════════════════════════════════════════════════
+     AG GUIDANCE DISPLAY
+     ═══════════════════════════════════════════════════════════════════════════════ */
+  
+  .celestial-panel .ag-guidance-display {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: var(--space-2) !important;
+    padding: var(--space-3) !important;
+    background: rgba(134, 239, 172, 0.05) !important;
+    border: 1px solid rgba(134, 239, 172, 0.2) !important;
+    border-radius: var(--radius-md) !important;
+  }
+
+  .celestial-panel .ag-activity {
+    font-size: var(--text-lg) !important;
+    font-weight: 600 !important;
+    color: #86efac !important;
+  }
+
+  .celestial-panel .ag-confidence {
+    font-family: var(--font-mono) !important;
+    font-size: var(--text-xs) !important;
+    text-transform: uppercase !important;
+  }
+
+  .celestial-panel .ag-confidence--high {
+    color: #86efac !important;
+  }
+
+  .celestial-panel .ag-confidence--moderate {
+    color: #fbbf24 !important;
+  }
+
+  .celestial-panel .ag-confidence--low {
+    color: #fca5a5 !important;
+  }
+
+  /* ═══════════════════════════════════════════════════════════════════════════════
+     ENERGY FORECAST
+     ═══════════════════════════════════════════════════════════════════════════════ */
+  
+  .celestial-panel .energy-forecast-display {
+    padding: var(--space-3) !important;
+    background: rgba(255, 255, 255, 0.02) !important;
+    border-radius: var(--radius-md) !important;
+  }
+
+  .celestial-panel .energy-level-bar {
+    height: 8px !important;
+    background: rgba(255, 255, 255, 0.1) !important;
+    border-radius: 4px !important;
+    overflow: hidden !important;
+    margin-bottom: var(--space-3) !important;
+  }
+
+  .celestial-panel .energy-level-fill {
+    height: 100% !important;
+    border-radius: 4px !important;
+    transition: width 0.5s ease !important;
+  }
+
+  .celestial-panel .energy-description {
+    font-size: var(--text-sm) !important;
+    color: var(--color-text) !important;
+    margin-bottom: var(--space-2) !important;
+  }
+
+  .celestial-panel .energy-factors {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    gap: var(--space-2) !important;
+  }
+
+  .celestial-panel .energy-factor {
+    font-size: var(--text-xs) !important;
+    padding: 2px 8px !important;
+    background: rgba(201, 162, 39, 0.1) !important;
+    border-radius: var(--radius-full) !important;
+    color: var(--color-gold) !important;
+  }
+
+  /* ═══════════════════════════════════════════════════════════════════════════════
+     NUMEROLOGY DISPLAY
+     ═══════════════════════════════════════════════════════════════════════════════ */
+  
+  .celestial-panel .numerology-display {
+    display: flex !important;
+    align-items: center !important;
+    gap: var(--space-4) !important;
+    padding: var(--space-4) !important;
+    background: rgba(212, 188, 122, 0.05) !important;
+    border: 1px solid rgba(212, 188, 122, 0.2) !important;
+    border-radius: var(--radius-md) !important;
+    margin-bottom: var(--space-3) !important;
+  }
+
+  .celestial-panel .numerology-number {
+    font-size: var(--text-4xl) !important;
+    font-weight: 700 !important;
+    color: #d4bc7a !important;
+    font-family: var(--font-display) !important;
+    text-shadow: 0 0 20px rgba(212, 188, 122, 0.3) !important;
+  }
+
+  .celestial-panel .numerology-meaning {
+    flex: 1 !important;
+    font-size: var(--text-sm) !important;
+    color: var(--color-text-secondary) !important;
+  }
+
+  .celestial-panel .numerology-meta {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    gap: var(--space-2) !important;
+    margin-top: var(--space-3) !important;
+  }
+
+  /* ═══════════════════════════════════════════════════════════════════════════════
+     COUNTDOWN WIDGET
+     ═══════════════════════════════════════════════════════════════════════════════ */
+  
+  .celestial-panel .countdown-widget {
+    background: rgba(255, 255, 255, 0.03) !important;
+    border: 1px solid rgba(201, 162, 39, 0.15) !important;
+    border-radius: var(--radius-md) !important;
+    padding: var(--space-3) !important;
+    margin-bottom: var(--space-3) !important;
+    min-width: 0 !important;
+    overflow: visible !important;
+  }
+
+  .celestial-panel .countdown-time {
+    gap: 4px !important;
+  }
+
+  .celestial-panel .countdown-unit {
+    min-width: 45px !important;
+    flex: 1 !important;
+  }
+
+  .celestial-panel .countdown-value {
+    font-size: 1.25rem !important;
+  }
+
+  .celestial-panel .countdown-unit-label {
+    font-size: 0.6rem !important;
+  }
+
+  .celestial-panel .countdown-separator {
+    font-size: 1rem !important;
+    padding: 0 2px !important;
+  }
+
+  /* ═══════════════════════════════════════════════════════════════════════════════
+     ZODIAC CARD (within expandable cards)
+     ═══════════════════════════════════════════════════════════════════════════════ */
+  
+  .celestial-panel .zodiac-card__description {
+    font-size: var(--text-sm) !important;
+    color: var(--color-text-secondary) !important;
+    line-height: 1.6 !important;
+    margin-bottom: var(--space-3) !important;
+  }
+
+  .celestial-panel .zodiac-card__traits {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    gap: var(--space-2) !important;
+    align-items: center !important;
+    margin-top: var(--space-3) !important;
+  }
+
+  .celestial-panel .zodiac-card__label {
+    font-family: var(--font-mono) !important;
+    font-size: var(--text-xs) !important;
+    color: var(--color-text-muted) !important;
+  }
+
+  .celestial-panel .zodiac-card__trait {
+    font-size: var(--text-xs) !important;
+    padding: 2px 8px !important;
+    background: rgba(201, 162, 39, 0.1) !important;
+    border: 1px solid rgba(201, 162, 39, 0.3) !important;
+    border-radius: var(--radius-full) !important;
+    color: var(--color-gold) !important;
+  }
+}
+
+  /* ═══════════════════════════════════════════════════════════════════════════════
+     SCROLL FIX - Ensure all card elements allow vertical scroll
+     ═══════════════════════════════════════════════════════════════════════════════ */
+  
+  /* ALL celestial card children must allow vertical scroll */
+  .celestial-panel .celestial-expandable-card *,
+  .celestial-panel .celestial-info-section *,
+  .celestial-panel .celestial-info-list *,
+  .celestial-panel .celestial-info-badge *,
+  .celestial-panel .zodiac-card__traits *,
+  .celestial-panel .countdown-widget *,
+  .celestial-panel .selected-date-info * {
+    touch-action: pan-y !important;
+  }
+  
+  /* Card header specifically - ensure click works but scroll passes through */
+  .celestial-panel .celestial-expandable-card__header,
+  .celestial-panel .celestial-expandable-card__header * {
+    touch-action: pan-y !important;
+    user-select: none !important;
+  }
+}

@@ -1,0 +1,131 @@
+/**
+ * Celestial Intelligence Custom Fonts
+ * 6 unique typefaces for the observatory interface
+ */
+
+/* Import Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Orbitron:wght@400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Syncopate:wght@400;700&family=Rajdhani:wght@300;400;500;600;700&display=swap');
+
+/* Font Variables */
+:root {
+  /* 1. Stellar - Classic astrology elegance */
+  --ci-font-stellar: 'Cinzel', serif;
+  
+  /* 2. Cosmic - Modern sci-fi tech */
+  --ci-font-cosmic: 'Orbitron', sans-serif;
+  
+  /* 3. Nebula - Clean geometric space */
+  --ci-font-nebula: 'Space Grotesk', sans-serif;
+  
+  /* 4. Void - Elegant mystical serif */
+  --ci-font-void: 'Cormorant Garamond', serif;
+  
+  /* 5. Oracle - Bold futuristic display */
+  --ci-font-oracle: 'Syncopate', sans-serif;
+  
+  /* 6. Quantum - Technical precise */
+  --ci-font-quantum: 'Rajdhani', sans-serif;
+}
+
+/* Default font for CI section */
+.stars-hub {
+  font-family: var(--ci-font-nebula);
+}
+
+/* Font Classes - can be toggled via JS */
+.ci-font-stellar {
+  --ci-current-font: var(--ci-font-stellar);
+  font-family: var(--ci-font-stellar);
+}
+
+.ci-font-cosmic {
+  --ci-current-font: var(--ci-font-cosmic);
+  font-family: var(--ci-font-cosmic);
+}
+
+.ci-font-nebula {
+  --ci-current-font: var(--ci-font-nebula);
+  font-family: var(--ci-font-nebula);
+}
+
+.ci-font-void {
+  --ci-current-font: var(--ci-font-void);
+  font-family: var(--ci-font-void);
+}
+
+.ci-font-oracle {
+  --ci-current-font: var(--ci-font-oracle);
+  font-family: var(--ci-font-oracle);
+}
+
+.ci-font-quantum {
+  --ci-current-font: var(--ci-font-quantum);
+  font-family: var(--ci-font-quantum);
+}
+
+/* Font-specific adjustments */
+.ci-font-stellar .sh-title {
+  letter-spacing: 0.1em;
+  font-weight: 600;
+}
+
+.ci-font-cosmic .sh-title {
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+}
+
+.ci-font-cosmic .sh-tab {
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.ci-font-void .sh-title {
+  font-style: italic;
+  font-weight: 500;
+}
+
+.ci-font-void .sh-card-title {
+  font-style: italic;
+}
+
+.ci-font-oracle .sh-title {
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  font-weight: 700;
+}
+
+.ci-font-oracle .sh-tab {
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.ci-font-quantum .sh-time-display {
+  font-weight: 300;
+  letter-spacing: 0.05em;
+}
+
+/* Apply font to key elements */
+.ci-font-stellar h1, .ci-font-stellar h2, .ci-font-stellar h3,
+.ci-font-stellar .sh-section-title, .ci-font-stellar .sh-card-title {
+  font-family: var(--ci-font-stellar);
+}
+
+.ci-font-cosmic h1, .ci-font-cosmic h2, .ci-font-cosmic h3,
+.ci-font-cosmic .sh-section-title, .ci-font-cosmic .sh-card-title {
+  font-family: var(--ci-font-cosmic);
+}
+
+.ci-font-void h1, .ci-font-void h2, .ci-font-void h3,
+.ci-font-void .sh-section-title, .ci-font-void .sh-card-title {
+  font-family: var(--ci-font-void);
+}
+
+.ci-font-oracle h1, .ci-font-oracle h2, .ci-font-oracle h3,
+.ci-font-oracle .sh-section-title, .ci-font-oracle .sh-card-title {
+  font-family: var(--ci-font-oracle);
+}
+
+.ci-font-quantum h1, .ci-font-quantum h2, .ci-font-quantum h3,
+.ci-font-quantum .sh-section-title, .ci-font-quantum .sh-card-title {
+  font-family: var(--ci-font-quantum);
+}

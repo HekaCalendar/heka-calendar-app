@@ -1,0 +1,312 @@
+/**
+ * Energy Vote Card Styles
+ * Community energy voting interface
+ */
+
+.energy-vote-card {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.02));
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 16px;
+  padding: 16px;
+  min-width: 280px;
+  flex-shrink: 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.energy-vote-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+}
+
+.energy-vote-card__header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.energy-vote-card__icon {
+  font-size: 24px;
+}
+
+.energy-vote-card__title-group {
+  flex: 1;
+}
+
+.energy-vote-card__title {
+  display: block;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.92);
+  font-size: 14px;
+}
+
+.energy-vote-card__subtitle {
+  display: block;
+  font-family: ui-monospace, monospace;
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.5);
+  letter-spacing: 0.05em;
+}
+
+/* Energy Display */
+.energy-vote-display {
+  text-align: center;
+  padding: 16px;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 12px;
+  margin-bottom: 16px;
+}
+
+/* Empty State - No votes recorded */
+.energy-vote-display--empty {
+  padding: 24px 16px;
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.energy-vote-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.energy-vote-empty-icon {
+  font-size: 28px;
+  opacity: 0.6;
+}
+
+.energy-vote-empty-text {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.5);
+  font-style: italic;
+}
+
+.energy-vote-rating {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 4px;
+  margin-bottom: 8px;
+}
+
+.energy-vote-number {
+  font-size: 48px;
+  font-weight: 700;
+  color: #caa24a;
+  font-family: 'Cinzel', serif;
+  line-height: 1;
+}
+
+.energy-vote-outof {
+  font-size: 16px;
+  color: rgba(255, 255, 255, 0.4);
+  font-family: ui-monospace, monospace;
+}
+
+.energy-vote-level {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.energy-vote-emoji {
+  font-size: 20px;
+}
+
+.energy-vote-label {
+  font-size: 14px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+/* Energy Bar */
+.energy-vote-bar-container {
+  margin-top: 12px;
+}
+
+.energy-vote-bar-bg {
+  height: 8px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+  overflow: hidden;
+  position: relative;
+}
+
+.energy-vote-bar-fill {
+  height: 100%;
+  border-radius: 4px;
+  transition: width 0.5s ease;
+  box-shadow: 0 0 10px currentColor;
+}
+
+.energy-vote-scale {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 4px;
+  font-family: ui-monospace, monospace;
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.4);
+}
+
+/* Guidance */
+.energy-vote-guidance {
+  padding: 12px;
+  background: rgba(202, 162, 74, 0.05);
+  border-left: 2px solid #caa24a;
+  border-radius: 0 8px 8px 0;
+  margin-bottom: 16px;
+}
+
+.energy-vote-guidance p {
+  margin: 0;
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.7);
+  line-height: 1.5;
+}
+
+/* Voting Section */
+.energy-vote-section {
+  margin-top: 12px;
+}
+
+.energy-vote-thanks {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px;
+  background: rgba(85, 255, 164, 0.1);
+  border: 1px solid rgba(85, 255, 164, 0.3);
+  border-radius: 8px;
+  font-size: 12px;
+  color: #55ffa4;
+}
+
+.energy-vote-check {
+  font-size: 16px;
+}
+
+.energy-vote-form {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 12px;
+  padding: 16px;
+}
+
+.energy-vote-question {
+  margin: 0 0 12px 0;
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.8);
+  text-align: center;
+}
+
+.energy-vote-options {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+
+.energy-vote-option {
+  width: 36px;
+  height: 36px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.03);
+  color: rgba(255, 255, 255, 0.7);
+  border-radius: 8px;
+  font-family: ui-monospace, monospace;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.energy-vote-option:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.25);
+  transform: translateY(-2px);
+}
+
+.energy-vote-option.selected {
+  background: rgba(202, 162, 74, 0.2);
+  border-color: #caa24a;
+  color: #caa24a;
+  box-shadow: 0 0 15px rgba(202, 162, 74, 0.3);
+}
+
+.energy-vote-actions {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+}
+
+.energy-vote-actions .btn {
+  padding: 8px 16px;
+  font-size: 12px;
+}
+
+.energy-vote-cta {
+  text-align: center;
+  padding: 12px;
+}
+
+.energy-vote-cta p {
+  margin: 0 0 8px 0;
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.5);
+  font-family: ui-monospace, monospace;
+}
+
+.energy-vote-btn {
+  background: rgba(202, 162, 74, 0.15) !important;
+  border-color: rgba(202, 162, 74, 0.5) !important;
+}
+
+.energy-vote-btn:hover {
+  background: rgba(202, 162, 74, 0.25) !important;
+  box-shadow: 0 0 20px rgba(202, 162, 74, 0.25) !important;
+}
+
+.energy-vote-closed {
+  text-align: center;
+  padding: 12px;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 8px;
+}
+
+.energy-vote-closed p {
+  margin: 0;
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.energy-vote-next {
+  margin-top: 4px !important;
+  font-size: 11px !important;
+  color: rgba(202, 162, 74, 0.8) !important;
+}
+
+/* ==========================================================================
+   Mobile Styles - Fix scroll issues
+   ========================================================================== */
+
+@media (max-width: 768px) {
+  /* On mobile, the card should allow vertical scroll to pass through */
+  .energy-vote-card {
+    touch-action: pan-y;
+  }
+  
+  /* Buttons should respond to taps but not block page scroll */
+  .energy-vote-option,
+  .energy-vote-btn,
+  .energy-vote-actions .btn {
+    touch-action: manipulation;
+  }
+}

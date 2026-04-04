@@ -1,0 +1,259 @@
+/* SYNC vs TRUE - EPIC Mathematics Visual */
+.svte-visual {
+  padding: 20px;
+  margin: 16px 0;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.6) 0%, rgba(20, 20, 50, 0.8) 100%);
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 0 0 40px rgba(201, 162, 39, 0.1);
+}
+
+/* Header */
+.svte-header {
+  text-align: center;
+  margin-bottom: 16px;
+}
+
+.svte-subtitle {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.5);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+/* Mode Comparison */
+.svte-modes {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 16px;
+  align-items: stretch;
+}
+
+.svte-mode {
+  flex: 1;
+  padding: 16px;
+  border-radius: 16px;
+  border: 1px solid;
+  display: flex;
+  flex-direction: column;
+}
+
+.svte-mode.sync {
+  background: linear-gradient(180deg, rgba(59, 130, 246, 0.15) 0%, rgba(59, 130, 246, 0.05) 100%);
+  border-color: rgba(59, 130, 246, 0.4);
+}
+
+.svte-mode.true {
+  background: linear-gradient(180deg, rgba(201, 162, 39, 0.15) 0%, rgba(201, 162, 39, 0.05) 100%);
+  border-color: rgba(201, 162, 39, 0.4);
+}
+
+.svte-mode-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.svte-icon {
+  font-size: 24px;
+}
+
+.svte-title {
+  font-size: 16px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.svte-mode.sync .svte-title {
+  color: rgba(147, 197, 253, 0.9);
+}
+
+.svte-mode.true .svte-title {
+  color: #c9a227;
+}
+
+/* Details */
+.svte-details {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 12px;
+  flex: 1;
+}
+
+.svte-detail {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 6px 8px;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 6px;
+}
+
+.svte-label {
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.5);
+  text-transform: uppercase;
+}
+
+.svte-value {
+  font-size: 11px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.svte-value.highlight {
+  color: #22c55e;
+}
+
+/* Accuracy Bars */
+.svte-accuracy-bar {
+  height: 6px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 3px;
+  overflow: hidden;
+  margin-bottom: 6px;
+}
+
+.svte-accuracy-fill {
+  height: 100%;
+  border-radius: 3px;
+  transition: width 0.5s ease;
+}
+
+.svte-accuracy-fill.sync {
+  background: linear-gradient(90deg, #3b82f6, #60a5fa);
+  box-shadow: 0 0 10px rgba(59, 130, 246, 0.5);
+}
+
+.svte-accuracy-fill.true {
+  background: linear-gradient(90deg, #c9a227, #f0d878);
+  box-shadow: 0 0 10px rgba(201, 162, 39, 0.5);
+}
+
+.svte-accuracy-label {
+  font-size: 9px;
+  color: rgba(255, 255, 255, 0.5);
+  text-align: center;
+  display: block;
+}
+
+/* Divider */
+.svte-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.3);
+  padding: 0 4px;
+}
+
+/* Slider Section */
+.svte-slider-section {
+  margin-bottom: 12px;
+  padding: 12px;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 12px;
+}
+
+.svte-slider-label {
+  display: block;
+  text-align: center;
+  font-size: 12px;
+  font-weight: 600;
+  color: #c9a227;
+  margin-bottom: 8px;
+}
+
+.svte-slider {
+  width: 100%;
+  height: 6px;
+  -webkit-appearance: none;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 3px;
+  outline: none;
+  margin-bottom: 10px;
+}
+
+.svte-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 18px;
+  height: 18px;
+  background: #c9a227;
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow: 0 0 10px rgba(201, 162, 39, 0.5);
+}
+
+.svte-drift-display {
+  display: flex;
+  justify-content: space-around;
+  gap: 16px;
+}
+
+.svte-drift {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.svte-drift-label {
+  font-size: 9px;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.svte-drift-value {
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.svte-drift.sync .svte-drift-value {
+  color: #3b82f6;
+}
+
+.svte-drift.true .svte-drift-value {
+  color: #c9a227;
+}
+
+/* Bottom Truth */
+.svte-truth {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px;
+  background: rgba(201, 162, 39, 0.1);
+  border-radius: 10px;
+  border: 1px solid rgba(201, 162, 39, 0.2);
+}
+
+.svte-truth-icon {
+  font-size: 20px;
+}
+
+.svte-truth-text {
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.8);
+  line-height: 1.5;
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+  .svte-modes {
+    flex-direction: column;
+  }
+  
+  .svte-divider {
+    padding: 8px 0;
+  }
+  
+  .svte-drift-display {
+    flex-direction: column;
+    gap: 8px;
+  }
+}

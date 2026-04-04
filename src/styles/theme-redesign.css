@@ -1,0 +1,317 @@
+/**
+ * HEKA Calendar - Soothing Eye-Friendly Theme
+ * Reduced contrast, warmer tones, better for extended viewing
+ */
+
+:root {
+  /* Soothing Background Colors - Less Harsh */
+  --color-bg: #0c0c0f;
+  --color-bg-elevated: #121218;
+  --color-bg-card: #1a1a22;
+  --color-bg-hover: #22222c;
+  --color-bg-selected: #2a2a38;
+  
+  /* Muted Gold - Less Blinding */
+  --color-gold: #b8a060;
+  --color-gold-light: #d4bc7a;
+  --color-gold-dark: #9a8548;
+  --color-gold-muted: rgba(184, 160, 96, 0.1);
+  --color-gold-glow: rgba(184, 160, 96, 0.25);
+  
+  /* Softer Arc Colors */
+  --color-opening: #c45c5c;
+  --color-opening-bg: rgba(196, 92, 92, 0.1);
+  --color-opening-glow: rgba(196, 92, 92, 0.2);
+  
+  --color-core: #5a9a6a;
+  --color-core-bg: rgba(90, 154, 106, 0.1);
+  --color-core-glow: rgba(90, 154, 106, 0.2);
+  
+  --color-closing: #8a7ac4;
+  --color-closing-bg: rgba(138, 122, 196, 0.1);
+  --color-closing-glow: rgba(138, 122, 196, 0.2);
+  
+  /* Warmer, Softer Text */
+  --color-text: #e8e6e1;
+  --color-text-secondary: #b8b4a8;
+  --color-text-muted: #888480;
+  --color-text-subtle: #5c5850;
+  
+  /* Gentler Borders */
+  --color-border: rgba(255, 255, 255, 0.06);
+  --color-border-hover: rgba(184, 160, 96, 0.25);
+  --color-border-strong: rgba(255, 255, 255, 0.12);
+  
+  /* Selection States - Clear Visual Feedback */
+  --color-selection-bg: rgba(184, 160, 96, 0.15);
+  --color-selection-border: rgba(184, 160, 96, 0.5);
+  
+  /* Mode Indicators - Muted */
+  --color-sync: #6ab4d4;
+  --color-sync-bg: rgba(106, 180, 212, 0.1);
+  --color-true: #d4a46a;
+  --color-true-bg: rgba(212, 164, 106, 0.1);
+  
+  /* Additional Accent Variations */
+  --color-accent-1: #6a9a9a; /* Teal - Notes */
+  --color-accent-2: #9a8a6a; /* Bronze - Journal */
+  --color-accent-3: #8a6a8a; /* Purple - Stats */
+  --color-accent-4: #6a7a9a; /* Blue - Settings */
+  
+  /* Gradients */
+  --gradient-gold: linear-gradient(135deg, rgba(184, 160, 96, 0.15) 0%, rgba(184, 160, 96, 0.05) 100%);
+  --gradient-card: linear-gradient(180deg, rgba(255, 255, 255, 0.03) 0%, transparent 100%);
+  --gradient-hover: linear-gradient(135deg, rgba(184, 160, 96, 0.08) 0%, rgba(184, 160, 96, 0.02) 100%);
+}
+
+/* Apply Theme Overrides */
+.app {
+  background-color: var(--color-bg);
+  color: var(--color-text);
+}
+
+/* Softer App Header */
+.app-header {
+  background: var(--gradient-card);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.app-title {
+  color: var(--color-gold);
+  text-shadow: 0 2px 20px var(--color-gold-glow);
+}
+
+.app-subtitle {
+  color: var(--color-text-secondary);
+}
+
+/* Muted Mode Indicator */
+.mode-indicator {
+  background: var(--color-border);
+  border: 1px solid var(--color-border-strong);
+  color: var(--color-text-secondary);
+}
+
+.mode-indicator--sync {
+  background: var(--color-sync-bg);
+  border-color: var(--color-sync);
+  color: var(--color-sync);
+}
+
+.mode-indicator--true {
+  background: var(--color-true-bg);
+  border-color: var(--color-true);
+  color: var(--color-true);
+}
+
+/* Softer Settings Panel */
+.settings-panel {
+  background: var(--color-bg-elevated);
+  border: 1px solid var(--color-border);
+}
+
+.settings-panel__title {
+  color: var(--color-gold);
+}
+
+/* Gentler Buttons */
+.btn {
+  background: var(--color-bg-card);
+  border: 1px solid var(--color-border);
+  color: var(--color-text-secondary);
+  transition: all 0.2s ease;
+}
+
+.btn:hover {
+  background: var(--color-bg-hover);
+  border-color: var(--color-border-hover);
+  color: var(--color-text);
+}
+
+.btn--primary {
+  background: var(--color-gold-muted);
+  border-color: var(--color-gold);
+  color: var(--color-gold-light);
+}
+
+.btn--primary:hover {
+  background: rgba(184, 160, 96, 0.2);
+  box-shadow: 0 0 20px var(--color-gold-glow);
+}
+
+.btn--active {
+  background: var(--color-selection-bg);
+  border-color: var(--color-selection-border);
+  color: var(--color-gold-light);
+}
+
+/* Softer Day Cells */
+.day-cell {
+  background: var(--color-bg-card);
+  border: 1px solid var(--color-border);
+}
+
+.day-cell:hover {
+  background: var(--color-bg-hover);
+  border-color: var(--color-border-hover);
+}
+
+.day-cell--selected {
+  background: var(--color-selection-bg);
+  border-color: var(--color-selection-border);
+  box-shadow: 
+    0 0 0 1px var(--color-selection-border),
+    0 0 15px var(--color-gold-glow);
+}
+
+.day-cell--today {
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.12) 0%, transparent 100%);
+  border-color: #3b82f6;
+  box-shadow: 
+    0 0 0 1px #3b82f6,
+    0 0 20px rgba(59, 130, 246, 0.2);
+}
+
+/* Softer Arc Indicators */
+.month-header__arc[data-arc="OPENING"] {
+  background: var(--color-opening-bg) !important;
+  border-color: var(--color-opening) !important;
+  color: #e8a0a0 !important;
+  box-shadow: 0 0 10px var(--color-opening-glow) !important;
+}
+
+.month-header__arc[data-arc="CORE"] {
+  background: var(--color-core-bg) !important;
+  border-color: var(--color-core) !important;
+  color: #a0d4b0 !important;
+  box-shadow: 0 0 10px var(--color-core-glow) !important;
+}
+
+.month-header__arc[data-arc="CLOSING"] {
+  background: var(--color-closing-bg) !important;
+  border-color: var(--color-closing) !important;
+  color: #c0b0e8 !important;
+  box-shadow: 0 0 10px var(--color-closing-glow) !important;
+}
+
+/* Softer Celestial Panel */
+.celestial-panel {
+  background: linear-gradient(135deg, rgba(184, 160, 96, 0.03) 0%, rgba(12, 12, 15, 0.8) 100%);
+}
+
+.celestial-card {
+  background: var(--color-bg-elevated);
+  border: 1px solid var(--color-border);
+}
+
+.celestial-card:hover {
+  border-color: var(--color-border-hover);
+}
+
+/* Celestial Panel Scrollbar - Styled */
+.celestial-panel::-webkit-scrollbar {
+  height: 10px;
+  background: transparent;
+}
+
+.celestial-panel::-webkit-scrollbar-track {
+  background: var(--color-bg-card);
+  border-radius: 5px;
+  margin: 0 8px;
+}
+
+.celestial-panel::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, var(--color-gold) 0%, var(--color-gold-dark) 100%);
+  border-radius: 5px;
+  border: 2px solid var(--color-bg-card);
+}
+
+.celestial-panel::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, var(--color-gold-light) 0%, var(--color-gold) 100%);
+}
+
+/* Note Previews - Softer */
+.day-cell__note-preview {
+  background: rgba(106, 154, 154, 0.15);
+  border-left-color: var(--color-accent-1);
+  color: var(--color-text-secondary);
+}
+
+/* Modal Overlays - Gentler */
+.modal-overlay {
+  background: rgba(12, 12, 15, 0.9);
+  backdrop-filter: blur(8px);
+}
+
+.modal {
+  background: var(--color-bg-elevated);
+  border: 1px solid var(--color-border);
+}
+
+.modal__title {
+  color: var(--color-gold);
+}
+
+/* Install Button - Muted */
+.install-btn {
+  background: linear-gradient(135deg, var(--color-gold) 0%, var(--color-gold-dark) 100%) !important;
+  color: var(--color-bg) !important;
+  animation: gentle-pulse 3s infinite;
+}
+
+@keyframes gentle-pulse {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(184, 160, 96, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 0 6px rgba(184, 160, 96, 0);
+  }
+}
+
+/* Notification Panel - Softer */
+.notification-settings {
+  background: var(--color-bg-card);
+  border: 1px solid var(--color-border);
+}
+
+/* Day Panel - Gentler */
+.day-panel {
+  background: var(--color-bg-elevated);
+  border-left: 1px solid var(--color-border);
+}
+
+/* Year Modal - Softer */
+.year-modal {
+  background: var(--color-bg-elevated);
+}
+
+.year-modal__content {
+  background: var(--color-bg);
+}
+
+/* Tooltip - Softer */
+.celestial-tooltip {
+  background: rgba(18, 18, 24, 0.98);
+  border-color: var(--color-gold);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+}
+
+/* Form Elements */
+input, select, textarea {
+  background: var(--color-bg-card);
+  border: 1px solid var(--color-border);
+  color: var(--color-text);
+}
+
+input:focus, select:focus, textarea:focus {
+  border-color: var(--color-gold);
+  box-shadow: 0 0 0 2px var(--color-gold-muted);
+}
+
+/* Checkbox and Radio */
+.checkbox input:checked + span,
+.radio input:checked + span {
+  background: var(--color-selection-bg);
+  border-color: var(--color-gold);
+  color: var(--color-gold-light);
+}

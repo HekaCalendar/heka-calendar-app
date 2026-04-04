@@ -1,0 +1,321 @@
+/**
+ * UniversalTools Styles
+ */
+
+.universal-tools {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 20px;
+}
+
+.ut-card {
+  background: #16161a;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  padding: 20px;
+}
+
+.ut-hour-card {
+  grid-column: span 2;
+  background: linear-gradient(135deg, rgba(212, 175, 55, 0.08), rgba(212, 175, 55, 0.02));
+  border-color: rgba(212, 175, 55, 0.2);
+}
+
+.ut-hour-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.ut-badge {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  padding: 6px 12px;
+  background: rgba(212, 175, 55, 0.15);
+  color: #d4af37;
+  border-radius: 6px;
+}
+
+.ut-badge.moon {
+  background: rgba(96, 165, 250, 0.15);
+  color: #60a5fa;
+}
+
+.ut-badge.retro {
+  background: rgba(239, 68, 68, 0.15);
+  color: #ef4444;
+}
+
+.ut-badge.void {
+  background: rgba(234, 179, 8, 0.15);
+  color: #eab308;
+}
+
+.ut-live {
+  font-size: 11px;
+  color: #22c55e;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.ut-hour-main {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.ut-hour-symbol {
+  width: 64px;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 36px;
+  background: rgba(212, 175, 55, 0.1);
+  border-radius: 16px;
+  border: 1px solid rgba(212, 175, 55, 0.2);
+}
+
+.ut-hour-name {
+  font-size: 24px;
+  font-weight: 700;
+  color: #f8f7f5;
+}
+
+.ut-hour-time {
+  font-size: 14px;
+  color: #a1a1aa;
+  margin-top: 4px;
+}
+
+.ut-hour-activities {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.ut-activity-section {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.ut-activity-label {
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.ut-activity-label.good {
+  color: #22c55e;
+}
+
+.ut-activity-label.avoid {
+  color: #ef4444;
+}
+
+.ut-activity-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.ut-tag {
+  font-size: 12px;
+  padding: 6px 10px;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.ut-tag.good {
+  background: rgba(34, 197, 94, 0.1);
+  color: #22c55e;
+}
+
+.ut-tag.avoid {
+  background: rgba(239, 68, 68, 0.1);
+  color: #ef4444;
+}
+
+.ut-upcoming {
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  padding-top: 16px;
+}
+
+.ut-upcoming-title {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #71717a;
+  margin-bottom: 10px;
+}
+
+.ut-upcoming-list {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.ut-upcoming-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 8px;
+  font-size: 13px;
+}
+
+.ut-upcoming-time {
+  color: #71717a;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.ut-next-day {
+  font-size: 9px;
+  background: rgba(212, 175, 55, 0.2);
+  color: #d4af37;
+  padding: 2px 4px;
+  border-radius: 4px;
+}
+
+.ut-upcoming-planet {
+  color: #a1a1aa;
+}
+
+/* Moon Card */
+.ut-moon-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.ut-moon-phase-name {
+  font-size: 18px;
+  font-weight: 600;
+  color: #60a5fa;
+}
+
+.ut-moon-guidance {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.ut-guidance-section h4 {
+  font-size: 13px;
+  font-weight: 600;
+  color: #f8f7f5;
+  margin: 0 0 6px 0;
+}
+
+.ut-guidance-section p {
+  font-size: 13px;
+  color: #a1a1aa;
+  margin: 0;
+  line-height: 1.5;
+}
+
+/* Retrograde Card */
+.ut-retro-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.ut-retro-count {
+  font-size: 13px;
+  color: #ef4444;
+  font-weight: 500;
+}
+
+.ut-retro-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.ut-retro-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 12px;
+  background: rgba(239, 68, 68, 0.05);
+  border-radius: 10px;
+  border-left: 3px solid #ef4444;
+}
+
+.ut-retro-planet {
+  font-size: 15px;
+  font-weight: 600;
+  color: #f8f7f5;
+}
+
+.ut-retro-impact {
+  font-size: 13px;
+  color: #a1a1aa;
+}
+
+/* Void Card */
+.ut-void-header {
+  margin-bottom: 12px;
+}
+
+.ut-void-desc {
+  font-size: 14px;
+  color: #a1a1aa;
+  margin: 0 0 16px 0;
+  line-height: 1.5;
+}
+
+.ut-void-rules {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.ut-void-rule {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+  padding: 10px 12px;
+  border-radius: 8px;
+}
+
+.ut-void-rule.avoid {
+  background: rgba(239, 68, 68, 0.1);
+  color: #ef4444;
+}
+
+.ut-void-rule.good {
+  background: rgba(34, 197, 94, 0.1);
+  color: #22c55e;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .universal-tools {
+    grid-template-columns: 1fr;
+  }
+  
+  .ut-hour-card {
+    grid-column: span 1;
+  }
+  
+  .ut-hour-activities {
+    grid-template-columns: 1fr;
+  }
+}

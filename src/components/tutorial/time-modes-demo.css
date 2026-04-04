@@ -1,0 +1,240 @@
+/* Time Modes Demo - SYNC vs TRUE comparison */
+.tmd-visual {
+  padding: 20px;
+  margin: 16px 0;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.5) 0%, rgba(30, 30, 63, 0.6) 100%);
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Toggle Buttons */
+.tmd-toggle {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 20px;
+  justify-content: center;
+}
+
+.tmd-toggle-btn {
+  padding: 10px 24px;
+  border-radius: 24px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.05);
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.tmd-toggle-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.tmd-toggle-btn.active {
+  background: rgba(201, 162, 39, 0.3);
+  border-color: rgba(201, 162, 39, 0.6);
+  color: #fff;
+  box-shadow: 0 0 15px rgba(201, 162, 39, 0.3);
+}
+
+/* Main Display */
+.tmd-display {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+/* Calendar Section */
+.tmd-calendar-section {
+  flex: 1;
+  padding: 16px;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.tmd-month-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.tmd-month-name {
+  font-size: 16px;
+  font-weight: 700;
+  color: #c9a227;
+}
+
+.tmd-month-meta {
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.tmd-weekdays {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 4px;
+  margin-bottom: 8px;
+}
+
+.tmd-weekday {
+  text-align: center;
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.4);
+  text-transform: uppercase;
+  padding: 4px;
+}
+
+.tmd-days {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 4px;
+}
+
+.tmd-day {
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.05);
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.tmd-day.weekend {
+  background: rgba(34, 197, 94, 0.1);
+  color: rgba(34, 197, 94, 0.8);
+}
+
+.tmd-day.active {
+  background: #c9a227;
+  color: #000;
+  font-weight: 700;
+  box-shadow: 0 0 10px rgba(201, 162, 39, 0.5);
+}
+
+/* Info Section */
+.tmd-info-section {
+  flex: 1;
+  padding: 16px;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.tmd-date-display {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.tmd-date-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.tmd-label {
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.5);
+  text-transform: uppercase;
+}
+
+.tmd-value {
+  font-size: 13px;
+  font-weight: 600;
+  color: #c9a227;
+}
+
+.tmd-value.civil {
+  color: rgba(148, 163, 184, 0.9);
+}
+
+.tmd-features {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.tmd-feature {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.tmd-check {
+  color: #22c55e;
+  font-weight: 700;
+}
+
+.tmd-use-case {
+  margin-top: auto;
+  padding: 10px;
+  background: rgba(201, 162, 39, 0.1);
+  border-radius: 8px;
+  border: 1px solid rgba(201, 162, 39, 0.2);
+}
+
+.tmd-use-label {
+  display: block;
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.5);
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+
+.tmd-use-value {
+  font-size: 12px;
+  font-weight: 600;
+  color: #c9a227;
+}
+
+/* Scenario */
+.tmd-scenario {
+  padding: 12px 16px;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+  border-left: 3px solid #c9a227;
+}
+
+.tmd-scenario-label {
+  font-size: 11px;
+  font-weight: 700;
+  color: #c9a227;
+  text-transform: uppercase;
+  margin-right: 8px;
+}
+
+.tmd-scenario-text {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.8);
+  font-style: italic;
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+  .tmd-display {
+    flex-direction: column;
+  }
+  
+  .tmd-toggle-btn {
+    padding: 8px 16px;
+    font-size: 12px;
+  }
+  
+  .tmd-day {
+    font-size: 10px;
+  }
+}

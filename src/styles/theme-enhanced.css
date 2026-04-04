@@ -1,0 +1,348 @@
+/**
+ * HEKA Calendar - Enhanced Professional Theme
+ * Based on v1 aesthetic with modern polish
+ * Deep space elegance with gold and purple accents
+ */
+
+:root {
+  /* Core Background - Deep space */
+  --color-bg: #0b0b0f;
+  --color-bg-elevated: rgba(255, 255, 255, 0.03);
+  --color-bg-card: rgba(255, 255, 255, 0.04);
+  --color-bg-hover: rgba(255, 255, 255, 0.06);
+  
+  /* Premium Gold */
+  --color-gold: #caa24a;
+  --color-gold-light: #e8c97a;
+  --color-gold-dark: #a0803a;
+  --color-gold-muted: rgba(202, 162, 74, 0.15);
+  --color-gold-glow: rgba(202, 162, 74, 0.35);
+  
+  /* Elegant Purple */
+  --color-purple: #9d7bf2;
+  --color-purple-light: #b9a0f5;
+  --color-purple-muted: rgba(157, 123, 242, 0.15);
+  
+  /* Crisp Text */
+  --color-text: rgba(255, 255, 255, 0.92);
+  --color-text-secondary: rgba(255, 255, 255, 0.62);
+  --color-text-muted: rgba(255, 255, 255, 0.45);
+  --color-text-subtle: rgba(255, 255, 255, 0.25);
+  
+  /* Sophisticated Borders */
+  --color-border: rgba(255, 255, 255, 0.12);
+  --color-border-hover: rgba(202, 162, 74, 0.4);
+  --color-border-strong: rgba(255, 255, 255, 0.18);
+  
+  /* Vibrant Arc Colors */
+  --color-opening: #ff5a6d;
+  --color-opening-bg: rgba(255, 90, 109, 0.12);
+  --color-opening-glow: rgba(255, 90, 109, 0.25);
+  
+  --color-core: #55ffa4;
+  --color-core-bg: rgba(85, 255, 164, 0.12);
+  --color-core-glow: rgba(85, 255, 164, 0.25);
+  
+  --color-closing: #9d7bf2;
+  --color-closing-bg: rgba(157, 123, 242, 0.12);
+  --color-closing-glow: rgba(157, 123, 242, 0.25);
+  
+  /* Energy Colors */
+  --color-energy-high: #ff5a6d;
+  --color-energy-moderate: #fbbf24;
+  --color-energy-low: #55ffa4;
+  
+  /* Typography */
+  --font-display: 'Cinzel', 'Playfair Display', Georgia, serif;
+  --font-body: 'Inter', ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  
+  /* Spacing */
+  --radius: 16px;
+  --radius-sm: 12px;
+  --radius-lg: 20px;
+}
+
+/* Deep Space Background with Radial Gradients */
+body {
+  background:
+    radial-gradient(1200px 700px at 20% 10%, rgba(202, 162, 74, 0.08), transparent 60%),
+    radial-gradient(900px 600px at 80% 30%, rgba(157, 123, 242, 0.08), transparent 55%),
+    radial-gradient(1000px 700px at 50% 90%, rgba(255, 255, 255, 0.03), transparent 60%),
+    var(--color-bg);
+  background-attachment: fixed;
+}
+
+/* App Container */
+.app {
+  background: transparent;
+  min-height: 100vh;
+}
+
+/* Glassmorphic App Header */
+.app-header {
+  background: linear-gradient(180deg, rgba(11, 11, 15, 0.9), rgba(11, 11, 15, 0.7));
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--color-border);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+}
+
+.app-title {
+  color: var(--color-gold);
+  font-family: var(--font-display);
+  text-shadow: 
+    0 0 20px rgba(202, 162, 74, 0.4),
+    0 0 40px rgba(202, 162, 74, 0.2);
+  letter-spacing: 0.12em;
+  font-weight: 600;
+}
+
+.app-subtitle {
+  color: var(--color-text-secondary);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* Mode Indicators - Elegant */
+.mode-indicator {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 6px 14px;
+}
+
+.mode-indicator--sync {
+  border-color: rgba(106, 180, 232, 0.5);
+  color: #6ab4e8;
+  box-shadow: 0 0 15px rgba(106, 180, 232, 0.2);
+}
+
+.mode-indicator--true {
+  border-color: rgba(232, 180, 106, 0.5);
+  color: #e8b46a;
+  box-shadow: 0 0 15px rgba(232, 180, 106, 0.2);
+}
+
+/* Glassmorphic Cards */
+.settings-panel,
+.celestial-card,
+.modal {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.02));
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  box-shadow: 0 18px 60px rgba(0, 0, 0, 0.35);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Day panel needs overflow visible for scrolling - FIXED */
+.day-panel {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.02));
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  box-shadow: 0 18px 60px rgba(0, 0, 0, 0.35);
+  position: relative;
+  overflow: visible;
+}
+
+.settings-panel::before,
+.celestial-card::before,
+.day-panel::before,
+.modal::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+}
+
+/* Elegant Buttons */
+.btn {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  color: var(--color-text);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.03em;
+  padding: 10px 14px;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.btn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.1), transparent);
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.btn:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.2);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.btn:hover::before {
+  opacity: 1;
+}
+
+.btn:active {
+  transform: translateY(0) scale(0.98);
+}
+
+.btn--primary {
+  background: rgba(202, 162, 74, 0.12);
+  border-color: rgba(202, 162, 74, 0.55);
+  color: var(--color-gold-light);
+  font-weight: 500;
+}
+
+.btn--primary:hover {
+  background: rgba(202, 162, 74, 0.2);
+  border-color: var(--color-gold);
+  box-shadow: 0 0 20px rgba(202, 162, 74, 0.25);
+}
+
+.btn--active {
+  background: rgba(202, 162, 74, 0.15);
+  border-color: var(--color-gold);
+  color: var(--color-gold-light);
+}
+
+/* Day Cells - Refined */
+.day-cell {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: var(--radius-sm);
+  transition: all 0.2s ease;
+}
+
+.day-cell:hover {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(202, 162, 74, 0.3);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+}
+
+.day-cell--selected {
+  background: rgba(202, 162, 74, 0.12);
+  border-color: var(--color-gold);
+  box-shadow: 
+    0 0 0 1px var(--color-gold),
+    0 0 30px rgba(202, 162, 74, 0.2),
+    inset 0 0 20px rgba(202, 162, 74, 0.05);
+}
+
+.day-cell--today {
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.15), rgba(59, 130, 246, 0.05));
+  border-color: #3b82f6;
+  box-shadow: 
+    0 0 0 1px #3b82f6,
+    0 0 25px rgba(59, 130, 246, 0.25),
+    inset 0 0 15px rgba(59, 130, 246, 0.05);
+}
+
+/* Arc Indicators - Vibrant */
+.month-header__arc[data-arc="OPENING"] {
+  background: linear-gradient(135deg, var(--color-opening-bg), transparent) !important;
+  border-color: var(--color-opening) !important;
+  color: var(--color-opening) !important;
+  box-shadow: 0 0 20px var(--color-opening-glow) !important;
+  text-shadow: 0 0 10px var(--color-opening-glow);
+}
+
+.month-header__arc[data-arc="CORE"] {
+  background: linear-gradient(135deg, var(--color-core-bg), transparent) !important;
+  border-color: var(--color-core) !important;
+  color: var(--color-core) !important;
+  box-shadow: 0 0 20px var(--color-core-glow) !important;
+  text-shadow: 0 0 10px var(--color-core-glow);
+}
+
+.month-header__arc[data-arc="CLOSING"] {
+  background: linear-gradient(135deg, var(--color-closing-bg), transparent) !important;
+  border-color: var(--color-closing) !important;
+  color: var(--color-closing) !important;
+  box-shadow: 0 0 20px var(--color-closing-glow) !important;
+  text-shadow: 0 0 10px var(--color-closing-glow);
+}
+
+/* Celestial Panel - Deep Space */
+.celestial-panel {
+  background: linear-gradient(135deg, 
+    rgba(255, 255, 255, 0.03) 0%, 
+    rgba(11, 11, 15, 0.8) 100%
+  );
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+}
+
+/* Enhanced Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.25);
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.15) rgba(255, 255, 255, 0.02);
+}
+
+/* Selection */
+::selection {
+  background: rgba(202, 162, 74, 0.3);
+  color: #fff;
+}
+
+/* Professional Typography */
+h1, h2, h3 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  letter-spacing: 0.05em;
+}
+
+/* Mode-specific backgrounds */
+body.mode-sync {
+  background:
+    radial-gradient(1200px 700px at 20% 10%, rgba(106, 180, 232, 0.08), transparent 60%),
+    radial-gradient(900px 600px at 80% 30%, rgba(157, 123, 242, 0.06), transparent 55%),
+    radial-gradient(1000px 700px at 50% 90%, rgba(255, 255, 255, 0.02), transparent 60%),
+    var(--color-bg);
+  background-attachment: fixed;
+}
+
+body.mode-true {
+  background:
+    radial-gradient(1200px 700px at 20% 10%, rgba(232, 180, 106, 0.08), transparent 60%),
+    radial-gradient(900px 600px at 80% 30%, rgba(255, 150, 80, 0.06), transparent 55%),
+    radial-gradient(1000px 700px at 50% 90%, rgba(255, 255, 255, 0.02), transparent 60%),
+    var(--color-bg);
+  background-attachment: fixed;
+}

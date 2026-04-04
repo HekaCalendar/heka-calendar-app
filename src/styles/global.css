@@ -1,0 +1,6150 @@
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Cinzel+Decorative:wght@400;700&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap');
+
+/**
+ * HEKA Calendar - Premium Professional Theme
+ * Elegant, powerful, and visually stunning design
+ * 
+ * Defensive CSS: Includes fallbacks for older browsers
+ */
+
+/* ==========================================================================
+   Defensive Base Styles (Fallbacks)
+   ========================================================================== */
+
+/* Ensure box-sizing is applied even if CSS variables fail */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+/* Minimum viable styles if CSS variables aren't supported */
+html {
+  background: #070708;
+  color: #f8f7f5;
+}
+
+/* Ensure content is visible even if JS fails */
+noscript {
+  display: block;
+  padding: 2rem;
+  text-align: center;
+  color: #f5f5f5;
+  background: #0c0c0f;
+}
+
+:root {
+  /* Core Color System - Sophisticated Dark Theme */
+  --color-bg: #070708;
+  --color-bg-elevated: #0f0f11;
+  --color-bg-card: #16161a;
+  --color-bg-hover: #1e1e24;
+  
+  /* Premium Accent Colors */
+  --color-gold: #d4af37;
+  --color-gold-light: #f4d03f;
+  --color-gold-dark: #b8941f;
+  --color-gold-muted: rgba(212, 175, 55, 0.12);
+  --color-gold-glow: rgba(212, 175, 55, 0.4);
+  
+  /* Arc Colors - Distinct and Professional */
+  --color-opening: #dc2626;
+  --color-opening-bg: rgba(220, 38, 38, 0.12);
+  --color-opening-glow: rgba(220, 38, 38, 0.3);
+  
+  --color-core: #16a34a;
+  --color-core-bg: rgba(22, 163, 74, 0.12);
+  --color-core-glow: rgba(22, 163, 74, 0.3);
+  
+  --color-closing: #7c3aed;
+  --color-closing-bg: rgba(124, 58, 237, 0.12);
+  --color-closing-glow: rgba(124, 58, 237, 0.3);
+  
+  /* Semantic Colors */
+  --color-text: #f8f7f5;
+  --color-text-secondary: #a1a1aa;
+  --color-text-muted: #71717a;
+  --color-text-subtle: #52525b;
+  
+  --color-border: rgba(255, 255, 255, 0.08);
+  --color-border-hover: rgba(212, 175, 55, 0.3);
+  --color-border-strong: rgba(255, 255, 255, 0.15);
+  
+  /* Mode Indicators */
+  --color-sync: #0ea5e9;
+  --color-sync-bg: rgba(14, 165, 233, 0.1);
+  --color-true: #f59e0b;
+  --color-true-bg: rgba(245, 158, 11, 0.1);
+  
+  /* Typography */
+  --font-display: 'Cinzel', 'Playfair Display', Georgia, serif;
+  --font-heading: 'Cinzel', serif;
+  --font-body: 'Inter', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+  
+  /* Font Sizes */
+  --text-xs: 0.65rem;
+  --text-sm: 0.8rem;
+  --text-base: 0.95rem;
+  --text-lg: 1.1rem;
+  --text-xl: 1.35rem;
+  --text-2xl: 1.75rem;
+  --text-3xl: 2.5rem;
+  --text-4xl: 3.5rem;
+  
+  /* Spacing */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.25rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-10: 2.5rem;
+  --space-12: 3rem;
+  
+  /* Radii */
+  --radius-sm: 6px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+  
+  /* Shadows */
+  --shadow-sm: 0 1px 2px rgba(0,0,0,0.3);
+  --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.4), 0 2px 4px -1px rgba(0,0,0,0.2);
+  --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.5), 0 4px 6px -2px rgba(0,0,0,0.3);
+  --shadow-gold: 0 0 20px rgba(212, 175, 55, 0.15);
+  --shadow-gold-strong: 0 0 30px rgba(212, 175, 55, 0.25);
+  
+  /* Gradients */
+  --gradient-gold: linear-gradient(135deg, var(--color-gold-light) 0%, var(--color-gold) 50%, var(--color-gold-dark) 100%);
+  --gradient-bg: radial-gradient(ellipse at 20% 0%, rgba(212, 175, 55, 0.03) 0%, transparent 50%),
+                 radial-gradient(ellipse at 80% 100%, rgba(124, 58, 237, 0.02) 0%, transparent 40%),
+                 var(--color-bg);
+  
+  /* Transitions */
+  --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-base: 250ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slow: 350ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ==========================================================================
+   Base Styles
+   ========================================================================== */
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  font-family: var(--font-body);
+  font-weight: 400;
+  background: var(--gradient-bg);
+  background-attachment: fixed;
+  color: var(--color-text);
+  line-height: 1.6;
+  min-height: 100vh;
+  letter-spacing: -0.01em;
+  position: relative;
+}
+
+
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+  border: none;
+  background: none;
+  color: inherit;
+}
+
+/* ==========================================================================
+   Select Dropdown Styling
+   ========================================================================== */
+
+select {
+  appearance: none;
+  background: linear-gradient(145deg, rgba(22, 22, 26, 0.95) 0%, rgba(15, 15, 17, 0.98) 100%);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  color: var(--color-text);
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  padding: var(--space-2) var(--space-4);
+  padding-right: 2.5rem;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23d4af37' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.875rem center;
+}
+
+select:hover {
+  border-color: var(--color-border-hover);
+  box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.1);
+}
+
+select:focus {
+  outline: none;
+  border-color: var(--color-gold);
+  box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.2);
+}
+
+select option {
+  background: var(--color-bg-card);
+  color: var(--color-text);
+  padding: var(--space-2);
+}
+
+optgroup {
+  background: var(--color-bg-elevated);
+  color: var(--color-gold);
+  font-weight: 600;
+}
+
+/* ==========================================================================
+   App Layout
+   ========================================================================== */
+
+.app {
+  max-width: 1600px;
+  margin: 0 auto;
+  padding: var(--space-4) var(--space-6) var(--space-6);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ==========================================================================
+   Top Bar (Above Header) - Sign In Button
+   ========================================================================== */
+
+.app-top-bar {
+  display: flex;
+  justify-content: flex-end;
+  padding: 12px var(--space-6) 10px;
+  margin-bottom: 0;
+  margin-top: env(safe-area-inset-top, 7px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  position: relative;
+  z-index: 10;
+}
+
+@media (max-width: 480px) {
+  .app-top-bar {
+    justify-content: center;
+    padding: 10px var(--space-4) 8px;
+    margin-top: env(safe-area-inset-top, 5px);
+  }
+}
+
+/* ==========================================================================
+   Header - Prestigious Title (EPIC REFINED)
+   ========================================================================== */
+
+.app-header {
+  text-align: center;
+  margin-bottom: var(--space-8);
+  position: relative;
+}
+
+/* Flower of Life behind header - positioned just above sign in */
+.app-header::before {
+  content: '';
+  position: absolute;
+  top: -130px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 300px;
+  height: 300px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Cdefs%3E%3ClinearGradient id='folGrad' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%23d4af37;stop-opacity:0.15'/%3E%3Cstop offset='50%25' style='stop-color:%23d4af37;stop-opacity:0.08'/%3E%3Cstop offset='100%25' style='stop-color:%23d4af37;stop-opacity:0.15'/%3E%3C/linearGradient%3E%3C/defs%3E%3Cg fill='none' stroke='url(%23folGrad)' stroke-width='0.8'%3E%3Ccircle cx='100' cy='100' r='30'/%3E%3Ccircle cx='100' cy='70' r='30'/%3E%3Ccircle cx='100' cy='130' r='30'/%3E%3Ccircle cx='74' cy='85' r='30'/%3E%3Ccircle cx='126' cy='85' r='30'/%3E%3Ccircle cx='74' cy='115' r='30'/%3E%3Ccircle cx='126' cy='115' r='30'/%3E%3Ccircle cx='100' cy='40' r='30'/%3E%3Ccircle cx='100' cy='160' r='30'/%3E%3Ccircle cx='48' cy='70' r='30'/%3E%3Ccircle cx='152' cy='70' r='30'/%3E%3Ccircle cx='48' cy='130' r='30'/%3E%3Ccircle cx='152' cy='130' r='30'/%3E%3Ccircle cx='48' cy='100' r='30'/%3E%3Ccircle cx='152' cy='100' r='30'/%3E%3C/g%3E%3C/svg%3E");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  opacity: 0.5;
+  pointer-events: none;
+  z-index: -1;
+  animation: folPulse 8s ease-in-out infinite;
+}
+
+@keyframes folPulse {
+  0%, 100% { opacity: 0.35; transform: translateX(-50%) scale(1); }
+  50% { opacity: 0.5; transform: translateX(-50%) scale(1.02); }
+}
+
+/* Line above heading - sits at the very top of header */
+.app-header__top-line {
+  position: absolute;
+  top: 15px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 500px;
+  height: 1px;
+  background: linear-gradient(90deg, 
+    transparent 0%, 
+    rgba(212, 175, 55, 0.1) 15%, 
+    rgba(212, 175, 55, 0.4) 40%, 
+    var(--color-gold) 50%, 
+    rgba(212, 175, 55, 0.4) 60%, 
+    rgba(212, 175, 55, 0.1) 85%, 
+    transparent 100%
+  );
+  box-shadow: 0 0 15px rgba(212, 175, 55, 0.2);
+}
+
+.app-title {
+  font-family: var(--font-display);
+  font-size: clamp(3rem, 9vw, 5.5rem);
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  background: linear-gradient(
+    180deg,
+    #fff8e7 0%,
+    var(--color-gold-light) 20%,
+    var(--color-gold) 50%,
+    var(--color-gold-dark) 80%,
+    #8b6914 100%
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: var(--space-5);
+  position: relative;
+  display: inline-block;
+  filter: drop-shadow(0 8px 30px rgba(212, 175, 55, 0.4));
+  line-height: 1.1;
+}
+
+/* Diamond moved to after mode indicator */
+.app-title::before {
+  display: none;
+}
+
+.app-title::after {
+  display: none;
+}
+
+.app-subtitle {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  font-weight: 500;
+  margin-bottom: var(--space-3);
+}
+
+.app-subtitle--true {
+  color: var(--color-true);
+  text-shadow: 0 0 20px rgba(245, 158, 11, 0.3);
+}
+
+/* Line below subtitle/mode indicator */
+.app-header .mode-indicator {
+  position: relative;
+  margin-bottom: var(--space-4);
+}
+
+.app-header .mode-indicator::after {
+  content: '';
+  position: absolute;
+  top: calc(100% + 15px);
+  left: 50%;
+  transform: translateX(-50%);
+  width: 400px;
+  height: 1px;
+  background: linear-gradient(90deg, 
+    transparent 0%, 
+    rgba(212, 175, 55, 0.1) 15%, 
+    rgba(212, 175, 55, 0.4) 40%, 
+    var(--color-gold) 50%, 
+    rgba(212, 175, 55, 0.4) 60%, 
+    rgba(212, 175, 55, 0.1) 85%, 
+    transparent 100%
+  );
+  box-shadow: 0 0 15px rgba(212, 175, 55, 0.2);
+}
+
+/* Diamond symbol below the mode indicator line, centered */
+.app-header__diamond {
+  position: absolute;
+  bottom: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 18px;
+  color: var(--color-gold);
+  opacity: 0.9;
+  text-shadow: 0 0 20px rgba(212, 175, 55, 0.8);
+  line-height: 1;
+}
+
+/* Mode Indicator Badge */
+.mode-indicator {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--radius-sm);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-top: var(--space-3);
+}
+
+.mode-indicator--sync {
+  background: var(--color-sync-bg);
+  border: 1px solid rgba(14, 165, 233, 0.3);
+  color: var(--color-sync);
+}
+
+.mode-indicator--true {
+  background: var(--color-true-bg);
+  border: 1px solid rgba(245, 158, 11, 0.3);
+  color: var(--color-true);
+}
+
+/* ==========================================================================
+   Settings Panel - Overlay Mode (No Layout Shift)
+   ========================================================================== */
+
+/* Toggle Button Wrapper - Fixed height, never changes */
+.settings-toggle-wrapper {
+  height: 48px;
+  margin-bottom: var(--space-4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.settings-toggle-btn {
+  width: 100%;
+  height: 100%;
+  padding: 12px;
+  background: rgba(201, 162, 39, 0.1);
+  border: 1px solid rgba(201, 162, 39, 0.3);
+  border-radius: 8px;
+  color: var(--color-gold);
+  font-size: 0.9rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: all 150ms ease;
+}
+
+.settings-toggle-btn:hover {
+  background: rgba(201, 162, 39, 0.2);
+  border-color: rgba(201, 162, 39, 0.5);
+  transform: translateY(-1px);
+}
+
+/* Overlay Root - Fixed position portal, never affects layout */
+.settings-overlay-root {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+  pointer-events: none;
+}
+
+/* Backdrop - covers everything */
+.settings-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(1px);
+  pointer-events: auto;
+  animation: fade-in 200ms ease;
+}
+
+/* Modal - centered floating panel */
+.settings-modal {
+  position: relative;
+  width: min(90vw, 900px);
+  max-height: calc(100vh - 40px);
+  overflow-y: auto;
+  background: rgba(22, 22, 26, 0.95);
+  padding-bottom: calc(40px + env(safe-area-inset-bottom, 20px));
+  border: 1px solid rgba(212, 175, 55, 0.3);
+  border-radius: var(--radius-lg);
+  padding: var(--space-4) var(--space-5);
+  padding-top: calc(var(--space-4) + env(safe-area-inset-top, 16px));
+  padding-bottom: calc(50px + env(safe-area-inset-bottom, 16px));
+  box-shadow: 
+    0 25px 50px -12px rgba(0, 0, 0, 0.5),
+    0 0 0 1px rgba(201, 162, 39, 0.15);
+  pointer-events: auto;
+  animation: slide-down 250ms ease;
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slide-down {
+  from { 
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to { 
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.settings-modal__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--space-3);
+  padding-top: 0;
+  padding-bottom: var(--space-3);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.settings-modal__title {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--color-gold);
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.settings-modal__title::before {
+  content: '◈';
+  color: var(--color-gold);
+}
+
+.settings-modal__close {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(220, 38, 38, 0.15);
+  border: 1px solid rgba(220, 38, 38, 0.4);
+  border-radius: 50%;
+  color: #ef4444;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all 150ms ease;
+  box-shadow: 
+    0 0 10px rgba(220, 38, 38, 0.3),
+    0 0 20px rgba(220, 38, 38, 0.15),
+    inset 0 0 8px rgba(220, 38, 38, 0.1);
+  text-shadow: 0 0 8px rgba(220, 38, 38, 0.5);
+}
+
+.settings-modal__close:hover {
+  background: rgba(220, 38, 38, 0.25);
+  border-color: rgba(220, 38, 38, 0.6);
+  color: #ff5555;
+  box-shadow: 
+    0 0 15px rgba(220, 38, 38, 0.5),
+    0 0 30px rgba(220, 38, 38, 0.25),
+    inset 0 0 12px rgba(220, 38, 38, 0.2);
+  transform: scale(1.1);
+}
+
+.settings-modal__content {
+  overflow-y: auto;
+}
+
+.settings-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: var(--space-5);
+}
+
+.settings-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.settings-group--note {
+  font-size: 12px;
+  opacity: 0.9;
+}
+
+.settings-group--note p {
+  margin: 0 0 8px 0;
+  font-style: italic;
+}
+
+.settings-group--footer {
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding-top: 16px;
+  margin-top: 8px;
+}
+
+.settings-group--footer p {
+  font-size: 12px;
+  opacity: 0.7;
+  margin: 0 0 8px 0;
+}
+
+.settings-group__label {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-text-secondary);
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.settings-group__control {
+  display: flex;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+}
+
+.settings-group__control--stack {
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.settings-group__control--stack .btn {
+  width: 100%;
+  justify-content: flex-start;
+  text-align: left;
+}
+
+.settings-group__hint {
+  font-size: 11px;
+  opacity: 0.7;
+  margin: 4px 0 0 0;
+  font-style: italic;
+}
+
+/* ==========================================================================
+   Error Banner
+   ========================================================================== */
+
+.error-banner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: linear-gradient(90deg, rgba(220, 38, 38, 0.1) 0%, rgba(220, 38, 38, 0.05) 100%);
+  border: 1px solid rgba(220, 38, 38, 0.3);
+  border-radius: var(--radius-md);
+  padding: var(--space-3) var(--space-4);
+  margin-bottom: var(--space-5);
+  color: #ef4444;
+  font-size: var(--text-sm);
+}
+
+.error-banner button {
+  font-size: var(--text-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  opacity: 0.8;
+  transition: opacity var(--transition-fast);
+  font-weight: 600;
+}
+
+.error-banner button:hover {
+  opacity: 1;
+}
+
+/* ==========================================================================
+   Calendar Container & Wrapper
+   ========================================================================== */
+
+.calendar-container {
+  display: grid;
+  grid-template-columns: 1fr 380px;
+  gap: var(--space-6);
+}
+
+@media (max-width: 1200px) {
+  .calendar-container {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* New wrapper structure for horizontal expand */
+.calendar-wrapper {
+  display: grid;
+  grid-template-columns: 1fr 380px;
+  gap: var(--space-6);
+  align-items: start;
+}
+
+@media (max-width: 1200px) {
+  .calendar-wrapper {
+    grid-template-columns: 1fr;
+  }
+  
+  .day-panel {
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+}
+
+/* Landscape mobile - day panel fills width */
+@media (max-width: 1200px) and (orientation: landscape) {
+  .day-panel {
+    max-width: none;
+    margin: 0;
+  }
+}
+
+/* Calendar grid wrapper - this gets the horizontal scroll */
+.calendar-grid-wrapper {
+  min-width: 0; /* Allow grid item to shrink */
+}
+
+.calendar-grid-wrapper--expanded-h {
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding-bottom: var(--space-3);
+  scroll-behavior: smooth;
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-gold) rgba(255, 255, 255, 0.05);
+}
+
+/* Webkit scrollbar styling */
+.calendar-grid-wrapper--expanded-h::-webkit-scrollbar {
+  height: 8px;
+}
+
+.calendar-grid-wrapper--expanded-h::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: var(--radius-sm);
+}
+
+.calendar-grid-wrapper--expanded-h::-webkit-scrollbar-thumb {
+  background: linear-gradient(90deg, var(--color-gold-dark), var(--color-gold), var(--color-gold-dark));
+  border-radius: var(--radius-sm);
+  border: 1px solid rgba(0, 0, 0, 0.3);
+}
+
+.calendar-grid-wrapper--expanded-h::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(90deg, var(--color-gold), var(--color-gold-light), var(--color-gold));
+  box-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
+}
+
+/* ==========================================================================
+   Month Header - Enhanced Navigation
+   ========================================================================== */
+
+.month-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--space-4) var(--space-5);
+  background: linear-gradient(180deg, rgba(22, 22, 26, 0.8) 0%, rgba(15, 15, 17, 0.9) 100%);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  margin-bottom: var(--space-5);
+  backdrop-filter: blur(20px);
+  box-shadow: var(--shadow-md);
+}
+
+.month-header__left {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-2);
+}
+
+.month-header__title {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.month-header__name {
+  font-family: var(--font-heading);
+  font-size: var(--text-xl);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-text);
+  text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+}
+
+.month-header__month-index {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  padding: var(--space-1) var(--space-3);
+  background: var(--color-gold-muted);
+  border: 1px solid rgba(212, 175, 55, 0.25);
+  border-radius: var(--radius-sm);
+  color: var(--color-gold);
+}
+
+.month-header__year {
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  color: var(--color-text-secondary);
+  letter-spacing: 0.05em;
+}
+
+.month-header__arc {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--radius-sm);
+  transition: all var(--transition-fast);
+}
+
+/* Arc-specific colors */
+.month-header__arc[data-arc="OPENING"] {
+  background: var(--color-opening-bg);
+  border: 1px solid var(--color-opening-glow);
+  color: #fca5a5;
+  box-shadow: 0 0 15px var(--color-opening-glow);
+}
+
+.month-header__arc[data-arc="CORE"] {
+  background: var(--color-core-bg);
+  border: 1px solid var(--color-core-glow);
+  color: #86efac;
+  box-shadow: 0 0 15px var(--color-core-glow);
+}
+
+.month-header__arc[data-arc="CLOSING"] {
+  background: var(--color-closing-bg);
+  border: 1px solid var(--color-closing-glow);
+  color: #c4b5fd;
+  box-shadow: 0 0 15px var(--color-closing-glow);
+}
+
+.month-header__controls {
+  display: flex;
+  align-items: stretch;
+  gap: var(--space-3);
+  justify-content: center;
+}
+
+/* Columns for two-section layout */
+.month-header__column {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  flex-shrink: 0;
+}
+
+.month-header__column--controls {
+  align-items: flex-start;
+}
+
+.month-header__column--features {
+  align-items: flex-start;
+}
+
+/* Rows within each column */
+.month-header__row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  flex-wrap: nowrap;
+  white-space: nowrap;
+}
+
+.month-header__row .btn {
+  flex-shrink: 0;
+}
+
+/* Visual Divider between calendar controls and extra features */
+.month-header__divider {
+  width: 2px;
+  min-height: 80px;
+  align-self: center;
+  background: linear-gradient(
+    180deg,
+    transparent 0%,
+    var(--color-gold) 20%,
+    var(--color-gold) 80%,
+    transparent 100%
+  );
+  opacity: 0.4;
+  margin: 0 var(--space-3);
+  flex-shrink: 0;
+  border-radius: 1px;
+}
+
+/* Display Toggles - Centered below divider */
+.month-header__display-toggles {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: var(--space-2);
+  margin-top: var(--space-2);
+  width: 100%;
+}
+
+.month-header__display-toggles .btn {
+  padding: var(--space-1) var(--space-2);
+  font-size: var(--text-xs);
+  min-height: 28px;
+}
+
+/* Custom active states for display toggles */
+.month-header__display-toggles .btn--active[data-toggle="civil"] {
+  background: rgba(220, 38, 38, 0.2);
+  border-color: rgba(220, 38, 38, 0.5);
+  color: #fca5a5;
+  box-shadow: 0 0 15px rgba(220, 38, 38, 0.3);
+}
+
+.month-header__display-toggles .btn--active[data-toggle="moon"] {
+  background: rgba(34, 197, 94, 0.2);
+  border-color: rgba(34, 197, 94, 0.5);
+  color: #86efac;
+  box-shadow: 0 0 15px rgba(34, 197, 94, 0.3);
+}
+
+.month-header__display-toggles .btn--active[data-toggle="holidays"] {
+  background: rgba(139, 92, 246, 0.2);
+  border-color: rgba(139, 92, 246, 0.5);
+  color: #c4b5fd;
+  box-shadow: 0 0 15px rgba(139, 92, 246, 0.3);
+}
+
+/* Mobile: Smaller gap */
+@media (max-width: 768px) {
+  .month-header__display-toggles {
+    gap: var(--space-2);
+    margin-top: var(--space-1);
+  }
+}
+
+/* ==========================================================================
+   Buttons - Premium Style
+   ========================================================================== */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-4);
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  border-radius: var(--radius-md);
+  background: linear-gradient(145deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.02) 100%);
+  border: 1px solid var(--color-border);
+  color: var(--color-text);
+  transition: all var(--transition-fast);
+  position: relative;
+  overflow: hidden;
+}
+
+.btn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(255,255,255,0.08) 0%, transparent 100%);
+  opacity: 0;
+  transition: opacity var(--transition-fast);
+}
+
+.btn:hover {
+  border-color: var(--color-border-hover);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-gold);
+}
+
+.btn:hover::before {
+  opacity: 1;
+}
+
+.btn:active {
+  transform: translateY(0);
+}
+
+.btn--primary {
+  background: var(--gradient-gold);
+  border-color: var(--color-gold);
+  color: #0a0a0c;
+  font-weight: 600;
+}
+
+.btn--primary:hover {
+  box-shadow: var(--shadow-gold-strong);
+}
+
+.btn--active {
+  background: var(--color-gold-muted);
+  border-color: rgba(212, 175, 55, 0.5);
+  color: var(--color-gold);
+  box-shadow: 0 0 15px rgba(212, 175, 55, 0.2);
+}
+
+.btn--icon {
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  font-size: var(--text-lg);
+  line-height: 1;
+}
+
+/* ==========================================================================
+   Calendar Grid
+   ========================================================================== */
+
+.calendar-grid {
+  background: linear-gradient(180deg, rgba(22, 22, 26, 0.6) 0%, rgba(15, 15, 17, 0.8) 100%);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-5);
+  backdrop-filter: blur(20px);
+  box-shadow: var(--shadow-lg);
+  /* Performance: CSS containment for the entire grid */
+  contain: layout;
+  /* Performance: Hint browser this content can be rendered independently */
+  content-visibility: auto;
+  /* Performance: Reserve space to prevent layout shift */
+  contain-intrinsic-size: 0 500px;
+  /* Smooth transition for expand/collapse */
+  transition: padding var(--transition-base);
+}
+
+/* Expanded state - 2.5x vertical height */
+.calendar-grid--expanded {
+  padding: var(--space-5);
+}
+
+.calendar-grid--expanded .calendar-grid__week {
+  gap: var(--space-3);
+}
+
+.calendar-grid--expanded .day-cell {
+  aspect-ratio: auto;
+  min-height: 220px;
+  padding: var(--space-4);
+}
+
+.calendar-grid--expanded .day-cell__heka-num {
+  font-size: var(--text-xl);
+}
+
+.calendar-grid--expanded .day-cell__civil {
+  font-size: var(--text-sm);
+}
+
+.calendar-grid--expanded .day-cell__note-preview {
+  font-size: 11px;
+  -webkit-line-clamp: 4;
+  margin-top: var(--space-2);
+}
+
+/* ==========================================================================
+   Horizontal Expand Mode - Widescreen Panoramic View
+   ========================================================================== */
+
+/* Horizontal only mode - fixed width columns for consistent sizing */
+/* Width = content (7×180 + 6×12 = 1332px) + padding (40px) = 1372px */
+.calendar-grid--expanded-h {
+  width: 1372px;
+  min-width: 1372px;
+  padding: var(--space-5);
+  margin: 0 auto;
+}
+
+.calendar-grid--expanded-h .calendar-grid__dow {
+  grid-template-columns: repeat(7, 180px);
+  gap: var(--space-3);
+}
+
+.calendar-grid--expanded-h .calendar-grid__week {
+  grid-template-columns: repeat(7, 180px);
+  gap: var(--space-3);
+}
+
+.calendar-grid--expanded-h .day-cell {
+  aspect-ratio: auto;
+  min-height: 140px;
+  padding: var(--space-4);
+}
+
+/* Combined vertical + horizontal expand = large cells with proper grid */
+/* Width = content (7×220 + 6×12 = 1652px) + padding (40px) = 1692px */
+.calendar-grid--expanded.calendar-grid--expanded-h {
+  width: 1692px;
+  min-width: 1692px;
+  padding: var(--space-5);
+  margin: 0 auto;
+}
+
+.calendar-grid--expanded.calendar-grid--expanded-h .calendar-grid__week {
+  /* Fixed column width instead of minmax to prevent overlap */
+  grid-template-columns: repeat(7, 220px);
+  gap: var(--space-3);
+}
+
+.calendar-grid--expanded.calendar-grid--expanded-h .day-cell {
+  aspect-ratio: auto;
+  min-height: 220px;
+  min-width: 220px;
+  width: 100%;
+}
+
+.calendar-grid--expanded.calendar-grid--expanded-h .calendar-grid__dow {
+  grid-template-columns: repeat(7, 220px);
+  gap: var(--space-3);
+}
+
+.calendar-grid--expanded-h .day-cell__heka-num {
+  font-size: var(--text-xl);
+}
+
+.calendar-grid--expanded-h .day-cell__civil {
+  font-size: var(--text-sm);
+}
+
+.calendar-grid--expanded-h .day-cell__note-preview {
+  font-size: 11px;
+  -webkit-line-clamp: 3;
+  margin-top: var(--space-2);
+}
+
+/* Responsive: reduce min-width on smaller screens */
+@media (max-width: 768px) {
+  /* Horizontal only mobile: content 982px + padding 40px = 1022px */
+  .calendar-grid--expanded-h {
+    width: 1022px;
+    min-width: 1022px;
+    margin: 0 auto;
+  }
+  
+  .calendar-grid--expanded-h .calendar-grid__week,
+  .calendar-grid--expanded-h .calendar-grid__dow {
+    grid-template-columns: repeat(7, 130px);
+  }
+  
+  .calendar-grid--expanded-h .day-cell {
+    min-height: 120px;
+    padding: var(--space-3);
+  }
+  
+  /* Combined mode mobile: content 1132px + padding 40px = 1172px */
+  .calendar-grid--expanded.calendar-grid--expanded-h {
+    width: 1172px;
+    min-width: 1172px;
+    margin: 0 auto;
+  }
+  
+  .calendar-grid--expanded.calendar-grid--expanded-h .calendar-grid__week,
+  .calendar-grid--expanded.calendar-grid--expanded-h .calendar-grid__dow {
+    grid-template-columns: repeat(7, 150px);
+  }
+  
+  .calendar-grid--expanded.calendar-grid--expanded-h .day-cell {
+    min-height: 180px;
+    min-width: 150px;
+  }
+}
+
+/* ==========================================================================
+   Calendar Grid Month Header - Inside Calendar Area
+   ========================================================================== */
+
+.calendar-grid__month-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: var(--space-3) var(--space-4);
+  margin-bottom: var(--space-2);
+  background: linear-gradient(180deg, rgba(255,255,255,0.02) 0%, rgba(255,255,255,0) 100%);
+  border-bottom: 1px solid var(--color-border);
+  border-radius: var(--radius-md) var(--radius-md) 0 0;
+}
+
+/* Left side: Month name + Year */
+.calendar-grid__month-title {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-2);
+}
+
+.calendar-grid__month-name {
+  font-family: var(--font-display);
+  font-size: var(--text-2xl);
+  font-weight: 700;
+  color: var(--color-gold);
+  letter-spacing: 0.02em;
+  text-transform: capitalize;
+}
+
+.calendar-grid__year {
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  color: var(--color-text-secondary);
+  letter-spacing: 0.05em;
+}
+
+/* Right side: Arc pill */
+.calendar-grid__arc {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--radius-full);
+  border: 1px solid;
+}
+
+/* Bottom: Month/13 centered */
+.calendar-grid__month-index {
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+  letter-spacing: 0.1em;
+  padding: var(--space-1) var(--space-2);
+  margin-bottom: var(--space-2);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .calendar-grid__month-header {
+    padding: var(--space-2) var(--space-3);
+    gap: var(--space-1);
+  }
+  
+  .calendar-grid__month-name {
+    font-size: var(--text-xl);
+  }
+  
+  .calendar-grid__month-meta {
+    gap: var(--space-2);
+  }
+}
+
+.calendar-grid__dow {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: var(--space-3);
+  margin-bottom: var(--space-3);
+  padding: 0 var(--space-1);
+}
+
+.calendar-grid__dow-cell {
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+  padding: var(--space-2);
+}
+
+.calendar-grid__week {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: var(--space-3);
+  /* Performance: Isolate layout only - paint containment clips box-shadows */
+  contain: layout;
+  /* Performance: Hint for GPU acceleration on transforms */
+  will-change: transform;
+  /* Padding to allow box-shadow overflow */
+  padding: var(--space-1);
+}
+
+/* ==========================================================================
+   Day Cell - Elegant Cards
+   ========================================================================== */
+
+.day-cell {
+  aspect-ratio: 1;
+  min-height: 100px;
+  background: linear-gradient(145deg, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.01) 100%);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-3);
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  cursor: pointer;
+  /* Performance: Only animate transform and opacity for GPU acceleration */
+  transition: transform 150ms ease-out, opacity 150ms ease-out, border-color 150ms ease-out, box-shadow 150ms ease-out;
+  position: relative;
+  overflow: visible;
+  /* Performance: CSS containment for layout/style only - paint clips box-shadow */
+  contain: layout style;
+  /* Performance: Promote to compositing layer for smooth animations */
+  will-change: transform;
+  /* Performance: Prevent text selection during rapid clicks */
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.day-cell::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: var(--radius-md);
+  padding: 1px;
+  background: linear-gradient(145deg, rgba(212, 175, 55, 0) 0%, rgba(212, 175, 55, 0) 100%);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  transition: background var(--transition-base);
+}
+
+.day-cell:hover {
+  background: linear-gradient(145deg, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0.02) 100%);
+  border-color: var(--color-border-hover);
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: var(--shadow-lg), var(--shadow-gold);
+  z-index: 1;
+  /* Performance: Ensure smooth hover with compositing */
+  will-change: transform, box-shadow;
+}
+
+.day-cell:hover::before {
+  background: linear-gradient(145deg, rgba(212, 175, 55, 0.4) 0%, rgba(212, 175, 55, 0) 50%);
+}
+
+.day-cell--selected {
+  background: linear-gradient(145deg, rgba(212, 175, 55, 0.1) 0%, rgba(212, 175, 55, 0.03) 100%);
+  border-color: var(--color-gold);
+  box-shadow: 
+    0 0 0 1px var(--color-gold),
+    0 0 30px rgba(212, 175, 55, 0.25),
+    inset 0 0 15px rgba(212, 175, 55, 0.05);
+  z-index: 10;
+  position: relative;
+}
+
+.day-cell--selected::before {
+  background: linear-gradient(145deg, rgba(212, 175, 55, 0.6) 0%, rgba(212, 175, 55, 0) 70%);
+}
+
+/* When both selected and today, show both borders (today blue takes priority for border) */
+.day-cell--selected.day-cell--today {
+  background: linear-gradient(145deg, rgba(59, 130, 246, 0.1) 0%, rgba(59, 130, 246, 0.03) 100%);
+  border-color: #3b82f6;
+  box-shadow: 
+    0 0 0 1px #3b82f6,
+    0 0 20px rgba(59, 130, 246, 0.25),
+    inset 0 0 15px rgba(59, 130, 246, 0.05);
+  z-index: 10;
+}
+
+.day-cell--today {
+  background: linear-gradient(145deg, rgba(59, 130, 246, 0.1) 0%, rgba(59, 130, 246, 0.03) 100%);
+  border-color: #3b82f6;
+  box-shadow: 
+    0 0 0 1px #3b82f6,
+    0 0 20px rgba(59, 130, 246, 0.25),
+    inset 0 0 15px rgba(59, 130, 246, 0.05);
+  z-index: 1;
+}
+
+
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.7; transform: scale(1.1); }
+}
+
+.day-cell--blank {
+  background: transparent;
+  border-color: transparent;
+  pointer-events: none;
+}
+
+.day-cell__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: var(--space-1);
+}
+
+.day-cell__heka-num {
+  font-family: var(--font-heading);
+  font-size: var(--text-lg);
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.day-cell__moon {
+  font-size: var(--text-base);
+  opacity: 0.9;
+}
+
+.day-cell__civil {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--color-text-subtle);
+  letter-spacing: 0.02em;
+}
+
+.day-cell__holiday-indicator {
+  position: absolute;
+  bottom: 4px;
+  right: 4px;
+  width: 6px;
+  height: 6px;
+  background: #22c55e;
+  border-radius: 50%;
+  box-shadow: 0 0 6px #22c55e;
+}
+
+.day-cell__note-indicator {
+  position: absolute;
+  bottom: 4px;
+  right: 4px;
+  width: 6px;
+  height: 6px;
+  background: var(--color-gold);
+  border-radius: 50%;
+  box-shadow: 0 0 6px var(--color-gold);
+}
+
+.day-cell__note-preview {
+  margin-top: 4px;
+  font-size: 9px;
+  color: var(--color-text-muted);
+  line-height: 1.3;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+.note-preview-text {
+  background: rgba(212, 175, 55, 0.1);
+  padding: 1px 4px;
+  border-radius: 3px;
+  border-left: 2px solid var(--color-gold);
+}
+
+.note-more-indicator {
+  color: var(--color-gold);
+  font-weight: 600;
+  margin-left: 4px;
+  font-size: 10px;
+}
+
+/* Expanded note preview styles for larger cells */
+.day-cell__note-preview--expanded {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-top: 8px;
+}
+
+.day-cell__note-preview--expanded .note-preview-item {
+  display: block;
+}
+
+.day-cell__note-preview--expanded .note-preview-text {
+  display: block;
+  font-size: 10px;
+  line-height: 1.4;
+  padding: 2px 6px;
+  margin-bottom: 2px;
+}
+
+.calendar-grid--expanded-h .day-cell__note-preview--expanded .note-preview-text,
+.calendar-grid--expanded.calendar-grid--expanded-h .day-cell__note-preview--expanded .note-preview-text {
+  font-size: 11px;
+}
+
+/* ==========================================================================
+   Day Panel - Elegant Sidebar
+   ========================================================================== */
+
+.day-panel {
+  background: linear-gradient(180deg, rgba(22, 22, 26, 0.6) 0%, rgba(15, 15, 17, 0.8) 100%);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-6);
+  height: fit-content;
+  width: 380px;
+  flex-shrink: 0; /* Prevent shrinking in flex/grid layouts */
+  backdrop-filter: blur(20px);
+  box-shadow: var(--shadow-lg);
+}
+
+.day-panel__empty {
+  text-align: center;
+  color: var(--color-text-muted);
+  font-style: italic;
+  padding: var(--space-8) var(--space-4);
+}
+
+.day-panel__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: var(--space-5);
+  padding-bottom: var(--space-4);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.day-panel__date {
+  font-family: var(--font-heading);
+  font-size: var(--text-2xl);
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.day-panel__civil {
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  color: var(--color-text-secondary);
+}
+
+.day-panel__section {
+  margin-bottom: var(--space-5);
+}
+
+.day-panel__label {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-2);
+}
+
+.day-panel__note {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-3);
+  font-size: var(--text-sm);
+  line-height: 1.6;
+}
+
+.day-panel__textarea {
+  width: 100%;
+  min-height: 120px;
+  padding: var(--space-3);
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  color: var(--color-text);
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  line-height: 1.6;
+  resize: vertical;
+  transition: border-color var(--transition-fast);
+}
+
+.day-panel__textarea:focus {
+  outline: none;
+  border-color: var(--color-gold);
+  box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.1);
+}
+
+.day-panel__textarea::placeholder {
+  color: var(--color-text-subtle);
+}
+
+/* ==========================================================================
+   Theme Settings - Expandable with Colors (Grid) and Fonts (List)
+   ========================================================================== */
+
+.theme-settings {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.theme-settings__section {
+  background: linear-gradient(145deg, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.01) 100%);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+.theme-settings__header {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-3);
+  background: transparent;
+  border: none;
+  color: var(--color-text);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.theme-settings__header:hover {
+  background: rgba(255,255,255,0.03);
+}
+
+.theme-settings__header--active {
+  background: var(--color-gold-muted);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.theme-settings__icon {
+  font-size: 1.1rem;
+}
+
+.theme-settings__title {
+  flex: 1;
+  font-weight: 500;
+  font-size: var(--text-sm);
+  text-align: left;
+}
+
+.theme-settings__current {
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+  margin-right: var(--space-2);
+}
+
+.theme-settings__arrow {
+  font-size: 0.7rem;
+  color: var(--color-text-muted);
+  transition: transform var(--transition-fast);
+}
+
+.theme-settings__content {
+  padding: var(--space-3);
+  animation: fadeIn 0.2s ease;
+}
+
+.theme-settings__content--fonts {
+  padding: var(--space-2);
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Theme Grid - For Colors */
+.theme-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-3);
+}
+
+@media (max-width: 768px) {
+  .theme-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  .theme-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.theme-card {
+  background: linear-gradient(145deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.02) 100%);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-3);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.theme-card:hover {
+  border-color: var(--color-border-hover);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.theme-card--active {
+  border-color: var(--color-gold);
+  box-shadow: 0 0 0 2px var(--color-gold-glow), var(--shadow-gold);
+}
+
+.theme-card__preview {
+  height: 60px;
+  border-radius: var(--radius-sm);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: var(--space-2);
+}
+
+.theme-card__accents {
+  display: flex;
+  gap: 6px;
+}
+
+.theme-card__dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  box-shadow: 0 0 4px rgba(0,0,0,0.5);
+}
+
+.theme-card__mode-preview {
+  height: 8px;
+  border-radius: 4px;
+  box-shadow: 0 0 4px rgba(0,0,0,0.3);
+}
+
+.theme-card__info {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--text-sm);
+}
+
+.theme-card__icon {
+  font-size: 1.2rem;
+}
+
+.theme-card__name {
+  flex: 1;
+  color: var(--color-text);
+  font-weight: 500;
+}
+
+.theme-card__check {
+  color: var(--color-gold);
+  font-weight: 600;
+}
+
+/* Font List - For Fonts */
+.font-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.font-card {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-3);
+  background: linear-gradient(145deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.02) 100%);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  text-align: left;
+}
+
+.font-card:hover {
+  border-color: var(--color-border-hover);
+  background: rgba(255,255,255,0.06);
+}
+
+.font-card--active {
+  border-color: var(--color-gold);
+  box-shadow: 0 0 0 2px var(--color-gold-glow);
+}
+
+.font-card__preview {
+  width: 60px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0,0,0,0.3);
+  border-radius: var(--radius-sm);
+  flex-shrink: 0;
+}
+
+.font-card__sample {
+  font-size: var(--text-lg);
+  font-weight: 600;
+  color: var(--color-gold);
+}
+
+.font-card__info {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+}
+
+.font-card__icon {
+  font-size: 1.1rem;
+}
+
+.font-card__name {
+  font-weight: 500;
+  color: var(--color-text);
+  font-size: var(--text-sm);
+}
+
+.font-card__desc {
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+  width: 100%;
+  margin-left: 1.8rem;
+}
+
+.font-card__check {
+  color: var(--color-gold);
+  font-weight: 600;
+  margin-left: auto;
+}
+
+/* ==========================================================================
+   Print Preview
+   ========================================================================== */
+
+.print-preview {
+  background: linear-gradient(180deg, rgba(22, 22, 26, 0.8) 0%, rgba(15, 15, 17, 0.9) 100%);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-8);
+  padding-top: calc(var(--space-8) + env(safe-area-inset-top, 0px));
+  padding-bottom: calc(var(--space-8) + env(safe-area-inset-bottom, 0px));
+  max-width: 600px;
+  margin: 0 auto;
+  backdrop-filter: blur(20px);
+  box-shadow: var(--shadow-lg);
+  position: relative;
+  z-index: 1;
+}
+
+.print-preview__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--space-6);
+  padding-bottom: var(--space-4);
+  border-bottom: 1px solid var(--color-border);
+  position: relative;
+  z-index: 5;
+}
+
+.print-preview__header .btn--icon {
+  width: 44px;
+  height: 44px;
+  min-width: 44px;
+  min-height: 44px;
+  font-size: 28px;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  position: relative;
+  z-index: 10;
+}
+
+.print-preview__header .btn--icon:hover {
+  background: rgba(255, 90, 109, 0.2);
+  border-color: var(--color-accent);
+  transform: scale(1.05);
+}
+
+.print-preview__header .btn--icon:active {
+  transform: scale(0.95);
+}
+
+.print-preview__header h2 {
+  font-family: var(--font-heading);
+  font-size: var(--text-xl);
+  font-weight: 600;
+  letter-spacing: 0.05em;
+}
+
+.print-preview__content {
+  padding-right: var(--space-2);
+}
+
+.option-group {
+  margin-bottom: var(--space-5);
+}
+
+.option-group label {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-2);
+}
+
+.radio-group,
+.checkbox-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+}
+
+.radio,
+.checkbox {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  cursor: pointer;
+  font-size: var(--text-sm);
+}
+
+.radio input,
+.checkbox input {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--color-gold);
+}
+
+.theme-select {
+  width: 100%;
+  padding: var(--space-3) var(--space-4);
+  font-size: var(--text-sm);
+  font-family: var(--font-body);
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  color: var(--color-text);
+  cursor: pointer;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23a0a0a0' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  background-size: 16px;
+  padding-right: 40px;
+  transition: all 0.2s ease;
+}
+
+.theme-select:hover {
+  border-color: var(--color-gold);
+  background-color: rgba(201, 162, 74, 0.05);
+}
+
+.theme-select:focus {
+  outline: none;
+  border-color: var(--color-gold);
+  box-shadow: 0 0 0 2px rgba(201, 162, 74, 0.2);
+}
+
+.theme-select option {
+  background: var(--color-bg);
+  color: var(--color-text);
+  padding: var(--space-2);
+}
+
+.theme-description {
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+  margin-top: var(--space-2);
+  font-style: italic;
+  line-height: 1.5;
+}
+
+.status-message {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-3);
+  padding: var(--space-4);
+  border-radius: var(--radius-md);
+  font-size: var(--text-sm);
+}
+
+.status-message--loading {
+  color: var(--color-text-muted);
+}
+
+.status-message--success {
+  background: rgba(34, 197, 94, 0.1);
+  color: #4ade80;
+  border: 1px solid rgba(34, 197, 94, 0.2);
+}
+
+.status-message--error {
+  background: rgba(220, 38, 38, 0.1);
+  color: #f87171;
+  border: 1px solid rgba(220, 38, 38, 0.2);
+}
+
+.spinner {
+  width: 20px;
+  height: 20px;
+  border: 2px solid var(--color-border);
+  border-top-color: var(--color-gold);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.print-preview__actions {
+  display: flex;
+  gap: var(--space-3);
+  justify-content: flex-end;
+  margin-top: var(--space-6);
+  position: relative;
+  z-index: 5;
+}
+
+.print-preview__actions .btn {
+  min-height: 44px;
+  min-width: 100px;
+  padding: var(--space-3) var(--space-5);
+  font-weight: 600;
+  cursor: pointer;
+  position: relative;
+  z-index: 10;
+}
+
+.print-preview__actions .btn:active {
+  transform: translateY(1px);
+}
+
+.print-preview__actions .btn--primary {
+  background: linear-gradient(135deg, var(--color-gold) 0%, var(--color-gold-dark) 100%);
+  color: #0b0b0f;
+  border: none;
+}
+
+.print-preview__actions .btn--primary:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(201, 162, 74, 0.3);
+}
+
+.print-preview__actions .btn--primary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* ==========================================================================
+   Modal
+   ========================================================================== */
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(12px);
+  display: flex;
+  align-items: flex-start;
+  padding-top: max(var(--space-12), 15vh);
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: var(--space-6);
+}
+
+.modal {
+  background: linear-gradient(180deg, rgba(22, 22, 26, 0.95) 0%, rgba(15, 15, 17, 0.98) 100%);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-6);
+  max-width: 1200px;
+  max-height: 75vh;
+  overflow-y: auto;
+  width: 100%;
+  max-height: 90vh;
+  overflow: auto;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8);
+}
+
+.modal__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--space-6);
+  padding-bottom: var(--space-4);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.modal__title {
+  font-family: var(--font-heading);
+  font-size: var(--text-xl);
+  font-weight: 600;
+  letter-spacing: 0.05em;
+}
+
+.mini-calendar {
+  background: linear-gradient(145deg, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.01) 100%);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-3);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.mini-calendar:hover {
+  border-color: var(--color-border-hover);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md), var(--shadow-gold);
+}
+
+.mini-calendar__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--space-2);
+  padding-bottom: var(--space-2);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.mini-calendar__name {
+  font-family: var(--font-heading);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.mini-calendar__hint {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+}
+
+/* ==========================================================================
+   Celestial Panel
+   ========================================================================== */
+
+.celestial-panel {
+  background: linear-gradient(180deg, rgba(22, 22, 26, 0.6) 0%, rgba(15, 15, 17, 0.8) 100%);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-5);
+  margin-bottom: var(--space-5);
+  backdrop-filter: blur(20px);
+}
+
+.celestial-panel__title {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--color-gold);
+  margin-bottom: var(--space-4);
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.countdown-widget {
+  background: linear-gradient(145deg, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.01) 100%);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-4);
+  margin-bottom: var(--space-3);
+}
+
+.countdown-header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-bottom: var(--space-2);
+}
+
+.countdown-symbol {
+  font-size: 1.5rem;
+}
+
+.countdown-label {
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.countdown-time {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-1);
+  font-family: var(--font-mono);
+}
+
+.countdown-unit {
+  text-align: center;
+}
+
+.countdown-value {
+  font-size: var(--text-xl);
+  font-weight: 700;
+  color: var(--color-gold);
+}
+
+.countdown-unit-label {
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+}
+
+.countdown-separator {
+  color: var(--color-gold);
+  font-size: var(--text-lg);
+}
+
+.celestial-card {
+  background: linear-gradient(145deg, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.01) 100%);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-3);
+  margin-bottom: var(--space-3);
+}
+
+.celestial-card__header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-bottom: var(--space-2);
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.celestial-icon {
+  font-size: 1rem;
+}
+
+.solar-noon-time {
+  font-size: var(--text-xl);
+  font-weight: 700;
+  color: var(--color-text);
+  font-family: var(--font-mono);
+}
+
+.solar-noon-elevation {
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+}
+
+.lunar-month-name {
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.lunar-dates {
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+  margin-top: var(--space-1);
+}
+
+.ag-card {
+  border-left: 3px solid;
+}
+
+.ag-plant { border-left-color: #22c55e; }
+.ag-transplant { border-left-color: #3b82f6; }
+.ag-harvest { border-left-color: #eab308; }
+.ag-prune { border-left-color: #8b5cf6; }
+.ag-fertilize { border-left-color: #06b6d4; }
+.ag-rest { border-left-color: #6b7280; }
+
+.ag-activity {
+  font-size: var(--text-sm);
+  color: var(--color-text);
+}
+
+.ag-confidence {
+  font-size: var(--text-xs);
+  margin-top: var(--space-1);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.ag-confidence--high { color: #22c55e; }
+.ag-confidence--medium { color: #eab308; }
+.ag-confidence--low { color: #6b7280; }
+
+.energy-level-bar {
+  height: 8px;
+  background: rgba(255,255,255,0.1);
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: var(--space-2);
+}
+
+.energy-level-fill {
+  height: 100%;
+  border-radius: 4px;
+  transition: width 0.5s ease;
+}
+
+.energy-description {
+  font-size: var(--text-sm);
+  color: var(--color-text);
+  margin-bottom: var(--space-2);
+}
+
+.energy-factors {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1);
+}
+
+.energy-factor {
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+  background: rgba(255,255,255,0.05);
+  padding: 2px 8px;
+  border-radius: var(--radius-sm);
+}
+
+/* ==========================================================================
+   Statistics Modal
+   ========================================================================== */
+
+.stats-overview {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-3);
+  margin-bottom: var(--space-5);
+}
+
+.stat-card {
+  background: linear-gradient(145deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.02) 100%);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-4);
+  text-align: center;
+}
+
+.stat-card--primary {
+  border-color: var(--color-gold);
+  background: var(--color-gold-muted);
+}
+
+.stat-card--fire {
+  border-color: #ef4444;
+  background: rgba(239, 68, 68, 0.1);
+}
+
+.stat-value {
+  font-size: var(--text-2xl);
+  font-weight: 700;
+  color: var(--color-text);
+  font-family: var(--font-mono);
+}
+
+.stat-label {
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-top: var(--space-1);
+}
+
+.stat-sublabel {
+  font-size: var(--text-xs);
+  color: var(--color-gold);
+  margin-top: 2px;
+}
+
+.stats-progress-section {
+  margin-bottom: var(--space-5);
+}
+
+.stats-progress-label {
+  display: flex;
+  justify-content: space-between;
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-2);
+}
+
+.stats-progress-bar {
+  height: 8px;
+  background: rgba(255,255,255,0.1);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.stats-progress-fill {
+  height: 100%;
+  background: var(--gradient-gold);
+  border-radius: 4px;
+  transition: width 0.5s ease;
+}
+
+.stats-section {
+  margin-bottom: var(--space-5);
+}
+
+.stats-section-title {
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--color-text);
+  margin-bottom: var(--space-3);
+  letter-spacing: 0.05em;
+}
+
+.category-grid {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.category-bar-item {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.category-bar-header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--text-sm);
+}
+
+.category-icon {
+  font-size: 1rem;
+}
+
+.category-name {
+  flex: 1;
+  color: var(--color-text-secondary);
+}
+
+.category-count {
+  font-weight: 600;
+  color: var(--color-text);
+  font-family: var(--font-mono);
+}
+
+.category-bar-track {
+  height: 6px;
+  background: rgba(255,255,255,0.05);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.category-bar-fill {
+  height: 100%;
+  border-radius: 3px;
+  transition: width 0.5s ease;
+}
+
+.monthly-chart {
+  display: flex;
+  align-items: flex-end;
+  gap: var(--space-1);
+  height: 120px;
+  padding-bottom: var(--space-4);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.monthly-bar {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-1);
+}
+
+.monthly-bar-fill {
+  width: 100%;
+  background: var(--color-gold);
+  border-radius: 2px 2px 0 0;
+  min-height: 4px;
+  opacity: 0.7;
+  transition: opacity 0.2s;
+}
+
+.monthly-bar:hover .monthly-bar-fill {
+  opacity: 1;
+}
+
+.monthly-bar-label {
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+  transform: rotate(-45deg);
+  transform-origin: center;
+  white-space: nowrap;
+}
+
+.badges-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-3);
+}
+
+.badge-item {
+  background: linear-gradient(145deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.02) 100%);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-3);
+  text-align: center;
+  position: relative;
+}
+
+.badge-item.earned {
+  border-color: var(--color-gold);
+  background: var(--color-gold-muted);
+}
+
+.badge-item.locked {
+  opacity: 0.5;
+}
+
+.badge-icon {
+  font-size: 2rem;
+  margin-bottom: var(--space-1);
+}
+
+.badge-name {
+  font-size: var(--text-xs);
+  color: var(--color-text-secondary);
+}
+
+.badge-lock {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 1.5rem;
+  opacity: 0.8;
+}
+
+.stats-insight {
+  background: rgba(212, 175, 55, 0.08);
+  border: 1px solid rgba(212, 175, 55, 0.2);
+  border-radius: var(--radius-md);
+  padding: var(--space-3);
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--text-sm);
+  color: var(--color-text-secondary);
+  margin-bottom: var(--space-4);
+}
+
+.insight-icon {
+  font-size: 1.2rem;
+}
+
+.stats-actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+/* ==========================================================================
+   Community Holidays
+   ========================================================================== */
+
+.community-intro {
+  font-size: var(--text-sm);
+  color: var(--color-text-secondary);
+  margin-bottom: var(--space-4);
+  line-height: 1.6;
+}
+
+.suggestion-form {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-4);
+  margin-bottom: var(--space-4);
+}
+
+.form-group {
+  margin-bottom: var(--space-3);
+}
+
+.form-group label {
+  display: block;
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: var(--space-1);
+}
+
+.form-group input,
+.form-group textarea {
+  width: 100%;
+  padding: var(--space-2) var(--space-3);
+  background: rgba(0,0,0,0.3);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  color: var(--color-text);
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: var(--color-gold);
+}
+
+.holidays-section {
+  margin-bottom: var(--space-4);
+}
+
+.holidays-section-title {
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--color-text);
+  margin-bottom: var(--space-3);
+}
+
+.holidays-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.holiday-card {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-3);
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.holiday-card.approved {
+  border-left: 3px solid #22c55e;
+}
+
+.holiday-card.pending {
+  border-left: 3px solid #eab308;
+}
+
+.holiday-date {
+  font-size: var(--text-xs);
+  color: var(--color-gold);
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.holiday-name {
+  font-weight: 600;
+  color: var(--color-text);
+  margin: var(--space-1) 0;
+}
+
+.holiday-description {
+  font-size: var(--text-sm);
+  color: var(--color-text-secondary);
+}
+
+.holiday-author {
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+  margin-top: var(--space-1);
+}
+
+.holiday-votes {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-1);
+}
+
+.vote-btn {
+  background: none;
+  border: none;
+  color: var(--color-gold);
+  font-size: 1.2rem;
+  cursor: pointer;
+  padding: var(--space-1);
+  transition: transform 0.2s;
+}
+
+.vote-btn:hover {
+  transform: scale(1.2);
+}
+
+.vote-count {
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--color-text);
+  font-family: var(--font-mono);
+}
+
+.empty-state {
+  text-align: center;
+  padding: var(--space-8) var(--space-4);
+}
+
+.empty-icon {
+  font-size: 3rem;
+  margin-bottom: var(--space-3);
+  opacity: 0.5;
+}
+
+/* ==========================================================================
+   Enhanced Day Panel
+   ========================================================================== */
+
+.day-panel__meta {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--color-gold);
+  margin-top: 4px;
+}
+
+.moon-section {
+  background: rgba(212, 175, 55, 0.05);
+  border: 1px solid rgba(212, 175, 55, 0.2);
+  border-radius: var(--radius-md);
+  padding: var(--space-4);
+}
+
+.moon-display {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  margin-bottom: var(--space-2);
+}
+
+.moon-emoji {
+  font-size: 2.5rem;
+}
+
+.moon-info {
+  flex: 1;
+}
+
+.moon-phase {
+  font-weight: 600;
+  color: var(--color-gold);
+  font-size: var(--text-base);
+}
+
+.moon-details {
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+  margin-top: 2px;
+}
+
+.moon-age {
+  font-size: var(--text-xs);
+  color: var(--color-text-subtle);
+  font-family: var(--font-mono);
+  margin-top: 2px;
+}
+
+.moon-hemisphere {
+  font-size: var(--text-xs);
+  color: var(--color-text-subtle);
+  font-family: var(--font-mono);
+  padding-top: var(--space-2);
+  border-top: 1px solid rgba(212, 175, 55, 0.1);
+}
+
+.holiday-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.holiday-badge {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-md);
+  font-size: var(--text-sm);
+}
+
+.holiday-badge--public {
+  background: rgba(34, 197, 94, 0.1);
+  border: 1px solid rgba(34, 197, 94, 0.3);
+}
+
+.holiday-badge--religious {
+  background: rgba(212, 175, 55, 0.1);
+  border: 1px solid rgba(212, 175, 55, 0.3);
+}
+
+.holiday-badge--observance {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.1);
+}
+
+.holiday-type {
+  font-size: var(--text-xs);
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+}
+
+.notes-section .day-panel__label {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.btn--sm {
+  padding: 2px 8px;
+  font-size: var(--text-xs);
+}
+
+.note-display {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-3);
+}
+
+.note-mood {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-bottom: var(--space-2);
+}
+
+.mood-emoji {
+  font-size: 1.5rem;
+}
+
+.mood-label {
+  font-size: var(--text-sm);
+  color: var(--color-text-secondary);
+}
+
+.note-category {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  padding: 2px 8px;
+  border-radius: var(--radius-sm);
+  font-size: var(--text-xs);
+  margin-bottom: var(--space-2);
+  border: 1px solid;
+}
+
+.note-content {
+  font-size: var(--text-sm);
+  color: var(--color-text);
+  line-height: 1.6;
+  white-space: pre-wrap;
+}
+
+.note-meta {
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+  margin-top: var(--space-2);
+  padding-top: var(--space-2);
+  border-top: 1px solid var(--color-border);
+}
+
+.note-edit-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.category-selector {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1);
+}
+
+.category-btn {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  padding: var(--space-1) var(--space-2);
+  background: rgba(255,255,255,0.05);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  color: var(--color-text-secondary);
+  font-size: var(--text-xs);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.category-btn:hover {
+  border-color: var(--category-color);
+  color: var(--color-text);
+}
+
+.category-btn.active {
+  background: var(--category-color);
+  border-color: var(--category-color);
+  color: white;
+}
+
+.mood-selector {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.mood-label-text {
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+}
+
+.mood-options {
+  display: flex;
+  gap: var(--space-2);
+}
+
+.mood-btn {
+  font-size: 1.5rem;
+  padding: var(--space-1);
+  background: rgba(255,255,255,0.05);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all 0.2s;
+  opacity: 0.5;
+}
+
+.mood-btn:hover {
+  opacity: 0.8;
+  transform: scale(1.1);
+}
+
+.mood-btn.active {
+  opacity: 1;
+  border-color: var(--color-gold);
+  background: var(--color-gold-muted);
+}
+
+.note-actions {
+  display: flex;
+  gap: var(--space-2);
+}
+
+.no-notes {
+  color: var(--color-text-muted);
+  font-size: var(--text-sm);
+  font-style: italic;
+  text-align: center;
+  padding: var(--space-4);
+}
+
+/* Notes List */
+.notes-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  margin-bottom: var(--space-3);
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.note-item {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-3);
+  position: relative;
+}
+
+.note-item:hover {
+  border-color: var(--color-border-hover);
+}
+
+.note-item__header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-bottom: var(--space-2);
+  flex-wrap: wrap;
+}
+
+.note-item__number {
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+  font-family: var(--font-mono);
+}
+
+.note-item__mood {
+  font-size: var(--text-sm);
+}
+
+.note-item__category {
+  font-size: var(--text-xs);
+  padding: 2px 6px;
+  border-radius: var(--radius-sm);
+  border: 1px solid;
+}
+
+.note-item__delete {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(220, 38, 38, 0.2);
+  border: none;
+  border-radius: 4px;
+  color: #ef4444;
+  font-size: 14px;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.note-item:hover .note-item__delete {
+  opacity: 1;
+}
+
+.note-item__delete:hover {
+  background: rgba(220, 38, 38, 0.4);
+}
+
+.note-item__content {
+  font-size: var(--text-sm);
+  color: var(--color-text);
+  line-height: 1.5;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.note-item__time {
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+  margin-top: var(--space-2);
+  font-family: var(--font-mono);
+}
+
+/* ==========================================================================
+   Note Selection Mode
+   ========================================================================== */
+
+.selection-toolbar {
+  background: linear-gradient(135deg, rgba(201, 162, 39, 0.1) 0%, rgba(201, 162, 39, 0.05) 100%);
+  border: 1px solid rgba(201, 162, 39, 0.3);
+  border-radius: var(--radius-md);
+  padding: var(--space-3);
+  margin-bottom: var(--space-4);
+}
+
+.selection-toolbar__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--space-3);
+  padding-bottom: var(--space-2);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.selection-count {
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  color: var(--color-gold);
+  font-weight: 600;
+}
+
+.selection-toolbar__actions {
+  display: flex;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+}
+
+.selection-toolbar__actions .btn {
+  flex: 1;
+  min-width: 80px;
+}
+
+.selection-toolbar__actions .btn--danger {
+  background: rgba(220, 38, 38, 0.2);
+  border-color: rgba(220, 38, 38, 0.4);
+  color: #ef4444;
+}
+
+.selection-toolbar__actions .btn--danger:hover {
+  background: rgba(220, 38, 38, 0.3);
+}
+
+.duplicate-options .btn--warning {
+  background: rgba(245, 158, 11, 0.2);
+  border-color: rgba(245, 158, 11, 0.4);
+  color: #f59e0b;
+}
+
+.duplicate-options .btn--warning:hover {
+  background: rgba(245, 158, 11, 0.3);
+}
+
+.duplicate-options {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.duplicate-options__title {
+  font-size: var(--text-sm);
+  color: var(--color-text-secondary);
+  margin-bottom: var(--space-2);
+  font-weight: 500;
+}
+
+.duplicate-options .btn {
+  text-align: left;
+  justify-content: flex-start;
+  padding: var(--space-3);
+}
+
+/* Note item selection styles */
+.note-item--selectable {
+  cursor: pointer;
+  position: relative;
+  padding-left: 40px;
+}
+
+.note-item--selectable:hover {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.note-item--selected {
+  background: rgba(201, 162, 39, 0.1) !important;
+  border-color: var(--color-gold) !important;
+}
+
+.note-item__checkbox {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 20px;
+  height: 20px;
+  border: 2px solid var(--color-border);
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  color: white;
+  background: transparent;
+  transition: all 0.2s;
+}
+
+.note-item--selected .note-item__checkbox {
+  background: var(--color-gold);
+  border-color: var(--color-gold);
+}
+
+.notes-list.selection-active .note-item {
+  padding-left: 40px;
+}
+
+/* Note hint - long press instruction */
+.note-hint {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-3);
+  margin-bottom: var(--space-3);
+  background: rgba(201, 162, 39, 0.08);
+  border: 1px dashed rgba(201, 162, 39, 0.3);
+  border-radius: var(--radius-md);
+  animation: pulse-hint 3s ease-in-out infinite;
+}
+
+@keyframes pulse-hint {
+  0%, 100% { opacity: 0.7; }
+  50% { opacity: 1; }
+}
+
+.note-hint__icon {
+  font-size: var(--text-sm);
+}
+
+.note-hint__text {
+  font-size: var(--text-xs);
+  color: var(--color-gold);
+  font-style: italic;
+  letter-spacing: 0.02em;
+}
+
+/* Day Picker */
+.day-picker {
+  background: var(--color-bg-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-3);
+}
+
+.day-picker__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--space-3);
+}
+
+.day-picker__month {
+  font-family: var(--font-heading);
+  font-size: var(--text-base);
+  color: var(--color-gold);
+  font-weight: 600;
+}
+
+.day-picker__grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 4px;
+  margin-bottom: var(--space-3);
+}
+
+.day-picker__day {
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  color: var(--color-text);
+  font-size: var(--text-sm);
+  cursor: pointer;
+  transition: all 0.15s;
+  padding: 0;
+  min-height: 32px;
+}
+
+.day-picker__day:hover {
+  background: rgba(201, 162, 39, 0.2);
+  border-color: var(--color-gold);
+}
+
+.day-picker__day.selected {
+  background: var(--color-gold);
+  border-color: var(--color-gold);
+  color: #000;
+  font-weight: 600;
+}
+
+.day-picker__footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: var(--space-3);
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--color-border);
+}
+
+.selected-count {
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+}
+
+.day-picker__actions {
+  display: flex;
+  gap: var(--space-2);
+}
+
+/* ==========================================================================
+   Footer
+   ========================================================================== */
+
+.app-footer {
+  text-align: center;
+  padding-top: var(--space-8);
+  margin-top: var(--space-6);
+  border-top: 1px solid var(--color-border);
+}
+
+.app-footer p {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--color-text-subtle);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+/* ==========================================================================
+   Responsive
+   ========================================================================== */
+
+@media (max-width: 768px) {
+  .app {
+    padding: var(--space-3);
+    /* Safe area padding for mobile notches/cameras */
+    padding-top: max(var(--space-3), env(safe-area-inset-top));
+    padding-bottom: max(var(--space-4), env(safe-area-inset-bottom));
+    /* Add more right padding to prevent Friday column border cutoff */
+    padding-left: max(var(--space-3), env(safe-area-inset-left));
+    padding-right: max(var(--space-4), env(safe-area-inset-right));
+    overflow-x: hidden;
+  }
+  
+  /* Calendar container - equal padding on both sides for balanced look */
+  .calendar-container {
+    width: 100%;
+    max-width: 100%;
+    padding-left: 4px;
+    padding-right: 4px;
+    box-sizing: border-box;
+  }
+  
+  .calendar-grid {
+    width: 100%;
+    max-width: 100%;
+    overflow: visible;
+    /* Equal padding on both sides - Saturday (left) and Friday (right) */
+    padding-left: var(--space-2);
+    padding-right: var(--space-2);
+  }
+  
+  /* Day of week header row */
+  .calendar-grid__dow {
+    width: 100%;
+    gap: 4px;
+    padding: 0 2px;
+  }
+  
+  /* Week rows - ensure Friday column has room */
+  .calendar-grid__week {
+    width: 100%;
+    gap: 4px;
+    padding: 2px;
+    contain: none; /* Remove containment to prevent clipping */
+  }
+  
+  /* Ensure all day cells are same size - remove margin that shrinks Friday cells */
+  .calendar-grid__week .day-cell,
+  .calendar-grid__dow .calendar-grid__dow-cell {
+    /* All cells same size - no special margin for last child */
+  }
+  
+  .app-header {
+    margin-top: max(var(--space-8), 5vh);
+    margin-bottom: var(--space-6);
+    padding: var(--space-4) var(--space-4) var(--space-4);
+    background: rgba(212, 175, 55, 0.03);
+    border: 1px solid rgba(212, 175, 55, 0.1);
+    border-radius: var(--radius-lg);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+  
+  .app-title {
+    font-size: var(--text-xl);
+    letter-spacing: 0.05em;
+    margin-bottom: var(--space-2);
+  }
+  
+  .app-subtitle {
+    font-size: 0.7rem;
+    margin-bottom: var(--space-2);
+  }
+  
+  .settings-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  /* Mobile overlay positioning */
+  .settings-overlay-root {
+    padding: 10px;
+    padding-top: env(safe-area-inset-top, 10px);
+  }
+  
+  .settings-modal {
+    max-height: calc(100vh - 20px);
+    padding: var(--space-3) var(--space-4);
+    padding-top: calc(var(--space-3) + env(safe-area-inset-top, 10px));
+    padding-bottom: calc(60px + env(safe-area-inset-bottom, 20px));
+    width: 95vw;
+  }
+  
+  .month-header {
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+  
+  .month-header__controls {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  
+  .day-cell {
+    min-height: 90px;
+    padding: var(--space-2);
+  }
+  
+  .day-cell__heka-num {
+    font-size: var(--text-base);
+  }
+  
+  .print-preview {
+    padding: var(--space-5);
+    padding-top: calc(var(--space-5) + env(safe-area-inset-top, 0px));
+    margin-top: max(var(--space-8), 10vh, env(safe-area-inset-top, 0px));
+    min-height: auto;
+    box-sizing: border-box;
+  }
+  
+  .print-preview__header .btn--icon {
+    min-width: 48px;
+    min-height: 48px;
+    font-size: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .print-preview__actions {
+    position: sticky;
+    bottom: calc(var(--space-4) + env(safe-area-inset-bottom, 0px));
+    background: rgba(22, 22, 26, 0.95);
+    backdrop-filter: blur(10px);
+    padding: var(--space-4);
+    margin: var(--space-4) calc(-1 * var(--space-5)) calc(-1 * var(--space-5));
+    border-top: 1px solid var(--color-border);
+    z-index: 10;
+  }
+  
+  .print-preview__actions .btn {
+    flex: 1;
+    min-height: 48px;
+    font-size: 16px;
+  }
+}
+
+/* ==========================================================================
+   Accessibility
+   ========================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+.btn:focus-visible,
+.day-cell:focus-visible,
+.radio input:focus-visible,
+.checkbox input:focus-visible {
+  outline: 2px solid var(--color-gold);
+  outline-offset: 2px;
+}
+
+@media (prefers-contrast: high) {
+  :root {
+    --color-border: rgba(255, 255, 255, 0.2);
+    --color-text-muted: #c4c4c4;
+  }
+}
+
+/* ==========================================================================
+   Journal System
+   ========================================================================== */
+
+.journal {
+  padding: var(--space-6);
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.journal__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--space-6);
+  padding-bottom: var(--space-4);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.journal__title {
+  font-size: var(--text-2xl);
+  font-weight: 300;
+  color: var(--color-gold);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+.journal__list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.journal-entry {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-4);
+  transition: all 0.2s ease;
+}
+
+.journal-entry:hover {
+  border-color: var(--color-border-hover);
+}
+
+.journal-entry__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: var(--space-3);
+}
+
+.journal-entry__title {
+  font-size: var(--text-lg);
+  font-weight: 500;
+  color: var(--color-text);
+}
+
+.journal-entry__date {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+}
+
+.journal-entry__excerpt {
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+  line-height: 1.6;
+  margin-bottom: var(--space-3);
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.journal-entry__footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.journal-entry__tags {
+  display: flex;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+}
+
+.journal-entry__tag {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  padding: 2px 8px;
+  background: rgba(201, 162, 39, 0.1);
+  border-radius: var(--radius-sm);
+  color: var(--color-gold);
+}
+
+.journal-entry__actions {
+  display: flex;
+  gap: var(--space-2);
+}
+
+.journal-editor {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.journal-editor__field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.journal-editor__label {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.journal-editor__input {
+  padding: var(--space-3);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  color: var(--color-text);
+  font-size: var(--text-base);
+  transition: all 0.2s ease;
+}
+
+.journal-editor__input:focus {
+  outline: none;
+  border-color: var(--color-gold);
+  background: var(--color-surface-hover);
+}
+
+.journal-editor__textarea {
+  padding: var(--space-3);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  color: var(--color-text);
+  font-size: var(--text-base);
+  line-height: 1.6;
+  min-height: 200px;
+  resize: vertical;
+  transition: all 0.2s ease;
+}
+
+.journal-editor__textarea:focus {
+  outline: none;
+  border-color: var(--color-gold);
+  background: var(--color-surface-hover);
+}
+
+.journal-editor__tags-input {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  padding: var(--space-2);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+}
+
+.journal-editor__tag-chip {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  padding: 2px 8px;
+  background: rgba(201, 162, 39, 0.15);
+  border-radius: var(--radius-sm);
+  font-size: var(--text-xs);
+  color: var(--color-gold);
+}
+
+.journal-editor__tag-chip button {
+  background: none;
+  border: none;
+  color: var(--color-gold);
+  cursor: pointer;
+  font-size: 14px;
+  line-height: 1;
+}
+
+.journal-editor__tag-input {
+  flex: 1;
+  min-width: 100px;
+  background: transparent;
+  border: none;
+  color: var(--color-text);
+  font-size: var(--text-sm);
+  padding: 4px;
+}
+
+.journal-editor__tag-input:focus {
+  outline: none;
+}
+
+.journal-editor__actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--space-3);
+  margin-top: var(--space-4);
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--color-border);
+}
+
+.journal-empty {
+  text-align: center;
+  padding: var(--space-12);
+  color: var(--color-text-muted);
+}
+
+.journal-empty__icon {
+  font-size: var(--text-4xl);
+  margin-bottom: var(--space-4);
+  opacity: 0.5;
+}
+
+.journal-empty__text {
+  font-size: var(--text-lg);
+  margin-bottom: var(--space-6);
+}
+
+.journal-search {
+  display: flex;
+  gap: var(--space-3);
+  margin-bottom: var(--space-6);
+}
+
+.journal-search__input {
+  flex: 1;
+  padding: var(--space-3);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  color: var(--color-text);
+  font-size: var(--text-base);
+}
+
+.journal-search__input:focus {
+  outline: none;
+  border-color: var(--color-gold);
+}
+
+.journal-filters {
+  display: flex;
+  gap: var(--space-2);
+  margin-bottom: var(--space-4);
+  flex-wrap: wrap;
+}
+
+.journal-filter {
+  padding: var(--space-2) var(--space-3);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-full);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.journal-filter:hover {
+  border-color: var(--color-border-hover);
+  color: var(--color-text);
+}
+
+.journal-filter--active {
+  background: rgba(201, 162, 39, 0.15);
+  border-color: var(--color-gold);
+  color: var(--color-gold);
+}
+
+/* ==========================================================================
+   Journal Modal
+   ========================================================================== */
+
+.journal-modal {
+  display: flex;
+  flex-direction: column;
+  max-height: 85vh;
+  overflow: hidden;
+}
+
+.journal-container {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+  gap: var(--space-4);
+  padding: var(--space-4);
+  min-height: 0;
+}
+
+.journal-sidebar {
+  width: 280px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  border-right: 1px solid var(--color-border);
+  padding-right: var(--space-4);
+  overflow-y: auto;
+  max-height: 100%;
+  min-height: 0;
+}
+
+.journal-content {
+  flex: 1;
+  overflow-y: auto;
+  padding-left: var(--space-2);
+  max-height: 100%;
+  min-height: 0;
+}
+
+.journal-entries-list {
+  overflow-y: auto;
+  flex: 1;
+  min-height: 0;
+  max-height: calc(85vh - 250px);
+}
+
+.entry-detail-content {
+  overflow-y: auto;
+  max-height: calc(85vh - 180px);
+}
+
+.journal-entry-detail {
+  overflow-y: auto;
+  max-height: 100%;
+}
+
+.journal-search input {
+  width: 100%;
+  padding: var(--space-3);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  color: var(--color-text);
+  font-size: var(--text-sm);
+}
+
+.journal-search input:focus {
+  outline: none;
+  border-color: var(--color-gold);
+}
+
+.journal-section-title {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: var(--space-2);
+}
+
+.tag-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.tag-btn {
+  padding: var(--space-1) var(--space-2);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-full);
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.tag-btn:hover {
+  border-color: var(--color-border-hover);
+  color: var(--color-text);
+}
+
+.tag-btn.active {
+  background: rgba(201, 162, 39, 0.15);
+  border-color: var(--color-gold);
+  color: var(--color-gold);
+}
+
+.journal-entries-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.journal-entry-btn {
+  width: 100%;
+  padding: var(--space-3);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.journal-entry-btn:hover {
+  border-color: var(--color-border-hover);
+  background: var(--color-surface-hover);
+}
+
+.journal-entry-btn.active {
+  border-color: var(--color-gold);
+  background: rgba(201, 162, 39, 0.1);
+}
+
+.entry-btn-title {
+  font-size: var(--text-sm);
+  font-weight: 500;
+  color: var(--color-text);
+  margin-bottom: var(--space-1);
+}
+
+.entry-btn-meta {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+}
+
+.journal-entry-detail {
+  padding: var(--space-4);
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: var(--radius-lg);
+}
+
+.entry-detail-header {
+  margin-bottom: var(--space-6);
+  padding-bottom: var(--space-4);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.entry-detail-header h3 {
+  font-size: var(--text-xl);
+  font-weight: 300;
+  color: var(--color-gold);
+  margin-bottom: var(--space-3);
+}
+
+.entry-detail-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-3);
+}
+
+.entry-detail-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.entry-tag {
+  padding: 2px 10px;
+  background: rgba(201, 162, 39, 0.1);
+  border: 1px solid rgba(201, 162, 39, 0.3);
+  border-radius: var(--radius-full);
+  font-size: var(--text-xs);
+  color: var(--color-gold);
+}
+
+.entry-detail-content {
+  line-height: 1.8;
+}
+
+.entry-section {
+  margin-bottom: var(--space-4);
+}
+
+.entry-section-title {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--color-gold);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: var(--space-2);
+}
+
+.entry-section p {
+  color: var(--color-text);
+  white-space: pre-wrap;
+}
+
+.journal-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  text-align: center;
+  color: var(--color-text-muted);
+}
+
+.journal-empty-icon {
+  font-size: var(--text-4xl);
+  margin-bottom: var(--space-4);
+  opacity: 0.5;
+}
+
+.journal-empty-sub {
+  font-size: var(--text-sm);
+  margin-top: var(--space-2);
+}
+
+.journal-actions {
+  display: flex;
+  gap: var(--space-3);
+  align-items: center;
+}
+
+/* ==========================================================================
+   Modal Styles Update
+   ========================================================================== */
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-4);
+  z-index: 1000;
+  backdrop-filter: blur(4px);
+}
+
+.modal {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  max-width: 90vw;
+  max-height: 90vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.modal__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--space-4) var(--space-6);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.modal__title {
+  font-size: var(--text-xl);
+  font-weight: 300;
+  color: var(--color-gold);
+  letter-spacing: 0.1em;
+}
+
+/* ==========================================================================
+   Year Modal - Fixed Scrolling
+   ========================================================================== */
+
+.year-modal-overlay {
+  align-items: flex-start;
+  padding-top: max(var(--space-8), 8vh);
+  padding-bottom: 5vh;
+  overflow-y: auto;
+}
+
+.year-modal {
+  width: 95vw;
+  max-width: 1400px;
+  max-height: 90vh;
+  overflow: hidden;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  display: flex;
+  flex-direction: column;
+}
+
+.year-modal__header {
+  flex-shrink: 0;
+  padding: var(--space-4) var(--space-6);
+  border-bottom: 1px solid var(--color-border);
+  background: var(--color-surface);
+}
+
+.year-modal__content {
+  flex: 1;
+  overflow-y: auto;
+  padding: var(--space-6);
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: var(--space-4);
+  background: var(--color-surface);
+}
+
+/* Custom scrollbar for year modal */
+.year-modal__content::-webkit-scrollbar {
+  width: 8px;
+}
+
+.year-modal__content::-webkit-scrollbar-track {
+  background: var(--color-surface);
+}
+
+.year-modal__content::-webkit-scrollbar-thumb {
+  background: var(--color-border);
+  border-radius: 4px;
+}
+
+.year-modal__content::-webkit-scrollbar-thumb:hover {
+  background: var(--color-border-hover);
+}
+
+/* ==========================================================================
+   Celestial Panel - Horizontal Scroll
+   ========================================================================== */
+
+.celestial-panel-container {
+  width: 100%;
+  margin: var(--space-4) 0;
+  position: relative;
+  /* FIXED: Ensure container doesn't block page scroll */
+  overflow: visible;
+}
+
+.celestial-panel {
+  display: flex;
+  gap: var(--space-4);
+  padding: var(--space-4);
+  padding-bottom: var(--space-6);
+  /* FIXED: Use auto instead of scroll to prevent scroll capture issues */
+  overflow-x: auto;
+  overflow-y: visible;
+  /* FIXED: Removed scroll-snap which was causing scroll issues */
+  /* scroll-snap-type: x mandatory; */
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  background: linear-gradient(135deg, rgba(201, 162, 39, 0.05) 0%, rgba(20, 20, 30, 0.8) 100%);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  position: relative;
+  z-index: 1;
+  /* FIXED: Allow wheel events to propagate for page scrolling */
+  overscroll-behavior-x: contain;
+}
+
+/* Landscape mode - explicitly preserve celestial panel styling */
+@media (orientation: landscape) {
+  .celestial-panel {
+    background: linear-gradient(135deg, rgba(201, 162, 39, 0.05) 0%, rgba(20, 20, 30, 0.8) 100%) !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    border-radius: var(--radius-lg) !important;
+    padding: var(--space-4) !important;
+    padding-bottom: var(--space-6) !important;
+  }
+  
+  .celestial-panel .celestial-expandable-card {
+    background: rgba(26, 26, 38, 0.8) !important;
+    border: 1px solid rgba(201, 162, 39, 0.2) !important;
+    border-radius: var(--radius-md) !important;
+    min-width: 280px !important;
+    max-width: 320px !important;
+    flex-shrink: 0 !important;
+    /* FIXED: Let content expand naturally - DON'T make cards scroll containers */
+    overflow: visible !important;
+    box-sizing: border-box !important;
+  }
+  
+  /* Card header - MOVED to landscape-scroll-fix.css */
+  .celestial-panel .celestial-expandable-card__header {
+    padding: var(--space-4) !important;
+    user-select: none !important;
+  }
+  
+  /* Card content - constrain width */
+  .celestial-panel .celestial-expandable-card__content {
+    padding: 0 var(--space-4) var(--space-4) !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+  }
+  
+  /* Card text styling - preserve in landscape */
+  .celestial-panel .celestial-expandable-card__title {
+    color: var(--color-text) !important;
+    font-weight: 600 !important;
+    font-size: var(--text-base) !important;
+  }
+  
+  .celestial-panel .celestial-expandable-card__subtitle {
+    color: var(--color-text-muted) !important;
+    font-size: var(--text-xs) !important;
+    font-family: var(--font-mono) !important;
+  }
+  
+  .celestial-panel .celestial-expandable-card__chevron {
+    color: var(--color-gold) !important;
+  }
+  
+  /* Info sections */
+  .celestial-panel .celestial-info-section {
+    margin-top: var(--space-4) !important;
+    padding-top: var(--space-3) !important;
+    border-top: 1px solid var(--color-border) !important;
+    max-width: 100% !important;
+  }
+  
+  .celestial-panel .celestial-info-section__title {
+    color: var(--color-gold) !important;
+    font-family: var(--font-mono) !important;
+    font-size: var(--text-xs) !important;
+    margin-bottom: var(--space-2) !important;
+  }
+  
+  .celestial-panel .celestial-info-section__content {
+    color: var(--color-text-secondary) !important;
+    font-size: var(--text-sm) !important;
+    max-width: 100% !important;
+    word-wrap: break-word !important;
+    overflow-wrap: break-word !important;
+  }
+  
+  /* Lists - CRITICAL: prevent overflow */
+  .celestial-panel .celestial-info-list {
+    margin: 0 !important;
+    padding-left: var(--space-4) !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+  }
+  
+  .celestial-panel .celestial-info-list__item {
+    color: var(--color-text-secondary) !important;
+    font-size: var(--text-sm) !important;
+    margin-bottom: var(--space-1) !important;
+    line-height: 1.5 !important;
+    max-width: 100% !important;
+    word-wrap: break-word !important;
+    overflow-wrap: break-word !important;
+  }
+  
+  .celestial-panel .celestial-info-list__item::marker {
+    color: var(--color-gold) !important;
+  }
+  
+  /* Info badges */
+  .celestial-panel .celestial-info-badge {
+    background: rgba(255, 255, 255, 0.03) !important;
+    border: 1px solid var(--color-border) !important;
+    border-radius: var(--radius-md) !important;
+    padding: var(--space-2) var(--space-3) !important;
+    margin-right: var(--space-2) !important;
+    margin-bottom: var(--space-2) !important;
+  }
+  
+  .celestial-panel .celestial-info-badge__label {
+    color: var(--color-text-muted) !important;
+    font-family: var(--font-mono) !important;
+    font-size: var(--text-xs) !important;
+  }
+  
+  .celestial-panel .celestial-info-badge__value {
+    color: var(--color-text) !important;
+    font-weight: 600 !important;
+    font-size: var(--text-sm) !important;
+  }
+  
+  /* Solar noon display */
+  .celestial-panel .solar-noon-display {
+    background: rgba(251, 191, 36, 0.05) !important;
+    border: 1px solid rgba(251, 191, 36, 0.2) !important;
+    border-radius: var(--radius-md) !important;
+    padding: var(--space-3) !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+  }
+  
+  .celestial-panel .solar-noon-time {
+    color: #fbbf24 !important;
+    font-family: var(--font-mono) !important;
+    font-size: var(--text-xl) !important;
+    font-weight: 700 !important;
+  }
+  
+  .celestial-panel .solar-noon-elevation {
+    color: var(--color-text-secondary) !important;
+    font-size: var(--text-sm) !important;
+  }
+  
+  /* AG guidance */
+  .celestial-panel .ag-guidance-display {
+    background: rgba(134, 239, 172, 0.05) !important;
+    border: 1px solid rgba(134, 239, 172, 0.2) !important;
+    border-radius: var(--radius-md) !important;
+    padding: var(--space-3) !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+  }
+  
+  .celestial-panel .ag-activity {
+    color: #86efac !important;
+    font-size: var(--text-lg) !important;
+    font-weight: 600 !important;
+  }
+  
+  .celestial-panel .ag-confidence {
+    font-family: var(--font-mono) !important;
+    font-size: var(--text-xs) !important;
+  }
+  
+  .celestial-panel .ag-confidence--high {
+    color: #86efac !important;
+  }
+  
+  .celestial-panel .ag-confidence--moderate {
+    color: #fbbf24 !important;
+  }
+  
+  .celestial-panel .ag-confidence--low {
+    color: #fca5a5 !important;
+  }
+  
+  /* Zodiac card content */
+  .celestial-panel .zodiac-card__description {
+    color: var(--color-text-secondary) !important;
+    font-size: var(--text-sm) !important;
+    line-height: 1.6 !important;
+    max-width: 100% !important;
+    word-wrap: break-word !important;
+  }
+  
+  .celestial-panel .zodiac-card__traits {
+    margin-top: var(--space-3) !important;
+  }
+  
+  .celestial-panel .zodiac-card__label {
+    color: var(--color-text-muted) !important;
+    font-size: var(--text-xs) !important;
+    margin-right: var(--space-2) !important;
+  }
+  
+  .celestial-panel .zodiac-card__trait {
+    background: rgba(201, 162, 39, 0.1) !important;
+    color: var(--color-gold) !important;
+    padding: 2px 8px !important;
+    border-radius: var(--radius-sm) !important;
+    font-size: var(--text-xs) !important;
+    margin-right: var(--space-1) !important;
+    margin-bottom: var(--space-1) !important;
+    display: inline-block !important;
+  }
+  
+  /* Energy forecast */
+  .celestial-panel .energy-forecast-display {
+    background: rgba(255, 255, 255, 0.02) !important;
+    border-radius: var(--radius-md) !important;
+    padding: var(--space-3) !important;
+  }
+  
+  .celestial-panel .energy-description {
+    color: var(--color-text) !important;
+    font-size: var(--text-sm) !important;
+  }
+}
+
+/* Scrollbar - thin and allows touch pass-through for vertical scroll */
+.celestial-panel::-webkit-scrollbar {
+  height: 6px;
+  width: 6px;
+}
+
+.celestial-panel::-webkit-scrollbar-track {
+  background: transparent;
+  border-radius: var(--radius-sm);
+  margin: 0 var(--space-2);
+  pointer-events: none;
+}
+
+.celestial-panel::-webkit-scrollbar-thumb {
+  background: var(--color-gold);
+  border-radius: var(--radius-sm);
+  min-height: 6px;
+  border: none;
+  pointer-events: auto;
+}
+
+.celestial-panel::-webkit-scrollbar-thumb:hover {
+  background: #e0b93a;
+}
+
+.celestial-panel::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
+/* Firefox scrollbar - thin */
+.celestial-panel {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-gold) transparent;
+}
+
+.celestial-panel > * {
+  flex: 0 0 auto;
+  /* FIXED: Removed scroll-snap-align since we removed scroll-snap */
+  /* scroll-snap-align: start; */
+  width: 280px;
+  /* Ensure cards can expand without being cut off */
+  min-height: fit-content;
+  /* CRITICAL: Remove CSS containment that blocks scroll */
+  contain: none !important;
+  /* Ensure visible overflow */
+  overflow-x: visible;
+  overflow-y: visible;
+}
+
+.celestial-panel__title {
+  flex: 0 0 100%;
+  width: 100%;
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--color-gold);
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  margin-bottom: var(--space-2);
+}
+
+.countdown-widget,
+.celestial-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-4);
+}
+
+/* ==========================================================================
+   Performance Optimizations
+   ========================================================================== */
+
+/* GPU acceleration for calendar grid */
+.calendar-grid {
+  contain: layout style;
+  content-visibility: auto;
+  will-change: transform;
+}
+
+.day-cell {
+  contain: layout style;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+/* Reduce paint operations - CSS containment for performance */
+.month-header {
+  contain: layout paint;
+}
+
+/* Settings panel overlay - no paint containment needed */
+
+/* day-panel: contain removed to fix scroll issues on mobile */
+
+/* Optimize animations */
+.btn,
+.day-cell,
+.modal {
+  transform: translateZ(0);
+}
+
+/* Debounce hover effects */
+@media (hover: hover) {
+  .day-cell:hover,
+  .btn:hover {
+    transition: all 0.15s ease-out;
+  }
+}
+
+/* ==========================================================================
+   Mobile & Touch Optimizations
+   ========================================================================== */
+
+@media (max-width: 1024px) {
+  .celestial-panel > * {
+    width: 260px;
+  }
+}
+
+@media (max-width: 768px) {
+  .year-modal {
+    width: 100vw;
+    max-width: 100vw;
+    max-height: 100vh;
+    border-radius: 0;
+  }
+  
+  .year-modal-overlay {
+    padding-top: max(var(--space-6), 6vh);
+    padding-left: 0;
+    padding-right: 0;
+    padding-bottom: 0;
+    align-items: stretch;
+  }
+  
+  .year-modal__content {
+    grid-template-columns: repeat(2, 1fr);
+    padding: var(--space-4);
+  }
+  
+  .celestial-panel > * {
+    width: 240px;
+  }
+  
+  /* Larger touch targets */
+  .btn {
+    min-height: 44px;
+    min-width: 44px;
+  }
+  
+  .day-cell {
+    min-height: 80px;
+  }
+  
+  /* Fix Friday (last column) border cut off - equal padding on both sides */
+  .calendar-grid {
+    /* Equal padding for Saturday (first) and Friday (last) columns */
+    padding-left: 6px;
+    padding-right: 6px;
+  }
+  
+  /* Ensure last column cells have visible overflow for glow effects */
+  .calendar-grid__week .day-cell:last-child,
+  .calendar-grid__dow .calendar-grid__dow-cell:last-child {
+    overflow: visible;
+  }
+  
+  .calendar-grid__week .day-cell:last-child .day-cell__inner,
+  .calendar-grid__week .day-cell:last-child .day-cell__heka-num {
+    overflow: visible;
+  }
+  
+  /* Ensure first column (Saturday) also has room for glow */
+  .calendar-grid__week .day-cell:first-child,
+  .calendar-grid__dow .calendar-grid__dow-cell:first-child {
+    overflow: visible;
+  }
+  
+  /* Ensure the day-panel can scroll fully - FIXED: Allow page scroll */
+  .day-panel {
+    max-height: none;
+    /* FIXED: overflow: visible lets page scroll instead of panel scrolling */
+    overflow: visible;
+    padding-bottom: 150px;
+    /* Allow vertical scrolling throughout */
+    touch-action: pan-y;
+    contain: none;
+  }
+  
+  /* Ensure all sections within day-panel allow scrolling */
+  .day-panel__section {
+    touch-action: pan-y;
+  }
+  
+  /* Energy vote section - CRITICAL: allow scroll to pass through */
+  .day-panel__section.energy-vote-section {
+    touch-action: pan-y;
+  }
+}
+
+@media (max-width: 480px) {
+  .year-modal__content {
+    grid-template-columns: 1fr;
+  }
+  
+  .celestial-panel > * {
+    width: 85vw;
+  }
+}
+
+/* ==========================================================================
+   Print Styles - Hide UI elements
+   ========================================================================== */
+
+@media print {
+  .app-header,
+  .settings-toggle-wrapper,
+  .settings-overlay-root,
+  .day-panel,
+  .month-header__controls,
+  .celestial-panel-container,
+  .app-footer,
+  .modal-overlay,
+  .mode-indicator {
+    display: none !important;
+  }
+  
+  .app-main {
+    padding: 0;
+  }
+  
+  .calendar-container {
+    max-width: 100%;
+    width: 100%;
+    padding: 0 4px 0 0;
+    box-sizing: border-box;
+    overflow: visible;
+  }
+  
+  .calendar-grid {
+    padding: var(--space-3);
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    overflow: visible;
+    /* Disable containment to prevent clipping */
+    contain: none;
+    content-visibility: visible;
+  }
+  
+  .calendar-grid__dow,
+  .calendar-grid__week {
+    gap: 4px;
+    width: 100%;
+    padding: 2px;
+    /* Disable containment to prevent clipping */
+    contain: none;
+    will-change: auto;
+  }
+  
+  .day-cell {
+    min-height: 90px;
+    padding: var(--space-1);
+    overflow: visible;
+    /* Disable containment to prevent clipping */
+    contain: none;
+    will-change: auto;
+  }
+  
+}
+
+/* ==========================================================================
+   Reduced Motion Preferences
+   ========================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .celestial-panel {
+    scroll-behavior: auto;
+  }
+  
+  .calendar-grid,
+  .day-cell {
+    will-change: auto;
+    content-visibility: visible;
+  }
+}
+
+/* ==========================================================================
+   Mini Calendar Optimizations
+   ========================================================================== */
+
+.mini-calendar {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-3);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  contain: layout style;
+  will-change: transform;
+}
+
+.mini-calendar:hover {
+  border-color: var(--color-gold);
+  background: var(--color-surface-hover);
+  transform: translateY(-2px);
+}
+
+.mini-calendar__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--space-1);
+}
+
+.mini-calendar__name {
+  font-weight: 600;
+  font-size: var(--text-base);
+  color: var(--color-text);
+}
+
+.mini-calendar__arc {
+  font-size: 0.65rem;
+  color: var(--color-gold);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* Arc-specific colors for mini calendars */
+.mini-calendar__arc--opening {
+  color: var(--color-opening);
+}
+
+.mini-calendar__arc--core {
+  color: var(--color-core);
+}
+
+.mini-calendar__arc--closing {
+  color: var(--color-closing);
+}
+
+/* Arc-specific border colors for mini calendars */
+.mini-calendar--opening {
+  border-color: rgba(220, 38, 38, 0.3);
+}
+
+.mini-calendar--opening:hover {
+  border-color: var(--color-opening);
+  box-shadow: 0 4px 20px rgba(220, 38, 38, 0.2);
+}
+
+.mini-calendar--core {
+  border-color: rgba(34, 197, 94, 0.3);
+}
+
+.mini-calendar--core:hover {
+  border-color: var(--color-core);
+  box-shadow: 0 4px 20px rgba(34, 197, 94, 0.2);
+}
+
+.mini-calendar--closing {
+  border-color: rgba(124, 58, 237, 0.3);
+}
+
+.mini-calendar--closing:hover {
+  border-color: var(--color-closing);
+  box-shadow: 0 4px 20px rgba(124, 58, 237, 0.2);
+}
+
+.mini-calendar__hint {
+  font-size: 0.7rem;
+  color: var(--color-text-subtle);
+  margin-bottom: var(--space-2);
+}
+
+.mini-calendar__grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 2px;
+  font-size: 0.75rem;
+  font-family: var(--font-mono);
+}
+
+.mini-calendar__dow {
+  text-align: center;
+  padding: 2px;
+  color: var(--color-text-muted);
+  font-weight: 500;
+}
+
+.mini-calendar__day {
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  color: var(--color-text);
+  font-size: 0.8rem;
+}
+
+.mini-calendar__day--empty {
+  color: transparent;
+}
+
+/* ==========================================================================
+   Year Modal Content Grid
+   ========================================================================== */
+
+.year-modal__content {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: var(--space-4);
+  padding: var(--space-6);
+  overflow-y: auto;
+  content-visibility: auto;
+  contain: layout;
+}
+
+/* Optimize for less repaint during scroll */
+.year-modal {
+  contain: layout;
+  will-change: transform;
+}
+
+/* ==========================================================================
+   Notification Settings
+   ========================================================================== */
+
+.notification-settings {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-3);
+}
+
+.notification-settings__header {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  margin-bottom: var(--space-3);
+}
+
+.notification-settings__icon {
+  font-size: 1.5rem;
+  flex-shrink: 0;
+}
+
+.notification-settings__text strong {
+  display: block;
+  font-size: var(--text-sm);
+  color: var(--color-text);
+  margin-bottom: var(--space-1);
+}
+
+.notification-settings__text p {
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+  margin: 0;
+  line-height: 1.4;
+}
+
+.notification-settings__actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding-top: var(--space-2);
+  border-top: 1px solid var(--color-border);
+}
+
+.notification-settings__status {
+  font-size: var(--text-sm);
+  color: #22c55e;
+}
+
+.notification-settings--unsupported {
+  opacity: 0.6;
+}
+
+/* ==========================================================================
+   CSS Scrollbar Improvements for better clickability
+   ========================================================================== */
+
+/* Global scrollbar styling */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-surface);
+  border-radius: var(--radius-sm);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-gold);
+  border-radius: var(--radius-sm);
+  border: 2px solid var(--color-surface);
+  min-height: 40px;
+  min-width: 40px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #e0b93a;
+}
+
+::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
+/* Firefox scrollbar */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-gold) var(--color-surface);
+}
+
+/* ==========================================================================
+   Install Button
+   ========================================================================== */
+
+.install-btn {
+  background: linear-gradient(135deg, var(--color-gold) 0%, #e0b93a 100%) !important;
+  color: #000 !important;
+  font-weight: 600;
+  border: none;
+  animation: pulse-install 2s infinite;
+}
+
+@keyframes pulse-install {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(201, 162, 39, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 0 8px rgba(201, 162, 39, 0);
+  }
+}
+
+.install-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(201, 162, 39, 0.4);
+}
+
+.install-btn:active {
+  transform: translateY(0);
+}
+
+/* Hide pulse animation on mobile to save battery */
+@media (max-width: 768px) {
+  .install-btn {
+    animation: none;
+  }
+}
+
+/* ==========================================================================
+   Celestial Info Tooltip
+   ========================================================================== */
+
+.celestial-tooltip-container {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  cursor: help;
+}
+
+.celestial-tooltip-trigger {
+  font-size: 0.7rem;
+  color: var(--color-gold);
+  opacity: 0.6;
+  transition: opacity 0.2s ease;
+  cursor: help;
+}
+
+.celestial-tooltip-container:hover .celestial-tooltip-trigger {
+  opacity: 1;
+}
+
+.celestial-tooltip {
+  position: absolute;
+  z-index: 1000;
+  width: 320px;
+  max-width: 90vw;
+  background: rgba(15, 15, 25, 0.98);
+  border: 1px solid var(--color-gold);
+  border-radius: var(--radius-lg);
+  padding: var(--space-4);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(10px);
+  font-size: var(--text-sm);
+  line-height: 1.6;
+  pointer-events: none;
+}
+
+.celestial-tooltip::before {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 0;
+  border: 8px solid transparent;
+}
+
+.celestial-tooltip--top::before {
+  bottom: -16px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-top-color: var(--color-gold);
+}
+
+.celestial-tooltip--bottom::before {
+  top: -16px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-bottom-color: var(--color-gold);
+}
+
+.celestial-tooltip__header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-bottom: var(--space-3);
+  padding-bottom: var(--space-2);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.celestial-tooltip__symbol {
+  font-size: var(--text-2xl);
+}
+
+.celestial-tooltip__title {
+  font-size: var(--text-base);
+  font-weight: 600;
+  color: var(--color-gold);
+}
+
+.celestial-tooltip__section {
+  margin-bottom: var(--space-3);
+}
+
+.celestial-tooltip__section:last-child {
+  margin-bottom: 0;
+}
+
+.celestial-tooltip__section h4 {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: var(--space-1);
+}
+
+.celestial-tooltip__section p {
+  color: var(--color-text);
+  margin: 0;
+}
+
+.celestial-tooltip__section ul {
+  margin: var(--space-1) 0;
+  padding-left: var(--space-4);
+  color: var(--color-text);
+}
+
+.celestial-tooltip__section li {
+  margin-bottom: var(--space-1);
+  font-size: var(--text-xs);
+}
+
+/* ==========================================================================
+   Zodiac Cards
+   ========================================================================== */
+
+.zodiac-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-3);
+  min-width: 240px;
+}
+
+.zodiac-card__header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  cursor: pointer;
+}
+
+.zodiac-card__symbol {
+  font-size: var(--text-2xl);
+}
+
+.zodiac-card__info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.zodiac-card__sign {
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.zodiac-card__dates {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+}
+
+.zodiac-card__meta {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  align-items: flex-end;
+}
+
+.zodiac-card__element {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  padding: 2px 8px;
+  border-radius: var(--radius-full);
+  font-weight: 600;
+}
+
+.zodiac-card__element--fire {
+  background: rgba(239, 68, 68, 0.2);
+  color: #fca5a5;
+  border: 1px solid rgba(239, 68, 68, 0.4);
+}
+
+.zodiac-card__element--earth {
+  background: rgba(34, 197, 94, 0.2);
+  color: #86efac;
+  border: 1px solid rgba(34, 197, 94, 0.4);
+}
+
+.zodiac-card__element--air {
+  background: rgba(59, 130, 246, 0.2);
+  color: #93c5fd;
+  border: 1px solid rgba(59, 130, 246, 0.4);
+}
+
+.zodiac-card__element--water {
+  background: rgba(168, 85, 247, 0.2);
+  color: #c4b5fd;
+  border: 1px solid rgba(168, 85, 247, 0.4);
+}
+
+.zodiac-card__ruler {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+}
+
+.zodiac-card__details {
+  margin-top: var(--space-3);
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--color-border);
+}
+
+.zodiac-card__description {
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-3);
+}
+
+.zodiac-card__traits {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  align-items: center;
+}
+
+.zodiac-card__label {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+}
+
+.zodiac-card__trait {
+  font-size: var(--text-xs);
+  padding: 2px 8px;
+  background: rgba(201, 162, 39, 0.1);
+  border: 1px solid rgba(201, 162, 39, 0.3);
+  border-radius: var(--radius-full);
+  color: var(--color-gold);
+}
+
+/* ==========================================================================
+   Chinese Zodiac Card
+   ========================================================================== */
+
+.chinese-zodiac-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-3);
+  min-width: 240px;
+}
+
+.chinese-zodiac-card__header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  cursor: pointer;
+}
+
+.chinese-zodiac-card__animal {
+  font-size: var(--text-xl);
+  font-weight: 600;
+  color: var(--color-gold);
+}
+
+.chinese-zodiac-card__year {
+  font-size: var(--text-sm);
+  color: var(--color-text);
+}
+
+.chinese-zodiac-card__meta {
+  display: flex;
+  gap: var(--space-2);
+  margin-top: var(--space-1);
+}
+
+.chinese-zodiac-card__element,
+.chinese-zodiac-card__yinyang {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  padding: 2px 8px;
+  border-radius: var(--radius-full);
+}
+
+.chinese-zodiac-card__element {
+  background: rgba(201, 162, 39, 0.1);
+  border: 1px solid rgba(201, 162, 39, 0.3);
+  color: var(--color-gold);
+}
+
+.chinese-zodiac-card__yinyang {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: var(--color-text-muted);
+}
+
+.chinese-zodiac-card__details {
+  margin-top: var(--space-3);
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--color-border);
+}
+
+.chinese-zodiac-card__description {
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-3);
+}
+
+.chinese-zodiac-card__characteristics {
+  font-size: var(--text-xs);
+  color: var(--color-text);
+  margin-bottom: var(--space-2);
+}
+
+.chinese-zodiac-card__lucky {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+}
+
+
+/* ==========================================================================
+   AGGRESSIVE PERFORMANCE OPTIMIZATIONS
+   ========================================================================== */
+
+/* Layout containment for main containers - REMOVED contain:layout as it was causing lag */
+.app,
+.app-main,
+.calendar-container {
+  /* contain: layout; REMOVED - was causing scroll and lag issues */
+}
+
+/* GPU acceleration for animated elements only */
+.day-cell,
+.btn {
+  transform: translateZ(0);
+}
+
+/* REMOVED backface-visibility and transform from static elements - was causing lag */
+
+/* Optimize paint operations */
+.day-cell {
+  transition: transform 150ms cubic-bezier(0.4, 0, 0.2, 1),
+              box-shadow 150ms cubic-bezier(0.4, 0, 0.2, 1),
+              border-color 150ms ease-out;
+  /* REMOVED will-change - was causing excessive GPU memory usage and lag */
+}
+
+
+
+/* Optimized calendar rows - removed strict containment that blocks interactions */
+.calendar-grid__week {
+  contain: layout;
+}
+
+/* Optimize scrolling performance */
+.celestial-panel,
+.day-panel,
+.year-modal__content {
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Debounce rapid hover states */
+@media (hover: hover) {
+  .day-cell,
+  .btn {
+    transition-delay: 0ms;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  }
+}
+
+/* Reduce paint area for complex gradients - REMOVED contain:strict which was causing lag */
+.day-cell::before,
+.day-cell::after {
+  /* contain: strict; REMOVED */
+}
+
+/* Optimize countdown widget */
+.countdown-widget {
+  contain: layout style;
+  will-change: auto;
+}
+
+.countdown-time {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum";
+}
+
+/* Prevent text reflow during countdown */
+.countdown-value {
+  display: inline-block;
+  min-width: 2ch;
+  text-align: center;
+}
+
+/* Optimize modal rendering */
+.modal-overlay {
+  contain: layout paint;
+  will-change: opacity;
+}
+
+.modal {
+  contain: layout paint;
+  will-change: transform, opacity;
+}
+
+/* Reduce motion for users who prefer it */
+@media (prefers-reduced-motion: reduce) {
+  .day-cell,
+  .btn,
+  .modal,
+  .countdown-widget {
+    transition: none !important;
+    animation: none !important;
+    will-change: auto !important;
+  }
+  
+  /* Disable smooth scrolling */
+  html {
+    scroll-behavior: auto !important;
+  }
+  
+  /* Remove GPU promotions */
+  .day-cell,
+  .btn,
+  .modal,
+  .celestial-panel {
+    transform: none !important;
+  }
+}
+
+/* High-DPI screen optimizations */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  .day-cell {
+    /* Sharper text rendering on retina */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+}
+
+/* Touch device optimizations */
+@media (pointer: coarse) {
+  .day-cell,
+  .btn {
+    /* Remove hover effects on touch devices */
+    transition: none;
+    will-change: auto;
+  }
+  
+  .day-cell:active {
+    transform: scale(0.98);
+  }
+  
+  /* Larger touch targets */
+  .day-cell {
+    min-height: 70px;
+  }
+}
+
+/* Memory optimization - unload invisible content */
+@media (max-width: 768px) {
+  .day-panel:not(:focus-within) .notes-list {
+    content-visibility: auto;
+  }
+}
+
+/* Optimize celestial panel cards */
+.expanded-content {
+  contain: layout;
+}
+
+.celestial-panel > * {
+  /* REMOVED: contain: layout paint - was blocking horizontal scroll on mobile */
+  contain: none !important;
+}
+
+/* Prevent forced reflows from layout reads */
+.moon-phase-display,
+.solar-noon-display,
+.season-display {
+  contain: layout;
+}
+
+/* ==========================================================================
+   Countdown Specific Optimizations
+   ========================================================================== */
+
+.countdown-widget {
+  background: linear-gradient(135deg, 
+    rgba(201, 162, 39, 0.1) 0%, 
+    rgba(201, 162, 39, 0.02) 100%
+  );
+  border: 1px solid rgba(201, 162, 39, 0.3);
+  border-radius: var(--radius-md);
+  padding: var(--space-4);
+  margin-bottom: var(--space-4);
+}
+
+.countdown-header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-bottom: var(--space-3);
+  color: var(--color-gold);
+}
+
+.countdown-symbol {
+  font-size: var(--text-xl);
+}
+
+.countdown-label {
+  font-family: var(--font-heading);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.countdown-time {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  font-family: var(--font-mono);
+}
+
+.countdown-unit {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 55px;
+  flex: 1;
+}
+
+.countdown-value {
+  font-size: var(--text-2xl);
+  font-weight: 700;
+  color: var(--color-gold);
+  line-height: 1;
+  text-shadow: 0 0 20px rgba(201, 162, 39, 0.3);
+  /* Prevent text cutoff */
+  overflow: visible;
+  white-space: nowrap;
+}
+
+.countdown-unit-label {
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-top: var(--space-1);
+  /* Prevent text cutoff */
+  overflow: visible;
+  white-space: nowrap;
+}
+
+.countdown-separator {
+  font-size: var(--text-xl);
+  color: var(--color-gold);
+  opacity: 0.5;
+  font-weight: 300;
+  padding-top: 0;
+  /* Prevent separator from being squished */
+  flex-shrink: 0;
+}
+
+
+/* ==========================================================================
+   Landscape Orientation - Prevent Overscaling
+   ========================================================================== */
+
+/* Landscape phones and small tablets - cap sizes to match portrait proportions */
+@media (orientation: landscape) and (max-height: 600px) {
+  /* Cap title size - don't let it get huge */
+  .app-title {
+    font-size: 2rem;
+    margin-bottom: var(--space-3);
+  }
+  
+  .app-subtitle {
+    font-size: var(--text-sm);
+  }
+  
+  .mode-indicator {
+    font-size: var(--text-xs);
+    padding: 4px 10px;
+  }
+  
+  /* Smaller header padding in landscape */
+  .app-header {
+    padding-top: 20px !important;
+    padding-bottom: 20px !important;
+  }
+  
+  /* Cap cell sizes - don't expand to fill width */
+  .day-cell {
+    min-height: 60px;
+    padding: var(--space-1);
+  }
+  
+  .day-cell__heka-num {
+    font-size: var(--text-sm);
+  }
+  
+  .day-cell__civil {
+    font-size: 0.6rem;
+  }
+  
+  /* Grid gaps - keep compact */
+  .calendar-grid__week,
+  .calendar-grid__dow {
+    gap: 3px;
+  }
+  
+  /* Month header smaller */
+  .month-header {
+    padding: var(--space-2) var(--space-3);
+  }
+  
+  .month-header__name {
+    font-size: var(--text-lg);
+  }
+  
+  .month-header__heka-year,
+  .month-header__civil-year {
+    font-size: var(--text-xs);
+  }
+  
+  /* Settings toggle smaller */
+  .settings-toggle-wrapper {
+    height: 40px;
+    margin-bottom: var(--space-3);
+  }
+  
+  .settings-toggle-btn {
+    font-size: 0.8rem;
+    padding: 8px;
+  }
+  
+  /* Calendar padding reduced */
+  .calendar-grid {
+    padding: var(--space-3);
+  }
+}
+
+/* Larger landscape tablets - moderate scaling */
+@media (orientation: landscape) and (min-height: 601px) and (max-height: 800px) {
+  .app-title {
+    font-size: clamp(2rem, 5vh, 3rem);
+  }
+  
+  .day-cell {
+    min-height: 70px;
+  }
+}
+
+/* All landscape - full width professional layout */
+@media (orientation: landscape) {
+  .app-main {
+    max-width: 100vw;
+    width: 100%;
+    margin: 0;
+    padding: 0 var(--space-4);
+  }
+  
+  /* Calendar uses full available width */
+  .calendar-container {
+    max-width: 100%;
+    width: 100%;
+  }
+  
+  /* Grid fills the width */
+  .calendar-grid {
+    width: 100%;
+    max-width: 100%;
+  }
+  
+  /* Day panel expands to fill width in stacked layout */
+  .day-panel {
+    width: 100%;
+    max-width: none;
+    margin: 0;
+  }
+}
+
+/* Very wide but short viewports - maintain full width */
+@media (orientation: landscape) and (min-aspect-ratio: 2/1) {
+  .app {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  .app-main {
+    width: 100%;
+    max-width: 100vw;
+  }
+}
+
+
+/* ==========================================================================
+   Astrology Hub Styles
+   ========================================================================== */
+
+.astrology-hub { min-height: 100vh; background: var(--color-bg); color: var(--color-text); }
+.astrology-banner { text-align: center; padding: 0.5rem; font-size: 0.875rem; font-weight: 600; }
+.astrology-banner--demo { background: linear-gradient(90deg, #d97706, #ea580c); color: white; }
+.astrology-banner--live { background: linear-gradient(90deg, #059669, #10b981); color: white; }
+.astrology-debug { background: rgba(220, 38, 38, 0.5); color: #fecaca; padding: 0.25rem 1rem; font-size: 0.75rem; font-family: var(--font-mono); text-align: center; }
+.astrology-header { background: var(--color-bg-card); border-bottom: 1px solid var(--color-border); position: sticky; top: 0; z-index: 50; }
+.astrology-header__content { max-width: 80rem; margin: 0 auto; padding: 1rem; display: flex; align-items: center; justify-content: space-between; }
+.astrology-header__brand { display: flex; align-items: center; gap: 0.75rem; }
+.astrology-header__icon { font-size: 1.875rem; }
+.astrology-header__title { font-size: 1.25rem; font-weight: 700; color: var(--color-text); margin: 0; }
+.astrology-btn { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.5rem 1rem; border-radius: 0.5rem; font-weight: 500; font-size: 0.875rem; cursor: pointer; transition: all 0.2s; border: none; background: var(--gradient-gold); border-color: var(--color-gold); color: #0a0a0c; }
+.astrology-btn:hover { box-shadow: var(--shadow-gold-strong); }
+.astrology-card { background: var(--color-bg-card); border: 1px solid var(--color-border); border-radius: 0.75rem; padding: 1rem; }
+.astrology-container { max-width: 80rem; margin: 0 auto; padding: 1rem; }
+.astrology-loading { min-height: 100vh; display: flex; align-items: center; justify-content: center; background: var(--color-bg); }
+.astrology-loading__content { text-align: center; }
+.astrology-loading__spinner { width: 3rem; height: 3rem; border: 2px solid var(--color-gold); border-top-color: transparent; border-radius: 50%; animation: spin 1s linear infinite; margin: 0 auto 1rem; }
+
+
+/* ==========================================================================
+   Day Panel Astrology - Daily Cosmic Guidance
+   ========================================================================== */
+
+.day-panel__astrology {
+  background: linear-gradient(145deg, rgba(139, 92, 246, 0.08) 0%, rgba(59, 130, 246, 0.05) 100%);
+  border: 1px solid rgba(139, 92, 246, 0.2);
+  border-radius: var(--radius-lg);
+  padding: var(--space-4);
+}
+
+.day-panel__astrology-loading {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-4);
+  color: var(--color-text-muted);
+  font-size: var(--text-sm);
+}
+
+.day-panel__astrology-loading .spinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(139, 92, 246, 0.3);
+  border-top-color: #8b5cf6;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+.day-panel__astrology-empty {
+  padding: var(--space-4);
+  color: var(--color-text-muted);
+  font-size: var(--text-sm);
+  text-align: center;
+  font-style: italic;
+}
+
+.day-panel__astrology-content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+/* Astro Card - Moon Phase */
+.astro-card {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: var(--radius-md);
+  padding: var(--space-3);
+}
+
+.astro-card--moon {
+  border-left: 3px solid #8b5cf6;
+}
+
+.astro-card__icon {
+  font-size: 2rem;
+  line-height: 1;
+}
+
+.astro-card__info {
+  flex: 1;
+}
+
+.astro-card__title {
+  font-weight: 600;
+  color: var(--color-text);
+  font-size: var(--text-base);
+}
+
+.astro-card__detail {
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+}
+
+/* Astro Row - Signs */
+.astro-row {
+  display: flex;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+}
+
+.astro-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  background: rgba(139, 92, 246, 0.15);
+  border: 1px solid rgba(139, 92, 246, 0.25);
+  border-radius: var(--radius-full);
+  padding: var(--space-1) var(--space-3);
+  font-size: var(--text-sm);
+  color: #c4b5fd;
+}
+
+.astro-badge__icon {
+  font-size: 0.875rem;
+  opacity: 0.8;
+}
+
+.astro-badge__label {
+  font-weight: 500;
+}
+
+/* Daily Theme */
+.astro-theme {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-3);
+  background: rgba(234, 179, 8, 0.1);
+  border: 1px solid rgba(234, 179, 8, 0.2);
+  border-radius: var(--radius-md);
+  font-size: var(--text-sm);
+}
+
+.astro-theme__label {
+  color: var(--color-text-muted);
+}
+
+.astro-theme__value {
+  font-weight: 600;
+  color: #fbbf24;
+}
+
+/* Guidance */
+.astro-guidance {
+  padding: var(--space-3);
+  background: rgba(59, 130, 246, 0.08);
+  border-radius: var(--radius-md);
+  border-left: 3px solid #3b82f6;
+}
+
+.astro-guidance__label {
+  font-size: var(--text-xs);
+  font-weight: 600;
+  color: #60a5fa;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: var(--space-1);
+}
+
+.astro-guidance__text {
+  font-size: var(--text-sm);
+  color: var(--color-text);
+  line-height: 1.5;
+}
+
+/* Journal Prompt */
+.astro-prompt {
+  padding: var(--space-3);
+  background: rgba(16, 185, 129, 0.08);
+  border-radius: var(--radius-md);
+  border-left: 3px solid #10b981;
+}
+
+.astro-prompt__label {
+  font-size: var(--text-xs);
+  font-weight: 600;
+  color: #34d399;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: var(--space-1);
+}
+
+.astro-prompt__text {
+  font-size: var(--text-sm);
+  color: var(--color-text);
+  font-style: italic;
+  line-height: 1.5;
+}
+
+/* Affirmation */
+.astro-affirmation {
+  padding: var(--space-3);
+  background: rgba(236, 72, 153, 0.08);
+  border-radius: var(--radius-md);
+  border-left: 3px solid #ec4899;
+}
+
+.astro-affirmation__label {
+  font-size: var(--text-xs);
+  font-weight: 600;
+  color: #f472b6;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: var(--space-1);
+}
+
+.astro-affirmation__text {
+  font-size: var(--text-sm);
+  color: var(--color-text);
+  line-height: 1.5;
+}
+
+/* Power Moment */
+.astro-power-moment {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-3);
+  background: rgba(245, 158, 11, 0.1);
+  border: 1px solid rgba(245, 158, 11, 0.2);
+  border-radius: var(--radius-md);
+  font-size: var(--text-sm);
+  color: #fbbf24;
+}
+
+.astro-power-moment__icon {
+  font-size: 1rem;
+}
+
+/* Animation */
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ==========================================================================
+   Day Panel Swiss Moon Phase Styles
+   ========================================================================== */
+
+.moon-loading {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-3);
+  color: var(--color-text-muted);
+  font-size: var(--text-sm);
+}
+
+.moon-loading .spinner {
+  width: 14px;
+  height: 14px;
+  border: 2px solid rgba(139, 92, 246, 0.3);
+  border-top-color: #8b5cf6;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+.moon-precision {
+  font-size: var(--text-xs);
+  color: #a78bfa;
+  margin-top: var(--space-1);
+  font-style: italic;
+}
+
+.moon-unavailable {
+  padding: var(--space-3);
+  color: var(--color-text-muted);
+  font-size: var(--text-sm);
+  text-align: center;
+  font-style: italic;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+
+/* ==========================================================================
+   Welcome Modal - For Invited Users
+   ========================================================================== */
+
+.welcome-modal .modal__content {
+  max-width: 420px;
+  padding: 0;
+  overflow: hidden;
+}
+
+.welcome-modal__content {
+  padding: var(--space-6);
+  text-align: center;
+}
+
+.welcome-modal__icon {
+  font-size: 4rem;
+  margin-bottom: var(--space-4);
+  animation: gentleFloat 3s ease-in-out infinite;
+}
+
+@keyframes gentleFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+.welcome-modal__intro {
+  font-size: var(--text-lg);
+  font-family: var(--font-display);
+  color: var(--color-gold);
+  margin-bottom: var(--space-4);
+}
+
+.welcome-modal__invite-info {
+  background: linear-gradient(135deg, rgba(212, 175, 55, 0.1) 0%, rgba(212, 175, 55, 0.05) 100%);
+  border: 1px solid rgba(212, 175, 55, 0.3);
+  border-radius: var(--radius-lg);
+  padding: var(--space-4);
+  margin-bottom: var(--space-4);
+}
+
+.welcome-modal__code {
+  display: inline-block;
+  background: rgba(212, 175, 55, 0.15);
+  border: 1px dashed rgba(212, 175, 55, 0.4);
+  border-radius: var(--radius-md);
+  padding: var(--space-2) var(--space-4);
+  font-family: var(--font-mono);
+  font-size: var(--text-lg);
+  color: var(--color-gold);
+  letter-spacing: 0.1em;
+  margin: var(--space-2) 0 var(--space-3);
+}
+
+.welcome-modal__accept-btn {
+  width: 100%;
+  padding: var(--space-3) var(--space-4);
+  font-size: var(--text-base);
+  background: linear-gradient(135deg, var(--color-gold) 0%, var(--color-gold-dark) 100%);
+  border: none;
+  color: #000;
+  font-weight: 600;
+}
+
+.welcome-modal__accept-btn:hover:not(:disabled) {
+  box-shadow: 0 4px 20px rgba(212, 175, 55, 0.4);
+  transform: translateY(-1px);
+}
+
+.welcome-modal__divider {
+  position: relative;
+  margin: var(--space-4) 0;
+  text-align: center;
+}
+
+.welcome-modal__divider::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: var(--color-border);
+}
+
+.welcome-modal__divider span {
+  position: relative;
+  background: var(--color-bg-card);
+  padding: 0 var(--space-3);
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.welcome-modal__manual {
+  display: flex;
+  gap: var(--space-2);
+  margin-bottom: var(--space-3);
+}
+
+.welcome-modal__manual .input {
+  flex: 1;
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.welcome-modal__manual .btn {
+  white-space: nowrap;
+}
+
+.welcome-modal__error {
+  background: rgba(220, 38, 38, 0.1);
+  border: 1px solid rgba(220, 38, 38, 0.3);
+  border-radius: var(--radius-md);
+  padding: var(--space-3);
+  color: #ef4444;
+  font-size: var(--text-sm);
+  margin-bottom: var(--space-3);
+}
+
+.welcome-modal__skip {
+  background: transparent;
+  border: none;
+  color: var(--color-text-muted);
+  font-size: var(--text-sm);
+  cursor: pointer;
+  padding: var(--space-2);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  transition: color 0.2s;
+}
+
+.welcome-modal__skip:hover {
+  color: var(--color-text-secondary);
+}
+
+.welcome-modal__info {
+  margin-top: var(--space-4);
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--color-border);
+  text-align: left;
+}
+
+.welcome-modal__features {
+  list-style: none;
+  padding: 0;
+  margin: var(--space-2) 0 0;
+}
+
+.welcome-modal__features li {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-1) 0;
+  font-size: var(--text-sm);
+  color: var(--color-text-secondary);
+}
+
+/* ==========================================================================
+   Task Notification Badge
+   ========================================================================== */
+
+.task-notification {
+  position: fixed;
+  top: var(--space-4);
+  right: var(--space-4);
+  z-index: 9999;
+  max-width: 360px;
+  background: var(--color-bg-card);
+  border: 1px solid var(--color-gold);
+  border-radius: var(--radius-lg);
+  padding: var(--space-4);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5), 0 0 20px rgba(212, 175, 55, 0.2);
+  animation: slideInRight 0.4s ease-out;
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(100px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.task-notification__header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-bottom: var(--space-2);
+}
+
+.task-notification__icon {
+  font-size: 1.5rem;
+}
+
+.task-notification__title {
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--color-gold);
+}
+
+.task-notification__content {
+  font-size: var(--text-sm);
+  color: var(--color-text);
+  margin-bottom: var(--space-3);
+  line-height: 1.5;
+}
+
+.task-notification__date {
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+  font-family: var(--font-mono);
+  margin-bottom: var(--space-3);
+}
+
+.task-notification__actions {
+  display: flex;
+  gap: var(--space-2);
+}
+
+.task-notification__actions .btn {
+  flex: 1;
+  padding: var(--space-2);
+  font-size: var(--text-sm);
+}
+
+/* ==========================================================================
+   Task Notification Container
+   ========================================================================== */
+
+.task-notification-container {
+  position: fixed;
+  top: var(--space-4);
+  right: var(--space-4);
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  pointer-events: none;
+}
+
+.task-notification-container > * {
+  pointer-events: auto;
+}
+
+
+/* ==========================================================================
+   Profile Setup Modal
+   ========================================================================== */
+
+.profile-setup-modal .modal__content {
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+.profile-setup__avatar-section img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Scrollbar styling for profile setup */
+.profile-setup-modal ::-webkit-scrollbar {
+  width: 6px;
+}
+
+.profile-setup-modal ::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.profile-setup-modal ::-webkit-scrollbar-thumb {
+  background: var(--color-gold);
+  border-radius: 3px;
+}

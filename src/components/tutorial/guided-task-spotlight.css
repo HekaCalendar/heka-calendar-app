@@ -1,0 +1,237 @@
+/**
+ * Guided Task Spotlight Styles
+ * Calendar is fully visible - just highlights and floating panel
+ */
+
+/* Target Highlight - Gold border with pulse */
+.guided-task-highlight {
+  box-sizing: border-box;
+}
+
+.guided-task-highlight-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border: 3px solid #c9a227;
+  border-radius: 12px;
+  box-shadow: 
+    0 0 0 4px rgba(201, 162, 39, 0.3),
+    0 0 30px rgba(201, 162, 39, 0.4),
+    inset 0 0 20px rgba(201, 162, 39, 0.1);
+}
+
+.guided-task-pulse {
+  position: absolute;
+  top: -8px;
+  left: -8px;
+  right: -8px;
+  bottom: -8px;
+  border: 2px solid rgba(201, 162, 39, 0.6);
+  border-radius: 16px;
+  animation: guidedPulse 2s ease-out infinite;
+}
+
+.guided-task-pulse.delayed {
+  animation-delay: 1s;
+}
+
+@keyframes guidedPulse {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1.1);
+    opacity: 0;
+  }
+}
+
+/* Target element styling */
+.guided-task-target {
+  position: relative !important;
+  z-index: 9999 !important;
+}
+
+/* Floating Panel */
+.guided-task-floating-panel {
+  position: fixed;
+  top: 100px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: linear-gradient(145deg, rgba(30, 30, 63, 0.98) 0%, rgba(22, 22, 44, 0.98) 100%);
+  border: 1px solid rgba(201, 162, 39, 0.4);
+  border-radius: 20px;
+  padding: 24px 32px;
+  min-width: 320px;
+  max-width: 480px;
+  box-shadow: 
+    0 20px 60px rgba(0, 0, 0, 0.6),
+    0 0 0 1px rgba(201, 162, 39, 0.1);
+  z-index: 10001;
+  animation: panelSlideDown 0.4s ease;
+  backdrop-filter: blur(20px);
+}
+
+@keyframes panelSlideDown {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+}
+
+.guided-task-panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.guided-task-panel-header h3 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+  color: #ffffff;
+}
+
+.guided-task-step-counter {
+  font-size: 12px;
+  color: #c9a227;
+  font-weight: 600;
+  background: rgba(201, 162, 39, 0.15);
+  padding: 4px 10px;
+  border-radius: 12px;
+}
+
+.guided-task-instruction {
+  font-size: 15px;
+  color: rgba(255, 255, 255, 0.85);
+  margin: 0 0 16px 0;
+  line-height: 1.5;
+}
+
+.guided-task-dots {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+}
+
+.guided-task-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+  transition: all 0.3s ease;
+}
+
+.guided-task-dot.active {
+  background: #c9a227;
+  transform: scale(1.3);
+  box-shadow: 0 0 10px rgba(201, 162, 39, 0.5);
+}
+
+.guided-task-dot.completed {
+  background: #22c55e;
+}
+
+/* Skip Button */
+.guided-task-skip {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: rgba(255, 255, 255, 0.6);
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 13px;
+  cursor: pointer;
+  z-index: 10002;
+  transition: all 0.2s ease;
+}
+
+.guided-task-skip:hover {
+  background: rgba(255, 255, 255, 0.15);
+  color: rgba(255, 255, 255, 0.9);
+}
+
+/* Completion Message */
+.guided-task-complete-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 10002;
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.guided-task-complete-message {
+  background: linear-gradient(145deg, #1e1e3f 0%, #16162c 100%);
+  border: 2px solid #22c55e;
+  border-radius: 20px;
+  padding: 32px 48px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5), 0 0 30px rgba(34, 197, 94, 0.3);
+  animation: completePop 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes completePop {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.guided-task-complete-icon {
+  width: 48px;
+  height: 48px;
+  background: #22c55e;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  color: white;
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+  .guided-task-floating-panel {
+    top: 80px;
+    left: 16px;
+    right: 16px;
+    transform: none;
+    min-width: auto;
+    padding: 20px;
+  }
+  
+  @keyframes panelSlideDown {
+    from {
+      opacity: 0;
+      transform: translateY(-20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}

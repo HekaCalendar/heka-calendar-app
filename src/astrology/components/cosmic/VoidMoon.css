@@ -1,0 +1,409 @@
+/**
+ * Void Moon Status Component
+ * Elegant display for Void of Course Moon periods
+ */
+
+.void-moon-card {
+  background: linear-gradient(145deg, rgba(15, 15, 35, 0.95), rgba(25, 25, 50, 0.9));
+  border-radius: 16px;
+  padding: 20px;
+  border: 1px solid rgba(212, 175, 55, 0.2);
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.void-moon-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #d4af37, transparent);
+  opacity: 0.5;
+}
+
+.void-moon-card.void-active {
+  border-color: rgba(212, 175, 55, 0.5);
+  box-shadow: 0 0 30px rgba(212, 175, 55, 0.1);
+  animation: voidPulse 3s ease-in-out infinite;
+}
+
+@keyframes voidPulse {
+  0%, 100% { border-color: rgba(212, 175, 55, 0.3); }
+  50% { border-color: rgba(212, 175, 55, 0.6); }
+}
+
+.void-moon-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.void-moon-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: linear-gradient(145deg, rgba(30, 30, 60, 0.8), rgba(20, 20, 40, 0.9));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  border: 1px solid rgba(212, 175, 55, 0.3);
+  position: relative;
+}
+
+.void-moon-icon.active {
+  animation: voidIconPulse 2s ease-in-out infinite;
+}
+
+@keyframes voidIconPulse {
+  0%, 100% { 
+    box-shadow: 0 0 10px rgba(212, 175, 55, 0.3);
+    transform: scale(1);
+  }
+  50% { 
+    box-shadow: 0 0 20px rgba(212, 175, 55, 0.6);
+    transform: scale(1.05);
+  }
+}
+
+.void-moon-title-group {
+  flex: 1;
+}
+
+.void-moon-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: #d4af37;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin: 0 0 2px 0;
+}
+
+.void-moon-subtitle {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.5);
+  margin: 0;
+}
+
+.void-moon-status-badge {
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.void-moon-status-badge.active {
+  background: linear-gradient(145deg, rgba(212, 175, 55, 0.2), rgba(212, 175, 55, 0.1));
+  color: #d4af37;
+  border: 1px solid rgba(212, 175, 55, 0.4);
+}
+
+.void-moon-status-badge.inactive {
+  background: rgba(255, 255, 255, 0.05);
+  color: rgba(255, 255, 255, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.void-moon-timeline {
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.void-moon-current {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.void-moon-current-label {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.void-moon-current-value {
+  font-size: 13px;
+  font-weight: 600;
+  color: #fff;
+}
+
+.void-moon-progress {
+  height: 4px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 2px;
+  overflow: hidden;
+  margin-bottom: 12px;
+}
+
+.void-moon-progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, #d4af37, #f4cf67);
+  border-radius: 2px;
+  transition: width 1s ease;
+}
+
+.void-moon-next {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+  margin-top: 12px;
+}
+
+.void-moon-next-label {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.void-moon-next-value {
+  font-size: 13px;
+  font-weight: 600;
+  color: #d4af37;
+}
+
+.void-moon-guide {
+  margin-top: 16px;
+  padding: 12px;
+  background: rgba(212, 175, 55, 0.05);
+  border-radius: 8px;
+  border-left: 3px solid #d4af37;
+}
+
+.void-moon-guide-title {
+  font-size: 11px;
+  font-weight: 600;
+  color: #d4af37;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin: 0 0 8px 0;
+}
+
+.void-moon-guide-text {
+  font-size: 12px;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.7);
+  margin: 0;
+}
+
+/* Void Moon Calendar */
+.void-moon-calendar {
+  margin-top: 20px;
+}
+
+.void-moon-calendar-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: #fff;
+  margin: 0 0 12px 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.void-moon-calendar-title::before {
+  content: '';
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #d4af37;
+}
+
+.void-moon-calendar-grid {
+  display: grid;
+  gap: 8px;
+}
+
+.void-moon-event {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 8px;
+  transition: all 0.2s ease;
+}
+
+.void-moon-event:hover {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.void-moon-event.active {
+  background: rgba(212, 175, 55, 0.1);
+  border: 1px solid rgba(212, 175, 55, 0.2);
+}
+
+.void-moon-event-date {
+  text-align: center;
+  min-width: 50px;
+}
+
+.void-moon-event-day {
+  font-size: 18px;
+  font-weight: 700;
+  color: #fff;
+  line-height: 1;
+}
+
+.void-moon-event-month {
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.5);
+  text-transform: uppercase;
+  margin-top: 2px;
+}
+
+.void-moon-event-details {
+  flex: 1;
+}
+
+.void-moon-event-time {
+  font-size: 12px;
+  font-weight: 600;
+  color: #fff;
+  margin: 0 0 2px 0;
+}
+
+.void-moon-event-sign {
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.void-moon-event-duration {
+  text-align: right;
+}
+
+.void-moon-event-duration-value {
+  font-size: 14px;
+  font-weight: 600;
+  color: #d4af37;
+}
+
+.void-moon-event-duration-label {
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.4);
+}
+
+/* Mini void indicator for dashboard */
+.void-moon-mini {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 20px;
+  font-size: 12px;
+}
+
+.void-moon-mini-icon {
+  font-size: 14px;
+}
+
+.void-moon-mini-text {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.void-moon-mini.active .void-moon-mini-text {
+  color: #d4af37;
+  font-weight: 500;
+}
+
+.void-moon-mini-time {
+  margin-left: auto;
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+/* Void Moon Overlay (when active) */
+.void-moon-overlay {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: linear-gradient(145deg, rgba(20, 20, 40, 0.98), rgba(10, 10, 25, 0.99));
+  border: 1px solid rgba(212, 175, 55, 0.4);
+  border-radius: 12px;
+  padding: 16px 20px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5), 0 0 20px rgba(212, 175, 55, 0.1);
+  z-index: 1000;
+  animation: slideInUp 0.4s ease;
+  max-width: 320px;
+}
+
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.void-moon-overlay-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+
+.void-moon-overlay-icon {
+  font-size: 20px;
+  animation: voidPulseIcon 2s ease-in-out infinite;
+}
+
+@keyframes voidPulseIcon {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.6; }
+}
+
+.void-moon-overlay-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: #d4af37;
+  margin: 0;
+}
+
+.void-moon-overlay-text {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.7);
+  line-height: 1.5;
+  margin: 0;
+}
+
+.void-moon-overlay-close {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 24px;
+  height: 24px;
+  border: none;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  color: rgba(255, 255, 255, 0.6);
+  cursor: pointer;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.void-moon-overlay-close:hover {
+  background: rgba(255, 255, 255, 0.2);
+  color: #fff;
+}
+
+/* Dark mode compatibility */
+@media (prefers-color-scheme: light) {
+  .void-moon-card {
+    background: linear-gradient(145deg, rgba(30, 30, 60, 0.95), rgba(40, 40, 70, 0.9));
+  }
+}

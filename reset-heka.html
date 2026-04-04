@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Reset HEKA Calendar</title>
+  <style>
+    body { 
+      font-family: system-ui; 
+      max-width: 600px; 
+      margin: 50px auto; 
+      padding: 20px;
+      background: #1a1a2e;
+      color: #e0e0ff;
+    }
+    button {
+      background: #ef4444;
+      color: white;
+      border: none;
+      padding: 15px 30px;
+      font-size: 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      margin: 10px 0;
+    }
+    button:hover { background: #dc2626; }
+    .success { color: #22c55e; }
+    .warning { color: #f59e0b; }
+  </style>
+</head>
+<body>
+  <h1>🗑️ HEKA Calendar Reset Tool</h1>
+  <p class="warning">⚠️ This will permanently delete ALL your data including:</p>
+  <ul>
+    <li>Calendar notes & events</li>
+    <li>Oracle Journal entries</li>
+    <li>Birth charts & astro profiles</li>
+    <li>All settings & preferences</li>
+  </ul>
+  
+  <button onclick="resetAll()">Reset Everything</button>
+  <button onclick="resetJustDiary()" style="background: #f59e0b;">Reset Diary Only</button>
+  <button onclick="resetJustAstro()" style="background: #3b82f6;">Reset Astrology Only</button>
+  
+  <div id="result"></div>
+
+  <script>
+    function resetAll() {
+      if (!confirm('Are you sure? This cannot be undone!')) return;
+      
+      localStorage.clear();
+      
+      // Clear all IndexedDB databases
+      const databases = ['heka-calendar', 'heka-astrology', 'swiss-ephemeris-cache'];
+      databases.forEach(db => {
+        indexedDB.deleteDatabase(db);
+      });
+      
+      document.getElementById('result').innerHTML = 
+        '<p class="success">✅ All data cleared! Refresh your HEKA app.</p>';
+    }
+    
+    function resetJustDiary() {
+      if (!confirm('Delete all Oracle Journal entries?')) return;
+      
+      // Remove diary-related keys
+      Object.keys(localStorage).forEach(key => {
+        if (key.includes('diary') || key.includes('journal')) {
+          localStorage.removeItem(key);
+        }
+      });
+      
+      document.getElementById('result').innerHTML = 
+        '<p class="success">✅ Diary data cleared!</p>';
+    }
+    
+    function resetJustAstro() {
+      if (!confirm('Delete all birth charts and astro profiles?')) return;
+      
+      Object.keys(localStorage).forEach(key => {
+        if (key.includes('astro') || key.includes('chart') || key.includes('profile')) {
+          localStorage.removeItem(key);
+        }
+      });
+      
+      indexedDB.deleteDatabase('heka-astrology');
+      
+      document.getElementById('result').innerHTML = 
+        '<p class="success">✅ Astrology data cleared!</p>';
+    }
+  </script>
+</body>
+</html>

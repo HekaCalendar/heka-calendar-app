@@ -1,0 +1,176 @@
+import { registerPlugin } from '@capacitor/core';
+
+export type PaperSize = 'A4' | 'A3' | 'Letter' | 'Legal' | 'Tabloid';
+export type Orientation = 'portrait' | 'landscape';
+export type PrintTemplate = 'default' | 'minimal' | 'formal' | 'calendar' | 'photo';
+
+export interface PrintMargins {
+  top: number;
+  right: number;
+  bottom: number;
+  left: number;
+}
+
+export interface PrintJob {
+  pages: string[];
+  paperSize: PaperSize;
+  orientation: Orientation;
+  template?: PrintTemplate;
+  margins?: 'none' | 'minimal' | 'normal' | PrintMargins;
+  filename?: string;
+  metadata?: {
+    title?: string;
+    author?: string;
+  };
+}
+
+export interface PDFResult {
+  filePath: string;
+  filename: string;
+  pageCount: number;
+}
+
+export interface HekaPrintPlugin {
+  checkNetworkStatus(): Promise<{ isOnline: boolean }>;
+  generatePDF(options: PrintJob): Promise<PDFResult>;
+  printPDF(options: { filePath: string; orientation?: Orientation; paperSize?: PaperSize }): Promise<void>;
+  sharePDF(options: { filePath: string; filename?: string }): Promise<void>;
+  openPDF(options: { filePath: string; filename?: string }): Promise<void>;
+}
+
+const HekaPrint = registerPlugin<HekaPrintPlugin>('HekaPrint');
+
+export class PrintManager {
+  /**
+   * Check if device has internet connectivity
+   */
+  static async isOnline(): Promise<boolean> {
+    try {
+      const result = await HekaPrint.checkNetworkStatus();
+      return result.isOnline;
+    } catch (e) {
+      // Fallback: check via navigator
+      return navigator.onLine;
+    }
+  }
+
+  /**
+   * Generate PDF from HTML pages (works offline)
+   * @param pages Array of HTML strings (one per page)
+   * @param orientation 'portrait' or 'landscape'
+   * @param paperSize Paper size ('A4', 'A3', 'Letter', 'Legal')
+   * @returns PDF file path and metadata
+   */
+  static async generatePDF(pages: string[], orientation: Orientation = 'portrait', paperSize: PaperSize = 'A4'): Promise<PDFResult> {
+    console.log('[PrintManager] Generating PDF with', pages.length, 'pages', 'paperSize:', paperSize);
+    
+    try {
+      const result = await HekaPrint.generatePDF({
+        pages,
+        paperSize,
+        orientation,
+        template: 'calendar',
+        margins: 'none',
+        filename: `HEKA_Calendar_${new Date().getFullYear()}`
+      });
+      
+      console.log('[PrintManager] PDF generated:', result.filePath);
+      return result;
+    } catch (error) {
+      console.error('[PrintManager] PDF generation failed:', error);
+      throw error;
+    }
+  }
+
+  /**
+   * Print an existing PDF file (requires network)
+   * @param filePath Path to the PDF file
+   * @param orientation Page orientation ('portrait' or 'landscape')
+   * @param paperSize Paper size ('A4', 'A3', 'Letter', 'Legal')
+   */
+  static async printPDF(filePath: string, orientation: Orientation = 'portrait', paperSize: PaperSize = 'A4'): Promise<void> {
+    console.log('[PrintManager] Printing PDF:', filePath, 'orientation:', orientation, 'paperSize:', paperSize);
+    
+    try {
+      await HekaPrint.printPDF({ filePath, orientation, paperSize });
+      console.log('[PrintManager] Print job sent');
+    } catch (error: any) {
+      console.error('[PrintManager] Print failed:', error);
+      
+      // Handle specific error codes
+      if (error?.message?.includes('PRINT_NETWORK_REQUIRED') || 
+          error?.code === 'PRINT_NETWORK_REQUIRED') {
+        throw new Error('Network connection required for printing');
+      }
+      
+      throw error;
+    }
+  }
+
+  /**
+   * Open PDF with system PDF viewer (works offline)
+   * @param filePath Path to the PDF file
+   * @param filename Optional display name
+   */
+  static async openPDF(filePath: string, filename?: string): Promise<void> {
+    console.log('[PrintManager] Opening PDF:', filePath);
+    
+    try {
+      await HekaPrint.openPDF({ filePath, filename });
+      console.log('[PrintManager] PDF viewer opened');
+    } catch (error) {
+      console.error('[PrintManager] Open failed:', error);
+      throw error;
+    }
+  }
+
+  /**
+   * Share PDF via system share sheet (works offline)
+   * @param filePath Path to the PDF file
+   * @param filename Optional display name
+   */
+  static async sharePDF(filePath: string, filename?: string): Promise<void> {
+    console.log('[PrintManager] Sharing PDF:', filePath);
+    
+    try {
+      await HekaPrint.sharePDF({ filePath, filename });
+      console.log('[PrintManager] Share dialog opened');
+    } catch (error) {
+      console.error('[PrintManager] Share failed:', error);
+      throw error;
+    }
+  }
+
+  /**
+   * Legacy method - generates PDF and optionally prints
+   * @param pages Array of HTML strings
+   * @param orientation Page orientation
+   * @param autoPrint If true, attempts to print (requires network). If false, just generates PDF.
+   */
+  static async printCalendar(
+    pages: string[], 
+    orientation: Orientation = 'portrait',
+    autoPrint: boolean = false
+  ): Promise<PDFResult> {
+    // Step 1: Generate PDF (works offline)
+    const pdfResult = await this.generatePDF(pages, orientation);
+    
+    // Step 2: If autoPrint is true and online, try to print
+    if (autoPrint) {
+      const isOnline = await this.isOnline();
+      if (isOnline) {
+        try {
+          await this.printPDF(pdfResult.filePath);
+        } catch (e) {
+          // If print fails, at least we have the PDF
+          console.warn('[PrintManager] Auto-print failed, PDF saved:', pdfResult.filePath);
+        }
+      }
+    }
+    
+    return pdfResult;
+  }
+}
+
+// Re-export for convenience
+export { HekaPrint };

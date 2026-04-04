@@ -1,0 +1,1582 @@
+/**
+ * ╔═══════════════════════════════════════════════════════════════════════════╗
+ * ║                    THE ORACLE JOURNAL - STYLES                            ║
+ * ║                                                                           ║
+ * ║  Celestial aesthetics with dual theming system:                           ║
+ * ║  - Module Themes: Colors for entire journal UI                            ║
+ * ║  - Paper Themes: Background/textures for editor area                      ║
+ * ╚═══════════════════════════════════════════════════════════════════════════╝
+ */
+
+/* ═════════════════════════════════════════════════════════════════════════════
+   ROOT VARIABLES & MODULE THEME VARIANTS
+   ═════════════════════════════════════════════════════════════════════════════ */
+
+:root {
+  /* Default cosmic theme colors */
+  --oj-bg-primary: #0a0a1a;
+  --oj-bg-secondary: #12122a;
+  --oj-bg-tertiary: #1a1a3e;
+  --oj-accent-primary: #9d4edd;
+  --oj-accent-secondary: #ffd700;
+  --oj-text-primary: #e0e0ff;
+  --oj-text-secondary: #a0a0cc;
+  --oj-text-muted: #707099;
+  --oj-border-subtle: rgba(157, 78, 221, 0.2);
+  --oj-glow-accent: rgba(157, 78, 221, 0.3);
+  
+  /* Paper Theme Colors */
+  --paper-plain-bg: #ffffff;
+  --paper-plain-text: #1a1a1a;
+  --paper-lined-bg: #faf8f3;
+  --paper-lined-line: #a8c4e0;
+  --paper-grid-bg: #fafafa;
+  --paper-grid-dot: #cccccc;
+  --paper-parchment-bg: #e8dcc4;
+  --paper-parchment-text: #3d2914;
+  --paper-night-bg: #1a1a2e;
+  --paper-night-text: #e0e0ff;
+  --paper-celestial-bg: #0f0f1e;
+  --paper-celestial-text: #e0e0ff;
+  
+  /* Fonts */
+  --oj-font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+  --oj-font-display: 'Cinzel', 'Playfair Display', serif;
+  --oj-font-body: 'Inter', system-ui, sans-serif;
+}
+
+/* Module Theme: Cosmic Void (default) */
+.oracle-journal-overlay.theme-cosmic {
+  --module-bg: #0a0a1a;
+  --module-accent: #9d4edd;
+  --module-text: #e0e0ff;
+  --module-glow: rgba(157, 78, 221, 0.4);
+}
+
+/* Module Theme: Nebula Dreams */
+.oracle-journal-overlay.theme-nebula {
+  --module-bg: #1a0a1a;
+  --module-accent: #ff6b9d;
+  --module-text: #ffe0f0;
+  --module-glow: rgba(255, 107, 157, 0.4);
+}
+
+/* Module Theme: Aurora Borealis */
+.oracle-journal-overlay.theme-aurora {
+  --module-bg: #0a1a1a;
+  --module-accent: #00d9a5;
+  --module-text: #e0fff5;
+  --module-glow: rgba(0, 217, 165, 0.4);
+}
+
+/* Module Theme: Solar Flare */
+.oracle-journal-overlay.theme-solar {
+  --module-bg: #1a120a;
+  --module-accent: #ff9500;
+  --module-text: #fff5e0;
+  --module-glow: rgba(255, 149, 0, 0.4);
+}
+
+/* Module Theme: Midnight Scholar */
+.oracle-journal-overlay.theme-midnight {
+  --module-bg: #0a0f1a;
+  --module-accent: #ffd700;
+  --module-text: #f0f0ff;
+  --module-glow: rgba(255, 215, 0, 0.4);
+}
+
+/* Module Theme: Obsidian Mystic */
+.oracle-journal-overlay.theme-obsidian {
+  --module-bg: #050505;
+  --module-accent: #c0c0c0;
+  --module-text: #f0f0f0;
+  --module-glow: rgba(192, 192, 192, 0.4);
+}
+
+/* ═════════════════════════════════════════════════════════════════════════════
+   ANIMATIONS
+   ═════════════════════════════════════════════════════════════════════════════ */
+
+@keyframes starfield {
+  0% { background-position: 0 0; }
+  100% { background-position: 100px 100px; }
+}
+
+@keyframes nebula-pulse {
+  0%, 100% { opacity: 0.4; transform: scale(1); }
+  50% { opacity: 0.6; transform: scale(1.05); }
+}
+
+@keyframes wheel-spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@keyframes glow-pulse {
+  0%, 100% { box-shadow: 0 0 20px var(--module-glow), 0 0 40px var(--module-glow); }
+  50% { box-shadow: 0 0 30px var(--module-glow), 0 0 60px var(--module-glow); }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slide-in {
+  from { opacity: 0; transform: translateX(-20px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+/* ═════════════════════════════════════════════════════════════════════════════
+   OVERLAY & CONTAINER
+   ═════════════════════════════════════════════════════════════════════════════ */
+
+.oracle-journal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: var(--module-bg);
+  overflow: hidden;
+  animation: fade-in 0.3s ease-out;
+}
+
+/* Animated Background */
+.oracle-bg-stars {
+  position: absolute;
+  inset: 0;
+  background-image: 
+    radial-gradient(2px 2px at 20px 30px, var(--module-accent), transparent),
+    radial-gradient(2px 2px at 40px 70px, var(--module-text), transparent),
+    radial-gradient(1px 1px at 90px 40px, var(--module-accent), transparent),
+    radial-gradient(2px 2px at 160px 120px, var(--module-text), transparent),
+    radial-gradient(1px 1px at 230px 80px, var(--module-accent), transparent),
+    radial-gradient(2px 2px at 300px 150px, var(--module-text), transparent),
+    radial-gradient(1px 1px at 400px 200px, var(--module-accent), transparent),
+    radial-gradient(2px 2px at 500px 100px, var(--module-text), transparent);
+  background-size: 550px 250px;
+  animation: starfield 50s linear infinite;
+  opacity: 0.3;
+}
+
+.oracle-bg-nebula {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    ellipse at 30% 20%,
+    var(--module-glow) 0%,
+    transparent 50%
+  );
+  animation: nebula-pulse 10s ease-in-out infinite;
+}
+
+.oracle-journal {
+  position: relative;
+  width: 100%;
+  max-width: 900px;
+  height: 100vh;
+  margin: 0 auto;
+  background: linear-gradient(
+    180deg,
+    rgba(20, 20, 40, 0.95) 0%,
+    rgba(15, 15, 30, 0.98) 100%
+  );
+  border-left: 1px solid var(--oj-border-subtle);
+  border-right: 1px solid var(--oj-border-subtle);
+  box-shadow: 
+    0 0 60px rgba(0, 0, 0, 0.5),
+    0 0 100px var(--module-glow);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* ═════════════════════════════════════════════════════════════════════════════
+   HEADER
+   ═════════════════════════════════════════════════════════════════════════════ */
+
+.oracle-header {
+  flex-shrink: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(20, 20, 35, 0.98) 0%,
+    rgba(15, 15, 25, 0.95) 100%
+  );
+  border-bottom: 1px solid var(--oj-border-subtle);
+  /* Safe area padding for mobile notches/status bars */
+  padding: calc(1rem + env(safe-area-inset-top, 0px)) 1.5rem 1rem;
+  padding-right: calc(1.5rem + env(safe-area-inset-right, 0px));
+  padding-left: calc(1.5rem + env(safe-area-inset-left, 0px));
+}
+
+.oracle-header-mast {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+/* Back Button */
+.back-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  color: var(--module-text);
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.back-btn:hover {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: var(--module-accent);
+  transform: translateX(-2px);
+}
+
+.back-btn span:first-child {
+  font-size: 1.2rem;
+  line-height: 1;
+}
+
+.back-label {
+  display: inline;
+}
+
+@media (max-width: 600px) {
+  .back-label {
+    display: none;
+  }
+  .back-btn {
+    padding: 0.5rem;
+  }
+}
+
+/* Logo */
+.oracle-logo {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  min-width: 0;
+}
+
+.oracle-logo-icon {
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  background: linear-gradient(135deg, var(--module-accent) 0%, var(--module-glow) 100%);
+  border-radius: 50%;
+  box-shadow: 0 0 20px var(--module-glow);
+}
+
+.oracle-logo-text {
+  min-width: 0;
+}
+
+.oracle-logo-text h1 {
+  font-family: var(--oj-font-display);
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--module-text);
+  margin: 0;
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.oracle-logo-subtitle {
+  font-size: 0.75rem;
+  color: var(--oj-text-secondary);
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Module Theme Selector */
+.module-theme-selector {
+  position: relative;
+}
+
+.theme-btn {
+  display: flex;
+  align-items: center;
+  padding: 0.5rem;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  position: relative;
+}
+
+.theme-btn:hover {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: var(--module-accent);
+}
+
+.theme-icon {
+  font-size: 1.25rem;
+  line-height: 1;
+}
+
+.theme-popover {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  width: 220px;
+  background: rgba(15, 15, 25, 0.98);
+  border: 1px solid var(--oj-border-subtle);
+  border-radius: 12px;
+  padding: 0.5rem;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5), 0 0 30px var(--module-glow);
+  z-index: 100;
+  animation: fade-in 0.2s ease-out;
+}
+
+.theme-option {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  width: 100%;
+  padding: 0.625rem;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  color: var(--module-text);
+  cursor: pointer;
+  transition: all 0.15s ease;
+  text-align: left;
+}
+
+.theme-option:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.theme-option.active {
+  background: rgba(157, 78, 221, 0.2);
+  border-color: var(--module-accent);
+}
+
+.option-icon {
+  font-size: 1.25rem;
+  line-height: 1;
+}
+
+.option-label {
+  font-size: 0.9rem;
+}
+
+/* Celestial Status Bubbles */
+.oracle-celestial-status {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.celestial-bubble {
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+  padding: 0.375rem 0.625rem;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  font-size: 0.8rem;
+}
+
+.celestial-bubble.retrograde {
+  border-color: rgba(239, 68, 68, 0.4);
+  background: rgba(239, 68, 68, 0.1);
+}
+
+.celestial-bubble.transits {
+  border-color: rgba(157, 78, 221, 0.4);
+  background: rgba(157, 78, 221, 0.1);
+}
+
+.celestial-icon {
+  font-size: 0.9rem;
+}
+
+.celestial-value {
+  color: var(--module-text);
+  font-weight: 500;
+}
+
+/* Mode Navigation */
+.oracle-mode-nav {
+  display: flex;
+  gap: 0.375rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.oracle-mode-nav::-webkit-scrollbar {
+  display: none;
+}
+
+.mode-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid transparent;
+  border-radius: 8px;
+  color: var(--oj-text-secondary);
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+  position: relative;
+}
+
+.mode-btn:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--module-text);
+}
+
+.mode-btn.active {
+  background: rgba(157, 78, 221, 0.15);
+  border-color: var(--module-accent);
+  color: var(--module-text);
+}
+
+.mode-btn.icon-only {
+  padding: 0.5rem;
+  font-size: 1rem;
+}
+
+.mode-icon {
+  font-size: 1rem;
+}
+
+.mode-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 5px;
+  background: var(--module-accent);
+  color: var(--module-bg);
+  font-size: 0.7rem;
+  font-weight: 600;
+  border-radius: 9px;
+}
+
+.nav-divider {
+  width: 1px;
+  height: 24px;
+  background: rgba(255, 255, 255, 0.1);
+  margin: 0 0.25rem;
+}
+
+/* ═════════════════════════════════════════════════════════════════════════════
+   MAIN CONTENT
+   ═════════════════════════════════════════════════════════════════════════════ */
+
+.oracle-content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 1.5rem;
+  /* Safe area padding for bottom on mobile (home indicator) */
+  padding-bottom: calc(1.5rem + env(safe-area-inset-bottom, 0px));
+  scrollbar-width: thin;
+  scrollbar-color: var(--oj-border-subtle) transparent;
+}
+
+.oracle-content::-webkit-scrollbar {
+  width: 6px;
+}
+
+.oracle-content::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.oracle-content::-webkit-scrollbar-thumb {
+  background: var(--oj-border-subtle);
+  border-radius: 3px;
+}
+
+/* ═════════════════════════════════════════════════════════════════════════════
+   MODE: ORACLE (Dashboard)
+   ═════════════════════════════════════════════════════════════════════════════ */
+
+.oracle-mode-oracle {
+  animation: fade-in 0.4s ease-out;
+}
+
+/* Hero Card */
+.oracle-hero-card {
+  display: grid;
+  grid-template-columns: 140px 1fr;
+  gap: 1.5rem;
+  padding: 1.5rem;
+  background: linear-gradient(
+    135deg,
+    rgba(157, 78, 221, 0.1) 0%,
+    rgba(157, 78, 221, 0.02) 100%
+  );
+  border: 1px solid var(--oj-border-subtle);
+  border-radius: 16px;
+  margin-bottom: 1.5rem;
+}
+
+@media (max-width: 600px) {
+  .oracle-hero-card {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+}
+
+.hero-visual {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.empty-chart-icon {
+  font-size: 4rem;
+  animation: float 4s ease-in-out infinite;
+}
+
+.chart-wheel-animation {
+  position: relative;
+  width: 120px;
+  height: 120px;
+}
+
+.wheel-ring {
+  position: absolute;
+  border: 1px dashed var(--module-accent);
+  border-radius: 50%;
+}
+
+.wheel-ring.ring-1 {
+  inset: 0;
+  animation: wheel-spin 60s linear infinite;
+}
+
+.wheel-ring.ring-2 {
+  inset: 15px;
+  animation: wheel-spin 40s linear infinite reverse;
+}
+
+.wheel-ring.ring-3 {
+  inset: 30px;
+  animation: wheel-spin 20s linear infinite;
+}
+
+.wheel-center {
+  position: absolute;
+  inset: 45px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--module-accent);
+  color: var(--module-bg);
+  font-size: 1.5rem;
+  font-weight: 600;
+  border-radius: 50%;
+}
+
+.chart-glow {
+  position: absolute;
+  inset: -20px;
+  background: radial-gradient(circle, var(--module-glow) 0%, transparent 70%);
+  animation: glow-pulse 3s ease-in-out infinite;
+  pointer-events: none;
+}
+
+.hero-content h2 {
+  font-family: var(--oj-font-display);
+  font-size: 1.5rem;
+  color: var(--module-text);
+  margin: 0 0 0.5rem 0;
+}
+
+.hero-content p {
+  color: var(--oj-text-secondary);
+  margin: 0 0 1rem 0;
+  line-height: 1.6;
+}
+
+.hero-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.25rem;
+  background: linear-gradient(135deg, var(--module-accent) 0%, var(--module-glow) 100%);
+  border: none;
+  border-radius: 8px;
+  color: var(--module-bg);
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.hero-cta:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 20px var(--module-glow);
+}
+
+.cta-arrow {
+  transition: transform 0.2s ease;
+}
+
+.hero-cta:hover .cta-arrow {
+  transform: translateX(4px);
+}
+
+/* Stats Grid */
+.oracle-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.stat-card {
+  position: relative;
+  padding: 1rem;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 12px;
+  text-align: center;
+  overflow: hidden;
+}
+
+.stat-card.highlight {
+  background: rgba(157, 78, 221, 0.08);
+  border-color: var(--oj-border-subtle);
+}
+
+.stat-value {
+  font-family: var(--oj-font-display);
+  font-size: 2rem;
+  font-weight: 600;
+  color: var(--module-accent);
+  line-height: 1;
+  margin-bottom: 0.25rem;
+}
+
+.stat-label {
+  font-size: 0.8rem;
+  color: var(--oj-text-secondary);
+}
+
+.stat-icon {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  font-size: 1rem;
+  opacity: 0.3;
+}
+
+/* Quick Actions */
+.oracle-quick-actions {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.action-card {
+  flex: 1;
+  min-width: 120px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 1.25rem 1rem;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 12px;
+  color: var(--module-text);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.action-card:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: var(--module-accent);
+  transform: translateY(-2px);
+}
+
+.action-icon {
+  font-size: 1.75rem;
+}
+
+.action-label {
+  font-size: 0.875rem;
+}
+
+/* ═════════════════════════════════════════════════════════════════════════════
+   MODE: ENTRIES
+   ═════════════════════════════════════════════════════════════════════════════ */
+
+.oracle-mode-entries {
+  animation: slide-in 0.3s ease-out;
+}
+
+.entries-filters {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.entries-filters::-webkit-scrollbar {
+  display: none;
+}
+
+.filter-tab {
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+  padding: 0.5rem 1rem;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid transparent;
+  border-radius: 20px;
+  color: var(--oj-text-secondary);
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.filter-tab:hover {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.filter-tab.active {
+  background: rgba(157, 78, 221, 0.15);
+  border-color: var(--module-accent);
+  color: var(--module-text);
+}
+
+/* Entry Cards */
+.entries-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.entry-card {
+  padding: 1rem 1.25rem;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  animation: fade-in 0.3s ease-out;
+}
+
+.entry-card:hover {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: var(--oj-border-subtle);
+  transform: translateX(4px);
+}
+
+.entry-card.has-insight {
+  border-left: 3px solid var(--module-accent);
+}
+
+.entry-card.calendar-note {
+  border-left: 3px solid #3b82f6;
+}
+
+.entry-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.5rem;
+}
+
+.entry-date {
+  font-size: 0.8rem;
+  color: var(--oj-text-muted);
+}
+
+.entry-badge {
+  padding: 0.25rem 0.5rem;
+  font-size: 0.7rem;
+  border-radius: 4px;
+}
+
+.entry-badge.insight {
+  background: rgba(157, 78, 221, 0.2);
+  color: var(--module-accent);
+}
+
+.entry-badge.calendar {
+  background: rgba(59, 130, 246, 0.2);
+  color: #60a5fa;
+}
+
+.entry-preview {
+  color: var(--oj-text-secondary);
+  font-size: 0.9rem;
+  line-height: 1.5;
+  margin: 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.entry-insight {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+  padding-top: 0.5rem;
+  border-top: 1px solid rgba(157, 78, 221, 0.2);
+  font-size: 0.85rem;
+  color: var(--module-accent);
+}
+
+/* Empty State */
+.entries-empty {
+  text-align: center;
+  padding: 3rem 1rem;
+}
+
+.empty-icon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  opacity: 0.5;
+}
+
+.entries-empty h3 {
+  font-family: var(--oj-font-display);
+  color: var(--module-text);
+  margin: 0 0 0.5rem 0;
+}
+
+.empty-cta {
+  padding: 0.75rem 1.5rem;
+  background: var(--module-accent);
+  border: none;
+  border-radius: 8px;
+  color: var(--module-bg);
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.empty-cta:hover {
+  box-shadow: 0 4px 20px var(--module-glow);
+}
+
+/* ═════════════════════════════════════════════════════════════════════════════
+   MODE: CELESTIAL
+   ═════════════════════════════════════════════════════════════════════════════ */
+
+.oracle-mode-celestial {
+  animation: fade-in 0.4s ease-out;
+}
+
+.celestial-loading {
+  text-align: center;
+  padding: 4rem 1rem;
+}
+
+.loading-orb {
+  position: relative;
+  width: 80px;
+  height: 80px;
+  margin: 0 auto 1.5rem;
+}
+
+.orb-ring {
+  position: absolute;
+  inset: 0;
+  border: 2px solid transparent;
+  border-top-color: var(--module-accent);
+  border-radius: 50%;
+  animation: wheel-spin 1s linear infinite;
+}
+
+.orb-core {
+  position: absolute;
+  inset: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  animation: glow-pulse 1.5s ease-in-out infinite;
+  border-radius: 50%;
+}
+
+.celestial-loading p {
+  color: var(--oj-text-secondary);
+}
+
+.celestial-section {
+  margin-bottom: 2rem;
+}
+
+.section-title {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--oj-font-display);
+  font-size: 1.1rem;
+  color: var(--module-text);
+  margin: 0 0 1rem 0;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.section-empty {
+  color: var(--oj-text-muted);
+  font-style: italic;
+  padding: 1rem 0;
+}
+
+/* Planetary Grid */
+.planetary-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+  gap: 0.75rem;
+}
+
+.planet-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.875rem 0.5rem;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 10px;
+  text-align: center;
+}
+
+.planet-card.retrograde {
+  border-color: rgba(239, 68, 68, 0.3);
+  background: rgba(239, 68, 68, 0.05);
+}
+
+.planet-symbol {
+  font-size: 1.5rem;
+  color: var(--module-accent);
+}
+
+.planet-name {
+  font-size: 0.75rem;
+  color: var(--oj-text-secondary);
+  text-transform: capitalize;
+}
+
+.planet-position {
+  font-size: 0.8rem;
+  color: var(--module-text);
+}
+
+.retro-badge {
+  color: #ef4444;
+  margin-left: 0.25rem;
+  font-size: 0.7rem;
+}
+
+/* Transits List */
+.transits-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.625rem;
+}
+
+.transit-card {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.875rem 1rem;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.transit-card:hover {
+  background: rgba(255, 255, 255, 0.06);
+  transform: translateX(4px);
+}
+
+.transit-card.strength-4 {
+  border-left: 3px solid #22c55e;
+}
+
+.transit-card.strength-3 {
+  border-left: 3px solid #3b82f6;
+}
+
+.transit-card.strength-2 {
+  border-left: 3px solid #eab308;
+}
+
+.transit-symbols {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 1.25rem;
+  color: var(--module-accent);
+}
+
+.transit-symbols .aspect {
+  font-size: 0.9rem;
+  color: var(--oj-text-secondary);
+}
+
+.transit-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.125rem;
+}
+
+.transit-name {
+  font-size: 0.875rem;
+  color: var(--module-text);
+}
+
+.transit-house {
+  font-size: 0.75rem;
+  color: var(--oj-text-muted);
+}
+
+.transit-strength {
+  font-family: var(--oj-font-mono);
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+/* ═════════════════════════════════════════════════════════════════════════════
+   MODE: SCRIBE (Writing)
+   ═════════════════════════════════════════════════════════════════════════════
+ */
+
+.oracle-mode-scribe {
+  animation: fade-in 0.4s ease-out;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.scribe-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.scribe-header h3 {
+  font-family: var(--oj-font-display);
+  font-size: 1.25rem;
+  color: var(--module-text);
+  margin: 0;
+}
+
+.scribe-date {
+  font-size: 0.875rem;
+  color: var(--oj-text-secondary);
+}
+
+/* Paper Theme Bar */
+.scribe-theme-bar {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  position: relative;
+}
+
+.theme-label {
+  font-size: 0.8rem;
+  color: var(--oj-text-muted);
+}
+
+.theme-current {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.375rem 0.75rem;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 6px;
+  color: var(--module-text);
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.theme-current:hover {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: var(--module-accent);
+}
+
+.theme-current .theme-icon {
+  font-size: 1rem;
+}
+
+.theme-current .theme-arrow {
+  font-size: 0.7rem;
+  color: var(--oj-text-muted);
+  margin-left: 0.25rem;
+}
+
+/* Theme Dropdown */
+.theme-dropdown {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  width: 260px;
+  background: rgba(20, 20, 35, 0.98);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 0.5rem;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+  z-index: 100;
+  animation: fade-in 0.2s ease-out;
+}
+
+.theme-dropdown .theme-option {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  width: 100%;
+  padding: 0.625rem;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  color: var(--module-text);
+  cursor: pointer;
+  transition: all 0.15s ease;
+  text-align: left;
+}
+
+.theme-dropdown .theme-option:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.theme-dropdown .theme-option.active {
+  background: rgba(157, 78, 221, 0.2);
+  border-color: var(--module-accent);
+}
+
+.theme-dropdown .theme-icon {
+  font-size: 1.25rem;
+}
+
+.theme-dropdown .theme-info {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.theme-dropdown .theme-name {
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.theme-dropdown .theme-desc {
+  font-size: 0.75rem;
+  color: var(--oj-text-muted);
+}
+
+.theme-dropdown .theme-check {
+  font-size: 0.9rem;
+  color: var(--module-accent);
+}
+
+/* Scribe Editor */
+.scribe-editor {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 300px;
+}
+
+.scribe-textarea {
+  flex: 1;
+  width: 100%;
+  min-height: 300px;
+  padding: 1.25rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  font-size: 1rem;
+  line-height: 1.7;
+  resize: vertical;
+  transition: all 0.2s ease;
+}
+
+.scribe-textarea:focus {
+  outline: none;
+  border-color: var(--module-accent);
+  box-shadow: 0 0 20px var(--module-glow);
+}
+
+.scribe-textarea::placeholder {
+  opacity: 0.6;
+}
+
+/* Paper Theme Variants for Textarea */
+.scribe-textarea.paper-lined {
+  background: 
+    linear-gradient(transparent 95%, var(--paper-lined-line) 95%),
+    var(--paper-lined-bg) !important;
+  background-size: 100% 28px !important;
+  color: var(--paper-lined-text) !important;
+}
+
+.scribe-textarea.paper-lined::placeholder {
+  color: #8b7355 !important;
+}
+
+.scribe-textarea.paper-plain {
+  background: var(--paper-plain-bg) !important;
+  color: var(--paper-plain-text) !important;
+}
+
+.scribe-textarea.paper-plain::placeholder {
+  color: #666666 !important;
+}
+
+.scribe-textarea.paper-grid {
+  background: 
+    radial-gradient(circle, var(--paper-grid-dot) 1px, transparent 1px),
+    var(--paper-grid-bg) !important;
+  background-size: 20px 20px !important;
+  color: var(--paper-lined-text) !important;
+}
+
+.scribe-textarea.paper-grid::placeholder {
+  color: #8b7355 !important;
+}
+
+.scribe-textarea.paper-parchment {
+  background: 
+    url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E"),
+    linear-gradient(135deg, #e8dcc4 0%, #d4c4a8 50%, #c8b896 100%) !important;
+  background-blend-mode: overlay, normal !important;
+  color: var(--paper-parchment-text) !important;
+  box-shadow: 
+    inset 0 0 60px rgba(139, 115, 85, 0.15),
+    inset 0 0 20px rgba(139, 115, 85, 0.1);
+}
+
+.scribe-textarea.paper-parchment::placeholder {
+  color: #6b5635 !important;
+}
+
+.scribe-textarea.paper-night {
+  background: 
+    radial-gradient(ellipse at 20% 20%, rgba(100, 100, 150, 0.1) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 80%, rgba(150, 100, 100, 0.1) 0%, transparent 50%),
+    var(--paper-night-bg) !important;
+  color: var(--paper-night-text) !important;
+}
+
+.scribe-textarea.paper-night::placeholder {
+  color: #8888aa !important;
+}
+
+.scribe-textarea.paper-celestial {
+  background: 
+    radial-gradient(2px 2px at 20px 30px, rgba(255,255,255,0.15), transparent),
+    radial-gradient(2px 2px at 40px 70px, rgba(255,255,255,0.1), transparent),
+    radial-gradient(1px 1px at 90px 40px, rgba(255,255,255,0.12), transparent),
+    radial-gradient(2px 2px at 160px 120px, rgba(255,255,255,0.08), transparent),
+    radial-gradient(1px 1px at 230px 80px, rgba(255,255,255,0.1), transparent),
+    radial-gradient(2px 2px at 300px 150px, rgba(255,255,255,0.08), transparent),
+    radial-gradient(ellipse at 30% 20%, rgba(157, 78, 221, 0.15) 0%, transparent 50%),
+    var(--paper-celestial-bg) !important;
+  color: var(--paper-celestial-text) !important;
+}
+
+.scribe-textarea.paper-celestial::placeholder {
+  color: #8888aa !important;
+}
+
+/* Scribe Insight */
+.scribe-insight {
+  margin-top: 1rem;
+  padding: 1rem;
+  background: rgba(157, 78, 221, 0.1);
+  border: 1px solid rgba(157, 78, 221, 0.2);
+  border-radius: 10px;
+  animation: fade-in 0.3s ease-out;
+}
+
+.insight-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+}
+
+.insight-header span {
+  color: var(--module-accent);
+  font-weight: 500;
+}
+
+.insight-header button {
+  background: none;
+  border: none;
+  color: var(--oj-text-muted);
+  font-size: 1.25rem;
+  cursor: pointer;
+  padding: 0;
+  line-height: 1;
+}
+
+.insight-header button:hover {
+  color: var(--module-text);
+}
+
+.scribe-insight p {
+  color: var(--oj-text-secondary);
+  margin: 0;
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+
+/* Scribe Actions */
+.scribe-actions {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+}
+
+.btn-secondary,
+.btn-insight,
+.btn-primary {
+  padding: 0.625rem 1.25rem;
+  border-radius: 8px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-secondary {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: var(--oj-text-secondary);
+}
+
+.btn-secondary:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--module-text);
+}
+
+.btn-insight {
+  background: rgba(157, 78, 221, 0.2);
+  border: 1px solid var(--module-accent);
+  color: var(--module-text);
+}
+
+.btn-insight:hover:not(:disabled) {
+  background: rgba(157, 78, 221, 0.3);
+}
+
+.btn-insight:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.btn-primary {
+  background: var(--module-accent);
+  border: none;
+  color: var(--module-bg);
+}
+
+.btn-primary:hover:not(:disabled) {
+  box-shadow: 0 4px 20px var(--module-glow);
+  transform: translateY(-1px);
+}
+
+.btn-primary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* ═════════════════════════════════════════════════════════════════════════════
+   TRANSIT MODAL
+   ═════════════════════════════════════════════════════════════════════════════ */
+
+.transit-modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  background: rgba(0, 0, 0, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  animation: fade-in 0.2s ease-out;
+}
+
+.transit-modal {
+  width: 100%;
+  max-width: 400px;
+  background: linear-gradient(135deg, #1a1a2e 0%, #0f0f1e 100%);
+  border: 1px solid var(--oj-border-subtle);
+  border-radius: 16px;
+  padding: 1.5rem;
+  animation: slide-in 0.3s ease-out;
+}
+
+.transit-modal h3 {
+  font-family: var(--oj-font-display);
+  color: var(--module-accent);
+  margin: 0 0 0.75rem 0;
+  font-size: 1.1rem;
+}
+
+.transit-orb {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  font-size: 0.875rem;
+  color: var(--oj-text-secondary);
+}
+
+.transit-orb .strength {
+  color: var(--module-accent);
+}
+
+.transit-interpretation {
+  color: var(--oj-text-secondary);
+  line-height: 1.6;
+  margin-bottom: 1rem;
+}
+
+.transit-keywords {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1.25rem;
+}
+
+.transit-keywords .keyword {
+  padding: 0.25rem 0.625rem;
+  background: rgba(157, 78, 221, 0.15);
+  border-radius: 12px;
+  font-size: 0.8rem;
+  color: var(--module-accent);
+}
+
+.close-transit {
+  width: 100%;
+  padding: 0.75rem;
+  background: rgba(255, 255, 255, 0.1);
+  border: none;
+  border-radius: 8px;
+  color: var(--module-text);
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.close-transit:hover {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+/* ═════════════════════════════════════════════════════════════════════════════
+   RESPONSIVE
+   ═════════════════════════════════════════════════════════════════════════════ */
+
+@media (max-width: 600px) {
+  .oracle-journal {
+    border: none;
+    box-shadow: none;
+  }
+  
+  .oracle-header {
+    padding: calc(0.75rem + env(safe-area-inset-top, 0px)) 1rem 0.75rem;
+    padding-right: calc(1rem + env(safe-area-inset-right, 0px));
+    padding-left: calc(1rem + env(safe-area-inset-left, 0px));
+  }
+  
+  .oracle-content {
+    padding: 1rem;
+    padding-bottom: calc(1rem + env(safe-area-inset-bottom, 0px));
+  }
+  
+  .oracle-logo-text h1 {
+    font-size: 1.1rem;
+  }
+  
+  .oracle-stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .hero-content h2 {
+    font-size: 1.25rem;
+  }
+  
+  .scribe-actions {
+    flex-direction: column;
+  }
+  
+  .scribe-actions button {
+    width: 100%;
+  }
+  
+  .theme-dropdown {
+    left: 0;
+    right: auto;
+    width: calc(100vw - 2rem);
+    max-width: 300px;
+  }
+}
+
+/* ═════════════════════════════════════════════════════════════════════════════
+   PRINT STYLES
+   ═════════════════════════════════════════════════════════════════════════════ */
+
+@media print {
+  .oracle-journal-overlay {
+    position: static;
+    background: white;
+  }
+  
+  .oracle-bg-stars,
+  .oracle-bg-nebula {
+    display: none;
+  }
+  
+  .oracle-journal {
+    box-shadow: none;
+    border: 1px solid #ccc;
+  }
+  
+  .oracle-mode-nav,
+  .scribe-actions {
+    display: none;
+  }
+}

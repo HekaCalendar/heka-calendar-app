@@ -1,0 +1,1673 @@
+/**
+ * Premium Cards - Holographic Effects & Animations
+ * $200-tier app quality styling
+ */
+
+/* ============================================================================
+   Container & Layout
+   ============================================================================ */
+
+.premium-cards-container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 0;
+}
+
+/* ============================================================================
+   Base Card Styles
+   ============================================================================ */
+
+.premium-card {
+  position: relative;
+  background: linear-gradient(135deg, 
+    rgba(255, 255, 255, 0.08) 0%, 
+    rgba(255, 255, 255, 0.03) 50%,
+    rgba(255, 255, 255, 0.01) 100%
+  );
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  padding: 20px;
+  cursor: pointer;
+  overflow: hidden;
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  backdrop-filter: blur(20px);
+}
+
+/* Holographic Sheen Effect */
+.card-sheen {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    105deg,
+    transparent 0%,
+    transparent 40%,
+    rgba(255, 255, 255, 0.1) 50%,
+    transparent 60%,
+    transparent 100%
+  );
+  transform: translateX(-100%);
+  transition: transform 0.6s ease;
+  pointer-events: none;
+}
+
+.premium-card:hover .card-sheen {
+  transform: translateX(100%);
+}
+
+.premium-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--ci-primary, #a855f7);
+  box-shadow: 
+    0 20px 50px rgba(0, 0, 0, 0.4),
+    0 0 0 1px var(--ci-glow-primary, rgba(168, 85, 247, 0.3)),
+    0 0 60px var(--ci-glow-primary, rgba(168, 85, 247, 0.2));
+}
+
+.premium-card.expanded {
+  cursor: default;
+  border-color: var(--ci-primary, #a855f7);
+  box-shadow: 
+    0 30px 80px rgba(0, 0, 0, 0.5),
+    0 0 0 2px var(--ci-glow-primary, rgba(168, 85, 247, 0.4)),
+    0 0 100px var(--ci-glow-primary, rgba(168, 85, 247, 0.3));
+}
+
+/* Loading State */
+.premium-card.loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 160px;
+  color: var(--ci-text-secondary, #c4b5fd);
+}
+
+.loading-spinner {
+  font-size: 32px;
+  animation: pulse-glow 2s ease-in-out infinite;
+  margin-bottom: 12px;
+}
+
+@keyframes pulse-glow {
+  0%, 100% { opacity: 0.5; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.1); }
+}
+
+/* ============================================================================
+   Default View Styles
+   ============================================================================ */
+
+.card-default {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 12px;
+}
+
+.card-primary-content {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.card-primary-content.centered {
+  align-items: center;
+}
+
+.card-secondary-content {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  align-items: center;
+}
+
+.expand-hint {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  color: var(--ci-text-muted, #7c3aed);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-top: 8px;
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: all 0.3s ease;
+}
+
+.premium-card:hover .expand-hint {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.expand-icon {
+  animation: bounce-down 1.5s ease-in-out infinite;
+}
+
+@keyframes bounce-down {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(3px); }
+}
+
+/* ============================================================================
+   Expanded View Styles
+   ============================================================================ */
+
+.card-expanded {
+  animation: expand-in 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes expand-in {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.expanded-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.expanded-title {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  color: var(--ci-primary-light, #c084fc);
+  text-transform: uppercase;
+}
+
+.close-btn {
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  color: var(--ci-text-secondary, #c4b5fd);
+  font-size: 18px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.close-btn:hover {
+  background: rgba(244, 63, 94, 0.2);
+  border-color: rgba(244, 63, 94, 0.4);
+  color: #f43f5e;
+}
+
+.expanded-section {
+  margin-bottom: 20px;
+}
+
+.expanded-section:last-child {
+  margin-bottom: 0;
+}
+
+.section-label {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  color: var(--ci-text-muted, #7c3aed);
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+
+/* ============================================================================
+   EPIC TIME ICON - Chronos Card
+   ============================================================================ */
+
+.epic-time-container {
+  position: relative;
+  width: 90px;
+  height: 90px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.epic-time-ring {
+  position: absolute;
+  inset: 0;
+  border: 2px solid transparent;
+  border-radius: 50%;
+  background: linear-gradient(var(--ci-bg-base, #050508), var(--ci-bg-base, #050508)) padding-box,
+              linear-gradient(135deg, var(--ci-primary, #a855f7), var(--ci-secondary, #fbbf24), var(--ci-primary, #a855f7)) border-box;
+  animation: time-ring-rotate 8s linear infinite;
+}
+
+@keyframes time-ring-rotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.epic-time-ring::before {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  border-radius: 50%;
+  background: conic-gradient(from 0deg, transparent, var(--ci-glow-primary, rgba(168, 85, 247, 0.5)), transparent);
+  animation: time-ring-pulse 2s ease-in-out infinite;
+}
+
+@keyframes time-ring-pulse {
+  0%, 100% { opacity: 0.3; transform: scale(1); }
+  50% { opacity: 0.8; transform: scale(1.05); }
+}
+
+.epic-time-inner {
+  position: absolute;
+  inset: 8px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, rgba(168, 85, 247, 0.2), transparent 70%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.epic-time-icon {
+  font-size: 36px;
+  filter: drop-shadow(0 0 15px var(--ci-glow-primary, rgba(168, 85, 247, 0.8)));
+  animation: time-pulse 2s ease-in-out infinite;
+}
+
+@keyframes time-pulse {
+  0%, 100% { transform: scale(1); opacity: 0.9; }
+  50% { transform: scale(1.1); opacity: 1; }
+}
+
+.epic-time-ticks {
+  position: absolute;
+  inset: 0;
+}
+
+.epic-time-tick {
+  position: absolute;
+  width: 2px;
+  height: 6px;
+  background: var(--ci-primary-light, #c084fc);
+  left: 50%;
+  top: 4px;
+  transform-origin: center 41px;
+  border-radius: 1px;
+}
+
+/* ============================================================================
+   Card 1: CHRONOS - Time Card
+   ============================================================================ */
+
+/* Default View */
+.heka-date-main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+
+.heka-month {
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  color: var(--ci-primary-light, #c084fc);
+}
+
+.heka-day {
+  font-size: 48px;
+  font-weight: 200;
+  line-height: 1;
+  color: var(--ci-text-primary, #fafafa);
+  text-shadow: 0 0 40px var(--ci-glow-primary, rgba(168, 85, 247, 0.5));
+}
+
+.heka-year {
+  font-size: 16px;
+  font-weight: 400;
+  color: var(--ci-text-secondary, #c4b5fd);
+}
+
+.heka-label {
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  color: var(--ci-text-muted, #7c3aed);
+  margin-top: 4px;
+}
+
+.civil-time {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 24px;
+  font-weight: 300;
+  color: var(--ci-text-primary, #fafafa);
+  letter-spacing: 0.05em;
+}
+
+.arc-badge {
+  font-size: 11px;
+  padding: 4px 12px;
+  background: rgba(168, 85, 247, 0.15);
+  border: 1px solid rgba(168, 85, 247, 0.3);
+  border-radius: 20px;
+  color: var(--ci-primary-light, #c084fc);
+}
+
+/* Expanded View */
+.heka-expanded-display {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.heka-month-large {
+  font-size: 24px;
+  font-weight: 600;
+  color: var(--ci-text-primary, #fafafa);
+}
+
+.heka-day-large {
+  font-size: 48px;
+  font-weight: 200;
+  color: var(--ci-primary, #a855f7);
+  text-shadow: 0 0 40px var(--ci-glow-primary, rgba(168, 85, 247, 0.5));
+}
+
+.heka-year-large {
+  font-size: 20px;
+  font-weight: 400;
+  color: var(--ci-text-secondary, #c4b5fd);
+}
+
+.heka-meta {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.heka-meta span {
+  font-size: 11px;
+  padding: 4px 10px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 6px;
+  color: var(--ci-text-secondary, #c4b5fd);
+}
+
+.arc-tag {
+  background: rgba(168, 85, 247, 0.15) !important;
+  color: var(--ci-primary-light, #c084fc) !important;
+}
+
+/* Progress Bar */
+.progress-container {
+  margin-top: 8px;
+}
+
+.progress-track {
+  position: relative;
+  height: 6px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 3px;
+  overflow: hidden;
+  margin-bottom: 8px;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--ci-primary, #a855f7), var(--ci-secondary, #fbbf24));
+  border-radius: 3px;
+  transition: width 1s ease;
+}
+
+.progress-glow {
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 20px;
+  height: 20px;
+  background: var(--ci-secondary, #fbbf24);
+  border-radius: 50%;
+  filter: blur(8px);
+  opacity: 0.8;
+  transition: left 1s ease;
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+.progress-labels {
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+  color: var(--ci-text-muted, #7c3aed);
+}
+
+/* Civil Expanded */
+.civil-expanded {
+  text-align: center;
+}
+
+.civil-weekday {
+  font-size: 18px;
+  font-weight: 500;
+  color: var(--ci-text-primary, #fafafa);
+  margin-bottom: 4px;
+}
+
+.civil-full-date {
+  font-size: 14px;
+  color: var(--ci-text-secondary, #c4b5fd);
+}
+
+/* Luminaries */
+.luminaries-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.luminary-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 12px;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.lum-symbol {
+  font-size: 24px;
+  filter: drop-shadow(0 0 10px var(--ci-glow-primary, rgba(168, 85, 247, 0.5)));
+}
+
+.lum-name {
+  font-size: 11px;
+  color: var(--ci-text-muted, #7c3aed);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.lum-position {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--ci-text-primary, #fafafa);
+}
+
+.lum-quality {
+  font-size: 11px;
+  color: var(--ci-text-secondary, #c4b5fd);
+  text-transform: capitalize;
+}
+
+/* Julian Day */
+.jd-display {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.jd-value {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 18px;
+  color: var(--ci-text-primary, #fafafa);
+  background: rgba(0, 0, 0, 0.3);
+  padding: 8px 16px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.jd-action {
+  padding: 8px 16px;
+  background: var(--ci-glass-bg, rgba(124, 58, 237, 0.08));
+  border: 1px solid var(--ci-glass-border, rgba(168, 85, 247, 0.2));
+  border-radius: 8px;
+  color: var(--ci-text-secondary, #c4b5fd);
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.jd-action:hover {
+  background: var(--ci-primary, #a855f7);
+  color: white;
+}
+
+/* Next Event */
+.next-event .event-text {
+  font-size: 14px;
+  color: var(--ci-text-secondary, #c4b5fd);
+  padding: 12px;
+  background: rgba(251, 191, 36, 0.08);
+  border: 1px solid rgba(251, 191, 36, 0.2);
+  border-radius: 10px;
+}
+
+/* ============================================================================
+   Card 2: LUNA - 3D Epic Moon Visualization
+   ============================================================================ */
+
+/* Default View */
+.luna-visual {
+  position: relative;
+  width: 100px;
+  height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.moon-3d-container {
+  position: relative;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #f5f5f5, #c0c0c0 40%, #808080 70%, #404040);
+  box-shadow: 
+    inset -10px -10px 20px rgba(0, 0, 0, 0.5),
+    inset 10px 10px 20px rgba(255, 255, 255, 0.4),
+    0 0 30px rgba(251, 191, 36, 0.3),
+    0 0 60px rgba(251, 191, 36, 0.2),
+    0 0 0 1px rgba(255, 255, 255, 0.1);
+  animation: moon-float 4s ease-in-out infinite;
+  overflow: hidden;
+}
+
+/* Add a subtle edge glow to show the full moon outline */
+.moon-3d-container::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, rgba(255,255,255,0.2), transparent 50%, rgba(255,255,255,0.1));
+  z-index: -1;
+}
+
+@keyframes moon-float {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-5px) rotate(2deg); }
+}
+
+.moon-shadow-overlay {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: linear-gradient(135deg, transparent 50%, rgba(0, 0, 0, 0.4) 100%);
+  pointer-events: none;
+}
+
+.moon-glow-ring {
+  position: absolute;
+  inset: -15px;
+  border-radius: 50%;
+  border: 1px solid rgba(251, 191, 36, 0.2);
+  animation: moon-ring-pulse 3s ease-in-out infinite;
+}
+
+.moon-glow-ring::before,
+.moon-glow-ring::after {
+  content: '';
+  position: absolute;
+  border-radius: 50%;
+  border: 1px solid rgba(251, 191, 36, 0.15);
+}
+
+.moon-glow-ring::before {
+  inset: -10px;
+  animation: moon-ring-pulse 3s ease-in-out infinite 0.5s;
+}
+
+.moon-glow-ring::after {
+  inset: -20px;
+  animation: moon-ring-pulse 3s ease-in-out infinite 1s;
+}
+
+@keyframes moon-ring-pulse {
+  0%, 100% { transform: scale(1); opacity: 0.3; }
+  50% { transform: scale(1.1); opacity: 0.6; }
+}
+
+/* Moon crater details */
+.moon-crater {
+  position: absolute;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.4));
+  box-shadow: inset 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.moon-crater-1 {
+  width: 15px;
+  height: 15px;
+  top: 20%;
+  left: 25%;
+}
+
+.moon-crater-2 {
+  width: 10px;
+  height: 10px;
+  top: 50%;
+  left: 60%;
+}
+
+.moon-crater-3 {
+  width: 8px;
+  height: 8px;
+  top: 65%;
+  left: 30%;
+}
+
+/* Moon phase shadow overlay - using clip-path for accurate crescent rendering */
+.moon-phase-shadow {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: rgba(5, 5, 8, 0.92);
+  transition: clip-path 0.5s ease;
+}
+
+.moon-illumination-ring {
+  position: absolute;
+  inset: -5px;
+  border-radius: 50%;
+  border: 2px solid rgba(251, 191, 36, 0.4);
+  box-shadow: 0 0 20px rgba(251, 191, 36, 0.3);
+}
+
+.moon-illumination-text {
+  position: absolute;
+  bottom: -25px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 11px;
+  color: var(--ci-secondary, #fbbf24);
+  white-space: nowrap;
+}
+
+.moon-phase-name {
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: var(--ci-text-primary, #fafafa);
+  margin-top: 20px;
+}
+
+.moon-trend {
+  font-size: 11px;
+  color: var(--ci-text-muted, #7c3aed);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+/* Expanded View */
+.phase-cycle-visual {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.cycle-phase {
+  position: relative;
+  font-size: 20px;
+  opacity: 0.3;
+  transition: all 0.3s ease;
+}
+
+.cycle-phase.active {
+  opacity: 1;
+  transform: scale(1.3);
+}
+
+.phase-indicator {
+  position: absolute;
+  bottom: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 8px;
+  color: var(--ci-secondary, #fbbf24);
+  animation: twinkle-star 1.5s ease-in-out infinite;
+}
+
+@keyframes twinkle-star {
+  0%, 100% { opacity: 0.5; }
+  50% { opacity: 1; }
+}
+
+.cycle-line {
+  height: 3px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.cycle-progress {
+  height: 100%;
+  background: linear-gradient(90deg, var(--ci-primary, #a855f7), var(--ci-secondary, #fbbf24));
+  border-radius: 2px;
+  transition: width 1s ease;
+}
+
+/* Oracle Section */
+.oracle-section {
+  text-align: center;
+  padding: 20px;
+  background: linear-gradient(135deg, rgba(251, 191, 36, 0.08), rgba(168, 85, 247, 0.05));
+  border: 1px solid rgba(251, 191, 36, 0.15);
+  border-radius: 16px;
+}
+
+.oracle-title {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  color: var(--ci-secondary, #fbbf24);
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+
+.oracle-poem {
+  font-size: 14px;
+  font-style: italic;
+  line-height: 1.7;
+  color: var(--ci-text-secondary, #c4b5fd);
+}
+
+/* Moon Position Card */
+.moon-position-card {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 16px;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 12px;
+}
+
+.mp-sign {
+  font-size: 32px;
+  filter: drop-shadow(0 0 15px var(--ci-glow-primary, rgba(168, 85, 247, 0.5)));
+}
+
+.mp-degree {
+  font-size: 24px;
+  font-weight: 600;
+  color: var(--ci-text-primary, #fafafa);
+}
+
+.mp-name {
+  font-size: 14px;
+  text-transform: capitalize;
+  color: var(--ci-text-secondary, #c4b5fd);
+}
+
+.moon-qualities {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  margin-top: 12px;
+}
+
+.quality-tag {
+  font-size: 11px;
+  padding: 6px 12px;
+  border-radius: 20px;
+  text-transform: capitalize;
+}
+
+.quality-tag.element {
+  background: rgba(6, 182, 212, 0.15);
+  color: #06b6d4;
+}
+
+.quality-tag.modality {
+  background: rgba(168, 85, 247, 0.15);
+  color: #a855f7;
+}
+
+/* Favors & Warnings */
+.favors-list, .warnings-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.favor-item, .warning-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+  padding: 10px 14px;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 8px;
+}
+
+.favor-icon {
+  color: var(--ci-success, #34d399);
+}
+
+.warning-icon {
+  color: var(--ci-warning, #fbbf24);
+}
+
+/* Next Phase */
+.next-phase-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px;
+  background: rgba(168, 85, 247, 0.08);
+  border: 1px solid rgba(168, 85, 247, 0.2);
+  border-radius: 10px;
+}
+
+.next-phase-name {
+  font-weight: 600;
+  color: var(--ci-text-primary, #fafafa);
+}
+
+.next-phase-when {
+  font-size: 12px;
+  color: var(--ci-text-muted, #7c3aed);
+}
+
+/* ============================================================================
+   Card 3: KRONOS - The Chaldean Hourglass
+   ============================================================================ */
+
+/* Default View */
+.hour-symbol-container {
+  position: relative;
+  width: 80px;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hour-glow {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: radial-gradient(circle, var(--ci-glow-primary, rgba(168, 85, 247, 0.3)) 0%, transparent 70%);
+  animation: pulse-glow 3s ease-in-out infinite;
+}
+
+.hour-symbol-large {
+  font-size: 40px;
+  filter: drop-shadow(0 0 20px var(--ci-glow-primary, rgba(168, 85, 247, 0.5)));
+}
+
+.hour-planet-name {
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: var(--ci-text-primary, #fafafa);
+  text-transform: uppercase;
+}
+
+.hour-ruler-label {
+  font-size: 11px;
+  color: var(--ci-text-muted, #7c3aed);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.hour-quality {
+  font-size: 12px;
+  color: var(--ci-primary-light, #c084fc);
+  margin-top: 4px;
+}
+
+/* Expanded View */
+.current-hour {
+  text-align: center;
+}
+
+.hour-display-large {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.hour-planet-symbol {
+  font-size: 48px;
+  filter: drop-shadow(0 0 30px var(--ci-glow-primary, rgba(168, 85, 247, 0.5)));
+}
+
+.hour-info {
+  text-align: left;
+}
+
+.hour-name {
+  display: block;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: var(--ci-text-primary, #fafafa);
+  margin-bottom: 4px;
+}
+
+.hour-time {
+  display: block;
+  font-size: 13px;
+  color: var(--ci-text-secondary, #c4b5fd);
+}
+
+.hour-progress-container {
+  margin-top: 12px;
+}
+
+.hour-progress-track {
+  height: 4px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 2px;
+  overflow: hidden;
+  margin-bottom: 8px;
+}
+
+.hour-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--ci-primary, #a855f7), var(--ci-secondary, #fbbf24));
+  border-radius: 2px;
+  transition: width 0.5s ease;
+}
+
+.hour-progress-label {
+  font-size: 11px;
+  color: var(--ci-text-muted, #7c3aed);
+}
+
+/* Chaldean Order */
+.chaldean-order {
+  display: flex;
+  justify-content: space-between;
+  gap: 4px;
+}
+
+.chaldean-planet {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 10px 6px;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 10px;
+  flex: 1;
+  opacity: 0.5;
+  transition: all 0.3s ease;
+}
+
+.chaldean-planet.current {
+  opacity: 1;
+  background: rgba(168, 85, 247, 0.15);
+  border: 1px solid rgba(168, 85, 247, 0.3);
+  transform: scale(1.05);
+}
+
+.chaldean-planet.past {
+  opacity: 0.3;
+}
+
+.cp-symbol {
+  font-size: 18px;
+}
+
+.cp-name {
+  font-size: 9px;
+  text-transform: uppercase;
+  color: var(--ci-text-muted, #7c3aed);
+}
+
+.current-indicator {
+  position: absolute;
+  bottom: 2px;
+  font-size: 8px;
+  color: var(--ci-secondary, #fbbf24);
+}
+
+.hour-description {
+  font-size: 13px;
+  line-height: 1.7;
+  color: var(--ci-text-secondary, #c4b5fd);
+}
+
+/* Activities */
+.activities-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.activities-list.do .activity-icon {
+  color: var(--ci-success, #34d399);
+}
+
+.activities-list.dont .activity-icon {
+  color: var(--ci-danger, #f43f5e);
+}
+
+.activity-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+  padding: 10px 14px;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 8px;
+}
+
+/* ============================================================================
+   Card 4: STATION - The Celestial Weather
+   ============================================================================ */
+
+/* Default View */
+.weather-icon-container {
+  position: relative;
+  width: 80px;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.weather-icon {
+  font-size: 48px;
+  z-index: 1;
+}
+
+.weather-glow {
+  position: absolute;
+  inset: -10px;
+  border-radius: 50%;
+  opacity: 0.3;
+  filter: blur(20px);
+  animation: pulse-glow 3s ease-in-out infinite;
+}
+
+.retro-count {
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: var(--ci-text-primary, #fafafa);
+}
+
+.retro-planets {
+  font-size: 20px;
+  letter-spacing: 0.2em;
+}
+
+.weather-label {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+/* Expanded View */
+.weather-rating-large {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 12px;
+}
+
+.wr-icon {
+  font-size: 48px;
+}
+
+.wr-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.wr-label {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--ci-text-primary, #fafafa);
+}
+
+.wr-count {
+  font-size: 13px;
+  color: var(--ci-text-secondary, #c4b5fd);
+}
+
+/* Planet Status List */
+.planet-status-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.planet-row {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 8px;
+  padding: 12px 16px;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 10px;
+  border-left: 3px solid transparent;
+  transition: all 0.2s ease;
+}
+
+.planet-row.retro {
+  border-left-color: var(--ci-danger, #f43f5e);
+  background: rgba(244, 63, 94, 0.05);
+}
+
+.planet-row.strong {
+  border-left-color: var(--ci-success, #34d399);
+}
+
+.planet-row.debilitated {
+  border-left-color: var(--ci-warning, #fbbf24);
+}
+
+.planet-row-left, .planet-row-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.pr-symbol {
+  font-size: 20px;
+}
+
+.pr-name {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--ci-text-primary, #fafafa);
+  text-transform: capitalize;
+}
+
+.pr-retro-badge {
+  font-size: 12px;
+  color: var(--ci-danger, #f43f5e);
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+.pr-sign {
+  font-size: 18px;
+}
+
+.pr-degree {
+  font-size: 13px;
+  color: var(--ci-text-secondary, #c4b5fd);
+  font-family: 'JetBrains Mono', monospace;
+}
+
+.pr-dignity {
+  font-size: 12px;
+  width: 20px;
+  text-align: center;
+}
+
+.pr-dignity.strong {
+  color: var(--ci-success, #34d399);
+}
+
+.pr-dignity.debilitated {
+  color: var(--ci-warning, #fbbf24);
+}
+
+.pr-motion {
+  grid-column: 1 / -1;
+  font-size: 11px;
+  color: var(--ci-text-muted, #7c3aed);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.planet-row.retro .pr-motion {
+  color: var(--ci-danger, #f43f5e);
+}
+
+/* Retrograde Guidance */
+.retro-guidance {
+  padding: 16px;
+  background: rgba(251, 191, 36, 0.08);
+  border: 1px solid rgba(251, 191, 36, 0.2);
+  border-radius: 10px;
+  font-size: 13px;
+  line-height: 1.7;
+  color: var(--ci-text-secondary, #c4b5fd);
+}
+
+/* ============================================================================
+   Card 5: STELLIUM - Epic 3D Planet Icons
+   ============================================================================ */
+
+/* Default View - 3D Planet Thumbnails */
+.stellium-preview-3d {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 6px;
+  max-width: 220px;
+  padding: 10px;
+}
+
+.planet-thumb {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+  transition: transform 0.3s ease;
+}
+
+.planet-thumb:hover {
+  transform: scale(1.2);
+}
+
+/* Thumbnail sizes */
+.planet-thumb.planet-icon-sun { width: 32px; height: 32px; }
+.planet-thumb.planet-icon-jupiter { width: 30px; height: 30px; }
+.planet-thumb.planet-icon-saturn { width: 34px; height: 26px; }
+.planet-thumb.planet-icon-moon { width: 26px; height: 26px; }
+.planet-thumb.planet-icon-venus { width: 24px; height: 24px; }
+.planet-thumb.planet-icon-mars { width: 24px; height: 24px; }
+.planet-thumb.planet-icon-mercury { width: 20px; height: 20px; }
+.planet-thumb.planet-icon-uranus { width: 26px; height: 26px; }
+.planet-thumb.planet-icon-neptune { width: 26px; height: 26px; }
+.planet-thumb.planet-icon-pluto { width: 18px; height: 18px; }
+
+.stellium-title {
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: var(--ci-text-primary, #fafafa);
+}
+
+.stellium-count {
+  font-size: 12px;
+  color: var(--ci-text-muted, #7c3aed);
+}
+
+/* Expanded View - Elemental Balance */
+.elemental-bars {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.element-bar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.eb-symbol {
+  font-size: 16px;
+  width: 24px;
+}
+
+.eb-track {
+  flex: 1;
+  height: 8px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.eb-fill {
+  height: 100%;
+  border-radius: 4px;
+  transition: width 0.5s ease;
+}
+
+.eb-count {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ci-text-secondary, #c4b5fd);
+  width: 20px;
+  text-align: right;
+}
+
+/* Modal Balance */
+.modal-chips {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.modal-chip {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 20px;
+  opacity: 0.5;
+  transition: all 0.3s ease;
+}
+
+.modal-chip.active {
+  opacity: 1;
+  background: rgba(168, 85, 247, 0.15);
+  border: 1px solid rgba(168, 85, 247, 0.3);
+}
+
+.mc-symbol {
+  font-size: 14px;
+}
+
+.mc-name {
+  font-size: 12px;
+  text-transform: capitalize;
+}
+
+.mc-count {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--ci-primary-light, #c084fc);
+}
+
+/* Planet Spheres - Epic 3D Icons */
+.planet-spheres {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.planet-sphere {
+  display: grid;
+  grid-template-columns: 60px 1fr;
+  gap: 12px;
+  padding: 12px 16px;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 12px;
+  border-left: 3px solid transparent;
+  transition: all 0.2s ease;
+}
+
+.planet-sphere.retro {
+  border-left-color: var(--ci-danger, #f43f5e);
+}
+
+/* Epic 3D Planet Icon Container */
+.ps-orbit {
+  position: relative;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Sun - Radiant */
+.planet-icon-sun {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, #ffd700, #ff8c00 40%, #ff4500);
+  box-shadow: 
+    0 0 20px #ff8c00,
+    0 0 40px rgba(255, 140, 0, 0.5),
+    inset -4px -4px 8px rgba(0, 0, 0, 0.3);
+  animation: sun-pulse 3s ease-in-out infinite;
+}
+
+@keyframes sun-pulse {
+  0%, 100% { box-shadow: 0 0 20px #ff8c00, 0 0 40px rgba(255, 140, 0, 0.5); }
+  50% { box-shadow: 0 0 30px #ff8c00, 0 0 60px rgba(255, 140, 0, 0.7); }
+}
+
+/* Moon - Silver glow */
+.planet-icon-moon {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, #f5f5f5, #c0c0c0 50%, #a0a0a0);
+  box-shadow: 
+    0 0 15px rgba(192, 192, 192, 0.5),
+    inset -3px -3px 6px rgba(0, 0, 0, 0.3);
+}
+
+/* Mercury - Grey with shadow */
+.planet-icon-mercury {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, #a0a0a0, #696969 50%, #4a4a4a);
+  box-shadow: inset -2px -2px 4px rgba(0, 0, 0, 0.4);
+}
+
+/* Venus - Golden beauty */
+.planet-icon-venus {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, #ffd700, #daa520 50%, #b8860b);
+  box-shadow: 
+    0 0 15px rgba(218, 165, 32, 0.4),
+    inset -3px -3px 6px rgba(0, 0, 0, 0.3);
+}
+
+/* Mars - Red planet */
+.planet-icon-mars {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, #ff6347, #cd5c5c 40%, #8b0000);
+  box-shadow: 
+    0 0 12px rgba(205, 92, 92, 0.4),
+    inset -3px -3px 6px rgba(0, 0, 0, 0.4);
+}
+
+/* Jupiter - Banded gas giant */
+.planet-icon-jupiter {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: 
+    linear-gradient(180deg, 
+      #d4a574 0%, 
+      #c4956a 20%, 
+      #8b7355 40%, 
+      #d4a574 60%, 
+      #a0826d 80%, 
+      #c4956a 100%
+    );
+  box-shadow: 
+    0 0 18px rgba(196, 149, 106, 0.4),
+    inset -4px -4px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* Saturn - with rings */
+.planet-icon-saturn {
+  position: relative;
+  width: 38px;
+  height: 38px;
+}
+
+.planet-icon-saturn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, #f4d03f, #d4ac0d 50%, #9a7b0a);
+  box-shadow: inset -3px -3px 6px rgba(0, 0, 0, 0.3);
+}
+
+.planet-icon-saturn::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(-20deg);
+  width: 60px;
+  height: 14px;
+  border: 3px solid rgba(244, 208, 63, 0.6);
+  border-radius: 50%;
+  box-shadow: 0 0 5px rgba(244, 208, 63, 0.3);
+}
+
+/* Uranus - Cyan ice giant */
+.planet-icon-uranus {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, #40e0d0, #00ced1 50%, #008b8b);
+  box-shadow: 
+    0 0 15px rgba(0, 206, 209, 0.4),
+    inset -3px -3px 6px rgba(0, 0, 0, 0.3);
+}
+
+/* Neptune - Deep blue */
+.planet-icon-neptune {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, #4169e1, #0000cd 50%, #00008b);
+  box-shadow: 
+    0 0 15px rgba(65, 105, 225, 0.4),
+    inset -3px -3px 6px rgba(0, 0, 0, 0.3);
+}
+
+/* Pluto - Small distant */
+.planet-icon-pluto {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, #d2b48c, #a0522d 50%, #8b4513);
+  box-shadow: inset -2px -2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.ps-body {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ps-retro {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  font-size: 10px;
+  color: var(--ci-danger, #f43f5e);
+}
+
+.ps-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.ps-name {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ci-text-primary, #fafafa);
+}
+
+.ps-position {
+  font-size: 13px;
+  color: var(--ci-text-secondary, #c4b5fd);
+  font-family: 'JetBrains Mono', monospace;
+}
+
+.ps-qualities {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.ps-element {
+  font-size: 12px;
+}
+
+.ps-dignity {
+  font-size: 11px;
+  padding: 2px 8px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.ps-dignity.strong {
+  color: var(--ci-success, #34d399);
+}
+
+.ps-dignity.debilitated {
+  color: var(--ci-warning, #fbbf24);
+}
+
+/* ============================================================================
+   Responsive Adjustments
+   ============================================================================ */
+
+@media (max-width: 900px) {
+  .premium-card {
+    padding: 16px;
+  }
+  
+  .chaldean-order {
+    flex-wrap: wrap;
+  }
+  
+  .chaldean-planet {
+    flex: 1 1 calc(25% - 4px);
+  }
+  
+  .luminaries-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 600px) {
+  .heka-expanded-display {
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+  }
+  
+  .heka-day-large {
+    font-size: 36px;
+  }
+  
+  .hour-display-large {
+    flex-direction: column;
+    gap: 12px;
+  }
+  
+  .hour-info {
+    text-align: center;
+  }
+  
+  .chaldean-planet {
+    flex: 1 1 calc(33% - 4px);
+  }
+  
+  .weather-rating-large {
+    flex-direction: column;
+    text-align: center;
+  }
+  
+  .planet-row {
+    grid-template-columns: 1fr;
+  }
+  
+  .planet-row-right {
+    justify-content: flex-start;
+  }
+  
+  .moon-3d-container {
+    width: 60px;
+    height: 60px;
+  }
+  
+  .epic-time-container {
+    width: 70px;
+    height: 70px;
+  }
+}

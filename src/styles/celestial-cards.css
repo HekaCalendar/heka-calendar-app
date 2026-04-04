@@ -1,0 +1,360 @@
+/**
+ * Expandable Celestial Cards
+ * Click to reveal full information
+ */
+
+.celestial-expandable-card {
+  background: rgba(26, 26, 38, 0.8);
+  border: 1px solid rgba(201, 162, 39, 0.2);
+  border-radius: var(--radius-md);
+  min-width: 280px;
+  max-width: 320px;
+  flex-shrink: 0;
+  /* FIXED: overflow-x visible to prevent countdown cutoff */
+  overflow-x: visible;
+  overflow-y: visible;
+  transition: all 0.3s ease;
+  /* Ensure proper sizing */
+  box-sizing: border-box;
+}
+
+.celestial-expandable-card:hover {
+  border-color: rgba(201, 162, 39, 0.4);
+  box-shadow: 0 8px 32px rgba(201, 162, 39, 0.1);
+}
+
+.celestial-expandable-card.expanded {
+  border-color: var(--accent-color, var(--color-gold));
+  box-shadow: 0 8px 32px rgba(201, 162, 39, 0.15);
+}
+
+.celestial-expandable-card__header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-4);
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.celestial-expandable-card__header:hover {
+  background: rgba(201, 162, 39, 0.05);
+}
+
+.celestial-expandable-card__icon {
+  font-size: var(--text-2xl);
+  flex-shrink: 0;
+}
+
+.celestial-expandable-card__title-group {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.celestial-expandable-card__title {
+  font-weight: 600;
+  color: var(--color-text);
+  font-size: var(--text-base);
+}
+
+.celestial-expandable-card__subtitle {
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+  font-family: var(--font-mono);
+}
+
+.celestial-expandable-card__chevron {
+  font-size: var(--text-xs);
+  color: var(--color-gold);
+  transition: transform 0.3s ease;
+}
+
+.celestial-expandable-card__chevron.rotated {
+  transform: rotate(180deg);
+}
+
+.celestial-expandable-card__content {
+  padding: 0 var(--space-4) var(--space-4);
+  animation: expand-in 0.3s ease;
+}
+
+@keyframes expand-in {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Info Sections */
+.celestial-info-section {
+  margin-top: var(--space-4);
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--color-border);
+}
+
+.celestial-info-section__title {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--color-gold);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: var(--space-2);
+}
+
+.celestial-info-section__content {
+  color: var(--color-text-secondary);
+  font-size: var(--text-sm);
+  line-height: 1.6;
+}
+
+.celestial-info-section__content p {
+  margin: 0;
+}
+
+/* Info Lists */
+.celestial-info-list {
+  margin: 0;
+  padding-left: var(--space-4);
+}
+
+.celestial-info-list__item {
+  margin-bottom: var(--space-1);
+  font-size: var(--text-sm);
+  color: var(--color-text-secondary);
+  line-height: 1.5;
+}
+
+.celestial-info-list__item::marker {
+  color: var(--color-gold);
+}
+
+/* Info Badges */
+.celestial-info-badge {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  padding: var(--space-2) var(--space-3);
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  margin-right: var(--space-2);
+  margin-bottom: var(--space-2);
+}
+
+.celestial-info-badge__label {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+}
+
+.celestial-info-badge__value {
+  font-weight: 600;
+  color: var(--color-gold);
+  font-size: var(--text-sm);
+}
+
+/* Special Displays */
+.solar-noon-display {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding: var(--space-3);
+  background: rgba(251, 191, 36, 0.05);
+  border: 1px solid rgba(251, 191, 36, 0.2);
+  border-radius: var(--radius-md);
+}
+
+.solar-noon-time {
+  font-size: var(--text-xl);
+  font-weight: 700;
+  color: #fbbf24;
+  font-family: var(--font-mono);
+}
+
+.solar-noon-elevation {
+  font-size: var(--text-sm);
+  color: var(--color-text-secondary);
+}
+
+.lunar-month-display {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin-bottom: var(--space-3);
+}
+
+.ag-guidance-display {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding: var(--space-3);
+  background: rgba(134, 239, 172, 0.05);
+  border: 1px solid rgba(134, 239, 172, 0.2);
+  border-radius: var(--radius-md);
+}
+
+.ag-activity {
+  font-size: var(--text-lg);
+  font-weight: 600;
+  color: #86efac;
+}
+
+.ag-confidence {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  text-transform: uppercase;
+}
+
+.ag-confidence--high {
+  color: #86efac;
+}
+
+.ag-confidence--moderate {
+  color: #fbbf24;
+}
+
+.ag-confidence--low {
+  color: #fca5a5;
+}
+
+.energy-forecast-display {
+  padding: var(--space-3);
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: var(--radius-md);
+}
+
+.energy-level-bar {
+  height: 8px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: var(--space-3);
+}
+
+.energy-level-fill {
+  height: 100%;
+  border-radius: 4px;
+  transition: width 0.5s ease;
+}
+
+.energy-description {
+  font-size: var(--text-sm);
+  color: var(--color-text);
+  margin-bottom: var(--space-2);
+}
+
+.energy-factors {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.energy-factor {
+  font-size: var(--text-xs);
+  padding: 2px 8px;
+  background: rgba(201, 162, 39, 0.1);
+  border-radius: var(--radius-full);
+  color: var(--color-gold);
+}
+
+/* Numerology Display */
+.numerology-display {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  padding: var(--space-4);
+  background: rgba(212, 188, 122, 0.05);
+  border: 1px solid rgba(212, 188, 122, 0.2);
+  border-radius: var(--radius-md);
+  margin-bottom: var(--space-3);
+}
+
+.numerology-number {
+  font-size: var(--text-4xl);
+  font-weight: 700;
+  color: #d4bc7a;
+  font-family: var(--font-display);
+  text-shadow: 0 0 20px rgba(212, 188, 122, 0.3);
+}
+
+.numerology-meaning {
+  flex: 1;
+  font-size: var(--text-sm);
+  color: var(--color-text-secondary);
+}
+
+.numerology-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin-top: var(--space-3);
+}
+
+/* Countdown in expandable card - FIXED: prevent cutoff */
+.celestial-expandable-card .countdown-widget {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(201, 162, 39, 0.15);
+  border-radius: var(--radius-md);
+  padding: var(--space-3);
+  margin-bottom: var(--space-3);
+  /* Ensure countdown fits within card */
+  min-width: 0;
+  overflow: visible;
+}
+
+.celestial-expandable-card .countdown-time {
+  /* Reduce gap to fit better */
+  gap: 4px;
+}
+
+.celestial-expandable-card .countdown-unit {
+  /* Smaller min-width for cards */
+  min-width: 45px;
+  flex: 1;
+}
+
+.celestial-expandable-card .countdown-value {
+  /* Slightly smaller font for cards */
+  font-size: 1.25rem;
+}
+
+.celestial-expandable-card .countdown-unit-label {
+  /* Smaller labels */
+  font-size: 0.6rem;
+}
+
+.celestial-expandable-card .countdown-separator {
+  /* Smaller separator */
+  font-size: 1rem;
+  padding: 0 2px;
+}
+
+/* Celestial Panel Scrollbar Enhancement */
+.celestial-panel::-webkit-scrollbar {
+  height: 12px;
+}
+
+.celestial-panel::-webkit-scrollbar-track {
+  background: rgba(201, 162, 39, 0.05);
+  border-radius: 6px;
+  margin: 0 var(--space-4);
+}
+
+.celestial-panel::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, var(--color-gold), var(--color-gold-dark));
+  border-radius: 6px;
+  border: 3px solid transparent;
+  background-clip: content-box;
+}
+
+.celestial-panel::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, var(--color-gold-light), var(--color-gold));
+  background-clip: content-box;
+}

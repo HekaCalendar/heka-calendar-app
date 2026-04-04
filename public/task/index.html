@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Task Invitation - HEKA Calendar</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+      background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
+      min-height: 100vh;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    
+    .container {
+      max-width: 420px;
+      width: 100%;
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(10px);
+      border-radius: 20px;
+      border: 1px solid rgba(212, 175, 55, 0.3);
+      padding: 32px;
+      text-align: center;
+    }
+    
+    .logo {
+      font-size: 48px;
+      margin-bottom: 8px;
+    }
+    
+    .app-name {
+      font-size: 24px;
+      font-weight: 700;
+      color: #d4af37;
+      margin-bottom: 4px;
+      letter-spacing: 2px;
+    }
+    
+    .tagline {
+      font-size: 14px;
+      color: rgba(255, 255, 255, 0.6);
+      margin-bottom: 32px;
+    }
+    
+    .task-card {
+      background: rgba(212, 175, 55, 0.1);
+      border: 1px solid rgba(212, 175, 55, 0.3);
+      border-radius: 16px;
+      padding: 24px;
+      margin-bottom: 24px;
+      text-align: left;
+    }
+    
+    .task-label {
+      font-size: 12px;
+      color: #d4af37;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 8px;
+    }
+    
+    .task-title {
+      font-size: 20px;
+      font-weight: 600;
+      margin-bottom: 12px;
+      line-height: 1.4;
+    }
+    
+    .task-description {
+      font-size: 14px;
+      color: rgba(255, 255, 255, 0.8);
+      line-height: 1.6;
+      margin-bottom: 16px;
+    }
+    
+    .task-date {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+      color: rgba(212, 175, 55, 0.9);
+      background: rgba(212, 175, 55, 0.1);
+      padding: 6px 12px;
+      border-radius: 20px;
+    }
+    
+    .sender {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 24px;
+      padding: 16px;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 12px;
+    }
+    
+    .sender-avatar {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #d4af37 0%, #8b6914 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+    }
+    
+    .sender-info {
+      text-align: left;
+    }
+    
+    .sender-label {
+      font-size: 12px;
+      color: rgba(255, 255, 255, 0.5);
+    }
+    
+    .sender-name {
+      font-size: 16px;
+      font-weight: 600;
+      color: #d4af37;
+    }
+    
+    .cta-button {
+      display: block;
+      width: 100%;
+      padding: 16px 24px;
+      background: linear-gradient(135deg, #d4af37 0%, #b8941f 100%);
+      color: #0f0c29;
+      text-decoration: none;
+      border-radius: 12px;
+      font-weight: 700;
+      font-size: 16px;
+      margin-bottom: 12px;
+      transition: transform 0.2s, box-shadow 0.2s;
+      border: none;
+      cursor: pointer;
+    }
+    
+    .cta-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(212, 175, 55, 0.3);
+    }
+    
+    .secondary-button {
+      display: block;
+      width: 100%;
+      padding: 14px 24px;
+      background: transparent;
+      color: rgba(255, 255, 255, 0.7);
+      text-decoration: none;
+      border-radius: 12px;
+      font-size: 14px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    
+    .secondary-button:hover {
+      background: rgba(255, 255, 255, 0.1);
+      color: #fff;
+    }
+    
+    .loading {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      color: rgba(255, 255, 255, 0.6);
+      padding: 40px;
+    }
+    
+    .spinner {
+      width: 24px;
+      height: 24px;
+      border: 2px solid rgba(212, 175, 55, 0.3);
+      border-top-color: #d4af37;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+    
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+    
+    .error {
+      color: #ef4444;
+      padding: 20px;
+      text-align: center;
+    }
+    
+    .features {
+      margin-top: 32px;
+      padding-top: 24px;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    .features-title {
+      font-size: 14px;
+      color: rgba(255, 255, 255, 0.5);
+      margin-bottom: 16px;
+    }
+    
+    .feature-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      text-align: left;
+      font-size: 14px;
+      color: rgba(255, 255, 255, 0.7);
+    }
+    
+    .feature-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    .hidden {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Loading State -->
+    <div id="loading" class="loading">
+      <div class="spinner"></div>
+      <span>Loading task...</span>
+    </div>
+    
+    <!-- Error State -->
+    <div id="error" class="error hidden">
+      <div style="font-size: 48px; margin-bottom: 16px;">😕</div>
+      <h2 style="margin-bottom: 8px;">Task Not Found</h2>
+      <p style="color: rgba(255,255,255,0.6);">This task may have expired or been removed.</p>
+    </div>
+    
+    <!-- Task Content -->
+    <div id="content" class="hidden">
+      <div class="logo">🔮</div>
+      <div class="app-name">HEKA CALENDAR</div>
+      <div class="tagline">Cosmic Timekeeping & Task Rituals</div>
+      
+      <div class="sender">
+        <div class="sender-avatar" id="senderAvatar">👤</div>
+        <div class="sender-info">
+          <div class="sender-label">Task from</div>
+          <div class="sender-name" id="senderName">...</div>
+        </div>
+      </div>
+      
+      <div class="task-card">
+        <div class="task-label">📜 Task Ritual</div>
+        <div class="task-title" id="taskTitle">Loading...</div>
+        <div class="task-description" id="taskDescription"></div>
+        <div class="task-date hidden" id="taskDate">
+          <span>🌙</span>
+          <span id="dateText"></span>
+        </div>
+      </div>
+      
+      <a href="#" class="cta-button" id="downloadBtn">
+        📲 Get HEKA Calendar
+      </a>
+      
+      <button class="secondary-button hidden" id="openAppBtn">
+        🔮 Open in App
+      </button>
+      
+      <div class="features">
+        <div class="features-title">What you'll get:</div>
+        <div class="feature-list">
+          <div class="feature-item">
+            <span>✨</span>
+            <span>Accept this task and connect with <span id="senderName2">your friend</span></span>
+          </div>
+          <div class="feature-item">
+            <span>📜</span>
+            <span>Collaborate on celestial-aligned tasks</span>
+          </div>
+          <div class="feature-item">
+            <span>💬</span>
+            <span>Message and share rituals together</span>
+          </div>
+          <div class="feature-item">
+            <span>🌙</span>
+            <span>13-month HEKA calendar with astrological insights</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <script>
+    // Play Store URL
+    const PLAY_STORE_URL = 'https://play.google.com/store/apps/details?id=com.heka.calendar';
+    
+    // Get task code from URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const taskCode = urlParams.get('code');
+    
+    // Elements
+    const loadingEl = document.getElementById('loading');
+    const errorEl = document.getElementById('error');
+    const contentEl = document.getElementById('content');
+    const downloadBtn = document.getElementById('downloadBtn');
+    const openAppBtn = document.getElementById('openAppBtn');
+    
+    // If no code, show error
+    if (!taskCode) {
+      loadingEl.classList.add('hidden');
+      errorEl.classList.remove('hidden');
+    } else {
+      // Try to fetch task preview from Firestore
+      // Since we can't directly access Firestore from static HTML without SDK,
+      // we'll try to open the app first, then fall back to showing generic info
+      
+      // Try to open the app
+      const appUrl = `heka-calendar://task/${taskCode}`;
+      
+      // Detect if we're on Android
+      const isAndroid = /Android/i.test(navigator.userAgent);
+      const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
+      
+      // Update download button
+      if (isIOS) {
+        downloadBtn.textContent = '📲 Download on App Store';
+        downloadBtn.href = '#'; // Would be App Store URL
+      } else {
+        downloadBtn.textContent = '📲 Get HEKA Calendar';
+        downloadBtn.href = PLAY_STORE_URL;
+      }
+      
+      // Add referrer to Play Store URL to pass the task code
+      // This uses the referrer parameter which can be read by the app on first launch
+      const referrer = encodeURIComponent(`utm_source=task_share&utm_medium=link&utm_campaign=${taskCode}`);
+      downloadBtn.href = `${PLAY_STORE_URL}&referrer=${referrer}`;
+      
+      // Show content
+      loadingEl.classList.add('hidden');
+      contentEl.classList.remove('hidden');
+      
+      // Try to open app (for users who already have it)
+      // Use a timeout to detect if app opened
+      let appOpened = false;
+      
+      window.addEventListener('blur', () => {
+        appOpened = true;
+      });
+      
+      // Try to open app after a short delay
+      setTimeout(() => {
+        // Only try to open app if user is likely to have it
+        // (we can't reliably detect this, so we show the button instead)
+        openAppBtn.classList.remove('hidden');
+        openAppBtn.onclick = () => {
+          window.location.href = appUrl;
+        };
+      }, 1000);
+      
+      // Store task code in sessionStorage so we can pick it up after install
+      // The app can check for this on first launch
+      sessionStorage.setItem('pendingTaskCode', taskCode);
+      
+      // Also store in cookie for better persistence
+      document.cookie = `pendingTaskCode=${taskCode}; path=/; max-age=86400`;
+    }
+  </script>
+</body>
+</html>

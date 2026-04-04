@@ -1,0 +1,86 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Allow users to read/write their own user profile
+    match /users/{userId} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+    }
+    
+    // Allow users to read their own friendships
+    match /friendships/{friendshipId} {
+      allow read: if request.auth != null && 
+        (friendshipId.matches(request.auth.uid + '_.*') || 
+         friendshipId.matches('.*_' + request.auth.uid));
+      allow create, update: if request.auth != null;
+    }
+    
+    // Allow users to read/write messages in their conversations
+    match /messages/{conversationId} {
+      allow read, write: if request.auth != null &&
+        (conversationId.matches('conv_' + request.auth.uid + '_.*') ||
+         conversationId.matches('conv_.*_' + request.auth.uid));
+      
+      // Allow reading/writing individual messages
+      match /messages/{messageId} {
+        allow read, write: if request.auth != null &&
+          (conversationId.matches('conv_' + request.auth.uid + '_.*') ||
+           conversationId.matches('conv_.*_' + request.auth.uid));
+      }
+    }
+    
+    // Allow users to read/write their conversations
+    match /conversations/{conversationId} {
+      allow read, write: if request.auth != null &&
+        (conversationId.matches(request.auth.uid + '_.*') ||
+         conversationId.matches('.*_' + request.auth.uid));
+    }
+    
+    // Allow users to read/write tasks they're involved in
+    match /tasks/{taskId} {
+      allow read, write: if request.auth != null &&
+        (resource == null || 
+         resource.data.creatorId == request.auth.uid ||
+         resource.data.assigneeId == request.auth.uid);
+    }
+    
+    // SHARED TASKS - For viral task sharing
+    // Allow anyone to create a shared task (must be authenticated)
+    match /sharedTasks/{shareCode} {
+      // Anyone authenticated can create a shared task
+      allow create: if request.auth != null &&
+        request.resource.data.creatorId == request.auth.uid;
+      
+      // Anyone can read a shared task by its code (needed for preview)
+      allow read: if true;
+      
+      // Only the creator or the acceptor can update
+      allow update: if request.auth != null &&
+        (resource.data.creatorId == request.auth.uid ||
+         (resource.data.status == 'pending' && 
+          request.resource.data.status in ['accepted', 'declined'] &&
+          request.resource.data.acceptedBy == request.auth.uid));
+    }
+    
+    // Allow users to read/write their own notes
+    match /notes/{userId} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+    }
+    
+    // Allow users to read/write their settings
+    match /settings/{userId} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+    }
+    
+    // Energy votes - public read, authenticated write
+    match /energyVotes/{voteId} {
+      allow read: if true;
+      allow create, update: if request.auth != null;
+    }
+    
+    // Achievements - read by owner, system can write
+    match /achievements/{userId} {
+      allow read: if request.auth != null && request.auth.uid == userId;
+      allow create, update: if request.auth != null && request.auth.uid == userId;
+    }
+  }
+}

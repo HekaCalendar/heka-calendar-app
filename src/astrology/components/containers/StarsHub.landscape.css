@@ -1,0 +1,679 @@
+/**
+ * Stars Hub - Landscape Optimizations
+ * Premium celestial experience in landscape orientation
+ * 
+ * Strategy:
+ * - Small landscape phones (<600px height): Sidebar becomes horizontal scrollable strip
+ * - Medium landscape (600-800px): Condensed sidebar on left
+ * - Large landscape (>800px): Full sidebar with optimized spacing
+ */
+
+/* ═══════════════════════════════════════════════════════════════════════════════
+   LANDSCAPE BASE - All landscape sizes
+   ═══════════════════════════════════════════════════════════════════════════════ */
+
+@media (orientation: landscape) {
+  
+  /* Reduce overall vertical spacing */
+  .stars-hub {
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
+  
+  /* Compact title bar */
+  .sh-title-bar {
+    padding: 8px 24px 8px !important;
+  }
+  
+  .sh-main-title {
+    font-size: 22px !important;
+  }
+  
+  /* Compact header */
+  .sh-header {
+    padding: 12px 24px !important;
+  }
+  
+  .sh-back {
+    padding: 8px 16px !important;
+    font-size: 13px !important;
+  }
+  
+  /* Compact tabs */
+  .sh-tabs {
+    padding: 8px 24px 12px !important;
+    gap: 6px !important;
+    position: relative;
+  }
+  
+  .sh-tab {
+    padding: 8px 14px !important;
+    font-size: 13px !important;
+  }
+  
+  /* Main layout - sidebar handled by size-specific queries */
+  .sh-container {
+    padding: 16px 24px 24px !important;
+    gap: 20px !important;
+    max-width: none !important;
+  }
+  
+  /* Compact welcome section */
+  .sh-welcome {
+    padding: 24px !important;
+  }
+  
+  .sh-welcome h2 {
+    font-size: 24px !important;
+    margin-bottom: 8px !important;
+  }
+  
+  .sh-welcome p {
+    font-size: 14px !important;
+  }
+  
+  /* Stats grid - always 4 columns in landscape */
+  .sh-stats-grid {
+    grid-template-columns: repeat(4, 1fr) !important;
+    gap: 12px !important;
+  }
+  
+  .sh-stat-card {
+    padding: 16px !important;
+  }
+  
+  .sh-stat-value {
+    font-size: 28px !important;
+  }
+  
+  .sh-stat-label {
+    font-size: 10px !important;
+  }
+  
+  /* Section compact */
+  .sh-section-header {
+    padding: 14px 20px !important;
+  }
+  
+  .sh-section-title {
+    font-size: 14px !important;
+  }
+  
+  .sh-section-content {
+    padding: 16px !important;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════════
+   SMALL LANDSCAPE PHONES (<600px height)
+   Sidebar becomes horizontal scrollable strip at top
+   ═══════════════════════════════════════════════════════════════════════════════ */
+
+@media (orientation: landscape) and (max-height: 600px) {
+  
+  /* Very compact header */
+  .sh-title-bar {
+    padding: 6px 16px 6px !important;
+  }
+  
+  .sh-main-title {
+    font-size: 18px !important;
+  }
+  
+  .sh-header {
+    padding: 8px 16px !important;
+  }
+  
+  /* Horizontal scrollable tabs */
+  .sh-tabs {
+    padding: 6px 16px 10px !important;
+    overflow-x: auto !important;
+    flex-wrap: nowrap !important;
+    -webkit-overflow-scrolling: touch !important;
+    scrollbar-width: none !important;
+  }
+  
+  .sh-tabs::-webkit-scrollbar {
+    display: none !important;
+  }
+  
+  .sh-tab {
+    padding: 6px 12px !important;
+    font-size: 12px !important;
+    white-space: nowrap !important;
+    flex-shrink: 0 !important;
+  }
+  
+  /* Single column layout - no sidebar */
+  .sh-container {
+    display: flex !important;
+    flex-direction: column !important;
+    padding: 12px 16px 16px !important;
+  }
+  
+  /* Sidebar becomes horizontal scrollable cards */
+  .sh-sidebar {
+    display: flex !important;
+    flex-direction: row !important;
+    gap: 12px !important;
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+    padding-bottom: 8px !important;
+    -webkit-overflow-scrolling: touch !important;
+    scrollbar-width: thin !important;
+    order: -1 !important; /* Move above content */
+    margin-bottom: 12px !important;
+    width: 100% !important;
+  }
+  
+  .sh-sidebar::-webkit-scrollbar {
+    height: 4px !important;
+  }
+  
+  .sh-sidebar::-webkit-scrollbar-thumb {
+    background: var(--ci-primary) !important;
+    border-radius: 2px !important;
+  }
+  
+  /* Premium cards horizontal */
+  .premium-cards-container {
+    flex-direction: row !important;
+    gap: 12px !important;
+    width: max-content !important;
+  }
+  
+  .premium-card {
+    min-width: 160px !important;
+    max-width: 180px !important;
+    padding: 14px !important;
+    flex-shrink: 0 !important;
+  }
+  
+  /* Compact card content */
+  .epic-time-container {
+    width: 60px !important;
+    height: 60px !important;
+  }
+  
+  .epic-time-icon {
+    font-size: 24px !important;
+  }
+  
+  .heka-month {
+    font-size: 11px !important;
+  }
+  
+  .heka-day {
+    font-size: 24px !important;
+  }
+  
+  .heka-year {
+    font-size: 11px !important;
+  }
+  
+  .civil-time {
+    font-size: 13px !important;
+  }
+  
+  /* Compact welcome */
+  .sh-welcome {
+    padding: 16px !important;
+    margin-bottom: 12px !important;
+  }
+  
+  .sh-welcome h2 {
+    font-size: 18px !important;
+  }
+  
+  .sh-welcome p {
+    font-size: 12px !important;
+    line-height: 1.5 !important;
+  }
+  
+  /* Stats - 4 columns but compact */
+  .sh-stats-grid {
+    gap: 8px !important;
+    margin-bottom: 12px !important;
+  }
+  
+  .sh-stat-card {
+    padding: 12px 8px !important;
+  }
+  
+  .sh-stat-value {
+    font-size: 20px !important;
+  }
+  
+  .sh-stat-label {
+    font-size: 9px !important;
+  }
+  
+  /* Compact sections */
+  .sh-section {
+    margin-bottom: 12px !important;
+  }
+  
+  .sh-section-header {
+    padding: 10px 14px !important;
+  }
+  
+  .sh-section-content {
+    padding: 12px !important;
+  }
+  
+  /* Positions grid - more compact */
+  .sh-positions-grid {
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)) !important;
+    gap: 10px !important;
+  }
+  
+  .sh-pos-card {
+    padding: 12px !important;
+  }
+  
+  .sh-pos-symbol {
+    font-size: 18px !important;
+  }
+  
+  .sh-pos-sign-symbol {
+    font-size: 22px !important;
+  }
+  
+  /* Daily briefing compact */
+  .daily-briefing {
+    padding: 16px !important;
+  }
+  
+  .db-header {
+    padding: 0 0 12px !important;
+    margin-bottom: 12px !important;
+  }
+  
+  .db-header h3 {
+    font-size: 16px !important;
+  }
+  
+  .db-rating-score {
+    font-size: 24px !important;
+  }
+  
+  .db-section {
+    padding: 12px !important;
+    margin-bottom: 12px !important;
+  }
+  
+  .db-section-title {
+    font-size: 12px !important;
+  }
+  
+  .db-transit {
+    padding: 8px !important;
+  }
+  
+  .db-guidance {
+    padding: 12px !important;
+    margin-bottom: 12px !important;
+  }
+  
+  /* Celestial Guidance V2 compact */
+  .sh-content > div[style*="padding: '24px'"] {
+    padding: 12px !important;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════════
+   MEDIUM LANDSCAPE (600-800px height)
+   Condensed sidebar on left, optimized spacing
+   ═══════════════════════════════════════════════════════════════════════════════ */
+
+@media (orientation: landscape) and (min-height: 601px) and (max-height: 800px) {
+  
+  /* Two column layout with narrow sidebar */
+  .sh-container {
+    display: grid !important;
+    grid-template-columns: 200px 1fr !important;
+    gap: 16px !important;
+  }
+  
+  /* Narrow sidebar */
+  .sh-sidebar {
+    width: 200px !important;
+    max-height: calc(100vh - 180px) !important;
+    overflow-y: auto !important;
+  }
+  
+  /* Compact premium cards */
+  .premium-card {
+    padding: 14px !important;
+  }
+  
+  .epic-time-container {
+    width: 70px !important;
+    height: 70px !important;
+  }
+  
+  .epic-time-icon {
+    font-size: 28px !important;
+  }
+  
+  .heka-month {
+    font-size: 11px !important;
+  }
+  
+  .heka-day {
+    font-size: 28px !important;
+  }
+  
+  /* Welcome section - more compact */
+  .sh-welcome {
+    padding: 16px !important;
+  }
+  
+  .sh-welcome h2 {
+    font-size: 20px !important;
+    margin-bottom: 6px !important;
+  }
+  
+  .sh-welcome p {
+    font-size: 13px !important;
+    line-height: 1.4 !important;
+  }
+  
+  /* Stats grid - 2 columns in medium landscape to prevent crowding */
+  .sh-stats-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 10px !important;
+  }
+  
+  .sh-stat-card {
+    padding: 14px !important;
+  }
+  
+  .sh-stat-value {
+    font-size: 24px !important;
+  }
+  
+  .sh-stat-label {
+    font-size: 10px !important;
+  }
+  
+  /* Positions grid */
+  .sh-positions-grid {
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)) !important;
+    gap: 12px !important;
+  }
+  
+  /* Daily briefing */
+  .daily-briefing {
+    padding: 20px !important;
+  }
+  
+  .db-header {
+    padding-bottom: 16px !important;
+    margin-bottom: 16px !important;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════════
+   LARGE LANDSCAPE (>800px height) - Tablets, desktops
+   Full layout with optimized proportions
+   ═══════════════════════════════════════════════════════════════════════════════ */
+
+@media (orientation: landscape) and (min-height: 801px) {
+  
+  /* Two column layout with full sidebar */
+  .sh-container {
+    display: grid !important;
+    grid-template-columns: 260px 1fr !important;
+    gap: 24px !important;
+    max-width: 1600px !important;
+  }
+  
+  /* Full sidebar with scroll */
+  .sh-sidebar {
+    width: 260px !important;
+    max-height: calc(100vh - 200px) !important;
+    overflow-y: auto !important;
+  }
+  
+  /* Standard premium cards */
+  .premium-card {
+    padding: 18px !important;
+  }
+  
+  /* Enhanced welcome */
+  .sh-welcome {
+    padding: 32px !important;
+  }
+  
+  .sh-welcome h2 {
+    font-size: 28px !important;
+  }
+  
+  /* Full stats - but 4 columns only on very wide screens */
+  .sh-stats-grid {
+    grid-template-columns: repeat(4, 1fr) !important;
+    gap: 16px !important;
+  }
+  
+  .sh-stat-value {
+    font-size: 28px !important;
+  }
+  
+  /* Ensure content scrolls properly */
+  .sh-content {
+    max-height: calc(100vh - 180px) !important;
+    overflow-y: auto !important;
+  }
+  
+  /* Positions grid - more columns */
+  .sh-positions-grid {
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)) !important;
+    gap: 16px !important;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════════
+   OVERVIEW TAB - Landscape optimizations
+   ═══════════════════════════════════════════════════════════════════════════════ */
+
+@media (orientation: landscape) {
+  /* Overview tab specific layout fixes */
+  .sh-container:has(.sh-sidebar) .sh-content {
+    /* When sidebar is present, ensure content doesn't overflow */
+    min-width: 0 !important;
+  }
+  
+  /* Ensure welcome banner doesn't overflow */
+  .sh-welcome {
+    word-wrap: break-word !important;
+    overflow-wrap: break-word !important;
+  }
+  
+  .sh-welcome p {
+    max-width: 100% !important;
+  }
+  
+  /* Stats cards handle narrow widths */
+  .sh-stat-card {
+    min-width: 0 !important;
+  }
+  
+  /* Daily briefing section fits properly */
+  .sh-section:has(.daily-briefing) {
+    overflow: visible !important;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════════
+   LANDSCAPE SPECIFIC COMPONENT FIXES
+   ═══════════════════════════════════════════════════════════════════════════════ */
+
+@media (orientation: landscape) {
+  
+  /* Fix expanded card overflow in landscape */
+  .premium-card.expanded {
+    max-height: calc(100vh - 200px) !important;
+    overflow-y: auto !important;
+  }
+  
+  /* Ensure modal/popups don't overflow */
+  .card-expanded {
+    max-height: 60vh !important;
+    overflow-y: auto !important;
+  }
+  
+  /* Settings grid optimization */
+  .sh-settings-grid {
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)) !important;
+    gap: 16px !important;
+  }
+  
+  /* Tab scrolling indicator */
+  .sh-tabs::after {
+    content: '' !important;
+    position: absolute !important;
+    right: 0 !important;
+    top: 0 !important;
+    bottom: 0 !important;
+    width: 40px !important;
+    background: linear-gradient(to right, transparent, var(--ci-bg-base)) !important;
+    pointer-events: none !important;
+    opacity: 0 !important;
+    transition: opacity 0.3s ease !important;
+  }
+  
+  .sh-tabs.can-scroll::after {
+    opacity: 1 !important;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════════
+   DAILY BRIEFING - Landscape specific fixes
+   ═══════════════════════════════════════════════════════════════════════════════ */
+
+@media (orientation: landscape) {
+  /* Ensure daily briefing fits in landscape sidebar/content layout */
+  .daily-briefing {
+    max-width: 100% !important;
+    overflow-x: hidden !important;
+  }
+  
+  /* Header stacks better in narrow spaces */
+  .db-header {
+    flex-wrap: wrap !important;
+    gap: 12px !important;
+  }
+  
+  /* Transit items don't overflow */
+  .db-transit {
+    min-width: 0 !important;
+  }
+  
+  .db-t-info {
+    min-width: 0 !important;
+    overflow: hidden !important;
+  }
+  
+  .db-t-desc {
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    white-space: nowrap !important;
+  }
+}
+
+@media (orientation: landscape) and (max-height: 600px) {
+  .db-current-positions {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 8px !important;
+  }
+  
+  .db-position-mini {
+    padding: 8px 10px !important;
+    font-size: 11px !important;
+  }
+  
+  .db-symbol {
+    font-size: 14px !important;
+  }
+  
+  .db-transit {
+    gap: 10px !important;
+  }
+  
+  .db-t-symbol {
+    font-size: 16px !important;
+    width: 20px !important;
+  }
+  
+  .db-t-desc {
+    font-size: 12px !important;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════════
+   VOID MOON SANCTUARY - Landscape fixes
+   ═══════════════════════════════════════════════════════════════════════════════ */
+
+@media (orientation: landscape) and (max-height: 600px) {
+  .sh-content > div[style*="minHeight: 'calc(100vh - 200px)'"] {
+    min-height: auto !important;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════════
+   BIRTH CHART VIEW - Landscape fixes
+   ═══════════════════════════════════════════════════════════════════════════════ */
+
+@media (orientation: landscape) and (max-height: 600px) {
+  .sh-content > .sh-section > div > div {
+    max-height: calc(100vh - 180px) !important;
+    overflow-y: auto !important;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════════
+   CELESTIAL GUIDANCE V2 - Landscape fixes
+   ═══════════════════════════════════════════════════════════════════════════════ */
+
+@media (orientation: landscape) and (max-height: 600px) {
+  /* Target the inline styled container */
+  .sh-content > div[style*="maxWidth: 700px"] {
+    padding: 12px !important;
+    max-width: none !important;
+  }
+  
+  .sh-content > div[style*="maxWidth: 700px"] > div:first-child {
+    margin-bottom: 12px !important;
+  }
+  
+  .sh-content > div[style*="maxWidth: 700px"] > div:nth-child(2),
+  .sh-content > div[style*="maxWidth: 700px"] > div:nth-child(3),
+  .sh-content > div[style*="maxWidth: 700px"] > div:nth-child(4) {
+    margin-bottom: 12px !important;
+    padding: 12px !important;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════════
+   WIDE LANDSCAPE (>1200px width) - Extra wide optimization
+   ═══════════════════════════════════════════════════════════════════════════════ */
+
+@media (orientation: landscape) and (min-width: 1200px) and (min-height: 700px) {
+  .sh-container {
+    grid-template-columns: 320px 1fr !important;
+    gap: 32px !important;
+  }
+  
+  .sh-sidebar {
+    width: 320px !important;
+  }
+  
+  .sh-stats-grid {
+    gap: 16px !important;
+  }
+  
+  .sh-positions-grid {
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)) !important;
+  }
+}

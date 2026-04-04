@@ -1,0 +1,134 @@
+/**
+ * Android Scroll Fix
+ * Minimal, targeted fixes for scroll issues
+ */
+
+/* === CELESTIAL PANEL - Allow horizontal scroll === */
+/* The celestial panel needs to override parent touch-action */
+
+.celestial-panel {
+  /* Allow horizontal scrolling */
+  overflow-x: auto !important;
+  overflow-y: visible !important;
+  
+  /* CRITICAL: Allow BOTH horizontal pan for cards AND vertical scroll for page */
+  touch-action: pan-x pan-y !important;
+  
+  /* Smooth scrolling on iOS */
+  -webkit-overflow-scrolling: touch !important;
+  
+  /* Flex layout for horizontal cards */
+  display: flex !important;
+  flex-wrap: nowrap !important;
+  gap: 16px !important;
+  
+  /* Remove any containment */
+  contain: none !important;
+}
+
+/* === CELESTIAL CARDS - All descendants === */
+.celestial-panel > *,
+.celestial-panel .celestial-expandable-card {
+  /* Cards shouldn't shrink */
+  flex-shrink: 0 !important;
+  
+  /* Remove containment that blocks scroll */
+  contain: none !important;
+  
+  /* FIXED: Cards should NOT have touch-action, let panel handle it */
+  touch-action: auto !important;
+}
+
+/* Card children inherit from card */
+.celestial-panel .celestial-expandable-card *,
+.celestial-panel .celestial-info-section,
+.celestial-panel .celestial-info-section *,
+.celestial-panel .celestial-info-list,
+.celestial-panel .celestial-info-list *,
+.celestial-panel .celestial-info-badge,
+.celestial-panel .celestial-info-badge * {
+  contain: none !important;
+  /* FIXED: No touch-action, inherit from parent */
+  touch-action: auto !important;
+}
+
+/* === CELESTIAL CARD HEADER - Critical for scroll === */
+.celestial-panel .celestial-expandable-card__header {
+  /* FIXED: manipulation = taps only, scroll passes to parent panel */
+  touch-action: manipulation !important;
+  /* Ensure clicks still work but don't block scroll */
+  user-select: none !important;
+}
+
+/* === DAY PANEL - Allow page scroll === */
+.day-panel {
+  /* FIXED: Let page scroll naturally */
+  overflow: visible !important;
+  
+  /* Allow vertical scroll gestures */
+  touch-action: pan-y !important;
+  
+  /* Remove containment */
+  contain: none !important;
+}
+
+/* === ENERGY VOTE - Vertical scroll === */
+.energy-vote-card,
+.energy-vote-section {
+  touch-action: pan-y !important;
+  contain: none !important;
+}
+
+/* === CELESTIAL PANEL CONTAINER === */
+.celestial-panel-container {
+  /* Let children handle their own scroll */
+  overflow: visible !important;
+  touch-action: auto !important;
+  contain: none !important;
+}
+
+/* === NATIVE APP PRINT SUPPORT === */
+
+/* When preview is active - show the print content on screen */
+body.heka-print-preview-active #heka-print-host {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  overflow-y: auto !important;
+  -webkit-overflow-scrolling: touch !important;
+  z-index: 10000 !important;
+  background: #0b0b0f !important;
+}
+
+/* Hide app UI when preview is active */
+body.heka-print-preview-active .app-header,
+body.heka-print-preview-active .settings-panel,
+body.heka-print-preview-active .celestial-panel-container,
+body.heka-print-preview-active .calendar-container,
+body.heka-print-preview-active .day-panel,
+body.heka-print-preview-active .app-footer {
+  display: none !important;
+}
+
+/* Hide print controls in the preview (they're in the generated HTML) */
+body.heka-print-preview-active #heka-print-host .print-controls {
+  position: sticky !important;
+  top: 0 !important;
+  z-index: 10001 !important;
+}
+
+/* During actual print - hide controls */
+@media print {
+  /* Hide print controls */
+  #heka-print-host .print-controls {
+    display: none !important;
+  }
+  
+  /* Page breaks - managed by PrintPreview component CSS */
+  /* NOTE: Do NOT add page-break styles here as they conflict */
+  /* with the inline styles in the generated print HTML */
+}

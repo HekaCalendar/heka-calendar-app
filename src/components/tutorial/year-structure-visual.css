@@ -1,0 +1,171 @@
+/* Year Structure Visual - Accurate HEKA Math */
+.ysv-visual {
+  padding: 20px;
+  margin: 16px 0;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.5) 0%, rgba(30, 30, 63, 0.6) 100%);
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Main Equation */
+.ysv-equation {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.ysv-part {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 14px 18px;
+  background: rgba(34, 197, 94, 0.1);
+  border-radius: 12px;
+  border: 1px solid rgba(34, 197, 94, 0.3);
+  min-width: 90px;
+}
+
+.ysv-part.march {
+  background: rgba(201, 162, 39, 0.1);
+  border-color: rgba(201, 162, 39, 0.3);
+}
+
+.ysv-part.total {
+  background: rgba(168, 85, 247, 0.1);
+  border-color: rgba(168, 85, 247, 0.3);
+}
+
+.ysv-num {
+  font-size: 24px;
+  font-weight: 800;
+  color: #22c55e;
+}
+
+.ysv-part.march .ysv-num {
+  color: #c9a227;
+  font-size: 18px;
+}
+
+.ysv-part.total .ysv-num {
+  color: #a855f7;
+}
+
+.ysv-label {
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.7);
+  text-transform: uppercase;
+}
+
+.ysv-sub {
+  font-size: 9px;
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.ysv-op {
+  font-size: 20px;
+  color: rgba(255, 255, 255, 0.4);
+}
+
+/* Quarters */
+.ysv-quarters {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.ysv-q {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 12px 6px;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+  text-align: center;
+}
+
+.ysv-q.extended {
+  background: rgba(168, 85, 247, 0.15);
+  border: 1px solid rgba(168, 85, 247, 0.4);
+}
+
+.ysv-q-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.9);
+  margin-bottom: 4px;
+}
+
+.ysv-q.extended .ysv-q-title {
+  color: #c9a227;
+}
+
+.ysv-q-months {
+  font-size: 9px;
+  color: rgba(255, 255, 255, 0.5);
+  margin-bottom: 4px;
+}
+
+.ysv-q-days {
+  font-size: 11px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.ysv-q.extended .ysv-q-days {
+  color: #c9a227;
+}
+
+/* Benefits */
+.ysv-benefits {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.ysv-benefit {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 14px;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 8px;
+}
+
+.ysv-check {
+  color: #22c55e;
+  font-weight: 700;
+}
+
+.ysv-benefit span:last-child {
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+  .ysv-equation {
+    gap: 8px;
+  }
+  
+  .ysv-part {
+    padding: 10px 12px;
+    min-width: 70px;
+  }
+  
+  .ysv-num {
+    font-size: 18px;
+  }
+  
+  .ysv-quarters {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .ysv-benefits {
+    flex-direction: column;
+  }
+}

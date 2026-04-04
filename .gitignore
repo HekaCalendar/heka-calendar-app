@@ -1,0 +1,32 @@
+.vercel
+
+# Android Signing Keys (CRITICAL - Never commit these!)
+android/app/key.properties
+android/app/*.keystore
+android/app/*.jks
+*.keystore
+*.jks
+
+# Environment variables
+.env.local
+.env.production
+.env.staging
+
+# Build outputs
+dist/
+android/app/build/
+ios/App/build/
+
+# Node modules
+node_modules/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db

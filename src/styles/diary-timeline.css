@@ -1,0 +1,288 @@
+/**
+ * Diary Timeline Styles
+ * Beautiful chronological view of entries
+ */
+
+/* Empty State */
+.diary-timeline-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-16) var(--space-6);
+  text-align: center;
+  color: var(--color-text-muted);
+}
+
+.diary-timeline-empty-icon {
+  font-size: 4rem;
+  margin-bottom: var(--space-4);
+  opacity: 0.5;
+}
+
+.diary-timeline-empty h3 {
+  font-size: var(--text-xl);
+  font-weight: 600;
+  color: var(--color-text);
+  margin-bottom: var(--space-2);
+}
+
+.diary-timeline-empty p {
+  font-size: var(--text-base);
+  margin-bottom: var(--space-2);
+}
+
+.diary-timeline-empty-hint {
+  font-size: var(--text-sm);
+  font-style: italic;
+  opacity: 0.7;
+}
+
+/* Timeline Container */
+.diary-timeline {
+  padding: var(--space-4);
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+/* Day Section */
+.diary-timeline-day {
+  margin-bottom: var(--space-8);
+}
+
+.diary-timeline-date {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-3) 0;
+  margin-bottom: var(--space-4);
+  border-bottom: 1px solid rgba(202, 162, 74, 0.2);
+}
+
+.diary-timeline-date-label {
+  font-size: var(--text-base);
+  font-weight: 600;
+  color: var(--color-gold);
+}
+
+.diary-timeline-date-entries {
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+}
+
+/* Entries */
+.diary-timeline-entries {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+/* Entry Card */
+.diary-timeline-entry {
+  background: var(--color-bg-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-4);
+  cursor: pointer;
+  transition: all 0.2s;
+  position: relative;
+  overflow: hidden;
+}
+
+.diary-timeline-entry:hover {
+  border-color: rgba(202, 162, 74, 0.3);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.diary-timeline-entry::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--gradient-gold);
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.diary-timeline-entry:hover::before {
+  opacity: 1;
+}
+
+/* Entry Header */
+.diary-entry-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-3);
+}
+
+.diary-entry-time {
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+  font-weight: 500;
+}
+
+.diary-entry-moon {
+  font-size: 1.25rem;
+  opacity: 0.7;
+}
+
+/* Entry Preview */
+.diary-entry-preview {
+  margin-bottom: var(--space-3);
+}
+
+.diary-entry-preview p {
+  font-size: var(--text-base);
+  line-height: 1.6;
+  color: var(--color-text);
+  margin: 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.diary-entry-more {
+  font-size: var(--text-sm);
+  color: var(--color-gold);
+  font-style: italic;
+}
+
+/* Insight Preview */
+.diary-entry-insight-preview {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-3);
+  background: rgba(202, 162, 74, 0.08);
+  border: 1px solid rgba(202, 162, 74, 0.15);
+  border-radius: var(--radius-md);
+  margin-bottom: var(--space-3);
+}
+
+.insight-preview-icon {
+  font-size: 0.875rem;
+}
+
+.insight-preview-text {
+  flex: 1;
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.insight-preview-score {
+  font-size: var(--text-xs);
+  font-weight: 600;
+  padding: 0.125rem 0.5rem;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 100px;
+}
+
+/* Entry Footer */
+.diary-entry-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: var(--space-3);
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.diary-entry-wordcount {
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+}
+
+.diary-entry-rating {
+  font-size: 1rem;
+}
+
+/* Timeline End */
+.diary-timeline-end {
+  text-align: center;
+  padding: var(--space-8) 0;
+  color: var(--color-text-muted);
+  font-size: var(--text-sm);
+  font-style: italic;
+  opacity: 0.6;
+}
+
+/* Theme Variations */
+.diary-timeline-entry[data-theme="lined"] {
+  background-image: repeating-linear-gradient(
+    transparent,
+    transparent 23px,
+    rgba(202, 162, 74, 0.1) 23px,
+    rgba(202, 162, 74, 0.1) 24px
+  );
+}
+
+.diary-timeline-entry[data-theme="grid"] {
+  background-image: 
+    linear-gradient(rgba(202, 162, 74, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(202, 162, 74, 0.05) 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+
+.diary-timeline-entry[data-theme="night"] {
+  background: linear-gradient(
+    180deg,
+    #1a1a2e 0%,
+    #16213e 100%
+  );
+  border-color: rgba(147, 112, 219, 0.3);
+}
+
+.diary-timeline-entry[data-theme="parchment"] {
+  background: linear-gradient(
+    180deg,
+    #f5f0e1 0%,
+    #ebe5d3 100%
+  );
+}
+
+.diary-timeline-entry[data-theme="parchment"] .diary-entry-preview p {
+  color: #4a3c2a;
+}
+
+.diary-timeline-entry[data-theme="celestial"] {
+  background: linear-gradient(
+    135deg,
+    rgba(25, 25, 40, 0.95) 0%,
+    rgba(40, 30, 60, 0.95) 50%,
+    rgba(25, 25, 40, 0.95) 100%
+  );
+  border-color: rgba(147, 112, 219, 0.2);
+  box-shadow: 
+    inset 0 0 60px rgba(147, 112, 219, 0.1),
+    0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+/* Responsive */
+@media (max-width: 640px) {
+  .diary-timeline {
+    padding: var(--space-3);
+  }
+  
+  .diary-timeline-entry {
+    padding: var(--space-3);
+  }
+  
+  .diary-entry-insight-preview {
+    flex-wrap: wrap;
+  }
+  
+  .insight-preview-text {
+    white-space: normal;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+}

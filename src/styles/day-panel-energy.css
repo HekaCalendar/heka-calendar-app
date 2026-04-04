@@ -1,0 +1,125 @@
+/**
+ * Day Panel Energy Vote Section
+ */
+
+.day-panel__section.energy-vote-section {
+  background: rgba(202, 162, 74, 0.05);
+  border: 1px solid rgba(202, 162, 74, 0.2);
+  border-radius: 12px;
+  padding: 16px;
+  margin: 16px 0;
+}
+
+.day-panel__section.energy-vote-section .energy-vote-card {
+  background: transparent;
+  border: none;
+  padding: 0;
+  min-width: auto;
+}
+
+.day-panel__section.energy-vote-section .energy-vote-display {
+  background: rgba(0, 0, 0, 0.2);
+}
+
+/* ============================================================================
+   Day Panel Astrology Section - Styled Badges
+   ============================================================================ */
+
+/* Birth Chart Active Badge */
+.astro-personalized-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: linear-gradient(135deg, rgba(202, 162, 74, 0.2), rgba(202, 162, 74, 0.1));
+  border: 1px solid rgba(202, 162, 74, 0.4);
+  border-radius: 12px;
+  padding: 3px 10px;
+  font-size: 11px;
+  font-weight: 600;
+  color: #caa24a;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-left: 8px;
+  vertical-align: middle;
+}
+
+.astro-personalized-badge::before {
+  content: '✦';
+  font-size: 10px;
+}
+
+/* Location Times Container */
+.astro-location-times {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 12px 0;
+  padding: 12px;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* Time Badge (Sunrise, Sunset, Planetary Hour) */
+.astro-time-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 8px;
+  padding: 6px 12px;
+  font-size: 12px;
+  color: #e0e0e0;
+}
+
+.astro-time-icon {
+  font-size: 14px;
+  line-height: 1;
+}
+
+.astro-time-label {
+  font-weight: 500;
+  color: #f5f5f5;
+}
+
+/* Planetary Hour - Special Styling */
+.astro-planetary-hour {
+  background: linear-gradient(135deg, rgba(108, 92, 231, 0.15), rgba(108, 92, 231, 0.08));
+  border-color: rgba(108, 92, 231, 0.3);
+}
+
+.astro-planetary-hour .astro-time-label {
+  color: #b8b0ff;
+  font-weight: 600;
+}
+
+/* Location Name */
+.astro-location-name {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  width: 100%;
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  font-size: 12px;
+  color: #a0a0a0;
+  font-weight: 500;
+}
+
+/* Section Title with Personalization */
+.day-panel__section-title {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #f5f5f5;
+  margin-bottom: 12px;
+}
+
+.day-panel__section-title > span:first-child {
+  color: #caa24a;
+}

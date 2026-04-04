@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "572626167344",
+    "project_id": "heka-calendar",
+    "storage_bucket": "heka-calendar.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:572626167344:android:cdda8343288b2ba7e3eff5",
+        "android_client_info": {
+          "package_name": "com.heka.calendar"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "572626167344-kjeo1co1og4qgj5v8jeoplvjo4p6chn0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAdzk3d6yXVaR4Pfed-UZmBh_uv2Aw6gwM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "572626167344-kjeo1co1og4qgj5v8jeoplvjo4p6chn0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

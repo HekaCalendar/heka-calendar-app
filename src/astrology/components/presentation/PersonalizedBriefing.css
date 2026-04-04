@@ -1,0 +1,105 @@
+.pb-card {
+  background: #16161a;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  padding: 24px;
+}
+
+.pb-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.pb-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: #f8f7f5;
+  margin: 0;
+}
+
+.pb-rating {
+  text-align: right;
+}
+
+.pb-rating-score {
+  font-size: 28px;
+  font-weight: 700;
+  display: block;
+}
+
+.pb-rating-label {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #71717a;
+}
+
+.pb-quiet {
+  text-align: center;
+  padding: 40px;
+}
+
+.pb-quiet-icon {
+  font-size: 48px;
+  margin-bottom: 16px;
+}
+
+.pb-quiet h4 {
+  font-size: 18px;
+  color: #f8f7f5;
+  margin: 0 0 8px 0;
+}
+
+.pb-quiet p {
+  font-size: 14px;
+  color: #71717a;
+  margin: 0;
+}
+
+.pb-section {
+  margin-top: 16px;
+  padding: 16px;
+  border-radius: 12px;
+}
+
+.pb-section.positive {
+  background: rgba(34, 197, 94, 0.08);
+  border-left: 3px solid #22c55e;
+}
+
+.pb-section.challenging {
+  background: rgba(239, 68, 68, 0.08);
+  border-left: 3px solid #ef4444;
+}
+
+.pb-section-title {
+  font-size: 13px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin: 0 0 12px 0;
+}
+
+.pb-section.positive .pb-section-title {
+  color: #22c55e;
+}
+
+.pb-section.challenging .pb-section-title {
+  color: #ef4444;
+}
+
+.pb-transit {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 0;
+  font-size: 14px;
+  color: #e4e4e7;
+}
+
+.pb-aspect {
+  font-size: 16px;
+  color: #a1a1aa;
+}

@@ -1,0 +1,587 @@
+/**
+ * Void Moon Calendar - HEKA 13-Month Style
+ * Compact void indicators, educational section
+ */
+
+.vm-calendar {
+  background: linear-gradient(180deg, rgba(18, 18, 26, 0.8) 0%, rgba(10, 10, 15, 0.9) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+/* Header */
+.vm-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 24px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.vm-title-section h3 {
+  font-size: 20px;
+  font-weight: 600;
+  color: #fafafa;
+  margin: 0 0 4px 0;
+  letter-spacing: -0.01em;
+}
+
+.vm-subtitle {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.vm-month-year {
+  font-size: 14px;
+  color: #a1a1aa;
+  font-weight: 500;
+}
+
+.vm-mode-badge {
+  padding: 2px 8px;
+  background: rgba(201, 162, 39, 0.15);
+  border: 1px solid rgba(201, 162, 39, 0.3);
+  border-radius: 4px;
+  font-size: 10px;
+  font-weight: 600;
+  color: #c9a227;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.vm-leap-badge {
+  padding: 2px 8px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 4px;
+  font-size: 10px;
+  color: #71717a;
+}
+
+.vm-leap-badge.leap {
+  background: rgba(74, 222, 128, 0.15);
+  border-color: rgba(74, 222, 128, 0.3);
+  color: #4ade80;
+}
+
+.vm-nav {
+  display: flex;
+  gap: 8px;
+}
+
+.vm-nav-btn {
+  padding: 8px 14px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  color: #a1a1aa;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.vm-nav-btn:hover {
+  background: rgba(201, 162, 39, 0.1);
+  border-color: rgba(201, 162, 39, 0.3);
+  color: #c9a227;
+}
+
+.vm-nav-btn.today {
+  background: rgba(201, 162, 39, 0.1);
+  border-color: rgba(201, 162, 39, 0.3);
+  color: #c9a227;
+}
+
+/* Status Banner */
+.vm-status {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 24px;
+  margin: 16px;
+  border-radius: 12px;
+  gap: 16px;
+}
+
+.vm-status.void {
+  background: linear-gradient(135deg, rgba(232, 168, 56, 0.12), rgba(232, 168, 56, 0.04));
+  border: 1px solid rgba(232, 168, 56, 0.25);
+}
+
+.vm-status.clear {
+  background: linear-gradient(135deg, rgba(74, 222, 128, 0.1), rgba(74, 222, 128, 0.03));
+  border: 1px solid rgba(74, 222, 128, 0.2);
+}
+
+.vm-status-main {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.vm-status-icon {
+  font-size: 28px;
+  line-height: 1;
+}
+
+.vm-status-text h4 {
+  font-size: 15px;
+  font-weight: 600;
+  margin: 0 0 2px 0;
+  color: #fafafa;
+}
+
+.vm-status.void .vm-status-text h4 {
+  color: #e8a838;
+}
+
+.vm-status.clear .vm-status-text h4 {
+  color: #4ade80;
+}
+
+.vm-status-text p {
+  font-size: 12px;
+  color: #a1a1aa;
+  margin: 0;
+}
+
+.vm-status-time {
+  text-align: right;
+}
+
+.vm-status-label {
+  display: block;
+  font-size: 10px;
+  color: #71717a;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 2px;
+}
+
+.vm-status-value {
+  font-size: 18px;
+  font-weight: 600;
+  color: #fafafa;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Education Section */
+.vm-education {
+  margin: 0 16px 16px;
+}
+
+.vm-edu-details {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.vm-edu-details summary {
+  padding: 12px 16px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #c9a227;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  list-style: none;
+  user-select: none;
+}
+
+.vm-edu-details summary::before {
+  content: '▸';
+  font-size: 12px;
+  transition: transform 0.2s ease;
+}
+
+.vm-edu-details[open] summary::before {
+  transform: rotate(90deg);
+}
+
+.vm-edu-details summary:hover {
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.vm-edu-content {
+  padding: 0 16px 16px;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.vm-edu-content > p {
+  font-size: 13px;
+  line-height: 1.6;
+  color: #a1a1aa;
+  margin: 12px 0;
+}
+
+.vm-edu-content strong {
+  color: #fafafa;
+}
+
+.vm-edu-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.vm-edu-item {
+  padding: 12px;
+  border-radius: 8px;
+  border-left: 3px solid;
+}
+
+.vm-edu-item.avoid {
+  background: rgba(239, 68, 68, 0.08);
+  border-left-color: #ef4444;
+}
+
+.vm-edu-item.favor {
+  background: rgba(74, 222, 128, 0.08);
+  border-left-color: #4ade80;
+}
+
+.vm-edu-item h5 {
+  font-size: 12px;
+  font-weight: 600;
+  margin: 0 0 8px 0;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.vm-edu-item.avoid h5 { color: #ef4444; }
+.vm-edu-item.favor h5 { color: #4ade80; }
+
+.vm-edu-item ul {
+  margin: 0;
+  padding-left: 16px;
+  font-size: 12px;
+  color: #a1a1aa;
+  line-height: 1.5;
+}
+
+.vm-edu-item li {
+  margin-bottom: 2px;
+}
+
+/* Calendar Grid */
+.vm-grid-container {
+  padding: 0 16px 16px;
+}
+
+.vm-weekdays {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 4px;
+  margin-bottom: 4px;
+}
+
+.vm-wd {
+  text-align: center;
+  padding: 8px 4px;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: #71717a;
+}
+
+.vm-days {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 4px;
+}
+
+.vm-days.standard {
+  /* 28 days = exactly 4 rows */
+}
+
+.vm-days.march {
+  /* March may have 5 rows */
+}
+
+.vm-cell {
+  aspect-ratio: 1;
+  min-height: 48px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  border-radius: 8px;
+  padding: 6px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.vm-cell:hover {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+.vm-cell.other {
+  opacity: 0.4;
+}
+
+.vm-cell.today {
+  background: rgba(201, 162, 39, 0.1);
+  border-color: rgba(201, 162, 39, 0.3);
+}
+
+.vm-cell.weekend {
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.vm-cell.today .vm-cell-day {
+  color: #c9a227;
+  font-weight: 600;
+}
+
+.vm-cell.weekend .vm-cell-day {
+  color: #c9a227;
+}
+
+.vm-cell-day {
+  font-size: 13px;
+  font-weight: 500;
+  color: #a1a1aa;
+  margin-bottom: auto;
+}
+
+/* Void Bars - Horizontal within cells */
+.vm-void-bars {
+  position: absolute;
+  bottom: 6px;
+  left: 6px;
+  right: 6px;
+  height: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.vm-void-wrapper {
+  position: relative;
+  width: 100%;
+  height: 4px;
+}
+
+.vm-void-bar {
+  position: absolute;
+  height: 100%;
+  background: linear-gradient(90deg, #e8a838, #f4c430);
+  border-radius: 2px;
+  min-width: 4px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.vm-void-bar:hover {
+  height: 6px;
+  margin-top: -1px;
+  box-shadow: 0 0 8px rgba(232, 168, 56, 0.5);
+  z-index: 10;
+}
+
+/* Tooltip */
+.vm-void-tooltip {
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-8px);
+  background: rgba(10, 10, 15, 0.98);
+  border: 1px solid rgba(232, 168, 56, 0.3);
+  border-radius: 8px;
+  padding: 10px 14px;
+  font-size: 12px;
+  color: #a1a1aa;
+  white-space: nowrap;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.2s ease;
+  z-index: 100;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+  pointer-events: none;
+}
+
+.vm-void-bar:hover + .vm-void-tooltip,
+.vm-void-wrapper:hover .vm-void-tooltip {
+  opacity: 1;
+  visibility: visible;
+}
+
+.vm-void-tooltip strong {
+  display: block;
+  color: #e8a838;
+  margin-bottom: 4px;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.vm-void-tooltip span {
+  display: block;
+  line-height: 1.4;
+}
+
+.vm-void-dur {
+  color: #c9a227;
+  margin-top: 4px;
+  padding-top: 4px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Legend */
+.vm-legend {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 12px 24px;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.vm-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  color: #a1a1aa;
+}
+
+.vm-legend-bar {
+  width: 20px;
+  height: 4px;
+  border-radius: 2px;
+}
+
+.vm-legend-bar.void {
+  background: linear-gradient(90deg, #e8a838, #f4c430);
+}
+
+.vm-legend-bar.active {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.vm-legend-note {
+  margin-left: auto;
+  font-size: 11px;
+  color: #52525b;
+  font-style: italic;
+}
+
+/* Upcoming List - Compact horizontal */
+.vm-upcoming {
+  padding: 16px 24px;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  background: rgba(0, 0, 0, 0.15);
+}
+
+.vm-upcoming h4 {
+  font-size: 13px;
+  font-weight: 600;
+  color: #fafafa;
+  margin: 0 0 12px 0;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.vm-upcoming-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.vm-up-item {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 10px 12px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
+  font-size: 13px;
+}
+
+.vm-up-date {
+  font-weight: 500;
+  color: #fafafa;
+  min-width: 100px;
+}
+
+.vm-up-time {
+  color: #a1a1aa;
+  font-family: 'JetBrains Mono', monospace;
+  min-width: 110px;
+}
+
+.vm-up-signs {
+  color: #c9a227;
+  font-weight: 500;
+}
+
+.vm-up-dur {
+  margin-left: auto;
+  color: #e8a838;
+  font-weight: 500;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .vm-header {
+    flex-direction: column;
+    gap: 12px;
+    align-items: flex-start;
+    padding: 16px;
+  }
+  
+  .vm-nav {
+    width: 100%;
+    justify-content: flex-end;
+  }
+  
+  .vm-status {
+    flex-direction: column;
+    text-align: center;
+    padding: 16px;
+  }
+  
+  .vm-status-time {
+    text-align: center;
+  }
+  
+  .vm-edu-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .vm-cell {
+    min-height: 40px;
+    padding: 4px;
+  }
+  
+  .vm-cell-day {
+    font-size: 11px;
+  }
+  
+  .vm-wd {
+    font-size: 9px;
+    padding: 6px 2px;
+  }
+  
+  .vm-up-item {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  
+  .vm-up-dur {
+    margin-left: 0;
+    width: 100%;
+  }
+}
