@@ -331,6 +331,16 @@
   </div>
   
   <script>
+    // Firebase configuration
+    const FIREBASE_CONFIG = {
+      apiKey: "AIzaSyBevNpdAOCTWgpO3Kc9O4LE5SLYHGV1IpM",
+      authDomain: "heka-calendar.firebaseapp.com",
+      projectId: "heka-calendar",
+      storageBucket: "heka-calendar.firebasestorage.app",
+      messagingSenderId: "572626167344",
+      appId: "1:572626167344:web:3cbedfde750128b4e3eff5"
+    };
+    
     // Play Store URL
     const PLAY_STORE_URL = 'https://play.google.com/store/apps/details?id=com.heka.calendar';
     
@@ -411,22 +421,25 @@
       contentEl.classList.remove('hidden');
     }
     
-    // Fallback: Try Firestore (for old links)
+    // Fallback: Try Firestore (for old links) - NOW WITH API KEY!
     async function fetchTaskData(shareCode) {
       try {
-        const projectId = 'hekacalendar';
-        const url = `https://firestore.googleapis.com/v1/projects/${projectId}/databases/(default)/documents/sharedTasks/${shareCode}`;
+        const projectId = FIREBASE_CONFIG.projectId; // Use correct project ID from config
+        const apiKey = FIREBASE_CONFIG.apiKey;
+        // Firestore REST API requires API key for public access
+        const url = `https://firestore.googleapis.com/v1/projects/${projectId}/databases/(default)/documents/sharedTasks/${shareCode}?key=${apiKey}`;
         
+        console.log('[DEBUG] Fetching from Firestore with API key...');
         const response = await fetch(url);
         
         if (!response.ok) {
-          // Firestore requires auth - show generic view
-          console.log('[DEBUG] Firestore fetch failed, showing generic view');
+          console.log('[DEBUG] Firestore fetch failed:', response.status);
           showGenericTask();
           return;
         }
         
         const data = await response.json();
+        console.log('[DEBUG] Firestore data received:', data);
         displayTaskFromFirestore(data);
       } catch (error) {
         console.error('[DEBUG] Error:', error);
