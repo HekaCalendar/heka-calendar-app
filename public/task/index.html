@@ -420,9 +420,15 @@
       // Extract data from Firestore format
       const title = fields.title?.stringValue || 'Untitled Task';
       const description = fields.description?.stringValue || '';
-      const creatorName = fields.creatorName?.stringValue || 'Someone';
+      let creatorName = fields.creatorName?.stringValue || '';
       const creatorPhotoURL = fields.creatorPhotoURL?.stringValue || null;
       const status = fields.status?.stringValue || 'pending';
+      
+      // SECURITY: Validate creator name - don't show "Anonymous" or empty names
+      // This ensures only verified account names are displayed
+      if (!creatorName || creatorName === 'Anonymous' || creatorName.trim() === '') {
+        creatorName = 'A HEKA User'; // Generic but respectful fallback
+      }
       
       // Check if expired
       const expiresAt = fields.expiresAt?.timestampValue;

@@ -87,19 +87,27 @@ export async function createShareableTask(
     return { success: false, error: 'Not authenticated' };
   }
 
-  // Ensure user has a profile
+  // ENSURE user has a proper display name set - require profile setup
+  if (!currentUser.displayName || currentUser.displayName.trim() === '') {
+    return { 
+      success: false, 
+      error: 'Please set up your profile name before sharing tasks. Go to Circle settings.' 
+    };
+  }
+
+  // Ensure user has a profile in Firestore
   await ensureUserProfile();
 
   const shareCode = generateShareCode();
   // Use shareCode as the document ID for easy lookup
   const shareRef = doc(db, 'sharedTasks', shareCode);
 
-  // Build task object, only including optional fields if they have values
-  // Firestore doesn't allow undefined values
+  // Build task object with VERIFIED display name from Firebase Auth
+  // This ensures the name shown on the landing page is the user's real account name
   const sharedTask: Record<string, unknown> = {
     taskId: '', // Will be filled when accepted
     creatorId: currentUser.uid,
-    creatorName: currentUser.displayName || 'Anonymous',
+    creatorName: currentUser.displayName, // Verified Firebase Auth display name
     title,
     description,
     shareCode,
@@ -184,7 +192,12 @@ export function generateNativeTaskLink(shareCode: string): string {
 export function generateTaskShareText(title: string, shareCode: string, creatorName: string): string {
   const link = generateSmartTaskLink(shareCode);
   
-  return `📜 Task from ${creatorName} on HEKA Calendar
+  // SECURITY: Validate creator name in share text too
+  const safeCreatorName = (creatorName && creatorName !== 'Anonymous') 
+    ? creatorName 
+    : 'A friend';
+  
+  return `📜 Task from ${safeCreatorName} on HEKA Calendar
 
 "${title}"
 

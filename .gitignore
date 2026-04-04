@@ -1,5 +1,20 @@
 .vercel
 
+# Android APKs (large files, don't commit)
+*.apk
+heka-calendar-*.apk
+
+# Screenshots (not needed for deployment)
+*.png
+screenshot*.png
+account-modal*.png
+app-screen*.png
+current*.png
+s*.png
+tutorial*.png
+final-test.png
+test.png
+
 # Android Signing Keys (CRITICAL - Never commit these!)
 android/app/key.properties
 android/app/*.keystore

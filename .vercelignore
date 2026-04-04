@@ -1,0 +1,54 @@
+# Android APKs (huge files!)
+*.apk
+heka-calendar-*.apk
+
+# Node modules (will be installed fresh)
+node_modules/
+
+# Screenshots and images (not needed for web)
+*.png
+*.jpg
+*.jpeg
+*.gif
+
+# Build outputs
+dist/
+android/app/build/
+ios/App/build/
+
+# Server temp files
+server/temp/
+
+# Documentation (not needed for deployment)
+*.md
+ANDROID-PUBLISH.md
+ARCHITECTURE.md
+PRIVACY_POLICY.md
+TERMS_OF_SERVICE.md
+
+# IDE and OS files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Local environment
+.env.local
+.env.production
+.env.staging
+
+# Test files
+tests/
+*.test.ts
+*.test.tsx
+
+# Deprecated code
+_deprecated/
+
+# Scripts (not needed for deployment)
+scripts/
+*.bat
+*.ps1
+
+# Website (separate project)
+website/
