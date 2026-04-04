@@ -3,468 +3,891 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Task Invitation - HEKA Calendar</title>
+  <title>Task Ritual | HEKA Calendar</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <style>
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
     }
-    
+
+    :root {
+      --gold-primary: #d4af37;
+      --gold-light: #f4d03f;
+      --gold-dark: #b8941f;
+      --gold-glow: rgba(212, 175, 55, 0.4);
+      --deep-space: #0a0a0f;
+      --cosmic-blue: #0f172a;
+      --nebula-purple: #1a1a2e;
+      --star-white: #ffffff;
+      --text-muted: rgba(255, 255, 255, 0.6);
+      --glass-bg: rgba(255, 255, 255, 0.03);
+      --glass-border: rgba(255, 255, 255, 0.08);
+    }
+
     body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
-      background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
+      font-family: 'Inter', sans-serif;
+      background: var(--deep-space);
       min-height: 100vh;
-      color: #fff;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 20px;
+      overflow-x: hidden;
+      color: var(--star-white);
+      position: relative;
     }
-    
-    .container {
-      max-width: 420px;
-      width: 100%;
-      background: rgba(255, 255, 255, 0.05);
-      backdrop-filter: blur(10px);
-      border-radius: 20px;
-      border: 1px solid rgba(212, 175, 55, 0.3);
-      padding: 32px;
-      text-align: center;
-    }
-    
-    .logo {
-      font-size: 48px;
-      margin-bottom: 8px;
-    }
-    
-    .app-name {
-      font-size: 24px;
-      font-weight: 700;
-      color: #d4af37;
-      margin-bottom: 4px;
-      letter-spacing: 2px;
-    }
-    
-    .tagline {
-      font-size: 14px;
-      color: rgba(255, 255, 255, 0.6);
-      margin-bottom: 32px;
-    }
-    
-    .task-card {
-      background: rgba(212, 175, 55, 0.1);
-      border: 1px solid rgba(212, 175, 55, 0.3);
-      border-radius: 16px;
-      padding: 24px;
-      margin-bottom: 24px;
-      text-align: left;
-    }
-    
-    .task-label {
-      font-size: 12px;
-      color: #d4af37;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      margin-bottom: 8px;
-    }
-    
-    .task-title {
-      font-size: 20px;
-      font-weight: 600;
-      margin-bottom: 12px;
-      line-height: 1.4;
-    }
-    
-    .task-description {
-      font-size: 14px;
-      color: rgba(255, 255, 255, 0.8);
-      line-height: 1.6;
-      margin-bottom: 16px;
-    }
-    
-    .task-date {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      font-size: 13px;
-      color: rgba(212, 175, 55, 0.9);
-      background: rgba(212, 175, 55, 0.1);
-      padding: 6px 12px;
-      border-radius: 20px;
-    }
-    
-    .sender {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      margin-bottom: 24px;
-      padding: 16px;
-      background: rgba(255, 255, 255, 0.05);
-      border-radius: 12px;
-    }
-    
-    .sender-avatar {
-      width: 48px;
-      height: 48px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, #d4af37 0%, #8b6914 100%);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 24px;
-      overflow: hidden;
-    }
-    
-    .sender-avatar img {
+
+    /* Animated Cosmic Background */
+    .cosmic-bg {
+      position: fixed;
+      top: 0;
+      left: 0;
       width: 100%;
       height: 100%;
-      object-fit: cover;
+      z-index: -1;
+      background: 
+        radial-gradient(ellipse at 20% 20%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 80%, rgba(212, 175, 55, 0.15) 0%, transparent 50%),
+        radial-gradient(ellipse at 50% 50%, rgba(138, 43, 226, 0.1) 0%, transparent 70%),
+        linear-gradient(180deg, var(--deep-space) 0%, var(--cosmic-blue) 50%, var(--nebula-purple) 100%);
     }
-    
-    .sender-info {
-      text-align: left;
-    }
-    
-    .sender-label {
-      font-size: 12px;
-      color: rgba(255, 255, 255, 0.5);
-    }
-    
-    .sender-name {
-      font-size: 16px;
-      font-weight: 600;
-      color: #d4af37;
-    }
-    
-    .cta-button {
-      display: block;
+
+    /* Animated Stars */
+    .stars {
+      position: fixed;
+      top: 0;
+      left: 0;
       width: 100%;
-      padding: 16px 24px;
-      background: linear-gradient(135deg, #d4af37 0%, #b8941f 100%);
-      color: #0f0c29;
-      text-decoration: none;
-      border-radius: 12px;
-      font-weight: 700;
-      font-size: 16px;
-      margin-bottom: 12px;
-      transition: transform 0.2s, box-shadow 0.2s;
-      border: none;
-      cursor: pointer;
+      height: 100%;
+      z-index: -1;
+      pointer-events: none;
     }
-    
-    .cta-button:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 24px rgba(212, 175, 55, 0.3);
+
+    .star {
+      position: absolute;
+      background: white;
+      border-radius: 50%;
+      animation: twinkle var(--duration) ease-in-out infinite;
     }
-    
-    .secondary-button {
-      display: block;
-      width: 100%;
-      padding: 14px 24px;
-      background: transparent;
-      color: rgba(255, 255, 255, 0.7);
-      text-decoration: none;
-      border-radius: 12px;
-      font-size: 14px;
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      cursor: pointer;
-      transition: all 0.2s;
+
+    @keyframes twinkle {
+      0%, 100% { opacity: 0.2; transform: scale(0.8); }
+      50% { opacity: 1; transform: scale(1.2); }
     }
-    
-    .secondary-button:hover {
-      background: rgba(255, 255, 255, 0.1);
-      color: #fff;
+
+    /* Shooting Stars */
+    .shooting-star {
+      position: absolute;
+      width: 100px;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--gold-light), transparent);
+      animation: shoot 3s linear infinite;
+      opacity: 0;
     }
-    
-    .loading {
+
+    @keyframes shoot {
+      0% { transform: translateX(-100px) rotate(-45deg); opacity: 0; }
+      10% { opacity: 1; }
+      90% { opacity: 1; }
+      100% { transform: translateX(calc(100vw + 100px)) rotate(-45deg); opacity: 0; }
+    }
+
+    /* Floating Orbs */
+    .orb {
+      position: fixed;
+      border-radius: 50%;
+      filter: blur(80px);
+      opacity: 0.5;
+      animation: float 20s ease-in-out infinite;
+      z-index: -1;
+    }
+
+    .orb-1 {
+      width: 400px;
+      height: 400px;
+      background: radial-gradient(circle, rgba(212, 175, 55, 0.4) 0%, transparent 70%);
+      top: -10%;
+      right: -10%;
+      animation-delay: 0s;
+    }
+
+    .orb-2 {
+      width: 300px;
+      height: 300px;
+      background: radial-gradient(circle, rgba(138, 43, 226, 0.3) 0%, transparent 70%);
+      bottom: -5%;
+      left: -5%;
+      animation-delay: -10s;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translate(0, 0) scale(1); }
+      33% { transform: translate(30px, -30px) scale(1.1); }
+      66% { transform: translate(-20px, 20px) scale(0.9); }
+    }
+
+    /* Main Container */
+    .container {
+      max-width: 520px;
+      margin: 0 auto;
+      padding: 24px;
+      min-height: 100vh;
       display: flex;
       flex-direction: column;
-      align-items: center;
       justify-content: center;
-      gap: 16px;
-      color: rgba(255, 255, 255, 0.6);
-      padding: 40px;
+      position: relative;
+      z-index: 1;
     }
-    
-    .spinner {
-      width: 40px;
-      height: 40px;
-      border: 3px solid rgba(212, 175, 55, 0.3);
-      border-top-color: #d4af37;
+
+    /* Loading State */
+    .loading-container {
+      text-align: center;
+      padding: 60px 20px;
+    }
+
+    .cosmic-spinner {
+      width: 80px;
+      height: 80px;
+      margin: 0 auto 32px;
+      position: relative;
+    }
+
+    .cosmic-spinner::before,
+    .cosmic-spinner::after {
+      content: '';
+      position: absolute;
       border-radius: 50%;
-      animation: spin 1s linear infinite;
+      border: 3px solid transparent;
     }
-    
+
+    .cosmic-spinner::before {
+      width: 100%;
+      height: 100%;
+      border-top-color: var(--gold-primary);
+      border-right-color: rgba(212, 175, 55, 0.3);
+      animation: spin 1.5s linear infinite;
+    }
+
+    .cosmic-spinner::after {
+      width: 60%;
+      height: 60%;
+      top: 20%;
+      left: 20%;
+      border-bottom-color: var(--gold-light);
+      border-left-color: rgba(255, 255, 255, 0.2);
+      animation: spin-reverse 1s linear infinite;
+    }
+
     @keyframes spin {
       to { transform: rotate(360deg); }
     }
-    
-    .error {
-      color: #ef4444;
-      padding: 20px;
-      text-align: center;
+
+    @keyframes spin-reverse {
+      to { transform: rotate(-360deg); }
     }
-    
+
+    .loading-text {
+      font-family: 'Cinzel', serif;
+      font-size: 18px;
+      color: var(--gold-primary);
+      letter-spacing: 2px;
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 0.6; }
+      50% { opacity: 1; }
+    }
+
+    /* Error State */
+    .error-container {
+      text-align: center;
+      padding: 60px 20px;
+      background: var(--glass-bg);
+      border: 1px solid rgba(239, 68, 68, 0.3);
+      border-radius: 24px;
+      backdrop-filter: blur(20px);
+    }
+
+    .error-icon {
+      font-size: 64px;
+      margin-bottom: 20px;
+      display: block;
+    }
+
+    .error-title {
+      font-family: 'Cinzel', serif;
+      font-size: 28px;
+      color: var(--star-white);
+      margin-bottom: 12px;
+    }
+
+    .error-message {
+      color: var(--text-muted);
+      font-size: 16px;
+      line-height: 1.6;
+    }
+
+    /* Content Card */
+    .content-card {
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      border-radius: 32px;
+      padding: 40px 32px;
+      backdrop-filter: blur(20px);
+      box-shadow: 
+        0 8px 32px rgba(0, 0, 0, 0.4),
+        0 0 0 1px rgba(255, 255, 255, 0.05) inset,
+        0 0 100px rgba(212, 175, 55, 0.1) inset;
+      animation: card-appear 0.8s ease-out;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .content-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, 
+        transparent, 
+        rgba(212, 175, 55, 0.5), 
+        rgba(255, 255, 255, 0.3), 
+        rgba(212, 175, 55, 0.5), 
+        transparent
+      );
+    }
+
+    @keyframes card-appear {
+      from {
+        opacity: 0;
+        transform: translateY(30px) scale(0.95);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    /* Brand Header */
+    .brand-header {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+
+    .brand-logo {
+      width: 72px;
+      height: 72px;
+      margin: 0 auto 16px;
+      background: linear-gradient(135deg, var(--gold-primary) 0%, var(--gold-dark) 100%);
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 36px;
+      box-shadow: 
+        0 8px 32px rgba(212, 175, 55, 0.3),
+        0 0 0 1px rgba(255, 255, 255, 0.2) inset;
+      animation: logo-glow 3s ease-in-out infinite;
+    }
+
+    @keyframes logo-glow {
+      0%, 100% { box-shadow: 0 8px 32px rgba(212, 175, 55, 0.3), 0 0 0 1px rgba(255, 255, 255, 0.2) inset; }
+      50% { box-shadow: 0 8px 48px rgba(212, 175, 55, 0.5), 0 0 20px rgba(212, 175, 55, 0.3), 0 0 0 1px rgba(255, 255, 255, 0.3) inset; }
+    }
+
+    .brand-name {
+      font-family: 'Cinzel', serif;
+      font-size: 24px;
+      font-weight: 600;
+      background: linear-gradient(135deg, var(--gold-light) 0%, var(--gold-primary) 50%, var(--gold-dark) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      letter-spacing: 3px;
+      margin-bottom: 6px;
+    }
+
+    .brand-tagline {
+      font-size: 13px;
+      color: var(--text-muted);
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+    }
+
+    /* Sender Section */
+    .sender-section {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 20px;
+      background: linear-gradient(135deg, rgba(212, 175, 55, 0.1) 0%, rgba(212, 175, 55, 0.05) 100%);
+      border: 1px solid rgba(212, 175, 55, 0.2);
+      border-radius: 20px;
+      margin-bottom: 24px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .sender-section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold-primary), transparent);
+    }
+
+    .sender-avatar {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--gold-primary) 0%, var(--gold-dark) 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      font-weight: 600;
+      color: var(--deep-space);
+      flex-shrink: 0;
+      box-shadow: 0 4px 16px rgba(212, 175, 55, 0.3);
+    }
+
+    .sender-avatar img {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    .sender-info {
+      flex: 1;
+    }
+
+    .sender-label {
+      font-size: 12px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 4px;
+    }
+
+    .sender-name {
+      font-family: 'Cinzel', serif;
+      font-size: 20px;
+      font-weight: 600;
+      color: var(--gold-light);
+    }
+
+    /* Task Card */
+    .task-card {
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.02) 100%);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 24px;
+      padding: 28px;
+      margin-bottom: 24px;
+      position: relative;
+    }
+
+    .task-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: var(--gold-primary);
+      padding: 8px 16px;
+      background: rgba(212, 175, 55, 0.1);
+      border: 1px solid rgba(212, 175, 55, 0.2);
+      border-radius: 100px;
+      margin-bottom: 20px;
+    }
+
+    .task-title {
+      font-family: 'Cinzel', serif;
+      font-size: 24px;
+      font-weight: 600;
+      color: var(--star-white);
+      line-height: 1.4;
+      margin-bottom: 16px;
+    }
+
+    .task-description {
+      font-size: 16px;
+      color: var(--text-muted);
+      line-height: 1.7;
+      margin-bottom: 20px;
+    }
+
+    .task-date {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 20px;
+      background: rgba(212, 175, 55, 0.08);
+      border: 1px solid rgba(212, 175, 55, 0.15);
+      border-radius: 12px;
+      font-size: 14px;
+      color: var(--gold-light);
+    }
+
+    .task-date span:first-child {
+      font-size: 18px;
+    }
+
+    /* Status Badge */
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      padding: 10px 18px;
+      border-radius: 100px;
+      margin-bottom: 20px;
+    }
+
+    .status-pending {
+      background: rgba(34, 197, 94, 0.15);
+      border: 1px solid rgba(34, 197, 94, 0.3);
+      color: #4ade80;
+    }
+
+    .status-accepted {
+      background: rgba(59, 130, 246, 0.15);
+      border: 1px solid rgba(59, 130, 246, 0.3);
+      color: #60a5fa;
+    }
+
+    .status-expired {
+      background: rgba(239, 68, 68, 0.15);
+      border: 1px solid rgba(239, 68, 68, 0.3);
+      color: #f87171;
+    }
+
+    /* CTA Button */
+    .cta-button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      width: 100%;
+      padding: 20px 28px;
+      background: linear-gradient(135deg, var(--gold-primary) 0%, var(--gold-dark) 100%);
+      border: none;
+      border-radius: 16px;
+      color: var(--deep-space);
+      font-family: 'Inter', sans-serif;
+      font-size: 16px;
+      font-weight: 700;
+      text-decoration: none;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 
+        0 8px 32px rgba(212, 175, 55, 0.3),
+        0 0 0 1px rgba(255, 255, 255, 0.2) inset;
+      margin-bottom: 12px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cta-button::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+      transition: left 0.5s ease;
+    }
+
+    .cta-button:hover::before {
+      left: 100%;
+    }
+
+    .cta-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 
+        0 12px 40px rgba(212, 175, 55, 0.4),
+        0 0 0 1px rgba(255, 255, 255, 0.3) inset;
+    }
+
+    .cta-button:active {
+      transform: translateY(0);
+    }
+
+    .cta-button-icon {
+      font-size: 20px;
+    }
+
+    /* Secondary Button */
+    .secondary-button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      width: 100%;
+      padding: 18px 28px;
+      background: transparent;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 16px;
+      color: var(--star-white);
+      font-family: 'Inter', sans-serif;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      margin-bottom: 28px;
+    }
+
+    .secondary-button:hover {
+      background: rgba(255, 255, 255, 0.05);
+      border-color: rgba(255, 255, 255, 0.3);
+    }
+
+    /* Features Section */
     .features {
-      margin-top: 32px;
       padding-top: 24px;
       border-top: 1px solid rgba(255, 255, 255, 0.1);
     }
-    
+
     .features-title {
-      font-size: 14px;
-      color: rgba(255, 255, 255, 0.5);
-      margin-bottom: 16px;
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: var(--text-muted);
+      margin-bottom: 20px;
+      text-align: center;
     }
-    
+
     .feature-list {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      text-align: left;
-      font-size: 14px;
-      color: rgba(255, 255, 255, 0.7);
+      display: grid;
+      gap: 14px;
     }
-    
+
     .feature-item {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 14px;
+      padding: 16px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 14px;
+      transition: all 0.3s ease;
     }
-    
+
+    .feature-item:hover {
+      background: rgba(255, 255, 255, 0.05);
+      border-color: rgba(212, 175, 55, 0.2);
+      transform: translateX(4px);
+    }
+
+    .feature-icon {
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, rgba(212, 175, 55, 0.2) 0%, rgba(212, 175, 55, 0.05) 100%);
+      border: 1px solid rgba(212, 175, 55, 0.2);
+      border-radius: 12px;
+      font-size: 20px;
+      flex-shrink: 0;
+    }
+
+    .feature-text {
+      font-size: 14px;
+      color: rgba(255, 255, 255, 0.8);
+      line-height: 1.5;
+    }
+
+    .feature-text strong {
+      color: var(--gold-light);
+      font-weight: 600;
+    }
+
+    /* Hidden class */
     .hidden {
       display: none !important;
     }
 
-    .expired-badge {
-      display: inline-block;
-      background: #ef4444;
-      color: white;
-      font-size: 11px;
-      padding: 4px 10px;
-      border-radius: 12px;
-      margin-bottom: 12px;
+    /* Responsive */
+    @media (max-width: 480px) {
+      .container {
+        padding: 16px;
+      }
+
+      .content-card {
+        padding: 28px 20px;
+        border-radius: 24px;
+      }
+
+      .task-title {
+        font-size: 20px;
+      }
+
+      .sender-name {
+        font-size: 18px;
+      }
+
+      .cta-button,
+      .secondary-button {
+        padding: 18px 20px;
+      }
     }
 
-    .accepted-badge {
-      display: inline-block;
-      background: #22c55e;
-      color: white;
-      font-size: 11px;
-      padding: 4px 10px;
-      border-radius: 12px;
-      margin-bottom: 12px;
+    /* Animations */
+    .fade-in {
+      animation: fadeIn 0.6s ease-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
     }
   </style>
 </head>
 <body>
+  <!-- Cosmic Background -->
+  <div class="cosmic-bg"></div>
+  <div class="stars" id="stars"></div>
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+
   <div class="container">
     <!-- Loading State -->
-    <div id="loading" class="loading">
-      <div class="spinner"></div>
-      <span>Summoning task from the cosmic realm...</span>
+    <div id="loading" class="loading-container">
+      <div class="cosmic-spinner"></div>
+      <p class="loading-text">Summoning from the cosmic realm...</p>
     </div>
     
     <!-- Error State -->
-    <div id="error" class="error hidden">
-      <div style="font-size: 48px; margin-bottom: 16px;">😕</div>
-      <h2 style="margin-bottom: 8px;">Task Not Found</h2>
-      <p style="color: rgba(255,255,255,0.6);">This task may have expired or been removed.</p>
+    <div id="error" class="error-container hidden">
+      <span class="error-icon">🌑</span>
+      <h2 class="error-title">Task Not Found</h2>
+      <p class="error-message">This ritual has expired or returned to the void.</p>
     </div>
     
-    <!-- Task Content -->
-    <div id="content" class="hidden">
-      <div class="logo">🔮</div>
-      <div class="app-name">HEKA CALENDAR</div>
-      <div class="tagline">Cosmic Timekeeping & Task Rituals</div>
+    <!-- Content -->
+    <div id="content" class="content-card hidden">
+      <!-- Brand Header -->
+      <div class="brand-header">
+        <div class="brand-logo">🔮</div>
+        <div class="brand-name">HEKA CALENDAR</div>
+        <div class="brand-tagline">Cosmic Timekeeping & Task Rituals</div>
+      </div>
       
-      <div class="sender">
+      <!-- Sender -->
+      <div class="sender-section">
         <div class="sender-avatar" id="senderAvatar">👤</div>
         <div class="sender-info">
-          <div class="sender-label">Task from</div>
+          <div class="sender-label">Ritual from</div>
           <div class="sender-name" id="senderName">...</div>
         </div>
       </div>
       
+      <!-- Task -->
       <div class="task-card">
-        <div class="task-label">📜 Task Ritual</div>
-        <div id="taskStatus"></div>
-        <div class="task-title" id="taskTitle">Loading...</div>
-        <div class="task-description" id="taskDescription"></div>
+        <div class="task-label" id="taskStatus">📜 Task Ritual</div>
+        <h1 class="task-title" id="taskTitle">Loading...</h1>
+        <p class="task-description" id="taskDescription"></p>
         <div class="task-date hidden" id="taskDate">
           <span>🌙</span>
           <span id="dateText"></span>
         </div>
       </div>
       
+      <!-- Actions -->
       <a href="#" class="cta-button" id="downloadBtn">
-        📲 Get HEKA Calendar
+        <span class="cta-button-icon">📲</span>
+        <span>Get HEKA Calendar</span>
       </a>
       
       <button class="secondary-button hidden" id="openAppBtn">
-        🔮 Open in App
+        <span>🔮</span>
+        <span>Open in App</span>
       </button>
       
+      <!-- Features -->
       <div class="features">
-        <div class="features-title">What you'll get:</div>
+        <div class="features-title">What awaits you</div>
         <div class="feature-list">
           <div class="feature-item">
-            <span>✨</span>
-            <span>Accept this task and connect with <span id="senderName2">your friend</span></span>
+            <div class="feature-icon">✨</div>
+            <div class="feature-text">Accept this ritual and connect with <strong id="senderName2">your cosmic ally</strong></div>
           </div>
           <div class="feature-item">
-            <span>📜</span>
-            <span>Collaborate on celestial-aligned tasks</span>
+            <div class="feature-icon">📜</div>
+            <div class="feature-text">Collaborate on <strong>celestial-aligned tasks</strong></div>
           </div>
           <div class="feature-item">
-            <span>💬</span>
-            <span>Message and share rituals together</span>
+            <div class="feature-icon">💬</div>
+            <div class="feature-text">Exchange messages in the <strong>Cosmic Circle</strong></div>
           </div>
           <div class="feature-item">
-            <span>🌙</span>
-            <span>13-month HEKA calendar with astrological insights</span>
+            <div class="feature-icon">🌙</div>
+            <div class="feature-text">Experience the <strong>13-month HEKA calendar</strong></div>
           </div>
         </div>
       </div>
     </div>
   </div>
-  
+
   <script>
-    // Firebase configuration
+    // Generate animated stars
+    const starsContainer = document.getElementById('stars');
+    for (let i = 0; i < 100; i++) {
+      const star = document.createElement('div');
+      star.className = 'star';
+      star.style.left = Math.random() * 100 + '%';
+      star.style.top = Math.random() * 100 + '%';
+      star.style.width = Math.random() * 3 + 'px';
+      star.style.height = star.style.width;
+      star.style.setProperty('--duration', (Math.random() * 3 + 2) + 's');
+      star.style.animationDelay = Math.random() * 5 + 's';
+      starsContainer.appendChild(star);
+    }
+
+    // Generate shooting stars
+    setInterval(() => {
+      const shootingStar = document.createElement('div');
+      shootingStar.className = 'shooting-star';
+      shootingStar.style.top = Math.random() * 50 + '%';
+      shootingStar.style.left = '0';
+      shootingStar.style.animationDuration = (Math.random() * 2 + 2) + 's';
+      starsContainer.appendChild(shootingStar);
+      setTimeout(() => shootingStar.remove(), 4000);
+    }, 8000);
+
+    // Firebase config
     const FIREBASE_CONFIG = {
-      apiKey: "AIzaSyBevNpdAOCTWgpO3Kc9O4LE5SLYHGV1IpM",
-      authDomain: "heka-calendar.firebaseapp.com",
-      projectId: "heka-calendar",
-      storageBucket: "heka-calendar.firebasestorage.app",
-      messagingSenderId: "572626167344",
-      appId: "1:572626167344:web:3cbedfde750128b4e3eff5"
+      apiKey: "AIzaSyBBJ0Q9VfPkjP2DCKY1bC1SjM4xJMmHZ1E",
+      projectId: "hekacalendar"
     };
-    
-    // Play Store URL
+
     const PLAY_STORE_URL = 'https://play.google.com/store/apps/details?id=com.heka.calendar';
-    
-    // Get ALL params from URL
+
+    // Get URL params
     const urlParams = new URLSearchParams(window.location.search);
     const taskCode = urlParams.get('code');
     const embeddedTitle = urlParams.get('title');
     const embeddedCreator = urlParams.get('from');
-    
-    // Elements
+
     const loadingEl = document.getElementById('loading');
     const errorEl = document.getElementById('error');
     const contentEl = document.getElementById('content');
     const downloadBtn = document.getElementById('downloadBtn');
     const openAppBtn = document.getElementById('openAppBtn');
-    
-    // If no code, show error
+
     if (!taskCode) {
       loadingEl.classList.add('hidden');
       errorEl.classList.remove('hidden');
     } else {
-      // Store task code for after install
       sessionStorage.setItem('pendingTaskCode', taskCode);
       document.cookie = `pendingTaskCode=${taskCode}; path=/; max-age=86400`;
-      
-      // Detect platform
+
       const isAndroid = /Android/i.test(navigator.userAgent);
       const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
-      
-      // Update download button
+
       if (isIOS) {
-        downloadBtn.textContent = '📲 Download on App Store';
+        downloadBtn.querySelector('span:last-child').textContent = 'Download on App Store';
         downloadBtn.href = '#';
       } else {
-        downloadBtn.textContent = '📲 Get HEKA Calendar';
         const referrer = encodeURIComponent(`utm_source=task_share&utm_medium=link&utm_campaign=${taskCode}`);
         downloadBtn.href = `${PLAY_STORE_URL}&referrer=${referrer}`;
       }
-      
-      // Show "Open in App" button
+
       openAppBtn.classList.remove('hidden');
       openAppBtn.onclick = () => {
-        const appUrl = `heka-calendar://task/${taskCode}`;
-        window.location.href = appUrl;
+        window.location.href = `heka-calendar://task/${taskCode}`;
       };
-      
-      // NEW: Check if task data is embedded in URL (avoids 403 Firestore issues)
+
       if (embeddedTitle && embeddedCreator) {
-        // Use embedded data directly - no Firestore fetch needed!
         console.log('[DEBUG] Using embedded URL data');
         displayTaskFromURL(decodeURIComponent(embeddedTitle), decodeURIComponent(embeddedCreator));
       } else {
-        // Old link - try Firestore (will likely fail with 403)
         console.log('[DEBUG] No embedded data, trying Firestore...');
         fetchTaskData(taskCode);
       }
     }
-    
-    // NEW: Display task using embedded URL data
+
     function displayTaskFromURL(title, creatorName) {
-      // Validate creator name (security)
       if (!creatorName || creatorName === 'Anonymous' || creatorName.trim() === '') {
-        creatorName = 'A HEKA User';
+        creatorName = 'A Cosmic Traveler';
       }
-      
-      // Update UI
-      document.getElementById('taskTitle').textContent = title || 'Mystical Task';
-      document.getElementById('taskDescription').textContent = 'A friend has invited you to participate in a celestial-aligned task ritual. Download HEKA Calendar to view full details and accept.';
+
+      document.getElementById('taskTitle').textContent = title;
       document.getElementById('senderName').textContent = creatorName;
       document.getElementById('senderName2').textContent = creatorName;
-      
-      // Update avatar
+
       const avatarEl = document.getElementById('senderAvatar');
       avatarEl.textContent = creatorName.charAt(0).toUpperCase();
-      
-      // Hide loading, show content
+
       loadingEl.classList.add('hidden');
       contentEl.classList.remove('hidden');
+      contentEl.classList.add('fade-in');
     }
-    
-    // Fallback: Try Firestore (for old links) - NOW WITH API KEY!
+
     async function fetchTaskData(shareCode) {
       try {
-        const projectId = FIREBASE_CONFIG.projectId; // Use correct project ID from config
+        const projectId = FIREBASE_CONFIG.projectId;
         const apiKey = FIREBASE_CONFIG.apiKey;
-        // Firestore REST API requires API key for public access
         const url = `https://firestore.googleapis.com/v1/projects/${projectId}/databases/(default)/documents/sharedTasks/${shareCode}?key=${apiKey}`;
-        
-        console.log('[DEBUG] Fetching from Firestore with API key...');
+
         const response = await fetch(url);
-        
+
         if (!response.ok) {
-          console.log('[DEBUG] Firestore fetch failed:', response.status);
-          showGenericTask();
-          return;
+          throw new Error('Failed to fetch');
         }
-        
+
         const data = await response.json();
         console.log('[DEBUG] Firestore data received:', data);
-        displayTaskFromFirestore(data);
+
+        if (data.fields) {
+          const fields = data.fields;
+          const title = fields.title?.stringValue || 'Untitled Task';
+          const creatorName = fields.creatorName?.stringValue || 'A Cosmic Traveler';
+          const description = fields.description?.stringValue || '';
+
+          document.getElementById('taskTitle').textContent = title;
+          document.getElementById('taskDescription').textContent = description;
+          document.getElementById('senderName').textContent = creatorName;
+          document.getElementById('senderName2').textContent = creatorName;
+
+          const avatarEl = document.getElementById('senderAvatar');
+          avatarEl.textContent = creatorName.charAt(0).toUpperCase();
+
+          loadingEl.classList.add('hidden');
+          contentEl.classList.remove('hidden');
+          contentEl.classList.add('fade-in');
+        } else {
+          showError();
+        }
       } catch (error) {
-        console.error('[DEBUG] Error:', error);
+        console.error('[DEBUG] Firestore error:', error);
         showGenericTask();
       }
     }
-    
-    // Display from Firestore (rarely used now)
-    function displayTaskFromFirestore(firestoreData) {
-      const fields = firestoreData.fields || {};
-      const title = fields.title?.stringValue || 'Mystical Task';
-      let creatorName = fields.creatorName?.stringValue || '';
-      
-      if (!creatorName || creatorName === 'Anonymous' || creatorName.trim() === '') {
-        creatorName = 'A HEKA User';
-      }
-      
-      displayTaskFromURL(title, creatorName);
-    }
-    
-    // Generic fallback
+
     function showGenericTask() {
-      displayTaskFromURL('Mystical Task Ritual', 'A friend');
+      document.getElementById('taskTitle').textContent = 'Task Ritual';
+      document.getElementById('senderName').textContent = 'A Cosmic Traveler';
+      document.getElementById('senderName2').textContent = 'your cosmic ally';
+
+      loadingEl.classList.add('hidden');
+      contentEl.classList.remove('hidden');
+      contentEl.classList.add('fade-in');
     }
-    
+
     function showError() {
       loadingEl.classList.add('hidden');
       errorEl.classList.remove('hidden');
