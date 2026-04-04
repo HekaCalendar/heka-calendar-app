@@ -331,22 +331,14 @@
   </div>
   
   <script>
-    // Firebase configuration - using the same as your app
-    const FIREBASE_CONFIG = {
-      apiKey: "AIzaSyBBJ0Q9VfPkjP2DCKY1bC1SjM4xJMmHZ1E",
-      authDomain: "hekacalendar.firebaseapp.com",
-      projectId: "hekacalendar",
-      storageBucket: "hekacalendar.firebasestorage.app",
-      messagingSenderId: "89498906232",
-      appId: "1:89498906232:web:c7711f64a96d72e599ae3b"
-    };
-
     // Play Store URL
     const PLAY_STORE_URL = 'https://play.google.com/store/apps/details?id=com.heka.calendar';
     
-    // Get task code from URL
+    // Get ALL params from URL
     const urlParams = new URLSearchParams(window.location.search);
     const taskCode = urlParams.get('code');
+    const embeddedTitle = urlParams.get('title');
+    const embeddedCreator = urlParams.get('from');
     
     // Elements
     const loadingEl = document.getElementById('loading');
@@ -385,120 +377,79 @@
         window.location.href = appUrl;
       };
       
-      // Fetch task data from Firestore REST API
-      fetchTaskData(taskCode);
-    }
-    
-    async function fetchTaskData(shareCode) {
-      try {
-        // Use Firestore REST API to fetch the shared task
-        const projectId = FIREBASE_CONFIG.projectId;
-        const url = `https://firestore.googleapis.com/v1/projects/${projectId}/databases/(default)/documents/sharedTasks/${shareCode}`;
-        
-        console.log('[DEBUG] Fetching from:', url);
-        const response = await fetch(url);
-        console.log('[DEBUG] Response status:', response.status);
-        
-        if (!response.ok) {
-          if (response.status === 404) {
-            showError();
-            return;
-          }
-          throw new Error('Failed to fetch task: ' + response.status);
-        }
-        
-        const data = await response.json();
-        console.log('[DEBUG] Firestore data:', JSON.stringify(data, null, 2));
-        displayTask(data);
-      } catch (error) {
-        console.error('[DEBUG] Error fetching task:', error);
-        // Show generic task view as fallback
-        showGenericTask();
+      // NEW: Check if task data is embedded in URL (avoids 403 Firestore issues)
+      if (embeddedTitle && embeddedCreator) {
+        // Use embedded data directly - no Firestore fetch needed!
+        console.log('[DEBUG] Using embedded URL data');
+        displayTaskFromURL(decodeURIComponent(embeddedTitle), decodeURIComponent(embeddedCreator));
+      } else {
+        // Old link - try Firestore (will likely fail with 403)
+        console.log('[DEBUG] No embedded data, trying Firestore...');
+        fetchTaskData(taskCode);
       }
     }
     
-    function displayTask(firestoreData) {
-      const fields = firestoreData.fields || {};
-      
-      console.log('[DEBUG] Raw fields:', JSON.stringify(fields, null, 2));
-      
-      // Extract data from Firestore format
-      const title = fields.title?.stringValue || 'Untitled Task';
-      const description = fields.description?.stringValue || '';
-      let creatorName = fields.creatorName?.stringValue || '';
-      const creatorPhotoURL = fields.creatorPhotoURL?.stringValue || null;
-      const status = fields.status?.stringValue || 'pending';
-      
-      console.log('[DEBUG] Extracted creatorName:', creatorName);
-      
-      // SECURITY: Validate creator name - don't show "Anonymous" or empty names
-      // This ensures only verified account names are displayed
+    // NEW: Display task using embedded URL data
+    function displayTaskFromURL(title, creatorName) {
+      // Validate creator name (security)
       if (!creatorName || creatorName === 'Anonymous' || creatorName.trim() === '') {
-        console.log('[DEBUG] Using fallback name');
-        creatorName = 'A HEKA User'; // Generic but respectful fallback
-      }
-      
-      // Check if expired
-      const expiresAt = fields.expiresAt?.timestampValue;
-      const isExpired = expiresAt ? new Date(expiresAt) < new Date() : false;
-      const isAccepted = status === 'accepted';
-      
-      // Heka date
-      const hekaDate = fields.hekaDate?.mapValue?.fields;
-      let dateText = '';
-      if (hekaDate) {
-        const year = hekaDate.year?.integerValue;
-        const month = hekaDate.month?.integerValue;
-        const day = hekaDate.day?.integerValue;
-        if (year && month !== undefined && day) {
-          const monthNames = ['Thoth', 'Paopi', 'Hathor', 'Koiak', 'Tobi', 'Meshir', 'Semens', 'Paremhat', 'Paremoude', 'Pashons', 'Paoni', 'Epiphi', 'Mesori'];
-          dateText = `${day} ${monthNames[month] || 'Unknown'} ${year}`;
-        }
+        creatorName = 'A HEKA User';
       }
       
       // Update UI
-      document.getElementById('taskTitle').textContent = title;
-      document.getElementById('taskDescription').textContent = description;
+      document.getElementById('taskTitle').textContent = title || 'Mystical Task';
+      document.getElementById('taskDescription').textContent = 'A friend has invited you to participate in a celestial-aligned task ritual. Download HEKA Calendar to view full details and accept.';
       document.getElementById('senderName').textContent = creatorName;
       document.getElementById('senderName2').textContent = creatorName;
       
       // Update avatar
       const avatarEl = document.getElementById('senderAvatar');
-      if (creatorPhotoURL) {
-        avatarEl.innerHTML = `<img src="${creatorPhotoURL}" alt="${creatorName}" onerror="this.parentElement.textContent='👤'">`;
-      } else {
-        // Use first letter of name
-        avatarEl.textContent = creatorName.charAt(0).toUpperCase();
-      }
-      
-      // Show date if available
-      if (dateText) {
-        document.getElementById('dateText').textContent = dateText;
-        document.getElementById('taskDate').classList.remove('hidden');
-      }
-      
-      // Show status badges
-      const statusEl = document.getElementById('taskStatus');
-      if (isExpired) {
-        statusEl.innerHTML = '<span class="expired-badge">⚠️ Expired</span>';
-      } else if (isAccepted) {
-        statusEl.innerHTML = '<span class="accepted-badge">✅ Already Accepted</span>';
-      }
+      avatarEl.textContent = creatorName.charAt(0).toUpperCase();
       
       // Hide loading, show content
       loadingEl.classList.add('hidden');
       contentEl.classList.remove('hidden');
     }
     
-    function showGenericTask() {
-      // Fallback when we can't fetch the actual task
-      document.getElementById('taskTitle').textContent = 'Mystical Task Ritual';
-      document.getElementById('taskDescription').textContent = 'A friend has invited you to participate in a celestial-aligned task. Download HEKA Calendar to view the full details and accept this ritual.';
-      document.getElementById('senderName').textContent = 'A Friend';
-      document.getElementById('senderName2').textContent = 'your friend';
+    // Fallback: Try Firestore (for old links)
+    async function fetchTaskData(shareCode) {
+      try {
+        const projectId = 'hekacalendar';
+        const url = `https://firestore.googleapis.com/v1/projects/${projectId}/databases/(default)/documents/sharedTasks/${shareCode}`;
+        
+        const response = await fetch(url);
+        
+        if (!response.ok) {
+          // Firestore requires auth - show generic view
+          console.log('[DEBUG] Firestore fetch failed, showing generic view');
+          showGenericTask();
+          return;
+        }
+        
+        const data = await response.json();
+        displayTaskFromFirestore(data);
+      } catch (error) {
+        console.error('[DEBUG] Error:', error);
+        showGenericTask();
+      }
+    }
+    
+    // Display from Firestore (rarely used now)
+    function displayTaskFromFirestore(firestoreData) {
+      const fields = firestoreData.fields || {};
+      const title = fields.title?.stringValue || 'Mystical Task';
+      let creatorName = fields.creatorName?.stringValue || '';
       
-      loadingEl.classList.add('hidden');
-      contentEl.classList.remove('hidden');
+      if (!creatorName || creatorName === 'Anonymous' || creatorName.trim() === '') {
+        creatorName = 'A HEKA User';
+      }
+      
+      displayTaskFromURL(title, creatorName);
+    }
+    
+    // Generic fallback
+    function showGenericTask() {
+      displayTaskFromURL('Mystical Task Ritual', 'A friend');
     }
     
     function showError() {

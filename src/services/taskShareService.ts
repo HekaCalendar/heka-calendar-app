@@ -126,8 +126,8 @@ export async function createShareableTask(
 
   await setDoc(shareRef, sharedTask);
 
-  // Generate deep link
-  const shareLink = generateTaskShareLink(shareCode);
+  // Generate share link WITH embedded data (so landing page works without Firestore auth)
+  const shareLink = generateTaskShareLink(shareCode, title, currentUser.displayName || undefined);
 
   return {
     success: true,
@@ -153,10 +153,17 @@ const WEB_LANDING_BASE = 'https://heka-calendar-pro.vercel.app/task';
  * 1. Opens the app directly if installed (heka-calendar://)
  * 2. Falls back to web landing page if not installed
  * 3. Web page shows preview + Play Store link with code preserved
+ * 
+ * EMBEDS task data in URL so landing page works without Firestore auth
  */
-export function generateTaskShareLink(shareCode: string): string {
-  // Use web link as primary - it can detect and redirect to app or show landing page
-  return generateSmartTaskLink(shareCode);
+export function generateTaskShareLink(shareCode: string, title?: string, creatorName?: string): string {
+  // Build URL with embedded data for landing page (avoids 403 Firestore issues)
+  const params = new URLSearchParams();
+  params.set('code', shareCode);
+  if (title) params.set('title', encodeURIComponent(title));
+  if (creatorName) params.set('from', encodeURIComponent(creatorName));
+  
+  return `${WEB_LANDING_BASE}?${params.toString()}`;
 }
 
 /**
