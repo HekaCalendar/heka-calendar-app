@@ -113,6 +113,13 @@
       align-items: center;
       justify-content: center;
       font-size: 24px;
+      overflow: hidden;
+    }
+    
+    .sender-avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
     }
     
     .sender-info {
@@ -172,17 +179,18 @@
     
     .loading {
       display: flex;
+      flex-direction: column;
       align-items: center;
       justify-content: center;
-      gap: 12px;
+      gap: 16px;
       color: rgba(255, 255, 255, 0.6);
       padding: 40px;
     }
     
     .spinner {
-      width: 24px;
-      height: 24px;
-      border: 2px solid rgba(212, 175, 55, 0.3);
+      width: 40px;
+      height: 40px;
+      border: 3px solid rgba(212, 175, 55, 0.3);
       border-top-color: #d4af37;
       border-radius: 50%;
       animation: spin 1s linear infinite;
@@ -226,7 +234,27 @@
     }
     
     .hidden {
-      display: none;
+      display: none !important;
+    }
+
+    .expired-badge {
+      display: inline-block;
+      background: #ef4444;
+      color: white;
+      font-size: 11px;
+      padding: 4px 10px;
+      border-radius: 12px;
+      margin-bottom: 12px;
+    }
+
+    .accepted-badge {
+      display: inline-block;
+      background: #22c55e;
+      color: white;
+      font-size: 11px;
+      padding: 4px 10px;
+      border-radius: 12px;
+      margin-bottom: 12px;
     }
   </style>
 </head>
@@ -235,7 +263,7 @@
     <!-- Loading State -->
     <div id="loading" class="loading">
       <div class="spinner"></div>
-      <span>Loading task...</span>
+      <span>Summoning task from the cosmic realm...</span>
     </div>
     
     <!-- Error State -->
@@ -261,6 +289,7 @@
       
       <div class="task-card">
         <div class="task-label">📜 Task Ritual</div>
+        <div id="taskStatus"></div>
         <div class="task-title" id="taskTitle">Loading...</div>
         <div class="task-description" id="taskDescription"></div>
         <div class="task-date hidden" id="taskDate">
@@ -302,6 +331,16 @@
   </div>
   
   <script>
+    // Firebase configuration - using the same as your app
+    const FIREBASE_CONFIG = {
+      apiKey: "AIzaSyBBJ0Q9VfPkjP2DCKY1bC1SjM4xJMmHZ1E",
+      authDomain: "hekacalendar.firebaseapp.com",
+      projectId: "hekacalendar",
+      storageBucket: "hekacalendar.firebasestorage.app",
+      messagingSenderId: "89498906232",
+      appId: "1:89498906232:web:c7711f64a96d72e599ae3b"
+    };
+
     // Play Store URL
     const PLAY_STORE_URL = 'https://play.google.com/store/apps/details?id=com.heka.calendar';
     
@@ -321,59 +360,136 @@
       loadingEl.classList.add('hidden');
       errorEl.classList.remove('hidden');
     } else {
-      // Try to fetch task preview from Firestore
-      // Since we can't directly access Firestore from static HTML without SDK,
-      // we'll try to open the app first, then fall back to showing generic info
+      // Store task code for after install
+      sessionStorage.setItem('pendingTaskCode', taskCode);
+      document.cookie = `pendingTaskCode=${taskCode}; path=/; max-age=86400`;
       
-      // Try to open the app
-      const appUrl = `heka-calendar://task/${taskCode}`;
-      
-      // Detect if we're on Android
+      // Detect platform
       const isAndroid = /Android/i.test(navigator.userAgent);
       const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
       
       // Update download button
       if (isIOS) {
         downloadBtn.textContent = '📲 Download on App Store';
-        downloadBtn.href = '#'; // Would be App Store URL
+        downloadBtn.href = '#';
       } else {
         downloadBtn.textContent = '📲 Get HEKA Calendar';
-        downloadBtn.href = PLAY_STORE_URL;
+        const referrer = encodeURIComponent(`utm_source=task_share&utm_medium=link&utm_campaign=${taskCode}`);
+        downloadBtn.href = `${PLAY_STORE_URL}&referrer=${referrer}`;
       }
       
-      // Add referrer to Play Store URL to pass the task code
-      // This uses the referrer parameter which can be read by the app on first launch
-      const referrer = encodeURIComponent(`utm_source=task_share&utm_medium=link&utm_campaign=${taskCode}`);
-      downloadBtn.href = `${PLAY_STORE_URL}&referrer=${referrer}`;
+      // Show "Open in App" button
+      openAppBtn.classList.remove('hidden');
+      openAppBtn.onclick = () => {
+        const appUrl = `heka-calendar://task/${taskCode}`;
+        window.location.href = appUrl;
+      };
       
-      // Show content
+      // Fetch task data from Firestore REST API
+      fetchTaskData(taskCode);
+    }
+    
+    async function fetchTaskData(shareCode) {
+      try {
+        // Use Firestore REST API to fetch the shared task
+        const projectId = FIREBASE_CONFIG.projectId;
+        const url = `https://firestore.googleapis.com/v1/projects/${projectId}/databases/(default)/documents/sharedTasks/${shareCode}`;
+        
+        const response = await fetch(url);
+        
+        if (!response.ok) {
+          if (response.status === 404) {
+            showError();
+            return;
+          }
+          throw new Error('Failed to fetch task');
+        }
+        
+        const data = await response.json();
+        displayTask(data);
+      } catch (error) {
+        console.error('Error fetching task:', error);
+        // Show generic task view as fallback
+        showGenericTask();
+      }
+    }
+    
+    function displayTask(firestoreData) {
+      const fields = firestoreData.fields || {};
+      
+      // Extract data from Firestore format
+      const title = fields.title?.stringValue || 'Untitled Task';
+      const description = fields.description?.stringValue || '';
+      const creatorName = fields.creatorName?.stringValue || 'Someone';
+      const creatorPhotoURL = fields.creatorPhotoURL?.stringValue || null;
+      const status = fields.status?.stringValue || 'pending';
+      
+      // Check if expired
+      const expiresAt = fields.expiresAt?.timestampValue;
+      const isExpired = expiresAt ? new Date(expiresAt) < new Date() : false;
+      const isAccepted = status === 'accepted';
+      
+      // Heka date
+      const hekaDate = fields.hekaDate?.mapValue?.fields;
+      let dateText = '';
+      if (hekaDate) {
+        const year = hekaDate.year?.integerValue;
+        const month = hekaDate.month?.integerValue;
+        const day = hekaDate.day?.integerValue;
+        if (year && month !== undefined && day) {
+          const monthNames = ['Thoth', 'Paopi', 'Hathor', 'Koiak', 'Tobi', 'Meshir', 'Semens', 'Paremhat', 'Paremoude', 'Pashons', 'Paoni', 'Epiphi', 'Mesori'];
+          dateText = `${day} ${monthNames[month] || 'Unknown'} ${year}`;
+        }
+      }
+      
+      // Update UI
+      document.getElementById('taskTitle').textContent = title;
+      document.getElementById('taskDescription').textContent = description;
+      document.getElementById('senderName').textContent = creatorName;
+      document.getElementById('senderName2').textContent = creatorName;
+      
+      // Update avatar
+      const avatarEl = document.getElementById('senderAvatar');
+      if (creatorPhotoURL) {
+        avatarEl.innerHTML = `<img src="${creatorPhotoURL}" alt="${creatorName}" onerror="this.parentElement.textContent='👤'">`;
+      } else {
+        // Use first letter of name
+        avatarEl.textContent = creatorName.charAt(0).toUpperCase();
+      }
+      
+      // Show date if available
+      if (dateText) {
+        document.getElementById('dateText').textContent = dateText;
+        document.getElementById('taskDate').classList.remove('hidden');
+      }
+      
+      // Show status badges
+      const statusEl = document.getElementById('taskStatus');
+      if (isExpired) {
+        statusEl.innerHTML = '<span class="expired-badge">⚠️ Expired</span>';
+      } else if (isAccepted) {
+        statusEl.innerHTML = '<span class="accepted-badge">✅ Already Accepted</span>';
+      }
+      
+      // Hide loading, show content
       loadingEl.classList.add('hidden');
       contentEl.classList.remove('hidden');
+    }
+    
+    function showGenericTask() {
+      // Fallback when we can't fetch the actual task
+      document.getElementById('taskTitle').textContent = 'Mystical Task Ritual';
+      document.getElementById('taskDescription').textContent = 'A friend has invited you to participate in a celestial-aligned task. Download HEKA Calendar to view the full details and accept this ritual.';
+      document.getElementById('senderName').textContent = 'A Friend';
+      document.getElementById('senderName2').textContent = 'your friend';
       
-      // Try to open app (for users who already have it)
-      // Use a timeout to detect if app opened
-      let appOpened = false;
-      
-      window.addEventListener('blur', () => {
-        appOpened = true;
-      });
-      
-      // Try to open app after a short delay
-      setTimeout(() => {
-        // Only try to open app if user is likely to have it
-        // (we can't reliably detect this, so we show the button instead)
-        openAppBtn.classList.remove('hidden');
-        openAppBtn.onclick = () => {
-          window.location.href = appUrl;
-        };
-      }, 1000);
-      
-      // Store task code in sessionStorage so we can pick it up after install
-      // The app can check for this on first launch
-      sessionStorage.setItem('pendingTaskCode', taskCode);
-      
-      // Also store in cookie for better persistence
-      document.cookie = `pendingTaskCode=${taskCode}; path=/; max-age=86400`;
+      loadingEl.classList.add('hidden');
+      contentEl.classList.remove('hidden');
+    }
+    
+    function showError() {
+      loadingEl.classList.add('hidden');
+      errorEl.classList.remove('hidden');
     }
   </script>
 </body>
