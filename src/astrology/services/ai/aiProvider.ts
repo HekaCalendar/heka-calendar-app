@@ -15,6 +15,8 @@
 import type { Transit } from '../natal/natalChart';
 import type { PersonalizedReading } from '../guidance/templates/templateLibrary';
 import { sanitizeForPrompt } from '../../utils/sanitization';
+import { aiConfigService } from '../../../services/aiConfigService';
+import { secureKeyStore } from '../../../services/secureKeyStore';
 
 // ═══════════════════════════════════════════════════════════════════════════════
 // UTILITY: Fetch with timeout using AbortController
@@ -83,6 +85,7 @@ export interface AIResponse {
   tokensUsed?: number;
   latency: number;
   cached: boolean;
+  cachedAt?: number;
 }
 
 export interface AIProviderStatus {
@@ -220,7 +223,7 @@ class GroqProvider implements AIProvider {
     // Check cache
     const cacheKey = this.generateCacheKey(request);
     const cached = this.cache.get(cacheKey);
-    if (cached && Date.now() - cached.latency < 3600000) { // 1 hour cache
+    if (cached && Date.now() - (cached.cachedAt || 0) < 3600000) { // 1 hour cache
       return { ...cached, cached: true, latency: performance.now() - startTime };
     }
     
@@ -271,7 +274,7 @@ class GroqProvider implements AIProvider {
       };
       
       // Cache result
-      this.cache.set(cacheKey, result);
+      this.cache.set(cacheKey, { ...result, cachedAt: Date.now() });
       
       return result;
     } catch (error) {
@@ -715,8 +718,8 @@ export class AIProviderManager {
     this.registerProvider(new OpenAIProvider());
     this.registerProvider(new OllamaProvider());
     
-    // Load saved configuration
-    this.loadConfiguration();
+    // Load saved configuration asynchronously
+    void this.loadConfiguration();
   }
   
   registerProvider(provider: AIProvider): void {
@@ -826,33 +829,58 @@ export class AIProviderManager {
         })),
       };
       localStorage.setItem('celestial-ai-config', JSON.stringify(config));
+      aiConfigService.syncToLegacy();
     } catch (error) {
       console.warn('Failed to save AI config:', error);
     }
   }
   
   /**
-   * Load configuration from localStorage
+   * Load configuration from localStorage and secure storage
    */
-  private loadConfiguration(): void {
+  private async loadConfiguration(): Promise<void> {
     try {
-      const stored = localStorage.getItem('celestial-ai-config');
-      if (stored) {
-        const config = JSON.parse(stored);
-        if (config.activeProvider && this.providers.has(config.activeProvider)) {
-          this.activeProvider = config.activeProvider;
+      // Prefer unified config
+      const unified = aiConfigService.getConfig();
+      if (unified.provider && this.providers.has(unified.provider)) {
+        this.activeProvider = unified.provider;
+        const key = await secureKeyStore.get(`heka-ai-${unified.provider}`);
+        if (key) {
+          this.configureProvider(unified.provider, { apiKey: key });
+        }
+      } else {
+        const stored = localStorage.getItem('celestial-ai-config');
+        if (stored) {
+          const config = JSON.parse(stored);
+          if (config.activeProvider && this.providers.has(config.activeProvider)) {
+            this.activeProvider = config.activeProvider;
+          }
         }
       }
       
-      // Load API keys (stored separately for security)
-      const groqKey = localStorage.getItem('celestial-groq-key');
+      // Load API keys from secure storage (fallback to legacy localStorage)
+      const groqKey = await secureKeyStore.get('heka-ai-groq') 
+        ?? localStorage.getItem('celestial-groq-key');
       if (groqKey) {
         this.configureProvider('groq', { apiKey: groqKey });
       }
       
-      const openaiKey = localStorage.getItem('celestial-openai-key');
+      const openaiKey = await secureKeyStore.get('heka-ai-openai')
+        ?? localStorage.getItem('celestial-openai-key');
       if (openaiKey) {
         this.configureProvider('openai', { apiKey: openaiKey });
+      }
+      
+      const anthropicKey = await secureKeyStore.get('heka-ai-anthropic')
+        ?? localStorage.getItem('celestial-anthropic-key');
+      if (anthropicKey) {
+        this.configureProvider('anthropic', { apiKey: anthropicKey });
+      }
+      
+      const ollamaUrl = await secureKeyStore.get('heka-ai-ollama')
+        ?? localStorage.getItem('celestial-ollama-url');
+      if (ollamaUrl) {
+        this.configureProvider('ollama', { baseUrl: ollamaUrl });
       }
     } catch (error) {
       console.warn('Failed to load AI config:', error);
@@ -860,19 +888,30 @@ export class AIProviderManager {
   }
   
   /**
-   * Save API key securely (in production, use more secure storage)
+   * Save API key securely using native encrypted storage
    */
-  saveApiKey(type: AIProviderType, apiKey: string): void {
-    localStorage.setItem(`celestial-${type}-key`, apiKey);
-    this.configureProvider(type, { apiKey });
+  async saveApiKey(type: AIProviderType, apiKey: string): Promise<void> {
+    const storageKey = type === 'ollama' ? 'heka-ai-ollama' : `heka-ai-${type}`;
+    await secureKeyStore.set(storageKey, apiKey);
+    this.configureProvider(type, type === 'ollama' ? { baseUrl: apiKey } : { apiKey });
+    await aiConfigService.setApiKey(apiKey);
   }
   
   /**
-   * Clear API key
+   * Clear API key from secure storage
    */
-  clearApiKey(type: AIProviderType): void {
-    localStorage.removeItem(`celestial-${type}-key`);
+  async clearApiKey(type: AIProviderType): Promise<void> {
+    const storageKey = type === 'ollama' ? 'heka-ai-ollama' : `heka-ai-${type}`;
+    await secureKeyStore.remove(storageKey);
     this.configureProvider(type, { apiKey: undefined });
+    await aiConfigService.clearApiKey();
+  }
+  
+  /**
+   * Check if AI is enabled for a specific area (stars, journal, calendar, circle)
+   */
+  isAIEnabledForArea(area: import('../../../services/aiConfigService').AIArea): boolean {
+    return aiConfigService.isAreaEnabled(area);
   }
 }
 

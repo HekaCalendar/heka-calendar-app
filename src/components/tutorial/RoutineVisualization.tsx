@@ -15,7 +15,7 @@ export const RoutineVisualization: React.FC = () => {
     { id: 'review', name: 'Monthly Review', day: 1, icon: '📊' },
   ];
 
-  const months = ['Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec', 'Jan', 'Feb', 'Mar'];
+  const months = ['Apr', 'May', 'Jun', 'Jul', 'Aug', 'Hex', 'Sep', 'Oct', 'Nov', 'Dec', 'Jan', 'Feb', 'Mar'];
 
   const handleRoutineClick = (id: string) => {
     setActiveRoutine(id);

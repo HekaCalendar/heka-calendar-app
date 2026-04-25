@@ -21,6 +21,7 @@ export const WelcomeModal: React.FC<WelcomeModalProps> = ({
   const dispatch = useDispatch<AppDispatch>();
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [success, setSuccess] = useState(false);
   const [manualCode, setManualCode] = useState('');
 
   const handleAccept = useCallback(async (code: string) => {
@@ -28,18 +29,19 @@ export const WelcomeModal: React.FC<WelcomeModalProps> = ({
     
     setIsLoading(true);
     setError(null);
+    setSuccess(false);
     
     try {
       await dispatch(acceptInvite(code.trim())).unwrap();
-      // If we get here, the invite was accepted successfully
+      // Creates a pending friendship — the inviter will need to accept
       clearPendingInvite();
-      onAccepted();
+      setSuccess(true);
     } catch (err: any) {
-      setError(err?.message || 'Failed to accept invitation. Please check the code and try again.');
+      setError(err?.message || 'Failed to send friend request. Please check the code and try again.');
     } finally {
       setIsLoading(false);
     }
-  }, [dispatch, onAccepted]);
+  }, [dispatch]);
 
   const handleManualSubmit = useCallback(() => {
     void handleAccept(manualCode);
@@ -66,7 +68,7 @@ export const WelcomeModal: React.FC<WelcomeModalProps> = ({
           <div className="welcome-modal__icon">🌙</div>
           
           <p className="welcome-modal__intro">
-            You've been invited to join a Cosmic Circle!
+            Enter an invite code to send a friend request
           </p>
 
           {inviteCode && (
@@ -81,13 +83,13 @@ export const WelcomeModal: React.FC<WelcomeModalProps> = ({
                 onClick={() => handleAccept(inviteCode)}
                 disabled={isLoading}
               >
-                {isLoading ? '✨ Connecting...' : '🌟 Join the Circle'}
+                {isLoading ? '✨ Sending...' : '🌟 Send Friend Request'}
               </button>
             </div>
           )}
 
           <div className="welcome-modal__divider">
-            <span>or enter code manually</span>
+            <span>or enter a code manually</span>
           </div>
 
           <div className="welcome-modal__manual">
@@ -106,9 +108,22 @@ export const WelcomeModal: React.FC<WelcomeModalProps> = ({
               onClick={handleManualSubmit}
               disabled={!manualCode.trim() || isLoading}
             >
-              Submit
+              Send Request
             </button>
           </div>
+
+          {success && (
+            <div className="welcome-modal__success" style={{ color: 'var(--color-success)', textAlign: 'center', padding: 'var(--space-3)', background: 'rgba(34,197,94,0.1)', borderRadius: 'var(--radius-lg)' }}>
+              ✨ Friend request sent! They'll need to accept before you can chat.
+              <button
+                className="btn btn--primary"
+                style={{ marginTop: 'var(--space-3)' }}
+                onClick={onAccepted}
+              >
+                Open Cosmic Circle
+              </button>
+            </div>
+          )}
 
           {error && (
             <div className="welcome-modal__error">

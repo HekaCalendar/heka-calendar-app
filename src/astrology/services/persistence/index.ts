@@ -262,12 +262,17 @@ class LocalStoragePersistence implements PersistenceLayer {
             updatedAt: now,
             preferences: {
               zodiacSystem: '12-sign',
+              zodiacFrame: 'tropical',
+              signCount: 12,
               houseSystem: 'placidus',
               showAspects: true,
               showMinorAspects: false,
               showRetrogrades: true,
               showDignities: false,
-              defaultChartView: 'wheel'
+              defaultChartView: 'wheel',
+              ayanamsa: null,
+              showNakshatras: false,
+              nakshatraSystem: 'none',
             },
             chartIds: []
           };
@@ -290,6 +295,8 @@ class LocalStoragePersistence implements PersistenceLayer {
               calculatedAt: (legacyChart.calculatedAt || Date.now()) as unknown as import('../../types').Timestamp,
               version: '2.0',
               zodiacSystem: legacyChart.zodiacSystem || '12-sign',
+              zodiacFrame: legacyChart.zodiacFrame || (legacyChart.zodiacSystem === 'sidereal' ? 'sidereal' : 'tropical'),
+              signCount: legacyChart.signCount || (legacyChart.zodiacSystem === '13-sign' ? 13 : 12),
               houseSystem: legacyChart.houseSystem || 'placidus'
             } as NatalChart;
             
@@ -353,6 +360,8 @@ class LocalStoragePersistence implements PersistenceLayer {
             calculatedAt: legacyChart.calculatedAt || Date.now(),
             version: '2.0',
             zodiacSystem: legacyChart.zodiacSystem || '12-sign',
+            zodiacFrame: legacyChart.zodiacFrame || (legacyChart.zodiacSystem === 'sidereal' ? 'sidereal' : 'tropical'),
+            signCount: legacyChart.signCount || (legacyChart.zodiacSystem === '13-sign' ? 13 : 12),
             houseSystem: legacyChart.houseSystem || 'placidus'
           } as NatalChart;
           

@@ -59,7 +59,7 @@ export const ShareModal: React.FC<ShareModalProps> = ({ isOpen, onClose }) => {
       params.set('notes', notesData);
     }
     
-    return `${window.location.origin}${window.location.pathname}?${params.toString()}`;
+    return `${window.location.origin}${window.location.pathname}#/month/${viewDate.year}/${viewDate.month + 1}?${params.toString()}`;
   }, [viewDate, timeMode, location, notes, includeNotes]);
   
   const handleCopy = useCallback(async () => {

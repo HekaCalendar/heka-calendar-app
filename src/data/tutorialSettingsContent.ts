@@ -34,7 +34,7 @@ export const moonPhasesToggleExplanation: TutorialStep = {
   title: '🌙 Moon Phases Toggle',
   content: `**What it does:** Displays precise moon phase icons on each day of the calendar.
 
-**Powered by:** NASA-grade Swiss Ephemeris calculations (arc-second precision)
+**Powered by:** Swiss Ephemeris calculations (arc-second precision)
 
 **Icons shown:**
 • 🌑 New Moon - Planting above-ground crops, starting new projects
@@ -154,9 +154,9 @@ export const syncModeExplanation: TutorialStep = {
 
 **How it works:**
 • HEKA Month 1 begins on April 1 (Gregorian)
-• HEKA Month 13 ends on March 28 (Gregorian)
-• March 29-31 are the "Closing" arc of the year
-• March 31 is the "Day Out of Time"
+• HEKA Month 13 ends on March 29 (Gregorian)
+• March holds 29 days — or 30 in a leap year
+• All correction lives in the closing month
 
 **Best for:**
 • Users transitioning from regular calendars
@@ -164,8 +164,8 @@ export const syncModeExplanation: TutorialStep = {
 • School schedules and public holidays
 • Easier coordination with non-HEKA users
 
-**The "Day Out of Time":**
-The 365th day (March 31) exists outside the calendar structure - no month, no weekday. A day for celebration, reflection, and timeless activities.`,
+**The closing month:**
+March carries the leap day. Everywhere else, the rhythm is perfectly regular.`,
   position: 'center',
   actionLabel: 'Continue',
 };
@@ -179,7 +179,7 @@ export const trueModeExplanation: TutorialStep = {
 **How it works:**
 • Year begins at Spring Equinox (actual astronomical event)
 • March contains the leap day correction (4-year cycle, except 128th)
-• Months align with actual solar/lunar cycles
+• The thirteen-month structure echoes the moon's rhythm, while the year tracks the true solar cycle
 • "True" to astronomical reality
 
 **The Leap Day:**
@@ -466,12 +466,12 @@ Ready to understand your calendar fully?`,
   {
     id: 'settings-complete',
     type: 'celebration',
-    title: '🎓 Settings Master!',
+    title: 'Settings Overview',
     content: `You now understand every setting in HEKA Calendar!
 
 Remember: You can change these anytime. Experiment to find your perfect setup.
 
-Pro tip: Start with defaults and gradually enable features as you explore the calendar.`,
+Tip: Start with defaults and gradually enable features as you explore the calendar.`,
     position: 'center',
     actionLabel: 'Apply Settings',
   },

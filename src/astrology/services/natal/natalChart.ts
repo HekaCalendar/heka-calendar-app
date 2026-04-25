@@ -44,7 +44,9 @@ export interface NatalChart {
     mutable: number;
   };
   calculatedAt: Date;
-  zodiacSystem: '12-sign' | '13-sign';
+  zodiacSystem: '12-sign' | '13-sign' | 'sidereal';
+  zodiacFrame?: 'tropical' | 'sidereal';
+  signCount?: 12 | 13;
 }
 
 export interface Transit {
@@ -151,6 +153,7 @@ export function calculateElementalBalance(planets: Record<string, NatalPlanet>):
     taurus: 'earth', virgo: 'earth', capricorn: 'earth',
     gemini: 'air', libra: 'air', aquarius: 'air',
     cancer: 'water', scorpio: 'water', pisces: 'water',
+    ophiuchus: 'water',
   };
   
   Object.values(planets).forEach(planet => {
@@ -184,6 +187,7 @@ export function calculateModalityBalance(planets: Record<string, NatalPlanet>): 
     aries: 'cardinal', cancer: 'cardinal', libra: 'cardinal', capricorn: 'cardinal',
     taurus: 'fixed', leo: 'fixed', scorpio: 'fixed', aquarius: 'fixed',
     gemini: 'mutable', virgo: 'mutable', sagittarius: 'mutable', pisces: 'mutable',
+    ophiuchus: 'fixed',
   };
   
   Object.values(planets).forEach(planet => {

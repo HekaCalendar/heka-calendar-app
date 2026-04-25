@@ -3,42 +3,41 @@
  * Elite social layer for the HEKA Calendar
  */
 
-import { useState, useEffect, useRef, useCallback } from 'react';
+import { useState, useEffect, useRef, useCallback, useMemo } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import type { AppDispatch } from '../store';
 import type { RootState } from '../store';
 import {
-  setCircleTheme,
   setActiveTab,
   setSelectedFriend,
   updateFriends,
   updateMessages,
   updateTasks,
+  updateSharedTasks,
+  updateFriendRequests,
   generateInviteCode,
   acceptInvite,
+  acceptFriendRequest,
+  declineFriendRequest,
   createTask,
   respondToTask,
-  type CircleTheme,
+  revokeSharedTask,
+  revokeTask,
+  clearError,
 } from '../store/friendsSlice';
 import { FriendsService } from '../services/friendsService';
 import { TaskShareService } from '../services/taskShareService';
+import { aiConfigService } from '../services/aiConfigService';
 import { getCurrentUser } from '../services/firebase';
 import { generateInviteLink, generateWebInviteLink } from '../services/deepLinkService';
 import { ProfileSetupModal } from './ProfileSetupModal';
+import { CircleSettings } from './notification/CircleSettings';
 import '../styles/cosmic-circle.css';
 
 interface FriendsModalProps {
   isOpen: boolean;
   onClose: () => void;
 }
-
-const CIRCLE_THEMES: { id: CircleTheme; name: string; emoji: string }[] = [
-  { id: 'nebula', name: 'Nebula', emoji: '🌌' },
-  { id: 'solar', name: 'Solar', emoji: '☀️' },
-  { id: 'void', name: 'Void', emoji: '🌑' },
-  { id: 'aurora', name: 'Aurora', emoji: '✨' },
-  { id: 'quantum', name: 'Quantum', emoji: '⚛️' },
-];
 
 // Reactions available for messages
 // const REACTIONS = ['🌙', '☀️', '⭐', '🔥', '💧', '🌍', '✨', '🕯️'];
@@ -48,8 +47,10 @@ export const FriendsModal: React.FC<FriendsModalProps> = ({ isOpen, onClose }) =
   const {
     circleTheme,
     friends,
+    friendRequests,
     messages,
     tasks,
+    sharedTasks,
     inviteCode,
     selectedFriend,
     activeTab,
@@ -66,14 +67,24 @@ export const FriendsModal: React.FC<FriendsModalProps> = ({ isOpen, onClose }) =
     description: '',
     hekaDate: '',
   });
-  const [taskTab, setTaskTab] = useState<'assigned' | 'created'>('assigned');
+  const [taskTab, setTaskTab] = useState<'assigned' | 'created' | 'shared'>('assigned');
   const [copied, setCopied] = useState(false);
   const [showProfileSetup, setShowProfileSetup] = useState(false);
   const [showShareTask, setShowShareTask] = useState(false);
   const [shareableTaskCode, setShareableTaskCode] = useState<string | null>(null);
   const [taskCopied, setTaskCopied] = useState(false);
+  const [showSettings, setShowSettings] = useState(false);
+  const [circleAIEnabled, setCircleAIEnabled] = useState(() => aiConfigService.isAreaEnabled('circle'));
   
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  
+  // Listen for AI config changes
+  useEffect(() => {
+    const unsubscribe = aiConfigService.subscribe((config) => {
+      setCircleAIEnabled(config.globalEnabled && config.areas.circle);
+    });
+    return unsubscribe;
+  }, []);
   const currentUser = getCurrentUser();
   
   // Check if user needs to set up profile (no displayName)
@@ -106,12 +117,22 @@ export const FriendsModal: React.FC<FriendsModalProps> = ({ isOpen, onClose }) =
       dispatch(updateTasks(updatedTasks));
     });
 
+    const unsubscribeRequests = FriendsService.subscribeToFriendRequests((updatedRequests) => {
+      dispatch(updateFriendRequests(updatedRequests));
+    });
+
+    const unsubscribeSharedTasks = TaskShareService.subscribeToCreatorSharedTasks((updatedSharedTasks) => {
+      dispatch(updateSharedTasks(updatedSharedTasks));
+    });
+
     // Update presence
     FriendsService.updatePresence('Cosmic Circle');
 
     return () => {
       unsubscribeFriends();
       unsubscribeTasks();
+      unsubscribeRequests();
+      unsubscribeSharedTasks();
     };
   }, [isOpen, dispatch, currentUser]);
 
@@ -167,7 +188,7 @@ export const FriendsModal: React.FC<FriendsModalProps> = ({ isOpen, onClose }) =
     if (!inviteCode) return;
     
     const deepLink = generateInviteLink(inviteCode);
-    const webLink = generateWebInviteLink(inviteCode);
+    const webLink = generateWebInviteLink(inviteCode, currentUser?.displayName || undefined, 'friend');
     const shareText = `Join my Cosmic Circle on HEKA Calendar!\n\nUse invite code: ${inviteCode}\n\nOpen in app: ${deepLink}\n\nOr visit: ${webLink}`;
     
     // Try native share if available (mobile)
@@ -329,18 +350,15 @@ export const FriendsModal: React.FC<FriendsModalProps> = ({ isOpen, onClose }) =
               <span>{auth.displayName || 'Profile'}</span>
             </button>
             
-            {/* Theme Selector */}
-            <div className="cosmic-circle__theme-selector">
-              {CIRCLE_THEMES.map((theme) => (
-                <button
-                  key={theme.id}
-                  className={`cosmic-circle__theme-btn ${circleTheme === theme.id ? 'cosmic-circle__theme-btn--active' : ''}`}
-                  data-theme={theme.id}
-                  onClick={() => dispatch(setCircleTheme(theme.id))}
-                  title={theme.name}
-                />
-              ))}
-            </div>
+            {/* Settings */}
+            <button
+              className="btn btn--sm"
+              onClick={() => setShowSettings(true)}
+              title="Circle Settings"
+              style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '32px', height: '32px' }}
+            >
+              ⚙️
+            </button>
             
             <button className="cosmic-circle__close" onClick={onClose}>×</button>
           </div>
@@ -363,6 +381,15 @@ export const FriendsModal: React.FC<FriendsModalProps> = ({ isOpen, onClose }) =
             {unreadTotal > 0 && <span className="cosmic-circle__tab-badge">{unreadTotal}</span>}
           </button>
           <button
+            className={`cosmic-circle__tab ${activeTab === 'requests' ? 'cosmic-circle__tab--active' : ''}`}
+            onClick={() => dispatch(setActiveTab('requests'))}
+          >
+            🔔 Requests
+            {friendRequests.length > 0 && (
+              <span className="cosmic-circle__tab-badge">{friendRequests.length}</span>
+            )}
+          </button>
+          <button
             className={`cosmic-circle__tab ${activeTab === 'tasks' ? 'cosmic-circle__tab--active' : ''}`}
             onClick={() => dispatch(setActiveTab('tasks'))}
           >
@@ -380,6 +407,18 @@ export const FriendsModal: React.FC<FriendsModalProps> = ({ isOpen, onClose }) =
             ⚡ Invite
           </button>
         </nav>
+
+        {/* Circle AI Coach */}
+        {circleAIEnabled && (
+          <CircleAICoachBanner
+            friendsCount={friends.length}
+            pendingTasks={tasks.filter(t => t.status === 'pending' && t.assigneeId === currentUser?.uid).length}
+            unreadMessages={unreadTotal}
+            activeTab={activeTab}
+            onInvite={() => dispatch(setActiveTab('invite'))}
+            onViewTasks={() => dispatch(setActiveTab('tasks'))}
+          />
+        )}
 
         {/* Content */}
         <div className="cosmic-circle__content">
@@ -560,33 +599,103 @@ export const FriendsModal: React.FC<FriendsModalProps> = ({ isOpen, onClose }) =
                 >
                   ✨ Created by You ({myTasks.length})
                 </button>
+                <button
+                  className={`circle-tasks__tab ${taskTab === 'shared' ? 'circle-tasks__tab--active' : ''}`}
+                  onClick={() => setTaskTab('shared')}
+                >
+                  🔗 Shared by You ({sharedTasks.length})
+                </button>
               </div>
 
-              {(taskTab === 'assigned' ? assignedTasks : myTasks).length === 0 ? (
-                <div className="circle-friends__empty">
-                  <div className="circle-friends__empty-icon">📜</div>
-                  <p>No {taskTab === 'assigned' ? 'tasks assigned to you' : 'tasks created by you'}</p>
-                  {taskTab === 'assigned' && (
-                    <p style={{ fontSize: 'var(--text-sm)', marginTop: 'var(--space-2)' }}>
-                      Friends can send you ritual tasks tied to celestial dates
-                    </p>
-                  )}
-                  {taskTab === 'created' && friends.length === 0 && (
-                    <div style={{ marginTop: 'var(--space-3)', textAlign: 'center' }}>
-                      <p style={{ fontSize: 'var(--text-sm)', color: 'var(--color-text-muted)', marginBottom: 'var(--space-2)' }}>
-                        No friends yet? No problem!
-                      </p>
-                      <button
-                        className="btn btn--sm"
-                        onClick={() => setShowShareTask(true)}
-                      >
-                        🌟 Share Your First Task
-                      </button>
+              {(() => {
+                const currentList = taskTab === 'assigned' ? assignedTasks : taskTab === 'created' ? myTasks : sharedTasks;
+                const emptyMessage = taskTab === 'assigned' ? 'tasks assigned to you' : taskTab === 'created' ? 'tasks created by you' : 'shared tasks';
+
+                if (currentList.length === 0) {
+                  return (
+                    <div className="circle-friends__empty">
+                      <div className="circle-friends__empty-icon">📜</div>
+                      <p>No {emptyMessage}</p>
+                      {taskTab === 'assigned' && (
+                        <p style={{ fontSize: 'var(--text-sm)', marginTop: 'var(--space-2)' }}>
+                          Friends can send you ritual tasks tied to celestial dates
+                        </p>
+                      )}
+                      {taskTab === 'created' && friends.length === 0 && (
+                        <div style={{ marginTop: 'var(--space-3)', textAlign: 'center' }}>
+                          <p style={{ fontSize: 'var(--text-sm)', color: 'var(--color-text-muted)', marginBottom: 'var(--space-2)' }}>
+                            No friends yet? No problem!
+                          </p>
+                          <button
+                            className="btn btn--sm"
+                            onClick={() => setShowShareTask(true)}
+                          >
+                            🌟 Share Your First Task
+                          </button>
+                        </div>
+                      )}
+                      {taskTab === 'shared' && (
+                        <p style={{ fontSize: 'var(--text-sm)', marginTop: 'var(--space-2)' }}>
+                          Use "Create & Share Task" to share tasks with anyone
+                        </p>
+                      )}
                     </div>
-                  )}
-                </div>
-              ) : (
-                (taskTab === 'assigned' ? assignedTasks : myTasks).map((task) => (
+                  );
+                }
+
+                if (taskTab === 'shared') {
+                  return sharedTasks.map((task) => {
+                    const isExpired = task.expiresAt ? task.expiresAt.toMillis() < Date.now() : false;
+                    const daysUntilExpiry = task.expiresAt
+                      ? Math.ceil((task.expiresAt.toMillis() - Date.now()) / (1000 * 60 * 60 * 24))
+                      : 0;
+                    const expiryText = isExpired
+                      ? 'Expired'
+                      : daysUntilExpiry <= 0
+                        ? 'Expires today'
+                        : daysUntilExpiry === 1
+                          ? 'Expires in 1 day'
+                          : `Expires in ${daysUntilExpiry} days`;
+
+                    return (
+                      <div key={task.id} className="circle-task">
+                        <div className="circle-task__header">
+                          <div className="circle-task__title">🔗 {task.title}</div>
+                          <span className={`circle-task__status circle-task__status--${task.status}`}>
+                            {task.status}
+                          </span>
+                        </div>
+                        <div className="circle-task__description">{task.description}</div>
+                        <div className="circle-task__meta">
+                          {task.hekaDate && (
+                            <span className="circle-task__date">
+                              🌙 Due: {task.hekaDate.day}.{task.hekaDate.month + 1}.{task.hekaDate.year}
+                            </span>
+                          )}
+                          <span style={{ color: isExpired ? '#ef4444' : daysUntilExpiry <= 1 ? '#f59e0b' : 'inherit' }}>
+                            ⏳ {expiryText}
+                          </span>
+                        </div>
+                        <div className="circle-task__meta" style={{ fontSize: 'var(--text-xs)', opacity: 0.7 }}>
+                          <span>Code: {task.shareCode}</span>
+                          {task.acceptedBy && <span>Accepted by recipient</span>}
+                        </div>
+                        {task.status === 'pending' && !isExpired && (
+                          <div className="circle-task__actions">
+                            <button
+                              className="circle-task__btn circle-task__btn--decline"
+                              onClick={() => void dispatch(revokeSharedTask(task.shareCode))}
+                            >
+                              🚫 Revoke
+                            </button>
+                          </div>
+                        )}
+                      </div>
+                    );
+                  });
+                }
+
+                return currentList.map((task) => (
                   <div key={task.id} className="circle-task">
                     <div className="circle-task__header">
                       <div className="circle-task__title">
@@ -607,13 +716,13 @@ export const FriendsModal: React.FC<FriendsModalProps> = ({ isOpen, onClose }) =
                     </div>
                     {taskTab === 'assigned' && task.status === 'pending' && (
                       <div className="circle-task__actions">
-                        <button 
+                        <button
                           className="circle-task__btn circle-task__btn--accept"
                           onClick={() => handleTaskResponse(task.id, 'accepted')}
                         >
                           ✓ Accept
                         </button>
-                        <button 
+                        <button
                           className="circle-task__btn circle-task__btn--decline"
                           onClick={() => handleTaskResponse(task.id, 'declined')}
                         >
@@ -623,7 +732,7 @@ export const FriendsModal: React.FC<FriendsModalProps> = ({ isOpen, onClose }) =
                     )}
                     {taskTab === 'assigned' && task.status === 'accepted' && (
                       <div className="circle-task__actions">
-                        <button 
+                        <button
                           className="circle-task__btn circle-task__btn--complete"
                           onClick={() => handleTaskResponse(task.id, 'completed')}
                         >
@@ -631,8 +740,78 @@ export const FriendsModal: React.FC<FriendsModalProps> = ({ isOpen, onClose }) =
                         </button>
                       </div>
                     )}
+                    {taskTab === 'created' && task.status === 'pending' && (
+                      <div className="circle-task__actions">
+                        <button
+                          className="circle-task__btn circle-task__btn--decline"
+                          onClick={() => void dispatch(revokeTask(task.id))}
+                        >
+                          🚫 Revoke
+                        </button>
+                      </div>
+                    )}
                   </div>
-                ))
+                ));
+              })()}
+            </div>
+          )}
+
+          {/* Requests Tab */}
+          {activeTab === 'requests' && (
+            <div className="cosmic-circle__panel">
+              {friendRequests.length === 0 ? (
+                <div className="circle-friends__empty">
+                  <div className="circle-friends__empty-icon">🔔</div>
+                  <p>No pending requests</p>
+                  <p style={{ fontSize: 'var(--text-sm)', marginTop: 'var(--space-2)' }}>
+                    When someone invites you, their request will appear here
+                  </p>
+                </div>
+              ) : (
+                <div className="circle-friends__list">
+                  {friendRequests.map((request) => (
+                    <div
+                      key={request.uid}
+                      className="circle-friend"
+                    >
+                      <div className="circle-friend__avatar">
+                        {request.displayName.charAt(0).toUpperCase()}
+                      </div>
+                      <div className="circle-friend__info">
+                        <div className="circle-friend__name">{request.displayName}</div>
+                        <div className="circle-friend__status">
+                          ⚡ Wants to connect
+                        </div>
+                      </div>
+                      <div className="circle-friend__actions">
+                        <button
+                          className="circle-friend__btn"
+                          onClick={() => {
+                            const friendshipId = [currentUser?.uid || '', request.uid].sort().join('_');
+                            void dispatch(acceptFriendRequest(friendshipId)).unwrap().then(() => {
+                              dispatch(setSelectedFriend(request));
+                            });
+                          }}
+                          title="Accept"
+                          style={{ background: 'rgba(34, 197, 94, 0.2)', color: '#4ade80' }}
+                        >
+                          ✓
+                        </button>
+                        <button
+                          className="circle-friend__btn"
+                          onClick={() => {
+                            const friendshipId = [currentUser?.uid || '', request.uid].sort().join('_');
+                            void dispatch(declineFriendRequest(friendshipId));
+                          }}
+                          title="Decline"
+                          style={{ background: 'rgba(239, 68, 68, 0.2)', color: '#f87171' }}
+                        >
+                          ✕
+                        </button>
+                      </div>
+                    </div>
+                  ))}
+                </div>
               )}
             </div>
           )}
@@ -679,8 +858,13 @@ export const FriendsModal: React.FC<FriendsModalProps> = ({ isOpen, onClose }) =
                     </div>
                   </div>
                 ) : (
-                  <button className="circle-invite__btn" onClick={handleGenerateCode}>
-                    ⚡ Generate Invite Code
+                  <button 
+                    className="circle-invite__btn" 
+                    onClick={handleGenerateCode}
+                    disabled={isLoading}
+                    style={{ opacity: isLoading ? 0.6 : 1 }}
+                  >
+                    {isLoading ? '⚡ Generating...' : '⚡ Generate Invite Code'}
                   </button>
                 )}
 
@@ -691,10 +875,13 @@ export const FriendsModal: React.FC<FriendsModalProps> = ({ isOpen, onClose }) =
                     className="circle-invite__input"
                     placeholder="ENTER-CODE"
                     value={inviteInput}
-                    onChange={(e) => setInviteInput(e.target.value.toUpperCase())}
+                    onChange={(e) => {
+                      setInviteInput(e.target.value.toUpperCase());
+                      if (error) dispatch(clearError());
+                    }}
                   />
-                  {error && (
-                    <div style={{ color: '#ef4444', fontSize: 'var(--text-sm)', marginBottom: 'var(--space-2)' }}>
+                  {activeTab === 'invite' && error && (
+                    <div style={{ color: '#ef4444', fontSize: 'var(--text-sm)', marginBottom: 'var(--space-2)', textAlign: 'center' }}>
                       {error}
                     </div>
                   )}
@@ -715,6 +902,12 @@ export const FriendsModal: React.FC<FriendsModalProps> = ({ isOpen, onClose }) =
         <ProfileSetupModal
           isOpen={showProfileSetup}
           onComplete={() => setShowProfileSetup(false)}
+        />
+
+        {/* Circle Settings */}
+        <CircleSettings
+          isOpen={showSettings}
+          onClose={() => setShowSettings(false)}
         />
 
         {/* Create Task Modal Overlay */}
@@ -1001,6 +1194,123 @@ export const FriendsModal: React.FC<FriendsModalProps> = ({ isOpen, onClose }) =
   );
 };
 
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// CIRCLE AI COACH BANNER
+// ═══════════════════════════════════════════════════════════════════════════════
+
+interface CircleAICoachBannerProps {
+  friendsCount: number;
+  pendingTasks: number;
+  unreadMessages: number;
+  activeTab: 'friends' | 'messages' | 'tasks' | 'invite' | 'requests';
+  onInvite: () => void;
+  onViewTasks: () => void;
+}
+
+function CircleAICoachBanner({
+  friendsCount,
+  pendingTasks,
+  unreadMessages,
+  activeTab,
+  onInvite,
+  onViewTasks,
+}: CircleAICoachBannerProps) {
+  const message = useMemo(() => {
+    const userContext = aiConfigService.getUserContext();
+
+    // Update shared AI memory with current circle stats
+    aiConfigService.setUserContext({
+      friendCount: friendsCount,
+      pendingCircleTasks: pendingTasks,
+      unreadMessages,
+    });
+
+    // Cross-context merge: weave in recent journal themes when appropriate
+    const journalBridge = userContext.lastJournalThemes.length
+      ? ` You recently reflected on ${userContext.lastJournalThemes.join(', ')}.`
+      : '';
+    const moonBridge = userContext.lastCelebratedMoonPhase
+      ? ` The ${userContext.lastCelebratedMoonPhase} moon energy is still with you.`
+      : '';
+
+    if (activeTab === 'tasks' && pendingTasks > 0) {
+      return {
+        text: `You have ${pendingTasks} pending task${pendingTasks === 1 ? '' : 's'}.${moonBridge} Every completed ritual strengthens your cosmic bond.`,
+        icon: '✨',
+        action: { label: 'View Tasks', onClick: onViewTasks },
+      };
+    }
+    if (activeTab === 'messages' && unreadMessages > 0) {
+      return {
+        text: `${unreadMessages} unread message${unreadMessages === 1 ? '' : 's'} waiting.${journalBridge} A simple check-in can brighten someone's day.`,
+        icon: '💬',
+      };
+    }
+    if (friendsCount === 0) {
+      return {
+        text: 'Your circle is waiting to grow. Invite a friend to share celestial moments together.',
+        icon: '🌌',
+        action: { label: 'Invite Friend', onClick: onInvite },
+      };
+    }
+    if (friendsCount === 1) {
+      return {
+        text: `One cosmic connection made.${journalBridge} Who else might benefit from walking this path with you?`,
+        icon: '🔮',
+        action: { label: 'Invite Another', onClick: onInvite },
+      };
+    }
+    if (activeTab === 'invite') {
+      return {
+        text: 'Sharing your journey multiplies its meaning. Send an invite to someone who needs cosmic alignment.',
+        icon: '⚡',
+      };
+    }
+    return {
+      text: `Your circle has ${friendsCount} friend${friendsCount === 1 ? '' : 's'}.${journalBridge} Consider sending a message or sharing a task ritual today.`,
+      icon: '✦',
+    };
+  }, [friendsCount, pendingTasks, unreadMessages, activeTab, onInvite, onViewTasks]);
+
+  return (
+    <div
+      style={{
+        display: 'flex',
+        alignItems: 'center',
+        gap: '10px',
+        padding: '10px 14px',
+        margin: '0 16px 12px',
+        background: 'linear-gradient(90deg, rgba(212,175,55,0.08), rgba(157,78,221,0.08))',
+        border: '1px solid rgba(212,175,55,0.2)',
+        borderRadius: '10px',
+        fontSize: '13px',
+        color: '#e4e4e7',
+      }}
+    >
+      <span style={{ fontSize: '16px' }}>{message.icon}</span>
+      <p style={{ margin: 0, flex: 1, lineHeight: 1.5 }}>{message.text}</p>
+      {message.action && (
+        <button
+          onClick={message.action.onClick}
+          style={{
+            padding: '6px 12px',
+            background: 'rgba(212,175,55,0.15)',
+            border: '1px solid rgba(212,175,55,0.3)',
+            borderRadius: '8px',
+            color: '#f8f7f5',
+            fontSize: '12px',
+            fontWeight: 500,
+            cursor: 'pointer',
+            whiteSpace: 'nowrap',
+          }}
+        >
+          {message.action.label}
+        </button>
+      )}
+    </div>
+  );
+}
 
 // Helper function to format last active time
 function formatLastActive(timestamp: { toDate: () => Date } | Date): string {

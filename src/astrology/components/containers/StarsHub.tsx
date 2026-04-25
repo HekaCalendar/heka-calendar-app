@@ -4,10 +4,11 @@
  */
 
 import React, { useState, useEffect, useRef, useMemo } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import type { AppDispatch, RootState } from '../../../store';
 import { initializeAstrology, updateProfilePreferences, generateChartForProfile } from '../../store/thunks';
-import { updateAstroPreferences, toggleAstroPreference, setView } from '../../../store';
+import { updateAstroPreferences } from '../../../store';
 import { selectSelectedProfileChart, selectAllProfiles } from '../../store/selectors';
 import {
   calculateCurrentSky,
@@ -19,7 +20,7 @@ import {
 } from '../../services/calculations/swissCalculations';
 import { initializeSwissEphemeris, setZodiacSystem } from '../../services/swiss-ephemeris/engine';
 import type { CelestialBody } from '../../types';
-import { PLANET_NAMES, SIGN_ELEMENTS, SIGN_MODALITIES } from '../../types';
+import { PLANET_NAMES, SIGN_ELEMENTS, SIGN_MODALITIES, SIGN_ELEMENTS_13, SIGN_MODALITIES_13 } from '../../types';
 import DailyBriefing from '../presentation/DailyBriefing';
 import { VoidMoonSanctuary } from '../sanctuary/VoidMoonSanctuary';
 import { CelestialGuidanceV2 } from '../guidance/CelestialGuidanceV2';
@@ -31,13 +32,13 @@ import { AIProviderSettings } from '../cosmic/AIProviderSettings';
 import { CELESTIAL_THEMES, DEFAULT_CELESTIAL_THEME, generateThemeCSS, type CelestialThemeId } from './CelestialThemes';
 import './StarsHub.css';
 import './StarsHub.landscape.css';
-import {
-  initializeAstroNotifications,
-  scheduleDailyTips,
-} from '../../services/notifications/astroNotifications';
+import { NotificationEngine } from '../../../services/notificationEngine';
+import { store } from '../../../store';
 import { profileManager } from '../../services/natal/profileManager';
 import { getUnifiedUserBirthData, deleteUnifiedChart, getUnifiedChart } from '../../utils/chartBridge';
 import { CelestialErrorBoundary } from '../error/CelestialErrorBoundary';
+import { TwoSelvesModal } from '../modals/TwoSelvesModal';
+import { StarsNotificationSettings } from '../../../components/notification/StarsNotificationSettings';
 
 const SYMBOLS: Record<string, string> = {
   sun: '☉', moon: '☽', mercury: '☿', venus: '♀', mars: '♂',
@@ -65,10 +66,25 @@ const ZODIAC_ORDER_13 = [
 // Helper to get signs array based on zodiac system (used for sign displays)
 export const getZodiacSigns = (use13Signs: boolean) => use13Signs ? ZODIAC_ORDER_13 : ZODIAC_ORDER_12;
 
-type TabType = 'overview' | 'guidance' | 'void-moon' | 'transits' | 'positions' | 'chart' | 'settings';
+function getPlanetDomain(planet: string): string {
+  const domains: Record<string, string> = {
+    mercury: 'communication and plans',
+    venus: 'relationships and values',
+    mars: 'actions and desires',
+    jupiter: 'expansion and beliefs',
+    saturn: 'structures and commitments',
+    uranus: 'change and liberation',
+    neptune: 'dreams and spirituality',
+    pluto: 'transformation and power',
+  };
+  return domains[planet.toLowerCase()] || 'areas of life';
+}
+
+type TabType = 'overview' | 'guidance' | 'void-moon' | 'positions' | 'chart' | 'settings';
 type CelestialFontId = 'stellar' | 'cosmic' | 'nebula' | 'void' | 'oracle' | 'quantum';
 
 export const StarsHub: React.FC = () => {
+  const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
   const profiles = useSelector(selectAllProfiles);
   
@@ -83,6 +99,9 @@ export const StarsHub: React.FC = () => {
   
   const astroPreferences = useSelector((state: RootState) => state.calendar.astroPreferences);
   const zodiacSystem = astroPreferences?.zodiacSystem || '12-sign';
+  const zodiacFrame = astroPreferences?.zodiacFrame || 'tropical';
+  const signCount = astroPreferences?.signCount || 12;
+  const timeMode = useSelector((state: RootState) => state.calendar.timeMode);
   const selectedProfileId = useSelector((state: RootState) => state.astrology.ui.selectedProfileId);
   
   // Refs for managing async operations and cleanup
@@ -94,6 +113,7 @@ export const StarsHub: React.FC = () => {
   
   const [activeTab, setActiveTab] = useState<TabType>('overview');
   const [positions, setPositions] = useState<Record<string, CelestialBody> | null>(null);
+  const [skyData, setSkyData] = useState<{ positions: Record<string, CelestialBody>; julianDay: number; timestamp: number } | null>(null);
   const [moonPhase, setMoonPhase] = useState<any>(null);
   const [planetaryHour, setPlanetaryHour] = useState<any>(null);
   const [retrogrades, setRetrogrades] = useState<any[]>([]);
@@ -115,6 +135,7 @@ export const StarsHub: React.FC = () => {
   const [locationName, setLocationName] = useState<string>(() => {
     return localStorage.getItem('ci-location-name') || 'Universal';
   });
+  const [showTwoSelves, setShowTwoSelves] = useState(false);
   
   // Save preferences when changed
   useEffect(() => {
@@ -190,6 +211,25 @@ export const StarsHub: React.FC = () => {
     };
   }, []);
 
+  // Handle deep-links from AI coach / journal / other components
+  useEffect(() => {
+    try {
+      const deeplink = sessionStorage.getItem('stars-deeplink');
+      if (deeplink) {
+        const parsed = JSON.parse(deeplink);
+        if (parsed?.tab) {
+          const validTabs: TabType[] = ['overview', 'guidance', 'void-moon', 'positions', 'chart', 'settings'];
+          if (validTabs.includes(parsed.tab)) {
+            setActiveTab(parsed.tab);
+          }
+        }
+        sessionStorage.removeItem('stars-deeplink');
+      }
+    } catch {
+      // ignore malformed deeplink
+    }
+  }, []);
+
   // Get current theme config
   const currentTheme = CELESTIAL_THEMES[theme];
 
@@ -236,6 +276,7 @@ export const StarsHub: React.FC = () => {
         if (signal.aborted || !isMountedRef.current) return;
         
         setPositions(skyData.positions);
+        setSkyData(skyData);
         setJulianDay(skyData.julianDay);
         
         // Calculate moon phase
@@ -289,7 +330,7 @@ export const StarsHub: React.FC = () => {
     return () => {
       abortController.abort();
     };
-  }, [currentTime, isReady, userLocation, zodiacSystem]);
+  }, [currentTime, isReady, userLocation, zodiacSystem, zodiacFrame, signCount]);
   
   // Initialize astrology on mount
   useEffect(() => {
@@ -298,13 +339,54 @@ export const StarsHub: React.FC = () => {
   
   // Initialize notifications on mount
   useEffect(() => {
-    initializeAstroNotifications();
+    void NotificationEngine.initialize();
   }, []);
   
-  // Update notification schedules when preferences change
+  // Schedule daily celestial tips when preference changes
   useEffect(() => {
-    scheduleDailyTips(astroPreferences.enableDailyTips);
+    const prefs = store.getState().calendar.notificationPreferences.stars;
+    if (prefs.dailyCelestialTips) {
+      const now = new Date();
+      const scheduleTime = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 7, 0, 0);
+      if (scheduleTime <= now) scheduleTime.setDate(scheduleTime.getDate() + 1);
+      const seed = new Date().toISOString().split('T')[0];
+      void NotificationEngine.scheduleTemplated(
+        'daily-celestial-tips',
+        'standard',
+        'stars',
+        scheduleTime,
+        seed,
+        {},
+        { type: 'daily-celestial-tips' }
+      );
+    } else {
+      void NotificationEngine.cancelByType('daily-celestial-tips');
+    }
   }, [astroPreferences.enableDailyTips]);
+  
+  // Schedule retrograde alerts when preference changes
+  useEffect(() => {
+    const prefs = store.getState().calendar.notificationPreferences.stars;
+    if (prefs.retrogradeAlerts && retrogrades.length > 0) {
+      for (const retro of retrogrades) {
+        // Schedule 3 days before each retrograde start
+        // (This is a simplified placeholder — real implementation would use exact station dates)
+        const alertDate = new Date(Date.now() + 3 * 86400000);
+        const seed = retro.planet + alertDate.toISOString().split('T')[0];
+        void NotificationEngine.scheduleTemplated(
+          'retrograde-alert',
+          'ambient',
+          'stars',
+          alertDate,
+          seed,
+          { planet: retro.planet, domain: getPlanetDomain(retro.planet) },
+          { type: 'retrograde-alert', planet: retro.planet }
+        );
+      }
+    } else {
+      void NotificationEngine.cancelByType('retrograde-alert');
+    }
+  }, [astroPreferences.enableRetrogradeAlerts, retrogrades]);
   
   // Recalculate chart when zodiac system changes
   // Uses AbortController pattern to prevent race conditions on rapid toggles
@@ -324,6 +406,11 @@ export const StarsHub: React.FC = () => {
     
     // Set the zodiac system in the Swiss Ephemeris engine FIRST
     setZodiacSystem(zodiacSystem);
+    // Also set split fields for new engine API
+    import('../../services/swiss-ephemeris/engine').then(({ setZodiacFrame: setEngineFrame, setSignCount: setEngineCount }) => {
+      setEngineFrame(zodiacFrame);
+      setEngineCount(signCount);
+    });
     
     const recalculate = async () => {
       const activeProfile = profileManager.getActiveProfile();
@@ -337,7 +424,7 @@ export const StarsHub: React.FC = () => {
         if (selectedProfileId && !signal.aborted) {
           await dispatch(updateProfilePreferences({
             profileId: selectedProfileId,
-            preferences: { zodiacSystem }
+            preferences: { zodiacSystem, zodiacFrame, signCount }
           }));
         }
         
@@ -351,13 +438,29 @@ export const StarsHub: React.FC = () => {
         if (signal.aborted) return;
         
         // 3. Also update via ProfileManager for backward compatibility
-        await profileManager.recalculateChartWithZodiacSystem(activeProfile.id, zodiacSystem);
+        await profileManager.recalculateChartWithZodiacSystem(activeProfile.id, zodiacSystem, zodiacFrame, signCount);
         
         if (signal.aborted) return;
         
         // 4. Refresh the astrology data
         if (isMountedRef.current) {
           dispatch(initializeAstrology());
+        }
+        
+        // 5. Show Two Selves modal on first switch to sidereal
+        if (zodiacFrame === 'sidereal' && isMountedRef.current) {
+          const flagKey = `heka-two-selves-seen-${activeProfile.id}`;
+          // Set flag immediately (before async timeout) to prevent race conditions
+          // if this effect re-runs before the timeout fires
+          if (!localStorage.getItem(flagKey)) {
+            localStorage.setItem(flagKey, 'true');
+            // Small delay to let the recalculation finish and chart render
+            setTimeout(() => {
+              if (isMountedRef.current) {
+                setShowTwoSelves(true);
+              }
+            }, 800);
+          }
         }
         
       } catch (error) {
@@ -373,13 +476,12 @@ export const StarsHub: React.FC = () => {
     return () => {
       abortController.abort();
     };
-  }, [zodiacSystem, dispatch, selectedProfileId]);
+  }, [zodiacSystem, zodiacFrame, signCount, dispatch, selectedProfileId]);
 
   const tabs: { id: TabType; label: string; icon: string; badge?: number }[] = [
     { id: 'overview', label: 'Overview', icon: '◈' },
     { id: 'guidance', label: 'Guidance', icon: '◐' },
     { id: 'void-moon', label: 'Void Moon', icon: '🌑' },
-    { id: 'transits', label: 'Transits', icon: '◷' },
     { id: 'positions', label: 'Positions', icon: '✧' },
     { id: 'chart', label: 'Chart', icon: '◉' },
     { id: 'settings', label: 'Settings', icon: '⚙' },
@@ -399,6 +501,21 @@ export const StarsHub: React.FC = () => {
       ) as React.CSSProperties
     }}>
 
+      {/* Two Selves Modal */}
+      {(() => {
+        const activeProfileWithChart = profileManager.getActiveProfileWithChart();
+        if (showTwoSelves && activeProfileWithChart?.chart?.birthData) {
+          return (
+            <TwoSelvesModal
+              isOpen={showTwoSelves}
+              onClose={() => setShowTwoSelves(false)}
+              birthData={activeProfileWithChart.chart.birthData}
+            />
+          );
+        }
+        return null;
+      })()}
+
       {/* Animated Background Elements */}
       <div className="ci-shooting-stars" />
       
@@ -413,7 +530,7 @@ export const StarsHub: React.FC = () => {
         <header className="sh-header">
           <button 
             className="sh-back" 
-            onClick={() => dispatch(setView('month'))}
+            onClick={() => navigate('/')}
           >
             ← Back
           </button>
@@ -545,6 +662,9 @@ export const StarsHub: React.FC = () => {
                   longitude={userLocation?.longitude ?? 0}
                   voidMoonData={{ isVoid: false }}
                   natalChart={natalChart}
+                  skyData={skyData}
+                  planetaryHour={planetaryHour?.planet}
+                  onOpenSettings={() => setActiveTab('settings')}
                 />
               </CelestialErrorBoundary>
             </div>
@@ -562,57 +682,6 @@ export const StarsHub: React.FC = () => {
               <VoidMoonSanctuary 
                 userBirthData={getUnifiedUserBirthData()}
               />
-            </div>
-          )}
-          
-          {/* Transits Tab */}
-          {activeTab === 'transits' && (
-            <div className="sh-section">
-              <div className="sh-section-header">
-                <div className="sh-section-title">
-                  <span>◷</span>
-                  Current Transits
-                </div>
-              </div>
-              <div className="sh-section-content" style={{ textAlign: 'center', padding: '64px' }}>
-                {natalChart ? (
-                  <>
-                    <p style={{ color: '#4ade80', fontSize: '16px', marginBottom: '16px' }}>
-                      ✨ Personalized Transits Active
-                    </p>
-                    <p style={{ color: 'var(--text-tertiary)', fontSize: '16px' }}>
-                      Transit tracking is active in your Celestial Guidance
-                    </p>
-                    <p style={{ color: 'var(--text-muted)', fontSize: '14px', marginTop: '8px' }}>
-                      Visit the Guidance tab to see your personalized transits
-                    </p>
-                  </>
-                ) : (
-                  <>
-                    <p style={{ color: '#fbbf24', fontSize: '16px', marginBottom: '16px' }}>
-                      🌙 Birth Chart Needed
-                    </p>
-                    <p style={{ color: 'var(--text-tertiary)', fontSize: '16px' }}>
-                      Add your birth chart to see personalized transits
-                    </p>
-                    <button
-                      onClick={() => setActiveTab('chart')}
-                      style={{
-                        marginTop: '16px',
-                        padding: '10px 20px',
-                        background: 'rgba(167, 139, 250, 0.2)',
-                        border: '1px solid rgba(167, 139, 250, 0.4)',
-                        borderRadius: '8px',
-                        color: '#c4b5fd',
-                        cursor: 'pointer',
-                        fontSize: '14px',
-                      }}
-                    >
-                      Add Birth Chart →
-                    </button>
-                  </>
-                )}
-              </div>
             </div>
           )}
           
@@ -653,56 +722,162 @@ export const StarsHub: React.FC = () => {
                         <p>Choose your celestial framework</p>
                       </div>
                     </div>
-                    <div style={{ display: 'flex', gap: '12px', marginTop: '16px' }}>
+                    {/* ═══ Zodiac Frame Toggle (Tropical vs Sidereal) ═══ */}
+                    <div style={{
+                      display: 'grid',
+                      gridTemplateColumns: '1fr 1fr',
+                      gap: '8px',
+                      marginTop: '16px'
+                    }}>
                       <button
                         onClick={() => {
-                          console.log('[StarsHub] 12-sign button clicked');
-                          dispatch(updateAstroPreferences({ zodiacSystem: '12-sign' }));
+                          dispatch(updateAstroPreferences({ zodiacSystem: '12-sign', zodiacFrame: 'tropical', signCount: 12 }));
                         }}
                         style={{
-                          flex: 1,
-                          padding: '12px 16px',
+                          padding: '10px 8px',
                           borderRadius: '10px',
-                          border: `2px solid ${zodiacSystem === '12-sign' ? '#fbbf24' : 'rgba(255,255,255,0.1)'}`,
-                          background: zodiacSystem === '12-sign' ? 'rgba(251, 191, 36, 0.1)' : 'rgba(255,255,255,0.05)',
-                          color: zodiacSystem === '12-sign' ? '#fbbf24' : 'rgba(255,255,255,0.7)',
+                          border: `2px solid ${zodiacFrame === 'tropical' ? '#fbbf24' : 'rgba(255,255,255,0.1)'}`,
+                          background: zodiacFrame === 'tropical' ? 'rgba(251, 191, 36, 0.1)' : 'rgba(255,255,255,0.05)',
+                          color: zodiacFrame === 'tropical' ? '#fbbf24' : 'rgba(255,255,255,0.7)',
                           cursor: 'pointer',
-                          fontSize: '14px',
-                          fontWeight: zodiacSystem === '12-sign' ? 600 : 400,
+                          fontSize: '13px',
+                          fontWeight: zodiacFrame === 'tropical' ? 600 : 400,
                         }}
                       >
-                        {zodiacSystem === '12-sign' && '✓ '}12 Signs
-                        <span style={{ display: 'block', fontSize: '11px', opacity: 0.6, marginTop: '4px' }}>
-                          Traditional (Aries-Pisces)
+                        {zodiacFrame === 'tropical' && '✓ '}Tropical
+                        <span style={{ display: 'block', fontSize: '10px', opacity: 0.6, marginTop: '3px' }}>
+                          12 Signs · Seasons
                         </span>
                       </button>
                       <button
                         onClick={() => {
-                          dispatch(updateAstroPreferences({ zodiacSystem: '13-sign' }));
+                          dispatch(updateAstroPreferences({ zodiacSystem: 'sidereal', zodiacFrame: 'sidereal', signCount: signCount }));
                         }}
                         style={{
-                          flex: 1,
-                          padding: '12px 16px',
+                          padding: '10px 8px',
                           borderRadius: '10px',
-                          border: `2px solid ${zodiacSystem === '13-sign' ? '#a78bfa' : 'rgba(255,255,255,0.1)'}`,
-                          background: zodiacSystem === '13-sign' ? 'rgba(167, 139, 250, 0.1)' : 'rgba(255,255,255,0.05)',
-                          color: zodiacSystem === '13-sign' ? '#a78bfa' : 'rgba(255,255,255,0.7)',
+                          border: `2px solid ${zodiacFrame === 'sidereal' ? '#c9a227' : 'rgba(255,255,255,0.1)'}`,
+                          background: zodiacFrame === 'sidereal' ? 'rgba(201, 162, 39, 0.1)' : 'rgba(255,255,255,0.05)',
+                          color: zodiacFrame === 'sidereal' ? '#c9a227' : 'rgba(255,255,255,0.7)',
                           cursor: 'pointer',
-                          fontSize: '14px',
-                          fontWeight: zodiacSystem === '13-sign' ? 600 : 400,
+                          fontSize: '13px',
+                          fontWeight: zodiacFrame === 'sidereal' ? 600 : 400,
                         }}
                       >
-                        {zodiacSystem === '13-sign' && '✓ '}13 Signs ⛎
-                        <span style={{ display: 'block', fontSize: '11px', opacity: 0.6, marginTop: '4px' }}>
-                          Including Ophiuchus
+                        {zodiacFrame === 'sidereal' && '✓ '}Sidereal
+                        <span style={{ display: 'block', fontSize: '10px', opacity: 0.6, marginTop: '3px' }}>
+                          Fixed Stars · Nakshatras
                         </span>
                       </button>
                     </div>
-                    <p style={{ marginTop: '12px', fontSize: '13px', color: 'rgba(255,255,255,0.5)' }}>
-                      {zodiacSystem === '13-sign' 
-                        ? '⛎ Ophiuchus (Nov 30 - Dec 17): The Serpent Bearer of healing and wisdom'
-                        : 'Using classical 12-sign zodiac system'}
+
+                    {/* ═══ Sign Count Toggle (only when Sidereal) ═══ */}
+                    {zodiacFrame === 'sidereal' && (
+                      <div style={{
+                        marginTop: '10px',
+                        paddingLeft: '12px',
+                        borderLeft: '2px solid rgba(201, 162, 39, 0.3)',
+                      }}>
+                        <div style={{
+                          fontSize: '11px',
+                          color: 'rgba(255,255,255,0.4)',
+                          textTransform: 'uppercase',
+                          letterSpacing: '0.05em',
+                          marginBottom: '6px',
+                        }}>
+                          Sidereal Sign Count
+                        </div>
+                        <div style={{
+                          display: 'grid',
+                          gridTemplateColumns: '1fr 1fr',
+                          gap: '8px',
+                        }}>
+                          <button
+                            onClick={() => {
+                              dispatch(updateAstroPreferences({ zodiacSystem: 'sidereal', zodiacFrame: 'sidereal', signCount: 12 }));
+                            }}
+                            style={{
+                              padding: '8px 8px',
+                              borderRadius: '10px',
+                              border: `2px solid ${signCount === 12 ? '#c9a227' : 'rgba(255,255,255,0.1)'}`,
+                              background: signCount === 12 ? 'rgba(201, 162, 39, 0.1)' : 'rgba(255,255,255,0.05)',
+                              color: signCount === 12 ? '#c9a227' : 'rgba(255,255,255,0.7)',
+                              cursor: 'pointer',
+                              fontSize: '12px',
+                              fontWeight: signCount === 12 ? 600 : 400,
+                            }}
+                          >
+                            {signCount === 12 && '✓ '}12 Signs
+                            <span style={{ display: 'block', fontSize: '9px', opacity: 0.6, marginTop: '2px' }}>
+                              Traditional sidereal
+                            </span>
+                          </button>
+                          <button
+                            onClick={() => {
+                              dispatch(updateAstroPreferences({ zodiacSystem: 'sidereal', zodiacFrame: 'sidereal', signCount: 13 }));
+                            }}
+                            style={{
+                              padding: '8px 8px',
+                              borderRadius: '10px',
+                              border: `2px solid ${signCount === 13 ? '#a78bfa' : 'rgba(255,255,255,0.1)'}`,
+                              background: signCount === 13 ? 'rgba(167, 139, 250, 0.1)' : 'rgba(255,255,255,0.05)',
+                              color: signCount === 13 ? '#a78bfa' : 'rgba(255,255,255,0.7)',
+                              cursor: 'pointer',
+                              fontSize: '12px',
+                              fontWeight: signCount === 13 ? 600 : 400,
+                            }}
+                          >
+                            {signCount === 13 && '✓ '}13 Signs ⛎
+                            <span style={{ display: 'block', fontSize: '9px', opacity: 0.6, marginTop: '2px' }}>
+                              Ophiuchus included
+                            </span>
+                          </button>
+                        </div>
+                      </div>
+                    )}
+
+                    <p style={{ marginTop: '12px', fontSize: '12px', color: 'rgba(255,255,255,0.5)', lineHeight: 1.5 }}>
+                      {zodiacFrame === 'sidereal'
+                        ? signCount === 13
+                          ? '⛎ 13-sign sidereal: Ophiuchus included. The most astronomically accurate framework.'
+                          : '☀️ 12-sign sidereal: Traditional constellation boundaries with ayanamsa correction.'
+                        : 'Classical 12-sign tropical zodiac tied to the seasons.'}
+                      {' '}
+                      <span style={{ color: 'rgba(201, 162, 39, 0.7)' }}>
+                        {timeMode === 'TRUE' && zodiacFrame !== 'sidereal'
+                          ? '⚠️ You are in TRUE mode but not using sidereal. Switch to Sidereal for full alignment.'
+                          : timeMode === 'SYNC' && zodiacFrame === 'sidereal'
+                            ? '⚠️ You are in SYNC mode but using sidereal. This is an advanced override.'
+                            : ''}
+                      </span>
                     </p>
+
+                    {/* Two Selves comparison button — only in sidereal mode */}
+                    {zodiacFrame === 'sidereal' && (
+                      <button
+                        onClick={() => setShowTwoSelves(true)}
+                        style={{
+                          marginTop: '14px',
+                          width: '100%',
+                          padding: '10px 16px',
+                          borderRadius: '10px',
+                          border: '1px solid rgba(201, 162, 39, 0.4)',
+                          background: 'linear-gradient(135deg, rgba(201, 162, 39, 0.15) 0%, rgba(201, 162, 39, 0.05) 100%)',
+                          color: '#c9a227',
+                          cursor: 'pointer',
+                          fontSize: '13px',
+                          fontWeight: 600,
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          gap: '8px',
+                          transition: 'all 0.2s ease',
+                        }}
+                      >
+                        <span>🌟</span>
+                        Compare Your Two Selves
+                      </button>
+                    )}
                   </div>
 
                   {/* Notification Preferences */}
@@ -714,85 +889,7 @@ export const StarsHub: React.FC = () => {
                         <p>Receive guidance from the cosmos</p>
                       </div>
                     </div>
-                    <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', marginTop: '16px' }}>
-                      {/* Daily Tips */}
-                      <label style={{ 
-                        display: 'flex', 
-                        alignItems: 'center', 
-                        gap: '12px',
-                        padding: '12px',
-                        background: 'rgba(255,255,255,0.03)',
-                        borderRadius: '10px',
-                        cursor: 'pointer',
-                      }}>
-                        <input
-                          type="checkbox"
-                          checked={astroPreferences.enableDailyTips}
-                          onChange={() => dispatch(toggleAstroPreference('enableDailyTips'))}
-                          style={{ width: '20px', height: '20px', cursor: 'pointer' }}
-                        />
-                        <div style={{ flex: 1 }}>
-                          <div style={{ fontSize: '14px', color: 'rgba(255,255,255,0.9)' }}>
-                            🌅 Daily Celestial Tips
-                          </div>
-                          <div style={{ fontSize: '12px', color: 'rgba(255,255,255,0.5)' }}>
-                            Personalized guidance delivered at 7:00 AM
-                          </div>
-                        </div>
-                      </label>
-
-                      {/* Retrograde Alerts */}
-                      <label style={{ 
-                        display: 'flex', 
-                        alignItems: 'center', 
-                        gap: '12px',
-                        padding: '12px',
-                        background: 'rgba(255,255,255,0.03)',
-                        borderRadius: '10px',
-                        cursor: 'pointer',
-                      }}>
-                        <input
-                          type="checkbox"
-                          checked={astroPreferences.enableRetrogradeAlerts}
-                          onChange={() => dispatch(toggleAstroPreference('enableRetrogradeAlerts'))}
-                          style={{ width: '20px', height: '20px', cursor: 'pointer' }}
-                        />
-                        <div style={{ flex: 1 }}>
-                          <div style={{ fontSize: '14px', color: 'rgba(255,255,255,0.9)' }}>
-                            ⚠️ Retrograde Alerts
-                          </div>
-                          <div style={{ fontSize: '12px', color: 'rgba(255,255,255,0.5)' }}>
-                            3-day advance warning for planetary retrogrades
-                          </div>
-                        </div>
-                      </label>
-
-                      {/* Moon Phase Alerts */}
-                      <label style={{ 
-                        display: 'flex', 
-                        alignItems: 'center', 
-                        gap: '12px',
-                        padding: '12px',
-                        background: 'rgba(255,255,255,0.03)',
-                        borderRadius: '10px',
-                        cursor: 'pointer',
-                      }}>
-                        <input
-                          type="checkbox"
-                          checked={astroPreferences.enableMoonPhaseAlerts}
-                          onChange={() => dispatch(toggleAstroPreference('enableMoonPhaseAlerts'))}
-                          style={{ width: '20px', height: '20px', cursor: 'pointer' }}
-                        />
-                        <div style={{ flex: 1 }}>
-                          <div style={{ fontSize: '14px', color: 'rgba(255,255,255,0.9)' }}>
-                            🌕 Moon Phase Reminders
-                          </div>
-                          <div style={{ fontSize: '12px', color: 'rgba(255,255,255,0.5)' }}>
-                            New and Full Moon notifications
-                          </div>
-                        </div>
-                      </label>
-                    </div>
+                    <StarsNotificationSettings />
                   </div>
                   
                   {/* Theme Selection */}
@@ -1078,7 +1175,7 @@ const PlanetaryPositions: React.FC<PlanetaryPositionsProps> = ({ positions, loca
   if (selectedPlanet && positions?.[selectedPlanet]) {
     const body = positions[selectedPlanet];
     const isRetro = body.isRetrograde;
-    const signDeg = (body.longitude % 30).toFixed(1);
+    const signDeg = (body.degreeInSign ?? 0).toFixed(1);
     const planetColor = PLANET_COLORS[selectedPlanet] || '#ffffff';
     const interpretation = PLANET_IN_SIGN_MEANING[selectedPlanet]?.[body.sign] || 
       `${PLANET_NAMES[selectedPlanet as keyof typeof PLANET_NAMES]} in ${body.sign} brings unique energy.`;
@@ -1159,7 +1256,7 @@ const PlanetaryPositions: React.FC<PlanetaryPositionsProps> = ({ positions, loca
             
             {/* Element and Modality */}
             <div style={{ fontSize: '13px', color: 'rgba(255,255,255,0.6)' }}>
-              {SIGN_ELEMENTS[body.sign as keyof typeof SIGN_ELEMENTS]} element • {SIGN_MODALITIES[body.sign as keyof typeof SIGN_MODALITIES]} modality
+              {SIGN_ELEMENTS_13[body.sign as keyof typeof SIGN_ELEMENTS_13] ?? SIGN_ELEMENTS[body.sign as keyof typeof SIGN_ELEMENTS]} element • {SIGN_MODALITIES_13[body.sign as keyof typeof SIGN_MODALITIES_13] ?? SIGN_MODALITIES[body.sign as keyof typeof SIGN_MODALITIES]} modality
             </div>
           </div>
           
@@ -1245,7 +1342,7 @@ const PlanetaryPositions: React.FC<PlanetaryPositionsProps> = ({ positions, loca
             .filter(([id]) => ['sun', 'moon', 'mercury', 'venus', 'mars', 'jupiter', 'saturn'].includes(id))
             .map(([id, body]) => {
               const isRetro = body.isRetrograde;
-              const signDeg = (body.longitude % 30).toFixed(1);
+              const signDeg = (body.degreeInSign ?? 0).toFixed(1);
               const planetColor = PLANET_COLORS[id] || '#ffffff';
               return (
                 <button

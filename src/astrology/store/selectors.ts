@@ -252,6 +252,16 @@ export const selectZodiacSystem = createSelector(
   (prefs) => prefs.zodiacSystem
 );
 
+export const selectZodiacFrame = createSelector(
+  [selectPreferencesData],
+  (prefs) => prefs.zodiacFrame
+);
+
+export const selectSignCount = createSelector(
+  [selectPreferencesData],
+  (prefs) => prefs.signCount
+);
+
 export const selectHouseSystem = createSelector(
   [selectPreferencesData],
   (prefs) => prefs.houseSystem

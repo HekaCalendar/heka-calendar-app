@@ -5,6 +5,7 @@
 
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import type { RootState } from '../../store';
+import { addAstroProfile } from '../../store';
 import type { 
   AstroProfile, 
   NatalChart, 
@@ -12,6 +13,14 @@ import type {
   ChartParams,
   CreateProfileInput
 } from '../types';
+import type {
+  AstroProfile as CalendarAstroProfile,
+  NatalChart as CalendarNatalChart,
+  PlanetPosition,
+  HouseCusp,
+} from '../../types/astrology';
+import { getSignFromLongitude, getDegreeInSign } from '../types/core';
+import type { Degree } from '../types/core';
 
 import {
   generateNatalChart,
@@ -41,6 +50,164 @@ import {
   setPreferences,
   setCurrentPlanetaryPositions
 } from './slice';
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// CALENDAR SLICE SYNC BRIDGE
+// Ensures AI Coach, transit service, and day panel see profiles/charts created
+// in the new StarsHub astrology system.
+// ═══════════════════════════════════════════════════════════════════════════════
+
+function convertAstrologyChartToCalendar(
+  profileId: string,
+  chart: NatalChart,
+  birthData: {
+    date: string;
+    time: string;
+    timezone: string;
+    location: { latitude: number; longitude: number; name?: string; altitude?: number };
+  }
+): CalendarNatalChart {
+  const use13Signs = chart.signCount === 13;
+
+  // Convert planetary bodies to calendar PlanetPosition[]
+  const positions: PlanetPosition[] = Object.entries(chart.bodies || {}).map(([planetId, body]) => ({
+    planet: planetId as any,
+    sign: (body.sign || getSignFromLongitude(body.longitude as Degree, use13Signs)) as any,
+    degree: (body.degreeInSign ?? getDegreeInSign(body.longitude as Degree, use13Signs)) as number,
+    exactLongitude: body.longitude as number,
+    isRetrograde: body.isRetrograde ?? false,
+    speed: body.speed ?? 0,
+  }));
+
+  // Convert house cusps
+  const houses: HouseCusp[] = (chart.houses?.cusps || []).map((cusp) => ({
+    house: cusp.number as any,
+    sign: cusp.sign as any,
+    degree: cusp.degreeInSign as number,
+    exactLongitude: cusp.longitude as number,
+  }));
+
+  // Build ascendant PlanetPosition from house system ascendant degree
+  const ascLongitude = chart.houses?.ascendant as number | undefined;
+  const ascendant: PlanetPosition | null = ascLongitude !== undefined ? {
+    planet: 'sun' as any,
+    sign: getSignFromLongitude(ascLongitude as Degree, use13Signs) as any,
+    degree: getDegreeInSign(ascLongitude as Degree, use13Signs) as number,
+    exactLongitude: ascLongitude,
+    isRetrograde: false,
+    speed: 0,
+  } : null;
+
+  // Build midheaven PlanetPosition from house system mc degree
+  const mcLongitude = chart.houses?.mc as number | undefined;
+  const midheaven: PlanetPosition | null = mcLongitude !== undefined ? {
+    planet: 'sun' as any,
+    sign: getSignFromLongitude(mcLongitude as Degree, use13Signs) as any,
+    degree: getDegreeInSign(mcLongitude as Degree, use13Signs) as number,
+    exactLongitude: mcLongitude,
+    isRetrograde: false,
+    speed: 0,
+  } : null;
+
+  // Convert aspects (astrology aspect types are a superset of calendar aspect types)
+  const aspects = (chart.aspects || []).map((aspect: any) => ({
+    planet1: aspect.planet1 as any,
+    planet2: aspect.planet2 as any,
+    type: aspect.type as any,
+    angle: aspect.angle,
+    orb: aspect.orb,
+    isApplying: aspect.isApplying,
+  }));
+
+  const calculatedAt = typeof chart.calculatedAt === 'string'
+    ? chart.calculatedAt
+    : new Date(chart.calculatedAt as number).toISOString();
+
+  return {
+    id: chart.id as string,
+    profileId,
+    birthDate: birthData.date,
+    birthTime: birthData.time,
+    birthTimeUnknown: false,
+    timezone: birthData.timezone,
+    location: {
+      name: birthData.location.name || 'Unknown',
+      latitude: birthData.location.latitude,
+      longitude: birthData.location.longitude,
+      altitude: birthData.location.altitude,
+    },
+    positions,
+    ascendant,
+    midheaven,
+    houses: houses.length > 0 ? houses : undefined,
+    aspects,
+    calculatedAt,
+  };
+}
+
+function buildCalendarProfile(
+  astrologyProfile: AstroProfile,
+  chart?: CalendarNatalChart
+): CalendarAstroProfile {
+  const zodiacSystem = astrologyProfile.preferences.zodiacFrame === 'sidereal'
+    ? 'sidereal'
+    : (astrologyProfile.preferences.signCount === 13 ? '13-sign' : '12-sign');
+
+  return {
+    id: astrologyProfile.id as string,
+    name: astrologyProfile.name,
+    birthDate: astrologyProfile.birthData.birthDate,
+    birthTime: astrologyProfile.birthData.birthTime,
+    birthTimeUnknown: false,
+    location: {
+      name: astrologyProfile.birthData.location.locationName || 'Unknown',
+      latitude: astrologyProfile.birthData.location.latitude,
+      longitude: astrologyProfile.birthData.location.longitude,
+    },
+    timezone: astrologyProfile.birthData.timezone,
+    natalChart: chart,
+    preferences: {
+      zodiacSystem: zodiacSystem as any,
+      zodiacFrame: astrologyProfile.preferences.zodiacFrame,
+      signCount: astrologyProfile.preferences.signCount,
+      houseSystem: astrologyProfile.preferences.houseSystem as any,
+      aspectSet: 'major-only' as any,
+      showArabianParts: false,
+      showAsteroids: false,
+      showDwarfPlanets: false,
+    },
+    createdAt: new Date(astrologyProfile.createdAt as number).toISOString(),
+    updatedAt: new Date(astrologyProfile.updatedAt as number).toISOString(),
+  };
+}
+
+/** Sync an astrology profile (and optional chart) to the calendar slice so
+ *  the AI Coach, transit service, and day panel can access it. */
+function dispatchCalendarProfileSync(
+  dispatch: any,
+  astrologyProfile: AstroProfile,
+  chart?: NatalChart
+) {
+  let calendarChart: CalendarNatalChart | undefined;
+  if (chart) {
+    calendarChart = convertAstrologyChartToCalendar(
+      astrologyProfile.id as string,
+      chart,
+      {
+        date: astrologyProfile.birthData.birthDate,
+        time: astrologyProfile.birthData.birthTime,
+        timezone: astrologyProfile.birthData.timezone,
+        location: {
+          latitude: astrologyProfile.birthData.location.latitude,
+          longitude: astrologyProfile.birthData.location.longitude,
+          name: astrologyProfile.birthData.location.locationName,
+          altitude: astrologyProfile.birthData.location.altitude,
+        },
+      }
+    );
+  }
+  dispatch(addAstroProfile(buildCalendarProfile(astrologyProfile, calendarChart)));
+}
 
 // Initialize astrology system
 export const initializeAstrology = createAsyncThunk(
@@ -109,6 +276,9 @@ export const createProfile = createAsyncThunk(
       dispatch(addProfileAction(profile));
       dispatch(selectProfile(profile.id));
       
+      // Sync to calendar slice so AI Coach can see this profile
+      dispatchCalendarProfileSync(dispatch, profile);
+      
       // Generate chart for profile
       await dispatch(generateChartForProfile(profile.id));
       
@@ -159,14 +329,19 @@ export const generateChartForProfile = createAsyncThunk(
     dispatch(setCalculationProgress(0));
     
     try {
-      // Use global zodiac system preference from calendar state
-      const globalZodiacSystem = state.calendar.astroPreferences?.zodiacSystem || '12-sign';
+      // Use global zodiac preferences from calendar state
+      const globalPrefs = state.calendar.astroPreferences || {};
+      const globalZodiacSystem = globalPrefs.zodiacSystem || '12-sign';
+      const globalZodiacFrame = globalPrefs.zodiacFrame || 'tropical';
+      const globalSignCount = globalPrefs.signCount || 12;
       
       // Generate base chart
       const params: ChartParams = {
         profileId,
         birthData: profile.birthData,
         zodiacSystem: globalZodiacSystem,
+        zodiacFrame: globalZodiacFrame,
+        signCount: globalSignCount,
         houseSystem: profile.preferences.houseSystem
       };
       
@@ -201,6 +376,12 @@ export const generateChartForProfile = createAsyncThunk(
       // Update state
       dispatch(addChart(completeChart));
       dispatch(setCalculationStatus('complete'));
+      
+      // Sync to calendar slice so AI Coach can access natal chart + transits
+      const updatedProfile = (getState() as RootState).astrology.entities.profiles[profileId];
+      if (updatedProfile) {
+        dispatchCalendarProfileSync(dispatch, updatedProfile, completeChart);
+      }
       
       return completeChart;
     } catch (error) {
@@ -237,8 +418,11 @@ export const updateProfilePreferences = createAsyncThunk(
     await persistence.saveProfile(updatedProfile);
     dispatch(addProfileAction(updatedProfile));
     
-    // Regenerate chart if zodiac or house system changed
-    if (preferences.zodiacSystem || preferences.houseSystem) {
+    // Sync preferences update to calendar slice
+    dispatchCalendarProfileSync(dispatch, updatedProfile);
+    
+    // Regenerate chart if zodiac frame, sign count, or house system changed
+    if (preferences.zodiacSystem || preferences.zodiacFrame || preferences.signCount || preferences.houseSystem) {
       await dispatch(generateChartForProfile(profileId));
     }
     
@@ -279,11 +463,12 @@ export const updateCurrentPlanetaryPositions = createAsyncThunk(
     try {
       const now = new Date();
       const jd = calculateJulianDay(
-        now.getFullYear(),
-        now.getMonth() + 1,
-        now.getDate(),
-        now.getHours(),
-        now.getMinutes()
+        now.getUTCFullYear(),
+        now.getUTCMonth() + 1,
+        now.getUTCDate(),
+        now.getUTCHours(),
+        now.getUTCMinutes(),
+        now.getUTCSeconds()
       );
       
       const positions = calculateAllPlanets(jd, [

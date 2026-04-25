@@ -11,6 +11,7 @@
 
 import React, { useEffect, useState, useCallback, useRef } from 'react';
 import { useSelector } from 'react-redux';
+import { useBlocker } from 'react-router-dom';
 import type { RootState } from '../store';
 import { tutorialService } from '../services/tutorialService';
 import type { TutorialStep } from '../types/tutorial';
@@ -58,6 +59,14 @@ export const TutorialSpotlight: React.FC = () => {
   const isWaiting = tutorialState?.isWaitingForAction;
   const shouldBlockInteraction = isInteractive && isWaiting;
 
+  // Block route navigation during interactive steps
+  useBlocker(({ nextLocation, currentLocation }) => {
+    if (!shouldBlockInteraction) return false;
+    if (nextLocation.pathname === currentLocation.pathname) return false;
+    tutorialService.triggerShake();
+    return true;
+  });
+
   // Block keyboard navigation during interactive steps
   useEffect(() => {
     if (!shouldBlockInteraction) {
@@ -93,22 +102,10 @@ export const TutorialSpotlight: React.FC = () => {
       }
     };
 
-    // Prevent route changes by intercepting popstate
-    const blockPopState = (e: PopStateEvent) => {
-      e.preventDefault();
-      window.history.pushState(null, '', window.location.href);
-      tutorialService.triggerShake();
-    };
-
     document.addEventListener('keydown', blockKeyboard, true);
-    window.addEventListener('popstate', blockPopState);
-    
-    // Push state to prevent back button
-    window.history.pushState(null, '', window.location.href);
 
     return () => {
       document.removeEventListener('keydown', blockKeyboard, true);
-      window.removeEventListener('popstate', blockPopState);
     };
   }, [shouldBlockInteraction, currentStep?.targetSelector]);
 

@@ -312,6 +312,7 @@
 .celestial-expandable-card .countdown-time {
   /* Reduce gap to fit better */
   gap: 4px;
+  flex-wrap: wrap;
 }
 
 .celestial-expandable-card .countdown-unit {

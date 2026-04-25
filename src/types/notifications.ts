@@ -1,0 +1,247 @@
+/**
+ * ═══════════════════════════════════════════════════════════════════════════════
+ * NOTIFICATION TYPE DEFINITIONS
+ * Unified intelligent notification system for HEKA Calendar
+ * ═══════════════════════════════════════════════════════════════════════════════
+ */
+
+// ── Tiers ────────────────────────────────────────────────────────────────────
+
+export type NotificationTier = 'core' | 'standard' | 'ambient';
+
+export const TIER_DAILY_CAPS: Record<NotificationTier, number> = {
+  core: Infinity,
+  standard: 3,
+  ambient: 2,
+};
+
+export const TIER_PRIORITY: Record<NotificationTier, number> = {
+  core: 3,
+  standard: 2,
+  ambient: 1,
+};
+
+// ── Sections ─────────────────────────────────────────────────────────────────
+
+export type NotificationSection = 'calendar' | 'stars' | 'circle' | 'journal' | 'planner';
+
+// ── Notification Request (engine input) ──────────────────────────────────────
+
+export interface NotificationRequest {
+  type: string;
+  tier: NotificationTier;
+  title: string;
+  body: string;
+  scheduleAt: Date;
+  id?: number;
+  extra?: Record<string, any>;
+  section: NotificationSection;
+  /** If true, this notification can replace a previously scheduled one of the same type */
+  replaceExisting?: boolean;
+}
+
+export interface DeliveredNotification {
+  id: string;
+  type: string;
+  tier: NotificationTier;
+  section: NotificationSection;
+  title: string;
+  body: string;
+  deliveredAt: number; // timestamp
+  extra?: Record<string, any>;
+}
+
+export interface DailyStats {
+  date: string; // YYYY-MM-DD
+  counts: Record<NotificationTier, number>;
+  delivered: DeliveredNotification[];
+}
+
+// ── Template System ──────────────────────────────────────────────────────────
+
+export interface NotificationTemplate {
+  title: string;
+  body: string;
+  /** Optional condition function name (resolved at runtime) */
+  condition?: string;
+}
+
+export type TemplateLibrary = Record<string, NotificationTemplate[]>;
+
+// ── Per-Section Preferences ──────────────────────────────────────────────────
+
+export interface CalendarNotificationPrefs {
+  holidayReminders: boolean;
+  civilHekaTransition: boolean;
+  moonPhaseDegrees: boolean;
+  noteReminders: boolean;
+}
+
+export interface StarsNotificationPrefs {
+  dailyCelestialTips: boolean;
+  retrogradeAlerts: boolean;
+  voidMoonReminders: boolean;
+  moonDegreeNotifications: boolean;
+}
+
+export interface CircleNotificationPrefs {
+  friendRequests: boolean;
+  taskRequests: boolean;
+  messages: boolean;
+  taskDueReminders: boolean;
+}
+
+export interface JournalNotificationPrefs {
+  trackerReminders: boolean;
+  dailyReflectionPrompt: boolean;
+  celestialInsightAlert: boolean;
+}
+
+export interface PlannerNotificationPrefs {
+  taskReminders: boolean;
+  dailyBriefing: boolean;
+  streakSaver: boolean;
+  completionCelebrations: boolean;
+  complementaryTasks: boolean;
+}
+
+export interface QuietHoursConfig {
+  enabled: boolean;
+  start: number; // 0-23, e.g. 22 for 10 PM
+  end: number;   // 0-23, e.g. 7 for 7 AM
+}
+
+export interface NotificationPreferences {
+  globalEnabled: boolean;
+  quietHours: QuietHoursConfig;
+  calendar: CalendarNotificationPrefs;
+  stars: StarsNotificationPrefs;
+  circle: CircleNotificationPrefs;
+  journal: JournalNotificationPrefs;
+  planner: PlannerNotificationPrefs;
+}
+
+// ── Default Preferences ──────────────────────────────────────────────────────
+
+export const DEFAULT_CALENDAR_NOTIFICATION_PREFS: CalendarNotificationPrefs = {
+  holidayReminders: true,
+  civilHekaTransition: true,
+  moonPhaseDegrees: false,
+  noteReminders: true,
+};
+
+export const DEFAULT_STARS_NOTIFICATION_PREFS: StarsNotificationPrefs = {
+  dailyCelestialTips: false,
+  retrogradeAlerts: true,
+  voidMoonReminders: false,
+  moonDegreeNotifications: false,
+};
+
+export const DEFAULT_CIRCLE_NOTIFICATION_PREFS: CircleNotificationPrefs = {
+  friendRequests: true,
+  taskRequests: true,
+  messages: true,
+  taskDueReminders: true,
+};
+
+export const DEFAULT_JOURNAL_NOTIFICATION_PREFS: JournalNotificationPrefs = {
+  trackerReminders: false,
+  dailyReflectionPrompt: false,
+  celestialInsightAlert: false,
+};
+
+export const DEFAULT_PLANNER_NOTIFICATION_PREFS: PlannerNotificationPrefs = {
+  taskReminders: true,
+  dailyBriefing: true,
+  streakSaver: true,
+  completionCelebrations: true,
+  complementaryTasks: false,
+};
+
+export const DEFAULT_QUIET_HOURS: QuietHoursConfig = {
+  enabled: false,
+  start: 22,
+  end: 7,
+};
+
+export const DEFAULT_NOTIFICATION_PREFERENCES: NotificationPreferences = {
+  globalEnabled: true,
+  quietHours: DEFAULT_QUIET_HOURS,
+  calendar: DEFAULT_CALENDAR_NOTIFICATION_PREFS,
+  stars: DEFAULT_STARS_NOTIFICATION_PREFS,
+  circle: DEFAULT_CIRCLE_NOTIFICATION_PREFS,
+  journal: DEFAULT_JOURNAL_NOTIFICATION_PREFS,
+  planner: DEFAULT_PLANNER_NOTIFICATION_PREFS,
+};
+
+// ── Notification Type Constants ──────────────────────────────────────────────
+
+export const NOTIFICATION_TYPES = {
+  // Calendar
+  HOLIDAY_REMINDER: 'holiday-reminder',
+  CIVIL_HEKA_TRANSITION: 'civil-heka-transition',
+  MOON_DEGREE_UPDATE: 'moon-degree-update',
+  NOTE_REMINDER: 'note-reminder',
+
+  // Stars
+  DAILY_CELESTIAL_TIPS: 'daily-celestial-tips',
+  RETROGRADE_ALERT: 'retrograde-alert',
+  VOID_MOON_ENTERED: 'void-moon-entered',
+  VOID_MOON_ENDED: 'void-moon-ended',
+
+  // Circle
+  FRIEND_REQUEST: 'friend-request',
+  TASK_ASSIGNED: 'task-assigned',
+  MESSAGE_RECEIVED: 'message-received',
+  TASK_DUE_SOON: 'task-due-soon',
+
+  // Journal
+  TRACKER_REMINDER: 'tracker-reminder',
+  DAILY_REFLECTION_PROMPT: 'daily-reflection-prompt',
+  CELESTIAL_INSIGHT_ALERT: 'celestial-insight-alert',
+
+  // Planner
+  TASK_REMINDER: 'task-reminder',
+  DAILY_BRIEFING: 'daily-briefing',
+  STREAK_SAVER: 'streak-saver',
+  STREAK_PROTECTION: 'streak-protection',
+  COMPLETION_CELEBRATION: 'completion-celebration',
+  COMPLEMENTARY_TASK: 'complementary-task',
+} as const;
+
+// ── ID Ranges (to prevent collisions) ────────────────────────────────────────
+
+export const NOTIFICATION_ID_RANGES = {
+  calendar: { min: 100000, max: 199999 },
+  stars: { min: 200000, max: 299999 },
+  circle: { min: 300000, max: 399999 },
+  journal: { min: 400000, max: 499999 },
+  planner: { min: 500000, max: 599999 },
+  engine: { min: 900000, max: 999999 },
+} as const;
+
+// ── Engine State (persisted separately) ──────────────────────────────────────
+
+export interface NotificationEngineState {
+  lastReconcileAt: number | null;
+  dailyLedgers: Record<string, DailyStats>;
+  scheduledIds: string[];
+  voidMoonWatching: boolean;
+  lastVoidMoonState: boolean | null;
+  lastMoonDegree: number | null;
+  sentTodayFlags: Record<string, string>; // key -> date sent (YYYY-MM-DD)
+  templateEngagement: Record<string, Record<number, number>>;
+  timezone: string | null;
+}
+
+export const DEFAULT_ENGINE_STATE: NotificationEngineState = {
+  lastReconcileAt: null,
+  dailyLedgers: {},
+  scheduledIds: [],
+  voidMoonWatching: false,
+  lastVoidMoonState: null,
+  lastMoonDegree: null,
+  sentTodayFlags: {},
+  templateEngagement: {},
+  timezone: null,
+};

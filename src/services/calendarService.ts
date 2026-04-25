@@ -4,6 +4,7 @@
  */
 
 import type { HekaDate, HekaMonthIndex, ArcType, MonthInfo, CalendarDay, MoonPhaseData } from '../types';
+import { addDays, differenceInCalendarDays } from 'date-fns';
 
 // ============================================================================
 // Constants
@@ -62,18 +63,20 @@ export function isGregorianLeapYear(year: number): boolean {
  * Years in TRUE mode are numbered from a base year.
  * March gets 30 days on correction years, 29 otherwise.
  */
+const TRUE_MODE_BASE_YEAR = 2026;
+
 function isTrueModeMarchCorrection(hekaYear: number): boolean {
   // In TRUE mode, March correction happens every 4 years
   // EXCEPT every 128th year (which keeps 29 days)
   // This creates a mean year length of ~365.2422 days (very close to tropical year)
   
-  // Calculate years since base (year 0 = first HEKA year)
+  // Calculate years since base alignment year (2026 = index 0)
   // Correction years: 3, 7, 11, 15... (every 4 years, 0-indexed)
   // Skip corrections on years 127, 255, 383... (every 128 years)
   
-  const yearIndex = hekaYear >= 0 ? hekaYear : hekaYear + 1; // Handle negative years
-  const isFourthYear = (yearIndex % 4) === 3;
-  const is128thYear = (yearIndex % 128) === 127;
+  const yearIndex = hekaYear - TRUE_MODE_BASE_YEAR;
+  const isFourthYear = ((yearIndex % 4) + 4) % 4 === 3;
+  const is128thYear = ((yearIndex % 128) + 128) % 128 === 127;
   
   return isFourthYear && !is128thYear;
 }
@@ -114,8 +117,6 @@ export function getMarchLength(hekaYear: number): number {
  * We establish a base alignment and calculate cumulative drift
  */
 function getTrueModeYearStart(hekaYear: number): Date {
-  // Base alignment: HEKA year 2026 starts on April 1, 2026 (Gregorian)
-  const BASE_HEKA_YEAR = 2026;
   const BASE_GREGORIAN_YEAR = 2026;
   const BASE_GREGORIAN_MONTH = 3; // April (0-indexed)
   const BASE_GREGORIAN_DAY = 1;
@@ -123,19 +124,18 @@ function getTrueModeYearStart(hekaYear: number): Date {
   // Calculate days offset from base year
   let daysOffset = 0;
   
-  if (hekaYear >= BASE_HEKA_YEAR) {
-    for (let y = BASE_HEKA_YEAR; y < hekaYear; y++) {
+  if (hekaYear >= TRUE_MODE_BASE_YEAR) {
+    for (let y = TRUE_MODE_BASE_YEAR; y < hekaYear; y++) {
       daysOffset += isHekaLeapMarch(y) ? 366 : 365;
     }
   } else {
-    for (let y = hekaYear; y < BASE_HEKA_YEAR; y++) {
+    for (let y = hekaYear; y < TRUE_MODE_BASE_YEAR; y++) {
       daysOffset -= isHekaLeapMarch(y) ? 366 : 365;
     }
   }
   
   const baseDate = new Date(BASE_GREGORIAN_YEAR, BASE_GREGORIAN_MONTH, BASE_GREGORIAN_DAY);
-  const result = new Date(baseDate.getTime() + daysOffset * 24 * 60 * 60 * 1000);
-  return result;
+  return addDays(baseDate, daysOffset);
 }
 
 /**
@@ -183,9 +183,7 @@ export function getCivilStartOfHekaMonth(hekaYear: number, monthIndex: number): 
     daysToAdd += getDaysInMonth(hekaYear, i as HekaMonthIndex);
   }
   
-  const result = new Date(yearStart);
-  result.setDate(result.getDate() + daysToAdd);
-  return result;
+  return addDays(yearStart, daysToAdd);
 }
 
 /**
@@ -205,42 +203,35 @@ export function getDaysInMonth(hekaYear: number, monthIndex: HekaMonthIndex): nu
  */
 export function hekaToCivil(hekaDate: HekaDate): Date {
   const monthStart = getCivilStartOfHekaMonth(hekaDate.year, hekaDate.month);
-  const result = new Date(monthStart);
-  result.setDate(result.getDate() + hekaDate.day - 1);
-  return result;
+  return addDays(monthStart, hekaDate.day - 1);
 }
 
 /**
  * Convert civil date to HEKA date
  */
 export function civilToHeka(civilDate: Date): HekaDate | null {
+  // Strip time for accurate calendar-day comparison
+  const target = new Date(civilDate.getFullYear(), civilDate.getMonth(), civilDate.getDate());
+  
   // Find which HEKA year this date falls into
   // Start with an approximation based on the year
-  let hekaYear = civilDate.getMonth() < 3 ? civilDate.getFullYear() - 1 : civilDate.getFullYear();
+  let hekaYear = target.getMonth() < 3 ? target.getFullYear() - 1 : target.getFullYear();
   
   // Search backwards and forwards to find the correct year
   for (let offset = -2; offset <= 2; offset++) {
     const testYear = hekaYear + offset;
     const yearStart = getHekaYearStart(testYear);
-    const yearEnd = new Date(getHekaYearStart(testYear + 1).getTime() - 24 * 60 * 60 * 1000);
+    const yearEnd = addDays(getHekaYearStart(testYear + 1), -1);
     
-    if (civilDate >= yearStart && civilDate <= yearEnd) {
+    if (target >= yearStart && target <= yearEnd) {
       // Found the year, now find the month
       for (let m = 0; m < 13; m++) {
         const monthStart = getCivilStartOfHekaMonth(testYear, m);
-        const monthEnd = new Date(
-          getCivilStartOfHekaMonth(testYear, m + 1 < 13 ? m + 1 : 0).getTime() - 
-          (m === 12 ? 0 : 24 * 60 * 60 * 1000)
-        );
+        const monthLength = getDaysInMonth(testYear, m as HekaMonthIndex);
+        const monthEnd = addDays(monthStart, monthLength - 1);
         
-        // For March, use proper end calculation
-        if (m === 12) {
-          const marchLength = getDaysInMonth(testYear, 12 as HekaMonthIndex);
-          monthEnd.setTime(monthStart.getTime() + (marchLength - 1) * 24 * 60 * 60 * 1000);
-        }
-        
-        if (civilDate >= monthStart && civilDate <= monthEnd) {
-          const dayDiff = Math.floor((civilDate.getTime() - monthStart.getTime()) / (1000 * 60 * 60 * 24));
+        if (target >= monthStart && target <= monthEnd) {
+          const dayDiff = differenceInCalendarDays(target, monthStart);
           return { year: testYear, month: m as HekaMonthIndex, day: dayDiff + 1 };
         }
       }
@@ -329,8 +320,7 @@ export function generateMonthGrid(
   
   // Leading blank cells
   for (let i = 0; i < firstDayOffset; i++) {
-    const blankCivil = new Date(firstDayCivil);
-    blankCivil.setDate(blankCivil.getDate() - (firstDayOffset - i));
+    const blankCivil = addDays(firstDayCivil, -(firstDayOffset - i));
     
     grid.push({
       hekaDate: { year: hekaYear, month: monthIndex, day: 0 },
@@ -344,8 +334,7 @@ export function generateMonthGrid(
   
   // Actual days
   for (let day = 1; day <= daysInMonth; day++) {
-    const civilDate = new Date(firstDayCivil);
-    civilDate.setDate(civilDate.getDate() + day - 1);
+    const civilDate = addDays(firstDayCivil, day - 1);
     
     grid.push({
       hekaDate: { year: hekaYear, month: monthIndex, day },
@@ -362,8 +351,7 @@ export function generateMonthGrid(
   const lastDay = hekaToCivil({ year: hekaYear, month: monthIndex, day: daysInMonth });
   
   for (let i = 1; i <= remainingCells; i++) {
-    const nextCivil = new Date(lastDay);
-    nextCivil.setDate(nextCivil.getDate() + i);
+    const nextCivil = addDays(lastDay, i);
     
     grid.push({
       hekaDate: { year: hekaYear, month: monthIndex, day: 0 },

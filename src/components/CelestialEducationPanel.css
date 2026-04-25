@@ -1,0 +1,898 @@
+/**
+ * Celestial Education Panel Styles
+ */
+
+.celestial-education-panel {
+  background: var(--module-bg);
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+/* ═════════════════════════════════════════════════════════════════════════════
+   TAB NAVIGATION
+   ═════════════════════════════════════════════════════════════════════════════ */
+
+.edu-tabs {
+  display: flex;
+  gap: 0.5rem;
+  padding: 0.75rem;
+  background: var(--oj-surface);
+  border-bottom: 1px solid var(--oj-border-subtle);
+  overflow-x: auto;
+  scrollbar-width: thin;
+}
+
+.edu-tabs::-webkit-scrollbar {
+  height: 4px;
+}
+
+.edu-tabs::-webkit-scrollbar-thumb {
+  background: var(--oj-border-subtle);
+  border-radius: 2px;
+}
+
+.edu-tab {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.625rem 1rem;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  color: var(--oj-text-secondary);
+  font-size: 0.9rem;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.edu-tab:hover {
+  background: rgba(157, 78, 221, 0.1);
+  color: var(--module-text);
+}
+
+.edu-tab.active {
+  background: rgba(157, 78, 221, 0.2);
+  border-color: rgba(157, 78, 221, 0.3);
+  color: var(--module-accent);
+}
+
+.tab-count {
+  padding: 0.125rem 0.375rem;
+  background: var(--module-accent);
+  color: var(--module-bg);
+  border-radius: 10px;
+  font-size: 0.7rem;
+  font-weight: 600;
+}
+
+/* ═════════════════════════════════════════════════════════════════════════════
+   CONTENT AREA
+   ═════════════════════════════════════════════════════════════════════════════ */
+
+.edu-content {
+  padding: 1.25rem;
+  max-height: 600px;
+  overflow-y: auto;
+}
+
+.view-intro {
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--oj-border-subtle);
+}
+
+.view-intro h4 {
+  margin: 0 0 0.5rem;
+  color: var(--module-accent);
+  font-size: 1.1rem;
+}
+
+.view-intro p {
+  margin: 0;
+  color: var(--oj-text-secondary);
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+
+/* ═════════════════════════════════════════════════════════════════════════════
+   WEATHER VIEW
+   ═════════════════════════════════════════════════════════════════════════════ */
+
+.weather-view {
+  animation: fade-in 0.3s ease-out;
+}
+
+.weather-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+}
+
+.moon-display {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.25rem 2rem;
+  background: linear-gradient(135deg, rgba(157, 78, 221, 0.1) 0%, rgba(157, 78, 221, 0.02) 100%);
+  border-radius: 16px;
+  border: 1px solid rgba(157, 78, 221, 0.2);
+}
+
+.moon-icon {
+  font-size: 3rem;
+}
+
+.moon-info h3 {
+  margin: 0;
+  font-size: 1.25rem;
+  color: var(--module-text);
+}
+
+.moon-sign {
+  color: var(--module-accent);
+  font-size: 1rem;
+}
+
+.weather-summary,
+.weather-guidance,
+.weather-themes,
+.weather-opportunities,
+.weather-challenges,
+.moon-sign-deep-dive {
+  margin-bottom: 1.25rem;
+}
+
+.weather-summary h4,
+.weather-guidance h5,
+.weather-themes h5,
+.moon-sign-deep-dive h5,
+.weather-opportunities h5,
+.weather-challenges h5 {
+  margin: 0 0 0.75rem;
+  color: var(--module-text);
+}
+
+.weather-summary p,
+.weather-guidance p {
+  margin: 0;
+  line-height: 1.7;
+  color: var(--oj-text-secondary);
+}
+
+.theme-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.theme-tag {
+  padding: 0.375rem 0.75rem;
+  background: rgba(157, 78, 221, 0.1);
+  border: 1px solid rgba(157, 78, 221, 0.2);
+  border-radius: 20px;
+  font-size: 0.85rem;
+  color: var(--module-accent);
+}
+
+.moon-sign-deep-dive {
+  padding: 1rem;
+  background: var(--oj-surface);
+  border-radius: 12px;
+}
+
+.moon-sign-deep-dive p {
+  margin: 0.5rem 0;
+  color: var(--oj-text-secondary);
+}
+
+.keywords {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.375rem;
+  margin-top: 0.75rem;
+}
+
+.keyword {
+  padding: 0.25rem 0.5rem;
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: 4px;
+  font-size: 0.8rem;
+  color: var(--oj-text-secondary);
+}
+
+.weather-opportunities ul,
+.weather-challenges ul {
+  margin: 0;
+  padding-left: 1.25rem;
+  color: var(--oj-text-secondary);
+}
+
+.weather-opportunities li,
+.weather-challenges li {
+  margin-bottom: 0.5rem;
+  line-height: 1.5;
+}
+
+/* ═════════════════════════════════════════════════════════════════════════════
+   PLANETS VIEW
+   ═════════════════════════════════════════════════════════════════════════════ */
+
+.planets-view {
+  animation: fade-in 0.3s ease-out;
+}
+
+.planets-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.planet-card {
+  background: var(--oj-surface);
+  border: 1px solid var(--oj-border-subtle);
+  border-radius: 12px;
+  overflow: hidden;
+  transition: all 0.2s;
+}
+
+.planet-card:hover {
+  border-color: var(--planet-color, var(--oj-border-subtle));
+}
+
+.planet-card.expanded {
+  border-color: var(--planet-color, var(--module-accent));
+}
+
+.planet-header {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+}
+
+.planet-identity {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.planet-symbol {
+  font-size: 1.5rem;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--planet-color, var(--oj-border-subtle));
+  border-radius: 50%;
+  color: white;
+}
+
+.planet-names {
+  display: flex;
+  flex-direction: column;
+}
+
+.planet-name {
+  font-weight: 600;
+  color: var(--module-text);
+}
+
+.planet-position {
+  font-size: 0.85rem;
+  color: var(--oj-text-secondary);
+  text-transform: capitalize;
+}
+
+.planet-badges {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.element-badge {
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  text-transform: capitalize;
+  font-weight: 500;
+}
+
+.element-badge.fire {
+  background: rgba(239, 68, 68, 0.2);
+  color: #ef4444;
+}
+
+.element-badge.earth {
+  background: rgba(34, 197, 94, 0.2);
+  color: #22c55e;
+}
+
+.element-badge.air {
+  background: rgba(59, 130, 246, 0.2);
+  color: #3b82f6;
+}
+
+.element-badge.water {
+  background: rgba(6, 182, 212, 0.2);
+  color: #06b6d4;
+}
+
+.retrograde-badge {
+  padding: 0.25rem 0.5rem;
+  background: rgba(245, 158, 11, 0.2);
+  color: #f59e0b;
+  border-radius: 4px;
+  font-size: 0.75rem;
+}
+
+.expand-arrow {
+  color: var(--oj-text-muted);
+  transition: transform 0.2s;
+}
+
+.planet-card.expanded .expand-arrow {
+  transform: rotate(180deg);
+}
+
+.planet-education {
+  padding: 0 1rem 1rem;
+  border-top: 1px solid var(--oj-border-subtle);
+  animation: expand-in 0.3s ease-out;
+}
+
+@keyframes expand-in {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.edu-section {
+  margin-top: 1rem;
+}
+
+.edu-section h6 {
+  margin: 0 0 0.5rem;
+  color: var(--module-accent);
+  font-size: 0.9rem;
+}
+
+.edu-section p {
+  margin: 0;
+  line-height: 1.6;
+  color: var(--oj-text-secondary);
+}
+
+.edu-section.shadow {
+  padding: 0.75rem;
+  background: rgba(239, 68, 68, 0.05);
+  border-radius: 8px;
+}
+
+.edu-section.shadow h6 {
+  color: #ef4444;
+}
+
+.edu-section.advice {
+  padding: 0.75rem;
+  background: rgba(34, 197, 94, 0.05);
+  border-radius: 8px;
+}
+
+.edu-section.advice h6 {
+  color: #22c55e;
+}
+
+.governs-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+  align-items: center;
+}
+
+.governs-list span:first-child {
+  color: var(--oj-text-tertiary);
+  font-size: 0.85rem;
+}
+
+.govern-item {
+  padding: 0.25rem 0.5rem;
+  background: rgba(157, 78, 221, 0.1);
+  border-radius: 4px;
+  font-size: 0.8rem;
+  color: var(--oj-text-secondary);
+}
+
+/* ═════════════════════════════════════════════════════════════════════════════
+   TRANSITS VIEW
+   ═════════════════════════════════════════════════════════════════════════════ */
+
+.transits-view {
+  animation: fade-in 0.3s ease-out;
+}
+
+.transits-view.empty {
+  text-align: center;
+  padding: 3rem 1rem;
+}
+
+.empty-state {
+  opacity: 0.7;
+}
+
+.empty-icon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  display: block;
+}
+
+.transits-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.transit-edu-card {
+  background: var(--oj-surface);
+  border: 1px solid var(--oj-border-subtle);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.transit-edu-card.harmonious {
+  border-left: 3px solid #22c55e;
+}
+
+.transit-edu-card.challenging {
+  border-left: 3px solid #ef4444;
+}
+
+.transit-edu-card.neutral {
+  border-left: 3px solid #9d4edd;
+}
+
+.transit-header {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+}
+
+.transit-symbols {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 1.25rem;
+}
+
+.transit-symbols .aspect-symbol {
+  color: var(--oj-text-muted);
+  font-size: 1rem;
+}
+
+.transit-title {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.transit-name {
+  font-weight: 500;
+  color: var(--module-text);
+  text-transform: capitalize;
+}
+
+.transit-house-ref {
+  font-size: 0.8rem;
+  color: var(--oj-text-secondary);
+}
+
+.transit-meta {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.nature-badge {
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.7rem;
+  text-transform: capitalize;
+  font-weight: 500;
+}
+
+.nature-badge.harmonious {
+  background: rgba(34, 197, 94, 0.2);
+  color: #22c55e;
+}
+
+.nature-badge.challenging {
+  background: rgba(239, 68, 68, 0.2);
+  color: #ef4444;
+}
+
+.nature-badge.neutral {
+  background: rgba(157, 78, 221, 0.2);
+  color: #9d4edd;
+}
+
+.strength-badge {
+  padding: 0.25rem 0.5rem;
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: 4px;
+  font-size: 0.8rem;
+  color: var(--oj-text-secondary);
+  font-weight: 600;
+}
+
+.transit-education {
+  padding: 0 1rem 1rem;
+  border-top: 1px solid var(--oj-border-subtle);
+  animation: expand-in 0.3s ease-out;
+}
+
+.transit-reading h5 {
+  margin: 1rem 0 0.5rem;
+  color: var(--module-accent);
+  font-size: 1rem;
+}
+
+.reading-meaning {
+  margin: 0 0 1rem;
+  line-height: 1.6;
+  color: var(--oj-text-secondary);
+}
+
+.transit-personal,
+.aspect-deep-dive,
+.house-deep-dive,
+.transit-timing,
+.transit-advice {
+  margin-bottom: 1rem;
+  padding: 0.75rem;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 8px;
+}
+
+.transit-personal h6,
+.aspect-deep-dive h6,
+.house-deep-dive h6,
+.transit-timing h6,
+.transit-advice h6 {
+  margin: 0 0 0.5rem;
+  color: var(--module-accent);
+  font-size: 0.9rem;
+}
+
+.transit-personal p,
+.aspect-deep-dive p,
+.house-deep-dive p,
+.transit-timing p,
+.transit-advice p {
+  margin: 0.25rem 0;
+  line-height: 1.5;
+  color: var(--oj-text-secondary);
+}
+
+.life-areas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.375rem;
+  margin-top: 0.75rem;
+  align-items: center;
+}
+
+.life-areas span:first-child {
+  color: var(--oj-text-tertiary);
+  font-size: 0.85rem;
+}
+
+.area-tag {
+  padding: 0.25rem 0.5rem;
+  background: rgba(157, 78, 221, 0.1);
+  border-radius: 4px;
+  font-size: 0.8rem;
+  color: var(--oj-text-secondary);
+}
+
+/* ═════════════════════════════════════════════════════════════════════════════
+   HOUSES VIEW
+   ═════════════════════════════════════════════════════════════════════════════ */
+
+.houses-view {
+  animation: fade-in 0.3s ease-out;
+}
+
+.houses-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+
+.house-card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.25rem;
+  padding: 0.875rem;
+  background: var(--oj-surface);
+  border: 1px solid var(--oj-border-subtle);
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-align: left;
+}
+
+.house-card:hover {
+  border-color: var(--module-accent);
+  background: rgba(157, 78, 221, 0.05);
+}
+
+.house-card.selected {
+  border-color: var(--module-accent);
+  background: rgba(157, 78, 221, 0.1);
+}
+
+.house-number {
+  font-size: 0.75rem;
+  color: var(--oj-text-tertiary);
+  font-weight: 600;
+}
+
+.house-name {
+  font-weight: 500;
+  color: var(--module-text);
+}
+
+.house-question {
+  font-size: 0.8rem;
+  color: var(--oj-text-secondary);
+  font-style: italic;
+}
+
+.house-detail {
+  padding: 1.25rem;
+  background: var(--oj-surface);
+  border: 1px solid var(--oj-border-subtle);
+  border-radius: 12px;
+  animation: slide-up 0.3s ease-out;
+}
+
+@keyframes slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.house-detail h4 {
+  margin: 0 0 1rem;
+  color: var(--module-accent);
+}
+
+.house-psychological {
+  margin: 0 0 1rem;
+  line-height: 1.6;
+  color: var(--oj-text-secondary);
+}
+
+.house-keywords {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.375rem;
+  margin-bottom: 1rem;
+}
+
+.house-life-areas h5 {
+  margin: 0 0 0.5rem;
+  color: var(--module-text);
+  font-size: 0.9rem;
+}
+
+.house-life-areas ul {
+  margin: 0;
+  padding-left: 1.25rem;
+  color: var(--oj-text-secondary);
+}
+
+.house-life-areas li {
+  margin-bottom: 0.375rem;
+}
+
+/* ═════════════════════════════════════════════════════════════════════════════
+   ASPECTS VIEW
+   ═════════════════════════════════════════════════════════════════════════════ */
+
+.aspects-view {
+  animation: fade-in 0.3s ease-out;
+}
+
+.aspects-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.aspect-edu-card {
+  background: var(--oj-surface);
+  border: 1px solid var(--oj-border-subtle);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.aspect-edu-card.harmonious {
+  border-left: 3px solid #22c55e;
+}
+
+.aspect-edu-card.challenging {
+  border-left: 3px solid #ef4444;
+}
+
+.aspect-edu-card.neutral {
+  border-left: 3px solid #9d4edd;
+}
+
+.aspect-header {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+}
+
+.aspect-identity {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.aspect-angle {
+  padding: 0.375rem 0.625rem;
+  background: rgba(157, 78, 221, 0.1);
+  border-radius: 6px;
+  font-family: monospace;
+  font-size: 0.9rem;
+  color: var(--module-accent);
+}
+
+.aspect-name {
+  font-weight: 500;
+  color: var(--module-text);
+}
+
+.aspect-badges {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.aspect-education {
+  padding: 0 1rem 1rem;
+  border-top: 1px solid var(--oj-border-subtle);
+  animation: expand-in 0.3s ease-out;
+}
+
+.aspect-keywords {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.375rem;
+  margin: 1rem 0;
+}
+
+.aspect-section {
+  margin-bottom: 1rem;
+}
+
+.aspect-section h6 {
+  margin: 0 0 0.5rem;
+  color: var(--module-accent);
+  font-size: 0.9rem;
+}
+
+.aspect-section p {
+  margin: 0;
+  line-height: 1.6;
+  color: var(--oj-text-secondary);
+}
+
+.aspect-section.opportunity {
+  padding: 0.75rem;
+  background: rgba(34, 197, 94, 0.05);
+  border-radius: 8px;
+}
+
+.aspect-section.opportunity h6 {
+  color: #22c55e;
+}
+
+.aspect-section.challenge {
+  padding: 0.75rem;
+  background: rgba(239, 68, 68, 0.05);
+  border-radius: 8px;
+}
+
+.aspect-section.challenge h6 {
+  color: #ef4444;
+}
+
+/* ═════════════════════════════════════════════════════════════════════════════
+   RESPONSIVE
+   ═════════════════════════════════════════════════════════════════════════════ */
+
+@media (max-width: 480px) {
+  .edu-tabs {
+    padding: 0.5rem;
+  }
+  
+  .edu-tab {
+    padding: 0.5rem 0.75rem;
+    font-size: 0.85rem;
+  }
+  
+  .edu-content {
+    padding: 1rem;
+  }
+  
+  .houses-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .planet-header,
+  .transit-header,
+  .aspect-header {
+    flex-wrap: wrap;
+  }
+  
+  .transit-symbols {
+    font-size: 1rem;
+  }
+  
+  .transit-title {
+    flex: 1;
+    min-width: 0;
+  }
+  
+  .moon-display {
+    flex-direction: column;
+    text-align: center;
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}

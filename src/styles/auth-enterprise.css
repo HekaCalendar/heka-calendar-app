@@ -523,3 +523,135 @@
     transform: rotate(360deg);
   }
 }
+/* Account Picker */
+.auth-account-picker__subtitle {
+  text-align: center;
+  color: var(--color-text-muted);
+  font-size: 0.9375rem;
+  margin-bottom: 1.25rem;
+}
+
+.auth-account-picker__list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-bottom: 1.25rem;
+}
+
+.auth-account-picker__item {
+  display: flex;
+  align-items: center;
+  gap: 0.875rem;
+  padding: 0.875rem 1rem;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  transition: all 200ms ease;
+}
+
+.auth-account-picker__item:hover {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(212, 175, 55, 0.3);
+}
+
+.auth-account-picker__avatar {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, rgba(212, 175, 55, 0.2), rgba(212, 175, 55, 0.1));
+  border: 1px solid rgba(212, 175, 55, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 1rem;
+  color: var(--color-gold);
+  flex-shrink: 0;
+}
+
+.auth-account-picker__info {
+  flex: 1;
+  min-width: 0;
+}
+
+.auth-account-picker__name {
+  font-weight: 500;
+  color: var(--color-text);
+  font-size: 0.9375rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.auth-account-picker__email {
+  font-size: 0.8125rem;
+  color: var(--color-text-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.auth-account-picker__actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-shrink: 0;
+}
+
+.auth-account-picker__signin {
+  padding: 0.5rem 0.875rem;
+  background: rgba(212, 175, 55, 0.15);
+  border: 1px solid rgba(212, 175, 55, 0.4);
+  border-radius: var(--radius-md);
+  color: var(--color-gold);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 200ms ease;
+}
+
+.auth-account-picker__signin:hover {
+  background: rgba(212, 175, 55, 0.25);
+}
+
+.auth-account-picker__remove {
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  border-radius: 50%;
+  color: #ef4444;
+  font-size: 0.75rem;
+  cursor: pointer;
+  transition: all 200ms ease;
+}
+
+.auth-account-picker__remove:hover {
+  background: rgba(239, 68, 68, 0.1);
+  border-color: rgba(239, 68, 68, 0.5);
+}
+
+.auth-account-picker__footer {
+  text-align: center;
+}
+
+.auth-account-picker__add {
+  padding: 0.625rem 1.25rem;
+  background: transparent;
+  border: 1px dashed var(--color-border);
+  border-radius: var(--radius-md);
+  color: var(--color-text-muted);
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 200ms ease;
+}
+
+.auth-account-picker__add:hover {
+  border-color: var(--color-gold);
+  color: var(--color-gold);
+  background: rgba(212, 175, 55, 0.05);
+}

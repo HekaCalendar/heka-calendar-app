@@ -30,13 +30,13 @@
                 <data android:scheme="heka-calendar" />
             </intent-filter>
 
-            <!-- Deep link intent filter for https://heka.calendar domain -->
+            <!-- Deep link intent filter for https://heka-calendar-pro.vercel.app domain -->
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
                 <data android:scheme="https" 
-                      android:host="heka.calendar" 
+                      android:host="heka-calendar-pro.vercel.app" 
                       android:pathPrefix="/invite" />
             </intent-filter>
 
@@ -54,7 +54,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
                 <data android:scheme="https" 
-                      android:host="heka.calendar" 
+                      android:host="heka-calendar-pro.vercel.app" 
                       android:pathPrefix="/task" />
             </intent-filter>
 

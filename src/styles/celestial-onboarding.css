@@ -1,0 +1,401 @@
+/* ═══════════════════════════════════════════════════════════════════════════════
+   CELESTIAL AWAKENING — Visual Language for the HEKA Onboarding
+   ═══════════════════════════════════════════════════════════════════════════════ */
+
+/* ─── Root Variables ─── */
+:root {
+  --ca-void: #05040a;
+  --ca-void-light: #0c0a14;
+  --ca-gold: #c9a227;
+  --ca-gold-soft: rgba(201, 162, 39, 0.12);
+  --ca-gold-glow: rgba(201, 162, 39, 0.35);
+  --ca-violet: #7c3aed;
+  --ca-violet-soft: rgba(124, 58, 237, 0.15);
+  --ca-text: #f5f3ff;
+  --ca-text-muted: #a89bc8;
+  --ca-glass: rgba(12, 10, 20, 0.72);
+  --ca-glass-border: rgba(201, 162, 39, 0.15);
+}
+
+/* ─── Starfield Background ─── */
+.celestial-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 9990;
+  background:
+    radial-gradient(ellipse at 20% 20%, var(--ca-violet-soft) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 80%, var(--ca-gold-soft) 0%, transparent 45%),
+    radial-gradient(ellipse at 50% 50%, rgba(15, 12, 30, 0.9) 0%, var(--ca-void) 70%);
+  overflow: hidden;
+  animation: ca-fade-in 0.8s ease-out both;
+}
+
+.celestial-backdrop::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(2px 2px at 20px 30px, rgba(255,255,255,0.8), transparent),
+    radial-gradient(1px 1px at 50px 100px, rgba(255,255,255,0.6), transparent),
+    radial-gradient(2px 2px at 130px 80px, rgba(255,255,255,0.7), transparent),
+    radial-gradient(1px 1px at 250px 180px, rgba(255,255,255,0.5), transparent),
+    radial-gradient(2px 2px at 300px 40px, rgba(255,255,255,0.8), transparent),
+    radial-gradient(1px 1px at 400px 250px, rgba(255,255,255,0.4), transparent),
+    radial-gradient(2px 2px at 550px 120px, rgba(255,255,255,0.7), transparent),
+    radial-gradient(1px 1px at 700px 300px, rgba(255,255,255,0.5), transparent),
+    radial-gradient(2px 2px at 850px 60px, rgba(255,255,255,0.6), transparent),
+    radial-gradient(1px 1px at 900px 220px, rgba(255,255,255,0.4), transparent),
+    radial-gradient(2px 2px at 1100px 150px, rgba(255,255,255,0.8), transparent),
+    radial-gradient(1px 1px at 1200px 280px, rgba(255,255,255,0.5), transparent);
+  background-size: 1300px 350px;
+  opacity: 0.6;
+  animation: ca-twinkle 8s ease-in-out infinite alternate;
+}
+
+.celestial-backdrop[data-stars="low"]  { --star-density: 0.4; }
+.celestial-backdrop[data-stars="mid"]  { --star-density: 0.7; }
+.celestial-backdrop[data-stars="high"] { --star-density: 1.0; }
+
+/* ─── Constellation Lines ─── */
+.ca-constellation {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 1.2s ease;
+}
+.ca-constellation.is-visible {
+  opacity: 1;
+}
+
+/* ─── The Orb / Card ─── */
+.ca-orb {
+  position: relative;
+  z-index: 9992;
+  max-width: 560px;
+  max-height: min(84vh, 780px);
+  width: calc(100% - 48px);
+  padding: 40px 36px;
+  border-radius: 24px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  background: var(--ca-glass);
+  backdrop-filter: blur(24px) saturate(140%);
+  -webkit-backdrop-filter: blur(24px) saturate(140%);
+  border: 1px solid var(--ca-glass-border);
+  box-shadow:
+    0 24px 80px rgba(0, 0, 0, 0.45),
+    inset 0 1px 0 rgba(255, 255, 255, 0.04);
+  color: var(--ca-text);
+  text-align: center;
+  animation: ca-orb-enter 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.ca-orb__step-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ca-gold);
+  background: var(--ca-gold-soft);
+  border: 1px solid var(--ca-glass-border);
+  margin-bottom: 20px;
+}
+
+.ca-orb__icon {
+  font-size: 52px;
+  line-height: 1;
+  margin-bottom: 18px;
+  filter: drop-shadow(0 0 18px var(--ca-gold-glow));
+  animation: ca-icon-float 4s ease-in-out infinite;
+}
+
+.ca-orb__title {
+  font-family: 'Cinzel', Georgia, serif;
+  font-size: 28px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  margin: 0 0 16px;
+  line-height: 1.25;
+  background: linear-gradient(180deg, #fff 0%, #d4c8f0 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.ca-orb__content {
+  font-size: 16px;
+  line-height: 1.7;
+  color: var(--ca-text-muted);
+  margin-bottom: 28px;
+  white-space: pre-line;
+}
+
+.ca-orb__visual {
+  margin: 8px 0 24px;
+  min-height: 120px;
+  max-height: 32vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+.ca-orb__visual > * {
+  max-height: 100%;
+  max-width: 100%;
+}
+
+/* ─── Buttons ─── */
+.ca-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 14px 28px;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.2s ease, background 0.2s ease;
+  border: none;
+}
+.ca-btn:hover {
+  transform: translateY(-1px);
+}
+.ca-btn:active {
+  transform: translateY(0);
+}
+
+.ca-btn--primary {
+  background: linear-gradient(135deg, var(--ca-gold) 0%, #b8941f 100%);
+  color: #0c0a14;
+  box-shadow: 0 8px 24px var(--ca-gold-glow);
+}
+.ca-btn--primary:hover {
+  box-shadow: 0 10px 30px rgba(201, 162, 39, 0.5);
+}
+
+.ca-btn--ghost {
+  background: transparent;
+  color: var(--ca-text-muted);
+  border: 1px solid var(--ca-glass-border);
+}
+.ca-btn--ghost:hover {
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--ca-text);
+}
+
+.ca-orb__actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+/* ─── Progress Constellation ─── */
+.ca-progress {
+  position: fixed;
+  bottom: 28px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 9993;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 18px;
+  border-radius: 999px;
+  background: var(--ca-glass);
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--ca-glass-border);
+  animation: ca-fade-in 0.6s ease 0.3s both;
+}
+
+.ca-progress__star {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.15);
+  transition: background 0.4s ease, box-shadow 0.4s ease, transform 0.4s ease;
+}
+.ca-progress__star.is-lit {
+  background: var(--ca-gold);
+  box-shadow: 0 0 12px var(--ca-gold-glow);
+  transform: scale(1.2);
+}
+.ca-progress__star.is-current {
+  animation: ca-star-pulse 2s ease-in-out infinite;
+}
+
+.ca-progress__text {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--ca-text-muted);
+  margin-left: 6px;
+  letter-spacing: 0.08em;
+}
+
+/* ─── Celebration View ─── */
+.ca-celebration {
+  position: relative;
+  z-index: 9992;
+  max-width: 520px;
+  width: calc(100% - 48px);
+  padding: 48px 36px;
+  text-align: center;
+  animation: ca-orb-enter 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.ca-celebration__crown {
+  width: 90px;
+  height: 90px;
+  margin: 0 auto 22px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, #ffe9a6 0%, var(--ca-gold) 50%, #8a6d1b 100%);
+  box-shadow: 0 0 60px var(--ca-gold-glow), inset 0 -4px 12px rgba(0,0,0,0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 40px;
+  animation: ca-crown-glow 3s ease-in-out infinite alternate;
+}
+
+.ca-celebration__title {
+  font-family: 'Cinzel', Georgia, serif;
+  font-size: 32px;
+  font-weight: 700;
+  margin: 0 0 14px;
+  color: #fff;
+  text-shadow: 0 2px 20px rgba(201, 162, 39, 0.3);
+}
+
+.ca-celebration__text {
+  font-size: 17px;
+  line-height: 1.7;
+  color: var(--ca-text-muted);
+  margin-bottom: 32px;
+  white-space: pre-line;
+}
+
+/* ─── Interactive Spotlight Override ─── */
+.tutorial-spotlight .tutorial-tooltip {
+  background: var(--ca-glass) !important;
+  backdrop-filter: blur(22px) saturate(140%) !important;
+  -webkit-backdrop-filter: blur(22px) saturate(140%) !important;
+  border: 1px solid var(--ca-glass-border) !important;
+  border-radius: 18px !important;
+  color: var(--ca-text) !important;
+  box-shadow: 0 20px 70px rgba(0,0,0,0.4) !important;
+}
+
+.tutorial-spotlight .tutorial-tooltip__title {
+  font-family: 'Cinzel', Georgia, serif !important;
+  color: #fff !important;
+}
+
+.tutorial-spotlight .tutorial-tooltip__content {
+  color: var(--ca-text-muted) !important;
+}
+
+.tutorial-spotlight .tutorial-tooltip__action-required {
+  background: var(--ca-gold-soft) !important;
+  color: var(--ca-gold) !important;
+  border-radius: 10px !important;
+}
+
+.tutorial-spotlight .tutorial-tooltip__action,
+.tutorial-spotlight .tutorial-welcome-button {
+  background: linear-gradient(135deg, var(--ca-gold) 0%, #b8941f 100%) !important;
+  color: #0c0a14 !important;
+  border-radius: 10px !important;
+  font-weight: 600 !important;
+}
+
+.tutorial-spotlight .tutorial-tooltip__skip,
+.tutorial-spotlight .tutorial-tooltip__hint-btn {
+  color: var(--ca-text-muted) !important;
+  border-color: var(--ca-glass-border) !important;
+}
+
+.tutorial-spotlight .target-highlight {
+  border-radius: 14px !important;
+}
+
+/* ─── Animations ─── */
+@keyframes ca-fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes ca-orb-enter {
+  from {
+    opacity: 0;
+    transform: translateY(24px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes ca-icon-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+@keyframes ca-twinkle {
+  from { opacity: 0.45; }
+  to { opacity: 0.75; }
+}
+
+@keyframes ca-star-pulse {
+  0%, 100% { box-shadow: 0 0 8px var(--ca-gold-glow); }
+  50% { box-shadow: 0 0 18px var(--ca-gold); }
+}
+
+@keyframes ca-crown-glow {
+  from { box-shadow: 0 0 40px var(--ca-gold-glow); }
+  to { box-shadow: 0 0 80px rgba(201, 162, 39, 0.55); }
+}
+
+/* ─── Reduced Motion ─── */
+@media (prefers-reduced-motion: reduce) {
+  .celestial-backdrop,
+  .celestial-backdrop::before,
+  .ca-orb__icon,
+  .ca-progress__star.is-current,
+  .ca-celebration__crown {
+    animation: none !important;
+  }
+  .ca-orb,
+  .ca-celebration {
+    animation: ca-fade-in 0.3s ease both;
+  }
+}
+
+/* ─── Mobile Adjustments ─── */
+@media (max-width: 640px) {
+  .ca-orb {
+    padding: 24px 20px;
+    border-radius: 20px;
+    max-height: 88vh;
+  }
+  .ca-orb__title {
+    font-size: 20px;
+  }
+  .ca-orb__content {
+    font-size: 14px;
+  }
+  .ca-orb__visual {
+    max-height: 26vh;
+    min-height: 100px;
+  }
+  .ca-celebration__title {
+    font-size: 22px;
+  }
+}

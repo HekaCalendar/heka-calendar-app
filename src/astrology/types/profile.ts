@@ -6,8 +6,13 @@
 import type { 
   BirthData, 
   HouseSystemType,
+  ZodiacSystemType,
+  ZodiacFrame,
+  SignCount,
+  NakshatraSystemType,
   Timestamp 
 } from './core';
+import type { SiderealSystem } from './extended';
 import type { ProfileId } from './chart';
 
 // Profile
@@ -24,23 +29,34 @@ export interface AstroProfile {
 }
 
 export interface ProfilePreferences {
-  readonly zodiacSystem: '12-sign' | '13-sign';
+  readonly zodiacSystem: ZodiacSystemType;   // legacy — derive from frame+count
+  readonly zodiacFrame: ZodiacFrame;
+  readonly signCount: SignCount;
   readonly houseSystem: HouseSystemType;
   readonly showAspects: boolean;
   readonly showMinorAspects: boolean;
   readonly showRetrogrades: boolean;
   readonly showDignities: boolean;
   readonly defaultChartView: 'wheel' | 'grid' | 'list';
+  // ═══ Mode-aware celestial configuration ═══
+  readonly ayanamsa: SiderealSystem | null;
+  readonly showNakshatras: boolean;
+  readonly nakshatraSystem: NakshatraSystemType;
 }
 
 export const DEFAULT_PROFILE_PREFERENCES: ProfilePreferences = {
   zodiacSystem: '12-sign',
+  zodiacFrame: 'tropical',
+  signCount: 12,
   houseSystem: 'placidus',
   showAspects: true,
   showMinorAspects: false,
   showRetrogrades: true,
   showDignities: false,
-  defaultChartView: 'wheel'
+  defaultChartView: 'wheel',
+  ayanamsa: null,
+  showNakshatras: false,
+  nakshatraSystem: 'none',
 };
 
 // Profile Creation
@@ -66,7 +82,7 @@ export interface ProfileFilter {
   readonly searchTerm?: string;
   readonly tags?: string[];
   readonly hasNotes?: boolean;
-  readonly zodiacSystem?: '12-sign' | '13-sign';
+  readonly zodiacSystem?: ZodiacSystemType;
   readonly createdAfter?: Timestamp;
   readonly createdBefore?: Timestamp;
 }

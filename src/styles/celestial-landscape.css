@@ -124,6 +124,30 @@
     animation: expand-in 0.3s ease !important;
   }
 
+  /* Compact countdown for narrow desktop cards */
+  .celestial-panel .countdown-time {
+    flex-wrap: wrap !important;
+    gap: 4px !important;
+  }
+
+  .celestial-panel .countdown-unit {
+    min-width: 36px !important;
+    flex: 1 1 auto !important;
+  }
+
+  .celestial-panel .countdown-value {
+    font-size: 1.1rem !important;
+  }
+
+  .celestial-panel .countdown-unit-label {
+    font-size: 0.55rem !important;
+  }
+
+  .celestial-panel .countdown-separator {
+    font-size: 0.9rem !important;
+    padding: 0 1px !important;
+  }
+
   @keyframes expand-in {
     from {
       opacity: 0 !important;

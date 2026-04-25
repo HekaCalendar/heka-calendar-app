@@ -4,7 +4,7 @@
  */
 
 import { useState, useEffect, useCallback, useRef } from 'react';
-import { initializeSwissEphemeris, isSwissReady, isUsingFallback, setZodiacSystem, getZodiacSystem } from '../services/swiss-ephemeris/engine';
+import { initializeSwissEphemeris, isSwissReady, isUsingFallback, setZodiacSystem, getZodiacSystem, setZodiacFrame, getZodiacFrame, setSignCount, getSignCount } from '../services/swiss-ephemeris/engine';
 
 import { VoidMoonData, VoidMoonEvent } from '../types';
 
@@ -14,8 +14,12 @@ export interface UseSwissReturn {
   error: Error | null;
   fallback: boolean;
   initialize: () => Promise<void>;
-  zodiacSystem: '12-sign' | '13-sign';
-  setZodiacSystem: (system: '12-sign' | '13-sign') => void;
+  zodiacSystem: '12-sign' | '13-sign' | 'sidereal';
+  setZodiacSystem: (system: '12-sign' | '13-sign' | 'sidereal') => void;
+  zodiacFrame: 'tropical' | 'sidereal';
+  setZodiacFrame: (frame: 'tropical' | 'sidereal') => void;
+  signCount: 12 | 13;
+  setSignCount: (count: 12 | 13) => void;
 }
 
 export function useSwiss(): UseSwissReturn {
@@ -23,7 +27,9 @@ export function useSwiss(): UseSwissReturn {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<Error | null>(null);
   const [fallback, setFallback] = useState(false);
-  const [zodiacSystem, setSystem] = useState<'12-sign' | '13-sign'>(getZodiacSystem());
+  const [zodiacSystem, setSystem] = useState<'12-sign' | '13-sign' | 'sidereal'>(getZodiacSystem());
+  const [zodiacFrame, setFrame] = useState<'tropical' | 'sidereal'>(getZodiacFrame());
+  const [signCount, setCount] = useState<12 | 13>(getSignCount());
   const initialized = useRef(false);
   const hasAttemptedInit = useRef(false);
   
@@ -69,9 +75,23 @@ export function useSwiss(): UseSwissReturn {
     }
   }, []);
   
-  const handleSetZodiacSystem = useCallback((system: '12-sign' | '13-sign') => {
+  const handleSetZodiacSystem = useCallback((system: '12-sign' | '13-sign' | 'sidereal') => {
     setZodiacSystem(system);
     setSystem(system);
+    // Sync split fields
+    if (system === 'sidereal') { setFrame('sidereal'); setCount(12); }
+    else if (system === '13-sign') { setFrame('tropical'); setCount(13); }
+    else { setFrame('tropical'); setCount(12); }
+  }, []);
+  
+  const handleSetZodiacFrame = useCallback((frame: 'tropical' | 'sidereal') => {
+    setZodiacFrame(frame);
+    setFrame(frame);
+  }, []);
+  
+  const handleSetSignCount = useCallback((count: 12 | 13) => {
+    setSignCount(count);
+    setCount(count);
   }, []);
   
   // Auto-initialize on mount
@@ -86,7 +106,11 @@ export function useSwiss(): UseSwissReturn {
     fallback,
     initialize,
     zodiacSystem,
-    setZodiacSystem: handleSetZodiacSystem
+    setZodiacSystem: handleSetZodiacSystem,
+    zodiacFrame,
+    setZodiacFrame: handleSetZodiacFrame,
+    signCount,
+    setSignCount: handleSetSignCount,
   };
 }
 

@@ -268,3 +268,43 @@ export function getSeasonElementColor(element: string): string {
     default: return '#caa24a';
   }
 }
+
+export function getSeasonData(date: Date = new Date(), latitude: number = 0) {
+  const hemisphere = latitude >= 0 ? 'N' : 'S';
+  const season = getCurrentSeason(date, hemisphere);
+  return {
+    emoji: season.emoji,
+    name: season.name,
+    hemisphere: hemisphere === 'N' ? 'Northern' : 'Southern',
+    colors: [getSeasonElementColor(season.element)],
+    element: season.element,
+    psychology: {
+      energy: 'Balanced',
+      mood: 'Reflective',
+    },
+    characteristics: season.characteristics,
+  };
+}
+
+export function getDaysInSeason(date: Date = new Date(), latitude: number = 0) {
+  const hemisphere = latitude >= 0 ? 'N' : 'S';
+  const season = getCurrentSeason(date, hemisphere);
+  const daysRemaining = getDaysUntilNextSeason(date, hemisphere);
+  const seasons = hemisphere === 'N' ? NORTHERN_SEASONS : SOUTHERN_SEASONS;
+  const nextSeasonMonth = (season.endMonth + 1) % 12;
+  let nextSeasonName = 'Spring';
+  for (const s of Object.values(seasons)) {
+    if (s.startMonth === nextSeasonMonth) {
+      nextSeasonName = s.name;
+      break;
+    }
+  }
+  // Approximate season length ~90 days for percent calculation
+  const daysIntoSeason = Math.max(1, 90 - daysRemaining);
+  const percentComplete = Math.min(99, Math.max(1, Math.round((daysIntoSeason / 90) * 100)));
+  return {
+    daysRemaining,
+    nextSeason: nextSeasonName,
+    percentComplete,
+  };
+}

@@ -795,6 +795,11 @@
   color: #ef4444;
 }
 
+.circle-task__status--revoked {
+  background: rgba(148, 163, 184, 0.2);
+  color: #94a3b8;
+}
+
 .circle-task__description {
   color: var(--circle-text-secondary);
   font-size: var(--text-sm);

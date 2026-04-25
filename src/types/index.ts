@@ -48,6 +48,10 @@ export interface CalendarDay {
   hasNote: boolean;
   seasonalEvent?: import('../services/astronomyService').SeasonalEventData;
   lunarMonth?: string;
+  moonMansion?: import('../astrology/data/nakshatras').LunarMansion;
+  moonPhaseName?: string;
+  isSolarReturn?: boolean;
+  solarReturnOrb?: number; // arcminutes from exact return
 }
 
 export type TimeMode = 'SYNC' | 'TRUE';
@@ -83,12 +87,84 @@ export interface NoteData {
   mood?: 1 | 2 | 3 | 4 | 5; // 1=very bad, 5=excellent
   recurring?: RecurringConfig;
   duplicatedFrom?: string; // ID of the original note this was duplicated from
+  tags?: string[]; // e.g. ['quick note']
   createdAt: string;
   updatedAt: string;
 }
 
 // Notes are now stored as arrays per day to support multiple notes
 export type DayNotes = NoteData[];
+
+// ============================================================================
+// Planner Task System
+// ============================================================================
+
+export interface TaskEnergyScore {
+  score: 1 | 2 | 3 | 4 | 5;
+  submittedAt: string; // ISO
+}
+
+export interface PlannerTask {
+  id: string;
+  userId: string;
+  content: string;
+  category: NoteCategory;
+  mood?: 1 | 2 | 3 | 4 | 5;
+  hekaDate: { year: number; month: number; day: number };
+  dayKey: string; // "heka:2026:3:15"
+  timezone: string;
+  createdAt: string; // ISO
+  updatedAt: string; // ISO
+
+  // Task behavior
+  isTask: true;
+  isCompleted: boolean;
+  completedAt?: string; // ISO
+  dueTime?: string; // "HH:MM" local time
+  dueDateTime?: string; // ISO UTC
+  reminderMinutesBefore: number;
+  notificationId?: string;
+
+  // AI & celestial context
+  aiSuggested: boolean;
+  suggestedBy?: string; // coach message ID
+  complementaryTo?: string[]; // task IDs
+  celestialContext?: {
+    moonPhase: string;
+    sunSign: string;
+    planetaryHour?: string;
+  };
+
+  // Habit & streak
+  streakGroupId?: string;
+  recurring?: RecurringConfig;
+  energyScore?: TaskEnergyScore;
+
+  // Sharing to Circle
+  sharedToCircle?: {
+    shareCode: string;
+    sharedAt: string;
+    friendId?: string;
+  };
+}
+
+// Unified display type for Day Panel — notes and tasks render together
+export type DayItem = NoteData | PlannerTask;
+
+export interface PlannerPreferences {
+  defaultReminderMinutes: number;
+  dailyBriefingTime: string; // "07:00"
+  enableTaskNotifications: boolean;
+  enableAlarmMode: boolean;
+}
+
+export interface PlannerStats {
+  currentStreak: number;
+  longestStreak: number;
+  lastCompletionDate?: string;
+  completionsByCategory: Record<NoteCategory, number>;
+  preferredTaskTime: 'morning' | 'afternoon' | 'evening' | 'night' | 'unknown';
+}
 
 // ============================================================================
 // Statistics & Analytics
@@ -242,9 +318,25 @@ export interface CommunityHoliday {
   date: string; // MM-DD format
   description: string;
   suggestedBy: string;
-  votes: number;
-  approved: boolean;
+  suggestedByUid?: string;
+  votesUp: number;
+  votesDown: number;
+  status: 'pending' | 'approved' | 'rejected';
+  profanityChecked: boolean;
   createdAt: string;
+  voterUids?: string[];
+}
+
+export interface CommunityFeature {
+  id: string;
+  title: string;
+  description: string;
+  icon: string;
+  category: 'social' | 'astrology' | 'productivity' | 'premium' | 'integrations';
+  votes: number;
+  status: 'planned' | 'considering' | 'released' | 'in-progress';
+  createdAt: string;
+  voterUids?: string[];
 }
 
 export interface SharedCalendar {
@@ -283,8 +375,15 @@ export interface UserAuthState {
   syncError: string | null;
 }
 
+export interface SubscriptionState {
+  isPro: boolean;
+  tier: 'monthly' | 'yearly' | null;
+  expiryDate: string | null; // ISO date
+  purchasedProductIds: string[]; // one-time purchases (physical items, etc.)
+}
+
 export interface CalendarState {
-  currentView: 'month' | 'year' | 'print-preview' | 'astrology-hub' | 'stars';
+  currentView: 'month' | 'year' | 'print-preview' | 'astrology-hub' | 'stars' | 'store' | 'certificate-builder' | 'routine-builder' | 'natal-report';
   viewDate: HekaDate;
   selectedDate: HekaDate | null;
   timeMode: TimeMode;
@@ -297,9 +396,8 @@ export interface CalendarState {
     showCivilDates: boolean;
     showMoonPhases: boolean;
     showHolidays: boolean;
-    showSeasonalEvents: boolean;
-    showAgriculturalGuidance: boolean;
-    showEnergyForecast: boolean;
+    showCelestialCards: boolean;
+    pureModeLight?: boolean;
   };
   ui: {
     isYearModalOpen: boolean;
@@ -316,6 +414,7 @@ export interface CalendarState {
   statistics: UsageStatistics;
   // Social features
   communityHolidays: CommunityHoliday[];
+  communityFeatures: CommunityFeature[];
   subscribedCalendars: string[];
   pendingInvites: CalendarInvite[];
   // Gamification
@@ -328,8 +427,16 @@ export interface CalendarState {
     enableRetrogradeAlerts: boolean;
     enableMoonPhaseAlerts: boolean;
     showTransitsOnCalendar: boolean;
-    zodiacSystem: '12-sign' | '13-sign';
+    zodiacSystem: import('../astrology/types').ZodiacSystemType;
+    zodiacFrame: import('../astrology/types').ZodiacFrame;
+    signCount: import('../astrology/types').SignCount;
+    houseSystem: import('../astrology/types').HouseSystemType;
+    ayanamsa: import('../astrology/types').SiderealSystem | null;
+    showNakshatras: boolean;
+    nakshatraSystem: import('../astrology/types').NakshatraSystemType;
   };
+  subscription: SubscriptionState;
+  notificationPreferences: import('./notifications').NotificationPreferences;
 }
 
 export type PrintMode = 'month' | 'year' | null;

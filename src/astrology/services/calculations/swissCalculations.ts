@@ -9,13 +9,32 @@ import {
   calculateSunrise, 
   calculateSunset,
   calculateHouses,
-  getZodiacSystem,
+  getZodiacFrame,
+  getSignCount,
 } from '../swiss-ephemeris/engine';
 import type { CelestialBody, VoidMoonData, VoidMoonEvent } from '../../types';
-import { toDegree, toZodiacDegree } from '../../types/core';
+import { toDegree, getSignFromLongitude, SIGN_BOUNDARIES_13, getDegreeInSign } from '../../types/core';
+import type { ZodiacSign13, Degree } from '../../types/core';
 
 // Cache for calculations
 const calculationCache = new Map<string, any>();
+
+/**
+ * Get the ecliptic longitude of the next sign boundary.
+ * In 12-sign, signs are 30° each. In 13-sign, boundaries follow IAU constellations.
+ */
+export function getNextSignBoundary(longitude: number, use13Signs: boolean): number {
+  const normalized = ((longitude % 360) + 360) % 360;
+  if (!use13Signs) {
+    return (Math.floor(normalized / 30) + 1) * 30;
+  }
+  for (const [_sign, [start, end]] of Object.entries(SIGN_BOUNDARIES_13)) {
+    if (normalized >= start && normalized < end) {
+      return end;
+    }
+  }
+  return 360;
+}
 
 /**
  * Calculate current sky positions with Swiss Ephemeris precision
@@ -26,8 +45,9 @@ export async function calculateCurrentSky(date: Date = new Date()): Promise<{
   julianDay: number;
   timestamp: number;
 }> {
-  const zodiacSystem = getZodiacSystem();
-  const cacheKey = `sky-${date?.toISOString?.().slice(0, 16) || Date.now()}-${zodiacSystem}`;
+  const frame = getZodiacFrame();
+  const count = getSignCount();
+  const cacheKey = `sky-${date?.toISOString?.().slice(0, 16) || Date.now()}-${frame}-${count}`;
   
   if (calculationCache.has(cacheKey)) {
     return calculationCache.get(cacheKey);
@@ -35,21 +55,21 @@ export async function calculateCurrentSky(date: Date = new Date()): Promise<{
   
   try {
     const jd = calculateJulianDay(
-      date.getFullYear(),
-      date.getMonth() + 1,
-      date.getDate(),
-      date.getHours(),
-      date.getMinutes(),
-      date.getSeconds()
+      date.getUTCFullYear(),
+      date.getUTCMonth() + 1,
+      date.getUTCDate(),
+      date.getUTCHours(),
+      date.getUTCMinutes(),
+      date.getUTCSeconds()
     );
     
-    const use13Signs = zodiacSystem === '13-sign';
-    const positions = calculateAllPlanets(jd, undefined, use13Signs);
-    
+    const positions = calculateAllPlanets(jd, undefined, { zodiacFrame: frame, signCount: count });
+
     // Ensure we have valid positions (fallback if WASM not ready)
-    const validPositions = positions && Object.keys(positions).length > 0 
-      ? positions 
-      : getFallbackPositions(jd);
+    const use13Signs = count === 13;
+    const validPositions = positions && Object.keys(positions).length > 0
+      ? positions
+      : getFallbackPositions(jd, use13Signs);
     
     const result = {
       positions: validPositions,
@@ -70,15 +90,16 @@ export async function calculateCurrentSky(date: Date = new Date()): Promise<{
     console.warn('[SwissCalculations] Error calculating sky, using fallback:', error);
     // Return fallback data
     const jd = calculateJulianDay(
-      date.getFullYear(),
-      date.getMonth() + 1,
-      date.getDate(),
-      date.getHours(),
-      date.getMinutes(),
-      date.getSeconds()
+      date.getUTCFullYear(),
+      date.getUTCMonth() + 1,
+      date.getUTCDate(),
+      date.getUTCHours(),
+      date.getUTCMinutes(),
+      date.getUTCSeconds()
     );
+    const use13Signs = getSignCount() === 13;
     return {
-      positions: getFallbackPositions(jd),
+      positions: getFallbackPositions(jd, use13Signs),
       julianDay: jd,
       timestamp: date.getTime(),
     };
@@ -89,7 +110,7 @@ export async function calculateCurrentSky(date: Date = new Date()): Promise<{
  * Fallback planet positions when WASM is not available
  * Uses mean orbital elements for approximate positions
  */
-function getFallbackPositions(jd: number): Record<string, CelestialBody> {
+function getFallbackPositions(jd: number, use13Signs?: boolean): Record<string, CelestialBody> {
   const elements: Record<string, { meanLong: number; dailyMotion: number; distance: number }> = {
     sun: { meanLong: 280.46646, dailyMotion: 0.98564736, distance: 1.0 },
     moon: { meanLong: 218.316, dailyMotion: 13.176396, distance: 0.00257 },
@@ -111,10 +132,6 @@ function getFallbackPositions(jd: number): Record<string, CelestialBody> {
     let longitude = (el.meanLong + el.dailyMotion * daysSince2000) % 360;
     if (longitude < 0) longitude += 360;
     
-    const signIndex = Math.floor(longitude / 30) % 12;
-    const signs = ['aries', 'taurus', 'gemini', 'cancer', 'leo', 'virgo', 
-                   'libra', 'scorpio', 'sagittarius', 'capricorn', 'aquarius', 'pisces'] as const;
-    
     result[name] = {
       id: name as any,
       longitude: toDegree(longitude),
@@ -122,8 +139,8 @@ function getFallbackPositions(jd: number): Record<string, CelestialBody> {
       distance: el.distance,
       speed: el.dailyMotion,
       isRetrograde: el.dailyMotion < 0,
-      sign: signs[signIndex] as any,
-      degreeInSign: toZodiacDegree(toDegree(longitude)),
+      sign: getSignFromLongitude(toDegree(longitude), use13Signs),
+      degreeInSign: getDegreeInSign(toDegree(longitude), use13Signs),
     };
   }
   
@@ -472,12 +489,12 @@ export async function calculateLocalHouses(
   if (latitude === 0 && longitude === 0) return null;
   
   const jd = await calculateJulianDay(
-    date.getFullYear(),
-    date.getMonth() + 1,
-    date.getDate(),
-    date.getHours(),
-    date.getMinutes(),
-    date.getSeconds(),
+    date.getUTCFullYear(),
+    date.getUTCMonth() + 1,
+    date.getUTCDate(),
+    date.getUTCHours(),
+    date.getUTCMinutes(),
+    date.getUTCSeconds(),
     0
   );
   
@@ -507,12 +524,20 @@ export function formatCoordinate(longitude: number): {
   sign: string;
   signDegree: number;
 } {
-  const signs = ['Aries', 'Taurus', 'Gemini', 'Cancer', 'Leo', 'Virgo', 
-                 'Libra', 'Scorpio', 'Sagittarius', 'Capricorn', 'Aquarius', 'Pisces'];
-  
+  const use13Signs = getSignCount() === 13;
   const normalized = ((longitude % 360) + 360) % 360;
-  const signIndex = Math.floor(normalized / 30);
-  const signDegree = normalized % 30;
+  
+  const sign = getSignFromLongitude(normalized as any, use13Signs);
+  
+  // Degree within sign: for 13-sign, subtract the sign's start boundary
+  let signStart = 0;
+  if (use13Signs) {
+    const boundary = SIGN_BOUNDARIES_13[sign as ZodiacSign13];
+    if (boundary) signStart = boundary[0];
+  } else {
+    signStart = Math.floor(normalized / 30) * 30;
+  }
+  const signDegree = normalized - signStart;
   
   const degrees = Math.floor(signDegree);
   const minutesFloat = (signDegree - degrees) * 60;
@@ -523,7 +548,7 @@ export function formatCoordinate(longitude: number): {
     degrees,
     minutes,
     seconds,
-    sign: signs[signIndex],
+    sign: String(sign).charAt(0).toUpperCase() + String(sign).slice(1),
     signDegree: normalized,
   };
 }
@@ -832,9 +857,9 @@ export async function calculateVoidMoonStatus(): Promise<VoidMoonData & {
     // Get current aspects
     const currentAspects = findMoonAspects(moon, positions);
     
-    // Calculate sign ingress
-    const currentSign = Math.floor(moon.longitude / 30);
-    const nextSignDegree = (currentSign + 1) * 30;
+    // Calculate sign ingress (respects irregular 13-sign boundaries)
+    const use13Signs = getSignCount() === 13;
+    const nextSignDegree = getNextSignBoundary(moon.longitude, use13Signs);
     const degreesToIngress = (nextSignDegree - moon.longitude + 360) % 360;
     const daysToIngress = degreesToIngress / Math.abs(moon.speed || 13);
     const ingressTime = new Date(now.getTime() + (daysToIngress * 24 * 60 * 60 * 1000));
@@ -944,49 +969,52 @@ export async function getUpcomingVoidMoonEvents(days: number = 7): Promise<VoidM
   const now = new Date();
   
   try {
-    // Calculate void periods for each moon sign change in the next N days
-    // Moon changes sign every ~2.5 days
     const { positions } = await calculateCurrentSky();
     const moon = positions.moon;
     
     if (!moon) return events;
     
-    const currentSign = Math.floor(moon.longitude / 30);
+    const use13Signs = getSignCount() === 13;
     const moonSpeedDegreesPerDay = Math.abs(moon.speed) || 13;
+    let currentLongitude = moon.longitude;
+    let trackTime = now.getTime();
     
-    for (let i = 0; i < Math.ceil(days / 2.5); i++) {
-      const signNumber = (currentSign + i) % 12;
-      const nextSignNumber = (signNumber + 1) % 12;
+    // Iterate through upcoming sign changes (up to ~days/2 worth of changes)
+    const maxIterations = Math.ceil(days * 2);
+    for (let i = 0; i < maxIterations && events.length < days; i++) {
+      const nextBoundary = getNextSignBoundary(currentLongitude, use13Signs);
       
-      // Calculate ingress time for this sign change
-      const signEndDegree = nextSignNumber * 30;
-      
-      // If it's the current sign, calculate from current position
-      let degreesToIngress: number;
-      if (i === 0) {
-        degreesToIngress = (signEndDegree - moon.longitude + 360) % 360;
-      } else {
-        degreesToIngress = 30; // Full sign
+      // Degrees from current position to next boundary
+      let degreesToIngress = (nextBoundary - currentLongitude + 360) % 360;
+      if (degreesToIngress <= 0.001) {
+        // Already at/past boundary — advance to next sign
+        currentLongitude = ((currentLongitude as number) + 0.1) % 360 as Degree;
+        continue;
       }
       
       const daysToIngress = degreesToIngress / moonSpeedDegreesPerDay;
-      const ingressTime = new Date(now.getTime() + (daysToIngress * 24 * 60 * 60 * 1000));
+      const ingressTime = new Date(trackTime + (daysToIngress * 24 * 60 * 60 * 1000));
       
-      // Void typically starts 1-3 hours before ingress
-      // The exact timing depends on when the last aspect occurs
-      const voidDurationHours = 1.5 + (i * 0.3) % 1.5; // 1.5-3 hours (varies)
+      // Void heuristic: starts ~35% of remaining degrees before ingress
+      const voidDegrees = Math.max(0.5, degreesToIngress * 0.35);
+      let voidDurationHours = (voidDegrees / moonSpeedDegreesPerDay) * 24;
+      voidDurationHours = Math.max(1, Math.min(10, voidDurationHours));
       const voidStartTime = new Date(ingressTime.getTime() - (voidDurationHours * 60 * 60 * 1000));
       
       // Only include future events
-      if (voidStartTime > now && events.length < days) {
+      if (voidStartTime > now) {
         events.push({
           startTime: voidStartTime,
           endTime: ingressTime,
           durationMinutes: voidDurationHours * 60,
-          fromSignLongitude: signEndDegree - 5, // Approximate
-          toSignLongitude: signEndDegree,
+          fromSignLongitude: nextBoundary - 5,
+          toSignLongitude: nextBoundary,
         });
       }
+      
+      // Advance to next sign for next iteration
+      currentLongitude = nextBoundary as Degree;
+      trackTime = ingressTime.getTime();
     }
     
     return events;
@@ -1013,9 +1041,9 @@ export async function calculateMoonPhaseSwiss(
   angle: number;
   name: string;
 }> {
-  const zodiacSystem = getZodiacSystem();
-  const use13Signs = zodiacSystem === '13-sign';
-  
+  const frame = getZodiacFrame();
+  const count = getSignCount();
+
   const jd = calculateJulianDay(
     date.getFullYear(),
     date.getMonth() + 1,
@@ -1025,13 +1053,13 @@ export async function calculateMoonPhaseSwiss(
     0
   );
   
-  const positions = calculateAllPlanets(jd, ['sun', 'moon'], use13Signs);
+  const positions = calculateAllPlanets(jd, ['sun', 'moon'], { zodiacFrame: frame, signCount: count });
   const moonPhase = calculatePreciseMoonPhase(positions.sun, positions.moon);
-  
+
   // Calculate approximate moon age from phase (0-29.53 days)
   const synodicMonth = 29.53059;
   const moonAge = moonPhase.phase * synodicMonth;
-  
+
   // Adjust glyph for hemisphere
   let glyph = moonPhase.emoji;
   if (hemisphere === 'S') {
@@ -1073,9 +1101,9 @@ export async function calculateMoonPhaseBatch(
   name: string;
 }>> {
   const results = new Map();
-  const zodiacSystem = getZodiacSystem();
-  const use13Signs = zodiacSystem === '13-sign';
-  
+  const frame = getZodiacFrame();
+  const count = getSignCount();
+
   // Process in parallel for performance
   const calculations = dates.map(async (date) => {
     const dateKey = date.toISOString().split('T')[0];
@@ -1090,7 +1118,7 @@ export async function calculateMoonPhaseBatch(
         0
       );
       
-      const positions = calculateAllPlanets(jd, ['sun', 'moon'], use13Signs);
+      const positions = calculateAllPlanets(jd, ['sun', 'moon'], { zodiacFrame: frame, signCount: count });
       const moonPhase = calculatePreciseMoonPhase(positions.sun, positions.moon);
       
       const synodicMonth = 29.53059;
@@ -1143,4 +1171,133 @@ export async function calculateMoonPhaseBatch(
   });
   
   return results;
+}
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// CURRENT SKY ASPECTS & ADVANCED CELESTIAL DATA
+// ═══════════════════════════════════════════════════════════════════════════════
+
+export interface CurrentAspect {
+  planet1: string;
+  planet2: string;
+  aspect: 'conjunction' | 'sextile' | 'square' | 'trine' | 'opposition';
+  angle: number;
+  orb: number;
+  nature: 'harmonious' | 'challenging' | 'neutral';
+  description: string;
+}
+
+const ASPECT_DEFINITIONS: Record<string, { angle: number; orb: number; nature: CurrentAspect['nature'] }> = {
+  conjunction: { angle: 0, orb: 8, nature: 'neutral' },
+  sextile: { angle: 60, orb: 6, nature: 'harmonious' },
+  square: { angle: 90, orb: 8, nature: 'challenging' },
+  trine: { angle: 120, orb: 8, nature: 'harmonious' },
+  opposition: { angle: 180, orb: 8, nature: 'challenging' },
+};
+
+const ASPECT_VERBS: Record<string, string> = {
+  conjunction: 'conjunct',
+  sextile: 'sextiles',
+  square: 'squares',
+  trine: 'trines',
+  opposition: 'opposes',
+};
+
+function detectAspect(long1: number, long2: number): Omit<CurrentAspect, 'planet1' | 'planet2' | 'description'> | null {
+  const diff = Math.abs(long1 - long2);
+  const separation = Math.min(diff, 360 - diff);
+  
+  for (const [aspectName, def] of Object.entries(ASPECT_DEFINITIONS)) {
+    const orb = Math.abs(separation - def.angle);
+    if (orb <= def.orb) {
+      return {
+        aspect: aspectName as CurrentAspect['aspect'],
+        angle: def.angle,
+        orb: Math.round(orb * 100) / 100,
+        nature: def.nature,
+      };
+    }
+  }
+  return null;
+}
+
+/**
+ * Calculate all major aspects currently active in the sky
+ */
+export function calculateCurrentAspects(
+  positions: Record<string, CelestialBody>,
+  options: { includeMinor?: boolean; maxOrb?: number } = {}
+): CurrentAspect[] {
+  const planets = Object.entries(positions).filter(([name]) => 
+    ['sun', 'moon', 'mercury', 'venus', 'mars', 'jupiter', 'saturn', 'uranus', 'neptune', 'pluto', 'chiron', 'northnode'].includes(name)
+  );
+  
+  const aspects: CurrentAspect[] = [];
+  
+  for (let i = 0; i < planets.length; i++) {
+    for (let j = i + 1; j < planets.length; j++) {
+      const [p1Name, p1Body] = planets[i];
+      const [p2Name, p2Body] = planets[j];
+      
+      const aspectData = detectAspect(p1Body.longitude, p2Body.longitude);
+      if (!aspectData) continue;
+      if (options.maxOrb && aspectData.orb > options.maxOrb) continue;
+      
+      aspects.push({
+        planet1: p1Name,
+        planet2: p2Name,
+        ...aspectData,
+        description: `${capitalize(p1Name)} ${ASPECT_VERBS[aspectData.aspect]} ${capitalize(p2Name)} (${aspectData.orb}° orb)`,
+      });
+    }
+  }
+  
+  // Sort: tightest orbs first, then challenging aspects before harmonious
+  return aspects.sort((a, b) => {
+    if (a.orb !== b.orb) return a.orb - b.orb;
+    const natureOrder = { challenging: 0, neutral: 1, harmonious: 2 };
+    return natureOrder[a.nature] - natureOrder[b.nature];
+  });
+}
+
+function capitalize(str: string): string {
+  return str.charAt(0).toUpperCase() + str.slice(1);
+}
+
+export interface CriticalDegree {
+  planet: string;
+  degree: number;
+  type: 'anaretic' | 'ingress';
+  description: string;
+}
+
+/**
+ * Find planets at critical degrees (0° = ingress, 29° = anaretic)
+ */
+export function findCriticalDegrees(positions: Record<string, CelestialBody>): CriticalDegree[] {
+  const criticals: CriticalDegree[] = [];
+  
+  for (const [planet, body] of Object.entries(positions)) {
+    const deg = body.degreeInSign;
+    if (deg <= 1) {
+      criticals.push({
+        planet,
+        degree: Math.round(deg * 100) / 100,
+        type: 'ingress',
+        description: `${capitalize(planet)} at ${deg.toFixed(1)}° ${capitalize(body.sign)} — fresh energy, new cycle`,
+      });
+    } else if (deg >= 28) {
+      criticals.push({
+        planet,
+        degree: Math.round(deg * 100) / 100,
+        type: 'anaretic',
+        description: `${capitalize(planet)} at ${deg.toFixed(1)}° ${capitalize(body.sign)} — urgent, culminating energy`,
+      });
+    }
+  }
+  
+  return criticals.sort((a, b) => {
+    const typeOrder = { anaretic: 0, ingress: 1 };
+    return typeOrder[a.type] - typeOrder[b.type];
+  });
 }

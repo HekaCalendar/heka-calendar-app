@@ -2,7 +2,31 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta id="heka-viewport" name="viewport" content="width=device-width, initial-scale=1.0">
+  <script>
+    (function() {
+      var DESIGN_BASELINE = 390;
+      function updateViewport() {
+        var screenW = window.screen ? (window.screen.width || 0) : 0;
+        var innerW  = window.innerWidth || 0;
+        var w = Math.min(screenW || Infinity, innerW || Infinity) || DESIGN_BASELINE;
+        var vp = document.getElementById('heka-viewport');
+        if (!vp) return;
+        if (w < DESIGN_BASELINE) {
+          var scale = (w / DESIGN_BASELINE).toFixed(3);
+          vp.setAttribute('content',
+            'width=' + DESIGN_BASELINE + ', initial-scale=' + scale + ', viewport-fit=cover');
+        } else {
+          vp.setAttribute('content',
+            'width=device-width, initial-scale=1.0, viewport-fit=cover');
+        }
+      }
+      updateViewport();
+      window.addEventListener('orientationchange', function() {
+        setTimeout(updateViewport, 150);
+      });
+    })();
+  </script>
   <title>Task Ritual | HEKA Calendar</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -770,8 +794,8 @@
 
     // Firebase config
     const FIREBASE_CONFIG = {
-      apiKey: "AIzaSyBBJ0Q9VfPkjP2DCKY1bC1SjM4xJMmHZ1E",
-      projectId: "hekacalendar"
+      apiKey: "AIzaSyBevNpdAOCTWgpO3Kc9O4LE5SLYHGV1IpM",
+      projectId: "heka-calendar"
     };
 
     const PLAY_STORE_URL = 'https://play.google.com/store/apps/details?id=com.heka.calendar';

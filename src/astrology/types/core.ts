@@ -28,6 +28,20 @@ export function toZodiacDegree(longitude: Degree): ZodiacDegree {
   return (deg < 0 ? deg + 30 : deg) as ZodiacDegree;
 }
 
+/** Calculate degree within sign, respecting irregular 13-sign boundaries */
+export function getDegreeInSign(longitude: Degree, use13Signs: boolean = false): ZodiacDegree {
+  const normalized = ((longitude % 360) + 360) % 360;
+  if (use13Signs) {
+    const sign = getSignFromLongitude(longitude, true) as ZodiacSign13;
+    const boundary = SIGN_BOUNDARIES_13[sign];
+    if (boundary) {
+      return (normalized - boundary[0]) as ZodiacDegree;
+    }
+  }
+  const deg = normalized % 30;
+  return (deg < 0 ? deg + 30 : deg) as ZodiacDegree;
+}
+
 // Celestial Bodies
 export const PLANET_IDS = [
   'sun', 'moon', 'mercury', 'venus', 'mars',
@@ -61,7 +75,7 @@ export interface CelestialBody {
   readonly distance: number;         // AU
   readonly speed: number;            // degrees per day
   readonly isRetrograde: boolean;
-  readonly sign: ZodiacSign;
+  readonly sign: ZodiacSign | ZodiacSign13;
   readonly degreeInSign: ZodiacDegree;
 }
 
@@ -151,22 +165,23 @@ export const SIGN_DATES_13: Record<ZodiacSign13, { start: string; end: string }>
   pisces: { start: '03-12', end: '04-17' },
 };
 
-// Approximate longitude boundaries for 13-sign zodiac (based on actual constellation boundaries)
-// These are the IAU constellation boundaries at the ecliptic
+// IAU constellation boundaries projected onto the ecliptic, calibrated to match
+// actual solar ingress dates (SIGN_DATES_13). Accounts for elliptical orbit speed
+// variation so degree boundaries align with observed dates, not raw geometric projection.
 export const SIGN_BOUNDARIES_13: Record<ZodiacSign13, [number, number]> = {
-  aries: [0, 25],          // ~Apr 18 - May 13
-  taurus: [25, 55],        // ~May 14 - Jun 19
-  gemini: [55, 85],        // ~Jun 20 - Jul 20
-  cancer: [85, 115],       // ~Jul 21 - Aug 9
-  leo: [115, 145],         // ~Aug 10 - Sep 15
-  virgo: [145, 175],       // ~Sep 16 - Oct 30
-  libra: [175, 205],       // ~Oct 31 - Nov 22
-  scorpio: [205, 235],     // ~Nov 23 - Nov 29
-  ophiuchus: [235, 265],   // ~Nov 30 - Dec 17
-  sagittarius: [265, 295], // ~Dec 18 - Jan 18
-  capricorn: [295, 325],   // ~Jan 19 - Feb 15 (includes Feb 3 at ~314°)
-  aquarius: [325, 355],    // ~Feb 16 - Mar 11
-  pisces: [355, 360],      // ~Mar 12 - Apr 17
+  aries: [0, 28],          // Apr 18 - May 13
+  taurus: [28, 65],        // May 14 - Jun 19
+  gemini: [65, 94],        // Jun 20 - Jul 20
+  cancer: [94, 114],       // Jul 21 - Aug 9
+  leo: [114, 150],         // Aug 10 - Sep 15
+  virgo: [150, 193],       // Sep 16 - Oct 30
+  libra: [193, 217],       // Oct 31 - Nov 22
+  scorpio: [217, 223],     // Nov 23 - Nov 29
+  ophiuchus: [223, 242],   // Nov 30 - Dec 17
+  sagittarius: [242, 275], // Dec 18 - Jan 18
+  capricorn: [275, 303],   // Jan 19 - Feb 15
+  aquarius: [303, 327],    // Feb 16 - Mar 11
+  pisces: [327, 360],      // Mar 12 - Apr 17
 };
 
 // Helper function to get sign from longitude (supports both systems)
@@ -204,6 +219,68 @@ export const HOUSE_SYSTEMS = [
 ] as const;
 
 export type HouseSystemType = typeof HOUSE_SYSTEMS[number];
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// ZODIAC SYSTEMS
+// ═══════════════════════════════════════════════════════════════════════════════
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// ZODIAC FRAMEWORK (v3 — frame + signCount, replaces conflated ZodiacSystemType)
+// ═══════════════════════════════════════════════════════════════════════════════
+
+/** Tropical = aligned to seasons (vernal equinox = 0° Aries)
+ *  Sidereal  = aligned to fixed stars (requires ayanamsa)
+ */
+export const ZODIAC_FRAMES = ['tropical', 'sidereal'] as const;
+export type ZodiacFrame = typeof ZODIAC_FRAMES[number];
+
+/** 12 signs = traditional 30° sectors
+ *  13 signs = includes Ophiuchus with IAU constellation boundaries
+ */
+export const SIGN_COUNTS = [12, 13] as const;
+export type SignCount = typeof SIGN_COUNTS[number];
+
+// ── Legacy conflated enum (kept for backward-compat migration) ──
+export const ZODIAC_SYSTEMS = [
+  '12-sign',   // Tropical — seasons, 30° each
+  '13-sign',   // Astronomical — IAU constellation boundaries
+  'sidereal',  // Star-based — actual constellation positions with ayanamsa
+] as const;
+
+export type ZodiacSystemType = typeof ZODIAC_SYSTEMS[number];
+
+/** Migrate old conflated enum to new split fields.
+ *  Mapping:
+ *    '12-sign'  → { frame: 'tropical',  signCount: 12 }
+ *    '13-sign'  → { frame: 'tropical',  signCount: 13 }  // historically allowed, now invalid
+ *    'sidereal' → { frame: 'sidereal',  signCount: 12 }  // safest default for existing users
+ */
+export function migrateZodiacSystem(old: ZodiacSystemType): { frame: ZodiacFrame; signCount: SignCount } {
+  switch (old) {
+    case '12-sign':  return { frame: 'tropical', signCount: 12 };
+    case '13-sign':  return { frame: 'tropical', signCount: 13 };
+    case 'sidereal': return { frame: 'sidereal', signCount: 12 };
+    default:         return { frame: 'tropical', signCount: 12 };
+  }
+}
+
+/** Inverse: derive legacy string from split fields (for APIs still expecting it) */
+export function legacyZodiacSystem(frame: ZodiacFrame, signCount: SignCount): ZodiacSystemType {
+  if (frame === 'sidereal') return 'sidereal';
+  return signCount === 13 ? '13-sign' : '12-sign';
+}
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// NAKSHATRA SYSTEMS
+// ═══════════════════════════════════════════════════════════════════════════════
+
+export const NAKSHATRA_SYSTEMS = [
+  'none',
+  'vedic-27',   // Traditional 27 lunar mansions
+  'vedic-28',   // Including Abhijit
+] as const;
+
+export type NakshatraSystemType = typeof NAKSHATRA_SYSTEMS[number];
 
 export interface HouseCusp {
   readonly number: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12;

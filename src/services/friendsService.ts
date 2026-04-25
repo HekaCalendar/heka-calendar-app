@@ -21,14 +21,14 @@ import {
   writeBatch,
 } from 'firebase/firestore';
 import { db, getCurrentUser } from './firebase';
-import { scheduleNotification } from './notificationService';
+import { NotificationEngine } from './notificationEngine';
 
 // ============================================================================
 // Types
 // ============================================================================
 
-export type FriendshipStatus = 'pending' | 'accepted' | 'blocked';
-export type TaskStatus = 'pending' | 'accepted' | 'completed' | 'declined';
+export type FriendshipStatus = 'pending' | 'accepted' | 'declined' | 'blocked';
+export type TaskStatus = 'pending' | 'accepted' | 'completed' | 'declined' | 'revoked';
 
 export interface FriendProfile {
   uid: string;
@@ -46,6 +46,9 @@ export interface Friendship {
   initiatedBy: string;
   createdAt: Timestamp;
   acceptedAt?: Timestamp;
+  declinedAt?: Timestamp;
+  source?: 'invite' | 'task_share' | 'direct';
+  linkedTaskId?: string;
 }
 
 export interface Message {
@@ -79,6 +82,7 @@ export interface TaskRitual {
   createdAt: Timestamp;
   acceptedAt?: Timestamp;
   completedAt?: Timestamp;
+  revokedAt?: Timestamp;
   declinedReason?: string;
   conversationId: string; // Link to the conversation where it was created
 }
@@ -99,10 +103,14 @@ export interface Conversation {
 export interface InviteCode {
   code: string;
   createdBy: string;
+  creatorName: string;
+  creatorPhotoURL?: string;
   expiresAt: Timestamp;
   maxUses: number;
   usedCount: number;
   usedBy: string[];
+  type?: 'friend' | 'task';
+  linkedTaskCode?: string;
 }
 
 // ============================================================================
@@ -129,21 +137,32 @@ function generateInviteCode(): string {
 // Friendship Operations
 // ============================================================================
 
-export async function createInviteCode(): Promise<string | null> {
+export async function createInviteCode(type: 'friend' | 'task' = 'friend', linkedTaskCode?: string): Promise<string | null> {
   const currentUser = getCurrentUser();
   if (!currentUser || !db) return null;
 
   const code = generateInviteCode();
   const inviteRef = doc(db, 'invites', code);
   
-  await setDoc(inviteRef, {
+  const inviteData: Record<string, unknown> = {
     code,
     createdBy: currentUser.uid,
+    creatorName: currentUser.displayName || 'Cosmic Traveler',
     expiresAt: Timestamp.fromDate(new Date(Date.now() + 7 * 24 * 60 * 60 * 1000)), // 7 days
     maxUses: 5,
     usedCount: 0,
     usedBy: [],
-  });
+    type,
+  };
+
+  if (currentUser.photoURL) {
+    inviteData.creatorPhotoURL = currentUser.photoURL;
+  }
+  if (linkedTaskCode) {
+    inviteData.linkedTaskCode = linkedTaskCode;
+  }
+
+  await setDoc(inviteRef, inviteData);
 
   return code;
 }
@@ -236,35 +255,20 @@ export async function acceptInvite(code: string): Promise<{ success: boolean; er
 
   const batch = writeBatch(db);
 
-  // Create friendship
+  // Create friendship as PENDING (must be accepted by invitee)
   batch.set(friendshipRef, {
     id: friendshipId,
     users: [currentUser.uid, invite.createdBy],
-    status: 'accepted',
+    status: 'pending',
     initiatedBy: invite.createdBy,
+    source: invite.type === 'task' ? 'task_share' : 'invite',
     createdAt: serverTimestamp(),
-    acceptedAt: serverTimestamp(),
   });
 
   // Update invite
   batch.update(inviteRef, {
     usedCount: invite.usedCount + 1,
     usedBy: arrayUnion(currentUser.uid),
-  });
-
-  // Create conversation
-  const conversationId = getConversationId(currentUser.uid, invite.createdBy);
-  batch.set(doc(db, 'conversations', conversationId), {
-    id: conversationId,
-    participants: [currentUser.uid, invite.createdBy],
-    lastMessage: {
-      text: 'Friendship created! Start your cosmic conversation.',
-      senderId: 'system',
-      timestamp: serverTimestamp(),
-      type: 'system',
-    },
-    unreadCount: { [currentUser.uid]: 0, [invite.createdBy]: 0 },
-    updatedAt: serverTimestamp(),
   });
 
   await batch.commit();
@@ -333,6 +337,170 @@ export function subscribeToFriends(callback: (friends: FriendProfile[]) => void)
 
     callback(friendProfiles);
   });
+}
+
+// ============================================================================
+// Friend Request Operations
+// ============================================================================
+
+export async function getPendingFriendRequests(): Promise<FriendProfile[]> {
+  const currentUser = getCurrentUser();
+  if (!currentUser || !db) return [];
+
+  const friendshipsQuery = query(
+    collection(db, 'friendships'),
+    where('users', 'array-contains', currentUser.uid),
+    where('status', '==', 'pending')
+  );
+
+  const snapshot = await getDocs(friendshipsQuery);
+  const friendIds: string[] = [];
+
+  snapshot.docs.forEach(doc => {
+    const data = doc.data() as Friendship;
+    const friendId = data.users.find(uid => uid !== currentUser.uid);
+    if (friendId) friendIds.push(friendId);
+  });
+
+  const friendProfiles: FriendProfile[] = [];
+  for (const friendId of friendIds) {
+    const profileRef = doc(db, 'users', friendId);
+    const profileSnap = await getDoc(profileRef);
+    if (profileSnap.exists()) {
+      friendProfiles.push(profileSnap.data() as FriendProfile);
+    }
+  }
+
+  return friendProfiles;
+}
+
+export function subscribeToFriendRequests(callback: (requests: FriendProfile[]) => void): () => void {
+  const currentUser = getCurrentUser();
+  if (!currentUser || !db) return () => {};
+
+  const friendshipsQuery = query(
+    collection(db, 'friendships'),
+    where('users', 'array-contains', currentUser.uid),
+    where('status', '==', 'pending')
+  );
+
+  return onSnapshot(friendshipsQuery, async (snapshot) => {
+    const friendIds: string[] = [];
+    const notifiedIds = new Set(JSON.parse(localStorage.getItem('heka_notified_friend_requests') || '[]') as string[]);
+    const newNotifiedIds = new Set(notifiedIds);
+
+    snapshot.docs.forEach(doc => {
+      const data = doc.data() as Friendship;
+      const friendId = data.users.find(uid => uid !== currentUser.uid);
+      if (friendId) friendIds.push(friendId);
+
+      // Notify for new friend requests
+      if (friendId && !notifiedIds.has(doc.id)) {
+        newNotifiedIds.add(doc.id);
+        void NotificationEngine.notifyStandard(
+          'friend-request',
+          'circle',
+          'New Cosmic Connection',
+          `Someone has sent you a friend request. Open your Circle to connect.`,
+          new Date(Date.now() + 5000),
+          { friendRequestId: doc.id },
+          parseInt(doc.id.slice(-8), 16) || undefined
+        );
+      }
+    });
+
+    // Save notified IDs
+    if (newNotifiedIds.size !== notifiedIds.size) {
+      localStorage.setItem('heka_notified_friend_requests', JSON.stringify([...newNotifiedIds]));
+    }
+
+    const friendProfiles: FriendProfile[] = [];
+    for (const friendId of friendIds) {
+      const profileRef = doc(db, 'users', friendId);
+      const profileSnap = await getDoc(profileRef);
+      if (profileSnap.exists()) {
+        friendProfiles.push(profileSnap.data() as FriendProfile);
+      }
+    }
+
+    callback(friendProfiles);
+  });
+}
+
+export async function acceptFriendRequest(friendshipId: string): Promise<{ success: boolean; error?: string }> {
+  const currentUser = getCurrentUser();
+  if (!currentUser || !db) return { success: false, error: 'Not authenticated' };
+
+  const friendshipRef = doc(db, 'friendships', friendshipId);
+  const friendshipSnap = await getDoc(friendshipRef);
+
+  if (!friendshipSnap.exists()) {
+    return { success: false, error: 'Friend request not found' };
+  }
+
+  const friendship = friendshipSnap.data() as Friendship;
+  if (!friendship.users.includes(currentUser.uid)) {
+    return { success: false, error: 'Not authorized' };
+  }
+
+  if (friendship.status !== 'pending') {
+    return { success: false, error: 'Request already processed' };
+  }
+
+  const batch = writeBatch(db);
+
+  // Update friendship to accepted
+  batch.update(friendshipRef, {
+    status: 'accepted',
+    acceptedAt: serverTimestamp(),
+  });
+
+  // Create conversation
+  const otherUserId = friendship.users.find(uid => uid !== currentUser.uid)!;
+  const conversationId = getConversationId(currentUser.uid, otherUserId);
+  batch.set(doc(db, 'conversations', conversationId), {
+    id: conversationId,
+    participants: [currentUser.uid, otherUserId],
+    lastMessage: {
+      text: 'Friendship created! Start your cosmic conversation.',
+      senderId: 'system',
+      timestamp: serverTimestamp(),
+      type: 'system',
+    },
+    unreadCount: { [currentUser.uid]: 0, [otherUserId]: 0 },
+    updatedAt: serverTimestamp(),
+  });
+
+  await batch.commit();
+  return { success: true };
+}
+
+export async function declineFriendRequest(friendshipId: string): Promise<{ success: boolean; error?: string }> {
+  const currentUser = getCurrentUser();
+  if (!currentUser || !db) return { success: false, error: 'Not authenticated' };
+
+  const friendshipRef = doc(db, 'friendships', friendshipId);
+  const friendshipSnap = await getDoc(friendshipRef);
+
+  if (!friendshipSnap.exists()) {
+    return { success: false, error: 'Friend request not found' };
+  }
+
+  const friendship = friendshipSnap.data() as Friendship;
+  if (!friendship.users.includes(currentUser.uid)) {
+    return { success: false, error: 'Not authorized' };
+  }
+
+  if (friendship.status !== 'pending') {
+    return { success: false, error: 'Request already processed' };
+  }
+
+  await updateDoc(friendshipRef, {
+    status: 'declined',
+    declinedAt: serverTimestamp(),
+  });
+
+  return { success: true };
 }
 
 // ============================================================================
@@ -458,12 +626,14 @@ export async function createTaskRitual(
   const creatorName = currentUser.displayName || 'Someone';
   const hekaDateStr = hekaDate ? ` (Due: ${hekaDate.day}.${hekaDate.month + 1}.${hekaDate.year})` : '';
   
-  // Schedule immediate notification
-  void scheduleNotification(
+  // Schedule immediate notification via unified engine
+  void NotificationEngine.notifyCore(
+    'task-assigned',
+    'circle',
     'New Task from Cosmic Circle',
     `${creatorName} assigned you: ${title}${hekaDateStr}`,
-    new Date(Date.now() + 1000), // 1 second from now
-    { id: parseInt(taskRef.id.slice(-8), 16) || Math.floor(Math.random() * 100000) }
+    { taskId: taskRef.id, assigneeId },
+    parseInt(taskRef.id.slice(-8), 16) || undefined
   );
 
   return { id: taskRef.id, ...task };
@@ -489,6 +659,37 @@ export async function respondToTask(
   }
 
   await updateDoc(taskRef, update);
+}
+
+export async function revokeTask(taskId: string): Promise<{ success: boolean; error?: string }> {
+  const currentUser = getCurrentUser();
+  if (!currentUser || !db) {
+    return { success: false, error: 'Not authenticated' };
+  }
+
+  const taskRef = doc(db, 'tasks', taskId);
+  const taskSnap = await getDoc(taskRef);
+
+  if (!taskSnap.exists()) {
+    return { success: false, error: 'Task not found' };
+  }
+
+  const task = taskSnap.data() as TaskRitual;
+
+  if (task.creatorId !== currentUser.uid) {
+    return { success: false, error: 'Only the creator can revoke this task' };
+  }
+
+  if (task.status !== 'pending') {
+    return { success: false, error: 'Task already processed' };
+  }
+
+  await updateDoc(taskRef, {
+    status: 'revoked',
+    revokedAt: Timestamp.now(),
+  });
+
+  return { success: true };
 }
 
 export function subscribeToTasks(callback: (tasks: TaskRitual[]) => void): () => void {
@@ -578,11 +779,16 @@ export const FriendsService = {
   acceptInvite,
   getFriends,
   subscribeToFriends,
+  getPendingFriendRequests,
+  subscribeToFriendRequests,
+  acceptFriendRequest,
+  declineFriendRequest,
   sendMessage,
   subscribeToMessages,
   markConversationRead,
   createTaskRitual,
   respondToTask,
+  revokeTask,
   subscribeToTasks,
   updatePresence,
   subscribeToFriendPresence,

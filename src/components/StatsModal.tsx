@@ -41,7 +41,7 @@ export const StatsModal: React.FC<StatsModalProps> = ({ isOpen, onClose }) => {
     { id: 'month-streak', name: 'Month Master', icon: '📅', earned: stats.currentStreak >= 30 },
     { id: 'century', name: 'Century Club', icon: '💯', earned: stats.totalNotes >= 100 },
     { id: 'archivist', name: 'Archivist', icon: '📚', earned: stats.totalWords >= 10000 },
-    { id: 'explorer', name: 'Explorer', icon: '🧭', earned: Object.keys(stats.notesByMonth).length >= 12 },
+    { id: 'explorer', name: 'Explorer', icon: '🧭', earned: Object.keys(stats.notesByMonth).length >= 13 },
   ];
   
   const earnedBadges = badges.filter(b => b.earned);

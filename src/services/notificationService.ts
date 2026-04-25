@@ -4,6 +4,7 @@
  */
 
 import type { NoteData } from '../types';
+import { NotificationEngine } from './notificationEngine';
 
 // Check if running in Capacitor native app
 const IS_NATIVE_APP = typeof (window as any).Capacitor !== 'undefined';
@@ -229,6 +230,7 @@ export async function cancelNotification(id: string): Promise<boolean> {
 
 /**
  * Schedule a notification for a note/reminder
+ * Routes through the unified NotificationEngine for dedup, caps, and quiet hours.
  */
 export async function scheduleNoteReminder(
   note: NoteData,
@@ -237,13 +239,19 @@ export async function scheduleNoteReminder(
 ): Promise<string | null> {
   const title = 'HEKA Calendar Reminder';
   const body = note.content.substring(0, 100) + (note.content.length > 100 ? '...' : '');
-  
+
   // If no reminder time specified, schedule for 9 AM on that day
   const targetTime = reminderTime || new Date(note.createdAt);
-  
-  return scheduleNotification(title, body, targetTime, {
-    id: parseInt(note.id.replace(/\D/g, '').slice(0, 8)) || Math.floor(Math.random() * 100000),
-    extra: { noteId: note.id, dayKey }
+
+  return NotificationEngine.schedule({
+    type: 'note-reminder',
+    tier: 'standard',
+    title,
+    body,
+    scheduleAt: targetTime,
+    section: 'calendar',
+    id: parseInt(note.id.replace(/\D/g, '').slice(0, 8)) || undefined,
+    extra: { noteId: note.id, dayKey },
   });
 }
 
@@ -285,7 +293,13 @@ export async function syncNoteNotifications(notes: Record<string, NoteData[]>): 
         (dayNotes[0].content.length > 60 ? '...' : '') +
         (noteCount > 1 ? ` (+${noteCount - 1} more)` : '');
 
-      await scheduleNotification(title, body, hekaDate, {
+      await NotificationEngine.schedule({
+        type: 'note-reminder',
+        tier: 'standard',
+        title,
+        body,
+        scheduleAt: hekaDate,
+        section: 'calendar',
         id: parseInt(`${year}${month}${day}`),
         extra: { dayKey, noteCount }
       });
@@ -309,14 +323,21 @@ export async function getPendingNotifications(): Promise<any[]> {
 }
 
 /**
- * Cancel all scheduled notifications
+ * Cancel all scheduled notifications that are NOT managed by the NotificationEngine.
+ * Engine-managed notifications (daily briefing, streak saver, etc.) are preserved.
  */
 export async function cancelAllNotifications(): Promise<boolean> {
   if (IS_NATIVE_APP && isNativePluginAvailable()) {
     try {
       const { notifications } = await LocalNotifications.getPending();
       if (notifications && notifications.length > 0) {
-        await LocalNotifications.cancel({ notifications });
+        // Filter out engine-managed notifications (they have _engineType in extra)
+        const nonEngineNotifications = notifications.filter(
+          (n) => !n.extra?._engineType
+        );
+        if (nonEngineNotifications.length > 0) {
+          await LocalNotifications.cancel({ notifications: nonEngineNotifications });
+        }
       }
       return true;
     } catch (error) {
@@ -324,49 +345,115 @@ export async function cancelAllNotifications(): Promise<boolean> {
       return false;
     }
   }
-  
+
   return true;
 }
 
 /**
  * Test notification - sends immediately if permission granted
+ * Uses the unified engine with a reserved test ID (999999) to avoid collisions.
  */
 export async function testNotification(): Promise<void> {
-  // Try native app path first
-  if (IS_NATIVE_APP && isNativePluginAvailable()) {
-    try {
-      // Check permission
-      const { display } = await LocalNotifications.checkPermissions();
-      if (display !== 'granted') {
-        console.log('Notification permission not granted');
-        // Fall through to web
-      } else {
-        // Schedule immediate notification
-        await LocalNotifications.schedule({
-          notifications: [{
-            id: Math.floor(Math.random() * 100000),
-            title: 'HEKA Calendar',
-            body: 'Notifications are working! You\'ll be reminded of your notes.',
-            smallIcon: 'ic_notification',
-            iconColor: '#c9a227',
-            schedule: { at: new Date(Date.now() + 1000) } // 1 second from now
-          }]
-        });
-        
-        console.log('Test notification scheduled');
-        return;
-      }
-    } catch (error) {
-      console.error('Error sending native test notification:', error);
-      // Fall through to web
-    }
-  }
-  
-  // Browser / fallback path
-  sendNotification('HEKA Calendar', {
-    body: 'Notifications are working! You\'ll be reminded of your notes.',
-    icon: '/icon-192.png',
-    badge: '/icon-192.png',
-    requireInteraction: false,
+  const TEST_NOTIFICATION_ID = 999999;
+
+  await NotificationEngine.schedule({
+    type: 'test-notification',
+    tier: 'standard',
+    title: 'HEKA Calendar',
+    body: "Notifications are working! You'll be reminded of your notes.",
+    scheduleAt: new Date(Date.now() + 1000),
+    section: 'calendar',
+    id: TEST_NOTIFICATION_ID,
+    replaceExisting: true,
+    extra: { context: 'test' },
   });
+}
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// PLANNER TASK NOTIFICATIONS
+// ═══════════════════════════════════════════════════════════════════════════════
+
+import type { PlannerTask } from '../types';
+
+/**
+ * Schedule a reminder notification for a planner task.
+ * Returns the notification ID if scheduled successfully.
+ */
+export async function scheduleTaskReminder(task: PlannerTask): Promise<string | null> {
+  if (!task.dueDateTime) return null;
+
+  const due = new Date(task.dueDateTime);
+  const remindAt = new Date(due.getTime() - task.reminderMinutesBefore * 60 * 1000);
+
+  // Don't schedule if reminder time has already passed
+  if (remindAt.getTime() <= Date.now()) {
+    return null;
+  }
+
+  const notificationId = parseInt(task.id.replace(/\D/g, '').slice(0, 8), 10) || Math.floor(Math.random() * 100000);
+
+  return NotificationEngine.schedule({
+    type: 'task-reminder',
+    tier: 'core',
+    title: 'HEKA Intention',
+    body: `"${task.content.substring(0, 60)}${task.content.length > 60 ? '...' : ''}" is in ${task.reminderMinutesBefore} minutes.`,
+    scheduleAt: remindAt,
+    section: 'planner',
+    id: notificationId,
+    extra: {
+      type: 'task-reminder',
+      taskId: task.id,
+      dayKey: task.dayKey,
+    },
+  });
+}
+
+/**
+ * Cancel a task reminder by notification ID.
+ */
+export async function cancelTaskReminder(notificationId: string): Promise<boolean> {
+  return cancelNotification(notificationId);
+}
+
+/**
+ * Reconcile notifications for all incomplete planner tasks.
+ * Ensures every future task has a scheduled reminder, and removes stale ones.
+ */
+export async function reconcileTaskNotifications(tasksByDay: Record<string, PlannerTask[]>): Promise<void> {
+  if (!IS_NATIVE_APP || !isNativePluginAvailable()) return;
+
+  try {
+    const pending = await getPendingNotifications();
+    const pendingTaskIds = new Set(
+      pending
+        .filter((n) => n.extra?.type === 'task-reminder')
+        .map((n) => n.extra?.taskId as string)
+    );
+
+    for (const dayTasks of Object.values(tasksByDay)) {
+      for (const task of dayTasks) {
+        const shouldHaveNotification = !!task.dueDateTime && !task.isCompleted;
+        const hasNotification = task.notificationId && pendingTaskIds.has(task.id);
+
+        if (shouldHaveNotification && !hasNotification) {
+          const newId = await scheduleTaskReminder(task);
+          if (newId) {
+            // Update Firestore with new notificationId via plannerService
+            const { db, getCurrentUser } = await import('./firebase');
+            const uid = getCurrentUser()?.uid;
+            if (uid && db) {
+              const { doc, updateDoc } = await import('firebase/firestore');
+              await updateDoc(doc(db, 'users', uid, 'plannerTasks', task.id), { notificationId: newId });
+            }
+          }
+        }
+
+        if (!shouldHaveNotification && hasNotification && task.notificationId) {
+          await cancelTaskReminder(task.notificationId);
+        }
+      }
+    }
+  } catch (error) {
+    console.error('[PlannerNotifications] Reconcile failed:', error);
+  }
 }

@@ -5,6 +5,8 @@
 
 import React, { useState, useEffect, useCallback } from 'react';
 import { aiProviderManager, type AIProviderType } from '../../services/ai/aiProvider';
+import { aiConfigService } from '../../../services/aiConfigService';
+import { secureKeyStore } from '../../../services/secureKeyStore';
 import './AIProviderSettings.css';
 
 interface AIProviderSettingsProps {
@@ -289,11 +291,15 @@ export const AIProviderSettings: React.FC<AIProviderSettingsProps> = ({ onConfig
 
   // Load saved configuration on mount
   useEffect(() => {
-    const loadConfig = () => {
+    const loadConfig = async () => {
       const savedConfig = localStorage.getItem('celestial-ai-config');
       let active = 'template' as AIProviderType;
       
-      if (savedConfig) {
+      // Prefer unified config provider
+      const unified = aiConfigService.getConfig();
+      if (unified.provider !== 'template') {
+        active = unified.provider;
+      } else if (savedConfig) {
         try {
           const config = JSON.parse(savedConfig);
           if (config.activeProvider) {
@@ -304,11 +310,11 @@ export const AIProviderSettings: React.FC<AIProviderSettingsProps> = ({ onConfig
         }
       }
       
-      // Load existing keys
-      const groqKey = localStorage.getItem('celestial-groq-key');
-      const openaiKey = localStorage.getItem('celestial-openai-key');
-      const anthropicKey = localStorage.getItem('celestial-anthropic-key');
-      const ollamaUrl = localStorage.getItem('celestial-ollama-url');
+      // Load existing keys from secure storage
+      const groqKey = await secureKeyStore.get('heka-ai-groq');
+      const openaiKey = await secureKeyStore.get('heka-ai-openai');
+      const anthropicKey = await secureKeyStore.get('heka-ai-anthropic');
+      const ollamaUrl = await secureKeyStore.get('heka-ai-ollama');
       
       if (groqKey && active === 'groq') setApiKey(groqKey);
       if (openaiKey && active === 'openai') setApiKey(openaiKey);
@@ -322,18 +328,19 @@ export const AIProviderSettings: React.FC<AIProviderSettingsProps> = ({ onConfig
       onConfigChange?.(active !== 'template');
     };
     
-    loadConfig();
+    void loadConfig();
   }, [onConfigChange]);
 
-  const handleProviderChange = (provider: AIProviderType) => {
+  const handleProviderChange = async (provider: AIProviderType) => {
     setSelectedProvider(provider);
     setTestResult(null);
     setExpandedStep(1);
     setShowSetupGuide(true);
     
-    // Load existing key if available
+    // Load existing key if available from secure storage
     if (provider !== 'template') {
-      const key = localStorage.getItem(`celestial-${provider === 'ollama' ? 'ollama-url' : provider + '-key'}`);
+      const storageKey = provider === 'ollama' ? 'heka-ai-ollama' : `heka-ai-${provider}`;
+      const key = await secureKeyStore.get(storageKey);
       if (key) {
         setApiKey(key);
         setShowSetupGuide(false);
@@ -356,6 +363,8 @@ export const AIProviderSettings: React.FC<AIProviderSettingsProps> = ({ onConfig
           enabled: false 
         }));
         aiProviderManager.setActiveProvider('template');
+        aiConfigService.setProvider('template');
+        aiConfigService.setGlobalEnabled(false);
         
         setActiveProvider('template');
         setIsEnabled(false);
@@ -367,21 +376,19 @@ export const AIProviderSettings: React.FC<AIProviderSettingsProps> = ({ onConfig
           return;
         }
         
-        const storageKey = selectedProvider === 'ollama' 
-          ? 'celestial-ollama-url' 
-          : `celestial-${selectedProvider}-key`;
-        localStorage.setItem(storageKey, apiKey);
-        
-        aiProviderManager.configureProvider(selectedProvider, { 
-          apiKey: apiKey.trim(),
-          type: selectedProvider 
-        });
+        await aiProviderManager.saveApiKey(selectedProvider, apiKey.trim());
         aiProviderManager.setActiveProvider(selectedProvider);
         
         localStorage.setItem('celestial-ai-config', JSON.stringify({ 
           activeProvider: selectedProvider,
           enabled: true 
         }));
+        
+        // Sync to unified config
+        aiConfigService.setProvider(selectedProvider);
+        await aiConfigService.setApiKey(apiKey.trim());
+        aiConfigService.setGlobalEnabled(true);
+        aiConfigService.setAreaEnabled('stars', true);
         
         setActiveProvider(selectedProvider);
         setIsEnabled(true);

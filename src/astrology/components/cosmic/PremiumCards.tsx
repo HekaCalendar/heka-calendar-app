@@ -190,7 +190,7 @@ const ChronosCard: React.FC<ChronosCardProps> = ({ currentTime, julianDay, posit
                     <span className="lum-symbol">☉</span>
                     <span className="lum-name">Sun</span>
                     <span className="lum-position">
-                      {SIGN_SYMBOLS[positions.sun.sign as ZodiacSign]} {(positions.sun.longitude % 30).toFixed(0)}°
+                      {SIGN_SYMBOLS[positions.sun.sign as ZodiacSign]} {(positions.sun.degreeInSign ?? 0).toFixed(0)}°
                     </span>
                     <span className="lum-quality">
                       {SIGN_ELEMENTS[positions.sun.sign as ZodiacSign]} +
@@ -203,7 +203,7 @@ const ChronosCard: React.FC<ChronosCardProps> = ({ currentTime, julianDay, posit
                     <span className="lum-symbol">☽</span>
                     <span className="lum-name">Moon</span>
                     <span className="lum-position">
-                      {SIGN_SYMBOLS[positions.moon.sign as ZodiacSign]} {(positions.moon.longitude % 30).toFixed(0)}°
+                      {SIGN_SYMBOLS[positions.moon.sign as ZodiacSign]} {(positions.moon.degreeInSign ?? 0).toFixed(0)}°
                     </span>
                     <span className="lum-quality">
                       {SIGN_ELEMENTS[positions.moon.sign as ZodiacSign]} +
@@ -419,7 +419,7 @@ const LunaCard: React.FC<LunaCardProps> = ({ moonPhase, moonPosition, isExpanded
               <div className="section-label">☽ MOON'S CURRENT THRONE</div>
               <div className="moon-position-card">
                 <span className="mp-sign">{SIGN_SYMBOLS[moonPosition.sign as ZodiacSign]}</span>
-                <span className="mp-degree">{(moonPosition.longitude % 30).toFixed(1)}°</span>
+                <span className="mp-degree">{(moonPosition.degreeInSign ?? 0).toFixed(1)}°</span>
                 <span className="mp-name">{moonPosition.sign.charAt(0).toUpperCase() + moonPosition.sign.slice(1)}</span>
               </div>
               <div className="moon-qualities">
@@ -814,7 +814,7 @@ const StationCard: React.FC<StationCardProps> = ({ retrogrades, positions, isExp
                 
                 const isRetro = body.isRetrograde;
                 const dignity = PLANET_DIGNITY[planetId]?.[body.sign] || 'neutral';
-                const signDeg = (body.longitude % 30).toFixed(1);
+                const signDeg = (body.degreeInSign ?? 0).toFixed(1);
                 
                 return (
                   <div key={planetId} className={`planet-row ${isRetro ? 'retro' : ''} ${dignity}`}>
@@ -879,8 +879,10 @@ const StelliumCard: React.FC<StelliumCardProps> = ({ positions, isExpanded, onTo
     if (!positions) return { fire: 0, earth: 0, air: 0, water: 0 };
     
     const counts = { fire: 0, earth: 0, air: 0, water: 0 };
+    const use13 = getZodiacSystemPreference() === '13-sign';
+    const signElements = use13 ? SIGN_ELEMENTS_13 : SIGN_ELEMENTS;
     Object.values(positions).forEach(body => {
-      const element = SIGN_ELEMENTS[body.sign as ZodiacSign];
+      const element = signElements[body.sign as ZodiacSign];
       if (element && counts[element as keyof typeof counts] !== undefined) {
         counts[element as keyof typeof counts]++;
       }
@@ -946,13 +948,13 @@ const StelliumCard: React.FC<StelliumCardProps> = ({ positions, isExpanded, onTo
             <div className="elemental-bars">
               {Object.entries(elements).map(([element, count]) => (
                 <div key={element} className="element-bar">
-                  <span className="eb-symbol">{ELEMENT_META[element].symbol}</span>
+                  <span className="eb-symbol">{ELEMENT_META[element]?.symbol || '?'}</span>
                   <div className="eb-track">
                     <div 
                       className="eb-fill" 
                       style={{ 
                         width: `${Math.min((count / 10) * 100, 100)}%`,
-                        background: ELEMENT_META[element].color 
+                        background: ELEMENT_META[element]?.color || '#ccc'
                       }} 
                     />
                   </div>
@@ -1004,8 +1006,8 @@ const StelliumCard: React.FC<StelliumCardProps> = ({ positions, isExpanded, onTo
                         {SIGN_SYMBOLS[body.sign as ZodiacSign]} {signDeg}° {minutes.toString().padStart(2, '0')}'
                       </span>
                       <div className="ps-qualities">
-                        <span className="ps-element" style={{ color: ELEMENT_META[signElement || 'fire'].color }}>
-                          {ELEMENT_META[signElement || 'fire'].symbol}
+                        <span className="ps-element" style={{ color: ELEMENT_META[signElement || 'fire']?.color || '#f59e0b' }}>
+                          {ELEMENT_META[signElement || 'fire']?.symbol || '?'}
                         </span>
                         <span className={`ps-dignity ${dignity}`}>
                           {dignity === 'strong' ? '★ Strong' : 

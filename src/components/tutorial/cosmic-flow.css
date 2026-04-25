@@ -287,3 +287,101 @@
   font-weight: 700;
   color: rgba(255, 255, 255, 0.3);
 }
+
+/* ═══════════════════════════════════════════════════════════════════════════════
+   DESKTOP COMPACT MODE - Prevent tutorial modal from exceeding laptop viewport
+   ═══════════════════════════════════════════════════════════════════════════════ */
+
+@media (min-width: 1024px) {
+  .cosmic-flow-container {
+    padding: 12px;
+    margin: 8px 0;
+  }
+
+  .cosmic-earth {
+    margin-bottom: 10px;
+  }
+
+  .cosmic-earth-inner {
+    width: 64px;
+    height: 64px;
+  }
+
+  .cosmic-sun-rays {
+    width: 120px;
+    height: 120px;
+  }
+
+  .sun-ray {
+    width: 40px;
+    margin-left: 32px;
+  }
+
+  .cosmic-seasons {
+    gap: 6px;
+    margin-bottom: 10px;
+  }
+
+  .season-flow-item {
+    padding: 6px 10px;
+    gap: 3px;
+  }
+
+  .season-icon {
+    font-size: 18px;
+  }
+
+  .season-name {
+    font-size: 10px;
+  }
+
+  .season-date {
+    font-size: 9px;
+  }
+
+  .flow-arrow {
+    font-size: 14px;
+  }
+
+  .cosmic-insight {
+    padding: 8px;
+    margin-bottom: 8px;
+  }
+
+  .insight-item {
+    margin: 4px 0;
+    font-size: 11px;
+    gap: 8px;
+  }
+
+  .insight-item.highlight {
+    padding: 6px 8px;
+    margin: 6px 0;
+  }
+
+  .insight-icon {
+    font-size: 14px;
+  }
+
+  .cosmic-vs {
+    gap: 8px;
+  }
+
+  .vs-item {
+    padding: 8px 10px;
+    min-width: 90px;
+    gap: 2px;
+  }
+
+  .vs-label {
+    font-size: 12px;
+  }
+
+  .vs-reason {
+    font-size: 9px;
+  }
+
+  .vs-divider {
+    font-size: 11px;
+  }
+}

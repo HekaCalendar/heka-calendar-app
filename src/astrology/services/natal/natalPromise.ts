@@ -30,10 +30,60 @@ export interface NatalPromise {
 }
 
 // ═══════════════════════════════════════════════════════════════════════════════
-// SUN/MOON/ASCENDANT COMBINATIONS (144 variations)
+// SUN/MOON/ASCENDANT COMBINATIONS (1,728 variations)
 // ═══════════════════════════════════════════════════════════════════════════════
+// Instead of maintaining a 10,000-line unmaintainable lookup table, we compose
+// high-quality descriptions from three archetype dictionaries. This gives every
+// Sun/Moon/Ascendant combination a unique, coherent reading while keeping the
+// content maintainable. A small override table preserves hand-crafted entries.
 
-const SUN_MOON_ASCENDANT: Record<string, Record<string, Record<string, string>>> = {
+const SUN_ARCHETYPES: Record<string, string> = {
+  aries: 'A pure pioneer spirit, you embody raw initiative and fearless self-expression',
+  taurus: 'A steadfast builder, you are grounded in sensory experience and tangible creation',
+  gemini: 'A curious communicator, you endlessly explore ideas, connections, and perspectives',
+  cancer: 'A nurturing heart, you seek emotional depth, security, and belonging',
+  leo: 'A radiant creative force, you were born to shine, lead, and inspire',
+  virgo: 'A dedicated craftsman, you are committed to refinement, service, and practical mastery',
+  libra: 'A harmonizing presence, you seek balance, beauty, and meaningful partnership',
+  scorpio: 'A transformative power, you are drawn to intensity, depth, and profound truth',
+  sagittarius: 'An eternal explorer, you are guided by optimism, truth-seeking, and expansive vision',
+  capricorn: 'An ambitious climber, you build mastery through discipline and perseverance',
+  aquarius: 'A visionary innovator, you contribute unique perspectives to collective progress',
+  pisces: 'A sensitive dreamer, you flow between worlds, guided by compassion and imagination',
+};
+
+const MOON_ARCHETYPES: Record<string, string> = {
+  aries: 'Your emotions run hot and fast, needing immediate, honest expression and authentic response',
+  taurus: 'Your inner world craves stability, comfort, and deep sensory security',
+  gemini: 'Your feelings process through mental channels, needing variety and stimulating connection',
+  cancer: 'Your heart seeks nurturing bonds and a profound sense of emotional home',
+  leo: 'Your emotions need dramatic expression, heartfelt recognition, and creative joy',
+  virgo: 'Your emotional well-being depends on practical care, order, and being useful',
+  libra: 'Your inner peace requires harmonious partnership, beauty, and fair exchange',
+  scorpio: 'Your feelings run deep, seeking intense intimacy and transformative bonding',
+  sagittarius: 'Your emotional nature needs freedom, adventure, and philosophical meaning',
+  capricorn: 'Your heart values responsible commitment, maturity, and long-term security',
+  aquarius: 'Your feelings thrive on intellectual connection, friendship, and emotional space',
+  pisces: 'Your emotional world dissolves boundaries, seeking spiritual union and compassion',
+};
+
+const ASCENDANT_ARCHETYPES: Record<string, string> = {
+  aries: 'You meet the world with bold directness, charging headfirst into new experiences',
+  taurus: 'You approach life patiently, building lasting security through steady effort',
+  gemini: 'You navigate life as a curious communicator, adapting through mental agility',
+  cancer: 'You present a nurturing, protective face, creating emotional havens wherever you go',
+  leo: 'You enter rooms with warmth and confidence, naturally drawing others into your orbit',
+  virgo: 'You approach the world with practical analysis, seeking to improve and refine',
+  libra: 'You move through life gracefully, initiating connection and seeking harmony',
+  scorpio: 'You meet the world with magnetic intensity, penetrating surfaces to find truth',
+  sagittarius: 'You approach life as an adventure, sharing enthusiasm and seeking meaning',
+  capricorn: 'You present a composed, ambitious face, climbing toward your goals methodically',
+  aquarius: 'You move through life as an independent innovator, championing unique paths',
+  pisces: 'You approach the world with gentle sensitivity, flowing around obstacles intuitively',
+};
+
+// Premium hand-crafted overrides for particularly resonant combinations
+const SUN_MOON_ASCENDANT_OVERRIDES: Record<string, Record<string, Record<string, string>>> = {
   aries: {
     aries: {
       aries: 'A pure pioneer spirit, you embody raw initiative and fearless self-expression. Your journey is about learning courage through action.',
@@ -49,9 +99,7 @@ const SUN_MOON_ASCENDANT: Record<string, Record<string, Record<string, string>>>
       aquarius: 'A revolutionary innovator, you pioneer new collective paths. Your uniqueness is your strength.',
       pisces: 'Your assertive spirit flows through spiritual channels. You fight for the vulnerable and the dream.',
     },
-    // ... more moon combinations
   },
-  // ... more sun signs
 };
 
 // ═══════════════════════════════════════════════════════════════════════════════
@@ -162,9 +210,18 @@ function generateCoreIdentity(
   dominantElement: string,
   dominantModality: string
 ): string {
-  // Try to get specific combination
-  const specific = SUN_MOON_ASCENDANT[sun?.sign]?.[moon?.sign]?.[ascendant];
-  if (specific) return specific;
+  // Try premium hand-crafted override first
+  const override = SUN_MOON_ASCENDANT_OVERRIDES[sun?.sign]?.[moon?.sign]?.[ascendant];
+  if (override) return override;
+  
+  // Compose from archetypes for all 1,728 possible combinations
+  const sunText = SUN_ARCHETYPES[sun?.sign];
+  const moonText = MOON_ARCHETYPES[moon?.sign];
+  const ascText = ASCENDANT_ARCHETYPES[ascendant];
+  
+  if (sunText && moonText && ascText) {
+    return `${sunText}. ${moonText}. ${ascText}.`;
+  }
   
   // Fall back to element/modality
   return ELEMENT_MODALITY[dominantElement]?.[dominantModality] || 

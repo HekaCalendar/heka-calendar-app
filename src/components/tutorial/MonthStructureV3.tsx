@@ -73,7 +73,7 @@ export const MonthStructureV3: React.FC = () => {
           </div>
           <div className="v3-stat">
             <div className="v3-stat-value">28</div>
-            <div className="v3-stat-label">Days Each</div>
+            <div className="v3-stat-label">Days + March 29/30</div>
           </div>
           <div className="v3-stat">
             <div className="v3-stat-value">+8%</div>

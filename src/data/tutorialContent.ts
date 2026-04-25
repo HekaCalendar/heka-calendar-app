@@ -11,13 +11,20 @@
  */
 
 import type { Tutorial, ContextualHelp } from '../types/tutorial';
+import { celestialOnboarding } from './onboardingContent';
 import eliteTutorial from './tutorialElite';
 
 // ═══════════════════════════════════════════════════════════════════════════════
-// ONBOARDING TUTORIAL - Interactive First-Time Experience
+// ONBOARDING TUTORIAL - The Celestial Awakening
 // ═══════════════════════════════════════════════════════════════════════════════
 
-export const onboardingTutorial: Tutorial = {
+export const onboardingTutorial: Tutorial = celestialOnboarding;
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// LEGACY: Interactive First-Time Experience (preserved for reference)
+// ═══════════════════════════════════════════════════════════════════════════════
+
+export const legacyOnboardingTutorial: Tutorial = {
   id: 'onboarding-main',
   category: 'onboarding',
   name: 'Welcome to HEKA Calendar',
@@ -42,8 +49,8 @@ export const onboardingTutorial: Tutorial = {
     {
       id: 'the-pattern',
       type: 'modal',
-      title: '13 Months. 28 Days Each.',
-      content: 'Every month has exactly 4 weeks. The 1st is always the same weekday. Your birthday always falls on the same day.',
+      title: '13 Months. Mostly Twenty-Eight Days.',
+      content: 'Twelve months have exactly 4 weeks. March, the closing month, carries the leap day. Within each year, the 1st of every month falls on the same weekday.',
       position: 'center',
       actionLabel: 'The Year Starts When?',
       tone: 'friendly',
@@ -242,7 +249,7 @@ The moon makes 13 cycles per year. HEKA tracks this honestly.`,
           'Look for the → arrow button',
           'Click it to go to the next month',
         ],
-        successMessage: 'Time travel complete! 🚀',
+        successMessage: 'Returned to today.',
         indicator: 'bounce',
       },
     },
@@ -252,7 +259,7 @@ The moon makes 13 cycles per year. HEKA tracks this honestly.`,
       id: 'arc-explanation',
       type: 'spotlight',
       title: 'The Three Arcs 🌈',
-      content: '🔴 Opening (months 1-4): Beginnings, planting, new starts\n🟢 Core (months 5-9): Growth, action, fullness\n🟣 Closing (months 10-13): Harvest, reflection, completion\n\nEach arc has its own energy. Notice how you feel different in each!',
+      content: '🔴 Opening (month 1): Beginnings, planting, new starts\n🟢 Core (months 2-10): Growth, action, fullness\n🟣 Closing (months 11-13): Harvest, reflection, completion\n\nEach arc has its own energy. Notice how you feel different in each!',
       targetSelector: '.month-header__arc, [class*="arcIndicator"], .month-arc',
       position: 'bottom',
       actionLabel: 'Got it!',
@@ -277,7 +284,7 @@ The moon makes 13 cycles per year. HEKA tracks this honestly.`,
           'Look for a button with "Today" text',
           'It\'s usually near the month name',
         ],
-        successMessage: 'Boom! Back to the present! 🎯',
+        successMessage: 'Back to the present.',
         indicator: 'bounce',
         badgeText: 'Tap me!',
       },
@@ -555,7 +562,7 @@ The moon makes 13 cycles per year. HEKA tracks this honestly.`,
           'Or click outside the journal',
         ],
         allowSkipAfterSeconds: 3,
-        successMessage: 'Journal closed. Your secrets are safe! 🔒',
+        successMessage: 'Journal closed. Your entry is saved.',
         indicator: 'glow',
       },
     },
@@ -564,7 +571,7 @@ The moon makes 13 cycles per year. HEKA tracks this honestly.`,
       id: 'stars-hub-teaser',
       type: 'interactive',
       title: 'The Stars Await You! ✨',
-      content: 'Ready for something cosmic? The Stars Hub has birth charts, planetary transits, and personalized astrology. Based on NASA-grade calculations!',
+      content: 'Ready for something cosmic? The Stars Hub has birth charts, planetary transits, and personalized astrology. Calculated against the actual sky.',
       targetSelector: 'button:contains("Stars"), button:contains("✨"), [class*="stars"], .btn-stars',
       position: 'bottom',
       actionRequired: 'Click to enter Stars Hub (or skip)',
@@ -625,16 +632,8 @@ The moon makes 13 cycles per year. HEKA tracks this honestly.`,
     {
       id: 'completion',
       type: 'celebration',
-      title: 'You\'re Ready, Timekeeper! 🎉',
-      content: `Look at you go! You've mastered:
-
-✅ Adding notes with categories
-✅ Navigating months and returning home  
-✅ Customizing themes and moon phases
-✅ Expanding and year views
-✅ Private journaling with mood tracking
-
-Your journey through HEKA time begins now!`,
+      title: 'You have walked through the door',
+      content: `The calendar is yours now. Thirteen months of rhythm. A sky that speaks. A journal that remembers. Begin.`,
       position: 'center',
       actionLabel: 'Start Exploring',
       tone: 'excited',
@@ -659,8 +658,8 @@ export const settingsMasterClassTutorial: Tutorial = {
     {
       id: 'settings-intro',
       type: 'welcome',
-      title: 'Settings Master Class 🎓',
-      content: 'Ready to become a HEKA power user? We\'ll explore every toggle and option. By the end, you\'ll have your calendar perfectly tuned!',
+      title: 'Settings Overview',
+      content: 'We will explore every toggle and option. By the end, your calendar will be perfectly tuned.',
       position: 'center',
       actionLabel: 'Let\'s Dive In!',
       tone: 'excited',
@@ -752,17 +751,17 @@ Toggle in Settings → Mode. Most users prefer SYNC to start!`,
         validation: {
           elementDisappears: '.settings-panel, [class*="SettingsPanel"]',
         },
-        successMessage: 'Settings Master achievement unlocked! 🏆',
+        successMessage: 'Settings explored.',
         indicator: 'glow',
       },
     },
     {
       id: 'completion',
       type: 'celebration',
-      title: 'Settings Master! 🎓',
-      content: 'You now know every setting in HEKA Calendar. Your calendar is truly YOURS now!',
+      title: 'Settings',
+      content: 'You now know every setting in HEKA Calendar. Your calendar is truly yours.',
       position: 'center',
-      actionLabel: 'I\'m a Pro!',
+      actionLabel: 'Continue',
       tone: 'excited',
     },
   ],
@@ -790,7 +789,7 @@ export const calendarBasicsTutorial: Tutorial = {
 
 🌙 13 Moon cycles per year (not 12!)
 📅 28 days = perfect 4-week month
-🎯 Every date is always the same weekday
+🎯 Within each year, every date is the same weekday
 🌿 Aligns with planting & harvest cycles
 
 The Gregorian calendar was designed for taxes and empire. HEKA was designed for humans and nature.`,
@@ -819,14 +818,14 @@ The Gregorian calendar was designed for taxes and empire. HEKA was designed for 
       },
     },
     {
-      id: 'day-out-of-time',
+      id: 'march-closing',
       type: 'modal',
-      title: 'The Day Out of Time 🌀',
-      content: `Once per year, there's a special 365th day that exists outside the calendar structure. 
+      title: 'The Closing Month 🌀',
+      content: `March is the only month with a variable length — twenty-nine days in standard years, thirty in leap years.
 
-It's not part of any month or week—truly "time out of time." Many cultures celebrate this as a day of pure potential, reflection, and joy.
+All correction lives in one place. The other twelve months are perfectly, permanently regular. March completes the year and prepares you for the next opening.
 
-In HEKA, we honor this day for celebration and renewal!`,
+A time for reflection, completion, and setting intentions for the year to come.`,
       position: 'center',
       actionLabel: 'Beautiful!',
       tone: 'mysterious',
@@ -862,7 +861,7 @@ export const astrologyIntroTutorial: Tutorial = {
       id: 'stars-hub-welcome',
       type: 'welcome',
       title: 'Welcome to the Stars Hub ✨',
-      content: 'You\'ve entered the astrology portal! Everything here is calculated with NASA-grade Swiss Ephemeris for precision measured in arc-seconds. Let\'s discover your cosmic blueprint!',
+      content: 'You have entered the astrology portal. Everything here is calculated with Swiss Ephemeris for arc-second precision. Let us discover your cosmic blueprint.',
       position: 'center',
       actionLabel: 'I\'m Ready!',
       tone: 'mysterious',
@@ -1116,8 +1115,8 @@ export const advancedFeaturesTutorial: Tutorial = {
     {
       id: 'completion',
       type: 'celebration',
-      title: 'Power User Unlocked! 🚀',
-      content: 'You now know the advanced features that make HEKA Calendar truly powerful. You\'re ready to use the app like a pro!',
+      title: 'Advanced Features',
+      content: 'You now know the advanced features that make HEKA Calendar truly powerful. You are ready to use it with confidence.',
       position: 'center',
       actionLabel: 'I\'m a Pro!',
       tone: 'excited',
@@ -1167,11 +1166,11 @@ export const contextualHelpEntries: ContextualHelp[] = [
     category: 'ui',
   },
   {
-    id: 'day-out-of-time',
-    selector: '.day-out-of-time, [data-day="0"]',
-    title: 'Day Out of Time',
-    content: 'The 365th day that exists outside the calendar structure. A day for celebration, reflection, and timeless activities.',
-    proTip: 'This day doesn\'t belong to any week or month—perfect for breaking routines!',
+    id: 'march-leap-day',
+    selector: '.month-march, [data-month="12"]',
+    title: 'The Closing Month',
+    content: 'March carries the leap day — twenty-nine days in standard years, thirty in leap years. All correction lives in one place.',
+    proTip: 'The other twelve months are perfectly regular. Only March changes.',
     trigger: 'hover',
     showOnce: true,
     category: 'calendar',
@@ -1219,7 +1218,8 @@ export const contextualHelpEntries: ContextualHelp[] = [
 // ═══════════════════════════════════════════════════════════════════════════════
 
 export const allTutorials: Tutorial[] = [
-  eliteTutorial,  // ELITE onboarding (first-visit trigger) - SOLE onboarding experience
+  onboardingTutorial,  // Celestial Awakening — new unified onboarding
+  eliteTutorial,       // Legacy elite experience (kept for reference)
   calendarBasicsTutorial,
   astrologyIntroTutorial,
   settingsMasterClassTutorial,
@@ -1237,6 +1237,7 @@ export const getTutorialsByCategory = (category: string): Tutorial[] => {
 
 export const getRecommendedTutorialForUser = (completedTutorials: string[]): Tutorial | null => {
   const progression = [
+    'celestial-awakening-v1',
     'elite-onboarding',
     'calendar-basics',
     'journal-deep-dive',

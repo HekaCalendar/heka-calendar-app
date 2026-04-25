@@ -5,8 +5,8 @@
 
 import { useState, useCallback, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { navigateToMonth, selectDate } from '../store';
-import { HEKA_MONTHS, getTodayHekaDate } from '../services/calendarService';
+import { navigateToMonth, selectDate, setView } from '../store';
+import { HEKA_MONTHS, getTodayHekaDate, civilToHeka as calendarCivilToHeka } from '../services/calendarService';
 import type { HekaDate, HekaMonthIndex } from '../types';
 
 interface SearchModalProps {
@@ -108,47 +108,6 @@ function parseCivilDate(query: string, currentYear: number): Date | null {
   return null;
 }
 
-// Convert civil date to HEKA date
-function civilToHeka(civilDate: Date): HekaDate | null {
-  // HEKA year starts April 1
-  const year = civilDate.getMonth() < 3 ? civilDate.getFullYear() - 1 : civilDate.getFullYear();
-  
-  // Find which HEKA month this date falls into
-  // We'll iterate through months to find the right one
-  const monthStarts: Date[] = [];
-  let currentDate = new Date(year, 3, 1); // April 1
-  
-  for (let m = 0; m < 13; m++) {
-    monthStarts.push(new Date(currentDate));
-    // Add 28 days for next month (29 for March in leap years)
-    const daysToAdd = m === 11 ? (isLeapYear(year + 1) ? 30 : 29) : 28;
-    currentDate = new Date(currentDate.getTime() + daysToAdd * 24 * 60 * 60 * 1000);
-  }
-  
-  // Find which month contains the civil date
-  for (let m = 0; m < 12; m++) {
-    const monthStart = monthStarts[m];
-    const monthEnd = new Date(monthStarts[m + 1].getTime() - 24 * 60 * 60 * 1000);
-    
-    if (civilDate >= monthStart && civilDate <= monthEnd) {
-      const dayDiff = Math.floor((civilDate.getTime() - monthStart.getTime()) / (1000 * 60 * 60 * 24));
-      return { year, month: m as HekaMonthIndex, day: dayDiff + 1 };
-    }
-  }
-  
-  // Check March (last month)
-  const marchStart = monthStarts[12];
-  const marchDays = isLeapYear(year + 1) ? 30 : 29;
-  const marchEnd = new Date(marchStart.getTime() + (marchDays - 1) * 24 * 60 * 60 * 1000);
-  
-  if (civilDate >= marchStart && civilDate <= marchEnd) {
-    const dayDiff = Math.floor((civilDate.getTime() - marchStart.getTime()) / (1000 * 60 * 60 * 24));
-    return { year, month: 12 as HekaMonthIndex, day: dayDiff + 1 };
-  }
-  
-  return null;
-}
-
 function isLeapYear(year: number): boolean {
   return (year % 4 === 0 && year % 100 !== 0) || (year % 400 === 0);
 }
@@ -203,7 +162,7 @@ export const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose }) => 
     // Try parsing as civil date first (with natural language)
     const civilDate = parseCivilDate(searchQuery, today.year);
     if (civilDate) {
-      const hekaDate = civilToHeka(civilDate);
+      const hekaDate = calendarCivilToHeka(civilDate);
       if (hekaDate) {
         found.push({
           type: 'civil',
@@ -243,6 +202,7 @@ export const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose }) => 
   
   const handleSelectResult = useCallback((result: SearchResult) => {
     dispatch(navigateToMonth({ year: result.hekaDate.year, month: result.hekaDate.month }));
+    dispatch(setView('month'));
     dispatch(selectDate(result.hekaDate));
     onClose();
   }, [dispatch, onClose]);

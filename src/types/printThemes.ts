@@ -453,6 +453,279 @@ export const THEMES: Record<string, PrintTheme> = {
         noteDisplayStyle: 'dot'
       }
     }
+  },
+
+  'nature-organic': {
+    id: 'nature-organic',
+    name: 'Nature Organic',
+    description: 'Earthy greens, soft botanical styling, organic shapes',
+    preview: '🌿',
+    colors: {
+      primary: '#33691e',
+      primaryLight: '#558b2f',
+      primaryDark: '#1b5e20',
+      secondary: '#7cb342',
+      accent: '#8bc34a',
+      background: '#f8f9f4',
+      surface: '#ffffff',
+      surfaceElevated: '#ffffff',
+      text: '#2c3e2c',
+      textSecondary: '#558b2f',
+      textMuted: '#689f38',
+      border: '#dcedc8',
+      borderLight: '#e8f5e9',
+      arcOpening: '#d32f2f',
+      arcCore: '#388e3c',
+      arcClosing: '#7b1fa2'
+    },
+    typography: {
+      display: {
+        fontFamily: "'Cormorant Garamond', serif",
+        fontSize: '110px',
+        fontWeight: 600,
+        letterSpacing: '0.02em',
+        lineHeight: 1
+      },
+      h1: { fontSize: '38px', fontWeight: 600, letterSpacing: '0.03em' },
+      h2: { fontSize: '32px', fontWeight: 600, letterSpacing: '0.02em' },
+      h3: { fontSize: '13px', fontWeight: 600, letterSpacing: '0.15em' },
+      body: {
+        fontFamily: "'Quicksand', sans-serif",
+        fontSize: '13px',
+        fontWeight: 400,
+        lineHeight: 1.5
+      },
+      caption: { fontSize: '11px', fontWeight: 400 },
+      label: { fontSize: '10px', fontWeight: 600, letterSpacing: '0.1em' }
+    },
+    spacing: {
+      unit: 8,
+      xs: 4,
+      sm: 8,
+      md: 16,
+      lg: 24,
+      xl: 32,
+      xxl: 48,
+      pagePadding: 40,
+      gridGap: 6,
+      cellPadding: 8
+    },
+    effects: {
+      shadowSm: '0 1px 3px rgba(124,179,66,0.06)',
+      shadowMd: '0 2px 12px rgba(124,179,66,0.1)',
+      shadowLg: '0 4px 16px rgba(124,179,66,0.12)',
+      glowPrimary: 'none',
+      glowAccent: 'none',
+      borderRadius: {
+        sm: '8px',
+        md: '10px',
+        lg: '16px',
+        full: '9999px'
+      }
+    },
+    layouts: {
+      yearCover: {
+        enabled: true,
+        showArcs: true,
+        showWeekdayLegend: true,
+        backgroundStyle: 'gradient'
+      },
+      monthPage: {
+        headerStyle: 'standard',
+        showArcIndicator: true,
+        showCivilRange: false,
+        gridStyle: 'standard'
+      },
+      dayCell: {
+        showMoonPhase: true,
+        showCivilDate: true,
+        showNoteIndicators: true,
+        maxNotesVisible: 3,
+        noteDisplayStyle: 'badge'
+      }
+    }
+  },
+
+  cyberpunk: {
+    id: 'cyberpunk',
+    name: 'Cyberpunk',
+    description: 'Dark void, neon magenta/cyan grids, tech typography',
+    preview: '⚡',
+    colors: {
+      primary: '#ff00ff',
+      primaryLight: '#ff66ff',
+      primaryDark: '#aa00aa',
+      secondary: '#00ffff',
+      accent: '#ff0055',
+      background: '#050508',
+      surface: '#0a0a0f',
+      surfaceElevated: '#14141a',
+      text: '#e0e0ff',
+      textSecondary: '#a0a0dd',
+      textMuted: '#8888cc',
+      border: '#1a1a2e',
+      borderLight: 'rgba(0,255,255,0.15)',
+      arcOpening: '#ff0055',
+      arcCore: '#00ffaa',
+      arcClosing: '#aa00ff'
+    },
+    typography: {
+      display: {
+        fontFamily: "'Orbitron', sans-serif",
+        fontSize: '100px',
+        fontWeight: 700,
+        letterSpacing: '0.02em',
+        lineHeight: 1
+      },
+      h1: { fontSize: '32px', fontWeight: 600, letterSpacing: '0.03em' },
+      h2: { fontSize: '28px', fontWeight: 600, letterSpacing: '0.02em' },
+      h3: { fontSize: '12px', fontWeight: 600, letterSpacing: '0.15em' },
+      body: {
+        fontFamily: "'Rajdhani', sans-serif",
+        fontSize: '13px',
+        fontWeight: 400,
+        lineHeight: 1.5
+      },
+      caption: { fontSize: '11px', fontWeight: 400 },
+      label: { fontSize: '9px', fontWeight: 600, letterSpacing: '0.1em' }
+    },
+    spacing: {
+      unit: 8,
+      xs: 4,
+      sm: 8,
+      md: 16,
+      lg: 24,
+      xl: 32,
+      xxl: 48,
+      pagePadding: 40,
+      gridGap: 6,
+      cellPadding: 8
+    },
+    effects: {
+      shadowSm: '0 0 8px rgba(255,0,255,0.2)',
+      shadowMd: '0 0 12px rgba(255,0,255,0.15)',
+      shadowLg: '0 0 20px rgba(255,0,255,0.2)',
+      glowPrimary: '0 0 30px rgba(255,0,255,0.3)',
+      glowAccent: '0 0 40px rgba(0,255,255,0.3)',
+      borderRadius: {
+        sm: '2px',
+        md: '2px',
+        lg: '4px',
+        full: '9999px'
+      }
+    },
+    layouts: {
+      yearCover: {
+        enabled: true,
+        showArcs: true,
+        showWeekdayLegend: false,
+        backgroundStyle: 'solid'
+      },
+      monthPage: {
+        headerStyle: 'banner',
+        showArcIndicator: true,
+        showCivilRange: false,
+        gridStyle: 'standard'
+      },
+      dayCell: {
+        showMoonPhase: true,
+        showCivilDate: true,
+        showNoteIndicators: true,
+        maxNotesVisible: 3,
+        noteDisplayStyle: 'badge'
+      }
+    }
+  },
+
+  'ancient-egypt': {
+    id: 'ancient-egypt',
+    name: 'Ancient Egypt',
+    description: 'Papyrus/gold, lapis accents, column-style headers, hieroglyphic ornaments',
+    preview: '𓂀',
+    colors: {
+      primary: '#1a3a5c',
+      primaryLight: '#2e5c8a',
+      primaryDark: '#0f2438',
+      secondary: '#b8941f',
+      accent: '#d4af37',
+      background: '#f5e6c8',
+      surface: '#fdf5e6',
+      surfaceElevated: '#ffffff',
+      text: '#1a2332',
+      textSecondary: '#3a3020',
+      textMuted: '#5a4a3a',
+      border: '#d4c9a8',
+      borderLight: '#e0c48a',
+      arcOpening: '#c62828',
+      arcCore: '#2e7d32',
+      arcClosing: '#6a1b9a'
+    },
+    typography: {
+      display: {
+        fontFamily: "'Cinzel Decorative', serif",
+        fontSize: '110px',
+        fontWeight: 400,
+        letterSpacing: '0.05em',
+        lineHeight: 1
+      },
+      h1: { fontSize: '38px', fontWeight: 400, letterSpacing: '0.03em' },
+      h2: { fontSize: '32px', fontWeight: 400, letterSpacing: '0.02em' },
+      h3: { fontSize: '13px', fontWeight: 600, letterSpacing: '0.15em' },
+      body: {
+        fontFamily: "'Sorts Mill Goudy', serif",
+        fontSize: '14px',
+        fontWeight: 400,
+        lineHeight: 1.6
+      },
+      caption: { fontSize: '11px', fontWeight: 400 },
+      label: { fontSize: '10px', fontWeight: 600, letterSpacing: '0.1em' }
+    },
+    spacing: {
+      unit: 8,
+      xs: 4,
+      sm: 8,
+      md: 16,
+      lg: 24,
+      xl: 32,
+      xxl: 48,
+      pagePadding: 40,
+      gridGap: 6,
+      cellPadding: 8
+    },
+    effects: {
+      shadowSm: '0 1px 3px rgba(0,0,0,0.1)',
+      shadowMd: '0 2px 12px rgba(184,148,31,0.15)',
+      shadowLg: '0 4px 16px rgba(184,148,31,0.2)',
+      glowPrimary: 'none',
+      glowAccent: '0 0 20px rgba(212,175,55,0.2)',
+      borderRadius: {
+        sm: '2px',
+        md: '4px',
+        lg: '8px',
+        full: '50%'
+      }
+    },
+    layouts: {
+      yearCover: {
+        enabled: true,
+        showArcs: true,
+        showWeekdayLegend: true,
+        backgroundStyle: 'gradient'
+      },
+      monthPage: {
+        headerStyle: 'banner',
+        showArcIndicator: true,
+        showCivilRange: false,
+        gridStyle: 'standard'
+      },
+      dayCell: {
+        showMoonPhase: true,
+        showCivilDate: true,
+        showNoteIndicators: true,
+        maxNotesVisible: 3,
+        noteDisplayStyle: 'badge'
+      }
+    }
   }
 };
 

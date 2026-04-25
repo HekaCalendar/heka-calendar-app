@@ -3,7 +3,8 @@
  * Centralized Firebase setup for Auth and Firestore
  */
 
-import { initializeApp, getApps, getApp } from 'firebase/app';
+import { initializeApp, getApps, getApp, deleteApp } from 'firebase/app';
+import { Capacitor } from '@capacitor/core';
 import { 
   getAuth, 
   createUserWithEmailAndPassword,
@@ -12,6 +13,8 @@ import {
   sendPasswordResetEmail,
   updateProfile,
   onAuthStateChanged,
+  setPersistence,
+  browserLocalPersistence,
   type User,
   type UserCredential
 } from 'firebase/auth';
@@ -62,8 +65,15 @@ if (isFirebaseConfigured()) {
     auth = getAuth(app);
     db = getFirestore(app);
     
-    // Enable offline persistence for Firestore (works on web)
-    if (typeof window !== 'undefined' && db) {
+    // Force browser local persistence for Auth (more reliable in Capacitor WebView)
+    if (typeof window !== 'undefined' && auth) {
+      setPersistence(auth, browserLocalPersistence).catch((err: any) => {
+        console.warn('Firebase auth persistence failed:', err);
+      });
+    }
+    
+    // Enable offline persistence for Firestore (works on web, skip on Capacitor to avoid auth desync)
+    if (typeof window !== 'undefined' && db && !Capacitor.isNativePlatform()) {
       enableIndexedDbPersistence(db).catch((err: any) => {
         if (err.code === 'failed-precondition') {
           console.warn('Firebase persistence failed: Multiple tabs open');
@@ -80,6 +90,36 @@ if (isFirebaseConfigured()) {
 }
 
 export { auth, db, updateProfile };
+
+// Refresh the Firebase ID token (useful when Firestore reports permission errors)
+export async function refreshAuthToken(force = true): Promise<string | null> {
+  if (!auth || !auth.currentUser) return null;
+  try {
+    const { getIdToken } = await import('firebase/auth');
+    return await getIdToken(auth.currentUser, force);
+  } catch (err) {
+    console.error('Failed to refresh auth token:', err);
+    return null;
+  }
+}
+
+// Create a completely fresh Firestore instance via a temporary Firebase app.
+// Use this when the singleton Firestore connection seems poisoned (e.g. permission-denied with valid auth).
+export async function withTemporaryFirestore<T>(fn: (tempDb: any) => Promise<T>): Promise<T> {
+  if (!isFirebaseConfigured()) throw new Error('Firebase not configured');
+  const tempApp = initializeApp(firebaseConfig, 'temp_' + Date.now());
+  const { getFirestore } = await import('firebase/firestore');
+  const tempDb = getFirestore(tempApp);
+  try {
+    return await fn(tempDb);
+  } finally {
+    try {
+      await deleteApp(tempApp);
+    } catch {
+      // ignore cleanup errors
+    }
+  }
+}
 
 // ============================================================================
 // Authentication Functions

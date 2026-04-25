@@ -4,14 +4,15 @@
  */
 
 import React, { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import type { AppDispatch } from '../../../store';
-import { setView } from '../../../store';
 import { selectAllProfiles } from '../../store/selectors';
 import { initializeAstrology } from '../../store/thunks';
 import './StarsHub.css';
 
 export const AstrologyHub: React.FC = () => {
+  const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
   const profiles = useSelector(selectAllProfiles);
   
@@ -23,7 +24,7 @@ export const AstrologyHub: React.FC = () => {
     <div className="stars-hub">
       <header className="sh-header">
         <div className="sh-header-left">
-          <button className="sh-back" onClick={() => dispatch(setView('month'))}>
+          <button className="sh-back" onClick={() => navigate('/')}>
             ← Back
           </button>
         </div>
@@ -31,7 +32,7 @@ export const AstrologyHub: React.FC = () => {
           <h1>Birth Charts</h1>
         </div>
         <div className="sh-header-right">
-          <button className="sh-profile-btn" onClick={() => dispatch(setView('stars'))}>
+          <button className="sh-profile-btn" onClick={() => navigate('/stars')}>
             View Stars →
           </button>
         </div>
@@ -50,7 +51,7 @@ export const AstrologyHub: React.FC = () => {
           </p>
           <button 
             className="sh-profile-btn" 
-            onClick={() => dispatch(setView('stars'))}
+            onClick={() => navigate('/stars')}
             style={{ float: 'none', fontSize: '16px', padding: '14px 28px' }}
           >
             Open Celestial Intelligence ✦

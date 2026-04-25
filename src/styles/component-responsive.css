@@ -1,0 +1,543 @@
+/**
+ * Component-Specific Responsive Optimizations
+ * Surgical fixes for individual components
+ */
+
+/* ==========================================================================
+   PURE CALENDAR VIEW - COMPREHENSIVE
+   ========================================================================== */
+
+/* Base: Ensure Pure Calendar works on all sizes */
+.pure-calendar-view {
+  display: flex;
+  flex-direction: column;
+  height: 100dvh;
+  width: 100%;
+  overflow: hidden;
+}
+
+/* Pure mode cells - override expanded styles */
+.pure-calendar-view .day-cell {
+  aspect-ratio: unset;
+  min-height: clamp(80px, 15vh, 180px);
+}
+
+/* Pure mode on small screens */
+@media (max-width: 480px) {
+  .pure-calendar-view .day-cell {
+    min-height: 60px;
+    padding: 4px;
+  }
+  
+  .pure-calendar-view .day-cell__note-preview {
+    display: none;
+  }
+}
+
+/* Pure mode on foldables */
+@media (max-width: 720px) and (min-height: 1400px) {
+  .pure-calendar-view .day-cell {
+    min-height: 50px;
+    height: 50px;
+    max-height: 50px;
+  }
+}
+
+/* ==========================================================================
+   CELESTIAL PANEL - RESPONSIVE
+   ========================================================================== */
+
+.celestial-panel-container {
+  width: 100%;
+  overflow-x: auto;
+  scrollbar-width: thin;
+  -webkit-overflow-scrolling: touch;
+}
+
+.celestial-panel {
+  display: flex;
+  gap: var(--space-fluid-sm);
+  padding: var(--space-fluid-sm);
+}
+
+/* Horizontal scroll on mobile */
+@media (max-width: 1024px) {
+  .celestial-panel {
+    width: max-content;
+    min-width: 100%;
+  }
+  
+  .celestial-panel > * {
+    width: 280px;
+    flex-shrink: 0;
+  }
+}
+
+/* Grid on desktop */
+@media (min-width: 1025px) {
+  .celestial-panel {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    width: 100%;
+  }
+  
+  .celestial-panel > * {
+    width: auto;
+  }
+}
+
+/* ==========================================================================
+   JOURNAL MODAL - RESPONSIVE
+   ========================================================================== */
+
+.journal-modal {
+  width: min(900px, 95vw);
+  max-height: 90vh;
+}
+
+.journal-container {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Sidebar and content stack on mobile */
+@media (max-width: 768px) {
+  .journal-container {
+    flex-direction: column;
+  }
+  
+  .journal-sidebar {
+    width: 100%;
+    max-height: 200px;
+    border-right: none;
+    border-bottom: 1px solid var(--color-border);
+  }
+  
+  .journal-content {
+    flex: 1;
+  }
+}
+
+/* Side by side on desktop */
+@media (min-width: 769px) {
+  .journal-container {
+    flex-direction: row;
+  }
+  
+  .journal-sidebar {
+    width: 280px;
+    border-right: 1px solid var(--color-border);
+    border-bottom: none;
+  }
+}
+
+/* ==========================================================================
+   SEARCH MODAL - RESPONSIVE
+   ========================================================================== */
+
+.search-modal {
+  width: min(600px, 95vw);
+  max-height: 80vh;
+}
+
+.search-results {
+  max-height: 50vh;
+  overflow-y: auto;
+}
+
+/* ==========================================================================
+   STATS MODAL - RESPONSIVE
+   ========================================================================== */
+
+.stats-modal {
+  width: min(800px, 95vw);
+  max-height: 90vh;
+}
+
+.stats-grid {
+  display: grid;
+  gap: var(--space-fluid-md);
+}
+
+@media (max-width: 600px) {
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (min-width: 601px) {
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* ==========================================================================
+   FRIENDS MODAL - RESPONSIVE
+   ========================================================================== */
+
+.friends-modal {
+  width: min(500px, 95vw);
+  max-height: 90vh;
+}
+
+.friends-list {
+  max-height: 60vh;
+  overflow-y: auto;
+}
+
+/* ==========================================================================
+   YEAR MODAL - MINI CALENDAR FIXES
+   ========================================================================== */
+
+/* Ensure mini calendars don't get squashed */
+.mini-calendar {
+  min-height: 200px;
+  display: flex;
+  flex-direction: column;
+}
+
+.mini-calendar__grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  grid-template-rows: repeat(7, 1fr);
+  gap: 2px;
+  flex: 1;
+}
+
+.mini-calendar__day,
+.mini-calendar__dow {
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: clamp(0.7rem, 1.5vw, 0.85rem);
+  min-height: 20px;
+}
+
+/* ==========================================================================
+   TUTORIAL SPOTLIGHT - RESPONSIVE
+   ========================================================================== */
+
+.tutorial-spotlight {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+}
+
+.tutorial-tooltip {
+  position: absolute;
+  max-width: min(400px, 90vw);
+  padding: var(--space-fluid-md);
+  background: linear-gradient(145deg, #1e1e3f 0%, #16162c 100%);
+  border: 1px solid rgba(201, 162, 39, 0.3);
+  border-radius: 16px;
+  box-shadow: 0 25px 80px rgba(0, 0, 0, 0.6);
+}
+
+/* Position adjustments for small screens */
+@media (max-width: 480px) {
+  .tutorial-tooltip {
+    left: 16px !important;
+    right: 16px !important;
+    max-width: none;
+  }
+}
+
+/* ==========================================================================
+   PRINT OPTIONS - RESPONSIVE
+   ========================================================================== */
+
+.print-options__content {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: var(--space-fluid-md);
+}
+
+.print-options__toggle-group,
+.print-options__card-group {
+  display: grid;
+  gap: var(--space-fluid-sm);
+}
+
+@media (max-width: 480px) {
+  .print-options__toggle-group,
+  .print-options__card-group {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (min-width: 481px) {
+  .print-options__toggle-group {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .print-options__card-group {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* ==========================================================================
+   AUTH MODAL - RESPONSIVE
+   ========================================================================== */
+
+.auth-modal {
+  width: min(500px, 95vw);
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+/* ==========================================================================
+   ACHIEVEMENT DASHBOARD - RESPONSIVE
+   ========================================================================== */
+
+.achievement-dashboard {
+  width: min(900px, 95vw);
+  max-height: 90vh;
+}
+
+.achievement-grid {
+  display: grid;
+  gap: var(--space-fluid-md);
+}
+
+@media (max-width: 600px) {
+  .achievement-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 601px) {
+  .achievement-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (min-width: 900px) {
+  .achievement-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+/* ==========================================================================
+   ORACLE JOURNAL - RESPONSIVE
+   ========================================================================== */
+
+.oracle-journal {
+  width: min(1100px, 95vw);
+  max-height: 90vh;
+}
+
+.oracle-journal__container {
+  display: flex;
+  flex-direction: column;
+}
+
+@media (max-width: 768px) {
+  .oracle-journal__sidebar {
+    max-height: 150px;
+  }
+}
+
+@media (min-width: 769px) {
+  .oracle-journal__container {
+    flex-direction: row;
+  }
+  
+  .oracle-journal__sidebar {
+    width: 250px;
+  }
+}
+
+/* ==========================================================================
+   ASTROLOGY HUB - RESPONSIVE
+   ========================================================================== */
+
+.stars-hub {
+  width: 100%;
+  min-height: 100vh;
+}
+
+.stars-hub__container {
+  display: grid;
+  gap: var(--space-fluid-lg);
+  padding: var(--space-fluid-md);
+}
+
+@media (max-width: 1024px) {
+  .stars-hub__container {
+    grid-template-columns: 1fr;
+  }
+  
+  .stars-hub__sidebar {
+    order: -1;
+  }
+}
+
+@media (min-width: 1025px) {
+  .stars-hub__container {
+    grid-template-columns: 300px 1fr;
+  }
+}
+
+/* ==========================================================================
+   NOTIFICATION SETTINGS - RESPONSIVE
+   ========================================================================== */
+
+.notification-settings {
+  padding: var(--space-fluid-md);
+}
+
+/* ==========================================================================
+   ENERGY VOTE - RESPONSIVE
+   ========================================================================== */
+
+.energy-vote-section {
+  padding: var(--space-fluid-sm);
+}
+
+.energy-vote-options {
+  display: grid;
+  gap: var(--space-fluid-xs);
+}
+
+@media (max-width: 480px) {
+  .energy-vote-options {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 481px) {
+  .energy-vote-options {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* ==========================================================================
+   SAFE AREA UTILITIES
+   ========================================================================== */
+
+.safe-area-top {
+  padding-top: var(--safe-top);
+}
+
+.safe-area-bottom {
+  padding-bottom: var(--safe-bottom);
+}
+
+.safe-area-x {
+  padding-left: var(--safe-left);
+  padding-right: var(--safe-right);
+}
+
+/* Full safe area padding */
+.safe-area-all {
+  padding: var(--safe-top) var(--safe-right) var(--safe-bottom) var(--safe-left);
+}
+
+/* ==========================================================================
+   SCROLLBAR STYLING - RESPONSIVE
+   ========================================================================== */
+
+/* Custom scrollbar for webkit browsers */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(201, 162, 39, 0.3);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(201, 162, 39, 0.5);
+}
+
+/* Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(201, 162, 39, 0.3) rgba(255, 255, 255, 0.05);
+}
+
+/* Hide scrollbar on very small screens */
+@media (max-width: 360px) {
+  ::-webkit-scrollbar {
+    width: 4px;
+    height: 4px;
+  }
+}
+
+/* ==========================================================================
+   FOCUS VISIBLE - ACCESSIBILITY
+   ========================================================================== */
+
+/* Show focus ring only on keyboard navigation */
+:focus:not(:focus-visible) {
+  outline: none;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-gold);
+  outline-offset: 2px;
+}
+
+/* ==========================================================================
+   SELECTION STYLING
+   ========================================================================== */
+
+::selection {
+  background: rgba(201, 162, 39, 0.3);
+  color: inherit;
+}
+
+/* ==========================================================================
+   IMAGE OPTIMIZATION
+   ========================================================================== */
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* ==========================================================================
+   FORM ELEMENTS - RESPONSIVE
+   ========================================================================== */
+
+input,
+select,
+textarea,
+button {
+  font-size: 16px; /* Prevents zoom on iOS */
+}
+
+@media (min-width: 769px) {
+  input,
+  select,
+  textarea,
+  button {
+    font-size: inherit;
+  }
+}
+
+/* ==========================================================================
+   VIEWPORT UNITS FIX FOR MOBILE BROWSERS
+   ========================================================================== */
+
+/* Use dvh for dynamic viewport height */
+.full-height {
+  height: 100vh; /* Fallback */
+  height: 100dvh;
+}
+
+/* Fix for iOS Safari bottom bar */
+@supports (height: 100dvh) {
+  .app {
+    min-height: 100dvh;
+  }
+}

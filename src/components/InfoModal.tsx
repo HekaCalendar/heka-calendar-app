@@ -45,12 +45,12 @@ const chapters: Chapter[] = [
 const cardsByChapter: Record<string, Card[]> = {
   ch1: [
     { h: 'The Problem You Feel', b: 'Irregular months. Scattered holidays. A year that stumbles from January to December with no sense of opening, middle, or close. You have felt this friction. HEKA removes it.' },
-    { h: 'The Solution We Built', b: 'Thirteen months of twenty-eight days each. Four perfect weeks per month. A year that flows: April opens, May through December form the stable core, January through March bring it to completion.' },
+    { h: 'The Solution We Built', b: 'Thirteen months. Twelve hold twenty-eight days in perfect symmetry. March, the closing month, carries the leap day. Four perfect weeks per month. A year that flows: April opens, May through December form the stable core, January through March bring it to completion.' },
     { h: 'The World You Keep', b: 'HEKA does not disrupt your life. Civil dates remain visible. Your meetings, appointments, and legal obligations stay exactly where they are. You simply gain a clearer lens.' },
   ],
   ch2: [
     { h: 'The Opening Arc', b: 'April is the threshold. The year begins not in winter exhaustion but in spring vitality. New growth. New projects. The opening announces: something is beginning.' },
-    { h: 'The Core Arc', b: 'May through December is the long stable middle. Eight months of perfectly regular, predictable rhythm. Plan with confidence. Build momentum. This is where the work happens.' },
+    { h: 'The Core Arc', b: 'May through December is the long stable middle. Nine months of perfectly regular, predictable rhythm. Plan with confidence. Build momentum. This is where the work happens.' },
     { h: 'The Closing Arc', b: 'January through March brings the year to resolution. Finish what you started. Harvest what you grew. The closing creates space for reflection and prepares you for the next opening.' },
   ],
   ch3: [

@@ -1,0 +1,17 @@
+﻿node_modules
+dist
+build
+target
+src-tauri/target
+android/app/build
+ios/App/build
+.vercel
+_deprecated
+_builds
+*.pdb
+*.rlib
+*.rmeta
+*.log
+*.hprof
+*.apk
+dep-graph.bin

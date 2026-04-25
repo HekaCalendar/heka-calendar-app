@@ -12,6 +12,7 @@
 import React, { useState, useCallback, useMemo, useRef, useEffect } from 'react';
 import type { NatalChart, NatalPlanet } from '../../services/natal/natalChart';
 import { getSignFromLongitude, SIGN_BOUNDARIES_13 } from '../../types/core';
+import { detectPatterns, type ChartPattern } from '../../services/calculations/patternDetection';
 
 // ═══════════════════════════════════════════════════════════════════════════════
 // TYPES & INTERFACES
@@ -125,7 +126,7 @@ const ELEMENT_BY_SIGN: Record<string, string> = {
   aries: 'fire', leo: 'fire', sagittarius: 'fire',
   taurus: 'earth', virgo: 'earth', capricorn: 'earth',
   gemini: 'air', libra: 'air', aquarius: 'air',
-  cancer: 'water', scorpio: 'water', pisces: 'water',
+  cancer: 'water', scorpio: 'water', ophiuchus: 'water', pisces: 'water',
 };
 
 // ═══════════════════════════════════════════════════════════════════════════════
@@ -143,7 +144,11 @@ export const ChartWheel: React.FC<ChartWheelProps> = ({
 }) => {
   const [hoveredPlanet, setHoveredPlanet] = useState<string | null>(null);
   const [hoveredHouse, setHoveredHouse] = useState<number | null>(null);
-  const [rotation, setRotation] = useState(0);
+  const [rotation, setRotation] = useState(() => {
+    // Standard natal chart orientation: ascendant at left (9 o'clock = 180°)
+    const ascendantLongitude = (chart.houses?.ascendant as any)?.longitude ?? (chart.houses?.ascendant as number) ?? 0;
+    return 180 - ascendantLongitude;
+  });
   const [isDragging, setIsDragging] = useState(false);
   const [dragStart, setDragStart] = useState({ x: 0, y: 0, rotation: 0 });
   const svgRef = useRef<SVGSVGElement>(null);
@@ -156,8 +161,8 @@ export const ChartWheel: React.FC<ChartWheelProps> = ({
   // CALCULATE POSITIONS
   // ═══════════════════════════════════════════════════════════════════════════
 
-  // Determine zodiac system from chart
-  const use13Signs = chart.zodiacSystem === '13-sign';
+  // Determine zodiac system from chart (supports legacy + new split fields)
+  const use13Signs = chart.zodiacSystem === '13-sign' || chart.signCount === 13;
   const SIGNS = use13Signs ? SIGNS_13 : SIGNS_12;
 
   const planetPositions = useMemo((): PlanetPosition[] => {
@@ -275,6 +280,16 @@ export const ChartWheel: React.FC<ChartWheelProps> = ({
     return result.sort((a, b) => a.orb - b.orb);
   }, [planetPositions, showAspects]);
 
+  // Calculate patterns for geometric overlays
+  const patterns = useMemo((): ChartPattern[] => {
+    if (!showAspects) return [];
+    try {
+      return detectPatterns(chart.planets as any).slice(0, 6);
+    } catch {
+      return [];
+    }
+  }, [chart.planets, showAspects]);
+
   // ═══════════════════════════════════════════════════════════════════════════
   // COORDINATE HELPERS
   // ═══════════════════════════════════════════════════════════════════════════
@@ -287,16 +302,14 @@ export const ChartWheel: React.FC<ChartWheelProps> = ({
     };
   }, [center, rotation]);
 
-  const getSignSlicePath = useCallback((index: number, innerR: number, outerR: number) => {
-    const startAngle = index * 30;
-    const endAngle = (index + 1) * 30;
-    
+  const getSignSlicePath = useCallback((startAngle: number, endAngle: number, innerR: number, outerR: number) => {
     const start = polarToCartesian(startAngle, outerR);
     const end = polarToCartesian(endAngle, outerR);
     const startInner = polarToCartesian(startAngle, innerR);
     const endInner = polarToCartesian(endAngle, innerR);
     
-    const largeArc = 0;
+    const angleDiff = endAngle - startAngle;
+    const largeArc = angleDiff > 180 ? 1 : 0;
     
     return `
       M ${startInner.x} ${startInner.y}
@@ -427,9 +440,24 @@ export const ChartWheel: React.FC<ChartWheelProps> = ({
       <g className="zodiac-ring">
         {SIGNS.map((sign, i) => {
           const element = ELEMENT_BY_SIGN[sign];
-          const color = ZODIAC_COLORS[element];
-          const path = getSignSlicePath(i, innerR, outerR);
-          const centerAngle = i * 30 + 15;
+          const color = ZODIAC_COLORS[element] || ZODIAC_COLORS.fire;
+          
+          let startAngle: number;
+          let endAngle: number;
+          let centerAngle: number;
+          
+          if (use13Signs) {
+            const boundary = SIGN_BOUNDARIES_13[sign as keyof typeof SIGN_BOUNDARIES_13];
+            startAngle = boundary[0];
+            endAngle = boundary[1];
+            centerAngle = (startAngle + endAngle) / 2;
+          } else {
+            startAngle = i * 30;
+            endAngle = (i + 1) * 30;
+            centerAngle = i * 30 + 15;
+          }
+          
+          const path = getSignSlicePath(startAngle, endAngle, innerR, outerR);
           const labelPos = polarToCartesian(centerAngle, (innerR + outerR) / 2);
           
           return (
@@ -543,22 +571,170 @@ export const ChartWheel: React.FC<ChartWheelProps> = ({
     );
   };
 
-  // Detect overlaps and adjust positions - moved outside render
+  // Detect overlaps and adjust positions symmetrically, including wrap-around
   const adjustedPositions = useMemo(() => {
-    const minSeparation = 12;
-    const positions = [...planetPositions];
-    
-    for (let i = 0; i < positions.length; i++) {
-      for (let j = i + 1; j < positions.length; j++) {
-        const diff = Math.abs(positions[i].longitude - positions[j].longitude);
-        if (diff < minSeparation) {
-          positions[j] = { ...positions[j], longitude: positions[j].longitude + minSeparation };
+    const minSeparation = 10;
+    const positions = [...planetPositions].sort((a, b) => a.longitude - b.longitude);
+    if (positions.length < 2) return positions;
+
+    // Resolve overlaps over multiple passes
+    for (let pass = 0; pass < 5; pass++) {
+      let moved = false;
+      for (let i = 0; i < positions.length; i++) {
+        const prev = positions[(i - 1 + positions.length) % positions.length];
+        const curr = positions[i];
+
+        // Check gap from previous (forward direction)
+        let forwardGap = (curr.longitude - prev.longitude + 360) % 360;
+        if (forwardGap === 0 && i > 0) forwardGap = 360; // allow full-circle for identical positions
+
+        if (forwardGap < minSeparation) {
+          const shift = (minSeparation - forwardGap) / 2;
+          prev.longitude = (prev.longitude - shift + 360) % 360;
+          curr.longitude = (curr.longitude + shift) % 360;
+          moved = true;
         }
       }
+      // Re-sort after each pass
+      positions.sort((a, b) => a.longitude - b.longitude);
+      if (!moved) break;
     }
-    
+
     return positions;
   }, [planetPositions]);
+
+  const renderPatterns = () => {
+    if (!showAspects || patterns.length === 0) return null;
+    
+    const planetR = radius * 0.55;
+    
+    const getPlanetPos = (id: string) => {
+      const p = adjustedPositions.find(ap => ap.id === id);
+      if (!p) return null;
+      return polarToCartesian(p.longitude, planetR);
+    };
+    
+    return (
+      <g className="patterns">
+        {patterns.map((pattern, idx) => {
+          const color = {
+            'grand_trine': 'rgba(34, 197, 94, 0.35)',
+            't_square': 'rgba(239, 68, 68, 0.35)',
+            'grand_cross': 'rgba(168, 85, 247, 0.35)',
+            'yod': 'rgba(245, 158, 11, 0.35)',
+            'kite': 'rgba(59, 130, 246, 0.35)',
+            'mystic_rectangle': 'rgba(236, 72, 153, 0.35)',
+            'stellium': 'rgba(251, 191, 36, 0.25)',
+            'cradle': 'rgba(99, 102, 241, 0.35)',
+            'thors_hammer': 'rgba(220, 38, 38, 0.35)',
+            'hard_rectangle': 'rgba(249, 115, 22, 0.35)',
+            'grand_sextile': 'rgba(14, 165, 233, 0.35)',
+          }[pattern.type] || 'rgba(147, 51, 234, 0.3)';
+          
+          const strokeColor = color.replace(/[0-9.]+\)$/, '0.8)');
+          
+          // Stellium: draw a glow halo around clustered planets
+          if (pattern.type === 'stellium') {
+            return pattern.planets.map((pid, pidx) => {
+              const pos = getPlanetPos(pid);
+              if (!pos) return null;
+              return (
+                <circle
+                  key={`${idx}-stellium-${pidx}`}
+                  cx={pos.x}
+                  cy={pos.y}
+                  r={18}
+                  fill={color}
+                  stroke={strokeColor}
+                  strokeWidth={1}
+                />
+              );
+            });
+          }
+          
+          // Grand Trine / Kite: triangle connecting planets
+          if (pattern.type === 'grand_trine' || pattern.type === 'kite') {
+            const pts = pattern.planets.map(pid => getPlanetPos(pid)).filter(Boolean) as {x: number, y: number}[];
+            if (pts.length < 3) return null;
+            const path = `M ${pts.map(p => `${p.x} ${p.y}`).join(' L ')} ${pattern.type === 'grand_trine' ? 'Z' : ''}`;
+            return (
+              <path
+                key={`${idx}-triangle`}
+                d={path}
+                fill={color}
+                stroke={strokeColor}
+                strokeWidth={2}
+                strokeLinejoin="round"
+              />
+            );
+          }
+          
+          // T-Square: opposition line + apex connector
+          if (pattern.type === 't_square') {
+            const [apex, ...base] = pattern.planets;
+            const apexPos = getPlanetPos(apex);
+            const basePos = base.map(pid => getPlanetPos(pid)).filter(Boolean) as {x: number, y: number}[];
+            if (!apexPos || basePos.length < 2) return null;
+            return (
+              <g key={`${idx}-tsquare`}>
+                <line x1={basePos[0].x} y1={basePos[0].y} x2={basePos[1].x} y2={basePos[1].y} stroke={strokeColor} strokeWidth={2} strokeDasharray="4,2" />
+                <line x1={apexPos.x} y1={apexPos.y} x2={basePos[0].x} y2={basePos[0].y} stroke={strokeColor} strokeWidth={2} />
+                <line x1={apexPos.x} y1={apexPos.y} x2={basePos[1].x} y2={basePos[1].y} stroke={strokeColor} strokeWidth={2} />
+              </g>
+            );
+          }
+          
+          // Grand Cross: X shape
+          if (pattern.type === 'grand_cross') {
+            const pts = pattern.planets.map(pid => getPlanetPos(pid)).filter(Boolean) as {x: number, y: number}[];
+            if (pts.length < 4) return null;
+            return (
+              <g key={`${idx}-cross`}>
+                <line x1={pts[0].x} y1={pts[0].y} x2={pts[2].x} y2={pts[2].y} stroke={strokeColor} strokeWidth={2} />
+                <line x1={pts[1].x} y1={pts[1].y} x2={pts[3].x} y2={pts[3].y} stroke={strokeColor} strokeWidth={2} />
+                <polygon points={pts.map(p => `${p.x},${p.y}`).join(' ')} fill={color} stroke={strokeColor} strokeWidth={1} />
+              </g>
+            );
+          }
+          
+          // Yod: sextile base + two quincunx lines to apex
+          if (pattern.type === 'yod') {
+            const [apex, base1, base2] = pattern.planets;
+            const apexPos = getPlanetPos(apex);
+            const b1 = getPlanetPos(base1);
+            const b2 = getPlanetPos(base2);
+            if (!apexPos || !b1 || !b2) return null;
+            return (
+              <g key={`${idx}-yod`}>
+                <line x1={b1.x} y1={b1.y} x2={b2.x} y2={b2.y} stroke={strokeColor} strokeWidth={2} />
+                <line x1={apexPos.x} y1={apexPos.y} x2={b1.x} y2={b1.y} stroke={strokeColor} strokeWidth={2} strokeDasharray="3,3" />
+                <line x1={apexPos.x} y1={apexPos.y} x2={b2.x} y2={b2.y} stroke={strokeColor} strokeWidth={2} strokeDasharray="3,3" />
+                <circle cx={apexPos.x} cy={apexPos.y} r={8} fill={color} />
+              </g>
+            );
+          }
+          
+          // Mystic Rectangle / Cradle: quadrilateral
+          if (pattern.type === 'mystic_rectangle' || pattern.type === 'cradle' || pattern.type === 'hard_rectangle') {
+            const pts = pattern.planets.map(pid => getPlanetPos(pid)).filter(Boolean) as {x: number, y: number}[];
+            if (pts.length < 4) return null;
+            return (
+              <polygon
+                key={`${idx}-quad`}
+                points={pts.map(p => `${p.x},${p.y}`).join(' ')}
+                fill={color}
+                stroke={strokeColor}
+                strokeWidth={1.5}
+                strokeLinejoin="round"
+              />
+            );
+          }
+          
+          return null;
+        })}
+      </g>
+    );
+  };
 
   const renderPlanets = () => {
     const planetRadius = radius * 0.55;
@@ -732,6 +908,9 @@ export const ChartWheel: React.FC<ChartWheelProps> = ({
         
         {/* Aspects */}
         {renderAspects()}
+        
+        {/* Pattern Overlays */}
+        {renderPatterns()}
         
         {/* Center */}
         {renderCenter()}

@@ -27,9 +27,23 @@ export interface DeepLinkData {
   date?: { year: number; month: number; day: number };
 }
 
+const WEB_LANDING_BASE = 'https://heka-calendar-pro.vercel.app/invite';
+
 let isInitialized = false;
 let pendingInviteCode: string | null = null;
 let pendingTaskCode: string | null = null;
+
+// Restore pending codes from sessionStorage (landing page → app transition)
+function restorePendingCodes(): void {
+  if (typeof window !== 'undefined') {
+    try {
+      const storedInvite = sessionStorage.getItem('pendingInviteCode');
+      const storedTask = sessionStorage.getItem('pendingTaskCode');
+      if (storedInvite && !pendingInviteCode) pendingInviteCode = storedInvite;
+      if (storedTask && !pendingTaskCode) pendingTaskCode = storedTask;
+    } catch {}
+  }
+}
 
 // Callbacks for different deep link types
 type InviteCallback = (code: string) => void;
@@ -47,6 +61,9 @@ export function initializeDeepLinks(
   if (isInitialized) return () => {};
   isInitialized = true;
 
+  // Restore codes from sessionStorage (landing page may have stored them)
+  restorePendingCodes();
+
   // Store task callback
   if (onTaskReceived) {
     onTaskReceivedCallback = onTaskReceived;
@@ -59,17 +76,19 @@ export function initializeDeepLinks(
     
     if (data?.type === 'invite' && data.code) {
       console.log('[DeepLink] Invite code detected:', data.code);
-      
-      // Store for the welcome flow (works for both logged in and new users)
       pendingInviteCode = data.code;
+      if (typeof window !== 'undefined') {
+        try { sessionStorage.setItem('pendingInviteCode', data.code); } catch {}
+      }
       onInviteReceived(data.code);
     }
     
     if (data?.type === 'task' && data.taskId) {
       console.log('[DeepLink] Task share code detected:', data.taskId);
-      
-      // Store for the task preview flow (works for both logged in and new users)
       pendingTaskCode = data.taskId;
+      if (typeof window !== 'undefined') {
+        try { sessionStorage.setItem('pendingTaskCode', data.taskId); } catch {}
+      }
       if (onTaskReceivedCallback) {
         onTaskReceivedCallback(data.taskId);
       }
@@ -77,6 +96,7 @@ export function initializeDeepLinks(
   };
 
   // Web: Check URL parameters for invite codes and task shares
+  // Check both search params (before hash) and hash params (after hash)
   if (typeof window !== 'undefined') {
     const urlParams = new URLSearchParams(window.location.search);
     const inviteParam = urlParams.get('invite');
@@ -88,6 +108,23 @@ export function initializeDeepLinks(
     
     if (taskParam) {
       handleAppUrl(`heka-calendar://task/${taskParam}`);
+    }
+
+    // Also check hash-based params (for hash router compatibility)
+    const hash = window.location.hash;
+    const hashQueryIndex = hash.indexOf('?');
+    if (hashQueryIndex !== -1) {
+      const hashParams = new URLSearchParams(hash.slice(hashQueryIndex + 1));
+      const hashInviteParam = hashParams.get('invite');
+      const hashTaskParam = hashParams.get('task');
+      
+      if (hashInviteParam) {
+        handleAppUrl(`heka-calendar://invite/${hashInviteParam}`);
+      }
+      
+      if (hashTaskParam) {
+        handleAppUrl(`heka-calendar://task/${hashTaskParam}`);
+      }
     }
   }
 
@@ -163,10 +200,14 @@ export function generateInviteLink(code: string): string {
 
 /**
  * Generate a web-based invite link (fallback)
+ * Embeds creator name so landing page works without extra Firestore auth
  */
-export function generateWebInviteLink(code: string): string {
-  // This would be a real website URL in production
-  return `https://heka.calendar/invite/${code}`;
+export function generateWebInviteLink(code: string, creatorName?: string, type: 'friend' | 'task' = 'friend'): string {
+  const params = new URLSearchParams();
+  params.set('code', code);
+  params.set('type', type);
+  if (creatorName) params.set('from', encodeURIComponent(creatorName));
+  return `${WEB_LANDING_BASE}?${params.toString()}`;
 }
 
 /**
@@ -174,7 +215,10 @@ export function generateWebInviteLink(code: string): string {
  */
 export function getPendingInviteCode(): string | null {
   const code = pendingInviteCode;
-  pendingInviteCode = null; // Clear it
+  pendingInviteCode = null;
+  if (typeof window !== 'undefined') {
+    try { sessionStorage.removeItem('pendingInviteCode'); } catch {}
+  }
   return code;
 }
 
@@ -190,6 +234,9 @@ export function hasPendingInvite(): boolean {
  */
 export function clearPendingInvite(): void {
   pendingInviteCode = null;
+  if (typeof window !== 'undefined') {
+    try { sessionStorage.removeItem('pendingInviteCode'); } catch {}
+  }
 }
 
 /**
@@ -197,7 +244,10 @@ export function clearPendingInvite(): void {
  */
 export function getPendingTaskCode(): string | null {
   const code = pendingTaskCode;
-  pendingTaskCode = null; // Clear it
+  pendingTaskCode = null;
+  if (typeof window !== 'undefined') {
+    try { sessionStorage.removeItem('pendingTaskCode'); } catch {}
+  }
   return code;
 }
 
@@ -213,4 +263,7 @@ export function hasPendingTaskShare(): boolean {
  */
 export function clearPendingTaskShare(): void {
   pendingTaskCode = null;
+  if (typeof window !== 'undefined') {
+    try { sessionStorage.removeItem('pendingTaskCode'); } catch {}
+  }
 }

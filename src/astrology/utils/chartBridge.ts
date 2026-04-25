@@ -10,6 +10,7 @@
  */
 
 import type { NatalChart } from '../types';
+import { getDegreeInSign } from '../types/core';
 
 // OLD system storage keys
 const OLD_CHART_KEY = (profileId: string) => `natal-chart-${profileId}`;
@@ -63,7 +64,9 @@ interface OldNatalChart {
     mutable: number;
   };
   calculatedAt: string;
-  zodiacSystem: '12-sign' | '13-sign';
+  zodiacSystem: '12-sign' | '13-sign' | 'sidereal';
+  zodiacFrame?: 'tropical' | 'sidereal';
+  signCount?: 12 | 13;
   houseSystem?: string;
 }
 
@@ -182,41 +185,51 @@ export function getUnifiedChart(profileId?: string): NatalChart | null {
   const oldChart = getOldChart(targetProfileId);
   if (oldChart) {
     // Convert old format to new format
+    const convertedPlanets = Object.fromEntries(
+      Object.entries(oldChart.planets).map(([key, p]) => [key, {
+        id: p.id,
+        name: p.name,
+        longitude: p.longitude,
+        sign: p.sign,
+        degreeInSign: getDegreeInSign(
+          p.longitude as any,
+          (oldChart.signCount === 13 || oldChart.zodiacSystem === '13-sign')
+        ),
+        house: p.house,
+        isRetrograde: p.isRetrograde,
+        dignity: p.dignity,
+        speed: 0,
+      }])
+    );
     return {
       id: oldChart.id,
       profileId: targetProfileId,
+      name: oldChart.name,
       birthData: oldChart.birthData,
-      bodies: Object.fromEntries(
-        Object.entries(oldChart.planets).map(([key, p]) => [key, {
-          id: p.id,
-          name: p.name,
-          longitude: p.longitude,
-          sign: p.sign,
-          house: p.house,
-          isRetrograde: p.isRetrograde,
-          speed: 0,
-        }])
-      ),
-      houses: oldChart.houses,
-      aspects: [],
-      patterns: [],
-      dignities: [],
-      elementalBalance: {
-        Fire: oldChart.elements.fire,
-        Earth: oldChart.elements.earth,
-        Air: oldChart.elements.air,
-        Water: oldChart.elements.water,
+      bodies: convertedPlanets,
+      planets: convertedPlanets,
+      houses: {
+        ...oldChart.houses,
+        ascendant: oldChart.ascendant,
+        mc: oldChart.midheaven,
       },
-      modalBalance: {
-        Cardinal: oldChart.modalities.cardinal,
-        Fixed: oldChart.modalities.fixed,
-        Mutable: oldChart.modalities.mutable,
+      ascendant: oldChart.ascendant,
+      midheaven: oldChart.midheaven,
+      elements: {
+        fire: oldChart.elements.fire,
+        earth: oldChart.elements.earth,
+        air: oldChart.elements.air,
+        water: oldChart.elements.water,
       },
-      julianDay: 0,
-      calculatedAt: oldChart.calculatedAt,
-      version: '2.0',
+      modalities: {
+        cardinal: oldChart.modalities.cardinal,
+        fixed: oldChart.modalities.fixed,
+        mutable: oldChart.modalities.mutable,
+      },
+      calculatedAt: new Date(oldChart.calculatedAt),
       zodiacSystem: oldChart.zodiacSystem,
-      houseSystem: oldChart.houseSystem || 'placidus',
+      zodiacFrame: oldChart.zodiacFrame || (oldChart.zodiacSystem === 'sidereal' ? 'sidereal' : 'tropical'),
+      signCount: oldChart.signCount || (oldChart.zodiacSystem === '13-sign' ? 13 : 12),
     } as unknown as NatalChart;
   }
 
@@ -251,8 +264,8 @@ export function getUnifiedUserBirthData(): { moonSign: string; voidMoon: boolean
   const chart = getUnifiedChart();
   if (!chart) return null;
 
-  // Get moon sign from bodies (new format) or fallback
-  const moonBody = chart.bodies?.moon;
+  // Get moon sign from bodies (new format) or planets (legacy format)
+  const moonBody = chart.bodies?.moon || (chart as any).planets?.moon;
   if (moonBody?.sign) {
     return {
       moonSign: moonBody.sign,

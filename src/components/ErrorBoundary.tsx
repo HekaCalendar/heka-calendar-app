@@ -31,7 +31,8 @@ export class ErrorBoundary extends Component<Props, State> {
     if (msg.includes('is not a function') || msg.includes('WASM') || msg.includes('swisseph') || msg.includes('#185')) {
       return;
     }
-    console.error('[ErrorBoundary] Error:', error, errorInfo);
+    console.error('[ErrorBoundary] Error:', error?.message || error);
+    console.error('[ErrorBoundary] ComponentStack:', errorInfo?.componentStack || 'none');
   }
 
   private handleRetry = () => {

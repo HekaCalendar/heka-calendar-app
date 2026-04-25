@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta id="heka-viewport" name="viewport" content="width=device-width, initial-scale=1.0">
+  <script>
+    (function() {
+      var DESIGN_BASELINE = 390;
+      function updateViewport() {
+        var screenW = window.screen ? (window.screen.width || 0) : 0;
+        var innerW  = window.innerWidth || 0;
+        var w = Math.min(screenW || Infinity, innerW || Infinity) || DESIGN_BASELINE;
+        var vp = document.getElementById('heka-viewport');
+        if (!vp) return;
+        if (w < DESIGN_BASELINE) {
+          var scale = (w / DESIGN_BASELINE).toFixed(3);
+          vp.setAttribute('content',
+            'width=' + DESIGN_BASELINE + ', initial-scale=' + scale + ', viewport-fit=cover');
+        } else {
+          vp.setAttribute('content',
+            'width=device-width, initial-scale=1.0, viewport-fit=cover');
+        }
+      }
+      updateViewport();
+      window.addEventListener('orientationchange', function() {
+        setTimeout(updateViewport, 150);
+      });
+    })();
+  </script>
+  <title>Cosmic Circle Invite | HEKA Calendar</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --gold-primary: #d4af37;
+      --gold-light: #f4d03f;
+      --gold-dark: #b8941f;
+      --gold-glow: rgba(212, 175, 55, 0.4);
+      --deep-space: #0a0a0f;
+      --cosmic-blue: #0f172a;
+      --nebula-purple: #1a1a2e;
+      --star-white: #ffffff;
+      --text-muted: rgba(255, 255, 255, 0.6);
+      --glass-bg: rgba(255, 255, 255, 0.03);
+      --glass-border: rgba(255, 255, 255, 0.08);
+    }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--deep-space);
+      min-height: 100vh;
+      overflow-x: hidden;
+      color: var(--star-white);
+      position: relative;
+    }
+    .cosmic-bg {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      z-index: -1;
+      background:
+        radial-gradient(ellipse at 20% 20%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 80%, rgba(212, 175, 55, 0.15) 0%, transparent 50%),
+        radial-gradient(ellipse at 50% 50%, rgba(138, 43, 226, 0.1) 0%, transparent 70%),
+        linear-gradient(180deg, var(--deep-space) 0%, var(--cosmic-blue) 50%, var(--nebula-purple) 100%);
+    }
+    .stars {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      z-index: -1;
+      pointer-events: none;
+    }
+    .star {
+      position: absolute;
+      background: white;
+      border-radius: 50%;
+      animation: twinkle var(--duration) ease-in-out infinite;
+    }
+    @keyframes twinkle {
+      0%, 100% { opacity: 0.2; transform: scale(0.8); }
+      50% { opacity: 1; transform: scale(1.2); }
+    }
+    .shooting-star {
+      position: absolute;
+      width: 100px; height: 2px;
+      background: linear-gradient(90deg, transparent, var(--gold-light), transparent);
+      animation: shoot 3s linear infinite;
+      opacity: 0;
+    }
+    @keyframes shoot {
+      0% { transform: translateX(-100px) rotate(-45deg); opacity: 0; }
+      10% { opacity: 1; }
+      90% { opacity: 1; }
+      100% { transform: translateX(calc(100vw + 100px)) rotate(-45deg); opacity: 0; }
+    }
+    .orb {
+      position: fixed;
+      border-radius: 50%;
+      filter: blur(80px);
+      opacity: 0.5;
+      animation: float 20s ease-in-out infinite;
+      z-index: -1;
+    }
+    .orb-1 {
+      width: 400px; height: 400px;
+      background: radial-gradient(circle, rgba(212, 175, 55, 0.4) 0%, transparent 70%);
+      top: -10%; right: -10%;
+      animation-delay: 0s;
+    }
+    .orb-2 {
+      width: 300px; height: 300px;
+      background: radial-gradient(circle, rgba(138, 43, 226, 0.3) 0%, transparent 70%);
+      bottom: -5%; left: -5%;
+      animation-delay: -10s;
+    }
+    @keyframes float {
+      0%, 100% { transform: translate(0, 0) scale(1); }
+      33% { transform: translate(30px, -30px) scale(1.1); }
+      66% { transform: translate(-20px, 20px) scale(0.9); }
+    }
+    .container {
+      max-width: 520px;
+      margin: 0 auto;
+      padding: 24px;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      position: relative;
+      z-index: 1;
+    }
+    .loading-container {
+      text-align: center;
+      padding: 60px 20px;
+    }
+    .cosmic-spinner {
+      width: 80px; height: 80px;
+      margin: 0 auto 32px;
+      position: relative;
+    }
+    .cosmic-spinner::before, .cosmic-spinner::after {
+      content: '';
+      position: absolute;
+      border-radius: 50%;
+      border: 3px solid transparent;
+    }
+    .cosmic-spinner::before {
+      width: 100%; height: 100%;
+      border-top-color: var(--gold-primary);
+      border-right-color: rgba(212, 175, 55, 0.3);
+      animation: spin 1.5s linear infinite;
+    }
+    .cosmic-spinner::after {
+      width: 60%; height: 60%;
+      top: 20%; left: 20%;
+      border-bottom-color: var(--gold-light);
+      border-left-color: rgba(255, 255, 255, 0.2);
+      animation: spin-reverse 1s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    @keyframes spin-reverse { to { transform: rotate(-360deg); } }
+    .loading-text {
+      font-family: 'Cinzel', serif;
+      font-size: 18px;
+      color: var(--gold-primary);
+      letter-spacing: 2px;
+      animation: pulse 2s ease-in-out infinite;
+    }
+    @keyframes pulse { 0%, 100% { opacity: 0.6; } 50% { opacity: 1; } }
+    .error-container {
+      text-align: center;
+      padding: 60px 20px;
+      background: var(--glass-bg);
+      border: 1px solid rgba(239, 68, 68, 0.3);
+      border-radius: 24px;
+      backdrop-filter: blur(20px);
+    }
+    .error-icon { font-size: 64px; margin-bottom: 20px; display: block; }
+    .error-title {
+      font-family: 'Cinzel', serif;
+      font-size: 28px;
+      color: var(--star-white);
+      margin-bottom: 12px;
+    }
+    .error-message { color: var(--text-muted); font-size: 16px; line-height: 1.6; }
+    .content-card {
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      border-radius: 32px;
+      padding: 40px 32px;
+      backdrop-filter: blur(20px);
+      box-shadow:
+        0 8px 32px rgba(0, 0, 0, 0.4),
+        0 0 0 1px rgba(255, 255, 255, 0.05) inset,
+        0 0 100px rgba(212, 175, 55, 0.1) inset;
+      animation: card-appear 0.8s ease-out;
+      position: relative;
+      overflow: hidden;
+    }
+    .content-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.5), rgba(255, 255, 255, 0.3), rgba(212, 175, 55, 0.5), transparent);
+    }
+    @keyframes card-appear {
+      from { opacity: 0; transform: translateY(30px) scale(0.95); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+    .brand-header { text-align: center; margin-bottom: 32px; }
+    .brand-logo {
+      width: 72px; height: 72px;
+      margin: 0 auto 16px;
+      background: linear-gradient(135deg, var(--gold-primary) 0%, var(--gold-dark) 100%);
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 36px;
+      box-shadow: 0 8px 32px rgba(212, 175, 55, 0.3), 0 0 0 1px rgba(255, 255, 255, 0.2) inset;
+      animation: logo-glow 3s ease-in-out infinite;
+    }
+    @keyframes logo-glow {
+      0%, 100% { box-shadow: 0 8px 32px rgba(212, 175, 55, 0.3), 0 0 0 1px rgba(255, 255, 255, 0.2) inset; }
+      50% { box-shadow: 0 8px 48px rgba(212, 175, 55, 0.5), 0 0 20px rgba(212, 175, 55, 0.3), 0 0 0 1px rgba(255, 255, 255, 0.3) inset; }
+    }
+    .brand-name {
+      font-family: 'Cinzel', serif;
+      font-size: 24px;
+      font-weight: 600;
+      background: linear-gradient(135deg, var(--gold-light) 0%, var(--gold-primary) 50%, var(--gold-dark) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      letter-spacing: 3px;
+      margin-bottom: 6px;
+    }
+    .brand-tagline {
+      font-size: 13px;
+      color: var(--text-muted);
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+    }
+    .sender-section {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 20px;
+      background: linear-gradient(135deg, rgba(212, 175, 55, 0.1) 0%, rgba(212, 175, 55, 0.05) 100%);
+      border: 1px solid rgba(212, 175, 55, 0.2);
+      border-radius: 20px;
+      margin-bottom: 24px;
+      position: relative;
+      overflow: hidden;
+    }
+    .sender-section::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold-primary), transparent);
+    }
+    .sender-avatar {
+      width: 56px; height: 56px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--gold-primary) 0%, var(--gold-dark) 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      font-weight: 600;
+      color: var(--deep-space);
+      flex-shrink: 0;
+      box-shadow: 0 4px 16px rgba(212, 175, 55, 0.3);
+    }
+    .sender-avatar img { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; }
+    .sender-info { flex: 1; }
+    .sender-label { font-size: 12px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4px; }
+    .sender-name { font-family: 'Cinzel', serif; font-size: 20px; font-weight: 600; color: var(--gold-light); }
+    .invite-type-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: var(--gold-primary);
+      padding: 8px 16px;
+      background: rgba(212, 175, 55, 0.1);
+      border: 1px solid rgba(212, 175, 55, 0.2);
+      border-radius: 100px;
+      margin-bottom: 20px;
+    }
+    .task-card {
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.02) 100%);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 24px;
+      padding: 28px;
+      margin-bottom: 24px;
+      position: relative;
+    }
+    .task-title {
+      font-family: 'Cinzel', serif;
+      font-size: 24px;
+      font-weight: 600;
+      color: var(--star-white);
+      line-height: 1.4;
+      margin-bottom: 16px;
+    }
+    .task-description { font-size: 16px; color: var(--text-muted); line-height: 1.7; margin-bottom: 20px; }
+    .cta-button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      width: 100%;
+      padding: 20px 28px;
+      background: linear-gradient(135deg, var(--gold-primary) 0%, var(--gold-dark) 100%);
+      border: none;
+      border-radius: 16px;
+      color: var(--deep-space);
+      font-family: 'Inter', sans-serif;
+      font-size: 16px;
+      font-weight: 700;
+      text-decoration: none;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 8px 32px rgba(212, 175, 55, 0.3), 0 0 0 1px rgba(255, 255, 255, 0.2) inset;
+      margin-bottom: 12px;
+      position: relative;
+      overflow: hidden;
+    }
+    .cta-button::before {
+      content: '';
+      position: absolute;
+      top: 0; left: -100%;
+      width: 100%; height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+      transition: left 0.5s ease;
+    }
+    .cta-button:hover::before { left: 100%; }
+    .cta-button:hover { transform: translateY(-2px); box-shadow: 0 12px 40px rgba(212, 175, 55, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.3) inset; }
+    .cta-button:active { transform: translateY(0); }
+    .cta-button-icon { font-size: 20px; }
+    .secondary-button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      width: 100%;
+      padding: 18px 28px;
+      background: transparent;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 16px;
+      color: var(--star-white);
+      font-family: 'Inter', sans-serif;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      margin-bottom: 28px;
+    }
+    .secondary-button:hover { background: rgba(255, 255, 255, 0.05); border-color: rgba(255, 255, 255, 0.3); }
+    .features { padding-top: 24px; border-top: 1px solid rgba(255, 255, 255, 0.1); }
+    .features-title { font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 2px; color: var(--text-muted); margin-bottom: 20px; text-align: center; }
+    .feature-list { display: grid; gap: 14px; }
+    .feature-item {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 16px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 14px;
+      transition: all 0.3s ease;
+    }
+    .feature-item:hover { background: rgba(255, 255, 255, 0.05); border-color: rgba(212, 175, 55, 0.2); transform: translateX(4px); }
+    .feature-icon {
+      width: 40px; height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, rgba(212, 175, 55, 0.2) 0%, rgba(212, 175, 55, 0.05) 100%);
+      border: 1px solid rgba(212, 175, 55, 0.2);
+      border-radius: 12px;
+      font-size: 20px;
+      flex-shrink: 0;
+    }
+    .feature-text { font-size: 14px; color: rgba(255, 255, 255, 0.8); line-height: 1.5; }
+    .feature-text strong { color: var(--gold-light); font-weight: 600; }
+    .hidden { display: none !important; }
+    @media (max-width: 480px) {
+      .container { padding: 16px; }
+      .content-card { padding: 28px 20px; border-radius: 24px; }
+      .task-title { font-size: 20px; }
+      .sender-name { font-size: 18px; }
+      .cta-button, .secondary-button { padding: 18px 20px; }
+    }
+    .fade-in { animation: fadeIn 0.6s ease-out; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+  </style>
+</head>
+<body>
+  <div class="cosmic-bg"></div>
+  <div class="stars" id="stars"></div>
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+
+  <div class="container">
+    <div id="loading" class="loading-container">
+      <div class="cosmic-spinner"></div>
+      <p class="loading-text">Summoning from the cosmic realm...</p>
+    </div>
+
+    <div id="error" class="error-container hidden">
+      <span class="error-icon">🌑</span>
+      <h2 class="error-title">Invite Not Found</h2>
+      <p class="error-message">This cosmic invitation has expired or returned to the void.</p>
+    </div>
+
+    <div id="content" class="content-card hidden">
+      <div class="brand-header">
+        <div class="brand-logo">🔮</div>
+        <div class="brand-name">HEKA CALENDAR</div>
+        <div class="brand-tagline">Cosmic Timekeeping & Circle</div>
+      </div>
+
+      <div class="sender-section">
+        <div class="sender-avatar" id="senderAvatar">👤</div>
+        <div class="sender-info">
+          <div class="sender-label">Invitation from</div>
+          <div class="sender-name" id="senderName">...</div>
+        </div>
+      </div>
+
+      <div class="invite-type-badge" id="inviteBadge">✨ Cosmic Circle Invite</div>
+
+      <div class="task-card hidden" id="taskPreview">
+        <div class="task-title" id="taskTitle"></div>
+        <div class="task-description" id="taskDescription"></div>
+      </div>
+
+      <a href="#" class="cta-button" id="downloadBtn">
+        <span class="cta-button-icon">📲</span>
+        <span>Get HEKA Calendar</span>
+      </a>
+
+      <button class="secondary-button hidden" id="openAppBtn">
+        <span>🔮</span>
+        <span>Open in App</span>
+      </button>
+
+      <div class="features">
+        <div class="features-title">What awaits you</div>
+        <div class="feature-list">
+          <div class="feature-item">
+            <div class="feature-icon">✨</div>
+            <div class="feature-text">Join <strong id="senderName2">your cosmic ally</strong> in the Circle</div>
+          </div>
+          <div class="feature-item">
+            <div class="feature-icon">📜</div>
+            <div class="feature-text">Collaborate on <strong>celestial-aligned tasks</strong></div>
+          </div>
+          <div class="feature-item">
+            <div class="feature-icon">💬</div>
+            <div class="feature-text">Exchange messages in the <strong>Cosmic Circle</strong></div>
+          </div>
+          <div class="feature-item">
+            <div class="feature-icon">🌙</div>
+            <div class="feature-text">Experience the <strong>13-month HEKA calendar</strong></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const starsContainer = document.getElementById('stars');
+    for (let i = 0; i < 100; i++) {
+      const star = document.createElement('div');
+      star.className = 'star';
+      star.style.left = Math.random() * 100 + '%';
+      star.style.top = Math.random() * 100 + '%';
+      star.style.width = Math.random() * 3 + 'px';
+      star.style.height = star.style.width;
+      star.style.setProperty('--duration', (Math.random() * 3 + 2) + 's');
+      star.style.animationDelay = Math.random() * 5 + 's';
+      starsContainer.appendChild(star);
+    }
+    setInterval(() => {
+      const shootingStar = document.createElement('div');
+      shootingStar.className = 'shooting-star';
+      shootingStar.style.top = Math.random() * 50 + '%';
+      shootingStar.style.left = '0';
+      shootingStar.style.animationDuration = (Math.random() * 2 + 2) + 's';
+      starsContainer.appendChild(shootingStar);
+      setTimeout(() => shootingStar.remove(), 4000);
+    }, 8000);
+
+    const FIREBASE_CONFIG = { apiKey: "AIzaSyBevNpdAOCTWgpO3Kc9O4LE5SLYHGV1IpM", projectId: "heka-calendar" };
+    const PLAY_STORE_URL = 'https://play.google.com/store/apps/details?id=com.heka.calendar';
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const inviteCode = urlParams.get('code');
+    const embeddedName = urlParams.get('from');
+    const embeddedType = urlParams.get('type');
+    const embeddedTaskTitle = urlParams.get('taskTitle');
+    const embeddedTaskDesc = urlParams.get('taskDesc');
+    const embeddedTaskCode = urlParams.get('taskCode');
+
+    const loadingEl = document.getElementById('loading');
+    const errorEl = document.getElementById('error');
+    const contentEl = document.getElementById('content');
+    const downloadBtn = document.getElementById('downloadBtn');
+    const openAppBtn = document.getElementById('openAppBtn');
+    const taskPreview = document.getElementById('taskPreview');
+    const inviteBadge = document.getElementById('inviteBadge');
+
+    if (!inviteCode) {
+      loadingEl.classList.add('hidden');
+      errorEl.classList.remove('hidden');
+    } else {
+      sessionStorage.setItem('pendingInviteCode', inviteCode);
+      document.cookie = `pendingInviteCode=${inviteCode}; path=/; max-age=86400`;
+
+      const isAndroid = /Android/i.test(navigator.userAgent);
+      const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
+
+      if (isIOS) {
+        downloadBtn.querySelector('span:last-child').textContent = 'Download on App Store';
+        downloadBtn.href = '#';
+      } else {
+        const referrer = encodeURIComponent(`utm_source=invite&utm_medium=link&utm_campaign=${inviteCode}`);
+        downloadBtn.href = `${PLAY_STORE_URL}&referrer=${referrer}`;
+      }
+
+      openAppBtn.classList.remove('hidden');
+
+      // For task invites, use the task deep link so the app shows TaskPreviewModal
+      if (embeddedType === 'task' && embeddedTaskCode) {
+        sessionStorage.setItem('pendingTaskCode', embeddedTaskCode);
+        document.cookie = `pendingTaskCode=${embeddedTaskCode}; path=/; max-age=86400`;
+        openAppBtn.onclick = () => { window.location.href = `heka-calendar://task/${embeddedTaskCode}`; };
+      } else {
+        openAppBtn.onclick = () => { window.location.href = `heka-calendar://invite/${inviteCode}`; };
+      }
+
+      if (embeddedName) {
+        displayInviteFromURL(decodeURIComponent(embeddedName), embeddedType, embeddedTaskTitle, embeddedTaskDesc);
+      } else {
+        fetchInviteData(inviteCode);
+      }
+    }
+
+    function displayInviteFromURL(creatorName, type, taskTitle, taskDesc) {
+      if (!creatorName || creatorName === 'Anonymous' || creatorName.trim() === '') creatorName = 'A Cosmic Traveler';
+      document.getElementById('senderName').textContent = creatorName;
+      document.getElementById('senderName2').textContent = creatorName;
+      document.getElementById('senderAvatar').textContent = creatorName.charAt(0).toUpperCase();
+
+      if (type === 'task' && taskTitle) {
+        inviteBadge.textContent = '📜 Task Ritual Invite';
+        taskPreview.classList.remove('hidden');
+        document.getElementById('taskTitle').textContent = decodeURIComponent(taskTitle);
+        if (taskDesc) document.getElementById('taskDescription').textContent = decodeURIComponent(taskDesc);
+      }
+
+      loadingEl.classList.add('hidden');
+      contentEl.classList.remove('hidden');
+      contentEl.classList.add('fade-in');
+    }
+
+    async function fetchInviteData(code) {
+      try {
+        const url = `https://firestore.googleapis.com/v1/projects/${FIREBASE_CONFIG.projectId}/databases/(default)/documents/invites/${code}?key=${FIREBASE_CONFIG.apiKey}`;
+        const response = await fetch(url);
+        if (!response.ok) throw new Error('Failed to fetch');
+        const data = await response.json();
+        if (data.fields) {
+          const f = data.fields;
+          const creatorName = f.creatorName?.stringValue || 'A Cosmic Traveler';
+          const type = f.type?.stringValue || 'friend';
+          const taskTitle = f.linkedTaskTitle?.stringValue || '';
+          const taskDesc = f.linkedTaskDesc?.stringValue || '';
+          const linkedTaskCode = f.linkedTaskCode?.stringValue || '';
+
+          document.getElementById('senderName').textContent = creatorName;
+          document.getElementById('senderName2').textContent = creatorName;
+          document.getElementById('senderAvatar').textContent = creatorName.charAt(0).toUpperCase();
+
+          if (type === 'task') {
+            inviteBadge.textContent = '📜 Task Ritual Invite';
+            if (taskTitle) {
+              taskPreview.classList.remove('hidden');
+              document.getElementById('taskTitle').textContent = taskTitle;
+              if (taskDesc) document.getElementById('taskDescription').textContent = taskDesc;
+            }
+            // Update deep link to use task URL if we have the linked task code
+            if (linkedTaskCode) {
+              sessionStorage.setItem('pendingTaskCode', linkedTaskCode);
+              document.cookie = `pendingTaskCode=${linkedTaskCode}; path=/; max-age=86400`;
+              openAppBtn.onclick = () => { window.location.href = `heka-calendar://task/${linkedTaskCode}`; };
+            }
+          }
+
+          loadingEl.classList.add('hidden');
+          contentEl.classList.remove('hidden');
+          contentEl.classList.add('fade-in');
+        } else {
+          showError();
+        }
+      } catch (error) {
+        console.error('[InviteLanding] Firestore error:', error);
+        showGenericInvite();
+      }
+    }
+
+    function showGenericInvite() {
+      document.getElementById('senderName').textContent = 'A Cosmic Traveler';
+      document.getElementById('senderName2').textContent = 'your cosmic ally';
+      document.getElementById('senderAvatar').textContent = '👤';
+      loadingEl.classList.add('hidden');
+      contentEl.classList.remove('hidden');
+      contentEl.classList.add('fade-in');
+    }
+
+    function showError() {
+      loadingEl.classList.add('hidden');
+      errorEl.classList.remove('hidden');
+    }
+  </script>
+</body>
+</html>

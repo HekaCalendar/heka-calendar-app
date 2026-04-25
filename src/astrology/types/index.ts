@@ -9,5 +9,8 @@ export * from './core';
 // Chart types
 export * from './chart';
 
+// Extended types — explicit re-exports to avoid ambiguity with core.ts
+export { SIDEREAL_SYSTEMS, type SiderealSystem } from './extended';
+
 // Profile types
 export * from './profile';

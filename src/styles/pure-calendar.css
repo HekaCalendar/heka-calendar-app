@@ -1,0 +1,1599 @@
+/**
+ * Pure Calendar Mode - Minimal Full-Screen View
+ * 
+ * Layout:
+ * - Safe padding at top
+ * - Full-width Settings + Pure Mode toggles
+ * - Calendar grid fills remaining space with EXISTING header
+ * - Cells: Same width, 1.25x taller vertically
+ * - Yin-Yang added above Month/13 in CalendarGrid's existing header
+ * - Light mode: White grid background with black borders only
+ */
+
+/* Main container - seamless with background */
+.pure-calendar-view {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  height: 100dvh;
+  width: 100%;
+  overflow: hidden;
+  background: transparent; /* Inherit from app background */
+}
+
+/* Safe area padding at top - must inherit background */
+.pure-safe-area {
+  height: env(safe-area-inset-top, 24px);
+  min-height: 24px;
+  flex-shrink: 0;
+  /* Inherit background from parent to avoid white bar */
+  background: transparent;
+}
+
+/* Full-width toggles container - seamless */
+.pure-toggles-container {
+  flex-shrink: 0;
+  padding: 8px 16px 12px;
+  background: transparent; /* Blend with background */
+  border-bottom: 1px solid var(--color-border); /* Separator line */
+}
+
+/* The SettingsPanel component renders its own .settings-toggle-wrapper here */
+.pure-toggles-container .settings-toggle-wrapper {
+  margin-bottom: 0;
+}
+
+/* Calendar container - fills remaining space, FULL WIDTH, seamless */
+.pure-calendar-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  padding: 8px 0 16px 0; /* Top spacing after separator, bottom spacing to use available space */
+  background: transparent; /* Seamless with parent */
+}
+
+/* Grid wrapper - fills remaining space, FULL WIDTH, seamless */
+.pure-grid-wrapper {
+  flex: 1;
+  min-height: 0;
+  border-radius: 0;
+  overflow: auto; /* Allow scrolling */
+  background: transparent; /* Seamless with background */
+  /* Hide scrollbar - users scroll with touch naturally */
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+/* Hide webkit scrollbar */
+.pure-grid-wrapper::-webkit-scrollbar {
+  display: none;
+}
+
+/* Full width calendar grid in pure mode - seamless */
+.pure-calendar-view .calendar-grid {
+  width: 100%;
+  max-width: 100%;
+  margin: 0;
+  padding: 0;
+  border-radius: 0;
+  background: transparent; /* No distinct background */
+  border: none; /* No border separation */
+  box-shadow: none; /* No shadow separation */
+}
+
+/* ========================================================================
+   PURE MODE CELL EXPANSION FIXES
+   ======================================================================== */
+
+/* Horizontal-only: 1.5x the standard 180px expanded columns -> 270px square cells.
+   Grid width = 7*270 + 6*12 (gaps) + 2*24 (padding) = 2010px */
+.pure-calendar-view .calendar-grid--expanded-h {
+  width: 2010px;
+  min-width: 2010px;
+  max-width: none;
+  margin: 0 auto;
+  padding: var(--space-5);
+}
+
+.pure-calendar-view .calendar-grid--expanded-h .calendar-grid__week,
+.pure-calendar-view .calendar-grid--expanded-h .calendar-grid__dow {
+  grid-template-columns: repeat(7, 270px);
+  gap: var(--space-3);
+}
+
+/* Combined vertical + horizontal: keep vertical height (320px) and make width match.
+   Grid width = 7*320 + 6*12 + 2*24 = 2360px */
+.pure-calendar-view .calendar-grid--expanded.calendar-grid--expanded-h {
+  width: 2360px;
+  min-width: 2360px;
+}
+
+.pure-calendar-view .calendar-grid--expanded.calendar-grid--expanded-h .calendar-grid__week,
+.pure-calendar-view .calendar-grid--expanded.calendar-grid--expanded-h .calendar-grid__dow {
+  grid-template-columns: repeat(7, 320px);
+  gap: var(--space-3);
+}
+
+/* Mobile: 1.5x the standard mobile 130px -> 195px square cells.
+   Grid width = 7*195 + 6*12 + 2*24 = 1485px */
+@media (max-width: 768px) {
+  .pure-calendar-view .calendar-grid--expanded-h {
+    width: 1485px;
+    min-width: 1485px;
+  }
+
+  .pure-calendar-view .calendar-grid--expanded-h .calendar-grid__week,
+  .pure-calendar-view .calendar-grid--expanded-h .calendar-grid__dow {
+    grid-template-columns: repeat(7, 195px);
+    gap: var(--space-3);
+  }
+
+  /* Combined mobile: same 320px square cells */
+  .pure-calendar-view .calendar-grid--expanded.calendar-grid--expanded-h {
+    width: 2360px;
+    min-width: 2360px;
+  }
+
+  .pure-calendar-view .calendar-grid--expanded.calendar-grid--expanded-h .calendar-grid__week,
+  .pure-calendar-view .calendar-grid--expanded.calendar-grid--expanded-h .calendar-grid__dow {
+    grid-template-columns: repeat(7, 320px);
+    gap: var(--space-3);
+  }
+}
+
+.pure-calendar-view .calendar-grid--expanded-h .calendar-grid__month-header,
+.pure-calendar-view .calendar-grid--expanded.calendar-grid--expanded-h .calendar-grid__month-header {
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.pure-calendar-view .calendar-grid--expanded-h .calendar-grid__month-index,
+.pure-calendar-view .calendar-grid--expanded.calendar-grid--expanded-h .calendar-grid__month-index {
+  margin-left: 0;
+  margin-right: 0;
+}
+
+/* Lock moon symbol size so it never grows in expanded modes */
+.pure-calendar-view .calendar-grid--expanded .day-cell__moon,
+.pure-calendar-view .calendar-grid--expanded-h .day-cell__moon,
+.pure-calendar-view .calendar-grid--expanded.calendar-grid--expanded-h .day-cell__moon {
+  font-size: var(--text-base);
+}
+
+/* Vertical-only expansion: tall cells */
+.pure-calendar-view .calendar-grid--expanded .day-cell {
+  min-height: 320px;
+  padding: var(--space-4);
+}
+
+/* Horizontal and combined: enforce square cells */
+.pure-calendar-view .calendar-grid--expanded-h .day-cell,
+.pure-calendar-view .calendar-grid--expanded.calendar-grid--expanded-h .day-cell {
+  aspect-ratio: 1 / 1;
+  min-height: auto;
+  padding: var(--space-4);
+}
+
+/* Expanded week rows in Pure Mode: remove fixed min-height so cells can grow */
+.pure-calendar-view .calendar-grid--expanded .calendar-grid__week,
+.pure-calendar-view .calendar-grid--expanded-h .calendar-grid__week,
+.pure-calendar-view .calendar-grid--expanded.calendar-grid--expanded-h .calendar-grid__week {
+  min-height: auto;
+}
+
+/* Ensure cells stretch full width - slightly wider cells */
+.pure-calendar-view .calendar-grid__week {
+  width: 100%;
+}
+
+.pure-calendar-view .day-cell {
+  flex: 1 1 0; /* Grow and shrink equally */
+  min-width: 0; /* Allow cells to shrink */
+  /* Cells naturally distribute available space */
+}
+
+/* Note previews in cells - subtle on transparent background */
+.pure-calendar-view .day-cell__note-preview {
+  background: rgba(201, 162, 39, 0.08); /* Subtle gold tint */
+  border-radius: 4px;
+  padding: 2px 4px;
+  margin-top: 4px;
+}
+
+.pure-calendar-view .day-cell__civil {
+  font-size: 0.7rem;
+  color: var(--color-text-muted);
+  opacity: 0.8;
+}
+
+/* Holiday indicator - subtle */
+.pure-calendar-view .day-cell__holiday-indicator {
+  background: var(--color-gold);
+  opacity: 0.6;
+}
+
+/* Multi-select indicator in Pure Mode */
+.pure-calendar-view .day-cell__selected-indicator {
+  background: var(--color-gold);
+  color: #1a1a1a;
+  font-size: 9px;
+  font-weight: 700;
+  padding: 1px 4px;
+  border-radius: 8px;
+  min-width: 16px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+}
+
+/* Selected cell - subtle highlight */
+.pure-calendar-view .day-cell--selected {
+  background: rgba(201, 162, 39, 0.12);
+  border-color: rgba(201, 162, 39, 0.4);
+}
+
+/* Today's cell - beautiful blue glow like regular interface */
+.pure-calendar-view .day-cell--today {
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.15), rgba(59, 130, 246, 0.05));
+  border-color: #3b82f6;
+  box-shadow:
+    0 0 0 1px #3b82f6,
+    0 0 25px rgba(59, 130, 246, 0.25),
+    inset 0 0 15px rgba(59, 130, 246, 0.05);
+  z-index: 1;
+}
+
+/* Selected + Today combo must keep blue glow */
+.pure-calendar-view .day-cell--selected.day-cell--today {
+  background: linear-gradient(145deg, rgba(59, 130, 246, 0.1) 0%, rgba(59, 130, 246, 0.03) 100%);
+  border-color: #3b82f6;
+  box-shadow:
+    0 0 0 1px #3b82f6,
+    0 0 20px rgba(59, 130, 246, 0.25),
+    inset 0 0 15px rgba(59, 130, 246, 0.05);
+  z-index: 10;
+}
+
+/* ============================================
+   PURE MODE CELL SIZING - 1.25x TALLER
+   Remove aspect-ratio and make cells taller
+   ============================================ */
+
+/* In Pure Mode, make calendar cells 1.58x taller than width, SEAMLESS */
+.pure-calendar-view .day-cell {
+  aspect-ratio: unset; /* Remove square aspect ratio */
+  min-height: 158px; /* 1.58x the typical 100px width */
+  background: transparent; /* No distinct background - seamless with page */
+  border: 1px solid rgba(255, 255, 255, 0.08); /* Subtle border only */
+  border-radius: 0; /* No rounded corners for seamless look */
+}
+
+/* Week rows expand to fit taller cells */
+.pure-calendar-view .calendar-grid__week {
+  min-height: 158px;
+  gap: 0px; /* No gap - cells touch for seamless look, each cell gains ~1px width */
+  background: transparent;
+}
+
+/* Day of week header - seamless */
+.pure-calendar-view .calendar-grid__dow {
+  background: transparent;
+  border: none;
+  gap: 1px;
+}
+
+.pure-calendar-view .calendar-grid__dow-cell {
+  background: transparent;
+  border: none;
+  color: var(--color-text-muted);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* Month header - glass morphism effect with month index included */
+.pure-calendar-view .calendar-grid__month-header {
+  background: linear-gradient(180deg, 
+    rgba(255,255,255,0.06) 0%, 
+    rgba(255,255,255,0.02) 50%,
+    rgba(255,255,255,0.04) 100%);
+  backdrop-filter: blur(12px) saturate(180%);
+  -webkit-backdrop-filter: blur(12px) saturate(180%);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-bottom: 1px solid rgba(255,255,255,0.12);
+  padding: 18px 16px 8px; /* Top padding moved down ~6mm total */
+  margin: 12px 8px 0; /* Increased margin for more space from divider */
+  border-radius: 12px 12px 0 0;
+  box-shadow: 
+    inset 0 1px 0 rgba(255,255,255,0.1),
+    0 2px 8px rgba(0,0,0,0.15);
+}
+
+/* Light mode header - glass effect */
+.pure-calendar-view--light .calendar-grid__month-header {
+  background: linear-gradient(180deg, 
+    rgba(0,0,0,0.04) 0%, 
+    rgba(0,0,0,0.015) 50%,
+    rgba(0,0,0,0.03) 100%);
+  border-color: rgba(0,0,0,0.08);
+  border-bottom-color: rgba(0,0,0,0.12);
+  box-shadow: 
+    inset 0 1px 0 rgba(255,255,255,0.8),
+    0 2px 8px rgba(0,0,0,0.08);
+}
+
+/* Month index - part of header area with same background */
+.pure-calendar-view .calendar-grid__month-index {
+  background: linear-gradient(180deg, 
+    rgba(255,255,255,0.04) 0%, 
+    rgba(255,255,255,0.01) 100%);
+  backdrop-filter: blur(12px) saturate(180%);
+  -webkit-backdrop-filter: blur(12px) saturate(180%);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-top: none;
+  color: var(--color-text-muted);
+  font-size: 0.75rem;
+  padding: 6px 16px 8px;
+  margin: 0 8px 4px;
+  border-radius: 0 0 12px 12px;
+}
+
+.pure-calendar-view--light .calendar-grid__month-index {
+  background: linear-gradient(180deg, 
+    rgba(0,0,0,0.03) 0%, 
+    rgba(0,0,0,0.01) 100%);
+  border-color: rgba(0,0,0,0.08);
+  border-top: none;
+}
+
+/* ============================================
+   YIN-YANG TOGGLE IN CALENDAR HEADER
+   ============================================ */
+
+/* Center toggle container in month header */
+.calendar-grid__center-actions,
+.calendar-grid__center-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+}
+
+/* Yin-Yang toggle button - always visible, consistent colors */
+.pure-yin-yang {
+  width: 28px;
+  height: 28px;
+  padding: 3px;
+  background: transparent;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  color: #f8f7f5;
+  cursor: pointer;
+  transition: all 200ms ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  z-index: 10;
+}
+
+.pure-yin-yang:hover {
+  border-color: #c9a24a;
+  color: #c9a24a;
+  transform: rotate(180deg);
+}
+
+.pure-yin-yang svg {
+  width: 100%;
+  height: 100%;
+}
+
+/* Light mode: black button - immediate switch */
+.pure-calendar-view--light .pure-yin-yang,
+.pure-calendar-view--light .pure-yin-yang.pure-yin-yang--light {
+  border-color: #000 !important;
+  color: #000 !important;
+}
+
+.pure-calendar-view--light .pure-yin-yang:hover,
+.pure-calendar-view--light .pure-yin-yang--light:hover {
+  border-color: #c9a24a !important;
+  color: #c9a24a !important;
+}
+
+/* Light mode - darker arc pill colors */
+.pure-calendar-view--light .calendar-grid__arc[data-arc="OPENING"] {
+  background: rgba(180, 30, 30, 0.25) !important;
+  border-color: rgba(180, 30, 30, 0.5) !important;
+  color: rgba(140, 20, 20, 0.9) !important;
+}
+
+.pure-calendar-view--light .calendar-grid__arc[data-arc="CORE"] {
+  background: rgba(20, 130, 60, 0.25) !important;
+  border-color: rgba(20, 130, 60, 0.5) !important;
+  color: rgba(15, 100, 45, 0.9) !important;
+}
+
+.pure-calendar-view--light .calendar-grid__arc[data-arc="CLOSING"] {
+  background: rgba(100, 40, 200, 0.25) !important;
+  border-color: rgba(100, 40, 200, 0.5) !important;
+  color: rgba(80, 30, 160, 0.9) !important;
+}
+
+/* Ensure yin-yang container is always visible */
+.calendar-grid__center-actions,
+.calendar-grid__center-toggle {
+  position: relative;
+  z-index: 10;
+}
+
+/* ============================================
+   PURE MODE DAY PANEL - Half-Screen Overlay
+   ============================================ */
+
+.pure-mode-panel-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
+  z-index: 1000;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  animation: fadeIn 200ms ease;
+  padding: 0; /* Remove any default padding */
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.pure-mode-day-panel {
+  width: 100%;
+  max-width: 100%; /* Full width on mobile */
+  max-height: 85vh; /* Slightly taller for more content */
+  background: var(--color-bg);
+  border-radius: 20px 20px 0 0;
+  border: 1px solid var(--color-border);
+  border-bottom: none;
+  box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.4);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  animation: slideUp 300ms cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+}
+
+/* Responsive: Larger screens get max-width constraint */
+@media (min-width: 640px) {
+  .pure-mode-day-panel {
+    max-width: 640px;
+    border-radius: 20px 20px 0 0;
+  }
+}
+
+@media (min-width: 768px) {
+  .pure-mode-day-panel {
+    max-width: 720px;
+    max-height: 80vh;
+  }
+}
+
+@media (min-width: 1024px) {
+  .pure-mode-day-panel {
+    max-width: 900px;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Panel content scrolling */
+.pure-mode-day-panel .day-panel__section {
+  flex-shrink: 0;
+  padding: 12px 16px; /* Responsive padding */
+}
+
+.pure-mode-day-panel .notes-section {
+  flex: 1;
+  overflow-y: auto;
+  min-height: 0;
+  padding: 12px 16px;
+}
+
+/* Ensure text doesn't overflow on small screens */
+.pure-mode-day-panel .day-panel__header {
+  padding: 16px;
+}
+
+.pure-mode-day-panel .note-item {
+  padding: 12px;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+.pure-mode-day-panel .note-item__content {
+  font-size: clamp(0.875rem, 2.5vw, 1rem); /* Responsive font size */
+  line-height: 1.5;
+}
+
+/* Responsive buttons */
+.pure-mode-day-panel .btn {
+  padding: 8px 12px;
+  font-size: clamp(0.75rem, 2vw, 0.875rem);
+  white-space: nowrap;
+}
+
+/* Ensure categories don't overflow */
+.pure-mode-day-panel .note-item__category {
+  font-size: clamp(0.625rem, 2vw, 0.75rem);
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Handle bar at top */
+.pure-mode-day-panel::before {
+  content: '';
+  position: absolute;
+  top: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 40px;
+  height: 4px;
+  background: var(--color-border);
+  border-radius: 2px;
+  opacity: 0.5;
+}
+
+/* ============================================
+   PURE DAY PANEL - Enterprise Note Management
+   ============================================ */
+
+/* Overlay backdrop */
+.pure-day-panel-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 16px;
+  animation: fadeIn 200ms ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* Panel container */
+.pure-day-panel {
+  background: var(--color-bg);
+  border: 2px solid var(--color-border);
+  border-radius: 16px;
+  width: 100%;
+  max-width: 480px;
+  max-height: 80vh;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 
+    0 25px 50px -12px rgba(0, 0, 0, 0.5),
+    0 0 0 1px rgba(201, 162, 39, 0.1);
+  animation: slideUp 300ms cubic-bezier(0.16, 1, 0.3, 1);
+  overflow: hidden;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Panel header */
+.pure-day-panel__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--color-border);
+  background: linear-gradient(180deg, rgba(201, 162, 39, 0.1) 0%, transparent 100%);
+}
+
+.pure-day-panel__date {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.pure-day-panel__heka-date {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--color-gold);
+  font-family: var(--font-display, inherit);
+}
+
+.pure-day-panel__year {
+  font-size: 0.875rem;
+  color: var(--color-text-muted);
+}
+
+.pure-day-panel__meta {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.pure-day-panel__civil {
+  font-size: 0.875rem;
+  color: var(--color-text-secondary);
+  padding: 4px 10px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 20px;
+}
+
+.pure-day-panel__moon {
+  font-size: 1.25rem;
+  filter: drop-shadow(0 0 8px rgba(201, 162, 39, 0.5));
+}
+
+.pure-day-panel__close {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1px solid var(--color-border);
+  background: transparent;
+  color: var(--color-text);
+  font-size: 1.5rem;
+  line-height: 1;
+  cursor: pointer;
+  transition: all 200ms ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pure-day-panel__close:hover {
+  background: rgba(239, 68, 68, 0.1);
+  border-color: rgba(239, 68, 68, 0.5);
+  color: #ef4444;
+}
+
+/* Holidays section */
+.pure-day-panel__holidays {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 12px 20px;
+  background: rgba(201, 162, 39, 0.05);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.pure-day-panel__holiday-tag {
+  font-size: 0.75rem;
+  padding: 4px 10px;
+  background: rgba(201, 162, 39, 0.15);
+  color: var(--color-gold);
+  border-radius: 20px;
+  border: 1px solid rgba(201, 162, 39, 0.3);
+}
+
+/* Notes list container */
+.pure-day-panel__notes {
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* Empty state */
+.pure-day-panel__empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+  text-align: center;
+  gap: 12px;
+}
+
+.pure-day-panel__empty-icon {
+  font-size: 3rem;
+  opacity: 0.5;
+}
+
+.pure-day-panel__empty p {
+  color: var(--color-text-muted);
+  font-size: 0.95rem;
+}
+
+.pure-day-panel__add-btn {
+  padding: 10px 20px;
+  background: var(--color-gold);
+  color: #000;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 200ms ease;
+}
+
+.pure-day-panel__add-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(201, 162, 39, 0.4);
+}
+
+/* Note item */
+.pure-day-panel__note {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+  padding: 14px;
+  transition: all 200ms ease;
+}
+
+.pure-day-panel__note:hover {
+  border-color: rgba(201, 162, 39, 0.3);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.pure-day-panel__note--editing {
+  border-color: var(--color-gold);
+  background: rgba(201, 162, 39, 0.08);
+}
+
+.pure-day-panel__note--new {
+  border-color: var(--color-gold);
+  border-style: dashed;
+  background: rgba(201, 162, 39, 0.05);
+  animation: pulseBorder 2s ease infinite;
+}
+
+@keyframes pulseBorder {
+  0%, 100% { border-color: var(--color-gold); }
+  50% { border-color: rgba(201, 162, 39, 0.3); }
+}
+
+/* Note view mode */
+.pure-day-panel__note-view {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.pure-day-panel__note-content {
+  flex: 1;
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.pure-day-panel__category-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  margin-top: 6px;
+  box-shadow: 0 0 8px currentColor;
+}
+
+.pure-day-panel__note-text {
+  flex: 1;
+  color: var(--color-text);
+  font-size: 0.95rem;
+  line-height: 1.5;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.pure-day-panel__recurring-badge {
+  font-size: 0.875rem;
+  opacity: 0.7;
+  margin-left: 4px;
+}
+
+/* Note actions */
+.pure-day-panel__note-actions {
+  display: flex;
+  gap: 6px;
+  opacity: 0;
+  transition: opacity 200ms ease;
+}
+
+.pure-day-panel__note:hover .pure-day-panel__note-actions {
+  opacity: 1;
+}
+
+.pure-day-panel__action-btn {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  border: 1px solid var(--color-border);
+  background: rgba(255, 255, 255, 0.05);
+  cursor: pointer;
+  transition: all 200ms ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.875rem;
+}
+
+.pure-day-panel__action-btn:hover {
+  transform: translateY(-2px);
+}
+
+.pure-day-panel__action-btn--edit:hover {
+  background: rgba(59, 130, 246, 0.15);
+  border-color: rgba(59, 130, 246, 0.5);
+}
+
+.pure-day-panel__action-btn--delete:hover {
+  background: rgba(239, 68, 68, 0.15);
+  border-color: rgba(239, 68, 68, 0.5);
+}
+
+/* Note edit mode */
+.pure-day-panel__note-edit {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.pure-day-panel__edit-textarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-size: 0.95rem;
+  font-family: inherit;
+  line-height: 1.5;
+  resize: vertical;
+  min-height: 80px;
+  outline: none;
+  transition: all 200ms ease;
+}
+
+.pure-day-panel__edit-textarea:focus {
+  border-color: var(--color-gold);
+  box-shadow: 0 0 0 3px rgba(201, 162, 39, 0.15);
+}
+
+/* Edit controls */
+.pure-day-panel__edit-controls {
+  display: flex;
+  gap: 12px;
+}
+
+.pure-day-panel__category-select,
+.pure-day-panel__recurring-select {
+  padding: 8px 12px;
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--color-text);
+  font-size: 0.875rem;
+  cursor: pointer;
+  outline: none;
+}
+
+.pure-day-panel__category-select:focus,
+.pure-day-panel__recurring-select:focus {
+  border-color: var(--color-gold);
+}
+
+.pure-day-panel__category-select option,
+.pure-day-panel__recurring-select option {
+  background: var(--color-bg);
+  color: var(--color-text);
+}
+
+/* Edit actions */
+.pure-day-panel__edit-actions {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+}
+
+.pure-day-panel__save-btn,
+.pure-day-panel__cancel-btn {
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 200ms ease;
+}
+
+.pure-day-panel__save-btn {
+  background: var(--color-gold);
+  color: #000;
+  border: none;
+}
+
+.pure-day-panel__save-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(201, 162, 39, 0.4);
+}
+
+.pure-day-panel__cancel-btn {
+  background: transparent;
+  color: var(--color-text);
+  border: 1px solid var(--color-border);
+}
+
+.pure-day-panel__cancel-btn:hover {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: var(--color-text);
+}
+
+/* Footer - Add another button */
+.pure-day-panel__footer {
+  padding: 16px 20px;
+  border-top: 1px solid var(--color-border);
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.pure-day-panel__add-another-btn {
+  width: 100%;
+  padding: 12px;
+  background: transparent;
+  border: 2px dashed var(--color-border);
+  border-radius: 10px;
+  color: var(--color-text-muted);
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 200ms ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.pure-day-panel__add-another-btn:hover {
+  border-color: var(--color-gold);
+  color: var(--color-gold);
+  background: rgba(201, 162, 39, 0.05);
+}
+
+.pure-day-panel__add-another-btn span {
+  font-size: 1.25rem;
+  font-weight: 300;
+}
+
+/* ============================================
+   LIGHT MODE - FULL THEME
+   ============================================ */
+
+/* Light mode background for entire Pure Mode view */
+.pure-calendar-view--light {
+  background: linear-gradient(180deg, #f0ede8 0%, #e0dcd5 100%);
+  color: #1a1a1a;
+}
+
+/* Keep ENTIRE top section DARK in light mode */
+.pure-calendar-view--light .pure-safe-area,
+.pure-calendar-view--light .pure-toggles-container {
+  background: #16161a !important;
+}
+
+.pure-calendar-view--light .pure-toggles-container {
+  border-bottom-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Ensure settings modal is NOT affected by light mode */
+.settings-modal,
+.settings-modal--pure-mode {
+  background: rgba(22, 22, 26, 0.95) !important;
+  color: var(--color-text) !important;
+}
+
+/* Pure Mode settings panel: force single-column grid to prevent landscape overlap */
+.settings-modal--pure-mode .settings-grid {
+  grid-template-columns: 1fr;
+}
+
+/* Pure Mode settings modal: thinner padding, remove inner scroll, hide all scrollbars */
+.settings-modal--pure-mode {
+  overflow-x: hidden;
+  padding: 8px 12px;
+  padding-top: calc(8px + env(safe-area-inset-top, 16px));
+  padding-bottom: calc(8px + env(safe-area-inset-bottom, 20px));
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.settings-modal--pure-mode::-webkit-scrollbar {
+  display: none;
+}
+
+/* Remove the inner content scroll box so the whole modal scrolls as one unit */
+.settings-modal--pure-mode .settings-modal__content {
+  overflow: visible;
+}
+
+/* MonthHeader inside pure-mode settings should not have bottom margin */
+.settings-modal--pure-mode .settings-group--pure-header .month-header {
+  margin-bottom: 0;
+}
+
+/* Centre the MonthHeader inside the pure-mode settings panel */
+.settings-modal--pure-mode .settings-group--pure-header .settings-group__control {
+  justify-content: center;
+}
+
+/* In light mode, cells remain transparent/seamless */
+.pure-calendar-view--light .calendar-grid {
+  background: transparent;
+}
+
+.pure-calendar-view--light .calendar-grid__dow {
+  background: transparent;
+  border: none;
+  color: #1a1a1a;
+}
+
+.pure-calendar-view--light .calendar-grid__dow-cell {
+  color: #1a1a1a;
+}
+
+/* Light mode cells - off-white for contrast */
+.pure-calendar-view--light .day-cell {
+  background: #f5f3ef !important;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  color: #1a1a1a;
+}
+
+/* Light mode text colors */
+.pure-calendar-view--light .day-cell__heka-num,
+.pure-calendar-view--light .day-cell__heka-day {
+  color: #1a1a1a;
+}
+
+.pure-calendar-view--light .day-cell__civil {
+  color: rgba(0, 0, 0, 0.6);
+}
+
+/* Multi-select indicator in light mode */
+.pure-calendar-view--light .day-cell__selected-indicator {
+  background: #2563eb;
+  color: white;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+/* ==========================================================================
+   RESPONSIVE DESIGN - All screen sizes
+   ========================================================================== */
+
+/* Small phones (up to 360px) */
+@media (max-width: 360px) {
+  .pure-calendar-view .day-cell {
+    min-height: 120px;
+    font-size: 0.75rem;
+  }
+  
+  .pure-calendar-view .day-cell__heka-num {
+    font-size: 0.875rem;
+  }
+  
+  .pure-toggles-container {
+    padding: 4px 8px;
+  }
+  
+  .pure-mode-day-panel {
+    max-height: 90vh;
+    border-radius: 16px 16px 0 0;
+  }
+  
+  .pure-mode-day-panel .day-panel__header {
+    padding: 12px;
+  }
+  
+  .pure-mode-day-panel .day-panel__section {
+    padding: 8px 12px;
+  }
+  
+  .pure-mode-day-panel .note-item {
+    padding: 8px;
+  }
+  
+  .pure-mode-day-panel .btn {
+    padding: 6px 10px;
+    font-size: 0.75rem;
+  }
+}
+
+/* Phones (361px - 640px) */
+@media (min-width: 361px) and (max-width: 640px) {
+  .pure-safe-area {
+    min-height: 20px;
+  }
+  
+  .pure-toggles-container {
+    padding: 6px 12px;
+  }
+  
+  .pure-yin-yang {
+    width: 24px;
+    height: 24px;
+  }
+  
+  .pure-day-panel {
+    max-height: 85vh;
+    margin: 8px;
+  }
+  
+  .pure-day-panel__header {
+    padding: 12px 16px;
+  }
+  
+  .pure-day-panel__heka-date {
+    font-size: 1.1rem;
+  }
+  
+  .pure-day-panel__notes {
+    padding: 12px 16px;
+  }
+  
+  .pure-mode-day-panel {
+    max-height: 85vh;
+  }
+  
+  .pure-mode-day-panel .day-panel__section {
+    padding: 10px 14px;
+  }
+}
+
+/* Large phones / Small tablets (641px - 768px) */
+@media (min-width: 641px) and (max-width: 768px) {
+  .pure-mode-day-panel {
+    max-width: 100%;
+    max-height: 80vh;
+  }
+  
+  .pure-calendar-view .day-cell {
+    min-height: 140px;
+  }
+}
+
+/* Tablets (769px - 1024px) */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .pure-mode-day-panel {
+    max-width: 760px;
+    max-height: 75vh;
+  }
+  
+  .pure-calendar-view .day-cell {
+    min-height: 145px;
+  }
+}
+
+/* Large tablets / Small laptops (1025px - 1366px) */
+@media (min-width: 1025px) and (max-width: 1366px) {
+  .pure-mode-day-panel {
+    max-width: 900px;
+    max-height: 70vh;
+  }
+}
+
+/* Desktop (1367px and up) */
+@media (min-width: 1367px) {
+  .pure-mode-day-panel {
+    max-width: 1000px;
+    max-height: 65vh;
+  }
+}
+
+/* Landscape orientation on phones */
+@media (max-height: 500px) and (orientation: landscape) {
+  .pure-mode-day-panel {
+    max-height: 95vh;
+  }
+  
+  .pure-mode-day-panel .notes-section {
+    max-height: 60vh;
+  }
+  
+  /* Pure calendar landscape - OVERRIDE ALL PARENT PADDING */
+  /* Force zero padding on all parent containers */
+  .app:has(.pure-calendar-view),
+  .app-main:has(.pure-calendar-view) {
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+  
+  /* Landscape - simple layout */
+  .pure-calendar-view {
+    height: 100vh;
+    width: 100%;
+    overflow: hidden;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+  
+  .pure-safe-area {
+    height: env(safe-area-inset-top, 20px);
+    min-height: 20px;
+    background: transparent !important;
+  }
+  
+  .pure-toggles-container {
+    padding: 8px 0 12px !important;
+    margin: 0 !important;
+    background: transparent !important;
+    border-bottom: none !important;
+  }
+  
+  .pure-calendar-container {
+    flex: 1;
+    padding: 8px 0 16px 0 !important;
+    margin: 0 !important;
+  }
+  
+  .pure-grid-wrapper {
+    overflow-y: auto;
+    overflow-x: hidden;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  
+  .pure-grid-wrapper::-webkit-scrollbar {
+    display: none;
+  }
+  
+  /* Solid cell background so visible when scrolling over buttons */
+  .pure-calendar-view .day-cell {
+    background: var(--color-bg) !important;
+  }
+  
+  .pure-calendar-view--light .day-cell {
+    background: #f5f3ef !important;
+  }
+  
+  /* Grid - NARROWER to avoid camera notch (50px total margin = 25px each side) */
+  .pure-calendar-view .calendar-grid,
+  .pure-calendar-view--light .calendar-grid {
+    width: calc(100% - 50px) !important;
+    max-width: calc(100% - 50px) !important;
+    margin: 0 auto !important;
+    padding: 8px 0 16px 0 !important;
+    box-sizing: border-box;
+    contain: none !important;
+    content-visibility: visible !important;
+    background: var(--color-bg) !important;
+  }
+  
+  .pure-calendar-view--light .calendar-grid {
+    background: #f0ede8 !important;
+  }
+  
+  /* Header - NO margins */
+  .pure-calendar-view .calendar-grid__month-header {
+    margin: 4px 0 0 !important;
+    padding-left: 4px !important;
+    padding-right: 4px !important;
+  }
+  
+  /* Week rows - smaller gaps */
+  .pure-calendar-view .calendar-grid__week {
+    gap: 1px;
+    contain: none !important;
+    min-height: auto !important;
+  }
+  
+  /* Cells - SMALLER in landscape (more specific selector) */
+  .pure-calendar-view .calendar-grid .day-cell {
+    min-height: 40px !important;
+    min-width: 0 !important;
+    padding: 4px !important;
+    aspect-ratio: auto !important;
+    contain: none !important;
+    content-visibility: visible !important;
+    height: auto !important;
+  }
+  
+  .pure-calendar-view .day-cell__heka-num {
+    font-size: 0.75rem;
+  }
+  
+  .pure-calendar-view .day-cell__civil {
+    font-size: 0.6rem;
+  }
+  
+  /* Reduce header size */
+  .pure-calendar-view .calendar-grid__month-header {
+    padding: 4px 8px;
+    margin: 4px 0 0;
+  }
+  
+  /* Smaller text */
+  .pure-calendar-view .day-cell__heka-num {
+    font-size: 0.75rem;
+  }
+  
+  .pure-calendar-view .calendar-grid__dow-cell {
+    font-size: 0.55rem;
+    padding: 2px;
+  }
+}
+
+/* High DPI / Retina displays */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  .pure-yin-yang {
+    border-width: 1.5px;
+  }
+}
+
+/* Ensure minimum touch target sizes (44x44px per WCAG) */
+.pure-mode-day-panel .btn,
+.pure-mode-day-panel .note-item__delete,
+.pure-mode-day-panel .note-item__action-btn {
+  min-height: 44px;
+  min-width: 44px;
+}
+
+/* Prevent text zoom on iOS when rotating */
+@media screen and (max-width: 768px) {
+  .pure-mode-day-panel {
+    font-size: 16px; /* Prevents iOS zoom */
+  }
+}
+
+/* ============================================
+   FLOATING SELECTION MODE INDICATOR
+   ============================================ */
+
+.selection-mode-floating-indicator {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: linear-gradient(135deg, rgba(201, 162, 39, 0.95), rgba(180, 140, 30, 0.95));
+  color: #1a1a1a;
+  padding: 12px 20px;
+  border-radius: 50px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  box-shadow: 
+    0 4px 20px rgba(0, 0, 0, 0.4),
+    0 0 0 1px rgba(255, 255, 255, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  z-index: 1000;
+  font-weight: 600;
+  font-size: 14px;
+  animation: selection-indicator-slide-up 0.3s ease-out;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+@keyframes selection-indicator-slide-up {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+}
+
+.selection-mode-floating-indicator__count {
+  white-space: nowrap;
+}
+
+.selection-mode-floating-indicator__done {
+  background: #1a1a1a;
+  color: var(--color-gold);
+  border: none;
+  padding: 6px 16px;
+  border-radius: 20px;
+  font-weight: 600;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.selection-mode-floating-indicator__done:hover {
+  background: #2a2a2a;
+  transform: scale(1.05);
+}
+
+.selection-mode-floating-indicator__done:active {
+  transform: scale(0.95);
+}
+
+/* Light mode variant */
+.pure-calendar-view--light .selection-mode-floating-indicator {
+  background: linear-gradient(135deg, rgba(37, 99, 235, 0.95), rgba(29, 78, 216, 0.95));
+  color: white;
+  box-shadow: 
+    0 4px 20px rgba(0, 0, 0, 0.2),
+    0 0 0 1px rgba(255, 255, 255, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+.pure-calendar-view--light .selection-mode-floating-indicator__done {
+  background: white;
+  color: #2563eb;
+}
+
+.pure-calendar-view--light .selection-mode-floating-indicator__done:hover {
+  background: #f0f0f0;
+}
+
+/* ============================================
+   FLOATING SELECTION TOOLBAR (Full Controls)
+   ============================================ */
+
+.selection-toolbar-floating {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000;
+  animation: selection-toolbar-slide-up 0.3s ease-out;
+  max-width: 95vw;
+  width: auto;
+}
+
+@keyframes selection-toolbar-slide-up {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+}
+
+.selection-toolbar-floating .selection-toolbar {
+  background: linear-gradient(135deg, rgba(30, 30, 35, 0.98), rgba(25, 25, 30, 0.98));
+  border: 1px solid rgba(201, 162, 39, 0.4);
+  border-radius: 16px;
+  padding: 16px 20px;
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.5),
+    0 0 0 1px rgba(255, 255, 255, 0.05),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(20px) saturate(180%);
+  min-width: 320px;
+}
+
+.selection-toolbar-floating .selection-toolbar__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.selection-toolbar-floating .selection-count {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-gold);
+}
+
+.selection-toolbar-floating .selection-toolbar__actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.selection-toolbar-floating .selection-toolbar .btn {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: var(--color-text);
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.selection-toolbar-floating .selection-toolbar .btn:hover {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.25);
+  transform: translateY(-1px);
+}
+
+.selection-toolbar-floating .selection-toolbar .btn--primary {
+  background: rgba(201, 162, 39, 0.2);
+  border-color: rgba(201, 162, 39, 0.5);
+  color: var(--color-gold);
+}
+
+.selection-toolbar-floating .selection-toolbar .btn--primary:hover {
+  background: rgba(201, 162, 39, 0.3);
+}
+
+.selection-toolbar-floating .selection-toolbar .btn--danger {
+  background: rgba(220, 38, 38, 0.15);
+  border-color: rgba(220, 38, 38, 0.4);
+  color: #fca5a5;
+}
+
+.selection-toolbar-floating .selection-toolbar .btn--danger:hover {
+  background: rgba(220, 38, 38, 0.25);
+}
+
+.selection-toolbar-floating .duplicate-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+  padding-top: 8px;
+}
+
+.selection-toolbar-floating .duplicate-options__title {
+  width: 100%;
+  text-align: center;
+  font-size: 12px;
+  color: var(--color-text-muted);
+  margin-bottom: 4px;
+}
+
+.selection-toolbar-floating .day-picker {
+  margin-top: 12px;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 12px;
+  padding: 12px;
+}
+
+/* Light mode */
+.pure-calendar-view--light .selection-toolbar-floating .selection-toolbar {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.98), rgba(250, 250, 252, 0.98));
+  border-color: rgba(37, 99, 235, 0.3);
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.2),
+    0 0 0 1px rgba(0, 0, 0, 0.05),
+    inset 0 1px 0 rgba(255, 255, 255, 0.5);
+}
+
+.pure-calendar-view--light .selection-toolbar-floating .selection-count {
+  color: #2563eb;
+}
+
+.pure-calendar-view--light .selection-toolbar-floating .selection-toolbar .btn {
+  background: rgba(0, 0, 0, 0.05);
+  border-color: rgba(0, 0, 0, 0.15);
+  color: #1a1a1a;
+}
+
+.pure-calendar-view--light .selection-toolbar-floating .selection-toolbar .btn:hover {
+  background: rgba(0, 0, 0, 0.1);
+}
+
+.pure-calendar-view--light .selection-toolbar-floating .selection-toolbar .btn--primary {
+  background: rgba(37, 99, 235, 0.15);
+  border-color: rgba(37, 99, 235, 0.4);
+  color: #2563eb;
+}
+
+.pure-calendar-view--light .selection-toolbar-floating .selection-toolbar .btn--danger {
+  background: rgba(220, 38, 38, 0.1);
+  border-color: rgba(220, 38, 38, 0.3);
+  color: #dc2626;
+}

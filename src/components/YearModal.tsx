@@ -6,7 +6,7 @@
 import { useSelector, useDispatch } from 'react-redux';
 import { memo, useMemo } from 'react';
 import type { RootState } from '../store';
-import { navigateToMonth, setPrintMode, navigateToPrevYear, navigateToNextYear } from '../store';
+import { navigateToMonth, setPrintMode, navigateToPrevYear, navigateToNextYear, setView } from '../store';
 import { HEKA_MONTHS, getCivilStartOfHekaMonth, getDaysInMonth } from '../services/calendarService';
 import { ARC_NAMES, HekaMonthIndex } from '../types';
 
@@ -26,11 +26,13 @@ export const YearModal: React.FC<YearModalProps> = ({ isOpen, onClose }) => {
   
   const handlePrintYear = () => {
     dispatch(setPrintMode('year'));
+    dispatch(setView('print-preview'));
     onClose();
   };
   
   const handleMonthClick = (monthIndex: HekaMonthIndex) => {
     dispatch(navigateToMonth({ year: viewDate.year, month: monthIndex }));
+    dispatch(setView('month'));
     onClose();
   };
   

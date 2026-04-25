@@ -1,0 +1,353 @@
+/**
+ * Calendar AI Coach - Floating overlay styles
+ */
+
+.calendar-ai-coach {
+  position: fixed;
+  right: 16px;
+  bottom: 16px;
+  z-index: 9999;
+  font-family: 'Inter', system-ui, sans-serif;
+  animation: coach-enter 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: transform;
+}
+
+.calendar-ai-coach.dragging {
+  cursor: grabbing;
+}
+
+@keyframes coach-enter {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Minimized pill */
+.coach-pill {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  border: 1px solid rgba(212, 175, 55, 0.35);
+  border-radius: 999px;
+  color: #f8f7f5;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: grab;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.35);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.calendar-ai-coach.dragging .coach-pill {
+  cursor: grabbing;
+}
+
+.coach-pill:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.45);
+}
+
+.coach-pill-icon {
+  font-size: 16px;
+}
+
+.coach-pill-text {
+  background: linear-gradient(90deg, #f8f7f5, #e9d5ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Expanded card */
+.coach-card {
+  width: 320px;
+  max-width: calc(100vw - 32px);
+  background: rgba(15, 15, 20, 0.92);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+  overflow: hidden;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.coach-card.generating {
+  animation: generating-pulse 2s ease-in-out infinite;
+}
+
+@keyframes generating-pulse {
+  0%, 100% {
+    border-color: rgba(255, 255, 255, 0.1);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+  }
+  50% {
+    border-color: rgba(212, 175, 55, 0.35);
+    box-shadow: 0 20px 60px rgba(212, 175, 55, 0.12);
+  }
+}
+
+.coach-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 14px;
+  background: linear-gradient(90deg, rgba(212, 175, 55, 0.1), rgba(157, 78, 221, 0.1));
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  cursor: grab;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.calendar-ai-coach.dragging .coach-header {
+  cursor: grabbing;
+}
+
+.coach-avatar {
+  position: relative;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.08);
+  font-size: 14px;
+}
+
+.coach-avatar-pulse {
+  position: absolute;
+  inset: -2px;
+  border-radius: 50%;
+  border: 1px solid rgba(212, 175, 55, 0.4);
+  animation: avatar-pulse 2s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes avatar-pulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 0.6;
+  }
+  50% {
+    transform: scale(1.2);
+    opacity: 0.2;
+  }
+}
+
+.coach-title {
+  flex: 1;
+  font-size: 13px;
+  font-weight: 600;
+  color: #f8f7f5;
+  letter-spacing: 0.02em;
+}
+
+.coach-controls {
+  display: flex;
+  gap: 4px;
+}
+
+.coach-btn {
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 6px;
+  color: #a1a1aa;
+  font-size: 14px;
+  line-height: 1;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.coach-btn:hover {
+  background: rgba(255, 255, 255, 0.12);
+  color: #f8f7f5;
+}
+
+.coach-body {
+  padding: 14px;
+  min-height: 80px;
+}
+
+.coach-typing {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 0;
+}
+
+.coach-typing-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: rgba(212, 175, 55, 0.7);
+  animation: typing-bounce 1.4s infinite ease-in-out both;
+}
+
+.coach-typing-dot:nth-child(1) {
+  animation-delay: -0.32s;
+}
+.coach-typing-dot:nth-child(2) {
+  animation-delay: -0.16s;
+}
+
+@keyframes typing-bounce {
+  0%, 80%, 100% {
+    transform: scale(0.6);
+    opacity: 0.4;
+  }
+  40% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.coach-message {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+}
+
+.coach-message-icon {
+  font-size: 18px;
+  margin-top: 2px;
+  flex-shrink: 0;
+}
+
+.coach-message p {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.55;
+  color: #e4e4e7;
+}
+
+.coach-action {
+  width: 100%;
+  margin-top: 12px;
+  padding: 10px;
+  background: linear-gradient(90deg, rgba(212, 175, 55, 0.15), rgba(157, 78, 221, 0.15));
+  border: 1px solid rgba(212, 175, 55, 0.25);
+  border-radius: 10px;
+  color: #f8f7f5;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.coach-action:hover {
+  background: linear-gradient(90deg, rgba(212, 175, 55, 0.22), rgba(157, 78, 221, 0.22));
+  transform: translateY(-1px);
+}
+
+.coach-empty {
+  margin: 0;
+  font-size: 13px;
+  color: #71717a;
+  font-style: italic;
+  text-align: center;
+  padding: 12px 0;
+}
+
+.coach-footer {
+  display: flex;
+  gap: 8px;
+  padding: 10px 14px;
+  background: rgba(0, 0, 0, 0.2);
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.coach-footer-btn {
+  flex: 1;
+  padding: 8px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
+  color: #d4d4d8;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.coach-footer-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #f8f7f5;
+}
+
+.coach-footer-btn--secondary {
+  background: transparent;
+  border-color: transparent;
+  color: #71717a;
+}
+
+.coach-footer-btn--secondary:hover {
+  background: rgba(255, 255, 255, 0.04);
+  color: #a1a1aa;
+}
+
+/* Link styling in messages */
+.coach-message a {
+  color: #d4af37;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.coach-message a:hover {
+  color: #f0d878;
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .calendar-ai-coach {
+    animation: none;
+  }
+  .coach-avatar-pulse {
+    animation: none;
+    opacity: 0.6;
+  }
+  .coach-card.generating {
+    animation: none;
+    border-color: rgba(212, 175, 55, 0.35);
+  }
+  .coach-typing-dot {
+    animation: none;
+    opacity: 0.7;
+  }
+  .coach-pill {
+    transition: none;
+  }
+  .coach-action {
+    transition: none;
+  }
+  .coach-btn {
+    transition: none;
+  }
+}
+
+/* Mobile adjustments */
+@media (max-width: 600px) {
+  .calendar-ai-coach {
+    right: 12px;
+    bottom: 12px;
+  }
+
+  .coach-card {
+    width: calc(100vw - 24px);
+    max-width: 360px;
+  }
+}

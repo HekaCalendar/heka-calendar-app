@@ -1,43 +1,39 @@
-// GLOBAL ERROR HANDLER - Must be first to catch WASM errors before React
+// TEMPORARY WASM INIT ERROR SUPPRESSOR
+// Only active for the first 10 seconds to catch noisy swisseph-wasm init failures.
+// Real errors are still logged; this just prevents React from crashing during WASM bootstrap.
 (function() {
+  const INIT_WINDOW_MS = 10000;
+  const startTime = Date.now();
   const originalOnError = window.onerror;
-  let wasmErrorCount = 0;
-  const MAX_WASM_ERRORS = 5;
+  
+  function isWASMInitNoise(msg: string, error?: Error): boolean {
+    const msgStr = String(msg).toLowerCase();
+    const errMsg = error?.message?.toLowerCase() || '';
+    const isWASMRelated = msgStr.includes('swisseph') || errMsg.includes('swisseph') || msgStr.includes('wasm') || errMsg.includes('wasm');
+    const isTypicalInitNoise = msgStr.includes('is not a function') || msgStr.includes('cannot read properties') || msgStr.includes('module');
+    return isWASMRelated && isTypicalInitNoise;
+  }
   
   window.onerror = function(msg, url, line, col, error) {
-    const msgStr = String(msg);
-    
-    // Suppress WASM initialization errors
-    if (msgStr.includes('is not a function') || 
-        msgStr.includes('WASM') || 
-        msgStr.includes('swisseph') ||
-        (error && error.message && (
-          error.message.includes('is not a function') ||
-          error.message.includes('WASM')
-        ))) {
-      wasmErrorCount++;
-      if (wasmErrorCount <= MAX_WASM_ERRORS) {
-        console.warn('[GLOBAL ERROR HANDLER] Suppressed WASM error:', msgStr.substring(0, 100));
-      }
-      return true; // Completely suppress the error
+    if (Date.now() - startTime < INIT_WINDOW_MS && isWASMInitNoise(String(msg), error as Error)) {
+      console.warn('[WASM Init] Non-fatal bootstrap noise suppressed:', msg);
+      return true;
     }
-    
-    // Call original handler for other errors
     if (originalOnError) {
       return originalOnError(msg, url, line, col, error);
     }
     return false;
   };
   
-  // Also catch unhandled promise rejections
   window.addEventListener('unhandledrejection', function(event) {
-    const msg = String(event.reason);
-    if (msg.includes('is not a function') || msg.includes('WASM') || msg.includes('swisseph')) {
-      event.preventDefault();
-      event.stopPropagation();
-      console.warn('[GLOBAL ERROR HANDLER] Suppressed WASM promise rejection');
+    if (Date.now() - startTime < INIT_WINDOW_MS) {
+      const msg = String(event.reason).toLowerCase();
+      if ((msg.includes('swisseph') || msg.includes('wasm')) && msg.includes('is not a function')) {
+        console.warn('[WASM Init] Non-fatal promise rejection suppressed:', event.reason);
+        event.preventDefault();
+      }
     }
-  }, true);
+  });
 })();
 
 import React from 'react';
@@ -46,9 +42,50 @@ import { App } from './components/App';
 import { onAuthChange, isFirebaseConfigured } from './services/firebase';
 import { store } from './store';
 import { setAuthenticated, setUnauthenticated } from './store';
+import { attachPlannerListener, detachPlannerListener } from './services/plannerService';
 import { initializeSwissEphemeris } from './astrology/services/swiss-ephemeris/engine';
 
-const APP_VERSION = '2.2.0';
+// Defensive console sanitizer: redact API keys from all log output in native builds
+(function () {
+  if (typeof window === 'undefined') return;
+  const isNative = (window as any).Capacitor?.isNative;
+  if (!isNative) return;
+
+  const SENSITIVE_PATTERNS = [
+    /sk-[a-zA-Z0-9]{48,}/g,
+    /sk-proj-[a-zA-Z0-9_-]{100,}/g,
+  ];
+
+  function sanitize(args: any[]): any[] {
+    return args.map((arg) => {
+      if (typeof arg === 'string') {
+        return arg.replace(SENSITIVE_PATTERNS[0], '[REDACTED]').replace(SENSITIVE_PATTERNS[1], '[REDACTED]');
+      }
+      if (typeof arg === 'object' && arg !== null) {
+        try {
+          const str = JSON.stringify(arg);
+          const redacted = str.replace(SENSITIVE_PATTERNS[0], '[REDACTED]').replace(SENSITIVE_PATTERNS[1], '[REDACTED]');
+          return JSON.parse(redacted);
+        } catch {
+          return arg;
+        }
+      }
+      return arg;
+    });
+  }
+
+  const methods: (keyof Console)[] = ['log', 'info', 'warn', 'error', 'debug'];
+  methods.forEach((method) => {
+    const original = (console as any)[method];
+    if (typeof original === 'function') {
+      (console as any)[method] = function (...args: any[]) {
+        return original.apply(console, sanitize(args));
+      };
+    }
+  });
+})();
+
+const APP_VERSION = '2.2.1';
 const BUILD_TIME = Date.now().toString();
 
 console.log('[HEKA] Version:', APP_VERSION, 'Build:', BUILD_TIME);
@@ -114,9 +151,11 @@ if (isFirebaseConfigured()) {
         displayName: user.displayName,
         photoURL: user.photoURL,
       }));
+      attachPlannerListener();
       console.log('[HEKA] User authenticated:', user.email);
     } else {
       store.dispatch(setUnauthenticated());
+      detachPlannerListener();
       console.log('[HEKA] User not authenticated');
     }
   });
@@ -189,6 +228,7 @@ if (root) {
     safeLocalStorageRemove('heka-tutorial-state-v1');
     safeLocalStorageRemove('heka-tutorial-state-v2');
     safeLocalStorageRemove('heka-tutorial-analytics-v2');
+    safeLocalStorageRemove('heka-tutorial-v3');
     window.location.reload();
   },
   resetTutorial: () => {
@@ -196,6 +236,7 @@ if (root) {
     safeLocalStorageRemove('heka-tutorial-state-v2');
     safeLocalStorageRemove('heka-tutorial-analytics-v2');
     safeLocalStorageRemove('heka-tutorial-data-version');
+    safeLocalStorageRemove('heka-tutorial-v3');
     console.log('[HEKA] Tutorial state cleared. Refresh to see onboarding.');
     window.location.reload();
   },

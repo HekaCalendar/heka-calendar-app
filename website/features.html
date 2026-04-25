@@ -4,7 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Features | HEKA</title>
-    <meta name="description" content="HEKA Calendar features. A complete timekeeping system.">
+    <meta name="description" content="HEKA Calendar features. AI Coach, Cosmic Circle, Stars Hub, Oracle Journal, and the 13-month calendar.">
+    <link rel="icon" type="image/png" href="../icon-192.png">
+    <meta property="og:title" content="Features | HEKA Calendar">
+    <meta property="og:description" content="AI Coach, Cosmic Circle, Stars Hub, Oracle Journal, and the 13-month calendar designed for clarity.">
+    <meta property="og:type" content="website">
     
     <link rel="stylesheet" href="assets/css/sacred.css">
     <style>
@@ -251,7 +255,7 @@
     <nav class="navbar">
         <div class="container navbar-inner">
             <a href="index.html" class="navbar-brand">
-                <div class="brand-symbol">☉</div>
+                <div class="brand-symbol symbol-sun"></div>
                 <span class="brand-text">HEKA</span>
             </a>
             <button class="navbar-toggle" onclick="toggleNav()" aria-label="Toggle navigation">
@@ -266,7 +270,7 @@
                 <a href="harmony.html" class="navbar-link">Harmony</a>
                 <a href="features.html" class="navbar-link">Features</a>
                 <a href="temporal.html" class="navbar-link">Temporal</a>
-                <a href="index.html#download" class="navbar-cta" style="border-color: var(--copper); color: var(--copper);" style="border-color: var(--copper); color: var(--copper);">Download</a>
+                <a href="index.html#download" class="navbar-cta" style="border-color: var(--copper); color: var(--copper);">Download</a>
             </div>
         </div>
     </nav>
@@ -293,7 +297,7 @@
                     <span class="feature-tag">Foundation</span>
                     <h2 class="feature-title-large">The 13-Month Calendar</h2>
                     <p class="feature-desc-large">
-                        The core HEKA experience. Thirteen months of twenty-eight days. Three arcs. March bears the correction. Civil dates overlay for coordination.
+                        The core HEKA experience. Thirteen months. Twelve have twenty-eight days. March bears the correction. Three arcs. Civil dates overlay for coordination.
                     </p>
                     <ul class="feature-list-clean">
                         <li>Year view with all thirteen months</li>
@@ -392,6 +396,51 @@
                     <h3 class="feature-tile-title">Multiple Profiles</h3>
                     <p class="feature-tile-desc">Store charts for family and friends. Compare transits. All data stays on your device.</p>
                 </div>
+                <div class="feature-tile card-sapphire category-stars">
+                    <span class="feature-tile-icon" style="color: #3b82f6; font-size: 3rem;">🤖</span>
+                    <h3 class="feature-tile-title">AI-Enhanced Readings</h3>
+                    <p class="feature-tile-desc">Bring your own API key for personalized, real-time astrological insights powered by modern LLMs.</p>
+                </div>
+            </div>
+
+            <!-- Main Feature: AI Coach -->
+            <div class="feature-showcase">
+                <div class="feature-visual-side">
+                    <span class="feature-icon-large" style="font-size: 5rem;">🔮</span>
+                </div>
+                <div class="feature-content-side">
+                    <span class="feature-tag">Intelligence</span>
+                    <h2 class="feature-title-large">HEKA AI Coach</h2>
+                    <p class="feature-desc-large">
+                        A mystical, intelligent oracle that lives in your calendar. It reads celestial weather, your tasks, your journal, and the turning of seasons — then speaks in the voice of the stars.
+                    </p>
+                    <ul class="feature-list-clean">
+                        <li>Provider-flexible: Groq, OpenAI, Anthropic, or local Ollama</li>
+                        <li>Zone-aware: different guidance in Calendar, Stars, Journal, Circle</li>
+                        <li>Remembers your journey — builds continuity across sessions</li>
+                        <li>Celebrates streaks, grounds stress, never repeats itself</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Main Feature: Cosmic Circle -->
+            <div class="feature-showcase">
+                <div class="feature-content-side">
+                    <span class="feature-tag">Social</span>
+                    <h2 class="feature-title-large">Cosmic Circle</h2>
+                    <p class="feature-desc-large">
+                        Invite friends into your orbit. Share task rituals. Send celestial greetings. Chat through cosmic channels. The Circle turns a solitary calendar into a shared constellation.
+                    </p>
+                    <ul class="feature-list-clean">
+                        <li>Friend requests with pending/accept flow</li>
+                        <li>Share task rituals with astrological timing</li>
+                        <li>Celestial chat channels</li>
+                        <li>Real-time presence and notifications</li>
+                    </ul>
+                </div>
+                <div class="feature-visual-side">
+                    <span class="feature-icon-large" style="font-size: 5rem;">🌌</span>
+                </div>
             </div>
 
             <!-- Main Feature: Print -->
@@ -440,7 +489,20 @@
                 <div class="feature-tile">
                     <span class="feature-tile-icon symbol-lightning"></span>
                     <h3 class="feature-tile-title">SYNC / TRUE</h3>
-                    <p class="feature-tile-desc">Choose coordination with Gregorian or pure astronomical precision. Switch anytime.</p>
+                    <p class="feature-tile-desc">Two ways to calculate the year. Two ways to read the sky. Switch anytime without losing your data.</p>
+                    <div style="margin-top: 16px; text-align: left;">
+                        <div style="padding: 12px; background: rgba(59, 130, 246, 0.05); border: 1px solid rgba(59, 130, 246, 0.15); border-radius: 8px; margin-bottom: 8px;">
+                            <div style="font-family: var(--font-ritual); font-size: 0.65rem; letter-spacing: 0.15em; color: #3b82f6; margin-bottom: 4px;">SYNC MODE — The Bridge</div>
+                            <div style="font-size: 0.8rem; color: var(--light-secondary); line-height: 1.5;">Gregorian-aligned. Tropical zodiac. 12-sign astrology.</div>
+                        </div>
+                        <div style="padding: 12px; background: rgba(212, 175, 55, 0.05); border: 1px solid rgba(212, 175, 55, 0.15); border-radius: 8px;">
+                            <div style="font-family: var(--font-ritual); font-size: 0.65rem; letter-spacing: 0.15em; color: var(--gold); margin-bottom: 4px;">TRUE MODE — The Deep Current</div>
+                            <div style="font-size: 0.8rem; color: var(--light-secondary); line-height: 1.5;">Astronomical year. Sidereal zodiac. 27 Lunar Mansions.</div>
+                        </div>
+                    </div>
+                    <p style="margin-top: 12px; font-size: 0.8rem;">
+                        <a href="precision.html" style="color: var(--copper); text-decoration: none; border-bottom: 1px solid var(--copper);">See the mathematics →</a>
+                    </p>
                 </div>
                 <div class="feature-tile">
                     <span class="feature-tile-icon symbol-lock"></span>
@@ -452,6 +514,16 @@
                     <h3 class="feature-tile-title">Offline</h3>
                     <p class="feature-tile-desc">Full functionality without internet. All calculations happen on your device.</p>
                 </div>
+                <div class="feature-tile">
+                    <span class="feature-tile-icon" style="font-size: 3rem;">🔥</span>
+                    <h3 class="feature-tile-title">Streaks & Achievements</h3>
+                    <p class="feature-tile-desc">Gamified timekeeping. Build consistency. Earn achievements. Your calendar becomes a game you want to play.</p>
+                </div>
+                <div class="feature-tile">
+                    <span class="feature-tile-icon" style="font-size: 3rem;">📜</span>
+                    <h3 class="feature-tile-title">Task Rituals</h3>
+                    <p class="feature-tile-desc">Create shareable tasks tied to celestial moments. The Planner chooses the best astrological time to act.</p>
+                </div>
             </div>
         </div>
     </main>
@@ -461,7 +533,7 @@
             <div class="footer-grid">
                 <div>
                     <div class="footer-sigil">
-                        <div class="footer-sigil-symbol">☉</div>
+                        <div class="footer-sigil-symbol symbol-sun"></div>
                         <span class="footer-sigil-text">HEKA</span>
                     </div>
                     <p class="footer-mantra">

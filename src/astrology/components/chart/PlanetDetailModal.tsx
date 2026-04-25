@@ -41,6 +41,7 @@ const SIGN_SYMBOLS: Record<string, string> = {
   aries: '♈', taurus: '♉', gemini: '♊', cancer: '♋',
   leo: '♌', virgo: '♍', libra: '♎', scorpio: '♏',
   sagittarius: '♐', capricorn: '♑', aquarius: '♒', pisces: '♓',
+  ophiuchus: '⛎',
 };
 
 type TabType = 'essence' | 'shadow' | 'growth' | 'famous';
@@ -261,7 +262,7 @@ export const PlanetDetailModal: React.FC<PlanetDetailModalProps> = ({
         {/* Footer */}
         <div style={styles.footer}>
           <span style={styles.footerText}>
-            {planetId.charAt(0).toUpperCase() + planetId.slice(1)} at {Math.floor(planet.longitude % 30)}° {planet.sign}
+            {planetId.charAt(0).toUpperCase() + planetId.slice(1)} at {Math.floor(planet.degreeInSign ?? 0)}° {planet.sign}
             {planet.isRetrograde && ' ℞'}
           </span>
         </div>

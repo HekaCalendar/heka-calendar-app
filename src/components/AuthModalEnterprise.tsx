@@ -8,16 +8,23 @@ import { useDispatch, useSelector } from 'react-redux';
 import type { RootState } from '../store';
 import { setAuthenticated, setUnauthenticated, setSyncing, setSyncError, setLastSync } from '../store';
 import { enterpriseAuth } from '../services/authEnterprise';
+import {
+  getKnownAccounts,
+  saveKnownAccount,
+  removeKnownAccount,
+  type KnownAccount,
+} from '../services/accountManager';
 import { isFirebaseConfigured } from '../services/firebase';
 import { syncToCloud, loadFromCloud } from '../services/firebase';
 import { tutorialService } from '../services/tutorialService';
+import { ONBOARDING_V2_STORAGE_KEY, ONBOARDING_V2_VERSION_KEY } from './onboarding/v2';
 
 interface AuthModalProps {
   isOpen: boolean;
   onClose: () => void;
 }
 
-type AuthView = 'login' | 'signup' | 'forgot' | 'profile' | 'security' | 'audit' | 'delete-account' | 'not-configured';
+type AuthView = 'login' | 'signup' | 'forgot' | 'profile' | 'security' | 'delete-account' | 'account-picker' | 'not-configured';
 
 // Password strength indicator
 const PasswordStrengthMeter = ({ password }: { password: string }) => {
@@ -61,32 +68,15 @@ const PasswordStrengthMeter = ({ password }: { password: string }) => {
   );
 };
 
-// Session info display
-const SessionInfo = () => {
-  const session = enterpriseAuth.getSessionInfo();
-  if (!session) return null;
-
-  const duration = Math.floor((Date.now() - new Date(session.startedAt).getTime()) / 60000);
-
-  return (
-    <div className="session-info">
-      <div className="session-info__icon">🔒</div>
-      <div className="session-info__details">
-        <div className="session-info__status">Session Active</div>
-        <div className="session-info__meta">
-          Duration: {duration}m • {session.deviceInfo}
-        </div>
-      </div>
-    </div>
-  );
-};
-
 export const AuthModalEnterprise: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
   const dispatch = useDispatch();
   const auth = useSelector((state: RootState) => state.calendar.auth);
   const calendarState = useSelector((state: RootState) => state.calendar);
   
-  const [view, setView] = useState<AuthView>(auth.isAuthenticated ? 'profile' : 'login');
+  const [view, setView] = useState<AuthView>(
+    auth.isAuthenticated ? 'profile' : (getKnownAccounts().length > 0 ? 'account-picker' : 'login')
+  );
+  const [knownAccounts, setKnownAccounts] = useState<KnownAccount[]>(() => getKnownAccounts());
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
@@ -98,20 +88,22 @@ export const AuthModalEnterprise: React.FC<AuthModalProps> = ({ isOpen, onClose 
   const [showPassword, setShowPassword] = useState(false);
   const [showNewPassword, setShowNewPassword] = useState(false);
   const [passwordStrength, setPasswordStrength] = useState({ score: 0, isValid: false });
-  const [auditLog, setAuditLog] = useState<any[]>([]);
   const [deleteConfirm, setDeleteConfirm] = useState('');
   
   const modalRef = useRef<HTMLDivElement>(null);
+  const modalContentRef = useRef<HTMLDivElement>(null);
   const firebaseConfigured = isFirebaseConfigured();
 
   // Update view based on auth state
   useEffect(() => {
     if (!firebaseConfigured) {
       setView('not-configured');
-    } else if (auth.isAuthenticated && view !== 'profile' && view !== 'security' && view !== 'audit') {
+    } else if (auth.isAuthenticated && view !== 'profile' && view !== 'security') {
       setView('profile');
-    } else if (!auth.isAuthenticated && ['profile', 'security', 'audit'].includes(view)) {
-      setView('login');
+    } else if (!auth.isAuthenticated && ['profile', 'security'].includes(view)) {
+      const accounts = getKnownAccounts();
+      setKnownAccounts(accounts);
+      setView(accounts.length > 0 ? 'account-picker' : 'login');
     }
   }, [auth.isAuthenticated, firebaseConfigured, view]);
 
@@ -193,7 +185,15 @@ export const AuthModalEnterprise: React.FC<AuthModalProps> = ({ isOpen, onClose 
     setIsLoading(true);
     
     try {
-      await enterpriseAuth.logIn(email, password);
+      const credential = await enterpriseAuth.logIn(email, password);
+      if (credential.user) {
+        saveKnownAccount({
+          uid: credential.user.uid,
+          email: credential.user.email || email,
+          displayName: credential.user.displayName,
+          photoURL: credential.user.photoURL,
+        });
+      }
       setSuccess('Welcome back!');
       setTimeout(() => {
         setView('profile');
@@ -220,7 +220,15 @@ export const AuthModalEnterprise: React.FC<AuthModalProps> = ({ isOpen, onClose 
     setIsLoading(true);
     
     try {
-      await enterpriseAuth.signUp(email, password, displayName);
+      const credential = await enterpriseAuth.signUp(email, password, displayName);
+      if (credential.user) {
+        saveKnownAccount({
+          uid: credential.user.uid,
+          email: credential.user.email || email,
+          displayName: credential.user.displayName || displayName,
+          photoURL: credential.user.photoURL,
+        });
+      }
       setSuccess('Account created successfully!');
       setTimeout(() => {
         setView('profile');
@@ -275,7 +283,10 @@ export const AuthModalEnterprise: React.FC<AuthModalProps> = ({ isOpen, onClose 
     setIsLoading(true);
     
     try {
+      const userEmail = auth.email;
       await enterpriseAuth.deleteAccount(password);
+      if (userEmail) removeKnownAccount(userEmail);
+      dispatch(setUnauthenticated());
       setSuccess('Account deleted successfully');
       setTimeout(() => {
         onClose();
@@ -305,8 +316,19 @@ export const AuthModalEnterprise: React.FC<AuthModalProps> = ({ isOpen, onClose 
   const handleLogout = async () => {
     setIsLoading(true);
     try {
+      // Remember this account so user can quickly log back in
+      if (auth.userId && auth.email) {
+        saveKnownAccount({
+          uid: auth.userId,
+          email: auth.email,
+          displayName: auth.displayName,
+          photoURL: auth.photoURL,
+        });
+      }
       await enterpriseAuth.signOut();
-      setView('login');
+      const accounts = getKnownAccounts();
+      setKnownAccounts(accounts);
+      setView(accounts.length > 0 ? 'account-picker' : 'login');
     } catch (err: any) {
       setError(err.message);
     } finally {
@@ -320,11 +342,6 @@ export const AuthModalEnterprise: React.FC<AuthModalProps> = ({ isOpen, onClose 
     }
   };
 
-  const loadAuditLog = () => {
-    setAuditLog(enterpriseAuth.getAuditLog());
-    setView('audit');
-  };
-
   const switchView = (newView: AuthView) => {
     setView(newView);
     setError(null);
@@ -333,6 +350,10 @@ export const AuthModalEnterprise: React.FC<AuthModalProps> = ({ isOpen, onClose 
     setNewPassword('');
     setConfirmPassword('');
     setDeleteConfirm('');
+    // Scroll modal back to top so new views are visible
+    if (modalContentRef.current) {
+      modalContentRef.current.scrollTop = 0;
+    }
   };
 
   const checkPasswordStrength = (pwd: string) => {
@@ -344,7 +365,7 @@ export const AuthModalEnterprise: React.FC<AuthModalProps> = ({ isOpen, onClose 
 
   return (
     <div className="modal-overlay" onClick={onClose} ref={modalRef}>
-      <div className="auth-modal auth-modal--enterprise" onClick={(e) => e.stopPropagation()}>
+      <div className="auth-modal auth-modal--enterprise" onClick={(e) => e.stopPropagation()} ref={modalContentRef}>
         {/* Header */}
         <div className="auth-modal__header">
           <div className="auth-modal__brand">
@@ -356,8 +377,8 @@ export const AuthModalEnterprise: React.FC<AuthModalProps> = ({ isOpen, onClose 
                 {view === 'forgot' && 'Reset Password'}
                 {view === 'profile' && 'Account'}
                 {view === 'security' && 'Security Settings'}
-                {view === 'audit' && 'Security Audit'}
                 {view === 'delete-account' && 'Delete Account'}
+                {view === 'account-picker' && 'Welcome Back'}
                 {view === 'not-configured' && 'Cloud Sync Setup'}
               </h2>
               {auth.isAuthenticated && view === 'profile' && (
@@ -381,6 +402,69 @@ export const AuthModalEnterprise: React.FC<AuthModalProps> = ({ isOpen, onClose 
             <div className="auth-alert auth-alert--success">
               <span className="auth-alert__icon">✓</span>
               <span>{success}</span>
+            </div>
+          )}
+
+          {/* Account Picker View */}
+          {view === 'account-picker' && (
+            <div className="auth-account-picker">
+              <p className="auth-account-picker__subtitle">
+                Select an account to sign in
+              </p>
+              <div className="auth-account-picker__list">
+                {knownAccounts.map((account) => (
+                  <div key={account.uid} className="auth-account-picker__item">
+                    <div className="auth-account-picker__avatar">
+                      {account.displayName?.charAt(0) || account.email?.charAt(0) || '?'}
+                    </div>
+                    <div className="auth-account-picker__info">
+                      <div className="auth-account-picker__name">
+                        {account.displayName || 'User'}
+                      </div>
+                      <div className="auth-account-picker__email">
+                        {account.email}
+                      </div>
+                    </div>
+                    <div className="auth-account-picker__actions">
+                      <button
+                        className="auth-account-picker__signin"
+                        onClick={() => {
+                          setEmail(account.email);
+                          switchView('login');
+                        }}
+                      >
+                        Sign in
+                      </button>
+                      <button
+                        className="auth-account-picker__remove"
+                        onClick={() => {
+                          removeKnownAccount(account.email);
+                          const remaining = getKnownAccounts();
+                          setKnownAccounts(remaining);
+                          if (remaining.length === 0) {
+                            setEmail('');
+                            switchView('login');
+                          }
+                        }}
+                        title="Forget this account"
+                      >
+                        ✕
+                      </button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+              <div className="auth-account-picker__footer">
+                <button
+                  className="auth-account-picker__add"
+                  onClick={() => {
+                    setEmail('');
+                    switchView('login');
+                  }}
+                >
+                  + Add account
+                </button>
+              </div>
             </div>
           )}
 
@@ -556,8 +640,6 @@ export const AuthModalEnterprise: React.FC<AuthModalProps> = ({ isOpen, onClose 
           {/* Profile View */}
           {view === 'profile' && auth.isAuthenticated && (
             <div className="auth-profile">
-              <SessionInfo />
-              
               <div className="auth-profile__user">
                 <div className="auth-profile__avatar">
                   {auth.displayName?.charAt(0) || auth.email?.charAt(0) || '?'}
@@ -601,20 +683,39 @@ export const AuthModalEnterprise: React.FC<AuthModalProps> = ({ isOpen, onClose 
                 <button className="auth-profile__menu-item" onClick={() => switchView('security')}>
                   <span>🔐</span> Security Settings
                 </button>
-                <button className="auth-profile__menu-item" onClick={loadAuditLog}>
-                  <span>📋</span> Security Audit Log
-                </button>
                 <button 
                   className="auth-profile__menu-item" 
                   onClick={() => {
+                    // Reset legacy tutorial
                     tutorialService.resetAllTutorials();
-                    tutorialService.startTutorial('elite-onboarding');
+                    // Reset v2 onboarding
+                    try {
+                      localStorage.removeItem(ONBOARDING_V2_STORAGE_KEY);
+                      localStorage.removeItem(ONBOARDING_V2_VERSION_KEY);
+                    } catch {
+                      // Non-fatal
+                    }
+                    // Reset v3 interactive tutorial
+                    try {
+                      localStorage.removeItem('heka-tutorial-v3');
+                    } catch {
+                      // Non-fatal
+                    }
                     onClose();
+                    // Reload to trigger new onboarding
+                    window.location.reload();
                   }}
                 >
                   <span>🎓</span> Restart Tutorial
                 </button>
-                <button className="auth-profile__menu-item auth-profile__menu-item--danger" onClick={() => switchView('delete-account')}>
+                <button 
+                  className="auth-profile__menu-item auth-profile__menu-item--danger" 
+                  onClick={() => {
+                    if (window.confirm('Are you sure you want to delete your account? This action cannot be undone.')) {
+                      switchView('delete-account');
+                    }
+                  }}
+                >
                   <span>🗑️</span> Delete Account
                 </button>
               </div>
@@ -708,40 +809,6 @@ export const AuthModalEnterprise: React.FC<AuthModalProps> = ({ isOpen, onClose 
                   {isLoading ? 'Updating...' : 'Change Password'}
                 </button>
               </form>
-            </div>
-          )}
-
-          {/* Audit Log View */}
-          {view === 'audit' && (
-            <div className="auth-audit">
-              <button className="auth-back" onClick={() => switchView('profile')}>
-                ← Back to Profile
-              </button>
-              
-              <h3 className="auth-audit__title">Security Audit Log</h3>
-              
-              <div className="auth-audit__list">
-                {auditLog.length === 0 ? (
-                  <p className="auth-audit__empty">No audit entries yet</p>
-                ) : (
-                  auditLog.slice().reverse().map((entry, idx) => (
-                    <div key={idx} className={`auth-audit__item ${entry.success ? '' : 'auth-audit__item--failed'}`}>
-                      <div className="auth-audit__action">
-                        <span className={`auth-audit__status ${entry.success ? 'success' : 'failed'}`}>
-                          {entry.success ? '✓' : '✗'}
-                        </span>
-                        {entry.action}
-                      </div>
-                      <div className="auth-audit__time">
-                        {new Date(entry.timestamp).toLocaleString()}
-                      </div>
-                      {entry.details && (
-                        <div className="auth-audit__details">{entry.details}</div>
-                      )}
-                    </div>
-                  ))
-                )}
-              </div>
             </div>
           )}
 

@@ -6,6 +6,19 @@
 export * from './diaryTypes';
 export { OracleEngine } from './oracleEngine';
 
+// Enhanced Insight Engine
+export {
+  EnhancedInsightEngine,
+  generateEnhancedInsight,
+} from './enhancedInsightEngine';
+
+export type {
+  EnhancedInsight,
+  EmotionalAnalysis,
+  CrisisIndicators,
+  ContentAnalysis,
+} from './enhancedInsightEngine';
+
 // Birth Chart Integration
 export {
   BirthChartIntegration,

@@ -1,4 +1,4 @@
-import { registerPlugin } from '@capacitor/core';
+import { registerPlugin, type PluginListenerHandle } from '@capacitor/core';
 
 export type PaperSize = 'A4' | 'A3' | 'Letter' | 'Legal' | 'Tabloid';
 export type Orientation = 'portrait' | 'landscape';
@@ -18,6 +18,7 @@ export interface PrintJob {
   template?: PrintTemplate;
   margins?: 'none' | 'minimal' | 'normal' | PrintMargins;
   filename?: string;
+  saveToDownloads?: boolean;
   metadata?: {
     title?: string;
     author?: string;
@@ -36,6 +37,10 @@ export interface HekaPrintPlugin {
   printPDF(options: { filePath: string; orientation?: Orientation; paperSize?: PaperSize }): Promise<void>;
   sharePDF(options: { filePath: string; filename?: string }): Promise<void>;
   openPDF(options: { filePath: string; filename?: string }): Promise<void>;
+  addListener(
+    eventName: 'pdfProgress',
+    listenerFunc: (event: { currentPage: number; totalPages: number; progress: number }) => void
+  ): PluginListenerHandle;
 }
 
 const HekaPrint = registerPlugin<HekaPrintPlugin>('HekaPrint');
@@ -61,9 +66,18 @@ export class PrintManager {
    * @param paperSize Paper size ('A4', 'A3', 'Letter', 'Legal')
    * @returns PDF file path and metadata
    */
-  static async generatePDF(pages: string[], orientation: Orientation = 'portrait', paperSize: PaperSize = 'A4'): Promise<PDFResult> {
-    console.log('[PrintManager] Generating PDF with', pages.length, 'pages', 'paperSize:', paperSize);
-    
+  static async generatePDF(
+    pages: string[],
+    orientation: Orientation = 'portrait',
+    paperSize: PaperSize = 'A4',
+    saveToDownloads: boolean = true,
+    onProgress?: (event: { currentPage: number; totalPages: number; progress: number }) => void
+  ): Promise<PDFResult> {
+    console.log('[PrintManager] Generating PDF with', pages.length, 'pages', 'paperSize:', paperSize, 'saveToDownloads:', saveToDownloads);
+    let listener: PluginListenerHandle | null = null;
+    if (onProgress) {
+      listener = HekaPrint.addListener('pdfProgress', onProgress);
+    }
     try {
       const result = await HekaPrint.generatePDF({
         pages,
@@ -71,14 +85,16 @@ export class PrintManager {
         orientation,
         template: 'calendar',
         margins: 'none',
-        filename: `HEKA_Calendar_${new Date().getFullYear()}`
+        filename: `HEKA_Calendar_${new Date().getFullYear()}`,
+        saveToDownloads
       });
-      
       console.log('[PrintManager] PDF generated:', result.filePath);
       return result;
     } catch (error) {
       console.error('[PrintManager] PDF generation failed:', error);
       throw error;
+    } finally {
+      listener?.remove();
     }
   }
 

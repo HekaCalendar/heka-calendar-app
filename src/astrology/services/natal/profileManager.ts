@@ -12,8 +12,9 @@
 import type { NatalChart, BirthData } from './natalChart';
 import { saveNatalChart, getNatalChart, deleteNatalChart, getDignity, getHouseFromLongitude } from './natalChart';
 import { calculateCurrentSky, calculateLocalHouses } from '../calculations/swissCalculations';
+import { birthDateTimeToUTC, setZodiacFrame, setSignCount } from '../swiss-ephemeris/engine';
 import { getSignFromLongitude, SIGN_ELEMENTS_13, SIGN_ELEMENTS } from '../../types/core';
-import { getZodiacSystemPreference, calculateElementalBalanceWithSystem, calculateModalityBalanceWithSystem } from './zodiacHelpers';
+import { getZodiacSystemPreference, getZodiacFramePreference, getSignCountPreference, calculateElementalBalanceWithSystem, calculateModalityBalanceWithSystem } from './zodiacHelpers';
 
 // ═══════════════════════════════════════════════════════════════════════════════
 // TYPES & INTERFACES
@@ -207,11 +208,13 @@ export class ProfileManager {
     const id = `profile-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
     const now = new Date();
 
-    // Get zodiac system preference
+    // Get zodiac preferences
     const zodiacSystem = getZodiacSystemPreference();
+    const zodiacFrame = getZodiacFramePreference();
+    const signCount = getSignCountPreference();
 
     // Calculate natal chart
-    const chart = await this.calculateNatalChart(id, name, birthData, zodiacSystem);
+    const chart = await this.calculateNatalChart(id, name, birthData, zodiacSystem, zodiacFrame, signCount);
 
     // Create profile
     const profile: Profile = {
@@ -264,7 +267,9 @@ export class ProfileManager {
     // If birth data changed, recalculate chart
     if (updates.birthData) {
       const zodiacSystem = getZodiacSystemPreference();
-      chart = await this.calculateNatalChart(id, updates.name || profile.name, updates.birthData, zodiacSystem);
+      const zodiacFrame = getZodiacFramePreference();
+      const signCount = getSignCountPreference();
+      chart = await this.calculateNatalChart(id, updates.name || profile.name, updates.birthData, zodiacSystem, zodiacFrame, signCount);
       // Update stored chart
       saveNatalChart(chart, id);
     } else {
@@ -398,7 +403,9 @@ export class ProfileManager {
 
   async recalculateChartWithZodiacSystem(
     profileId: string, 
-    zodiacSystem?: '12-sign' | '13-sign'
+    zodiacSystem?: '12-sign' | '13-sign' | 'sidereal',
+    zodiacFrame?: 'tropical' | 'sidereal',
+    signCount?: 12 | 13
   ): Promise<NatalChart | null> {
     
     const profile = this.profiles.get(profileId);
@@ -415,20 +422,27 @@ export class ProfileManager {
 
     console.log('[ProfileManager] Current chart birth data:', JSON.stringify(currentChart.birthData));
 
-    // Use provided zodiac system or fall back to preference
-    const targetSystem = zodiacSystem || getZodiacSystemPreference();
+    // Use provided split fields or fall back to preferences
+    const targetFrame = zodiacFrame || getZodiacFramePreference();
+    const targetCount = signCount || getSignCountPreference();
+    const targetSystem = zodiacSystem || (targetFrame === 'sidereal' ? 'sidereal' : targetCount === 13 ? '13-sign' : '12-sign');
     
-    if (currentChart.zodiacSystem === targetSystem) {
+    if (currentChart.zodiacSystem === targetSystem && (currentChart as any).zodiacFrame === targetFrame && (currentChart as any).signCount === targetCount) {
       console.log('[ProfileManager] Chart already using target system, skipping recalc');
       return currentChart;
     }
 
-    console.log('[ProfileManager] Recalculating chart with', targetSystem);
-    const newChart = await this.calculateNatalChart(profileId, profile.name, currentChart.birthData, targetSystem);
+    console.log('[ProfileManager] Recalculating chart with', targetFrame, targetCount);
+    const newChart = await this.calculateNatalChart(profileId, profile.name, currentChart.birthData, targetSystem, targetFrame, targetCount);
     console.log('[ProfileManager] New chart sun sign:', newChart.planets.sun?.sign);
     
     saveNatalChart(newChart, profileId);
     console.log('[ProfileManager] Chart saved to storage');
+
+    // Update profile timestamp since chart changed
+    const updated = { ...profile, updatedAt: new Date() };
+    this.profiles.set(profileId, updated);
+    this.persistProfiles();
     
     this.emit({ type: 'profile:updated', profileId, timestamp: new Date() });
     return newChart;
@@ -461,7 +475,7 @@ export class ProfileManager {
 
     this.unsetAllDefaults();
     
-    const updated = { ...profile, isDefault: true };
+    const updated = { ...profile, isDefault: true, updatedAt: new Date() };
     this.profiles.set(id, updated);
     this.persistProfiles();
 
@@ -475,7 +489,7 @@ export class ProfileManager {
   private unsetAllDefaults(): void {
     for (const [id, profile] of this.profiles) {
       if (profile.isDefault) {
-        this.profiles.set(id, { ...profile, isDefault: false });
+        this.profiles.set(id, { ...profile, isDefault: false, updatedAt: new Date() });
       }
     }
   }
@@ -488,8 +502,16 @@ export class ProfileManager {
     profileId: string,
     name: string,
     birthData: BirthData,
-    zodiacSystem: '12-sign' | '13-sign' = '12-sign'
+    zodiacSystem: '12-sign' | '13-sign' | 'sidereal' = '12-sign',
+    zodiacFrame?: 'tropical' | 'sidereal',
+    signCount?: 12 | 13
   ): Promise<NatalChart> {
+    // Resolve split fields from legacy param or use explicit values
+    const frame: 'tropical' | 'sidereal' = zodiacFrame ?? (zodiacSystem === 'sidereal' ? 'sidereal' : 'tropical');
+    const count: 12 | 13 = signCount ?? (zodiacSystem === '13-sign' ? 13 : 12);
+    // Set engine state so downstream calculations use correct frame/count
+    setZodiacFrame(frame);
+    setSignCount(count);
     // Validate birth data
     if (!birthData.date || !birthData.time) {
       throw new ChartCalculationError('Birth date and time are required');
@@ -499,8 +521,8 @@ export class ProfileManager {
     }
 
     console.log('[ProfileManager] Raw birth data:', JSON.stringify(birthData));
-    const date = new Date(`${birthData.date}T${birthData.time}`);
-    console.log('[ProfileManager] Parsed date:', date.toISOString(), 'from:', birthData.date, 'T', birthData.time);
+    const date = birthDateTimeToUTC(birthData.date, birthData.time, birthData.timezone);
+    console.log('[ProfileManager] Parsed UTC date:', date.toISOString(), 'from:', birthData.date, 'T', birthData.time, 'in', birthData.timezone);
     if (isNaN(date.getTime())) {
       throw new ChartCalculationError('Invalid birth date/time format');
     }
@@ -562,7 +584,7 @@ export class ProfileManager {
 
     // Transform to NatalPlanet with house placements
     const planets: Record<string, any> = {};
-    const use13Signs = zodiacSystem === '13-sign';
+    const use13Signs = count === 13;
     
     Object.entries(positions).forEach(([planetId, position]) => {
       console.log(`[ProfileManager] Processing ${planetId}:`, position ? 'valid' : 'undefined');
@@ -621,12 +643,14 @@ export class ProfileManager {
       birthData,
       planets,
       houses,
-      ascendant: planets.sun || firstPlanet || { longitude: 0, sign: 'aries', degree: 0 } as any,
-      midheaven: planets.sun || firstPlanet || { longitude: 0, sign: 'aries', degree: 0 } as any,
+      ascendant: houses.ascendant || firstPlanet || { longitude: 0, sign: 'aries', degree: 0 } as any,
+      midheaven: houses.mc || firstPlanet || { longitude: 0, sign: 'aries', degree: 0 } as any,
       elements,
       modalities,
       calculatedAt: new Date(),
-      zodiacSystem,
+      zodiacSystem: frame === 'sidereal' ? 'sidereal' : (count === 13 ? '13-sign' : '12-sign'),
+      zodiacFrame: frame,
+      signCount: count,
     };
 
     saveNatalChart(chart, profileId);
@@ -643,13 +667,14 @@ export class ProfileManager {
       aries: '🔥', taurus: '🌱', gemini: '💨', cancer: '🌊',
       leo: '👑', virgo: '🌾', libra: '⚖️', scorpio: '🦂',
       sagittarius: '🏹', capricorn: '🐐', aquarius: '⚡', pisces: '🐟',
+      ophiuchus: '⛎',
     };
     return avatars[sunSign || ''] || '✨';
   }
 
   private getSignFromLongitudeInternal(longitude: number): string {
-    // Use global zodiac system preference
-    const use13Signs = getZodiacSystemPreference() === '13-sign';
+    // Use global sign count preference
+    const use13Signs = getSignCountPreference() === 13;
     return getSignFromLongitude(longitude as any, use13Signs) as string;
   }
 
@@ -688,6 +713,12 @@ export class ProfileManager {
           // Check for duplicates
           if (this.profiles.has(profileData.id)) {
             errors.push(`Skipped duplicate profile: ${profileData.name}`);
+            continue;
+          }
+
+          // Enforce profile limit
+          if (this.profiles.size >= MAX_PROFILES) {
+            errors.push(`Skipped ${profileData.name}: maximum ${MAX_PROFILES} profiles reached`);
             continue;
           }
 
@@ -732,13 +763,15 @@ export class ProfileManager {
     localStorage.removeItem(STORAGE_KEYS.PROFILES);
     localStorage.removeItem(STORAGE_KEYS.ACTIVE_PROFILE);
     
-    // Clear individual chart data
+    // Clear individual chart data (iterate backwards to avoid skipping keys)
+    const keysToRemove: string[] = [];
     for (let i = 0; i < localStorage.length; i++) {
       const key = localStorage.key(i);
       if (key?.startsWith('natal-chart-')) {
-        localStorage.removeItem(key);
+        keysToRemove.push(key);
       }
     }
+    keysToRemove.forEach(key => localStorage.removeItem(key));
 
     this.emit({
       type: 'profile:deleted',

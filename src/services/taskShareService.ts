@@ -24,8 +24,8 @@ import {
   collection,
 } from 'firebase/firestore';
 import { db, getCurrentUser } from './firebase';
-import { scheduleNotification } from './notificationService';
-import { ensureUserProfile, getFriendshipId, getConversationId } from './friendsService';
+import { NotificationEngine } from './notificationEngine';
+import { ensureUserProfile, getFriendshipId, getConversationId, createInviteCode } from './friendsService';
 
 // ═══════════════════════════════════════════════════════════════════════════════
 // TYPES
@@ -41,7 +41,7 @@ export interface SharedTask {
   description: string;
   hekaDate?: { year: number; month: number; day: number };
   shareCode: string;
-  status: 'pending' | 'accepted' | 'declined';
+  status: 'pending' | 'accepted' | 'declined' | 'revoked';
   expiresAt: Timestamp;
   acceptedBy?: string;
   acceptedAt?: Timestamp;
@@ -126,8 +126,13 @@ export async function createShareableTask(
 
   await setDoc(shareRef, sharedTask);
 
-  // Generate share link WITH embedded data (so landing page works without Firestore auth)
-  const shareLink = generateTaskShareLink(shareCode, title, currentUser.displayName || undefined);
+  // Create a unified invite for the landing page
+  const inviteCode = await createInviteCode('task', shareCode);
+
+  // Generate share link using the unified invite landing page
+  const shareLink = inviteCode
+    ? generateInviteTaskShareLink(inviteCode, title, currentUser.displayName || undefined, shareCode)
+    : generateTaskShareLink(shareCode, title, currentUser.displayName || undefined);
 
   return {
     success: true,
@@ -164,6 +169,25 @@ export function generateTaskShareLink(shareCode: string, title?: string, creator
   if (creatorName) params.set('from', encodeURIComponent(creatorName));
   
   return `${WEB_LANDING_BASE}?${params.toString()}`;
+}
+
+/**
+ * Generate a share link using the unified invite landing page
+ * This redirects to /invite with task preview embedded
+ */
+export function generateInviteTaskShareLink(inviteCode: string, title?: string, creatorName?: string, taskCode?: string): string {
+  const INVITE_LANDING_BASE = 'https://heka-calendar-pro.vercel.app/invite';
+  const params = new URLSearchParams();
+  params.set('code', inviteCode);
+  params.set('type', 'task');
+  if (title) params.set('taskTitle', encodeURIComponent(title));
+  if (creatorName) {
+    params.set('from', encodeURIComponent(creatorName));
+  }
+  if (taskCode) {
+    params.set('taskCode', taskCode);
+  }
+  return `${INVITE_LANDING_BASE}?${params.toString()}`;
 }
 
 /**
@@ -311,68 +335,30 @@ export async function acceptSharedTask(
   let friendshipCreated = false;
 
   if (!friendshipSnap.exists()) {
-    // Create friendship
+    // Create friendship as PENDING (must be accepted before chat is enabled)
     batch.set(friendshipRef, {
       id: friendshipId,
       users: [currentUser.uid, sharedTask.creatorId],
-      status: 'accepted',
+      status: 'pending',
       initiatedBy: sharedTask.creatorId,
+      source: 'task_share',
+      linkedTaskId: taskRef.id,
       createdAt: serverTimestamp(),
-      acceptedAt: serverTimestamp(),
-    });
-
-    // Create conversation
-    const conversationId = getConversationId(currentUser.uid, sharedTask.creatorId);
-    batch.set(doc(db, 'conversations', conversationId), {
-      id: conversationId,
-      participants: [currentUser.uid, sharedTask.creatorId],
-      lastMessage: {
-        text: `📜 Task accepted: ${sharedTask.title}`,
-        senderId: 'system',
-        timestamp: serverTimestamp(),
-        type: 'system',
-      },
-      unreadCount: { [currentUser.uid]: 0, [sharedTask.creatorId]: 1 },
-      updatedAt: serverTimestamp(),
     });
 
     friendshipCreated = true;
-  } else {
-    // Just update unread count for existing conversation
-    const conversationId = getConversationId(currentUser.uid, sharedTask.creatorId);
-    batch.update(doc(db, 'conversations', conversationId), {
-      [`unreadCount.${sharedTask.creatorId}`]: 1,
-      lastMessage: {
-        text: `📜 Task accepted: ${sharedTask.title}`,
-        senderId: 'system',
-        timestamp: serverTimestamp(),
-        type: 'system',
-      },
-      updatedAt: serverTimestamp(),
-    });
   }
-
-  // Send message to conversation
-  const conversationId = getConversationId(currentUser.uid, sharedTask.creatorId);
-  const messageRef = doc(collection(db, 'messages', conversationId, 'messages'));
-  batch.set(messageRef, {
-    id: messageRef.id,
-    conversationId,
-    senderId: 'system',
-    text: `📜 Task accepted: ${sharedTask.title}`,
-    timestamp: Timestamp.now(),
-    type: 'task',
-    metadata: { taskId: taskRef.id },
-  });
 
   await batch.commit();
 
   // Notify creator
-  void scheduleNotification(
+  void NotificationEngine.notifyCore(
+    'task-completed',
+    'circle',
     'Task Accepted',
     `${currentUser.displayName || 'Someone'} accepted your task: ${sharedTask.title}`,
-    new Date(Date.now() + 1000),
-    { id: parseInt(taskRef.id.slice(-8), 16) || Math.floor(Math.random() * 100000) }
+    { taskId: taskRef.id },
+    parseInt(taskRef.id.slice(-8), 16) || undefined
   );
 
   return {
@@ -416,19 +402,34 @@ export async function declineSharedTask(
   });
 
   // Notify creator
-  void scheduleNotification(
+  void NotificationEngine.notifyCore(
+    'task-declined',
+    'circle',
     'Task Declined',
     `${currentUser.displayName || 'Someone'} declined your task: ${sharedTask.title}${reason ? ` - ${reason}` : ''}`,
-    new Date(Date.now() + 1000),
-    { id: Math.floor(Math.random() * 100000) }
+    { shareCode },
+    parseInt(shareCode.slice(-8), 36) || undefined
   );
 
   return { success: true };
 }
 
 // ═══════════════════════════════════════════════════════════════════════════════
-// GET PENDING SHARED TASKS FOR USER
+// GET SHARED TASKS FOR CREATOR (all statuses)
 // ═══════════════════════════════════════════════════════════════════════════════
+
+export async function getCreatorSharedTasks(): Promise<SharedTask[]> {
+  const currentUser = getCurrentUser();
+  if (!currentUser || !db) return [];
+
+  const sharedQuery = query(
+    collection(db, 'sharedTasks'),
+    where('creatorId', '==', currentUser.uid)
+  );
+
+  const snapshot = await getDocs(sharedQuery);
+  return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as SharedTask));
+}
 
 export async function getPendingSharedTasks(): Promise<SharedTask[]> {
   const currentUser = getCurrentUser();
@@ -443,6 +444,43 @@ export async function getPendingSharedTasks(): Promise<SharedTask[]> {
 
   const snapshot = await getDocs(sharedQuery);
   return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as SharedTask));
+}
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// REVOKE SHARED TASK (creator cancels before acceptance)
+// ═══════════════════════════════════════════════════════════════════════════════
+
+export async function revokeSharedTask(
+  shareCode: string
+): Promise<{ success: boolean; error?: string }> {
+  const currentUser = getCurrentUser();
+  if (!currentUser || !db) {
+    return { success: false, error: 'Not authenticated' };
+  }
+
+  const shareRef = doc(db, 'sharedTasks', shareCode);
+  const shareSnap = await getDoc(shareRef);
+
+  if (!shareSnap.exists()) {
+    return { success: false, error: 'Task not found' };
+  }
+
+  const sharedTask = shareSnap.data() as SharedTask;
+
+  if (sharedTask.creatorId !== currentUser.uid) {
+    return { success: false, error: 'Only the creator can revoke this task' };
+  }
+
+  if (sharedTask.status !== 'pending') {
+    return { success: false, error: 'Task already processed' };
+  }
+
+  await updateDoc(shareRef, {
+    status: 'revoked',
+    revokedAt: Timestamp.now(),
+  });
+
+  return { success: true };
 }
 
 // ═══════════════════════════════════════════════════════════════════════════════
@@ -462,6 +500,26 @@ export function subscribeToSharedTask(
     } else {
       callback(null);
     }
+  });
+}
+
+export function subscribeToCreatorSharedTasks(
+  callback: (tasks: SharedTask[]) => void
+): () => void {
+  const currentUser = getCurrentUser();
+  if (!currentUser || !db) return () => {};
+
+  const sharedQuery = query(
+    collection(db, 'sharedTasks'),
+    where('creatorId', '==', currentUser.uid)
+  );
+
+  return onSnapshot(sharedQuery, (snapshot) => {
+    const tasks = snapshot.docs.map(doc => ({
+      id: doc.id,
+      ...doc.data()
+    } as SharedTask));
+    callback(tasks);
   });
 }
 
@@ -503,8 +561,11 @@ export const TaskShareService = {
   getTaskPreview,
   acceptSharedTask,
   declineSharedTask,
+  revokeSharedTask,
+  getCreatorSharedTasks,
   getPendingSharedTasks,
   subscribeToSharedTask,
+  subscribeToCreatorSharedTasks,
   generateTaskShareLink,
   generateWebTaskShareLink,
   parseTaskShareLink,

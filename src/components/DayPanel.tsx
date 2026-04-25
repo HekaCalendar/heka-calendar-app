@@ -18,7 +18,7 @@ import { useState, useCallback, memo, useMemo, useRef, useEffect } from 'react';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import type { RootState } from '../store';
 import { selectDate, addNote, deleteNote, deleteDuplicates } from '../store';
-import { HEKA_MONTHS, hekaToCivil, civilToHeka, formatCivilDate, getNoteKey, getDaysInMonth } from '../services/calendarService';
+import { HEKA_MONTHS, hekaToCivil, civilToHeka, formatCivilDate, getNoteKey, getDaysInMonth, getCivilStartOfHekaMonth } from '../services/calendarService';
 import { getHolidaysForDateWithSubRegion, getYearLabel, LOCATIONS, getHemisphere, NOTE_CATEGORIES, type NoteData, type SubRegionCode } from '../types';
 import type { NoteCategory } from '../types';
 import { EnergyVoteCard } from './EnergyVoteCard';
@@ -1020,21 +1020,37 @@ const DayPanelComponent: React.FC = () => {
 };
 
 // Day Picker Component for selecting specific day
-const DayPicker = memo(({ currentViewDate, onSelectDay, onCancel }: { 
+const DayPicker = memo(({ currentViewDate, onSelectDay, onCancel }: {
   currentViewDate: { year: number; month: number };
   onSelectDay: (date: { year: number; month: number; day: number }) => void;
   onCancel: () => void;
 }) => {
   const [pickerYear, setPickerYear] = useState(currentViewDate.year);
   const [pickerMonth, setPickerMonth] = useState(currentViewDate.month);
-  
-  const daysInMonth = useMemo(() => 
+
+  const daysInMonth = useMemo(() =>
     getDaysInMonth(pickerYear, pickerMonth as any),
     [pickerYear, pickerMonth]
   );
-  
+
   const monthName = HEKA_MONTHS[pickerMonth].name;
-  
+
+  const firstDayOffset = useMemo(() => {
+    const firstDayCivil = getCivilStartOfHekaMonth(pickerYear, pickerMonth as any);
+    return (firstDayCivil.getDay() + 1) % 7; // Saturday-start
+  }, [pickerYear, pickerMonth]);
+
+  const gridCells = useMemo(() => {
+    const cells: { day: number | null }[] = [];
+    for (let i = 0; i < firstDayOffset; i++) cells.push({ day: null });
+    for (let day = 1; day <= daysInMonth; day++) cells.push({ day });
+    const remaining = (7 - (cells.length % 7)) % 7;
+    for (let i = 0; i < remaining; i++) cells.push({ day: null });
+    return cells;
+  }, [firstDayOffset, daysInMonth]);
+
+  const DOW_HEADERS = ['Sat', 'Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri'];
+
   return (
     <div className="day-picker">
       <div className="day-picker__header">
@@ -1056,15 +1072,24 @@ const DayPicker = memo(({ currentViewDate, onSelectDay, onCancel }: {
           }
         }}>→</button>
       </div>
+      <div className="day-picker__grid" style={{ marginBottom: '4px' }}>
+        {DOW_HEADERS.map(dow => (
+          <div key={dow} style={{ textAlign: 'center', fontSize: '0.7rem', color: 'var(--color-text-muted)', padding: '4px 0', fontWeight: 600 }}>{dow}</div>
+        ))}
+      </div>
       <div className="day-picker__grid">
-        {Array.from({ length: daysInMonth }, (_, i) => i + 1).map(day => (
-          <button
-            key={day}
-            className="day-picker__day"
-            onClick={() => onSelectDay({ year: pickerYear, month: pickerMonth, day })}
-          >
-            {day}
-          </button>
+        {gridCells.map((cell, index) => (
+          cell.day !== null ? (
+            <button
+              key={index}
+              className="day-picker__day"
+              onClick={() => onSelectDay({ year: pickerYear, month: pickerMonth, day: cell.day! })}
+            >
+              {cell.day}
+            </button>
+          ) : (
+            <span key={index} className="day-picker__day" style={{ visibility: 'hidden', pointerEvents: 'none' }} />
+          )
         ))}
       </div>
       <button className="btn btn--sm btn--secondary" onClick={onCancel}>
@@ -1077,7 +1102,7 @@ const DayPicker = memo(({ currentViewDate, onSelectDay, onCancel }: {
 DayPicker.displayName = 'DayPicker';
 
 // Multi-Day Picker Component for selecting multiple days
-const MultiDayPicker = memo(({ currentViewDate, onSelectDays, onCancel }: { 
+const MultiDayPicker = memo(({ currentViewDate, onSelectDays, onCancel }: {
   currentViewDate: { year: number; month: number };
   onSelectDays: (dates: { year: number; month: number; day: number }[]) => void;
   onCancel: () => void;
@@ -1085,26 +1110,23 @@ const MultiDayPicker = memo(({ currentViewDate, onSelectDays, onCancel }: {
   const [pickerYear, setPickerYear] = useState(currentViewDate.year);
   const [pickerMonth, setPickerMonth] = useState(currentViewDate.month);
   const [selectedDays, setSelectedDays] = useState<Set<number>>(new Set());
-  
-  const daysInMonth = useMemo(() => 
+
+  const daysInMonth = useMemo(() =>
     getDaysInMonth(pickerYear, pickerMonth as any),
     [pickerYear, pickerMonth]
   );
-  
+
   const monthName = HEKA_MONTHS[pickerMonth].name;
-  
+
   const toggleDay = useCallback((day: number) => {
     setSelectedDays(prev => {
       const newSet = new Set(prev);
-      if (newSet.has(day)) {
-        newSet.delete(day);
-      } else {
-        newSet.add(day);
-      }
+      if (newSet.has(day)) newSet.delete(day);
+      else newSet.add(day);
       return newSet;
     });
   }, []);
-  
+
   const handleConfirm = useCallback(() => {
     const dates = Array.from(selectedDays).map(day => ({
       year: pickerYear,
@@ -1113,7 +1135,23 @@ const MultiDayPicker = memo(({ currentViewDate, onSelectDays, onCancel }: {
     }));
     onSelectDays(dates);
   }, [selectedDays, pickerYear, pickerMonth, onSelectDays]);
-  
+
+  const firstDayOffset = useMemo(() => {
+    const firstDayCivil = getCivilStartOfHekaMonth(pickerYear, pickerMonth as any);
+    return (firstDayCivil.getDay() + 1) % 7;
+  }, [pickerYear, pickerMonth]);
+
+  const gridCells = useMemo(() => {
+    const cells: { day: number | null }[] = [];
+    for (let i = 0; i < firstDayOffset; i++) cells.push({ day: null });
+    for (let day = 1; day <= daysInMonth; day++) cells.push({ day });
+    const remaining = (7 - (cells.length % 7)) % 7;
+    for (let i = 0; i < remaining; i++) cells.push({ day: null });
+    return cells;
+  }, [firstDayOffset, daysInMonth]);
+
+  const DOW_HEADERS = ['Sat', 'Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri'];
+
   return (
     <div className="day-picker">
       <div className="day-picker__header">
@@ -1137,27 +1175,36 @@ const MultiDayPicker = memo(({ currentViewDate, onSelectDays, onCancel }: {
           setSelectedDays(new Set());
         }}>→</button>
       </div>
+      <div className="day-picker__grid" style={{ marginBottom: '4px' }}>
+        {DOW_HEADERS.map(dow => (
+          <div key={dow} style={{ textAlign: 'center', fontSize: '0.7rem', color: 'var(--color-text-muted)', padding: '4px 0', fontWeight: 600 }}>{dow}</div>
+        ))}
+      </div>
       <div className="day-picker__grid">
-        {Array.from({ length: daysInMonth }, (_, i) => i + 1).map(day => (
-          <button
-            key={day}
-            className={`day-picker__day ${selectedDays.has(day) ? 'selected' : ''}`}
-            onClick={() => toggleDay(day)}
-            style={selectedDays.has(day) ? {
-              background: 'var(--color-gold)',
-              borderColor: 'var(--color-gold)',
-              color: '#000',
-            } : {}}
-          >
-            {day}
-          </button>
+        {gridCells.map((cell, index) => (
+          cell.day !== null ? (
+            <button
+              key={index}
+              className={`day-picker__day ${selectedDays.has(cell.day) ? 'selected' : ''}`}
+              onClick={() => toggleDay(cell.day!)}
+              style={selectedDays.has(cell.day) ? {
+                background: 'var(--color-gold)',
+                borderColor: 'var(--color-gold)',
+                color: '#000',
+              } : {}}
+            >
+              {cell.day}
+            </button>
+          ) : (
+            <span key={index} className="day-picker__day" style={{ visibility: 'hidden', pointerEvents: 'none' }} />
+          )
         ))}
       </div>
       <div className="day-picker__footer">
         <span className="selected-count">{selectedDays.size} day(s) selected</span>
         <div className="day-picker__actions">
-          <button 
-            className="btn btn--sm btn--primary" 
+          <button
+            className="btn btn--sm btn--primary"
             onClick={handleConfirm}
             disabled={selectedDays.size === 0}
           >

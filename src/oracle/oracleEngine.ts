@@ -12,6 +12,7 @@
  */
 
 import { calculateJulianDay, calculateAllPlanets } from '../astrology/services/swiss-ephemeris/engine';
+import { calculateVoidMoonStatus } from '../astrology/services/calculations/swissCalculations';
 import type { CelestialBody } from '../astrology/types';
 
 // ============================================================================
@@ -215,11 +216,12 @@ export interface CelestialState {
 
 export async function getCurrentCelestialState(date: Date = new Date()): Promise<CelestialState> {
   const jd = calculateJulianDay(
-    date.getFullYear(),
-    date.getMonth() + 1,
-    date.getDate(),
-    date.getHours(),
-    date.getMinutes()
+    date.getUTCFullYear(),
+    date.getUTCMonth() + 1,
+    date.getUTCDate(),
+    date.getUTCHours(),
+    date.getUTCMinutes(),
+    date.getUTCSeconds()
   );
   
   const positions = calculateAllPlanets(jd);
@@ -234,7 +236,16 @@ export async function getCurrentCelestialState(date: Date = new Date()): Promise
   else if (angle < 225) moonPhaseName = 'full';
   else moonPhaseName = 'waning';
   
-  const isVoid = false;
+  // ═══════════════════════════════════════════════════════════════════════════
+  // PHASE 2: Real void-of-course moon calculation
+  // ═══════════════════════════════════════════════════════════════════════════
+  let isVoid = false;
+  try {
+    const voidStatus = await calculateVoidMoonStatus();
+    isVoid = voidStatus.isVoid;
+  } catch (e) {
+    console.warn('[OracleEngine] Void moon calculation failed, defaulting to false:', e);
+  }
   
   const events = detectCelestialEvents(positions);
   

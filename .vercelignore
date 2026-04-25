@@ -15,6 +15,7 @@ node_modules/
 dist/
 android/app/build/
 ios/App/build/
+src-tauri/target/
 
 # Server temp files
 server/temp/

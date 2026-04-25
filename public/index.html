@@ -2,7 +2,55 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta id="heka-viewport" name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script>
+    /* ═══════════════════════════════════════════════════════════════════════
+       HEKA Viewport Scale Guard — Narrow-Phone Safety Net
+       ─────────────────────────────────────────────────────────────────────
+       Purpose:
+         On large modern phones (Pixel 10 Pro XL, iPhone 15+, etc.) the app
+         renders natively — unchanged, unscaled, exactly as designed.
+       
+         On narrower screens (iPhone SE, budget Androids, small foldables
+         folded, etc.) the viewport renders at a 390px baseline and scales
+         down proportionally. This guarantees the exact same layout, the
+         exact same proportions, the exact same spacing — just slightly
+         smaller — with NOTHING cut off.
+       
+       Why 390px?
+         It is just below the width of every modern flagship (412–480px)
+         but safely above the narrowest phones still in active use (360px).
+         360px devices scale to ~0.923 — a barely perceptible shrink.
+       ───────────────────────────────────────────────────────────────────── */
+    (function() {
+      var DESIGN_BASELINE = 390;
+
+      function updateViewport() {
+        var screenW = window.screen ? (window.screen.width || 0) : 0;
+        var innerW  = window.innerWidth || 0;
+        var w = Math.min(screenW || Infinity, innerW || Infinity) || DESIGN_BASELINE;
+
+        var vp = document.getElementById('heka-viewport');
+        if (!vp) return;
+
+        if (w < DESIGN_BASELINE) {
+          var scale = (w / DESIGN_BASELINE).toFixed(3);
+          vp.setAttribute('content',
+            'width=' + DESIGN_BASELINE + ', initial-scale=' + scale + ', viewport-fit=cover');
+        } else {
+          vp.setAttribute('content',
+            'width=device-width, initial-scale=1.0, viewport-fit=cover');
+        }
+      }
+
+      updateViewport();
+
+      // Recalculate after orientation changes (foldables, rotation)
+      window.addEventListener('orientationchange', function() {
+        setTimeout(updateViewport, 150);
+      });
+    })();
+  </script>
   <meta name="description" content="The Modern HEKA Calendar - A 13-month calendar system from April to March" />
   <meta name="theme-color" content="#0c0c0f" />
   
@@ -13,7 +61,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   
   <!-- Favicon -->
-  <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+  <link rel="icon" type="image/png" href="/icon-192.png" />
   
   <style>
     /* Critical CSS for initial render */

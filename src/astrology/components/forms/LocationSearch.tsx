@@ -1,21 +1,31 @@
 /**
  * LocationSearch - Autocomplete location with lat/lng lookup
- * Uses OpenStreetMap Nominatim API (free)
+ * Uses OpenStreetMap Nominatim API (free) with country biasing
  */
 
 import React, { useState, useCallback, useEffect, useRef } from 'react';
 
+interface NominatimAddress {
+  suburb?: string;
+  town?: string;
+  city?: string;
+  village?: string;
+  municipality?: string;
+  county?: string;
+  state?: string;
+  country?: string;
+  country_code?: string;
+  postcode?: string;
+}
+
 interface LocationResult {
+  place_id: number;
   display_name: string;
   lat: string;
   lon: string;
-  address?: {
-    city?: string;
-    town?: string;
-    village?: string;
-    state?: string;
-    country?: string;
-  };
+  address?: NominatimAddress;
+  type?: string;
+  class?: string;
 }
 
 interface LocationSearchProps {
@@ -24,6 +34,8 @@ interface LocationSearchProps {
     latitude: number;
     longitude: number;
   }) => void;
+  defaultValue?: string;
+  onQueryChange?: (query: string) => void;
 }
 
 const styles: Record<string, React.CSSProperties> = {
@@ -51,7 +63,7 @@ const styles: Record<string, React.CSSProperties> = {
     background: '#16161a',
     border: '1px solid rgba(255,255,255,0.08)',
     borderRadius: '8px',
-    maxHeight: '250px',
+    maxHeight: '280px',
     overflowY: 'auto',
     zIndex: 100,
     boxShadow: '0 10px 25px rgba(0,0,0,0.5)',
@@ -86,15 +98,87 @@ const styles: Record<string, React.CSSProperties> = {
   },
 };
 
-export const LocationSearch: React.FC<LocationSearchProps> = ({ onLocationSelect }) => {
-  const [query, setQuery] = useState('');
+/**
+ * Map common IANA time zones to ISO country codes so we can bias
+ * Nominatim results to the user's current country.
+ */
+function getCountryCodeFromTimeZone(): string | null {
+  const tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
+  const mapping: Record<string, string> = {
+    'Australia/Sydney': 'au', 'Australia/Melbourne': 'au', 'Australia/Brisbane': 'au',
+    'Australia/Perth': 'au', 'Australia/Adelaide': 'au', 'Australia/Darwin': 'au',
+    'Australia/Hobart': 'au', 'Australia/Canberra': 'au', 'Australia/Currie': 'au',
+    'Australia/Broken_Hill': 'au', 'Australia/Lord_Howe': 'au',
+    'America/New_York': 'us', 'America/Chicago': 'us', 'America/Denver': 'us',
+    'America/Los_Angeles': 'us', 'America/Phoenix': 'us', 'America/Anchorage': 'us',
+    'Pacific/Honolulu': 'us', 'America/Detroit': 'us', 'America/Boise': 'us',
+    'America/Indiana/Indianapolis': 'us', 'America/Kentucky/Louisville': 'us',
+    'America/Toronto': 'ca', 'America/Vancouver': 'ca', 'America/Edmonton': 'ca',
+    'America/Winnipeg': 'ca', 'America/Halifax': 'ca', 'America/St_Johns': 'ca',
+    'America/Moncton': 'ca', 'America/Regina': 'ca', 'America/Swift_Current': 'ca',
+    'America/Yellowknife': 'ca', 'America/Whitehorse': 'ca', 'America/Iqaluit': 'ca',
+    'America/Dawson': 'ca', 'America/Creston': 'ca', 'America/Fort_Nelson': 'ca',
+    'Europe/London': 'gb', 'Europe/Paris': 'fr', 'Europe/Berlin': 'de',
+    'Europe/Madrid': 'es', 'Europe/Rome': 'it', 'Europe/Amsterdam': 'nl',
+    'Europe/Dublin': 'ie', 'Europe/Lisbon': 'pt', 'Europe/Vienna': 'at',
+    'Europe/Brussels': 'be', 'Europe/Zurich': 'ch', 'Europe/Stockholm': 'se',
+    'Europe/Oslo': 'no', 'Europe/Copenhagen': 'dk', 'Europe/Helsinki': 'fi',
+    'Europe/Warsaw': 'pl', 'Europe/Prague': 'cz', 'Europe/Budapest': 'hu',
+    'Europe/Athens': 'gr', 'Europe/Bucharest': 'ro', 'Europe/Sofia': 'bg',
+    'Asia/Tokyo': 'jp', 'Asia/Seoul': 'kr', 'Asia/Shanghai': 'cn',
+    'Asia/Hong_Kong': 'hk', 'Asia/Singapore': 'sg', 'Asia/Kolkata': 'in',
+    'Asia/Bangkok': 'th', 'Asia/Jakarta': 'id', 'Asia/Manila': 'ph',
+    'Asia/Kuala_Lumpur': 'my', 'Asia/Ho_Chi_Minh': 'vn', 'Asia/Taipei': 'tw',
+    'Pacific/Auckland': 'nz', 'Pacific/Chatham': 'nz', 'Pacific/Fiji': 'fj',
+    'Pacific/Guam': 'gu',
+  };
+
+  if (mapping[tz]) return mapping[tz];
+
+  // Fallback: try navigator.language (e.g. "en-AU" -> "au")
+  const lang = (navigator.language || '').toLowerCase();
+  const parts = lang.split('-');
+  if (parts.length > 1) {
+    const code = parts[parts.length - 1];
+    if (code.length === 2) return code;
+  }
+
+  return null;
+}
+
+function extractLocality(address?: NominatimAddress): string {
+  if (!address) return '';
+  return address.suburb || address.town || address.village || address.municipality || address.city || '';
+}
+
+function extractRegion(address?: NominatimAddress): string {
+  if (!address) return '';
+  return address.state || address.county || '';
+}
+
+function formatLocationName(result: LocationResult): string {
+  const locality = extractLocality(result.address);
+  const region = extractRegion(result.address);
+  const country = result.address?.country || '';
+
+  const parts: string[] = [];
+  if (locality) parts.push(locality);
+  if (region) parts.push(region);
+  if (country && country !== region) parts.push(country);
+
+  return parts.join(', ') || result.display_name.split(',')[0]?.trim() || 'Unknown';
+}
+
+export const LocationSearch: React.FC<LocationSearchProps> = ({ onLocationSelect, defaultValue, onQueryChange }) => {
+  const [query, setQuery] = useState(defaultValue || '');
   const [results, setResults] = useState<LocationResult[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [showDropdown, setShowDropdown] = useState(false);
   const [hoveredIndex, setHoveredIndex] = useState(-1);
   const containerRef = useRef<HTMLDivElement>(null);
-  const debounceTimer = useRef<NodeJS.Timeout>();
+  const debounceTimer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
+  const countryCode = useRef<string | null>(getCountryCodeFromTimeZone());
 
   // Close dropdown when clicking outside
   useEffect(() => {
@@ -118,9 +202,11 @@ export const LocationSearch: React.FC<LocationSearchProps> = ({ onLocationSelect
     setError('');
 
     try {
-      // OpenStreetMap Nominatim API (free, no API key required)
+      const cc = countryCode.current;
+      const countryParam = cc ? `&countrycodes=${encodeURIComponent(cc)}` : '';
+
       const response = await fetch(
-        `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(searchQuery)}&limit=5&addressdetails=1`,
+        `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(searchQuery)}&limit=10&addressdetails=1&dedupe=1${countryParam}`,
         {
           headers: {
             'Accept-Language': 'en-US,en',
@@ -161,9 +247,9 @@ export const LocationSearch: React.FC<LocationSearchProps> = ({ onLocationSelect
   }, [query, searchLocations]);
 
   const handleSelect = (result: LocationResult) => {
-    const locationName = result.display_name.split(',')[0];
-    const region = result.address?.state || result.address?.country || '';
-    const fullName = region ? `${locationName}, ${region}` : locationName;
+    const locality = extractLocality(result.address);
+    const region = extractRegion(result.address);
+    const fullName = region ? `${locality || result.display_name.split(',')[0]?.trim()}, ${region}` : (locality || result.display_name.split(',')[0]?.trim());
 
     onLocationSelect({
       name: fullName,
@@ -172,15 +258,9 @@ export const LocationSearch: React.FC<LocationSearchProps> = ({ onLocationSelect
     });
 
     setQuery(fullName);
+    onQueryChange?.(fullName);
     setShowDropdown(false);
     setResults([]);
-  };
-
-  const formatLocationName = (result: LocationResult): string => {
-    const parts = result.display_name.split(',');
-    const city = parts[0]?.trim();
-    const region = parts[parts.length - 2]?.trim() || parts[parts.length - 1]?.trim();
-    return region ? `${city}, ${region}` : city;
   };
 
   return (
@@ -190,10 +270,11 @@ export const LocationSearch: React.FC<LocationSearchProps> = ({ onLocationSelect
         value={query}
         onChange={(e) => {
           setQuery(e.target.value);
+          onQueryChange?.(e.target.value);
           setShowDropdown(true);
         }}
         onFocus={() => query.length >= 2 && setShowDropdown(true)}
-        placeholder="Start typing a city name..."
+        placeholder="Start typing a city or suburb..."
         style={styles.input}
         autoComplete="off"
       />
@@ -210,7 +291,7 @@ export const LocationSearch: React.FC<LocationSearchProps> = ({ onLocationSelect
 
           {results.map((result, index) => (
             <div
-              key={index}
+              key={result.place_id || index}
               style={{
                 ...styles.result,
                 ...(hoveredIndex === index ? styles.resultHover : {}),
@@ -223,6 +304,11 @@ export const LocationSearch: React.FC<LocationSearchProps> = ({ onLocationSelect
               <div style={styles.resultName}>{formatLocationName(result)}</div>
               <div style={styles.resultDetail}>
                 {result.address?.country}
+                {result.class && result.type && (
+                  <span style={{ textTransform: 'capitalize', opacity: 0.7 }}>
+                    {' '}· {result.type.replace(/_/g, ' ')}
+                  </span>
+                )}
               </div>
             </div>
           ))}

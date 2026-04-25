@@ -13,6 +13,8 @@ import type {
 import { OracleEngine } from '../oracle/oracleEngine';
 import { DEFAULT_JOURNAL_PREFERENCES } from '../oracle/diaryTypes';
 import { syncToCloud, loadFromCloud } from '../services/firebase';
+import { buildMoodHistory } from '../services/sentimentService';
+import { aiConfigService } from '../services/aiConfigService';
 
 // ============================================================================
 // INITIAL STATE
@@ -281,6 +283,22 @@ const createDiaryEntry = createAsyncThunk(
       }
     }
     
+    // ═══════════════════════════════════════════════════════════════════════════
+    // PHASE 1: Update AI mood context after journal creation
+    // ═══════════════════════════════════════════════════════════════════════════
+    try {
+      const allEntries = JSON.parse(localStorage.getItem('heka_diary_entries') || '[]') as DiaryEntry[];
+      const moodHistory = buildMoodHistory(allEntries);
+      aiConfigService.setUserContext({
+        moodHistory: moodHistory.slice(-30),
+        lastJournalSnippet: payload.content.slice(0, 200),
+        lastJournalDate: payload.date,
+        lastJournalThemes: entry.detectedThemes || [],
+      });
+    } catch (e) {
+      console.error('[Diary] Failed to update AI mood context:', e);
+    }
+    
     return entry;
   }
 );
@@ -358,6 +376,22 @@ const updateDiaryEntry = createAsyncThunk(
       }
     }
     
+    // ═══════════════════════════════════════════════════════════════════════════
+    // PHASE 1: Update AI mood context after journal update
+    // ═══════════════════════════════════════════════════════════════════════════
+    try {
+      const allEntries = JSON.parse(localStorage.getItem('heka_diary_entries') || '[]') as DiaryEntry[];
+      const moodHistory = buildMoodHistory(allEntries);
+      aiConfigService.setUserContext({
+        moodHistory: moodHistory.slice(-30),
+        lastJournalSnippet: payload.content.slice(0, 200),
+        lastJournalDate: existingEntry.date,
+        lastJournalThemes: updatedEntry.detectedThemes || [],
+      });
+    } catch (e) {
+      console.error('[Diary] Failed to update AI mood context:', e);
+    }
+    
     return updatedEntry;
   }
 );
@@ -385,7 +419,45 @@ const deleteDiaryEntry = createAsyncThunk(
       }
     }
     
+    // ═══════════════════════════════════════════════════════════════════════════
+    // PHASE 1: Recalculate AI mood context after journal deletion
+    // ═══════════════════════════════════════════════════════════════════════════
+    try {
+      const allEntries = JSON.parse(localStorage.getItem('heka_diary_entries') || '[]') as DiaryEntry[];
+      const moodHistory = buildMoodHistory(allEntries);
+      aiConfigService.setUserContext({
+        moodHistory: moodHistory.slice(-30),
+      });
+    } catch (e) {
+      console.error('[Diary] Failed to update AI mood context:', e);
+    }
+    
     return entryId;
+  }
+);
+
+/**
+ * Clear all diary entries
+ */
+const clearAllDiaryEntries = createAsyncThunk(
+  'diary/clearAll',
+  async (_, { getState }) => {
+    const state = getState() as RootState;
+    const { auth } = state.calendar;
+    
+    // Clear localStorage
+    localStorage.removeItem('heka_diary_entries');
+    
+    // Sync clear to cloud
+    if (auth.isAuthenticated && auth.userId) {
+      try {
+        await syncToCloud(auth.userId, { diaryEntries: [] });
+      } catch (error) {
+        console.error('Failed to sync diary clear:', error);
+      }
+    }
+    
+    return true;
   }
 );
 
@@ -539,6 +611,13 @@ const diarySlice = createSlice({
       }
     });
     
+    // Clear all entries
+    builder.addCase(clearAllDiaryEntries.fulfilled, (state) => {
+      state.entries = {};
+      state.entriesByDate = {};
+      state.editingEntryId = null;
+    });
+    
     // Sync from cloud
     builder.addCase(syncDiaryFromCloud.pending, (state) => {
       state.ui.isSyncing = true;
@@ -634,6 +713,7 @@ export {
   createDiaryEntry, 
   updateDiaryEntry, 
   deleteDiaryEntry, 
+  clearAllDiaryEntries,
   syncDiaryFromCloud 
 };
 

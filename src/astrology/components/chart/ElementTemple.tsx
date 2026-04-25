@@ -69,12 +69,9 @@ const PLANET_SYMBOLS: Record<string, string> = {
   jupiter: '♃', saturn: '♄', uranus: '⛢', neptune: '♆', pluto: '♇',
 };
 
-const SIGN_ELEMENTS: Record<string, string> = {
-  aries: 'fire', leo: 'fire', sagittarius: 'fire',
-  taurus: 'earth', virgo: 'earth', capricorn: 'earth',
-  gemini: 'air', libra: 'air', aquarius: 'air',
-  cancer: 'water', scorpio: 'water', pisces: 'water',
-};
+import { SIGN_ELEMENTS_13 } from '../../types/core';
+
+const SIGN_ELEMENTS: Record<string, string> = SIGN_ELEMENTS_13;
 
 export const ElementTemple: React.FC<ElementTempleProps> = ({
   chart,

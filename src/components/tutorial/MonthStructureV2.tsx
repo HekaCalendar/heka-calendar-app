@@ -20,10 +20,10 @@ export const MonthStructureV2: React.FC = () => {
 
   const months = [
     { num: 1, name: 'April', days: 28, arc: 'opening', weekPattern: [1, 8, 15, 22] },
-    { num: 2, name: 'May', days: 28, arc: 'opening', weekPattern: [1, 8, 15, 22] },
-    { num: 3, name: 'June', days: 28, arc: 'opening', weekPattern: [1, 8, 15, 22] },
-    { num: 4, name: 'July', days: 28, arc: 'opening', weekPattern: [1, 8, 15, 22] },
-    { num: 5, name: 'August', days: 28, arc: 'opening', weekPattern: [1, 8, 15, 22] },
+    { num: 2, name: 'May', days: 28, arc: 'core', weekPattern: [1, 8, 15, 22] },
+    { num: 3, name: 'June', days: 28, arc: 'core', weekPattern: [1, 8, 15, 22] },
+    { num: 4, name: 'July', days: 28, arc: 'core', weekPattern: [1, 8, 15, 22] },
+    { num: 5, name: 'August', days: 28, arc: 'core', weekPattern: [1, 8, 15, 22] },
     { num: 6, name: 'Hexa', days: 28, arc: 'core', weekPattern: [1, 8, 15, 22], highlight: true },
     { num: 7, name: 'September', days: 28, arc: 'core', weekPattern: [1, 8, 15, 22] },
     { num: 8, name: 'October', days: 28, arc: 'core', weekPattern: [1, 8, 15, 22] },

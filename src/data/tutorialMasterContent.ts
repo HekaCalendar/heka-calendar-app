@@ -56,9 +56,9 @@ All header controls are accessible from any view.`,
 • Closing arc: "2026–2027" (spans two Gregorian years)
 
 **The Arc Indicator:**
-• 🔴 Red = Opening Arc (months 1-4) - New beginnings
-• 🟢 Green = Core Arc (months 5-9) - Growth and development  
-• 🟣 Purple = Closing Arc (months 10-13) - Completion and harvest
+• 🔴 Red = Opening Arc (month 1) - New beginnings
+• 🟢 Green = Core Arc (months 2-10) - Growth and development  
+• 🟣 Purple = Closing Arc (months 11-13) - Completion and harvest
 
 The arc colors appear throughout the app to indicate seasonal energy.`,
       targetSelector: '.month-header__title',
@@ -76,7 +76,7 @@ The arc colors appear throughout the app to indicate seasonal energy.`,
 • Left/Right arrow keys = Navigate months
 • Up/Down arrow keys = Jump 3 months
 
-**Pro tip:** Hold Shift while clicking arrows to jump 3 months at once (quarterly navigation).`,
+**Tip:** Hold Shift while clicking arrows to jump 3 months at once (quarterly navigation).`,
       targetSelector: '.month-header__controls button:first-child, .month-header__controls button:last-child',
       position: 'bottom',
       actionLabel: 'Try It',
@@ -99,7 +99,7 @@ The arc colors appear throughout the app to indicate seasonal energy.`,
 • When you first open the app
 • To sync with your location's "now"
 
-**Achievement unlocked:** Using this button counts toward navigation badges!`,
+**Did you know:** Using this button counts toward navigation badges!`,
       targetSelector: 'button:contains("Today")',
       position: 'bottom',
       actionLabel: 'Continue',
@@ -144,7 +144,7 @@ The arc colors appear throughout the app to indicate seasonal energy.`,
 • Finding patterns across months
 • Creating wall calendars
 
-**Note:** The Day Out of Time appears as a special card at year end.`,
+**Note:** March, the closing month, carries the leap day and completes the year.`,
       targetSelector: 'button:contains("Year")',
       position: 'bottom',
       actionLabel: 'Continue',
@@ -306,7 +306,7 @@ The arc colors appear throughout the app to indicate seasonal energy.`,
 
 **Output:** High-resolution PDF, print-ready.
 
-**Achievement:** First print unlocks "Print Pioneer" badge!`,
+**Milestone:** First print earns the "Print Pioneer" mark!`,
       targetSelector: 'button:contains("Print")',
       position: 'bottom',
       actionLabel: 'Continue',
@@ -432,30 +432,27 @@ export const calendarGridTutorial: Tutorial = {
       actionLabel: 'Continue',
     },
     {
-      id: 'day-out-of-time-deep',
+      id: 'march-closing-deep',
       type: 'spotlight',
-      title: '🌀 Day Out of Time',
-      content: `**The 365th day of the year**
+      title: '🌀 The Closing Month',
+      content: `**March: Where the year finds its balance**
 
 **What makes it special:**
-• Exists outside the 13-month structure
-• No month assignment
-• No day of week
-• "Timeless" day
+• The only month with a variable length
+• 29 days in standard years, 30 in leap years
+• All correction lives in one place
+• The final act of the year's rhythm
 
 **Traditional uses:**
-• Celebration and festival
-• Reflection on the year
-• Setting intentions for next year
-• Timeless activities (art, music, play)
-• NOT for routine work or business
+• Reflection on the year past
+• Setting intentions for the next opening
+• Completion of unfinished work
+• Celebration of what was built
 
-**Visual:** Appears as a special card, often purple/gold themed
+**Visual:** Marked as the Closing Arc (purple/gold themed)
 
-**Gregorian equivalent:** None! This is unique to 13-month calendars.
-
-**In HEKA:** Usually falls on March 31 (SYNC mode) or Spring Equinox eve (TRUE mode).`,
-      targetSelector: '.day-out-of-time, [data-day="0"]',
+**In HEKA:** March closes every year. In SYNC mode, it aligns with Gregorian leap rules. In TRUE mode, it follows the astronomical 128-year cycle for greater long-term precision.`,
+      targetSelector: '.month-march, [data-month="12"]',
       position: 'center',
       actionLabel: 'Continue',
     },
@@ -1039,7 +1036,7 @@ export const oracleJournalTutorial: Tutorial = {
 • Search and filter find anything
 • Export preserves your journey
 
-**Achievement unlocked:** Keep writing for 7 days to earn "Week Warrior" badge!`,
+**Milestone:** Keep writing for 7 days to earn the "Week Warrior" mark!`,
       position: 'center',
       actionLabel: 'Start Journaling',
     },

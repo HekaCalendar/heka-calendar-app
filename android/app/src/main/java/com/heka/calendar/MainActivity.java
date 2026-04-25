@@ -13,10 +13,11 @@ public class MainActivity extends BridgeActivity {
     
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        
-        // Register custom plugins
+        // Register custom plugins BEFORE super.onCreate() so the Bridge picks them up
+        android.util.Log.d("MainActivity", "Registering HekaPrintPlugin before bridge creation");
         registerPlugin(HekaPrintPlugin.class);
+        
+        super.onCreate(savedInstanceState);
         
         WebView webView = getBridge().getWebView();
         WebSettings settings = webView.getSettings();

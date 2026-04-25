@@ -141,12 +141,16 @@ export const BirthChartForm: React.FC<BirthChartFormProps> = ({
   const [longitude, setLongitude] = useState('');
   const [locationName, setLocationName] = useState('');
   const [timezone] = useState(initialData?.birthData?.timezone || Intl.DateTimeFormat().resolvedOptions().timeZone);
-  // Get global zodiac system preference
-  const globalZodiacSystem = useSelector((state: RootState) => 
-    state.calendar.astroPreferences?.zodiacSystem || '12-sign'
+  // Get global zodiac preferences
+  const globalZodiacFrame = useSelector((state: RootState) =>
+    state.calendar.astroPreferences?.zodiacFrame || 'tropical'
   );
-  
-  const [zodiacSystem, setZodiacSystem] = useState<'12-sign' | '13-sign'>(globalZodiacSystem);
+  const globalSignCount = useSelector((state: RootState) =>
+    state.calendar.astroPreferences?.signCount || 12
+  );
+
+  const [zodiacFrame, setZodiacFrame] = useState<'tropical' | 'sidereal'>(globalZodiacFrame);
+  const [signCount, setSignCount] = useState<12 | 13>(globalSignCount);
   const [houseSystem, setHouseSystem] = useState<'placidus' | 'whole-sign' | 'equal'>('placidus');
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [isLoading, setIsLoading] = useState(false);
@@ -194,12 +198,17 @@ export const BirthChartForm: React.FC<BirthChartFormProps> = ({
           },
           timezone
         },
-        preferences: { zodiacSystem, houseSystem }
+        preferences: {
+          zodiacSystem: zodiacFrame === 'sidereal' ? 'sidereal' : (signCount === 13 ? '13-sign' : '12-sign'),
+          zodiacFrame,
+          signCount,
+          houseSystem
+        }
       });
     } finally {
       setIsLoading(false);
     }
-  }, [name, birthDate, birthTime, latitude, longitude, locationName, timezone, zodiacSystem, houseSystem, onSubmit, validate]);
+  }, [name, birthDate, birthTime, latitude, longitude, locationName, timezone, zodiacFrame, signCount, houseSystem, onSubmit, validate]);
   
   return (
     <form onSubmit={handleSubmit} style={styles.form}>
@@ -245,7 +254,7 @@ export const BirthChartForm: React.FC<BirthChartFormProps> = ({
         <label style={styles.label}>Birth Location *</label>
         <LocationSearch onLocationSelect={handleLocationSelect} />
         <p style={styles.locationNote}>
-          Start typing a city name (e.g. "Sydney", "London", "New York")
+          Start typing a suburb or city (e.g. "Bankstown", "Sydney", "London")
         </p>
         {(errors.latitude || errors.longitude) && (
           <span style={styles.error}>Please select a location from the dropdown</span>
@@ -267,17 +276,37 @@ export const BirthChartForm: React.FC<BirthChartFormProps> = ({
       
       <div style={styles.row}>
         <div style={styles.field}>
-          <label style={styles.label}>Zodiac System</label>
+          <label style={styles.label}>Zodiac Frame</label>
           <select
-            value={zodiacSystem}
-            onChange={(e) => setZodiacSystem(e.target.value as '12-sign' | '13-sign')}
+            value={zodiacFrame}
+            onChange={(e) => setZodiacFrame(e.target.value as 'tropical' | 'sidereal')}
             style={styles.select}
           >
-            <option value="12-sign">12 Signs (Traditional)</option>
-            <option value="13-sign">13 Signs (Ophiuchus)</option>
+            <option value="tropical">Tropical (Seasons)</option>
+            <option value="sidereal">Sidereal (Fixed Stars)</option>
           </select>
         </div>
-        
+
+        <div style={styles.field}>
+          <label style={styles.label}>Sign Count</label>
+          <select
+            value={signCount}
+            onChange={(e) => setSignCount(Number(e.target.value) as 12 | 13)}
+            style={styles.select}
+            disabled={zodiacFrame === 'tropical'}
+          >
+            <option value={12}>12 Signs</option>
+            <option value={13}>13 Signs ⛎</option>
+          </select>
+          {zodiacFrame === 'tropical' && (
+            <span style={{ fontSize: '11px', color: '#888', marginTop: '4px', display: 'block' }}>
+              Tropical always uses 12 signs
+            </span>
+          )}
+        </div>
+      </div>
+
+      <div style={styles.row}>
         <div style={styles.field}>
           <label style={styles.label}>House System</label>
           <select

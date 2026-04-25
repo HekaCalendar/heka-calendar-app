@@ -321,10 +321,6 @@ export const JournalModal: React.FC<JournalModalProps> = ({ isOpen, onClose }) =
                             onClick={() => {
                               // Navigate to that date on calendar
                               onClose();
-                              const event = new CustomEvent('navigate-to-date', { 
-                                detail: { dateKey: note.sourceKey } 
-                              });
-                              window.dispatchEvent(event);
                             }}
                           >
                             <div className="journal-calendar-item-header">
@@ -441,12 +437,8 @@ export const JournalModal: React.FC<JournalModalProps> = ({ isOpen, onClose }) =
           isOpen={isSearchOpen}
           onClose={() => setIsSearchOpen(false)}
           onEntrySelect={handleEditEntry}
-          onCalendarNoteSelect={(sourceKey) => {
+          onCalendarNoteSelect={() => {
             onClose();
-            const event = new CustomEvent('navigate-to-date', { 
-              detail: { dateKey: sourceKey } 
-            });
-            window.dispatchEvent(event);
           }}
           calendarNotes={calendarNoteEntries}
           theme={preferences.theme}

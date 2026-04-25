@@ -80,6 +80,86 @@
 .celestial-panel-container::before { left: 30px; }
 .celestial-panel-container::after { content: "›"; right: 30px; }
 
+/* ═══════════════════════════════════════════════════════════════
+   TOP SCROLLBAR - Identical to bottom, rendered above cards
+   ═══════════════════════════════════════════════════════════════ */
+
+.celestial-panel-container.has-top-scroll {
+  padding-top: 64px !important;
+}
+
+.celestial-panel-top-scroll {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 48px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  z-index: 10;
+  background: rgba(0, 0, 0, 0.05);
+  pointer-events: auto;
+  touch-action: none !important;
+}
+
+/* Force the content div to match the scrollable width of the panel */
+.celestial-panel-top-scroll__content {
+  display: block;
+  height: 1px;
+  pointer-events: auto;
+}
+
+/* Top scrollbar WebKit styles - identical to bottom */
+.celestial-panel-top-scroll::-webkit-scrollbar {
+  height: 48px !important;
+  background: transparent !important;
+}
+
+.celestial-panel-top-scroll::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.05) !important;
+  margin: 0 50px !important;
+  border: none !important;
+}
+
+.celestial-panel-top-scroll::-webkit-scrollbar-thumb {
+  border-radius: 14px !important;
+  min-width: 80px !important;
+  background: linear-gradient(180deg,
+    var(--color-gold, #c9a227) 0%,
+    var(--color-gold-dark, #9b7a18) 100%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.15) !important;
+  box-shadow:
+    0 4px 12px rgba(0, 0, 0, 0.5),
+    0 2px 4px rgba(0, 0, 0, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2) !important;
+  pointer-events: auto !important;
+}
+
+.celestial-panel-top-scroll::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg,
+    var(--color-gold-light, #d4af37) 0%,
+    var(--color-gold, #c9a227) 100%) !important;
+  box-shadow:
+    0 6px 20px rgba(0, 0, 0, 0.5),
+    0 0 20px var(--color-gold-glow, rgba(201, 162, 39, 0.3)),
+    inset 0 1px 0 rgba(255, 255, 255, 0.25) !important;
+}
+
+/* Firefox top scrollbar */
+.celestial-panel-top-scroll {
+  scrollbar-width: auto !important;
+  scrollbar-color: var(--color-gold, #c9a227) transparent !important;
+}
+
+
+
+/* Top arrows when has-top-scroll is active */
+.celestial-panel-container.has-top-scroll::before,
+.celestial-panel-container.has-top-scroll::after {
+  top: 12px;
+  bottom: auto;
+}
+
 .scrollbar-hint,
 .hex-scrollbar {
   display: none !important;

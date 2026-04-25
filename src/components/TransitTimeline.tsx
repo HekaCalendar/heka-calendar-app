@@ -8,6 +8,9 @@ import { useSelector } from 'react-redux';
 import type { RootState } from '../store';
 import type { PersonalTransit, TransitNotification } from '../oracle/birthChartIntegration';
 import '../styles/transit-timeline.css';
+import { getSignFromLongitude, SIGN_BOUNDARIES_13 } from '../astrology/types/core';
+import type { ZodiacSign13 } from '../astrology/types/core';
+import { getSignCount } from '../astrology/services/swiss-ephemeris/engine';
 
 interface TransitTimelineProps {
   transits: PersonalTransit[];
@@ -93,10 +96,13 @@ export const TransitTimeline: React.FC<TransitTimelineProps> = ({
   };
 
   const formatDegree = (longitude: number) => {
-    const signIndex = Math.floor(longitude / 30);
-    const sign = ['aries', 'taurus', 'gemini', 'cancer', 'leo', 'virgo',
-                   'libra', 'scorpio', 'sagittarius', 'capricorn', 'aquarius', 'pisces'][signIndex];
-    const degree = Math.floor(longitude % 30);
+    const normalized = ((longitude % 360) + 360) % 360;
+    const sign = getSignFromLongitude(normalized as any, getSignCount() === 13);
+    // For 13-sign, degree within sign isn't simply longitude % 30
+    const signStart = getSignCount() === 13
+      ? (SIGN_BOUNDARIES_13[sign as ZodiacSign13]?.[0] ?? 0)
+      : Math.floor(normalized / 30) * 30;
+    const degree = Math.floor(normalized - signStart);
     const minute = Math.floor((longitude % 1) * 60);
     return { sign, degree, minute };
   };

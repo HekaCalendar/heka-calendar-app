@@ -438,11 +438,12 @@ export async function getCurrentPlanetaryPositions(date: Date = new Date()): Pro
     // Import the Swiss Ephemeris engine dynamically to avoid circular dependencies
     const { calculateJulianDay, calculateAllPlanets } = await import('../astrology/services/swiss-ephemeris/engine');
     const jd = calculateJulianDay(
-      date.getFullYear(),
-      date.getMonth() + 1, // month is 1-indexed in the ephemeris
-      date.getDate(),
-      date.getHours(),
-      date.getMinutes()
+      date.getUTCFullYear(),
+      date.getUTCMonth() + 1, // month is 1-indexed in the ephemeris
+      date.getUTCDate(),
+      date.getUTCHours(),
+      date.getUTCMinutes(),
+      date.getUTCSeconds()
     );
     const positions = calculateAllPlanets(jd);
     
@@ -454,7 +455,7 @@ export async function getCurrentPlanetaryPositions(date: Date = new Date()): Pro
       result[planet] = {
         longitude: celestialBody.longitude,
         sign: (celestialBody.sign || 'aries').toLowerCase() as ZodiacSign,
-        degree: celestialBody.degree || 0,
+        degree: celestialBody.degreeInSign || 0,
         minute: celestialBody.minute || 0,
         retrograde: celestialBody.isRetrograde || celestialBody.retrograde || false,
         speed: celestialBody.speed || 0,

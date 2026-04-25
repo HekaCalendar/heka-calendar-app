@@ -12,8 +12,7 @@ import android.os.Environment;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.ParcelFileDescriptor;
-import android.app.ProgressDialog;
-import android.app.AlertDialog;
+
 import android.print.PageRange;
 import android.print.PrintAttributes;
 import android.print.PrintDocumentAdapter;
@@ -67,7 +66,6 @@ import java.util.concurrent.atomic.AtomicBoolean;
 public class HekaPrintPlugin extends Plugin {
     private static final String TAG = "HekaPrint";
     private static final long PAGE_LOAD_TIMEOUT_MS = 30000;
-    private AlertDialog progressDialog;
     
     // Paper sizes in POINTS (72 DPI) - used for PDF page info
     private static final Map<String, PaperDimensions> PAPER_SIZES_POINTS = new HashMap<>();
@@ -110,14 +108,11 @@ public class HekaPrintPlugin extends Plugin {
                 return;
             }
 
-            showProgressDialog("Generating PDF... This may take a moment.");
-            
             getActivity().runOnUiThread(() -> {
                 generatePDFFromHTML(request, call);
             });
             
         } catch (Exception e) {
-            hideProgressDialog();
             android.util.Log.e(TAG, "Error in generatePDF", e);
             call.reject("Invalid print request: " + e.getMessage());
         }
@@ -147,19 +142,10 @@ public class HekaPrintPlugin extends Plugin {
             }
 
             getActivity().runOnUiThread(() -> {
-                showProgressDialog("Preparing to print...");
-                try {
-                    printExistingPDF(pdfFile, orientation, paperSize, call);
-                } finally {
-                    // Hide dialog after a short delay to let the print dialog appear
-                    new Handler(Looper.getMainLooper()).postDelayed(() -> {
-                        hideProgressDialog();
-                    }, 1500);
-                }
+                printExistingPDF(pdfFile, orientation, paperSize, call);
             });
             
         } catch (Exception e) {
-            hideProgressDialog();
             android.util.Log.e(TAG, "Error in printPDF", e);
             call.reject("Print failed: " + e.getMessage());
         }
@@ -252,27 +238,7 @@ public class HekaPrintPlugin extends Plugin {
         return activeNetwork != null && activeNetwork.isConnected();
     }
 
-    private void showProgressDialog(String message) {
-        getActivity().runOnUiThread(() -> {
-            if (progressDialog != null && progressDialog.isShowing()) {
-                progressDialog.dismiss();
-            }
-            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-            builder.setMessage(message);
-            builder.setCancelable(false);
-            progressDialog = builder.create();
-            progressDialog.show();
-        });
-    }
-
-    private void hideProgressDialog() {
-        getActivity().runOnUiThread(() -> {
-            if (progressDialog != null && progressDialog.isShowing()) {
-                progressDialog.dismiss();
-                progressDialog = null;
-            }
-        });
-    }
+    // Native progress dialogs removed — progress is handled by the React overlay
 
     /**
      * Generate PDF using Android's PdfDocument with proper scaling
@@ -283,12 +249,14 @@ public class HekaPrintPlugin extends Plugin {
         // Create output file
         String timestamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.US).format(new Date());
         String filename = req.filename + "_" + timestamp + ".pdf";
-        File downloadsDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
-        if (!downloadsDir.exists()) {
-            downloadsDir.mkdirs();
+        File outputDir = req.saveToDownloads
+            ? Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
+            : getContext().getCacheDir();
+        if (!outputDir.exists()) {
+            outputDir.mkdirs();
         }
-        final File pdfFile = new File(downloadsDir, filename);
-        android.util.Log.d(TAG, "PDF will be saved to: " + pdfFile.getAbsolutePath());
+        final File pdfFile = new File(outputDir, filename);
+        android.util.Log.d(TAG, "PDF will be saved to: " + pdfFile.getAbsolutePath() + " (saveToDownloads=" + req.saveToDownloads + ")");
         
         // Process pages sequentially
         final int[] currentPage = {0};
@@ -301,7 +269,7 @@ public class HekaPrintPlugin extends Plugin {
             public void run() {
                 if (currentPage[0] >= req.pages.size()) {
                     // All pages processed, write PDF
-                    writePdfDocument(pdfDocument, pdfFile, call);
+                    writePdfDocument(pdfDocument, pdfFile, call, req.saveToDownloads);
                     return;
                 }
                 
@@ -321,6 +289,14 @@ public class HekaPrintPlugin extends Plugin {
                 renderPageToPdf(req.pages.get(currentPage[0]), pdfDocument, pixelWidth, pixelHeight, 
                     pointWidth, pointHeight, () -> {
                     currentPage[0]++;
+                    
+                    // Notify JS of progress
+                    JSObject progress = new JSObject();
+                    progress.put("currentPage", currentPage[0]);
+                    progress.put("totalPages", req.pages.size());
+                    progress.put("progress", (double) currentPage[0] / req.pages.size());
+                    notifyListeners("pdfProgress", progress);
+                    
                     mainHandler.post(this);
                 });
             }
@@ -419,6 +395,9 @@ public class HekaPrintPlugin extends Plugin {
             }
             
             getActivity().addContentView(webView, webView.getLayoutParams());
+            // Move off-screen so it doesn't cover the Capacitor WebView during rendering
+            webView.setTranslationX(-9999f);
+            webView.setTranslationY(-9999f);
             webView.loadUrl("file://" + tempFile.getAbsolutePath());
             tempFile.deleteOnExit();
             
@@ -430,7 +409,7 @@ public class HekaPrintPlugin extends Plugin {
         }
     }
     
-    private void writePdfDocument(PdfDocument pdfDocument, File pdfFile, PluginCall call) {
+    private void writePdfDocument(PdfDocument pdfDocument, File pdfFile, PluginCall call, boolean saveToDownloads) {
         try {
             try (FileOutputStream fos = new FileOutputStream(pdfFile)) {
                 pdfDocument.writeTo(fos);
@@ -445,18 +424,16 @@ public class HekaPrintPlugin extends Plugin {
             result.put("pageCount", pageCount);
             android.util.Log.d(TAG, "PDF saved successfully: " + pdfFile.getAbsolutePath() + " (" + pageCount + " pages)");
             
-            // Hide progress dialog before showing notification
-            hideProgressDialog();
-            
-            // Show download notification
-            showDownloadNotification(pdfFile);
+            // Show download notification only when explicitly saving
+            if (saveToDownloads) {
+                showDownloadNotification(pdfFile);
+            }
             
             call.resolve(result);
             
         } catch (IOException e) {
             android.util.Log.e(TAG, "Error writing PDF", e);
             pdfDocument.close();
-            hideProgressDialog();
             call.reject("Failed to write PDF: " + e.getMessage());
         }
     }
@@ -568,6 +545,7 @@ public class HekaPrintPlugin extends Plugin {
         }
         
         req.filename = call.getString("filename", "HEKA_Calendar");
+        req.saveToDownloads = call.getBoolean("saveToDownloads", true);
         
         return req;
     }
@@ -685,6 +663,7 @@ public class HekaPrintPlugin extends Plugin {
         List<String> pages;
         int pageWidth;
         int pageHeight;
+        boolean saveToDownloads;
     }
 
     private static class PaperDimensions {

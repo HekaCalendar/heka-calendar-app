@@ -85,35 +85,33 @@ function detectYods(
   aspects: Aspect[]
 ): ChartPattern[] {
   const patterns: ChartPattern[] = [];
-  const sextiles = aspects.filter(a => a.type === 'sextile');
-  const quincunxes = aspects.filter(a => a.type === 'quincunx');
+  const sextiles = aspects.filter(a => a.type === 'sextile' && a.orb < 3);
+  const quincunxes = aspects.filter(a => a.type === 'quincunx' && a.orb < 2.5);
   
   for (const sextile of sextiles) {
-    // Find a planet that both bodies in the sextile quincunx to
-    const apexCandidates = quincunxes.filter(q => 
-      (q.body1 === sextile.body1 || q.body1 === sextile.body2) &&
-      q.orb < 2
-    );
-    
-    for (const quincunx1 of apexCandidates) {
+    // Find apex planets that both sextile bodies quincunx to
+    for (const quincunx1 of quincunxes) {
+      const isBase1 = quincunx1.body1 === sextile.body1 || quincunx1.body2 === sextile.body1;
+      if (!isBase1) continue;
+      
       const apex = quincunx1.body1 === sextile.body1 ? quincunx1.body2 : quincunx1.body1;
       
-      // Check if the other sextile body also quincunxes to apex
+      // Check if the other sextile body also quincunxes to the same apex
       const quincunx2 = quincunxes.find(q => 
-        ((q.body1 === sextile.body2 && q.body2 === apex) ||
-         (q.body1 === apex && q.body2 === sextile.body2)) &&
-        q.orb < 2
+        (q !== quincunx1) && (
+          (q.body1 === sextile.body2 && q.body2 === apex) ||
+          (q.body1 === apex && q.body2 === sextile.body2)
+        )
       );
       
       if (quincunx2) {
-        const base1 = sextile.body1;
-        const base2 = sextile.body2;
+        const planets = [apex, sextile.body1, sextile.body2];
         
         patterns.push({
           type: 'yod',
           name: 'Yod (Finger of God)',
           description: `A fated configuration calling ${apex} to its divine purpose`,
-          planets: [apex, base1, base2],
+          planets,
           aspects: [sextile, quincunx1, quincunx2],
           strength: calculatePatternStrength([sextile, quincunx1, quincunx2]),
           interpretation: `The apex planet (${apex}) is under pressure to evolve. The sextile base provides resources, but the quincunxes demand constant adjustment. This is a karmic pointer to your soul's mission.`,
@@ -128,7 +126,7 @@ function detectYods(
     }
   }
   
-  return patterns;
+  return removeDuplicatePatterns(patterns);
 }
 
 /**
@@ -311,23 +309,39 @@ function detectKites(
 ): ChartPattern[] {
   const patterns: ChartPattern[] = [];
   const oppositions = aspects.filter(a => a.type === 'opposition' && a.orb < 3);
+  const sextiles = aspects.filter(a => a.type === 'sextile' && a.orb < 3);
   
   for (const trine of grandTrines) {
-    // Check if any planet in the trine opposes a planet outside it
+    const trinePlanets = trine.planets;
+    
     for (const opposition of oppositions) {
-      const trinePlanets = new Set(trine.planets);
+      const inTrineIdx = trinePlanets.findIndex(p => p === opposition.body1 || p === opposition.body2);
+      if (inTrineIdx === -1) continue;
       
-      const oneInTrine = trinePlanets.has(opposition.body1) || trinePlanets.has(opposition.body2);
-      const oneOutside = !trinePlanets.has(opposition.body1) || !trinePlanets.has(opposition.body2);
+      const trinePlanet = trinePlanets[inTrineIdx];
+      const oppositePlanet = opposition.body1 === trinePlanet ? opposition.body2 : opposition.body1;
       
-      if (oneInTrine && oneOutside) {
-        const allPlanets = [...new Set([...trine.planets, opposition.body1, opposition.body2])];
+      // The opposite planet must NOT be in the trine
+      if (trinePlanets.includes(oppositePlanet)) continue;
+      
+      // The opposite planet must sextile the other two trine planets
+      const otherTrinePlanets = trinePlanets.filter(p => p !== trinePlanet);
+      const sextilesBoth = sextiles.some(s =>
+        (s.body1 === oppositePlanet && s.body2 === otherTrinePlanets[0]) ||
+        (s.body2 === oppositePlanet && s.body1 === otherTrinePlanets[0])
+      ) && sextiles.some(s =>
+        (s.body1 === oppositePlanet && s.body2 === otherTrinePlanets[1]) ||
+        (s.body2 === oppositePlanet && s.body1 === otherTrinePlanets[1])
+      );
+      
+      if (sextilesBoth) {
+        const allPlanets = [...new Set([...trine.planets, oppositePlanet])] as PlanetId[];
         
         patterns.push({
           type: 'kite',
           name: 'Kite',
           description: 'Grand Trine with a release point',
-          planets: allPlanets as PlanetId[],
+          planets: allPlanets,
           aspects: [...trine.aspects, opposition],
           strength: calculatePatternStrength([...trine.aspects, opposition]),
           interpretation: 'The opposition provides an outlet for the Grand Trine\'s energy. This transforms lazy talent into active expression. The opposition planet shows where you manifest your gifts.',
@@ -448,36 +462,62 @@ function detectCradles(
   aspects: Aspect[]
 ): ChartPattern[] {
   const patterns: ChartPattern[] = [];
-  // Simplified detection - look for 3+ sextiles forming a chain
   const sextiles = aspects.filter(a => a.type === 'sextile' && a.orb < 3);
-  // const _trines = aspects.filter(a => a.type === 'trine' && a.orb < 3);
+  const trines = aspects.filter(a => a.type === 'trine' && a.orb < 3);
   
-  if (sextiles.length >= 3) {
-    // Find four planets connected by sextiles and one trine
-    const allSextilePlanets = new Set(sextiles.flatMap(s => [s.body1, s.body2]));
+  // A cradle requires 4 planets where:
+  // A sextile B, B sextile C, C sextile D, and A trine D
+  // (forming a shape with 3 sextiles and 1 trine)
+  for (const trine of trines) {
+    const a = trine.body1;
+    const d = trine.body2;
     
-    if (allSextilePlanets.size >= 4) {
-      const planetArray = Array.from(allSextilePlanets).slice(0, 4) as PlanetId[];
+    // Find planets B and C such that A-B-C-D are connected by sextiles
+    const bCandidates = sextiles
+      .filter(s => (s.body1 === a && s.body2 !== d) || (s.body2 === a && s.body1 !== d))
+      .map(s => s.body1 === a ? s.body2 : s.body1);
+    
+    for (const b of bCandidates) {
+      const cCandidates = sextiles
+        .filter(s => (s.body1 === b && s.body2 !== a && s.body2 !== d) || (s.body2 === b && s.body1 !== a && s.body1 !== d))
+        .map(s => s.body1 === b ? s.body2 : s.body1);
       
-      patterns.push({
-        type: 'cradle',
-        name: 'Cradle',
-        description: 'Supportive container for growth',
-        planets: planetArray,
-        aspects: sextiles.slice(0, 3),
-        strength: 6,
-        interpretation: 'You are held in a supportive energetic container. This provides safety to explore and grow, but may also keep you from necessary challenges. The trine offers an escape valve.',
-        lifeThemes: [
-          'Supportive environment for development',
-          'Natural charm and likeability',
-          'May avoid necessary confrontations',
-          'Healing and nurturing presence'
-        ]
-      });
+      for (const c of cCandidates) {
+        // Check if c sextiles d
+        const cSextilesD = sextiles.some(s =>
+          (s.body1 === c && s.body2 === d) || (s.body2 === c && s.body1 === d)
+        );
+        
+        if (cSextilesD) {
+          const planets = [a, b, c, d];
+          const cradleAspects = [
+            trine,
+            sextiles.find(s => (s.body1 === a && s.body2 === b) || (s.body2 === a && s.body1 === b))!,
+            sextiles.find(s => (s.body1 === b && s.body2 === c) || (s.body2 === b && s.body1 === c))!,
+            sextiles.find(s => (s.body1 === c && s.body2 === d) || (s.body2 === c && s.body1 === d))!,
+          ].filter(Boolean);
+          
+          patterns.push({
+            type: 'cradle',
+            name: 'Cradle',
+            description: 'Supportive container for growth',
+            planets,
+            aspects: cradleAspects,
+            strength: calculatePatternStrength(cradleAspects),
+            interpretation: 'You are held in a supportive energetic container. This provides safety to explore and grow, but may also keep you from necessary challenges. The trine offers an escape valve.',
+            lifeThemes: [
+              'Supportive environment for development',
+              'Natural charm and likeability',
+              'May avoid necessary confrontations',
+              'Healing and nurturing presence'
+            ]
+          });
+        }
+      }
     }
   }
   
-  return patterns;
+  return removeDuplicatePatterns(patterns);
 }
 
 /**
@@ -533,9 +573,20 @@ function detectThorsHammers(
 // ═══════════════════════════════════════════════════════════════════════════════
 
 function calculatePatternStrength(aspects: Aspect[]): number {
+  if (aspects.length === 0) return 5;
   const avgOrb = aspects.reduce((sum, a) => sum + a.orb, 0) / aspects.length;
   const exactBonus = aspects.filter(a => a.isExact).length * 2;
   return Math.min(Math.round((10 - avgOrb * 2) + exactBonus), 10);
+}
+
+function removeDuplicatePatterns(patterns: ChartPattern[]): ChartPattern[] {
+  const seen = new Set<string>();
+  return patterns.filter(p => {
+    const key = `${p.type}-${[...p.planets].sort().join('-')}`;
+    if (seen.has(key)) return false;
+    seen.add(key);
+    return true;
+  });
 }
 
 function getElementFromLongitude(longitude: number): string {
@@ -622,5 +673,17 @@ export const PATTERN_DESCRIPTIONS: Record<PatternType, {
     challenge: 'Constant stress requiring management'
   }
 };
+
+// Compatibility export for older code expecting the simpler Pattern type
+import type { Pattern } from '../../types';
+
+export function toLegacyPatterns(chartPatterns: ChartPattern[]): Pattern[] {
+  return chartPatterns.map(cp => ({
+    type: cp.type.replace('_', '-'),
+    planets: cp.planets,
+    description: cp.description,
+    strength: cp.strength / 10,
+  }));
+}
 
 export default detectPatterns;

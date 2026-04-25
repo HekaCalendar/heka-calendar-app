@@ -22,7 +22,7 @@ import { allTutorials, contextualHelpEntries, getTutorialById } from '../data/tu
 const STORAGE_KEY = 'heka-tutorial-state-v2';
 const ANALYTICS_KEY = 'heka-tutorial-analytics-v2';
 const TUTORIAL_VERSION_KEY = 'heka-tutorial-data-version';
-const CURRENT_TUTORIAL_VERSION = '2.2.0-elite'; // Bump this to force reset tutorials
+const CURRENT_TUTORIAL_VERSION = '2.2.1-celestial'; // Bump this to force reset tutorials
 
 // ═══════════════════════════════════════════════════════════════════════════════
 // DEFAULT STATE
@@ -1293,6 +1293,7 @@ class TutorialService {
    */
   trackNoteCreated(): void {
     localStorage.setItem('elite-step-04-note-created', 'true');
+    localStorage.setItem('tutorial-note-saved', 'true');
     console.log('[Tutorial] Note created');
     
     // Trigger validation check if we're on the note creation step
@@ -1440,14 +1441,15 @@ class TutorialService {
    * Check if onboarding is complete
    */
   isOnboardingComplete(): boolean {
-    return this.isTutorialCompleted('onboarding-main');
+    return this.isTutorialCompleted('celestial-awakening-v1') ||
+           this.isTutorialCompleted('elite-onboarding');
   }
 
   /**
    * Get next recommended tutorial
    */
   getRecommendedTutorial(): Tutorial | null {
-    const priority = ['onboarding-main', 'calendar-basics', 'astrology-intro', 'gamification-intro'];
+    const priority = ['celestial-awakening-v1', 'elite-onboarding', 'calendar-basics', 'astrology-intro', 'gamification-intro'];
     
     for (const id of priority) {
       if (!this.isTutorialCompleted(id)) {
@@ -1482,6 +1484,36 @@ class TutorialService {
     this.cleanupInteractiveStep();
     this.state = getDefaultState();
     this.notify();
+  }
+
+  /**
+   * Mark a specific tutorial as completed by ID (used by v2 onboarding to suppress legacy tutorials)
+   */
+  markTutorialCompleted(tutorialId: string): void {
+    let progress = this.getTutorialProgress(tutorialId);
+    
+    if (!progress) {
+      progress = {
+        tutorialId,
+        completed: true,
+        currentStepIndex: 0,
+        completedSteps: [],
+        startedAt: new Date().toISOString(),
+        completedAt: new Date().toISOString(),
+        skipped: false,
+        showCount: 1,
+      };
+      this.state.progress.push(progress);
+    } else {
+      progress.completed = true;
+      progress.completedAt = new Date().toISOString();
+    }
+    
+    if (!this.state.completedTutorials.includes(tutorialId)) {
+      this.state.completedTutorials.push(tutorialId);
+    }
+    
+    this.saveState();
   }
 
   // ═══════════════════════════════════════════════════════════════════════════════

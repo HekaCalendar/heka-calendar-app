@@ -7,20 +7,48 @@
 import type { NatalPlanet } from './natalChart';
 
 /**
- * Get current zodiac system preference from store
+ * Get current zodiac system preference from store (legacy)
  */
 export function getZodiacSystemPreference(): '12-sign' | '13-sign' {
   try {
     const persistedState = localStorage.getItem('heka-calendar-state');
     if (persistedState) {
       const state = JSON.parse(persistedState);
-      // Note: persisted state is the calendar state directly (not wrapped in calendar property)
-      return state.astroPreferences?.zodiacSystem || '12-sign';
+      const sys = state.astroPreferences?.zodiacSystem || '12-sign';
+      return sys === 'sidereal' ? '12-sign' : sys;
     }
   } catch (e) {
     console.warn('[ZodiacHelpers] Could not read zodiac preference:', e);
   }
   return '12-sign';
+}
+
+/** New split API: get zodiac frame (tropical | sidereal) from store */
+export function getZodiacFramePreference(): 'tropical' | 'sidereal' {
+  try {
+    const persistedState = localStorage.getItem('heka-calendar-state');
+    if (persistedState) {
+      const state = JSON.parse(persistedState);
+      return state.astroPreferences?.zodiacFrame || 'tropical';
+    }
+  } catch (e) {
+    console.warn('[ZodiacHelpers] Could not read zodiac frame:', e);
+  }
+  return 'tropical';
+}
+
+/** New split API: get sign count (12 | 13) from store */
+export function getSignCountPreference(): 12 | 13 {
+  try {
+    const persistedState = localStorage.getItem('heka-calendar-state');
+    if (persistedState) {
+      const state = JSON.parse(persistedState);
+      return state.astroPreferences?.signCount || 12;
+    }
+  } catch (e) {
+    console.warn('[ZodiacHelpers] Could not read sign count:', e);
+  }
+  return 12;
 }
 
 /**

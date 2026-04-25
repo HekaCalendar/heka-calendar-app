@@ -13,6 +13,7 @@ import type {
   CalculationState,
   ZodiacSign
 } from '../types';
+import type { TimeMode } from '../../types';
 
 // View types
 export type AstrologyView = 
@@ -60,12 +61,17 @@ export interface AstrologyState {
 // Default preferences
 const DEFAULT_PREFERENCES: ProfilePreferences = {
   zodiacSystem: '12-sign',
+  zodiacFrame: 'tropical',
+  signCount: 12,
   houseSystem: 'placidus',
   showAspects: true,
   showMinorAspects: false,
   showRetrogrades: true,
   showDignities: false,
-  defaultChartView: 'wheel'
+  defaultChartView: 'wheel',
+  ayanamsa: null,
+  showNakshatras: false,
+  nakshatraSystem: 'none',
 };
 
 // Initial state
@@ -227,9 +233,58 @@ const astrologySlice = createSlice({
     setPreferences: (state, action: PayloadAction<Partial<ProfilePreferences>>) => {
       state.preferences = { ...state.preferences, ...action.payload };
     },
-    
+
     resetPreferences: (state) => {
       state.preferences = DEFAULT_PREFERENCES;
+    },
+
+    /**
+     * Apply mode-driven celestial defaults.
+     * Called when the user switches between SYNC and TRUE calendar modes.
+     * SYNC  = tropical, Placidus, no Nakshatras
+     * TRUE  = sidereal, whole-sign, Lahiri, Nakshatras visible
+     */
+    applyModeDefaults: (state, action: PayloadAction<TimeMode>) => {
+      const mode = action.payload;
+      const newPrefs: ProfilePreferences = mode === 'TRUE'
+        ? {
+            ...state.preferences,
+            zodiacSystem: 'sidereal',
+            zodiacFrame: 'sidereal',
+            signCount: 13,
+            houseSystem: 'whole-sign',
+            ayanamsa: 'lahiri',
+            showNakshatras: true,
+            nakshatraSystem: 'vedic-27',
+            showDignities: true,
+          }
+        : {
+            ...state.preferences,
+            zodiacSystem: '12-sign',
+            zodiacFrame: 'tropical',
+            signCount: 12,
+            houseSystem: 'placidus',
+            ayanamsa: null,
+            showNakshatras: false,
+            nakshatraSystem: 'none',
+            showDignities: false,
+          };
+
+      // Update global preferences
+      state.preferences = newPrefs;
+
+      // CRITICAL: Also update every stored profile's preferences so charts
+      // recalculate correctly when reloaded from storage.
+      const profileIds = Object.keys(state.entities.profiles) as ProfileId[];
+      for (const profileId of profileIds) {
+        const profile = state.entities.profiles[profileId];
+        if (profile) {
+          state.entities.profiles[profileId] = {
+            ...profile,
+            preferences: { ...profile.preferences, ...newPrefs },
+          };
+        }
+      }
     },
     
     // Calculation state
@@ -278,6 +333,7 @@ export const {
   resetChartDisplayOptions,
   setPreferences,
   resetPreferences,
+  applyModeDefaults,
   setCalculationStatus,
   setCalculationProgress,
   setCalculationError,

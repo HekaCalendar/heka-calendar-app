@@ -48,6 +48,7 @@ const SIGN_SYMBOLS: Record<string, string> = {
   aries: '♈', taurus: '♉', gemini: '♊', cancer: '♋',
   leo: '♌', virgo: '♍', libra: '♎', scorpio: '♏',
   sagittarius: '♐', capricorn: '♑', aquarius: '♒', pisces: '♓',
+  ophiuchus: '⛎',
 };
 
 const DIGNITY_CONFIG: Record<string, { 
@@ -119,14 +120,14 @@ export const DignityDashboard: React.FC<DignityDashboardProps> = ({
         
         return {
           id,
-          name: PLANET_DATA[id].name,
-          symbol: PLANET_DATA[id].symbol,
+          name: PLANET_DATA[id]?.name || id,
+          symbol: PLANET_DATA[id]?.symbol || '?',
           sign: planet.sign,
           signSymbol: SIGN_SYMBOLS[planet.sign] || '?',
           dignity,
           score: dignityConfig.score + angularBonus,
           house: planet.house,
-          color: PLANET_DATA[id].color,
+          color: PLANET_DATA[id]?.color || '#fff',
           description: dignityConfig.description,
         };
       })

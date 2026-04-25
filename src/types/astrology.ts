@@ -167,6 +167,8 @@ export interface AstroTip {
 
 // User Preferences
 export type ZodiacSystem = '12-sign' | '13-sign';
+export type ZodiacFrame = 'tropical' | 'sidereal';
+export type SignCount = 12 | 13;
 export type HouseSystem = 'placidus' | 'whole-sign' | 'equal' | 'koch';
 export type AspectSet = 'major-only' | 'with-minor' | 'all';
 
@@ -188,6 +190,8 @@ export interface AstroProfile {
   // User preferences
   preferences: {
     zodiacSystem: ZodiacSystem;
+    zodiacFrame: ZodiacFrame;
+    signCount: SignCount;
     houseSystem: HouseSystem;
     aspectSet: AspectSet;
     showArabianParts: boolean;
@@ -590,56 +594,6 @@ export const PLANETS: Record<Planet, PlanetData> = {
   },
 };
 
-// Get sign from longitude
-export function getSignFromLongitude(longitude: number, use13Sign: boolean = false): ZodiacSign {
-  const normalized = ((longitude % 360) + 360) % 360;
-  
-  if (use13Sign) {
-    // 13-sign zodiac with Ophiuchus
-    const signNames13: ZodiacSign[] = [
-      'aries', 'taurus', 'gemini', 'cancer',
-      'leo', 'virgo', 'libra', 'scorpio',
-      'ophiuchus', 'sagittarius', 'capricorn', 'aquarius', 'pisces'
-    ];
-    const index = Math.floor(normalized / 30);
-    return signNames13[index];
-  }
-  
-  // Standard 12-sign zodiac
-  const signNames12: ZodiacSign[] = [
-    'aries', 'taurus', 'gemini', 'cancer',
-    'leo', 'virgo', 'libra', 'scorpio',
-    'sagittarius', 'capricorn', 'aquarius', 'pisces'
-  ];
-  const index = Math.floor(normalized / 30);
-  return signNames12[index];
-}
-
-// Get degree within sign (0-29.99)
-export function getDegreeInSign(longitude: number): number {
-  const normalized = ((longitude % 360) + 360) % 360;
-  return normalized % 30;
-}
-
-// Format position for display (e.g., "15° 32' Leo")
-export function formatPosition(longitude: number): string {
-  const sign = getSignFromLongitude(longitude);
-  const degree = Math.floor(getDegreeInSign(longitude));
-  const minutes = Math.floor((getDegreeInSign(longitude) % 1) * 60);
-  const signData = ZODIAC_SIGNS[sign];
-  return `${degree}° ${minutes.toString().padStart(2, '0')}' ${signData.symbol} ${signData.name}`;
-}
-
-// Format aspect
-export function formatAspect(aspect: Aspect): string {
-  const p1 = PLANETS[aspect.planet1].symbol;
-  const p2 = PLANETS[aspect.planet2].symbol;
-  const aspectSymbols: Record<AspectType, string> = {
-    conjunction: '☌',
-    sextile: '⚹',
-    square: '□',
-    trine: '△',
-    opposition: '☍',
-  };
-  return `${p1} ${aspectSymbols[aspect.type]} ${p2} (${aspect.orb.toFixed(1)}°)`;
-}
+// NOTE: getSignFromLongitude, getDegreeInSign, formatPosition, and formatAspect
+// have been removed from this file. Use the boundary-aware versions from
+// src/astrology/types/core.ts instead.

@@ -2,6 +2,8 @@
  * Swiss Ephemeris WebAssembly Service
  */
 
+import { getSignFromLongitude, toDegree, getDegreeInSign } from '../../types/core';
+
 const logger = {
   info: (...args: any[]) => console.log('[SwissEphemeris]', ...args),
   warn: (...args: any[]) => console.warn('[SwissEphemeris]', ...args),
@@ -43,6 +45,61 @@ export const SEFLG_NOABERR = 2048;
 export const SEFLG_TOPOCTR = 32768;
 export const SEFLG_SIDEREAL = 65536;
 export const SEFLG_ICRS = 131072;
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// SIDEREAL MODE CONSTANTS (Swiss Ephemeris ayanamsa systems)
+// ═══════════════════════════════════════════════════════════════════════════════
+
+export const SE_SIDM_FAGAN_BRADLEY = 0;
+export const SE_SIDM_LAHIRI = 1;
+export const SE_SIDM_RAMAN = 2;
+export const SE_SIDM_DE_LUCE = 9;
+export const SE_SIDM_KRISHNAMURTI = 5;
+export const SE_SIDM_JN_BHASIN = 8;
+export const SE_SIDM_YUKTESHWAR = 6;
+
+/** Map HEKA SiderealSystem names to Swiss Ephemeris sidereal mode constants */
+export const SIDEREAL_MODE_MAP: Record<string, number> = {
+  'fagan_bradley': SE_SIDM_FAGAN_BRADLEY,
+  'lahiri': SE_SIDM_LAHIRI,
+  'raman': SE_SIDM_RAMAN,
+  'de_luce': SE_SIDM_DE_LUCE,
+  'krishnamurti': SE_SIDM_KRISHNAMURTI,
+  'jn_bhasin': SE_SIDM_JN_BHASIN,
+  'yukteswar': SE_SIDM_YUKTESHWAR,
+};
+
+/** Currently active sidereal mode (null = tropical) */
+let currentSiderealMode: number | null = null;
+
+export function setSiderealMode(mode: string | null): void {
+  if (mode === null) {
+    currentSiderealMode = null;
+    return;
+  }
+  currentSiderealMode = SIDEREAL_MODE_MAP[mode] ?? SE_SIDM_LAHIRI;
+  // Tell the WASM engine which sidereal mode to use
+  if (swissModule && swissModule.set_sid_mode) {
+    swissModule.set_sid_mode(currentSiderealMode, 0, 0);
+  }
+}
+
+export function getSiderealMode(): number | null {
+  return currentSiderealMode;
+}
+
+export function calculateAyanamsa(jd: number): number {
+  if (!swissModule) {
+    // Fallback: Lahiri ayanamsa approximation (~23.86° at J2000, precesses 1° per 72 years)
+    const yearsSince2000 = (jd - 2451545.0) / 365.25;
+    return 23.86 + yearsSince2000 * (50.29 / 3600); // 50.29 arcsec/year
+  }
+  if (swissModule.get_ayanamsa_ex_ut) {
+    const aya = swissModule.get_ayanamsa_ex_ut(jd, SEFLG_SIDEREAL);
+    return aya?.ayanamsa ?? 0;
+  }
+  return 0;
+}
 
 const DEFAULT_FLAGS = SEFLG_SPEED;
 
@@ -150,9 +207,15 @@ async function loadWASM(): Promise<boolean> {
       return false;
     }
     
-    const swissephModule = await import(SWISSEPH_JS_PATH);
+    let swissephModule: any;
+    try {
+      swissephModule = await import(SWISSEPH_JS_PATH);
+    } catch {
+      console.warn('[SwissEphemeris] Module import failed (dev server may block public files), using fallback');
+      return false;
+    }
     if (!swissephModule) {
-      console.warn('[SwissEphemeris] Module import failed, using fallback');
+      console.warn('[SwissEphemeris] Module import returned empty, using fallback');
       return false;
     }
     
@@ -298,15 +361,80 @@ function wrapModule(Module: any): any {
         return mockCalcUt();
       }
     },
-    houses_ex: (jd: number, s: number, lat: number, lon: number) => {
-      const fn = funcs['_swe_houses_ex'] || funcs['_swe_houses'];
-      if (fn) return fn(jd, s, lat, lon);
-      return mockHouses();
+    houses_ex: (jd: number, iflag: number, lat: number, lon: number, hsys: number) => {
+      const mallocFn = funcs['_malloc'];
+      const freeFn = funcs['_free'];
+      const housesExFn = funcs['_swe_houses_ex'];
+      const housesFn = funcs['_swe_houses'];
+
+      if (!mallocFn || !freeFn || !Module.HEAPF64) {
+        return mockHouses();
+      }
+
+      try {
+        // Allocate memory: cusps[13] + ascmc[10]
+        const cuspsPtr = mallocFn(13 * 8);
+        const ascmcPtr = mallocFn(10 * 8);
+        let ret: number;
+
+        if (housesExFn) {
+          ret = housesExFn(jd, iflag, lat, lon, hsys, cuspsPtr, ascmcPtr);
+        } else if (housesFn) {
+          ret = housesFn(jd, lat, lon, hsys, cuspsPtr, ascmcPtr);
+        } else {
+          freeFn(cuspsPtr);
+          freeFn(ascmcPtr);
+          return mockHouses();
+        }
+
+        const cuspsArr = new Float64Array(Module.HEAPF64.buffer, cuspsPtr, 13);
+        const ascmcArr = new Float64Array(Module.HEAPF64.buffer, ascmcPtr, 10);
+
+        const result: any = { error: ret !== 0 ? ret : null };
+        // Swiss Ephemeris: cusps[1..12] = houses 1..12
+        for (let i = 0; i < 12; i++) {
+          result[i] = cuspsArr[i + 1];
+        }
+        result.ascendant = ascmcArr[0];
+        result.mc = ascmcArr[1];
+
+        freeFn(cuspsPtr);
+        freeFn(ascmcPtr);
+        return result;
+      } catch {
+        return mockHouses();
+      }
     },
-    houses: (jd: number, s: number, lat: number, lon: number) => {
-      const fn = funcs['_swe_houses'] || funcs['_swe_houses_ex'];
-      if (fn) return fn(jd, s, lat, lon);
-      return mockHouses();
+    houses: (jd: number, lat: number, lon: number, hsys: number) => {
+      const mallocFn = funcs['_malloc'];
+      const freeFn = funcs['_free'];
+      const housesFn = funcs['_swe_houses'];
+
+      if (!mallocFn || !freeFn || !Module.HEAPF64 || !housesFn) {
+        return mockHouses();
+      }
+
+      try {
+        const cuspsPtr = mallocFn(13 * 8);
+        const ascmcPtr = mallocFn(10 * 8);
+        const ret = housesFn(jd, lat, lon, hsys, cuspsPtr, ascmcPtr);
+
+        const cuspsArr = new Float64Array(Module.HEAPF64.buffer, cuspsPtr, 13);
+        const ascmcArr = new Float64Array(Module.HEAPF64.buffer, ascmcPtr, 10);
+
+        const result: any = { error: ret !== 0 ? ret : null };
+        for (let i = 0; i < 12; i++) {
+          result[i] = cuspsArr[i + 1];
+        }
+        result.ascendant = ascmcArr[0];
+        result.mc = ascmcArr[1];
+
+        freeFn(cuspsPtr);
+        freeFn(ascmcPtr);
+        return result;
+      } catch {
+        return mockHouses();
+      }
     },
     sidtime: (jd: number) => {
       const fn = funcs['_swe_sidtime'];
@@ -323,14 +451,30 @@ function wrapModule(Module: any): any {
   };
 }
 
-let currentZodiacSystem: '12-sign' | '13-sign' = '12-sign';
+let currentZodiacSystem: '12-sign' | '13-sign' | 'sidereal' = '12-sign';
+let currentZodiacFrame: 'tropical' | 'sidereal' = 'tropical';
+let currentSignCount: 12 | 13 = 12;
 
 export function isSwissReady(): boolean { return swissModule !== null; }
 export function isSwissEphemerisReady(): boolean { return isSwissReady(); }
 export function isUsingFallback(): boolean { return isFallbackMode; }
 export function isSwissEphemerisFallback(): boolean { return isFallbackMode; }
-export function setZodiacSystem(s: '12-sign' | '13-sign') { currentZodiacSystem = s; }
-export function getZodiacSystem(): '12-sign' | '13-sign' { return currentZodiacSystem; }
+export function getIsFallbackMode(): boolean { return isFallbackMode; }
+
+/** Legacy — kept for backward compat during transition */
+export function setZodiacSystem(s: '12-sign' | '13-sign' | 'sidereal') {
+  currentZodiacSystem = s;
+  if (s === 'sidereal') { currentZodiacFrame = 'sidereal'; currentSignCount = 12; }
+  else if (s === '13-sign') { currentZodiacFrame = 'tropical'; currentSignCount = 13; }
+  else { currentZodiacFrame = 'tropical'; currentSignCount = 12; }
+}
+export function getZodiacSystem(): '12-sign' | '13-sign' | 'sidereal' { return currentZodiacSystem; }
+
+/** New split API */
+export function setZodiacFrame(f: 'tropical' | 'sidereal') { currentZodiacFrame = f; }
+export function getZodiacFrame(): 'tropical' | 'sidereal' { return currentZodiacFrame; }
+export function setSignCount(n: 12 | 13) { currentSignCount = n; }
+export function getSignCount(): 12 | 13 { return currentSignCount; }
 
 export function calculateJulianDay(y: number, m: number, d: number, h: number, min: number, s: number = 0, g: number = SE_GREG_CAL): number {
   const hour = h + min / 60 + s / 3600;
@@ -363,28 +507,96 @@ function getSign(lon: number): string {
   return ['aries', 'taurus', 'gemini', 'cancer', 'leo', 'virgo', 'libra', 'scorpio', 'sagittarius', 'capricorn', 'aquarius', 'pisces'][Math.floor(lon / 30) % 12];
 }
 
-export function calculateAllPlanets(jd: number, planets?: string[], _?: boolean): any {
+export interface CalcOptions {
+  zodiacSystem?: '12-sign' | '13-sign' | 'sidereal'; // legacy — overrides frame+count if provided
+  zodiacFrame?: 'tropical' | 'sidereal';
+  signCount?: 12 | 13;
+}
+
+function resolveCalcOptions(opts?: CalcOptions | '12-sign' | '13-sign' | 'sidereal') {
+  // If a plain legacy string is passed, wrap it
+  if (typeof opts === 'string') {
+    return {
+      isSidereal: opts === 'sidereal',
+      use13Signs: opts === '13-sign',
+    };
+  }
+  // If legacy zodiacSystem is provided inside CalcOptions, derive from it
+  if (opts?.zodiacSystem) {
+    const s = opts.zodiacSystem;
+    return {
+      isSidereal: s === 'sidereal',
+      use13Signs: s === '13-sign',
+    };
+  }
+  // Otherwise use new split fields (default to module-level globals)
+  const frame = opts?.zodiacFrame ?? currentZodiacFrame;
+  const count = opts?.signCount ?? currentSignCount;
+  return {
+    isSidereal: frame === 'sidereal',
+    use13Signs: count === 13,
+  };
+}
+
+export function calculateAllPlanets(jd: number, planets?: string[], opts?: CalcOptions | '12-sign' | '13-sign' | 'sidereal'): any {
   if (!swissModule) return {};
+  const { isSidereal, use13Signs } = resolveCalcOptions(opts);
+  const flags = isSidereal ? (DEFAULT_FLAGS | SEFLG_SIDEREAL) : DEFAULT_FLAGS;
   const res: any = {};
   for (const name of (planets || Object.keys(planetNameToId))) {
     const id = planetNameToId[name.toLowerCase()];
     if (id === undefined) continue;
     try {
-      const p = swissModule.calc_ut(jd, id, DEFAULT_FLAGS);
-      res[name.toLowerCase()] = { id: name.toLowerCase(), longitude: p.longitude, latitude: p.latitude, distance: p.distance, speed: p.longitudeSpeed, isRetrograde: p.longitudeSpeed < 0, sign: getSign(p.longitude), degreeInSign: p.longitude % 30 };
+      const p = swissModule.calc_ut(jd, id, flags);
+      // Real WASM engine: SEFLG_SIDEREAL causes calc_ut to return sidereal longitudes directly.
+      // Fallback/mock engine ignores flags, so we must subtract ayanamsa manually.
+      const lon = isSidereal && isFallbackMode
+        ? (p.longitude - calculateAyanamsa(jd) + 360) % 360
+        : p.longitude;
+      res[name.toLowerCase()] = {
+        id: name.toLowerCase(),
+        longitude: lon,
+        latitude: p.latitude,
+        distance: p.distance,
+        speed: p.longitudeSpeed,
+        isRetrograde: p.longitudeSpeed < 0,
+        sign: use13Signs ? getSignFromLongitude(toDegree(lon), true) : getSign(lon),
+        degreeInSign: getDegreeInSign(toDegree(lon), use13Signs)
+      };
     } catch {}
   }
   return res;
 }
 
-export function calculateHouses(jd: number, loc: { latitude: number; longitude: number; altitude?: number }, hs: string = 'P'): any {
+export function calculateHouses(jd: number, loc: { latitude: number; longitude: number; altitude?: number }, hs: string = 'P', opts?: CalcOptions | '12-sign' | '13-sign' | 'sidereal'): any {
   if (!swissModule) return { ascendant: 0, mc: 0, ic: 180, dsc: 180, cusps: Array(12).fill({ longitude: 0, sign: 'aries' }) };
+  const { isSidereal, use13Signs } = resolveCalcOptions(opts);
   const hmap: Record<string, number> = { 'P': 80, 'K': 75, 'E': 69, 'W': 87, 'R': 82, 'C': 67, 'O': 79 };
   const sc = hmap[hs] || 80;
-  const h = swissModule.houses_ex(jd, sc, loc.latitude, loc.longitude);
+  const flags = isSidereal ? (DEFAULT_FLAGS | SEFLG_SIDEREAL) : DEFAULT_FLAGS;
+  // Real WASM: houses_ex receives (jd, iflag, lat, lon, hsys)
+  // Fallback/mock ignores iflag and returns tropical cusps
+  const h = swissModule.houses_ex(jd, flags, loc.latitude, loc.longitude, sc);
   const cusps = [];
-  for (let i = 0; i < 12; i++) cusps.push({ longitude: h[i] || 0, sign: getSign(h[i] || 0) });
-  return { ascendant: h.ascendant || cusps[0]?.longitude || 0, mc: h.mc || cusps[9]?.longitude || 0, ic: (h.mc || cusps[9]?.longitude || 0) + 180 % 360, dsc: (h.ascendant || cusps[0]?.longitude || 0) + 180 % 360, cusps };
+  for (let i = 0; i < 12; i++) {
+    const lon = h[i] || 0;
+    // Real WASM with SEFLG_SIDEREAL returns sidereal cusps directly.
+    // Fallback/mock returns tropical cusps — manual subtraction needed.
+    const siderealLon = isSidereal && isFallbackMode
+      ? (lon - calculateAyanamsa(jd) + 360) % 360
+      : lon;
+    cusps.push({ longitude: siderealLon, sign: use13Signs ? getSignFromLongitude(toDegree(siderealLon), true) : getSign(siderealLon) });
+  }
+  // Ascendant and MC also need conversion in fallback mode
+  const rawAscendant = h.ascendant || cusps[0]?.longitude || 0;
+  const rawMc = h.mc || cusps[9]?.longitude || 0;
+  const ascendant = isSidereal && isFallbackMode
+    ? (rawAscendant - calculateAyanamsa(jd) + 360) % 360
+    : rawAscendant;
+  const mc = isSidereal && isFallbackMode
+    ? (rawMc - calculateAyanamsa(jd) + 360) % 360
+    : rawMc;
+  return { ascendant, mc, ic: (mc + 180) % 360, dsc: (ascendant + 180) % 360, cusps };
 }
 
 export function calculateSiderealTime(jd: number) { 
@@ -403,18 +615,30 @@ export function calculateRiseTransitSet(jd: number, p: number, lat: number, lon:
 
 export async function calculateSunrise(d: Date, lat: number, lon: number): Promise<Date | null> {
   try {
-    const jd = calculateJulianDay(d.getFullYear(), d.getMonth() + 1, d.getDate(), 0, 0, 0);
+    const jd = calculateJulianDay(d.getUTCFullYear(), d.getUTCMonth() + 1, d.getUTCDate(), 0, 0, 0);
     const r = calculateRiseTransitSet(jd, SE_SUN, lat, lon);
-    if (r.rise) { const nd = new Date(d); const h = (r.rise - Math.floor(r.rise)) * 24; nd.setHours(Math.floor(h), Math.floor((h % 1) * 60), 0, 0); return nd; }
+    if (r.rise) {
+      const totalHours = (r.rise - Math.floor(r.rise)) * 24;
+      const h = Math.floor(totalHours);
+      const m = Math.floor((totalHours % 1) * 60);
+      // Return true UTC Date so downstream can convert to location timezone
+      return new Date(Date.UTC(d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDate(), h, m, 0));
+    }
   } catch {}
   return null;
 }
 
 export async function calculateSunset(d: Date, lat: number, lon: number): Promise<Date | null> {
   try {
-    const jd = calculateJulianDay(d.getFullYear(), d.getMonth() + 1, d.getDate(), 0, 0, 0);
+    const jd = calculateJulianDay(d.getUTCFullYear(), d.getUTCMonth() + 1, d.getUTCDate(), 0, 0, 0);
     const r = calculateRiseTransitSet(jd, SE_SUN, lat, lon);
-    if (r.set) { const nd = new Date(d); const h = (r.set - Math.floor(r.set)) * 24; nd.setHours(Math.floor(h), Math.floor((h % 1) * 60), 0, 0); return nd; }
+    if (r.set) {
+      const totalHours = (r.set - Math.floor(r.set)) * 24;
+      const h = Math.floor(totalHours);
+      const m = Math.floor((totalHours % 1) * 60);
+      // Return true UTC Date so downstream can convert to location timezone
+      return new Date(Date.UTC(d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDate(), h, m, 0));
+    }
   } catch {}
   return null;
 }
@@ -427,12 +651,80 @@ export async function reinitializeWithFallback(): Promise<void> {
   initializationComplete = true;
 }
 
+/**
+ * Convert a birth date/time in a specific timezone to an equivalent UTC Date.
+ * Critical for accurate ephemeris calculations across timezones.
+ */
+export function birthDateTimeToUTC(dateStr: string, timeStr: string, timezone: string): Date {
+  const [year, month, day] = dateStr.split('-').map(Number);
+  const [hour, minute] = timeStr.split(':').map(Number);
+
+  // Start with an estimate: assume the given components are UTC
+  let utc = new Date(Date.UTC(year, month - 1, day, hour, minute));
+
+  const fmt = new Intl.DateTimeFormat('en-US', {
+    timeZone: timezone,
+    year: 'numeric',
+    month: 'numeric',
+    day: 'numeric',
+    hour: 'numeric',
+    minute: 'numeric',
+    second: 'numeric',
+    hour12: false,
+  });
+
+  // Iterate to converge (usually 1-2 iterations, handles DST edge cases)
+  for (let i = 0; i < 3; i++) {
+    const parts = fmt.formatToParts(utc);
+    const get = (type: string) => Number(parts.find((p) => p.type === type)?.value);
+    const actualYear = get('year');
+    const actualMonth = get('month');
+    const actualDay = get('day');
+    const actualHour = get('hour');
+    const actualMinute = get('minute');
+
+    const desiredMs = Date.UTC(year, month - 1, day, hour, minute);
+    const actualMs = Date.UTC(actualYear, actualMonth - 1, actualDay, actualHour, actualMinute);
+    const diff = desiredMs - actualMs;
+
+    if (Math.abs(diff) < 1000) break;
+    utc = new Date(utc.getTime() + diff);
+  }
+
+  return utc;
+}
+
 export async function generateNatalChart(params: any): Promise<any> {
-  setZodiacSystem(params.zodiacSystem);
-  const dt = new Date(`${params.birthData.birthDate}T${params.birthData.birthTime}`);
-  const jd = calculateJulianDay(dt.getFullYear(), dt.getMonth() + 1, dt.getDate(), dt.getHours(), dt.getMinutes(), 0);
-  const planets = calculateAllPlanets(jd, undefined, params.zodiacSystem === '13-sign');
-  const houses = calculateHouses(jd, { latitude: params.birthData.location.latitude, longitude: params.birthData.location.longitude, altitude: params.birthData.location.altitude || 0 }, params.houseSystem);
+  const frame: 'tropical' | 'sidereal' = params.zodiacFrame || (params.zodiacSystem === 'sidereal' ? 'sidereal' : 'tropical');
+  const count: 12 | 13 = params.signCount ?? (params.zodiacSystem === '13-sign' ? 13 : 12);
+  setZodiacFrame(frame);
+  setSignCount(count);
+  // Also update legacy module state for callers still reading it
+  setZodiacSystem(params.zodiacSystem || (frame === 'sidereal' ? 'sidereal' : count === 13 ? '13-sign' : '12-sign'));
+
+  const dt = birthDateTimeToUTC(params.birthData.birthDate, params.birthData.birthTime, params.birthData.timezone);
+  const jd = calculateJulianDay(dt.getUTCFullYear(), dt.getUTCMonth() + 1, dt.getUTCDate(), dt.getUTCHours(), dt.getUTCMinutes(), 0);
+  const calcOpts: CalcOptions = { zodiacFrame: frame, signCount: count };
+  const planets = calculateAllPlanets(jd, undefined, calcOpts);
+  const houses = calculateHouses(jd, { latitude: params.birthData.location.latitude, longitude: params.birthData.location.longitude, altitude: params.birthData.location.altitude || 0 }, params.houseSystem, calcOpts);
   const cid = `chart-${params.profileId}-${Date.now()}`;
-  return { id: cid as any, profileId: params.profileId, birthData: params.birthData, bodies: planets, houses, aspects: [], patterns: [], dignities: [], elementalBalance: { fire: 0, earth: 0, air: 0, water: 0 }, modalBalance: { cardinal: 0, fixed: 0, mutable: 0 }, julianDay: jd, calculatedAt: new Date().toISOString(), version: 1, zodiacSystem: params.zodiacSystem, houseSystem: params.houseSystem };
+  return {
+    id: cid as any,
+    profileId: params.profileId,
+    birthData: params.birthData,
+    bodies: planets,
+    houses,
+    aspects: [],
+    patterns: [],
+    dignities: [],
+    elementalBalance: { fire: 0, earth: 0, air: 0, water: 0 },
+    modalBalance: { cardinal: 0, fixed: 0, mutable: 0 },
+    julianDay: jd,
+    calculatedAt: new Date().toISOString(),
+    version: 1,
+    zodiacSystem: params.zodiacSystem || (frame === 'sidereal' ? 'sidereal' : count === 13 ? '13-sign' : '12-sign'),
+    zodiacFrame: frame,
+    signCount: count,
+    houseSystem: params.houseSystem
+  };
 }

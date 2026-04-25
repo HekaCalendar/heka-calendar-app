@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="../icon-192.png">
+
     <title>Structure | HEKA</title>
     <meta name="description" content="The complete structure of the HEKA calendar: thirteen months of twenty-eight days, the three arcs, and the correction in March.">
     
@@ -664,7 +666,7 @@
                 </div>
                 
                 <p style="color: var(--light-secondary); margin-bottom: 48px; max-width: 700px;">
-                    In the Gregorian calendar, the 15th could be Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, or Sunday depending on the month. In HEKA, every month is identical. The 15th is always the same day, all year long.
+                    In the Gregorian calendar, the 15th could be Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, or Sunday depending on the month. In HEKA, every month is identical. Within any single year, the 15th is the same weekday in every month.
                 </p>
                 
                 <!-- Elegant Week Visual -->
@@ -710,7 +712,7 @@
                         <!-- The Point -->
                         <div style="text-align: center; padding: 32px; background: var(--void); border: 1px solid var(--veil);">
                             <p style="font-family: var(--font-wisdom); font-size: 1.4rem; color: var(--gold); font-style: italic; margin-bottom: 16px;">
-                                "The 15th is always the same weekday. Every month. All year."
+                                "Within a single year, the 15th is the same weekday. Every month."
                             </p>
                             <p style="color: var(--light-tertiary); font-size: 0.9rem;">
                                 No calculation needed. No checking required. You just know.
@@ -756,7 +758,7 @@
                         <div style="text-align: center;">
                             <div style="font-family: var(--font-ritual); font-size: 0.75rem; letter-spacing: 0.2em; color: var(--gold); margin-bottom: 16px;">HEKA</div>
                             <div style="font-size: 1.2rem; color: var(--light-primary); margin-bottom: 8px;">The 15th is...</div>
-                            <div style="font-size: 0.9rem; color: var(--light-secondary);">Always the same weekday.<br>Every month. All year.</div>
+                            <div style="font-size: 0.9rem; color: var(--light-secondary);">Same weekday every month.<br>Within each year.</div>
                         </div>
                     </div>
                 </div>
@@ -787,8 +789,8 @@
                         <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; margin-bottom: 48px;">
                             <div style="text-align: center; padding: 32px 24px; background: var(--void); border: 1px solid var(--veil);">
                                 <div style="font-family: var(--font-ritual); font-size: 3rem; font-weight: 600; color: var(--light-primary);">12</div>
-                                <div style="font-size: 0.85rem; color: var(--light-tertiary); margin-top: 8px;">Regular Months</div>
-                                <div style="font-size: 0.75rem; color: var(--light-tertiary); margin-top: 4px;">28 days each</div>
+                                <div style="font-size: 0.85rem; color: var(--light-tertiary); margin-top: 8px;">Months of 28 Days</div>
+                                <div style="font-size: 0.75rem; color: var(--light-tertiary); margin-top: 4px;">Plus March (29–30)</div>
                             </div>
                             <div style="text-align: center; padding: 32px 24px; background: var(--void); border: 1px solid var(--veil);">
                                 <div style="font-family: var(--font-ritual); font-size: 3rem; font-weight: 600; color: var(--light-primary);">336</div>
@@ -826,6 +828,24 @@
                                 </div>
                             </div>
                         </div>
+                    </div>
+                </div>
+                
+                <!-- Two Ways to Calculate -->
+                <div style="margin-top: 48px; display: grid; grid-template-columns: 1fr 1fr; gap: 24px;">
+                    <div style="padding: 32px; background: linear-gradient(135deg, rgba(59, 130, 246, 0.05), rgba(59, 130, 246, 0.02)); border: 1px solid rgba(59, 130, 246, 0.15);">
+                        <div style="font-family: var(--font-ritual); font-size: 0.7rem; letter-spacing: 0.2em; color: #3b82f6; margin-bottom: 12px;">SYNC MODE</div>
+                        <h4 style="font-size: 1.3rem; margin-bottom: 12px;">The Bridge</h4>
+                        <p style="color: var(--light-secondary); font-size: 0.95rem; line-height: 1.7;">
+                            March has 30 days when the <em>next</em> Gregorian year is a leap year. This keeps April 1st locked to civil April 1st forever. Best for coordinating with the Gregorian world.
+                        </p>
+                    </div>
+                    <div style="padding: 32px; background: linear-gradient(135deg, rgba(212, 175, 55, 0.05), rgba(212, 175, 55, 0.02)); border: 1px solid rgba(212, 175, 55, 0.15);">
+                        <div style="font-family: var(--font-ritual); font-size: 0.7rem; letter-spacing: 0.2em; color: var(--gold); margin-bottom: 12px;">TRUE MODE</div>
+                        <h4 style="font-size: 1.3rem; margin-bottom: 12px;">The Deep Current</h4>
+                        <p style="color: var(--light-secondary); font-size: 0.95rem; line-height: 1.7;">
+                            March has 30 days every 4th year except every 128th. Mean year: 365.242188 days. Matches the tropical year within 0.00001 days. For those who want the calendar and the sun to agree.
+                        </p>
                     </div>
                 </div>
                 

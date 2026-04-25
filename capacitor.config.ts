@@ -3,10 +3,10 @@ import type { CapacitorConfig } from '@capacitor/cli';
 const config: CapacitorConfig = {
   appId: 'com.heka.calendar',
   appName: 'HEKA Calendar',
-  webDir: 'dist',
+  webDir: 'dist2',
   server: {
-    // Allow cleartext for local dev
-    cleartext: true,
+    // Production: cleartext disabled (HTTPS only)
+    // cleartext: true, // Enable only for local dev
   },
   plugins: {
     SplashScreen: {
@@ -16,8 +16,10 @@ const config: CapacitorConfig = {
       androidSplashResourceName: 'splash',
       androidScaleType: 'CENTER_CROP',
     },
-    HekaPrint: {
-      // Native print plugin
+    // HekaPrint plugin placeholder removed — native print logic is handled
+    // by custom Android Java classes, not via Capacitor bridge.
+    FirebaseAuthentication: {
+      skipNativeAuth: true,
     },
   },
   android: {
@@ -25,7 +27,8 @@ const config: CapacitorConfig = {
     allowMixedContent: true,
     captureInput: true,
     // Enable scrolling
-    webContentsDebuggingEnabled: true,
+    // Debug mode OFF for Play Store release
+    webContentsDebuggingEnabled: false,
   },
   ios: {
     contentInset: 'always',

@@ -30,7 +30,7 @@ import { BirthChartInput } from '../natal/BirthChartInput';
 // CONSTANTS
 // ═══════════════════════════════════════════════════════════════════════════════
 
-const PLANET_ORDER = ['sun', 'moon', 'mercury', 'venus', 'mars', 'jupiter', 'saturn', 'uranus', 'neptune', 'pluto'];
+const PLANET_ORDER = ['sun', 'moon', 'mercury', 'venus', 'mars', 'jupiter', 'saturn', 'uranus', 'neptune', 'pluto', 'chiron', 'node'];
 
 const PLANET_SYMBOLS: Record<string, string> = {
   sun: '☉', moon: '☽', mercury: '☿', venus: '♀', mars: '♂',
@@ -44,6 +44,7 @@ const SIGN_SYMBOLS: Record<string, string> = {
   aries: '♈', taurus: '♉', gemini: '♊', cancer: '♋',
   leo: '♌', virgo: '♍', libra: '♎', scorpio: '♏',
   sagittarius: '♐', capricorn: '♑', aquarius: '♒', pisces: '♓',
+  ophiuchus: '⛎',
 };
 
 const ASPECT_COLORS: Record<string, string> = {
@@ -399,10 +400,13 @@ export const BirthChartView: React.FC<BirthChartViewProps> = ({ initialProfileId
         targetProfile = profileManager.getProfileWithChart(profileId);
       } else {
         // Try active, then default
-        targetProfile = profileManager.getActiveProfileWithChart() || 
-                       profileManager.getDefaultProfile()?.id 
-                         ? profileManager.getProfileWithChart(profileManager.getDefaultProfile()!.id)
-                         : null;
+        const active = profileManager.getActiveProfileWithChart();
+        if (active) {
+          targetProfile = active;
+        } else {
+          const defaultProfile = profileManager.getDefaultProfile();
+          targetProfile = defaultProfile ? profileManager.getProfileWithChart(defaultProfile.id) : null;
+        }
       }
 
       if (targetProfile) {
@@ -438,7 +442,7 @@ export const BirthChartView: React.FC<BirthChartViewProps> = ({ initialProfileId
     return unsubscribe;
   }, [initialProfileId, loadProfile]);
   
-  // Force reload when zodiac system changes
+  // Force reload when zodiac system changes (check on mount and when window regains focus)
   useEffect(() => {
     const checkZodiacSystem = () => {
       const currentSystem = getZodiacSystemPreference();
@@ -446,9 +450,10 @@ export const BirthChartView: React.FC<BirthChartViewProps> = ({ initialProfileId
         loadProfile(profile.id);
       }
     };
-    
-    const interval = setInterval(checkZodiacSystem, 1000);
-    return () => clearInterval(interval);
+
+    window.addEventListener('focus', checkZodiacSystem);
+    checkZodiacSystem(); // check immediately on mount
+    return () => window.removeEventListener('focus', checkZodiacSystem);
   }, [profile, loadProfile]);
 
   const handleProfileChange = (profileId: string | null) => {
@@ -550,6 +555,15 @@ export const BirthChartView: React.FC<BirthChartViewProps> = ({ initialProfileId
       {/* New Profile Modal */}
       {viewMode === 'new' && (
         <BirthChartInput
+          onChartCalculated={handleChartCalculated}
+          onCancel={() => setViewMode('chart')}
+        />
+      )}
+
+      {/* Edit Profile Modal */}
+      {viewMode === 'edit' && profile && (
+        <BirthChartInput
+          existingChart={profile.chart}
           onChartCalculated={handleChartCalculated}
           onCancel={() => setViewMode('chart')}
         />

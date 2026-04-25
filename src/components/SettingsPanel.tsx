@@ -8,16 +8,77 @@
 import { useState, useRef, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import type { RootState } from '../store';
-import { setLocation, setSubRegion, toggleDisplay, toggleTimeMode, toggleAstroPreference } from '../store';
+import { setLocation, setSubRegion, toggleDisplay, toggleTimeMode, toggleAstroPreference, updateAstroPreferences, setGlobalNotificationsEnabled } from '../store';
 import { LOCATIONS, SUB_REGIONS } from '../types';
-import { NotificationSettings } from './NotificationSettings';
+import { CalendarNotificationSettings } from './notification/CalendarNotificationSettings';
+import { NotificationHistory } from './notification/NotificationHistory';
 import { ThemeSettings } from './ThemeSettings';
+import { AISettingsPanel } from './AISettingsPanel';
 import { useFeatureDiscovery, useSettingsTracking } from '../hooks/useGamification';
 import { tutorialService } from '../services/tutorialService';
 
-export const SettingsPanel: React.FC = () => {
+const GlobalNotificationSwitch: React.FC = () => {
+  const dispatch = useDispatch();
+  const globalEnabled = useSelector((state: RootState) => state.calendar.notificationPreferences.globalEnabled);
+
+  return (
+    <label style={{
+      display: 'flex',
+      alignItems: 'center',
+      gap: '12px',
+      padding: '12px 0',
+      borderBottom: '1px solid rgba(255,255,255,0.12)',
+      cursor: 'pointer',
+      marginBottom: '12px',
+    }}>
+      <div style={{ flexShrink: 0 }}>
+        <div style={{
+          width: '44px',
+          height: '24px',
+          borderRadius: '12px',
+          background: globalEnabled ? '#c9a227' : 'rgba(255,255,255,0.15)',
+          position: 'relative',
+          transition: 'all 0.2s',
+        }}>
+          <div style={{
+            width: '20px',
+            height: '20px',
+            borderRadius: '50%',
+            background: '#fff',
+            position: 'absolute',
+            top: '2px',
+            left: globalEnabled ? '22px' : '2px',
+            transition: 'all 0.2s',
+          }} />
+        </div>
+      </div>
+      <input
+        type="checkbox"
+        checked={globalEnabled}
+        onChange={() => dispatch(setGlobalNotificationsEnabled(!globalEnabled))}
+        style={{ position: 'absolute', opacity: 0, width: 0, height: 0 }}
+      />
+      <div style={{ flex: 1 }}>
+        <div style={{ fontSize: '14px', fontWeight: 600, color: '#e0e0e0' }}>All Notifications</div>
+        <div style={{ fontSize: '12px', color: 'rgba(224,224,224,0.5)', marginTop: '2px' }}>
+          {globalEnabled ? 'Notifications are enabled across all sections' : 'Notifications are paused — no alerts will be sent'}
+        </div>
+      </div>
+    </label>
+  );
+};
+
+interface SettingsPanelProps {
+  onAuthClick?: () => void;
+  onPureModeClick?: () => void;
+  isPureMode?: boolean;
+  monthHeaderSlot?: React.ReactNode;
+}
+
+export const SettingsPanel: React.FC<SettingsPanelProps> = ({ onAuthClick, onPureModeClick, isPureMode, monthHeaderSlot }) => {
   const dispatch = useDispatch();
   const location = useSelector((state: RootState) => state.calendar.location);
+  const auth = useSelector((state: RootState) => state.calendar.auth);
   const subRegion = useSelector((state: RootState) => state.calendar.subRegion);
   const display = useSelector((state: RootState) => state.calendar.display);
   const timeMode = useSelector((state: RootState) => state.calendar.timeMode);
@@ -70,20 +131,66 @@ export const SettingsPanel: React.FC = () => {
   
   return (
     <>
-      {/* Toggle Button - Always stays in normal flow */}
+      {/* Toggle Buttons - 3 side by side with arc colors */}
       <div className="settings-toggle-wrapper">
-        <button 
+        <button
           className="settings-toggle-btn"
           onClick={() => {
             discover('openedSettings');
             setIsOpen(true);
           }}
           aria-label="Open settings"
+          style={{
+            background: 'rgba(220, 38, 38, 0.15)',
+            borderColor: 'rgba(220, 38, 38, 0.4)',
+            color: '#fca5a5',
+          }}
         >
           <span>⚙️</span> Show Settings
         </button>
+
+        {onAuthClick && (
+          <button
+            className="settings-toggle-btn"
+            onClick={onAuthClick}
+            aria-label={auth.isAuthenticated ? 'Account' : 'Sign In'}
+            style={{
+              background: 'rgba(34, 197, 94, 0.15)',
+              borderColor: 'rgba(34, 197, 94, 0.4)',
+              color: '#86efac',
+            }}
+          >
+            {auth.isAuthenticated ? (
+              <>
+                <span>{auth.displayName?.charAt(0) || auth.email?.charAt(0) || '?'}</span>
+                <span>Account</span>
+              </>
+            ) : (
+              <>
+                <span>🔐</span>
+                <span>Sign In</span>
+              </>
+            )}
+          </button>
+        )}
+
+        {onPureModeClick && (
+          <button
+            className="settings-toggle-btn"
+            onClick={onPureModeClick}
+            aria-label={isPureMode ? 'Exit Pure Mode' : 'Pure Mode'}
+            style={{
+              background: 'rgba(124, 58, 237, 0.15)',
+              borderColor: 'rgba(124, 58, 237, 0.4)',
+              color: '#c4b5fd',
+            }}
+          >
+            <span>☯</span>
+            {isPureMode ? 'Exit Pure' : 'Pure Mode'}
+          </button>
+        )}
       </div>
-      
+
       {/* Overlay - Portal-like behavior using fixed positioning */}
       {isOpen && (
         <div className="settings-overlay-root">
@@ -94,7 +201,7 @@ export const SettingsPanel: React.FC = () => {
           />
           <div 
             ref={panelRef} 
-            className="settings-modal"
+            className={`settings-modal ${isPureMode ? 'settings-modal--pure-mode' : ''}`}
             role="dialog"
             aria-label="Calendar Settings"
           >
@@ -111,6 +218,16 @@ export const SettingsPanel: React.FC = () => {
             
             <div className="settings-modal__content">
               <div className="settings-grid">
+                {/* Pure Mode: Full MonthHeader inside settings modal */}
+                {isPureMode && monthHeaderSlot && (
+                  <div className="settings-group settings-group--pure-header">
+                    <label className="settings-group__label">🎛️ Calendar Controls</label>
+                    <div className="settings-group__control settings-group__control--column">
+                      {monthHeaderSlot}
+                    </div>
+                  </div>
+                )}
+
                 {/* Location - Only show dropdown when changing */}
                 {isChangingLocation && (
                   <>
@@ -192,47 +309,27 @@ export const SettingsPanel: React.FC = () => {
                   </p>
                 </div>
                 
-                {/* Celestial */}
+                {/* Celestial - hidden in Pure Mode */}
+                {!isPureMode && (
                 <div className="settings-group settings-group-celestial">
-                  <label className="settings-group__label">✦ Celestial Guide</label>
+                  <label className="settings-group__label">✦ Celestial Cards</label>
                   <div className="settings-group__control">
                     <button 
-                      className={`btn btn-seasons-toggle ${display.showSeasonalEvents ? 'btn--active' : ''}`} 
+                      className={`btn btn-celestial-toggle ${display.showCelestialCards ? 'btn--active' : ''}`} 
                       onClick={() => {
-                        dispatch(toggleDisplay('showSeasonalEvents'));
-                        if (!display.showSeasonalEvents) {
+                        dispatch(toggleDisplay('showCelestialCards'));
+                        if (!display.showCelestialCards) {
                           discover('enabledSeasonalEvents');
-                          trackDisplay('showSeasonalEvents', true);
+                          trackDisplay('showCelestialCards', true);
                         }
-                        tutorialService.trackCelestialGuideToggle(!display.showSeasonalEvents);
+                        tutorialService.trackCelestialGuideToggle(!display.showCelestialCards);
                       }}
                     >
-                      {display.showSeasonalEvents ? '✓ Seasons' : 'Seasons'}
-                    </button>
-                    <button 
-                      className={`btn btn-agri-toggle ${display.showAgriculturalGuidance ? 'btn--active' : ''}`} 
-                      onClick={() => {
-                        dispatch(toggleDisplay('showAgriculturalGuidance'));
-                        tutorialService.trackCelestialGuideToggle(!display.showAgriculturalGuidance);
-                      }}
-                    >
-                      {display.showAgriculturalGuidance ? '✓ Agri' : 'Agri'}
-                    </button>
-                    <button 
-                      className={`btn btn-energy-toggle ${display.showEnergyForecast ? 'btn--active' : ''}`} 
-                      onClick={() => {
-                        dispatch(toggleDisplay('showEnergyForecast'));
-                        if (!display.showEnergyForecast) {
-                          discover('enabledEnergyVote');
-                          trackDisplay('showEnergyForecast', true);
-                        }
-                        tutorialService.trackCelestialGuideToggle(!display.showEnergyForecast);
-                      }}
-                    >
-                      {display.showEnergyForecast ? '✓ Energy' : 'Energy'}
+                      {display.showCelestialCards ? '✓ Show Celestial Cards' : 'Show Celestial Cards'}
                     </button>
                   </div>
                 </div>
+                )}
                 
                 {/* Mode */}
                 <div className="settings-group">
@@ -257,12 +354,19 @@ export const SettingsPanel: React.FC = () => {
                 <div className="settings-group">
                   <label className="settings-group__label">✨ Astrology</label>
                   <div className="settings-group__control settings-group__control--stack">
-                    <button 
-                      className={`btn ${astroPreferences.showTransitsOnCalendar ? 'btn--active' : ''}`} 
+                    <button
+                      className={`btn ${astroPreferences.showTransitsOnCalendar ? 'btn--active' : ''}`}
                       onClick={() => dispatch(toggleAstroPreference('showTransitsOnCalendar'))}
-                      title="Show moon signs and planetary transits on calendar day panels"
+                      title="Show moon signs and planetary transits in the day panel"
                     >
-                      {astroPreferences.showTransitsOnCalendar ? '✓ ' : ''}Show on Calendar
+                      {astroPreferences.showTransitsOnCalendar ? '✓ ' : ''}Show on Day Panel
+                    </button>
+                    <button
+                      className={`btn ${astroPreferences.showNakshatras ? 'btn--active' : ''}`}
+                      onClick={() => dispatch(updateAstroPreferences({ showNakshatras: !astroPreferences.showNakshatras }))}
+                      title="Show Lunar Mansions (Nakshatras) in TRUE mode"
+                    >
+                      {astroPreferences.showNakshatras ? '✓ ' : ''}Show Lunar Mansions
                     </button>
                   </div>
                   <p className="settings-group__hint">
@@ -270,10 +374,20 @@ export const SettingsPanel: React.FC = () => {
                   </p>
                 </div>
                 
+                {/* AI Integration */}
+                <div className="settings-group">
+                  <label className="settings-group__label">🤖 HEKA AI</label>
+                  <AISettingsPanel highlightArea="calendar" />
+                </div>
+
                 {/* Notifications */}
                 <div className="settings-group">
                   <label className="settings-group__label">🔔 Notifications</label>
-                  <NotificationSettings />
+                  <GlobalNotificationSwitch />
+                  <CalendarNotificationSettings />
+                  <div style={{ marginTop: '12px' }}>
+                    <NotificationHistory />
+                  </div>
                 </div>
                 
                 {/* Report Issue */}

@@ -1,0 +1,502 @@
+/* ═══════════════════════════════════════════════════════════════════════════════
+   TWO SELVES MODAL — Tropical vs Sidereal Birth Chart Comparison
+   ═══════════════════════════════════════════════════════════════════════════════ */
+
+/* Overlay */
+.tsm-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.88);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 16px;
+  animation: tsmFadeIn 0.3s ease;
+  overflow-y: auto;
+}
+
+@keyframes tsmFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* Modal Container */
+.tsm-modal {
+  background: linear-gradient(180deg, rgba(22, 22, 26, 0.98) 0%, rgba(12, 12, 15, 0.99) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 20px;
+  max-width: 960px;
+  width: 100%;
+  max-height: 92vh;
+  overflow-y: auto;
+  box-shadow: 0 25px 80px -12px rgba(0, 0, 0, 0.9), 0 0 60px rgba(201, 162, 39, 0.08);
+  animation: tsmSlideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes tsmSlideUp {
+  from { opacity: 0; transform: translateY(30px) scale(0.97); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* Header */
+.tsm-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 24px 28px 16px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  position: sticky;
+  top: 0;
+  background: linear-gradient(180deg, rgba(22, 22, 26, 0.98) 0%, rgba(22, 22, 26, 0.9) 100%);
+  z-index: 10;
+  backdrop-filter: blur(8px);
+}
+
+.tsm-title {
+  font-size: 22px;
+  font-weight: 700;
+  color: #fff;
+  margin: 0 0 4px;
+  letter-spacing: -0.3px;
+}
+
+.tsm-subtitle {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.5);
+  margin: 0;
+  font-style: italic;
+}
+
+.tsm-close {
+  background: none;
+  border: none;
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 28px;
+  line-height: 1;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+}
+
+.tsm-close:hover {
+  color: #dc2626;
+  background: rgba(220, 38, 38, 0.1);
+}
+
+/* Loading State */
+.tsm-loading {
+  text-align: center;
+  padding: 60px 20px;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.tsm-loading-icon {
+  font-size: 40px;
+  margin-bottom: 16px;
+  animation: tsmPulse 2s infinite;
+}
+
+@keyframes tsmPulse {
+  0%, 100% { opacity: 0.4; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.1); }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════════
+   Comparison Grid
+   ═══════════════════════════════════════════════════════════════════════════════ */
+
+.tsm-comparison {
+  display: grid;
+  grid-template-columns: 1fr 140px 1fr;
+  gap: 0;
+  padding: 20px 24px;
+}
+
+/* Side Columns */
+.tsm-side {
+  padding: 16px;
+  border-radius: 16px;
+  display: flex;
+  flex-direction: column;
+}
+
+.tsm-side.tropical {
+  background: linear-gradient(180deg, rgba(59, 130, 246, 0.08) 0%, rgba(59, 130, 246, 0.02) 100%);
+  border: 1px solid rgba(59, 130, 246, 0.2);
+}
+
+.tsm-side.sidereal {
+  background: linear-gradient(180deg, rgba(201, 162, 39, 0.08) 0%, rgba(201, 162, 39, 0.02) 100%);
+  border: 1px solid rgba(201, 162, 39, 0.2);
+}
+
+.tsm-side-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 4px;
+}
+
+.tsm-side-icon {
+  font-size: 18px;
+}
+
+.tsm-side-title {
+  font-size: 15px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.tsm-side.tropical .tsm-side-title {
+  color: rgba(147, 197, 253, 0.9);
+}
+
+.tsm-side.sidereal .tsm-side-title {
+  color: #c9a227;
+}
+
+.tsm-side-badge {
+  font-size: 9px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  padding: 2px 8px;
+  border-radius: 4px;
+  margin-left: auto;
+}
+
+.tsm-side.tropical .tsm-side-badge {
+  background: rgba(59, 130, 246, 0.2);
+  color: rgba(147, 197, 253, 0.9);
+}
+
+.tsm-side.sidereal .tsm-side-badge {
+  background: rgba(201, 162, 39, 0.2);
+  color: #c9a227;
+}
+
+.tsm-side-sub {
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.4);
+  margin-bottom: 12px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+/* Planet Rows */
+.tsm-planets {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  flex: 1;
+}
+
+.tsm-planet-row {
+  display: grid;
+  grid-template-columns: 24px 1fr auto auto;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 10px;
+  border-radius: 8px;
+  background: rgba(0, 0, 0, 0.25);
+  font-size: 13px;
+  transition: all 0.2s ease;
+}
+
+.tsm-planet-row.accent {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.tsm-planet-row.changed {
+  background: linear-gradient(90deg, rgba(201, 162, 39, 0.12) 0%, rgba(201, 162, 39, 0.04) 100%);
+  border: 1px solid rgba(201, 162, 39, 0.25);
+  animation: tsmGlow 2s ease-in-out infinite alternate;
+}
+
+@keyframes tsmGlow {
+  from { box-shadow: 0 0 0 rgba(201, 162, 39, 0); }
+  to { box-shadow: 0 0 12px rgba(201, 162, 39, 0.15); }
+}
+
+.tsm-planet-symbol {
+  font-size: 16px;
+  text-align: center;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.tsm-planet-name {
+  color: rgba(255, 255, 255, 0.85);
+  font-weight: 500;
+}
+
+.tsm-planet-sign {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+.tsm-planet-degree {
+  color: rgba(255, 255, 255, 0.45);
+  font-size: 11px;
+  font-variant-numeric: tabular-nums;
+}
+
+.tsm-change-badge {
+  color: #c9a227;
+  font-size: 12px;
+  margin-left: 4px;
+  animation: tsmPulse 2s infinite;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════════
+   Divider — Rich Educational Panel
+   ═══════════════════════════════════════════════════════════════════════════════ */
+
+.tsm-divider {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 16px 10px;
+}
+
+.tsm-divider-top {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  margin-bottom: 10px;
+}
+
+.tsm-divider-vs {
+  font-size: 13px;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.2);
+  letter-spacing: 3px;
+}
+
+.tsm-divider-shift {
+  font-size: 10px;
+  color: rgba(201, 162, 39, 0.6);
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  text-align: center;
+}
+
+.tsm-divider-line {
+  width: 1px;
+  flex: 1;
+  min-height: 40px;
+  background: linear-gradient(180deg, rgba(201, 162, 39, 0.3) 0%, rgba(59, 130, 246, 0.2) 50%, rgba(201, 162, 39, 0.3) 100%);
+  margin: 8px 0;
+}
+
+.tsm-divider-changed {
+  text-align: center;
+  padding: 10px 6px;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.tsm-divider-changed-label {
+  font-size: 9px;
+  font-weight: 600;
+  color: rgba(201, 162, 39, 0.7);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 6px;
+}
+
+.tsm-divider-changed-list {
+  font-size: 10px;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.5);
+  max-height: 180px;
+  overflow-y: auto;
+}
+
+/* Summary */
+.tsm-summary {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 12px;
+  margin-top: 12px;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 8px;
+}
+
+.tsm-summary-label {
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.4);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.tsm-summary-value {
+  font-size: 13px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+/* Narrative */
+.tsm-narrative {
+  margin: 0 24px 20px;
+  padding: 20px 24px;
+  background: linear-gradient(135deg, rgba(201, 162, 39, 0.08) 0%, rgba(59, 130, 246, 0.05) 100%);
+  border: 1px solid rgba(201, 162, 39, 0.15);
+  border-radius: 16px;
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+}
+
+.tsm-narrative-icon {
+  font-size: 28px;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.tsm-narrative-text {
+  flex: 1;
+}
+
+.tsm-narrative-text p {
+  margin: 0 0 10px;
+  font-size: 14px;
+  line-height: 1.65;
+  color: rgba(255, 255, 255, 0.75);
+}
+
+.tsm-narrative-text p:last-child {
+  margin-bottom: 0;
+}
+
+/* Footer */
+.tsm-footer {
+  padding: 0 24px 24px;
+  text-align: center;
+}
+
+.tsm-continue-btn {
+  background: linear-gradient(135deg, #c9a227 0%, #a08020 100%);
+  color: #000;
+  border: none;
+  padding: 14px 36px;
+  border-radius: 12px;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  box-shadow: 0 4px 20px rgba(201, 162, 39, 0.3);
+  letter-spacing: 0.5px;
+}
+
+.tsm-continue-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(201, 162, 39, 0.4);
+}
+
+.tsm-footer-hint {
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.35);
+  margin-top: 12px;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════════
+   RESPONSIVE — Mobile
+   ═══════════════════════════════════════════════════════════════════════════════ */
+
+@media (max-width: 768px) {
+  .tsm-overlay {
+    padding: 8px;
+    align-items: flex-end;
+  }
+
+  .tsm-modal {
+    max-height: 95vh;
+    border-radius: 16px 16px 0 0;
+    animation: tsmSlideUpMobile 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  @keyframes tsmSlideUpMobile {
+    from { opacity: 0; transform: translateY(40px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .tsm-header {
+    padding: 16px 20px 12px;
+  }
+
+  .tsm-title {
+    font-size: 18px;
+  }
+
+  .tsm-comparison {
+    grid-template-columns: 1fr 1fr;
+    padding: 12px 16px;
+    gap: 12px;
+  }
+
+  .tsm-divider {
+    display: none;
+  }
+
+  .tsm-planet-row {
+    grid-template-columns: 24px 1fr auto auto auto;
+    padding: 6px 8px;
+    font-size: 12px;
+  }
+
+  .tsm-narrative {
+    margin: 0 16px 16px;
+    padding: 16px;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .tsm-narrative-text p {
+    font-size: 13px;
+  }
+
+  .tsm-footer {
+    padding: 0 16px 20px;
+  }
+
+  .tsm-continue-btn {
+    width: 100%;
+    padding: 14px;
+  }
+}
+
+/* Landscape phone */
+@media (max-height: 500px) and (orientation: landscape) {
+  .tsm-overlay {
+    align-items: flex-start;
+    padding-top: 8px;
+  }
+
+  .tsm-modal {
+    max-height: 96vh;
+  }
+
+  .tsm-comparison {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .tsm-divider {
+    display: none;
+  }
+
+  .tsm-ayanamsa-banner {
+    flex-direction: row;
+    gap: 14px;
+  }
+}

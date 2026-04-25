@@ -8,6 +8,7 @@ import React, { useState, useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import './VoidMoonCalendar.css';
 import { useVoidMoon, useVoidMoonEvents } from '../../hooks/use-swiss';
+import { getSignCount } from '../../services/swiss-ephemeris/engine';
 import { VoidMoonEvent } from '../../types';
 import { 
   getTimeMode, 
@@ -17,22 +18,24 @@ import {
 } from '../../../services/calendarService';
 import type { HekaMonthIndex } from '../../../types';
 
-// Zodiac signs
-const SIGNS = ['Aries', 'Taurus', 'Gemini', 'Cancer', 'Leo', 'Virgo', 'Libra', 'Scorpio', 'Sagittarius', 'Capricorn', 'Aquarius', 'Pisces'];
-const SIGN_SYMBOLS = ['♈', '♉', '♊', '♋', '♌', '♍', '♎', '♏', '♐', '♑', '♒', '♓'];
+import { getSignFromLongitude } from '../../types/core';
+
+// Zodiac signs (13-sign inclusive)
+const SIGNS = ['Aries', 'Taurus', 'Gemini', 'Cancer', 'Leo', 'Virgo', 'Libra', 'Scorpio', 'Ophiuchus', 'Sagittarius', 'Capricorn', 'Aquarius', 'Pisces'];
+const SIGN_SYMBOLS = ['♈', '♉', '♊', '♋', '♌', '♍', '♎', '♏', '⛎', '♐', '♑', '♒', '♓'];
 
 // HEKA weekdays starting Saturday
 const HEKA_WEEKDAYS = ['Sat', 'Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri'];
 
 // 13 HEKA month names
 const HEKA_MONTHS = [
-  'April', 'May', 'June', 'July', 'August', 'September',
-  'October', 'November', 'December', 'January', 'February', 'March'
+  'April', 'May', 'June', 'July', 'August', 'Hexa',
+  'September', 'October', 'November', 'December', 'January', 'February', 'March'
 ];
 
 // Month day counts - 28 days for all except March (29 or 30)
 const getDaysInMonth = (year: number, month: number): number => {
-  if (month === 11) return isHekaLeapMarch(year) ? 30 : 29; // March (index 11)
+  if (month === 12) return isHekaLeapMarch(year) ? 30 : 29; // March (index 12)
   return 28; // All other months have exactly 28 days
 };
 
@@ -44,10 +47,13 @@ const formatDuration = (minutes: number): string => {
   return h > 0 && m > 0 ? `${h}h ${m}m` : h > 0 ? `${h}h` : `${m}m`;
 };
 
-// Get zodiac sign from longitude
+// Get zodiac sign from longitude (respects 12/13-sign setting)
 const getSign = (lng: number) => {
-  const idx = Math.floor(lng / 30) % 12;
-  return { name: SIGNS[idx], symbol: SIGN_SYMBOLS[idx], idx };
+  const use13 = getSignCount() === 13;
+  const sign = getSignFromLongitude(((lng % 360) + 360) % 360 as any, use13);
+  const idx = use13 ? SIGNS.indexOf(sign.charAt(0).toUpperCase() + sign.slice(1)) : Math.floor(((lng % 360) + 360) % 360 / 30) % 12;
+  const safeIdx = idx >= 0 ? idx : 0;
+  return { name: SIGNS[safeIdx] || 'Aries', symbol: SIGN_SYMBOLS[safeIdx] || '♈', idx: safeIdx };
 };
 
 interface CalendarCell {
@@ -67,7 +73,7 @@ export const VoidMoonCalendar: React.FC = () => {
     const civilMonth = now.getMonth();
     const civilYear = now.getFullYear();
     // Map civil month to HEKA month
-    const map = [9, 10, 11, 0, 1, 2, 3, 4, 5, 6, 7, 8]; // Apr=0, Mar=11
+    const map = [10, 11, 12, 0, 1, 2, 3, 4, 6, 7, 8, 9]; // Apr=0, Hexa=5, Mar=12
     const hekaMonth = map[civilMonth];
     const hekaYear = civilMonth >= 3 ? civilYear : civilYear - 1;
     return { year: hekaYear, month: hekaMonth };
@@ -99,7 +105,7 @@ export const VoidMoonCalendar: React.FC = () => {
       cells.push({
         date: prevDate,
         hekaYear: month === 0 ? year - 1 : year,
-        hekaMonth: month === 0 ? 11 : month - 1,
+        hekaMonth: month === 0 ? 12 : month - 1,
         hekaDay: getDaysInMonth(month === 0 ? year - 1 : year, month === 0 ? 11 : month - 1) - (saturdayOffset - i) + 1,
         isCurrentMonth: false,
         isToday: false,
@@ -139,7 +145,7 @@ export const VoidMoonCalendar: React.FC = () => {
       cells.push({
         date: nextDate,
         hekaYear: month === 11 ? year + 1 : year,
-        hekaMonth: month === 11 ? 0 : month + 1,
+        hekaMonth: month === 12 ? 0 : month + 1,
         hekaDay: i,
         isCurrentMonth: false,
         isToday: false,
@@ -154,20 +160,20 @@ export const VoidMoonCalendar: React.FC = () => {
   const prevMonth = () => setCurrentMonth(prev => {
     let m = prev.month - 1;
     let y = prev.year;
-    if (m < 0) { m = 11; y--; }
+    if (m < 0) { m = 12; y--; }
     return { year: y, month: m };
   });
 
   const nextMonth = () => setCurrentMonth(prev => {
     let m = prev.month + 1;
     let y = prev.year;
-    if (m > 11) { m = 0; y++; }
+    if (m > 12) { m = 0; y++; }
     return { year: y, month: m };
   });
 
   const goToToday = () => {
     const now = new Date();
-    const map = [9, 10, 11, 0, 1, 2, 3, 4, 5, 6, 7, 8];
+    const map = [10, 11, 12, 0, 1, 2, 3, 4, 6, 7, 8, 9];
     setCurrentMonth({
       year: now.getMonth() >= 3 ? now.getFullYear() : now.getFullYear() - 1,
       month: map[now.getMonth()]
@@ -192,7 +198,7 @@ export const VoidMoonCalendar: React.FC = () => {
     );
   }
 
-  const isMarch = currentMonth.month === 11;
+  const isMarch = currentMonth.month === 12;
   const isLeap = isMarch && isHekaLeapMarch(currentMonth.year);
 
   return (
@@ -341,7 +347,7 @@ export const VoidMoonCalendar: React.FC = () => {
           <div className="vm-upcoming-list">
             {upcomingVoids.map((evt, i) => {
               const date = new Date(evt.startTime);
-              const hekaMonth = [9, 10, 11, 0, 1, 2, 3, 4, 5, 6, 7, 8][date.getMonth()];
+              const hekaMonth = [10, 11, 12, 0, 1, 2, 3, 4, 6, 7, 8, 9][date.getMonth()];
               const hekaDay = date.getDate(); // Simplified
               const from = getSign(evt.fromSignLongitude);
               const to = getSign(evt.toSignLongitude);

@@ -888,11 +888,11 @@
 }
 
 /* ═════════════════════════════════════════════════════════════════════════════
-   MODE: CELESTIAL
+   MODE: CELESTIAL - Epic Integrated Dashboard
    ═════════════════════════════════════════════════════════════════════════════ */
 
 .oracle-mode-celestial {
-  animation: fade-in 0.4s ease-out;
+  animation: fade-in 0.5s ease-out;
 }
 
 .celestial-loading {
@@ -931,8 +931,14 @@
   color: var(--oj-text-secondary);
 }
 
+.celestial-dashboard {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
 .celestial-section {
-  margin-bottom: 2rem;
+  margin-bottom: 0;
 }
 
 .section-title {
@@ -942,8 +948,8 @@
   font-family: var(--oj-font-display);
   font-size: 1.1rem;
   color: var(--module-text);
-  margin: 0 0 1rem 0;
-  padding-bottom: 0.75rem;
+  margin: 0 0 0.875rem 0;
+  padding-bottom: 0.5rem;
   border-bottom: 1px solid rgba(255, 255, 255, 0.06);
 }
 
@@ -953,7 +959,540 @@
   padding: 1rem 0;
 }
 
-/* Planetary Grid */
+/* ═════════════════════════════════════════════════════════════════════════════
+   CELESTIAL HERO
+   ═════════════════════════════════════════════════════════════════════════════ */
+
+.celestial-hero {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  padding: 1.25rem 1.5rem;
+  background: linear-gradient(135deg, rgba(157, 78, 221, 0.12) 0%, rgba(15, 15, 30, 0.6) 100%);
+  border: 1px solid rgba(157, 78, 221, 0.25);
+  border-radius: 16px;
+  position: relative;
+  overflow: hidden;
+}
+
+.celestial-hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 10% 50%, rgba(157, 78, 221, 0.15) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+.moon-glow {
+  position: relative;
+  width: 72px;
+  height: 72px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.moon-emoji {
+  font-size: 2.5rem;
+  z-index: 1;
+  filter: drop-shadow(0 0 12px rgba(255, 255, 255, 0.35));
+}
+
+.moon-ring {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  animation: moon-pulse 3s ease-in-out infinite;
+}
+
+@keyframes moon-pulse {
+  0%, 100% { transform: scale(1); opacity: 0.6; }
+  50% { transform: scale(1.15); opacity: 0.2; }
+}
+
+.hero-text {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  flex: 1;
+}
+
+.hero-phase {
+  font-family: var(--oj-font-display);
+  font-size: 1.5rem;
+  color: var(--module-text);
+  margin: 0;
+  text-shadow: 0 2px 20px rgba(157, 78, 221, 0.35);
+}
+
+.hero-meta {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  color: var(--oj-text-secondary);
+  font-size: 0.9375rem;
+  margin: 0;
+  flex-wrap: wrap;
+}
+
+.sign-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.25rem 0.625rem;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 999px;
+  color: var(--module-text);
+  font-weight: 500;
+}
+
+.illumination-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--module-accent);
+  opacity: 0.7;
+}
+
+.celestial-microstats {
+  display: flex;
+  gap: 0.75rem;
+  flex-shrink: 0;
+}
+
+.microstat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-width: 64px;
+  padding: 0.625rem 0.75rem;
+  background: rgba(0, 0, 0, 0.25);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+}
+
+.microstat-value {
+  font-family: var(--oj-font-mono);
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--module-text);
+}
+
+.microstat-label {
+  font-size: 0.6875rem;
+  color: var(--oj-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+/* Retro Banner */
+.retro-banner {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
+  background: rgba(239, 68, 68, 0.08);
+  border: 1px solid rgba(239, 68, 68, 0.25);
+  border-radius: 12px;
+  color: #fca5a5;
+  font-size: 0.875rem;
+}
+
+.retro-banner-icon {
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.retro-banner-text {
+  line-height: 1.5;
+}
+
+/* Cosmic Prompt Panel */
+.cosmic-prompt-panel {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 1.25rem;
+  background: linear-gradient(90deg, rgba(202, 162, 74, 0.1) 0%, rgba(202, 162, 74, 0.02) 100%);
+  border: 1px solid rgba(202, 162, 74, 0.2);
+  border-radius: 14px;
+}
+
+.prompt-icon {
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: rgba(202, 162, 74, 0.15);
+  border: 1px solid rgba(202, 162, 74, 0.3);
+  font-size: 1.25rem;
+  flex-shrink: 0;
+}
+
+.prompt-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.prompt-content h4 {
+  margin: 0;
+  font-size: 0.8125rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: rgba(202, 162, 74, 0.9);
+}
+
+.prompt-content p {
+  margin: 0;
+  font-size: 0.9375rem;
+  color: var(--module-text);
+  line-height: 1.5;
+}
+
+.prompt-cta {
+  flex-shrink: 0;
+  padding: 0.625rem 1rem;
+  background: rgba(202, 162, 74, 0.15);
+  border: 1px solid rgba(202, 162, 74, 0.35);
+  border-radius: 10px;
+  color: #f3e5ab;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.prompt-cta:hover {
+  background: rgba(202, 162, 74, 0.25);
+  transform: translateY(-1px);
+}
+
+/* ═════════════════════════════════════════════════════════════════════════════
+   ZODIAC SKY MAP
+   ═════════════════════════════════════════════════════════════════════════════ */
+
+.zodiac-sky-map {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 0.5rem;
+}
+
+.zodiac-segment {
+  display: flex;
+  flex-direction: column;
+  gap: 0.375rem;
+  padding: 0.625rem 0.5rem;
+  background: rgba(255, 255, 255, 0.025);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-top: 2px solid var(--sign-color, rgba(255,255,255,0.1));
+  border-radius: 10px;
+  min-height: 80px;
+}
+
+.zodiac-segment-header {
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+  font-size: 0.75rem;
+  color: var(--oj-text-muted);
+  text-transform: capitalize;
+}
+
+.zodiac-segment-symbol {
+  font-size: 0.95rem;
+  color: var(--sign-color, var(--module-accent));
+}
+
+.zodiac-segment-planets {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+}
+
+.zodiac-empty {
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.15);
+}
+
+.zodiac-planet-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.125rem;
+  padding: 0.2rem 0.4rem;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 6px;
+  font-size: 0.7rem;
+  color: var(--module-text);
+}
+
+.zodiac-planet-chip.retro {
+  border-color: rgba(239, 68, 68, 0.3);
+  background: rgba(239, 68, 68, 0.08);
+}
+
+.chip-symbol {
+  font-size: 0.8rem;
+  color: var(--module-accent);
+}
+
+/* ═════════════════════════════════════════════════════════════════════════════
+   BIRTH CHART TRINITY
+   ═════════════════════════════════════════════════════════════════════════════ */
+
+.trinity-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.75rem;
+}
+
+.trinity-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 1rem 0.5rem;
+  background: linear-gradient(180deg, rgba(255,255,255,0.04) 0%, rgba(255,255,255,0.01) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-bottom: 2px solid var(--sign-color, rgba(255,255,255,0.1));
+  border-radius: 12px;
+  text-align: center;
+}
+
+.trinity-planet-symbol {
+  font-size: 0.75rem;
+  color: var(--oj-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.trinity-sign {
+  font-size: 1.75rem;
+  color: var(--sign-color, var(--module-accent));
+  filter: drop-shadow(0 0 8px color-mix(in srgb, var(--sign-color) 30%, transparent));
+}
+
+.trinity-title {
+  font-size: 0.8125rem;
+  color: var(--module-text);
+  font-weight: 500;
+}
+
+.trinity-detail {
+  font-size: 0.75rem;
+  color: var(--oj-text-muted);
+  text-transform: capitalize;
+}
+
+/* ═════════════════════════════════════════════════════════════════════════════
+   TRANSITS THEATRE
+   ═════════════════════════════════════════════════════════════════════════════ */
+
+.transits-empty-state {
+  text-align: center;
+  padding: 2rem 1rem;
+  color: var(--oj-text-muted);
+}
+
+.transits-empty-icon {
+  display: block;
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+  opacity: 0.5;
+}
+
+.transits-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+}
+
+.transit-theatre-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding: 1.25rem;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 14px;
+  cursor: pointer;
+  overflow: hidden;
+  transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.transit-theatre-card:hover {
+  transform: translateY(-2px);
+}
+
+.transit-theatre-card.strength-4 {
+  border-color: rgba(34, 197, 94, 0.35);
+  box-shadow: 0 0 0 1px rgba(34, 197, 94, 0.1), 0 8px 30px rgba(0, 0, 0, 0.25);
+}
+.transit-theatre-card.strength-4:hover {
+  box-shadow: 0 0 20px rgba(34, 197, 94, 0.12), 0 8px 30px rgba(0, 0, 0, 0.25);
+}
+
+.transit-theatre-card.strength-3 {
+  border-color: rgba(59, 130, 246, 0.35);
+  box-shadow: 0 0 0 1px rgba(59, 130, 246, 0.1), 0 8px 30px rgba(0, 0, 0, 0.25);
+}
+.transit-theatre-card.strength-3:hover {
+  box-shadow: 0 0 20px rgba(59, 130, 246, 0.12), 0 8px 30px rgba(0, 0, 0, 0.25);
+}
+
+.transit-theatre-card.strength-2 {
+  border-color: rgba(234, 179, 8, 0.35);
+  box-shadow: 0 0 0 1px rgba(234, 179, 8, 0.1), 0 8px 30px rgba(0, 0, 0, 0.25);
+}
+.transit-theatre-card.strength-2:hover {
+  box-shadow: 0 0 20px rgba(234, 179, 8, 0.12), 0 8px 30px rgba(0, 0, 0, 0.25);
+}
+
+.transit-theatre-card.strength-1,
+.transit-theatre-card.strength-0 {
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+.ttc-glow {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.transit-theatre-card.strength-4 .ttc-glow {
+  background: radial-gradient(circle at 80% 20%, rgba(34, 197, 94, 0.12) 0%, transparent 50%);
+}
+.transit-theatre-card.strength-3 .ttc-glow {
+  background: radial-gradient(circle at 80% 20%, rgba(59, 130, 246, 0.12) 0%, transparent 50%);
+}
+.transit-theatre-card.strength-2 .ttc-glow {
+  background: radial-gradient(circle at 80% 20%, rgba(234, 179, 8, 0.12) 0%, transparent 50%);
+}
+
+.transit-theatre-card:hover .ttc-glow {
+  opacity: 1;
+}
+
+.ttc-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.ttc-planets {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.ttc-planet {
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  font-size: 1.35rem;
+  color: var(--module-accent);
+}
+
+.ttc-aspect {
+  font-size: 1.1rem;
+  color: var(--oj-text-secondary);
+  opacity: 0.9;
+}
+
+.ttc-strength-badge {
+  padding: 0.375rem 0.75rem;
+  background: rgba(0, 0, 0, 0.25);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  font-family: var(--oj-font-mono);
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--module-text);
+}
+
+.ttc-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.375rem;
+}
+
+.ttc-name {
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--module-text);
+  text-transform: capitalize;
+}
+
+.ttc-houses {
+  font-size: 0.75rem;
+  color: var(--oj-text-muted);
+}
+
+.ttc-interpretation {
+  margin: 0.25rem 0 0 0;
+  font-size: 0.875rem;
+  color: var(--oj-text-secondary);
+  line-height: 1.55;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.ttc-actions {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.25rem;
+}
+
+.ttc-btn {
+  flex: 1;
+  padding: 0.625rem 0.75rem;
+  border-radius: 10px;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: 1px solid transparent;
+}
+
+.ttc-btn.journal {
+  background: rgba(157, 78, 221, 0.12);
+  border-color: rgba(157, 78, 221, 0.3);
+  color: #e9d5ff;
+}
+.ttc-btn.journal:hover {
+  background: rgba(157, 78, 221, 0.22);
+}
+
+.ttc-btn.track {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.12);
+  color: var(--oj-text-secondary);
+}
+.ttc-btn.track:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--module-text);
+}
+
+/* Legacy styles preserved for compatibility */
 .planetary-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
@@ -972,34 +1511,6 @@
   text-align: center;
 }
 
-.planet-card.retrograde {
-  border-color: rgba(239, 68, 68, 0.3);
-  background: rgba(239, 68, 68, 0.05);
-}
-
-.planet-symbol {
-  font-size: 1.5rem;
-  color: var(--module-accent);
-}
-
-.planet-name {
-  font-size: 0.75rem;
-  color: var(--oj-text-secondary);
-  text-transform: capitalize;
-}
-
-.planet-position {
-  font-size: 0.8rem;
-  color: var(--module-text);
-}
-
-.retro-badge {
-  color: #ef4444;
-  margin-left: 0.25rem;
-  font-size: 0.7rem;
-}
-
-/* Transits List */
 .transits-list {
   display: flex;
   flex-direction: column;
@@ -1017,58 +1528,6 @@
   border-radius: 10px;
   cursor: pointer;
   transition: all 0.2s ease;
-}
-
-.transit-card:hover {
-  background: rgba(255, 255, 255, 0.06);
-  transform: translateX(4px);
-}
-
-.transit-card.strength-4 {
-  border-left: 3px solid #22c55e;
-}
-
-.transit-card.strength-3 {
-  border-left: 3px solid #3b82f6;
-}
-
-.transit-card.strength-2 {
-  border-left: 3px solid #eab308;
-}
-
-.transit-symbols {
-  display: flex;
-  align-items: center;
-  gap: 0.25rem;
-  font-size: 1.25rem;
-  color: var(--module-accent);
-}
-
-.transit-symbols .aspect {
-  font-size: 0.9rem;
-  color: var(--oj-text-secondary);
-}
-
-.transit-info {
-  display: flex;
-  flex-direction: column;
-  gap: 0.125rem;
-}
-
-.transit-name {
-  font-size: 0.875rem;
-  color: var(--module-text);
-}
-
-.transit-house {
-  font-size: 0.75rem;
-  color: var(--oj-text-muted);
-}
-
-.transit-strength {
-  font-family: var(--oj-font-mono);
-  font-size: 0.875rem;
-  font-weight: 600;
 }
 
 /* ═════════════════════════════════════════════════════════════════════════════
@@ -1552,6 +2011,53 @@
     right: auto;
     width: calc(100vw - 2rem);
     max-width: 300px;
+  }
+  
+  /* Celestial Dashboard Mobile */
+  .celestial-hero {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+  
+  .hero-phase {
+    font-size: 1.25rem;
+  }
+  
+  .celestial-microstats {
+    width: 100%;
+    justify-content: space-between;
+  }
+  
+  .microstat {
+    flex: 1;
+  }
+  
+  .cosmic-prompt-panel {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
+  
+  .prompt-cta {
+    width: 100%;
+  }
+  
+  .zodiac-sky-map {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  
+  .trinity-cards {
+    grid-template-columns: 1fr;
+  }
+  
+  .ttc-header {
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+  
+  .ttc-actions {
+    flex-direction: column;
   }
 }
 

@@ -15,6 +15,9 @@ interface MorningBriefingProps {
   briefing: MorningBriefingType;
   onDismiss: () => void;
   onViewFullGuidance: () => void;
+  isAIEnabled?: boolean;
+  hasAIProvider?: boolean;
+  onOpenSettings?: () => void;
 }
 
 const styles: Record<string, React.CSSProperties> = {
@@ -298,6 +301,9 @@ export const MorningBriefing: React.FC<MorningBriefingProps> = ({
   briefing,
   onDismiss,
   onViewFullGuidance,
+  isAIEnabled,
+  hasAIProvider,
+  onOpenSettings,
 }) => {
   const [isVisible, setIsVisible] = useState(true);
   
@@ -313,6 +319,8 @@ export const MorningBriefing: React.FC<MorningBriefingProps> = ({
     practicalSteps,
     affirmation,
     patternMatches,
+    planetaryHour,
+    aiFallbackReason,
   } = briefing;
   
   const formatDate = (d: Date) => {
@@ -360,6 +368,12 @@ export const MorningBriefing: React.FC<MorningBriefingProps> = ({
           <span style={styles.icon}>☉</span>
           <span>Sun in {celestialSnapshot.sunSign.charAt(0).toUpperCase() + celestialSnapshot.sunSign.slice(1)}</span>
         </div>
+        {planetaryHour && (
+          <div style={styles.celestialBadge}>
+            <span style={styles.icon}>⏰</span>
+            <span>{planetaryHour.charAt(0).toUpperCase() + planetaryHour.slice(1)} Hour</span>
+          </div>
+        )}
         {celestialSnapshot.keyTransit && (
           <div style={styles.celestialBadge}>
             <span style={styles.icon}>{PLANET_SYMBOLS[celestialSnapshot.keyTransit.transitingPlanet] || '✦'}</span>
@@ -396,9 +410,88 @@ export const MorningBriefing: React.FC<MorningBriefingProps> = ({
         </div>
       )}
       
+      {/* AI Fallback Notice */}
+      {aiFallbackReason && (
+        <div style={{
+          background: 'rgba(245,158,11,0.12)',
+          borderRadius: '10px',
+          padding: '12px 16px',
+          marginBottom: '16px',
+          border: '1px solid rgba(245,158,11,0.3)',
+          position: 'relative' as const,
+          zIndex: 1,
+        }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+            <span>⚠️</span>
+            <span style={{ fontSize: '0.85rem', color: 'rgba(255,255,255,0.85)' }}>
+              AI enhancement unavailable. Showing template guidance.
+            </span>
+          </div>
+        </div>
+      )}
+      
+      {/* AI Upsell */}
+      {!isAIEnabled && !aiFallbackReason && (
+        <div style={{
+          background: 'linear-gradient(135deg, rgba(59,130,246,0.15) 0%, rgba(147,51,234,0.15) 100%)',
+          borderRadius: '12px',
+          padding: '16px 20px',
+          marginBottom: '20px',
+          border: '1px solid rgba(147,51,234,0.3)',
+          position: 'relative' as const,
+          zIndex: 1,
+        }}>
+          <div style={{ display: 'flex', alignItems: 'flex-start', gap: '12px' }}>
+            <span style={{ fontSize: '1.5rem' }}>✨</span>
+            <div style={{ flex: 1 }}>
+              <div style={{ fontSize: '0.9rem', fontWeight: 600, color: '#e9d5ff', marginBottom: '4px' }}>
+                {hasAIProvider ? 'Enable AI Guidance' : 'Unlock Deeper Insights'}
+              </div>
+              <p style={{ fontSize: '0.85rem', color: 'rgba(255,255,255,0.7)', margin: '0 0 12px 0', lineHeight: 1.5 }}>
+                {hasAIProvider
+                  ? 'You have an AI provider configured. Turn on AI guidance for poetic, personalized readings.'
+                  : 'Add an AI provider to receive LLM-enhanced interpretations tailored to your unique chart.'}
+              </p>
+              {onOpenSettings && (
+                <button
+                  onClick={onOpenSettings}
+                  style={{
+                    padding: '8px 14px',
+                    borderRadius: '8px',
+                    border: '1px solid rgba(147,51,234,0.5)',
+                    background: 'rgba(147,51,234,0.2)',
+                    color: '#e9d5ff',
+                    fontSize: '0.8rem',
+                    fontWeight: 500,
+                    cursor: 'pointer',
+                  }}
+                >
+                  {hasAIProvider ? 'Turn On in Settings' : 'Set Up AI →'}
+                </button>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
+      
       {/* Guidance */}
       <div style={styles.guidanceSection}>
-        <h3 style={styles.guidanceTitle}>Your Guidance</h3>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 12 }}>
+          <h3 style={styles.guidanceTitle}>Your Guidance</h3>
+          {guidance.aiGenerated ? (
+            <span style={{ fontSize: '0.7rem', color: '#a78bfa', background: 'rgba(167,139,250,0.15)', padding: '4px 8px', borderRadius: 12 }}>
+              ✨ AI-Enhanced
+            </span>
+          ) : aiFallbackReason ? (
+            <span style={{ fontSize: '0.7rem', color: '#fbbf24', background: 'rgba(251,191,36,0.12)', padding: '4px 8px', borderRadius: 12 }}>
+              ⚠️ Template Fallback
+            </span>
+          ) : (
+            <span style={{ fontSize: '0.7rem', color: '#60a5fa', background: 'rgba(96,165,250,0.15)', padding: '4px 8px', borderRadius: 12 }}>
+              📚 Template-Powered
+            </span>
+          )}
+        </div>
         <p style={styles.guidanceText}>{guidance.narrative}</p>
       </div>
       

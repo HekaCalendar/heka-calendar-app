@@ -17,7 +17,10 @@ import {
 } from '../../services/natal/natalChart';
 import { profileManager } from '../../services/natal/profileManager';
 import { calculateCurrentSky, calculateLocalHouses } from '../../services/calculations/swissCalculations';
-import { getZodiacSystemPreference } from '../../services/natal/zodiacHelpers';
+import { birthDateTimeToUTC } from '../../services/swiss-ephemeris/engine';
+import { getZodiacSystemPreference, getSignCountPreference } from '../../services/natal/zodiacHelpers';
+import { LocationSearch } from '../forms/LocationSearch';
+import { getSignFromLongitude, toDegree, getDegreeInSign } from '../../types';
 
 interface BirthChartInputProps {
   onChartCalculated: (chart: NatalChart) => void;
@@ -286,6 +289,7 @@ export const BirthChartInput: React.FC<BirthChartInputProps> = ({
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [calculatedChart, setCalculatedChart] = useState<NatalChart | null>(null);
+  const [locationSet, setLocationSet] = useState(false);
   
   // Try to get user's location
   useEffect(() => {
@@ -310,8 +314,19 @@ export const BirthChartInput: React.FC<BirthChartInputProps> = ({
     setError(null);
   };
   
+  const handleLocationSelect = (location: { name: string; latitude: number; longitude: number }) => {
+    setFormData(prev => ({
+      ...prev,
+      latitude: location.latitude.toFixed(6),
+      longitude: location.longitude.toFixed(6),
+      locationName: location.name,
+    }));
+    setLocationSet(true);
+    setError(null);
+  };
+  
   const calculateNatalPositions = async (birthData: BirthData): Promise<Record<string, NatalPlanet>> => {
-    const date = new Date(`${birthData.date}T${birthData.time}`);
+    const date = birthDateTimeToUTC(birthData.date, birthData.time, birthData.timezone);
     
     // Validate date
     if (isNaN(date.getTime())) {
@@ -414,7 +429,7 @@ export const BirthChartInput: React.FC<BirthChartInputProps> = ({
       const planets = await calculateNatalPositions(birthData);
       
       // Calculate houses with error handling
-      const date = new Date(`${birthData.date}T${birthData.time}`);
+      const date = birthDateTimeToUTC(birthData.date, birthData.time, birthData.timezone);
       let houseData;
       try {
         houseData = await calculateLocalHouses(date, birthData.latitude, birthData.longitude);
@@ -440,8 +455,26 @@ export const BirthChartInput: React.FC<BirthChartInputProps> = ({
       const elements = calculateElementalBalance(planets);
       const modalities = calculateModalityBalance(planets);
       
-      // Get first planet as placeholders for ascendant/mc
-      const firstPlanet = Object.values(planets)[0];
+      // Build proper ascendant / midheaven bodies from calculated house data
+      const use13Signs = getSignCountPreference() === 13;
+      const makeAngleBody = (longitude: number, houseNum: number): NatalPlanet => {
+        const deg = toDegree(longitude);
+        return {
+          id: 'sun' as any,
+          longitude: deg,
+          latitude: 0,
+          distance: 0,
+          speed: 0,
+          isRetrograde: false,
+          sign: getSignFromLongitude(deg, use13Signs) as any,
+          degreeInSign: getDegreeInSign(deg, use13Signs),
+          house: houseNum,
+          dignity: 'neutral',
+        };
+      };
+      
+      const ascendantBody = makeAngleBody(houseData.ascendant, 1);
+      const midheavenBody = makeAngleBody(houseData.mc, 10);
       
       const chart: NatalChart = {
         id: `natal-${Date.now()}`,
@@ -449,8 +482,8 @@ export const BirthChartInput: React.FC<BirthChartInputProps> = ({
         birthData,
         planets,
         houses,
-        ascendant: firstPlanet,
-        midheaven: firstPlanet,
+        ascendant: ascendantBody,
+        midheaven: midheavenBody,
         elements,
         modalities,
         calculatedAt: new Date(),
@@ -597,17 +630,35 @@ export const BirthChartInput: React.FC<BirthChartInputProps> = ({
         </div>
         
         <div style={styles.inputGroup}>
-          <label style={styles.label}>Location Name (optional)</label>
-          <input
-            type="text"
-            autoComplete="off"
-            autoCorrect="off"
-            value={formData.locationName}
-            onChange={(e) => handleChange('locationName', e.target.value)}
-            placeholder="e.g., New York, NY"
-            style={styles.input}
-          />
+          <label style={styles.label}>Birth Location *</label>
+          <LocationSearch onLocationSelect={handleLocationSelect} />
+          <p style={{ ...styles.privacyNote, marginTop: '6px', textAlign: 'left' }}>
+            Start typing a suburb or city (e.g. "Bankstown", "Sydney")
+          </p>
         </div>
+        
+        {locationSet && (
+          <div style={styles.row}>
+            <div style={styles.inputGroup}>
+              <label style={styles.label}>Latitude</label>
+              <input
+                type="text"
+                readOnly
+                value={formData.latitude}
+                style={{ ...styles.input, opacity: 0.8 }}
+              />
+            </div>
+            <div style={styles.inputGroup}>
+              <label style={styles.label}>Longitude</label>
+              <input
+                type="text"
+                readOnly
+                value={formData.longitude}
+                style={{ ...styles.input, opacity: 0.8 }}
+              />
+            </div>
+          </div>
+        )}
         
         <div style={styles.buttonGroup}>
           <button

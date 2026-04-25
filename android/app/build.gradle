@@ -9,8 +9,8 @@ android {
         applicationId "com.heka.calendar"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 220
-        versionName "2.2.0"
+        versionCode 221
+        versionName "2.2.1"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         androidResources {
             ignoreAssetsPattern = '!.svn:!.git:!.ds_store:!*.scc:.*:!CVS:!thumbs.db:!picasa.ini:!*~'
@@ -54,12 +54,17 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            // Only use release signing if keystore is configured
+            // Only enforce release keystore when actually building a release APK.
+            // During debug builds and Android Studio sync, fall back to debug signing.
             if (signingConfigs.release.storeFile != null && signingConfigs.release.storeFile.exists()) {
                 signingConfig signingConfigs.release
             } else {
+                def isReleaseBuild = gradle.startParameter.taskNames.any { it.toLowerCase().contains('release') }
+                if (isReleaseBuild) {
+                    throw new GradleException("Release keystore not configured. Create android/app/key.properties for Play Store builds.")
+                }
                 signingConfig signingConfigs.debug
-                println "Warning: Using debug signing for release. Create key.properties for Play Store."
+                println "Warning: Using debug signing for release build type. Create key.properties for Play Store."
             }
         }
         debug {
@@ -88,7 +93,7 @@ dependencies {
     implementation project(':capacitor-cordova-android-plugins')
     
     // Firebase BoM (Bill of Materials) - manages Firebase versions
-    implementation platform('com.google.firebase:firebase-bom:33.7.0')
+    implementation platform('com.google.firebase:firebase-bom:34.12.0')
     
     // Firebase Auth
     implementation 'com.google.firebase:firebase-auth'
@@ -104,6 +109,6 @@ try {
     if (servicesJSON.text) {
         apply plugin: 'com.google.gms.google-services'
     }
-} catch(Exception e) {
+} catch(Exception ignored) {
     logger.info("google-services.json not found, google-services plugin not applied. Push Notifications won't work")
 }

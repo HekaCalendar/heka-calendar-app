@@ -5,7 +5,7 @@
 
 import { useSelector, useDispatch } from 'react-redux';
 import type { RootState } from '../store';
-import { prevMonth, nextMonth, navigateToToday, toggleDisplay } from '../store';
+import { prevMonth, nextMonth, navigateToToday, toggleDisplay, setView } from '../store';
 
 import { useFeatureDiscovery, useSettingsTracking } from '../hooks/useGamification';
 import { trackMonthNavigation } from '../services/engagementService';
@@ -50,7 +50,7 @@ export const MonthHeader: React.FC<MonthHeaderProps> = ({
   const { trackDisplay } = useSettingsTracking();
   
   const { showCivilDates, showMoonPhases, showHolidays } = display;
-  
+
   const handleToggleCivil = () => {
     dispatch(toggleDisplay('showCivilDates'));
     tutorialService.trackDisplayToggle('showCivilDates', !showCivilDates);
@@ -99,6 +99,7 @@ export const MonthHeader: React.FC<MonthHeaderProps> = ({
               className="btn btn-today"
               onClick={() => {
                 dispatch(navigateToToday());
+                dispatch(setView('month'));
                 discover('usedTodayButton');
                 tutorialService.trackTodayButton();
               }}
@@ -240,7 +241,7 @@ export const MonthHeader: React.FC<MonthHeaderProps> = ({
             >
               ℹ️ About
             </button>
-            
+
             <button
               className="btn"
               onClick={() => {
@@ -250,7 +251,7 @@ export const MonthHeader: React.FC<MonthHeaderProps> = ({
             >
               📊 Stats
             </button>
-            
+
             <button
               className="btn"
               onClick={() => {
@@ -261,11 +262,13 @@ export const MonthHeader: React.FC<MonthHeaderProps> = ({
             >
               🌍 Community
             </button>
+
           </div>
+
+
         </div>
       </div>
       
-      {/* === DISPLAY TOGGLES - Centered below divider === */}
       <div className="month-header__display-toggles">
         <button 
           className={`btn ${showCivilDates ? 'btn--active' : ''}`}
@@ -292,6 +295,7 @@ export const MonthHeader: React.FC<MonthHeaderProps> = ({
           {showHolidays ? '✓ ' : ''}🎉 Holidays
         </button>
       </div>
+
     </div>
   );
 };

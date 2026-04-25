@@ -38,6 +38,8 @@ import {
 } from '../ai/aiProvider';
 
 import type { CelestialBody } from '../../types';
+import { guidanceHistoryService } from './guidanceHistoryService';
+import { aiConfigService } from '../../../services/aiConfigService';
 
 // ═══════════════════════════════════════════════════════════════════════════════
 // TYPES & INTERFACES
@@ -81,6 +83,10 @@ export interface PersonalizedGuidanceReading {
   // Metadata
   generatedAt: Date;
   confidence: number;
+  
+  // Fallback tracking
+  aiFallbackReason?: string;
+  planetaryHour?: string;
 }
 
 export interface MorningBriefing {
@@ -99,6 +105,8 @@ export interface MorningBriefing {
   practicalSteps: string[];
   affirmation: string;
   patternMatches: PatternCorrelation[];
+  planetaryHour?: string;
+  aiFallbackReason?: string;
 }
 
 // ═══════════════════════════════════════════════════════════════════════════════
@@ -122,6 +130,7 @@ export class PersonalizedGuidanceEngine {
     voidMoon?: { isVoid: boolean; lastAspect?: string };
     category?: LifeArea;
     useAI?: boolean;
+    planetaryHour?: string;
   }): Promise<PersonalizedGuidanceReading> {
     const { 
       timeframe, 
@@ -132,6 +141,7 @@ export class PersonalizedGuidanceEngine {
       voidMoon,
       category,
       useAI = false,
+      planetaryHour,
     } = params;
     
     // Check cache
@@ -169,16 +179,86 @@ export class PersonalizedGuidanceEngine {
     const activePatterns = patternEngine.getRelevantPatterns(snapshot);
     const patternInsights = activePatterns.map(p => p.insight);
     
-    // Generate overall reading
-    const overallReading = await this.generateReading({
-      planet: 'sun',
-      sign: positions.sun?.sign || 'aries',
-      moonPhase: moonPhase.phase,
-      transit: transits[0],
-      dominantElement: dominantElement || undefined,
-      category,
-      useAI,
-    });
+    // Sort transits by strength for better selection
+    const sortedTransits = this.getStrongestTransits(transits);
+    
+    // Track AI fallback
+    let aiFallbackReason: string | undefined;
+    
+    // Gather journal context for cross-linking
+    const userContext = aiConfigService.getUserContext();
+    const journalThemes = userContext.lastJournalThemes.length > 0 
+      ? userContext.lastJournalThemes 
+      : undefined;
+    const journalSnippet = userContext.lastJournalSnippet;
+    
+    // Generate holistic overall reading based on timeframe
+    let overallReading: PersonalizedReading;
+    
+    if (timeframe === 'weekly') {
+      overallReading = templateLibrary.synthesizeWeekly({
+        positions,
+        moonPhase,
+        retrogrades,
+        dominantElement: dominantElement || undefined,
+        transits: sortedTransits,
+        planetaryHour,
+        journalThemes,
+      });
+    } else if (timeframe === 'yearly') {
+      overallReading = templateLibrary.synthesizeYearly({
+        positions,
+        moonPhase,
+        retrogrades,
+        dominantElement: dominantElement || undefined,
+        transits: sortedTransits,
+        journalThemes,
+      });
+    } else {
+      overallReading = templateLibrary.synthesizeSnapshot({
+        positions,
+        moonPhase,
+        retrogrades,
+        dominantElement: dominantElement || undefined,
+        transits: sortedTransits,
+        planetaryHour,
+        journalThemes,
+      });
+    }
+    
+    // AI enhancement for overall reading if enabled
+    if (useAI) {
+      try {
+        const aiRequest: AIRequest = {
+          prompt: this.buildRichPrompt({
+            positions,
+            moonPhase,
+            retrogrades,
+            dominantElement: dominantElement || undefined,
+            transits: sortedTransits,
+            category: 'overall',
+            planetaryHour,
+            journalThemes,
+            journalSnippet,
+            timeframe,
+          }),
+          context: {
+            planet: 'sun',
+            sign: positions.sun?.sign || 'aries',
+            moonPhase: moonPhase.phase,
+            transits: sortedTransits.slice(0, 3),
+            userElement: dominantElement || undefined,
+            category,
+          },
+          templateReading: overallReading,
+        };
+        const aiResponse = await aiProviderManager.generateReading(aiRequest);
+        overallReading = aiResponse.reading;
+      } catch (error) {
+        aiFallbackReason = error instanceof Error ? error.message : 'AI provider unavailable';
+        console.warn('AI enhancement failed for overall reading, using template:', error);
+      }
+    }
     
     // Generate life area readings
     const lifeAreaReadings: Partial<Record<LifeArea, PersonalizedReading>> = {};
@@ -186,7 +266,7 @@ export class PersonalizedGuidanceEngine {
     // Generate life area readings in parallel for performance
     const lifeAreas: LifeArea[] = ['career', 'relationships', 'health', 'finances', 'personalGrowth', 'timing'];
     const readingPromises = lifeAreas.map(async (area) => {
-      const relevantTransit = this.findRelevantTransit(area, transits);
+      const relevantTransit = this.findRelevantTransit(area, sortedTransits);
       const relevantPlanet = this.getPlanetForLifeArea(area);
       
       const reading = await this.generateReading({
@@ -228,7 +308,12 @@ export class PersonalizedGuidanceEngine {
       patternInsights,
       generatedAt: new Date(),
       confidence: this.calculateConfidence(natalChart, transits, activePatterns),
+      aiFallbackReason,
+      planetaryHour,
     };
+    
+    // Save to history
+    guidanceHistoryService.saveReading(reading);
     
     // Cache result with size limit enforcement (LRU eviction)
     this.enforceCacheSizeLimit();
@@ -247,8 +332,9 @@ export class PersonalizedGuidanceEngine {
     voidMoon?: { isVoid: boolean; lastAspect?: string };
     userName?: string;
     useAI?: boolean;
+    planetaryHour?: string;
   }): Promise<MorningBriefing> {
-    const { positions, moonPhase, retrogrades, voidMoon, userName, useAI = false } = params;
+    const { positions, moonPhase, retrogrades, voidMoon, userName, useAI = false, planetaryHour } = params;
     const date = new Date();
     
     // Get natal chart
@@ -265,12 +351,14 @@ export class PersonalizedGuidanceEngine {
     else if (hour >= 17) greeting = 'Good evening';
     if (userName) greeting += `, ${userName}`;
     
-    // Get key transit
-    const keyTransit = transits[0];
+    // Sort transits by strength and get the most potent one
+    const sortedTransits = this.getStrongestTransits(transits);
+    const keyTransit = sortedTransits[0];
     
     // Generate guidance for focus area
+    let aiFallbackReason: string | undefined;
     const relevantPlanet = this.getPlanetForLifeArea(focusArea);
-    const guidance = await this.generateReading({
+    let guidance = await this.generateReading({
       planet: relevantPlanet,
       sign: positions[relevantPlanet]?.sign || 'aries',
       moonPhase: moonPhase.phase,
@@ -278,6 +366,17 @@ export class PersonalizedGuidanceEngine {
       dominantElement: natalChart ? getDominantElement(natalChart.elements) || undefined : undefined,
       category: focusArea,
       useAI,
+    }).catch((err) => {
+      aiFallbackReason = err instanceof Error ? err.message : 'AI provider unavailable';
+      // Return template reading on any error
+      return templateLibrary.generateReading({
+        planet: relevantPlanet,
+        sign: positions[relevantPlanet]?.sign || 'aries',
+        moonPhase: moonPhase.phase,
+        transit: keyTransit,
+        userElement: natalChart ? getDominantElement(natalChart.elements) || undefined : undefined,
+        category: focusArea,
+      });
     });
     
     // Get pattern matches
@@ -297,7 +396,7 @@ export class PersonalizedGuidanceEngine {
     // Generate practical steps
     const practicalSteps = this.generatePracticalSteps(focusArea, moonPhase.phase, keyTransit);
     
-    return {
+    const briefing: MorningBriefing = {
       date,
       greeting,
       celestialSnapshot: {
@@ -313,7 +412,13 @@ export class PersonalizedGuidanceEngine {
       practicalSteps,
       affirmation: guidance.affirmation,
       patternMatches,
+      planetaryHour,
+      aiFallbackReason,
     };
+    
+    guidanceHistoryService.saveBriefing(briefing);
+    
+    return briefing;
   }
   
   /**
@@ -344,7 +449,14 @@ export class PersonalizedGuidanceEngine {
     if (useAI) {
       try {
         const aiRequest: AIRequest = {
-          prompt: '',
+          prompt: this.buildRichPrompt({
+            planet,
+            sign,
+            moonPhase,
+            transit,
+            dominantElement,
+            category,
+          }),
           context: {
             planet,
             sign,
@@ -372,16 +484,130 @@ export class PersonalizedGuidanceEngine {
    */
   private findRelevantTransit(area: LifeArea, transits: Transit[]): Transit | undefined {
     const areaPlanets: Record<LifeArea, string[]> = {
-      career: ['saturn', 'jupiter', 'sun', 'mars'],
-      relationships: ['venus', 'moon', 'mars'],
-      health: ['mars', 'sun', 'saturn', 'moon'],
-      finances: ['jupiter', 'venus', 'saturn', 'pluto'],
-      personalGrowth: ['sun', 'jupiter', 'uranus', 'neptune'],
-      timing: ['moon', 'mercury', 'mars'],
+      career: ['saturn', 'jupiter', 'sun', 'mars', 'pluto'],
+      relationships: ['venus', 'moon', 'mars', 'pluto'],
+      health: ['mars', 'sun', 'saturn', 'moon', 'pluto'],
+      finances: ['jupiter', 'venus', 'saturn', 'pluto', 'uranus'],
+      personalGrowth: ['sun', 'jupiter', 'uranus', 'neptune', 'pluto'],
+      timing: ['moon', 'mercury', 'mars', 'uranus'],
     };
     
+    const sortedTransits = this.getStrongestTransits(transits);
     const relevantPlanets = areaPlanets[area];
-    return transits.find(t => relevantPlanets.includes(t.transitingPlanet));
+    return sortedTransits.find(t => relevantPlanets.includes(t.transitingPlanet));
+  }
+  
+  /**
+   * Score a transit by orb, aspect type, planet importance, and applying status
+   */
+  private scoreTransit(transit: Transit): number {
+    let score = 0;
+    
+    // Orb: closer is stronger (max 10°)
+    const orb = Math.min(transit.orb, 10);
+    score += (10 - orb) * 12; // 0-120
+    
+    // Applying transits are more potent
+    if (transit.applying) score += 30;
+    
+    // Aspect weights
+    const aspectWeights: Record<string, number> = {
+      conjunction: 45,
+      opposition: 40,
+      square: 35,
+      trine: 25,
+      sextile: 18,
+      quincunx: 12,
+      semisextile: 8,
+    };
+    score += aspectWeights[transit.aspect] || 10;
+    
+    // Planet importance weights
+    const planetWeights: Record<string, number> = {
+      pluto: 22, saturn: 20, uranus: 18, neptune: 18,
+      jupiter: 15, mars: 12, sun: 12, venus: 10, mercury: 8, moon: 6,
+    };
+    score += planetWeights[transit.transitingPlanet] || 5;
+    
+    return score;
+  }
+  
+  /**
+   * Return transits sorted by strength (strongest first)
+   */
+  private getStrongestTransits(transits: Transit[]): Transit[] {
+    return [...transits].sort((a, b) => this.scoreTransit(b) - this.scoreTransit(a));
+  }
+  
+  /**
+   * Build a rich prompt for AI providers
+   */
+  private buildRichPrompt(params: {
+    positions?: Record<string, CelestialBody>;
+    moonPhase?: string | { phase: string; sign?: string };
+    retrogrades?: string[];
+    dominantElement?: string;
+    transits?: Transit[];
+    planet?: string;
+    sign?: string;
+    transit?: Transit;
+    category?: string;
+    planetaryHour?: string;
+    journalThemes?: string[];
+    journalSnippet?: string;
+    timeframe?: string;
+  }): string {
+    const parts: string[] = [];
+    parts.push('You are a wise, warm astrological guide. Provide personalized guidance based on the following celestial data:');
+    
+    if (params.positions) {
+      const pos = params.positions;
+      const planetList = ['sun', 'moon', 'mercury', 'venus', 'mars', 'jupiter', 'saturn', 'uranus', 'neptune', 'pluto']
+        .filter(p => pos[p])
+        .map(p => `${p.charAt(0).toUpperCase() + p.slice(1)} in ${pos[p].sign.charAt(0).toUpperCase() + pos[p].sign.slice(1)}${pos[p].isRetrograde ? ' (Rx)' : ''}`);
+      parts.push(`\nCurrent Planetary Positions:\n${planetList.join('\n')}`);
+    }
+    
+    if (params.moonPhase) {
+      const phaseStr = typeof params.moonPhase === 'string'
+        ? params.moonPhase.replace(/-/g, ' ')
+        : params.moonPhase.phase.replace(/-/g, ' ');
+      parts.push(`\nMoon Phase: ${phaseStr}`);
+      if (typeof params.moonPhase === 'object' && params.moonPhase.sign) {
+        parts.push(`Moon Sign: ${params.moonPhase.sign}`);
+      }
+    }
+    
+    if (params.retrogrades && params.retrogrades.length > 0) {
+      parts.push(`\nRetrograde Planets: ${params.retrogrades.map(p => p.charAt(0).toUpperCase() + p.slice(1)).join(', ')}`);
+    }
+    
+    if (params.dominantElement) {
+      parts.push(`\nUser's Dominant Element: ${params.dominantElement}`);
+    }
+    
+    if (params.transits && params.transits.length > 0) {
+      parts.push(`\nKey Transits:`);
+      params.transits.slice(0, 4).forEach(t => {
+        parts.push(`- ${t.transitingPlanet.charAt(0).toUpperCase() + t.transitingPlanet.slice(1)} ${t.aspect} natal ${t.natalPlanet} (${t.orb.toFixed(1)}° ${t.applying ? 'applying' : 'separating'})`);
+      });
+    }
+    
+    if (params.planet && params.sign) {
+      parts.push(`\nFocus Planet: ${params.planet.charAt(0).toUpperCase() + params.planet.slice(1)} in ${params.sign.charAt(0).toUpperCase() + params.sign.slice(1)}`);
+    }
+    
+    if (params.transit) {
+      parts.push(`Relevant Transit: ${params.transit.transitingPlanet.charAt(0).toUpperCase() + params.transit.transitingPlanet.slice(1)} ${params.transit.aspect} natal ${params.transit.natalPlanet}`);
+    }
+    
+    if (params.category && params.category !== 'overall') {
+      parts.push(`\nLife Area Focus: ${params.category}`);
+    }
+    
+    parts.push('\nExpand the template guidance with poetic depth, practical wisdom, and warm specificity. Reference actual celestial positions in your response.');
+    
+    return parts.join('');
   }
   
   /**
@@ -404,8 +630,9 @@ export class PersonalizedGuidanceEngine {
    */
   private determineFocusArea(transits: Transit[], moonPhase: string): LifeArea {
     // Check for strong transits
-    if (transits.length > 0) {
-      const strongest = transits[0];
+    const sortedTransits = this.getStrongestTransits(transits);
+    if (sortedTransits.length > 0) {
+      const strongest = sortedTransits[0];
       if (strongest.transitingPlanet === 'saturn') return 'career';
       if (strongest.transitingPlanet === 'venus') return 'relationships';
       if (strongest.transitingPlanet === 'mars') return 'health';

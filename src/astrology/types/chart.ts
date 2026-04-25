@@ -15,7 +15,9 @@ import type {
   Timestamp,
   Degree,
   PlanetId,
-  ZodiacSign
+  ZodiacSign,
+  ZodiacFrame,
+  SignCount
 } from './core';
 
 // Chart Identification
@@ -43,7 +45,9 @@ export interface NatalChart {
   readonly julianDay: number;
   readonly calculatedAt: Timestamp;
   readonly version: '2.0';
-  readonly zodiacSystem: '12-sign' | '13-sign';
+  readonly zodiacSystem: '12-sign' | '13-sign' | 'sidereal'; // legacy
+  readonly zodiacFrame: ZodiacFrame;
+  readonly signCount: SignCount;
   readonly houseSystem: HouseSystem['type'];
 }
 
@@ -51,7 +55,9 @@ export interface NatalChart {
 export interface ChartParams {
   readonly profileId: ProfileId;
   readonly birthData: BirthData;
-  readonly zodiacSystem: '12-sign' | '13-sign';
+  readonly zodiacSystem: '12-sign' | '13-sign' | 'sidereal'; // legacy
+  readonly zodiacFrame: ZodiacFrame;
+  readonly signCount: SignCount;
   readonly houseSystem: HouseSystem['type'];
   readonly options?: ChartOptions;
 }

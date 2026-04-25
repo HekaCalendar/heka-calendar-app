@@ -373,17 +373,51 @@ optgroup {
   box-shadow: 0 0 15px rgba(212, 175, 55, 0.2);
 }
 
-/* Diamond symbol below the mode indicator line, centered */
-.app-header__diamond {
+/* Pro Store Button — replaces the static diamond */
+.app-header__pro-btn {
   position: absolute;
-  bottom: 12px;
+  bottom: 10px;
   left: 50%;
   transform: translateX(-50%);
-  font-size: 18px;
-  color: var(--color-gold);
-  opacity: 0.9;
-  text-shadow: 0 0 20px rgba(212, 175, 55, 0.8);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: linear-gradient(135deg, rgba(251, 191, 36, 0.12), rgba(245, 158, 11, 0.08));
+  border: 1px solid rgba(251, 191, 36, 0.35);
+  border-radius: 20px;
+  padding: 5px 14px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  animation: proBtnPulse 3s ease-in-out infinite;
+}
+
+.app-header__pro-btn:hover {
+  border-color: rgba(251, 191, 36, 0.7);
+  box-shadow: 0 0 25px rgba(251, 191, 36, 0.2);
+  transform: translateX(-50%) translateY(-1px);
+}
+
+.app-header__pro-diamond {
+  font-size: 14px;
+  color: #fbbf24;
   line-height: 1;
+}
+
+.app-header__pro-label {
+  font-size: 12px;
+  font-weight: 700;
+  color: #fbbf24;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+@keyframes proBtnPulse {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(251, 191, 36, 0);
+  }
+  50% {
+    box-shadow: 0 0 15px 2px rgba(251, 191, 36, 0.15);
+  }
 }
 
 /* Mode Indicator Badge */
@@ -424,10 +458,11 @@ optgroup {
   display: flex;
   align-items: center;
   justify-content: center;
+  gap: 8px;
 }
 
 .settings-toggle-btn {
-  width: 100%;
+  flex: 1;
   height: 100%;
   padding: 12px;
   background: rgba(201, 162, 39, 0.1);
@@ -1012,6 +1047,16 @@ optgroup {
   line-height: 1;
 }
 
+.month-nav-prev,
+.month-nav-next,
+.expand-btn-horizontal,
+.expand-btn-vertical {
+  font-size: 20px !important;
+  line-height: 1;
+  overflow: visible !important;
+  transform: scale(1.2);
+}
+
 /* ==========================================================================
    Calendar Grid
    ========================================================================== */
@@ -1219,6 +1264,46 @@ optgroup {
   border: 1px solid;
 }
 
+/* Center: Routine upload + other center actions */
+.calendar-grid__center-actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  flex: 1;
+}
+
+.calendar-grid__routine-upload {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  padding: 0;
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: var(--radius-sm);
+  color: var(--color-text-muted);
+  cursor: pointer;
+  opacity: 0.35;
+  transition: all 0.2s ease;
+}
+
+.calendar-grid__routine-upload svg {
+  width: 12px;
+  height: 12px;
+}
+
+.calendar-grid__routine-upload:hover {
+  opacity: 0.8;
+  border-color: rgba(212, 175, 55, 0.3);
+  color: var(--color-gold);
+}
+
+.calendar-grid__routine-upload:active {
+  transform: scale(0.92);
+}
+
 /* Bottom: Month/13 centered */
 .calendar-grid__month-index {
   text-align: center;
@@ -1399,6 +1484,33 @@ optgroup {
 .day-cell__moon {
   font-size: var(--text-base);
   opacity: 0.9;
+}
+
+.day-cell__celestial-badges {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 1px;
+}
+
+.day-cell__mansion {
+  font-size: 11px;
+  opacity: 0.85;
+  line-height: 1;
+  filter: drop-shadow(0 0 3px rgba(201, 162, 39, 0.4));
+}
+
+.day-cell__solar-return {
+  font-size: 10px;
+  opacity: 0.95;
+  line-height: 1;
+  filter: drop-shadow(0 0 4px rgba(251, 191, 36, 0.6));
+  animation: solarPulse 2s ease-in-out infinite;
+}
+
+@keyframes solarPulse {
+  0%, 100% { opacity: 0.8; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.15); }
 }
 
 .day-cell__civil {
@@ -2098,6 +2210,59 @@ optgroup {
   font-size: var(--text-xl);
   font-weight: 600;
   letter-spacing: 0.05em;
+}
+
+/* Quick Note Modal */
+.quick-note-tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.15rem 0.5rem;
+  border-radius: 999px;
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  background: rgba(212, 175, 55, 0.15);
+  color: #d4af37;
+  border: 1px solid rgba(212, 175, 55, 0.3);
+}
+
+.quick-note-modal-overlay {
+  z-index: 1100;
+}
+
+.quick-note-textarea:focus {
+  border-color: rgba(212, 175, 55, 0.5) !important;
+  box-shadow: 0 0 0 2px rgba(212, 175, 55, 0.1);
+}
+
+/* Day cell long-press feedback */
+.day-cell.long-pressing {
+  transform: scale(0.97);
+  border-color: rgba(212, 175, 55, 0.5);
+  box-shadow: inset 0 0 20px rgba(212, 175, 55, 0.15);
+  transition: transform 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+/* Quick note tag in day cell previews */
+.note-preview-item {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.note-preview-tag {
+  flex-shrink: 0;
+  font-size: 0.55rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  padding: 0.05rem 0.3rem;
+  border-radius: 999px;
+  background: rgba(212, 175, 55, 0.12);
+  color: #d4af37;
+  border: 1px solid rgba(212, 175, 55, 0.25);
+  white-space: nowrap;
 }
 
 .mini-calendar {
@@ -5474,10 +5639,10 @@ optgroup {
     padding: 4px 10px;
   }
   
-  /* Smaller header padding in landscape */
+  /* Thicker header in landscape — avoid narrow strip look */
   .app-header {
-    padding-top: 20px !important;
-    padding-bottom: 20px !important;
+    padding-top: 64px !important;
+    padding-bottom: 32px !important;
   }
   
   /* Cap cell sizes - don't expand to fill width */
@@ -5650,6 +5815,244 @@ optgroup {
   display: flex;
   flex-direction: column;
   gap: var(--space-3);
+}
+
+/* ==========================================================================
+   Day Panel Lunar Mansion — TRUE Mode
+   ========================================================================== */
+
+.day-panel__mansion {
+  background: linear-gradient(145deg, rgba(201, 162, 39, 0.08) 0%, rgba(139, 92, 246, 0.06) 100%);
+  border: 1px solid rgba(201, 162, 39, 0.25);
+  border-radius: var(--radius-lg);
+  padding: var(--space-4);
+  animation: fade-in 0.4s ease;
+}
+
+.day-panel__mansion-loading {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-4);
+  color: var(--color-text-muted);
+  font-size: var(--text-sm);
+}
+
+.day-panel__mansion-loading .spinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(201, 162, 39, 0.3);
+  border-top-color: #c9a227;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+.mansion-mode-badge {
+  font-size: 9px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  padding: 2px 8px;
+  border-radius: 4px;
+  background: rgba(201, 162, 39, 0.2);
+  color: #c9a227;
+  margin-left: auto;
+}
+
+.mansion-card {
+  border-radius: var(--radius-md);
+  padding: var(--space-3);
+  margin-top: var(--space-3);
+}
+
+.mansion-card--primary {
+  background: linear-gradient(135deg, rgba(201, 162, 39, 0.12) 0%, rgba(139, 92, 246, 0.08) 100%);
+  border: 1px solid rgba(201, 162, 39, 0.2);
+}
+
+.mansion-card--secondary {
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  opacity: 0.8;
+}
+
+.mansion-card__header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  margin-bottom: var(--space-2);
+}
+
+.mansion-card__symbol {
+  font-size: 1.75rem;
+  line-height: 1;
+}
+
+.mansion-card__title-group {
+  flex: 1;
+}
+
+.mansion-card__name {
+  font-weight: 700;
+  color: var(--color-text);
+  font-size: var(--text-base);
+}
+
+.mansion-card__name--small {
+  font-size: var(--text-sm);
+  font-weight: 500;
+  color: var(--color-text-muted);
+}
+
+.mansion-card__archetype {
+  font-size: var(--text-xs);
+  color: #c9a227;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-top: 2px;
+}
+
+.mansion-card__theme {
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+  font-style: italic;
+  line-height: 1.5;
+  margin-bottom: var(--space-3);
+  padding-bottom: var(--space-2);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.mansion-card__details {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-2);
+}
+
+.mansion-detail {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.mansion-detail__label {
+  font-size: 10px;
+  color: var(--color-text-subtle);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.mansion-detail__value {
+  font-size: var(--text-sm);
+  color: var(--color-text);
+  font-weight: 500;
+}
+
+.mansion-detail__value--capitalize {
+  text-transform: capitalize;
+}
+
+.mansion-quality--active {
+  color: #f97316;
+  font-weight: 600;
+  text-transform: capitalize;
+}
+
+.mansion-quality--passive {
+  color: #3b82f6;
+  font-weight: 600;
+  text-transform: capitalize;
+}
+
+.mansion-quality--balanced {
+  color: #22c55e;
+  font-weight: 600;
+  text-transform: capitalize;
+}
+
+.mansion-card__totem {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-3);
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: var(--radius-md);
+  margin-bottom: var(--space-3);
+}
+
+.mansion-totem-label {
+  font-size: 10px;
+  color: var(--color-text-subtle);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.mansion-totem-value {
+  font-size: var(--text-sm);
+  color: var(--color-text);
+  font-weight: 500;
+}
+
+/* ==========================================================================
+   Day Panel Solar Return — TRUE Mode
+   ========================================================================== */
+
+.day-panel__solar-return {
+  background: linear-gradient(145deg, rgba(251, 191, 36, 0.1) 0%, rgba(245, 158, 11, 0.05) 100%);
+  border: 1px solid rgba(251, 191, 36, 0.3);
+  border-radius: var(--radius-lg);
+  padding: var(--space-4);
+  animation: fade-in 0.4s ease;
+}
+
+.solar-return-mode-badge {
+  font-size: 9px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  padding: 2px 8px;
+  border-radius: 4px;
+  background: rgba(251, 191, 36, 0.2);
+  color: #fbbf24;
+  margin-left: auto;
+}
+
+.solar-return-card {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: var(--radius-md);
+  padding: var(--space-3);
+  margin-top: var(--space-3);
+  border-left: 3px solid #fbbf24;
+}
+
+.solar-return-card__icon {
+  font-size: 1.5rem;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.solar-return-card__body {
+  flex: 1;
+}
+
+.solar-return-card__title {
+  font-weight: 600;
+  color: var(--color-text);
+  font-size: var(--text-sm);
+  margin-bottom: var(--space-1);
+}
+
+.solar-return-card__detail {
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+  line-height: 1.5;
+}
+
+.solar-return-orb {
+  color: #fbbf24;
+  font-weight: 500;
 }
 
 /* Astro Card - Moon Phase */

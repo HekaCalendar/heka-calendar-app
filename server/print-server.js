@@ -10,6 +10,7 @@ import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
 import { writeFile, mkdir, unlink } from 'fs/promises';
 import { randomUUID } from 'crypto';
+import { addDays } from 'date-fns';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -17,9 +18,64 @@ const __dirname = dirname(__filename);
 const app = express();
 const PORT = process.env.PORT || 3001;
 
-// Middleware
-app.use(cors());
+// ============================================================================
+// Security Middleware
+// ============================================================================
+
+const ALLOWED_ORIGINS = (process.env.ALLOWED_ORIGINS || 'http://localhost:3000,http://localhost:5173')
+  .split(',')
+  .map(o => o.trim())
+  .filter(Boolean);
+
+app.use(cors({
+  origin: (origin, callback) => {
+    // Allow requests with no origin (e.g., mobile apps, curl)
+    if (!origin) return callback(null, true);
+    if (ALLOWED_ORIGINS.includes(origin)) return callback(null, true);
+    callback(new Error('Not allowed by CORS'));
+  },
+  methods: ['GET', 'POST'],
+}));
 app.use(express.json());
+
+// ============================================================================
+// Simple In-Memory Rate Limiting
+// ============================================================================
+
+const RATE_LIMIT = {
+  windowMs: 60 * 60 * 1000, // 1 hour
+  maxRequests: 10,
+};
+
+const requestCounts = new Map(); // ip -> { count, resetTime }
+
+function rateLimit(req, res, next) {
+  const ip = req.ip || req.connection.remoteAddress || 'unknown';
+  const now = Date.now();
+  const record = requestCounts.get(ip);
+  
+  if (!record || now > record.resetTime) {
+    requestCounts.set(ip, { count: 1, resetTime: now + RATE_LIMIT.windowMs });
+    return next();
+  }
+  
+  if (record.count >= RATE_LIMIT.maxRequests) {
+    return res.status(429).json({ error: 'Too many requests. Please try again later.' });
+  }
+  
+  record.count += 1;
+  next();
+}
+
+// Clean up old entries every hour
+setInterval(() => {
+  const now = Date.now();
+  for (const [ip, record] of requestCounts) {
+    if (now > record.resetTime) {
+      requestCounts.delete(ip);
+    }
+  }
+}, 60 * 60 * 1000);
 
 // Ensure temp directory exists
 const TEMP_DIR = join(__dirname, 'temp');
@@ -29,7 +85,7 @@ await mkdir(TEMP_DIR, { recursive: true });
 const jobs = new Map();
 
 // ============================================================================
-// Calendar Constants (must match client-side)
+// Calendar Constants & Math (MUST stay in sync with src/services/calendarService.ts)
 // ============================================================================
 
 const MONTHS = [
@@ -58,11 +114,12 @@ function isGregorianLeapYear(year) {
   return (year % 4 === 0 && year % 100 !== 0) || (year % 400 === 0);
 }
 
+const TRUE_MODE_BASE_YEAR = 2026;
+
 function isTrueModeMarchCorrection(hekaYear) {
-  // TRUE Mode: March correction every 4 years EXCEPT 128th
-  const yearIndex = hekaYear >= 0 ? hekaYear : hekaYear + 1;
-  const isFourthYear = (yearIndex % 4) === 3;
-  const is128thYear = (yearIndex % 128) === 127;
+  const yearIndex = hekaYear - TRUE_MODE_BASE_YEAR;
+  const isFourthYear = ((yearIndex % 4) + 4) % 4 === 3;
+  const is128thYear = ((yearIndex % 128) + 128) % 128 === 127;
   return isFourthYear && !is128thYear;
 }
 
@@ -88,23 +145,22 @@ function getDaysInMonth(hekaYear, monthIndex) {
 }
 
 function getTrueModeYearStart(hekaYear) {
-  const BASE_HEKA_YEAR = 2026;
   const BASE_GREGORIAN_YEAR = 2026;
   
   let daysOffset = 0;
   
-  if (hekaYear >= BASE_HEKA_YEAR) {
-    for (let y = BASE_HEKA_YEAR; y < hekaYear; y++) {
+  if (hekaYear >= TRUE_MODE_BASE_YEAR) {
+    for (let y = TRUE_MODE_BASE_YEAR; y < hekaYear; y++) {
       daysOffset += isHekaLeapMarch(y) ? 366 : 365;
     }
   } else {
-    for (let y = hekaYear; y < BASE_HEKA_YEAR; y++) {
+    for (let y = hekaYear; y < TRUE_MODE_BASE_YEAR; y++) {
       daysOffset -= isHekaLeapMarch(y) ? 366 : 365;
     }
   }
   
   const baseDate = new Date(BASE_GREGORIAN_YEAR, 3, 1);
-  return new Date(baseDate.getTime() + daysOffset * 24 * 60 * 60 * 1000);
+  return addDays(baseDate, daysOffset);
 }
 
 function getSyncModeYearStart(hekaYear) {
@@ -124,16 +180,12 @@ function getCivilStartOfHekaMonth(hekaYear, monthIndex) {
   for (let i = 0; i < monthIndex; i++) {
     daysToAdd += getDaysInMonth(hekaYear, i);
   }
-  const result = new Date(yearStart);
-  result.setDate(result.getDate() + daysToAdd);
-  return result;
+  return addDays(yearStart, daysToAdd);
 }
 
 function hekaToCivil(hekaYear, monthIndex, day) {
   const monthStart = getCivilStartOfHekaMonth(hekaYear, monthIndex);
-  const result = new Date(monthStart);
-  result.setDate(result.getDate() + day - 1);
-  return result;
+  return addDays(monthStart, day - 1);
 }
 
 function getSaturdayStartOffset(hekaYear, monthIndex) {
@@ -698,7 +750,7 @@ function generateYearHTML(year, options, timeMode, notes = {}) {
 // PDF Generation Endpoint
 // ============================================================================
 
-app.post('/api/print', async (req, res) => {
+app.post('/api/print', rateLimit, async (req, res) => {
   const jobId = randomUUID();
   const { mode, year, month, options, timeMode, notes } = req.body;
   

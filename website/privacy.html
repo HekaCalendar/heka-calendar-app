@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="../icon-192.png">
+
     <title>Privacy | HEKA</title>
     <meta name="description" content="HEKA Calendar privacy policy. Your data stays on your device. Local-first architecture.">
     
@@ -85,9 +87,24 @@
                             <td class="storage-local">Device Only</td>
                         </tr>
                         <tr>
+                            <td><strong>Notifications</strong></td>
+                            <td>Task reminders & celestial alerts</td>
+                            <td class="storage-local">Device Only</td>
+                        </tr>
+                        <tr>
+                            <td><strong>PDF Export</strong></td>
+                            <td>Print-to-PDF feature output</td>
+                            <td class="storage-local">Device Only</td>
+                        </tr>
+                        <tr>
                             <td><strong>Community Energy</strong></td>
                             <td>Anonymous daily voting (optional)</td>
-                            <td class="storage-optional">Cloud (opt-in)</td>
+                            <td class="storage-local">Device Only</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Crash Analytics</strong></td>
+                            <td>App stability diagnostics</td>
+                            <td class="storage-optional">Cloud (anonymous)</td>
                         </tr>
                     </tbody>
                 </table>
@@ -160,9 +177,14 @@
                     transmitted to external servers for astrological computation.
                 </p>
                 <p style="color: var(--light-secondary); line-height: 1.8; margin-top: 16px;">
-                    If you opt into cloud synchronization, encrypted data is stored using industry-standard 
-                    infrastructure. You retain full ownership of your data. Encryption keys are generated and 
-                    stored on your device—we cannot access or decrypt your information.
+                    If you opt into cloud synchronization, encrypted data is stored using Firebase (Google). 
+                    We also use Firebase Crashlytics for anonymous crash reporting to improve app stability. 
+                    You retain full ownership of your data. Encryption keys are generated and stored on your 
+                    device—we cannot access or decrypt your information.
+                </p>
+                <p style="color: var(--light-secondary); line-height: 1.8; margin-top: 16px;">
+                    <strong>External Storage:</strong> Storage permissions are used solely for the Print-to-PDF 
+                    feature. We do not access your photos, videos, or personal media.
                 </p>
             </section>
 
@@ -202,7 +224,7 @@
                 </div>
                 
                 <p style="text-align: center; color: var(--light-tertiary); font-size: 0.9rem; margin-top: 48px;">
-                    Last Updated: March 28, 2026
+                    Last Updated: April 16, 2026
                 </p>
             </section>
         </div>

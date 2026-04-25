@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <meta name="description" content="HEKA Calendar v2.2.0 - NEW ASTROLOGY" />
+  <meta id="heka-viewport" name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="description" content="HEKA Calendar v2.2.1 - The 13-month calendar aligned with celestial rhythms" />
   <meta name="theme-color" content="#0c0c0f" />
   
   <!-- NO CACHE -->
@@ -11,12 +11,12 @@
   <meta http-equiv="Pragma" content="no-cache" />
   <meta http-equiv="Expires" content="0" />
   
-  <title>HEKA Calendar v2.2.0</title>
+  <title>HEKA Calendar v2.2.1</title>
   
   <!-- INLINE KILL SWITCH - Cannot be cached separately -->
   <script>
     (function() {
-      var VERSION = '2.2.0';
+      var VERSION = '2.2.1';
       var KEY = 'heka-v220-loaded';
       
       // Check if we already loaded this version
@@ -59,12 +59,56 @@
     })();
   </script>
   
+  <!-- ═══════════════════════════════════════════════════════════════════════
+       HEKA Viewport Scale Guard — Narrow-Phone Safety Net
+       ─────────────────────────────────────────────────────────────────────
+       Large modern phones (Pixel 10 Pro XL, iPhone 15+, etc.) render the
+       app natively — unchanged, unscaled, exactly as designed.
+       
+       Narrower screens (iPhone SE, budget Androids, small foldables
+       folded, etc.) render at a 390px baseline and scale down
+       proportionally. Same layout, same proportions, same spacing — just
+       slightly smaller. Nothing gets cut off.
+       
+       390px is just below flagship widths (412–480px) but above the
+       narrowest active devices (360px). A 360px phone scales to ~0.923.
+       ───────────────────────────────────────────────────────────────────── -->
+  <script>
+    (function() {
+      var DESIGN_BASELINE = 390;
+
+      function updateViewport() {
+        var screenW = window.screen ? (window.screen.width || 0) : 0;
+        var innerW  = window.innerWidth || 0;
+        var w = Math.min(screenW || Infinity, innerW || Infinity) || DESIGN_BASELINE;
+
+        var vp = document.getElementById('heka-viewport');
+        if (!vp) return;
+
+        if (w < DESIGN_BASELINE) {
+          var scale = (w / DESIGN_BASELINE).toFixed(3);
+          vp.setAttribute('content',
+            'width=' + DESIGN_BASELINE + ', initial-scale=' + scale + ', viewport-fit=cover');
+        } else {
+          vp.setAttribute('content',
+            'width=device-width, initial-scale=1.0, viewport-fit=cover');
+        }
+      }
+
+      updateViewport();
+
+      window.addEventListener('orientationchange', function() {
+        setTimeout(updateViewport, 150);
+      });
+    })();
+  </script>
+  
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   
   <!-- Icons -->
-  <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+  <link rel="icon" type="image/png" href="/icon-192.png" />
   
   <style>
     html, body { 
@@ -109,7 +153,7 @@
 </head>
 <body>
   <div id="root">
-    <div class="loading">HEKA v2.1.5</div>
+    <div class="loading">HEKA v2.2.1</div>
   </div>
 
   
