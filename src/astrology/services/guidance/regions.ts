@@ -10,7 +10,7 @@ export interface CelestialRegion {
   centerLongitude: number;
   longitudeRange: [number, number];
   primaryCities: string[];
-  element: 'fire' | 'earth' | 'air' | 'water';
+  element: 'fire' | 'earth' | 'air' | 'water' | 'ether';
   quality: 'cardinal' | 'fixed' | 'mutable';
 }
 

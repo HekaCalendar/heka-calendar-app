@@ -18,7 +18,8 @@ export const secureKeyStore = {
   async set(key: string, value: string): Promise<void> {
     try {
       await SecureStoragePlugin.set({ key, value });
-    } catch {
+    } catch (err) {
+      console.warn(`[SecureKeyStore] Native set failed for "${key}", falling back to localStorage:`, err);
       localStorage.setItem(`${FALLBACK_PREFIX}${key}`, value);
     }
   },
@@ -30,8 +31,11 @@ export const secureKeyStore = {
     try {
       const result = await SecureStoragePlugin.get({ key });
       return result.value ?? null;
-    } catch {
+    } catch (err) {
       const fallback = localStorage.getItem(`${FALLBACK_PREFIX}${key}`);
+      if (!fallback) {
+        console.debug(`[SecureKeyStore] Key "${key}" not found in secure storage or localStorage`);
+      }
       return fallback;
     }
   },
@@ -42,8 +46,8 @@ export const secureKeyStore = {
   async remove(key: string): Promise<void> {
     try {
       await SecureStoragePlugin.remove({ key });
-    } catch {
-      // ignore
+    } catch (err) {
+      console.warn(`[SecureKeyStore] Native remove failed for "${key}":`, err);
     }
     localStorage.removeItem(`${FALLBACK_PREFIX}${key}`);
   },

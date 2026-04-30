@@ -131,7 +131,7 @@ export const PLANET_MEANINGS: Record<string, PlanetMeaning> = {
 export interface SignMeaning {
   name: string;
   symbol: string;
-  element: 'fire' | 'earth' | 'air' | 'water';
+  element: 'fire' | 'earth' | 'air' | 'water' | 'ether';
   modality: 'cardinal' | 'fixed' | 'mutable';
   keywords: string[];
   expression: string;
@@ -471,7 +471,8 @@ export function generatePlanetInSignReading(planet: string, sign: string): Plane
     fire: 'passion and inspiration',
     earth: 'practicality and stability',
     air: 'intellect and communication',
-    water: 'emotion and intuition'
+    water: 'emotion and intuition',
+    ether: 'transcendence and alchemical transformation'
   };
   
   return {

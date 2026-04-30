@@ -44,6 +44,7 @@ import { store } from './store';
 import { setAuthenticated, setUnauthenticated } from './store';
 import { attachPlannerListener, detachPlannerListener } from './services/plannerService';
 import { initializeSwissEphemeris } from './astrology/services/swiss-ephemeris/engine';
+import { initI18n } from './i18n';
 
 // Defensive console sanitizer: redact API keys from all log output in native builds
 (function () {
@@ -161,21 +162,39 @@ if (isFirebaseConfigured()) {
   });
 }
 
+// Determine user's language from persisted setup state
+function getUserLanguage(): string {
+  try {
+    const raw = localStorage.getItem('heka-setup-v1');
+    if (raw) {
+      const parsed = JSON.parse(raw);
+      if (parsed.language) return parsed.language;
+    }
+  } catch { /* ignore */ }
+  return 'en';
+}
+
 // Initialize Swiss Ephemeris before rendering, then mount app
 const root = document.getElementById('root');
 if (root) {
-  // Initialize WASM first (with timeout to prevent blocking)
+  const userLanguage = getUserLanguage();
+  console.log('[HEKA] User language:', userLanguage);
+
+  // Initialize WASM and i18n in parallel (with timeout to prevent blocking)
   const initPromise = Promise.race([
-    initializeSwissEphemeris(),
-    new Promise(resolve => setTimeout(resolve, 3000)) // Max 3 second wait
+    Promise.all([
+      initializeSwissEphemeris(),
+      initI18n(userLanguage),
+    ]),
+    new Promise(resolve => setTimeout(resolve, 5000)) // Max 5 second wait
   ]);
-  
+
   initPromise.then(() => {
-    console.log('[HEKA] Swiss Ephemeris initialized');
+    console.log('[HEKA] Swiss Ephemeris & i18n initialized');
   }).catch(() => {
-    console.warn('[HEKA] Swiss Ephemeris init failed, using fallback');
+    console.warn('[HEKA] Init failed, using fallbacks');
   }).finally(() => {
-    // Render app regardless of WASM status (fallbacks will handle it)
+    // Render app regardless of init status (fallbacks will handle it)
     try {
       ReactDOM.createRoot(root).render(
         <React.StrictMode>

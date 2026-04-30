@@ -121,7 +121,7 @@ export interface AIProvider {
 class TemplateProvider implements AIProvider {
   readonly type: AIProviderType = 'template';
   readonly name = 'Template Library';
-  readonly description = '26,000+ pre-written templates (free, instant, no API key)';
+  readonly description = '169+ hand-crafted planet-sign templates, woven into thousands of unique readings (free, instant, no API key)';
   
   private config: AIProviderConfig = { type: 'template' };
   

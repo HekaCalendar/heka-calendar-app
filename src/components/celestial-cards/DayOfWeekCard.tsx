@@ -1,11 +1,12 @@
 /**
  * Day of Week Card
  * Planetary ruler, daily guidance, and live planetary hour
+ * Location-aware, real-time updating, Chaldean timeline
  */
 
-import { useState, useEffect, memo } from 'react';
+import { useState, useEffect, useMemo, memo, useCallback } from 'react';
 import { getDayOfWeekData } from '../../services/dayOfWeekService';
-import { getEliteSunTimes } from '../../services/eliteSunService';
+import { getCurrentPlanetaryHour } from '../../astrology/services/calculations/swissCalculations';
 import type { LocationData } from '../../types';
 import './UnifiedCards.css';
 
@@ -26,125 +27,321 @@ const CHALDEAN = [
 
 const DAY_START_INDEX = [3, 6, 2, 5, 1, 4, 0]; // Sun, Mon, Tue, Wed, Thu, Fri, Sat
 
+const PLANETARY_GUIDANCE: Record<string, {
+  title: string;
+  description: string;
+  do: string[];
+  dont: string[];
+  quality: string;
+}> = {
+  sun: {
+    title: 'The Solar Hour',
+    description: 'The Sun illuminates all it touches. This hour favors visibility, leadership, and matters of the heart and ego.',
+    do: ['Take leadership', 'Make important requests', 'Focus on visibility', 'Express yourself', 'Seek recognition'],
+    dont: ['Hide in the shadows', 'Avoid responsibility', 'Dim your light'],
+    quality: 'Vitality & Recognition'
+  },
+  moon: {
+    title: 'The Lunar Hour',
+    description: 'The Moon rules the tides of emotion and intuition. A time for nurturing, home, and psychic receptivity.',
+    do: ['Nurture relationships', 'Trust intuition', 'Home and family matters', 'Emotional processing', 'Dream work'],
+    dont: ['Force rational decisions', 'Ignore feelings', 'Push too hard'],
+    quality: 'Emotion & Intuition'
+  },
+  mars: {
+    title: 'The Martian Hour',
+    description: 'Mars brings fire, drive, and competitive energy. Physical action and confrontation are favored.',
+    do: ['Physical activity', 'Handle conflicts directly', 'Exercise', 'Competitive pursuits', 'Take bold action'],
+    dont: ['Avoid necessary confrontation', 'Repress anger', 'Start arguments'],
+    quality: 'Action & Drive'
+  },
+  mercury: {
+    title: 'The Mercurial Hour',
+    description: 'Mercury quickens the mind and tongue. Communication, learning, and commerce flow easily now.',
+    do: ['Send important messages', 'Write and study', 'Negotiate', 'Travel short distances', 'Problem-solve'],
+    dont: ['Engage in deception', 'Spread gossip', 'Rush contracts'],
+    quality: 'Mind & Communication'
+  },
+  jupiter: {
+    title: 'The Jovian Hour',
+    description: 'Jupiter expands all it touches. Fortune, wisdom, and growth are blessed in this hour.',
+    do: ['Business dealings', 'Seek wisdom', 'Expand horizons', 'Teach and learn', 'Acts of generosity'],
+    dont: ['Be miserly', 'Think small', 'Limit yourself'],
+    quality: 'Expansion & Fortune'
+  },
+  venus: {
+    title: 'The Venusian Hour',
+    description: 'Venus bathes the world in beauty and desire. Love, art, and harmony reign supreme.',
+    do: ['Romance and courtship', 'Artistic creation', 'Socialize', 'Create beauty', 'Resolve conflicts peacefully'],
+    dont: ['Force outcomes', 'Ignore aesthetics', 'Rush intimacy'],
+    quality: 'Love & Beauty'
+  },
+  saturn: {
+    title: 'The Saturnine Hour',
+    description: 'Saturn demands discipline and structure. Hard work now yields lasting results.',
+    do: ['Focus on responsibilities', 'Study and organize', 'Plan ahead', 'Build foundations', 'Accept limitations'],
+    dont: ['Cut corners', 'Avoid duties', 'Expect instant results'],
+    quality: 'Discipline & Structure'
+  }
+};
+
+/** Get day-of-week index (0=Sunday) for a specific date in the given timezone */
+function getLocationDayOfWeek(date: Date, timezone: string): number {
+  const f = new Intl.DateTimeFormat('en-US', { timeZone: timezone, weekday: 'short' });
+  const map: Record<string, number> = { Sun: 0, Mon: 1, Tue: 2, Wed: 3, Thu: 4, Fri: 5, Sat: 6 };
+  return map[f.format(date)] ?? 0;
+}
+
+/** Build a local Date whose wall-clock values match the given date in the target timezone */
+function getLocationDate(date: Date, timezone: string): Date {
+  const f = new Intl.DateTimeFormat('en-US', {
+    timeZone: timezone,
+    year: 'numeric', month: 'numeric', day: 'numeric',
+    hour: 'numeric', minute: 'numeric', second: 'numeric',
+    hour12: false,
+  });
+  const parts = f.formatToParts(date);
+  const get = (t: string) => parseInt(parts.find(p => p.type === t)?.value || '0', 10);
+  return new Date(get('year'), get('month') - 1, get('day'), get('hour'), get('minute'), get('second'));
+}
+
 const DayOfWeekCardComponent: React.FC<Props> = ({ date, location }) => {
-  const [dayData, setDayData] = useState<ReturnType<typeof getDayOfWeekData> | null>(null);
+  const [tick, setTick] = useState(0);
   const [expanded, setExpanded] = useState(false);
-  const [planetaryHour, setPlanetaryHour] = useState<{ planet: typeof CHALDEAN[0]; hourIndex: number; progress: number } | null>(null);
+  const [planetaryHour, setPlanetaryHour] = useState<Awaited<ReturnType<typeof getCurrentPlanetaryHour>> | null>(null);
+  const [loading, setLoading] = useState(false);
 
+  // Tick every 10 seconds for smooth progress bar + minute-level hour changes
   useEffect(() => {
-    setDayData(getDayOfWeekData(date));
-  }, [date]);
+    const i = setInterval(() => setTick(t => t + 1), 10000);
+    return () => clearInterval(i);
+  }, []);
 
+  // Derive "now" from the selected date + current real time, so the card stays
+  // live while respecting the calendar selection.
+  const now = useMemo(() => {
+    const base = new Date(date);
+    const real = new Date();
+    base.setHours(real.getHours(), real.getMinutes(), real.getSeconds(), real.getMilliseconds());
+    return base;
+  }, [date, tick]);
+
+  // Compute planetary hour whenever now or location changes
   useEffect(() => {
     let cancelled = false;
     const compute = async () => {
+      setLoading(true);
       try {
-        const today = await getEliteSunTimes(date, location);
-        const tomorrowDate = new Date(date);
-        tomorrowDate.setDate(tomorrowDate.getDate() + 1);
-        const tomorrow = await getEliteSunTimes(tomorrowDate, location);
-
-        if (cancelled) return;
-        const now = date.getTime();
-
-        // Validate sun times before computing
-        const sunrise = today?.sunrise?.getTime?.();
-        const sunset = today?.sunset?.getTime?.();
-        const nextSunrise = tomorrow?.sunrise?.getTime?.();
-        if (
-          sunrise == null || sunset == null || nextSunrise == null ||
-          Number.isNaN(sunrise) || Number.isNaN(sunset) || Number.isNaN(nextSunrise)
-        ) {
-          setPlanetaryHour(null);
-          return;
-        }
-
-        const dayOfWeek = date.getDay();
-        const startIndex = DAY_START_INDEX[dayOfWeek];
-
-        let hourIndex = 0;
-        let progress = 0;
-
-        if (now >= sunrise && now <= sunset) {
-          const daylightHourMs = (sunset - sunrise) / 12;
-          const msSinceSunrise = now - sunrise;
-          hourIndex = Math.min(11, Math.floor(msSinceSunrise / daylightHourMs));
-          progress = Math.min(100, (msSinceSunrise % daylightHourMs) / daylightHourMs * 100);
-        } else {
-          const nightHourMs = (nextSunrise - sunset) / 12;
-          const msSinceSunset = now - sunset;
-          hourIndex = Math.min(11, Math.floor(msSinceSunset / nightHourMs)) + 12;
-          progress = Math.min(100, (msSinceSunset % nightHourMs) / nightHourMs * 100);
-        }
-
-        const planetIndex = (startIndex + hourIndex) % 7;
-        const planet = CHALDEAN[planetIndex];
-        if (!planet) {
-          setPlanetaryHour(null);
-          return;
-        }
-        setPlanetaryHour({ planet, hourIndex, progress });
+        const ph = await getCurrentPlanetaryHour(
+          now,
+          location.latitude,
+          location.longitude,
+          0
+        );
+        if (!cancelled) setPlanetaryHour(ph);
       } catch {
-        setPlanetaryHour(null);
+        if (!cancelled) setPlanetaryHour(null);
+      } finally {
+        if (!cancelled) setLoading(false);
       }
     };
     compute();
     return () => { cancelled = true; };
-  }, [date, location]);
+  }, [now, location]);
 
-  const hours = date.getHours() + date.getMinutes() / 60;
-  const dayProgress = (hours / 24) * 100;
+  // Day ruler based on LOCATION timezone for the selected date
+  const locDayOfWeek = getLocationDayOfWeek(date, location.timezone);
+  // Jan 7 2024 = Sunday; offset gives any target DoW
+  const dayData = getDayOfWeekData(new Date(2024, 0, 7 + locDayOfWeek));
 
-  if (!dayData) return null;
+  // Day progress in location timezone
+  const locDate = getLocationDate(date, location.timezone);
+  const dayProgress = ((locDate.getHours() + locDate.getMinutes() / 60) / 24) * 100;
+
+  // Current planet info
+  const currentPlanet = planetaryHour
+    ? CHALDEAN.find(p => p.name.toLowerCase() === planetaryHour.planet) ?? null
+    : null;
+
+  // Build 24-hour Chaldean sequence for the location day
+  const chaldeanSequence = useCallback(() => {
+    const startIndex = DAY_START_INDEX[locDayOfWeek];
+    const seq: { planet: typeof CHALDEAN[0]; hourIndex: number; isDay: boolean }[] = [];
+    for (let h = 0; h < 24; h++) {
+      const idx = (startIndex + h) % 7;
+      seq.push({ planet: CHALDEAN[idx], hourIndex: h, isDay: h < 12 });
+    }
+    return seq;
+  }, [locDayOfWeek]);
+
+  const fullSequence = chaldeanSequence();
+  const currentHourIndex = planetaryHour?.hour ?? -1;
+
+  // Hour guidance
+  const hourGuidance = planetaryHour ? PLANETARY_GUIDANCE[planetaryHour.planet] : null;
+
+  // Ring shows planetary hour progress (or day progress if no planetary hour)
+  const ringProgress = planetaryHour?.progress ?? dayProgress;
+  const ringColor = currentPlanet?.color ?? dayData.color;
 
   return (
-    <div className={`heka-card ${expanded ? 'expanded' : ''}`}>
+    <div className={`heka-card heka-card--day ${expanded ? 'expanded' : ''}`}>
+      {/* ── Collapsed Header ── */}
       <div className="heka-card__header" onClick={() => setExpanded(!expanded)}>
         <span className="heka-card__icon">{dayData.icon}</span>
         <div className="heka-card__title-group">
           <span className="heka-card__title">{dayData.day}</span>
           <span className="heka-card__subtitle">
-            {planetaryHour?.planet
-              ? `${planetaryHour.planet.symbol} ${planetaryHour.planet.name} Hour`
-              : `${dayData.planetSymbol} ${dayData.planet}'s Day`}
-            {' • '}{Math.round(dayProgress)}% complete
+            {currentPlanet ? (
+              <>
+                <span style={{ color: currentPlanet.color }}>{currentPlanet.symbol} {currentPlanet.name} Hour</span>
+                {' • '}
+                <span style={{ color: 'rgba(255,255,255,0.35)' }}>
+                  {planetaryHour?.isDay ? 'Daylight' : 'Night'} • {Math.round(ringProgress)}%
+                </span>
+              </>
+            ) : (
+              <>
+                {dayData.planetSymbol} {dayData.planet}'s Day
+                {' • '}
+                <span style={{ color: 'rgba(255,255,255,0.35)' }}>
+                  {Math.round(dayProgress)}% complete
+                </span>
+              </>
+            )}
           </span>
         </div>
+
         <div className="heka-ring">
           <svg viewBox="0 0 36 36">
-            <path className="heka-ring__bg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
-            <path className="heka-ring__fill" strokeDasharray={`${dayProgress}, 100`}
+            <path className="heka-ring__bg"
+              d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+            <path className="heka-ring__fill"
+              strokeDasharray={`${ringProgress}, 100`}
               d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
-              style={{ stroke: dayData.color }} />
+              style={{ stroke: ringColor }} />
           </svg>
-          <span className="heka-ring__text">{Math.round(dayProgress)}%</span>
+          <span className="heka-ring__text" style={{ color: ringColor }}>
+            {currentPlanet ? currentPlanet.symbol : dayData.planetSymbol}
+          </span>
         </div>
+
+        <span className={`heka-card__chevron ${expanded ? 'rotated' : ''}`}>▼</span>
       </div>
 
+      {/* ── Expanded Content ── */}
       {expanded && (
         <div className="heka-card__content">
-          {/* Planetary Hour */}
-          {planetaryHour?.planet && (
+
+          {/* Current Planetary Hour — Hero */}
+          {planetaryHour && currentPlanet && hourGuidance && (
             <div className="heka-section">
-              <div className="heka-section__title">⏳ Planetary Hour {planetaryHour.hourIndex + 1}/24</div>
-              <div className="heka-data-cell" style={{ borderColor: `${planetaryHour.planet.color}30`, marginBottom: '8px' }}>
-                <span className="heka-data-cell__icon" style={{ fontSize: '20px' }}>{planetaryHour.planet.symbol}</span>
-                <span className="heka-data-cell__label">Current Ruler</span>
-                <span className="heka-data-cell__value" style={{ color: planetaryHour.planet.color }}>{planetaryHour.planet.name}</span>
+              <div className="heka-section__title">
+                ⏳ Planetary Hour {planetaryHour.hour + 1}/24
+                <span className="heka-chip" style={{ borderColor: `${currentPlanet.color}40`, color: currentPlanet.color }}>
+                  {planetaryHour.isDay ? '☀ Day' : '🌙 Night'}
+                </span>
               </div>
-              <div className="heka-progress__track">
-                <div className="heka-progress__fill" style={{ width: `${planetaryHour.progress}%`, background: planetaryHour.planet.color }} />
+
+              <div className="heka-hero" style={{ borderColor: `${currentPlanet.color}20` }}>
+                <span className="heka-hero__icon" style={{ filter: `drop-shadow(0 4px 12px ${currentPlanet.color}40)` }}>
+                  {currentPlanet.symbol}
+                </span>
+                <div className="heka-hero__content">
+                  <div className="heka-hero__title" style={{ color: currentPlanet.color }}>{hourGuidance.title}</div>
+                  <div className="heka-hero__meta">{hourGuidance.quality}</div>
+                </div>
               </div>
-              <div style={{ fontSize: '10px', color: 'rgba(255,255,255,0.4)', marginTop: '4px', textAlign: 'right' }}>
-                {Math.round(planetaryHour.progress)}% through hour
+
+              <div className="heka-progress" style={{ marginTop: '10px' }}>
+                <div className="heka-progress__labels">
+                  <span style={{ color: currentPlanet.color }}>{currentPlanet.name} Hour Progress</span>
+                  <span style={{ color: currentPlanet.color }}>{Math.round(planetaryHour.progress)}%</span>
+                </div>
+                <div className="heka-progress__track">
+                  <div className="heka-progress__fill" style={{ width: `${planetaryHour.progress}%`, background: currentPlanet.color, boxShadow: `0 0 10px ${currentPlanet.color}60` }} />
+                </div>
+              </div>
+
+              {/* Sunrise / Sunset */}
+              {(planetaryHour.sunrise || planetaryHour.sunset) && (
+                <div className="heka-data-grid heka-data-grid--2" style={{ marginTop: '14px', marginBottom: 0 }}>
+                  {planetaryHour.sunrise && (
+                    <div className="heka-data-cell">
+                      <span className="heka-data-cell__icon">🌅</span>
+                      <span className="heka-data-cell__label">Sunrise</span>
+                      <span className="heka-data-cell__value">
+                        {planetaryHour.sunrise.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', timeZone: location.timezone })}
+                      </span>
+                    </div>
+                  )}
+                  {planetaryHour.sunset && (
+                    <div className="heka-data-cell">
+                      <span className="heka-data-cell__icon">🌇</span>
+                      <span className="heka-data-cell__label">Sunset</span>
+                      <span className="heka-data-cell__value">
+                        {planetaryHour.sunset.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', timeZone: location.timezone })}
+                      </span>
+                    </div>
+                  )}
+                </div>
+              )}
+            </div>
+          )}
+
+          {/* Chaldean Timeline */}
+          <div className="heka-section">
+            <div className="heka-section__title">🜁 The Chaldean Order</div>
+            <div className="chaldean-timeline">
+              {fullSequence.map((item) => {
+                const isCurrent = item.hourIndex === currentHourIndex;
+                const isPast = item.hourIndex < currentHourIndex;
+                return (
+                  <div
+                    key={item.hourIndex}
+                    className={`chaldean-timeline__slot ${isCurrent ? 'current' : ''} ${isPast ? 'past' : ''}`}
+                    title={`Hour ${item.hourIndex + 1}: ${item.planet.name}`}
+                  >
+                    <span className="chaldean-timeline__symbol" style={{ color: item.planet.color }}>
+                      {item.planet.symbol}
+                    </span>
+                    <span className="chaldean-timeline__label">{item.hourIndex + 1}</span>
+                    {isCurrent && <div className="chaldean-timeline__indicator" style={{ background: item.planet.color }} />}
+                  </div>
+                );
+              })}
+            </div>
+            <div style={{ fontSize: '10px', color: 'rgba(255,255,255,0.3)', textAlign: 'center', marginTop: '6px' }}>
+              Hour 1 begins at sunrise • Hours 13–24 are night hours
+            </div>
+          </div>
+
+          {/* Hour Guidance: Do / Don't */}
+          {hourGuidance && (
+            <div className="heka-section">
+              <div className="heka-section__title">✓ Favored Now</div>
+              <div className="heka-list" style={{ marginBottom: '10px' }}>
+                {hourGuidance.do.map((item, i) => (
+                  <div key={i} className="heka-list__item">
+                    <span style={{ color: '#4ade80', marginRight: '8px' }}>✓</span>{item}
+                  </div>
+                ))}
+              </div>
+              <div className="heka-section__title" style={{ marginTop: '12px' }}>✗ Best to Avoid</div>
+              <div className="heka-list">
+                {hourGuidance.dont.map((item, i) => (
+                  <div key={i} className="heka-list__item">
+                    <span style={{ color: '#ef4444', marginRight: '8px' }}>✗</span>{item}
+                  </div>
+                ))}
               </div>
             </div>
           )}
 
           {/* Day Progress */}
-          <div className="heka-progress" style={{ marginTop: planetaryHour?.planet ? '12px' : '0' }}>
+          <div className="heka-section">
             <div className="heka-progress__labels">
-              <span>{dayData.planet}'s Influence</span>
+              <span>{dayData.planet}'s Day Progress</span>
               <span style={{ color: dayData.color }}>{Math.round(dayProgress)}%</span>
             </div>
             <div className="heka-progress__track">
@@ -153,7 +350,7 @@ const DayOfWeekCardComponent: React.FC<Props> = ({ date, location }) => {
           </div>
 
           {/* Favorable Activities */}
-          <div className="heka-section" style={{ marginTop: '16px' }}>
+          <div className="heka-section">
             <div className="heka-section__title">✓ Favorable Today</div>
             <div className="heka-tags">
               {dayData.favorableActivities.slice(0, 6).map((a, i) => (
@@ -185,6 +382,12 @@ const DayOfWeekCardComponent: React.FC<Props> = ({ date, location }) => {
                 <span key={i} className="heka-tag">{q}</span>
               ))}
             </div>
+          </div>
+
+          {/* Location Footer */}
+          <div className="heka-footer">
+            <span>📍 {location.name || 'Your Location'}</span>
+            <span>{loading ? 'Calculating...' : 'Live Chaldean precision'}</span>
           </div>
         </div>
       )}

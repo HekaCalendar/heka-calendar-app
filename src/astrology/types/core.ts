@@ -116,10 +116,10 @@ export const SIGN_ELEMENTS: Record<ZodiacSign, Element> = {
   cancer: 'water', scorpio: 'water', pisces: 'water',
 };
 
-// 13-Sign Elements (Ophiuchus is often considered a fire or water sign)
+// 13-Sign Elements (Ophiuchus as the 5th element — ether/quintessence)
 export const SIGN_ELEMENTS_13: Record<ZodiacSign13, Element> = {
   ...SIGN_ELEMENTS,
-  ophiuchus: 'water', // Associated with healing and transformation
+  ophiuchus: 'ether', // The transcendent, alchemical element
 };
 
 // 12-Sign Modalities
@@ -206,10 +206,10 @@ export function getSignFromLongitude(
   return ZODIAC_SIGNS_12[signIndex] ?? 'aries';
 }
 
-export type Element = 'fire' | 'earth' | 'air' | 'water';
+export type Element = 'fire' | 'earth' | 'air' | 'water' | 'ether';
 export type Modality = 'cardinal' | 'fixed' | 'mutable';
 
-export const ELEMENTS = ['fire', 'earth', 'air', 'water'] as const;
+export const ELEMENTS = ['fire', 'earth', 'air', 'water', 'ether'] as const;
 export const MODALITIES = ['cardinal', 'fixed', 'mutable'] as const;
 
 // House Systems

@@ -94,7 +94,7 @@ const DigitalClockCardComponent: React.FC<Props> = ({ date: _date, location }) =
       {expanded && (
         <div className="heka-card__content">
           {counters.map((c, i) => (
-            <div key={c.key} className="heka-epic-counter" style={{ borderColor: `${c.color}20`, marginBottom: i === counters.length - 1 ? 0 : '16px' }}>
+            <div key={c.key} className="heka-epic-counter" style={{ borderColor: `${c.color}20`, marginBottom: i === counters.length - 1 ? 0 : '12px' }}>
               <div className="heka-epic-counter__digits">
                 <div className="heka-epic-counter__segment">
                   <span className="heka-epic-counter__number" style={{ color: c.color }}>{String(c.d).padStart(2,'0')}</span>

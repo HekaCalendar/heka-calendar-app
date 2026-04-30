@@ -479,7 +479,7 @@ function generateJournalPrompts(planet: string, _aspect: string): string[] {
 export interface SignEssence {
   sign: string;
   symbol: string;
-  element: 'fire' | 'earth' | 'air' | 'water';
+  element: 'fire' | 'earth' | 'air' | 'water' | 'ether';
   modality: 'cardinal' | 'fixed' | 'mutable';
   essence: string;
   voidAtmosphere: string;

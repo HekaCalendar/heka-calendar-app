@@ -1907,7 +1907,9 @@ export const CalendarAICoach: React.FC<CalendarAICoachProps> = ({ focusedDate })
   const zodiacFrame = useSelector((s: RootState) => s.calendar.astroPreferences.zodiacFrame);
   const signCount = useSelector((s: RootState) => s.calendar.astroPreferences.signCount);
 
-  const [enabled, setEnabled] = useState(() => aiConfigService.isAreaEnabled('calendar'));
+  const [enabled, setEnabled] = useState(() =>
+    aiConfigService.isAreaEnabled('calendar') && aiConfigService.isRealProviderConfigured()
+  );
   const [minimized, setMinimizedState] = useState(() => {
     const until = aiConfigService.getConfig().userContext.coachMinimizedUntil || 0;
     return until > Date.now();
@@ -2016,7 +2018,12 @@ export const CalendarAICoach: React.FC<CalendarAICoachProps> = ({ focusedDate })
   // Listen for AI config changes
   useEffect(() => {
     const unsubscribe = aiConfigService.subscribe((config) => {
-      setEnabled(config.globalEnabled && config.areas.calendar);
+      setEnabled(
+        config.globalEnabled &&
+        config.areas.calendar &&
+        config.provider !== 'template' &&
+        !!config.apiKey
+      );
     });
     return unsubscribe;
   }, []);
@@ -2382,13 +2389,28 @@ export const CalendarAICoach: React.FC<CalendarAICoachProps> = ({ focusedDate })
       }
     };
 
+    const onTutorialComplete = ({ aiEnabled }: { aiEnabled: boolean }) => {
+      const welcomeText = aiEnabled
+        ? 'Welcome to HEKA. I am your celestial companion. The sky is already speaking — shall I interpret it for you?'
+        : 'Welcome to HEKA. The calendar is yours. Tap any day to begin.';
+      void showImmediateMessage(Promise.resolve({
+        id: `tutorial-welcome-${Date.now()}`,
+        type: 'insight',
+        text: welcomeText,
+        icon: aiEnabled ? '🔮' : '✨',
+        color: '#d4af37',
+      }));
+    };
+
     const unsubTaskCreated = eventBus.subscribe('heka-task-created', onTaskCreated);
     const unsubTaskCompleted = eventBus.subscribe('heka-task-completed', onTaskCompleted);
     const unsubAchievement = eventBus.subscribe('heka-achievement-unlocked', onAchievementUnlocked);
+    const unsubTutorial = eventBus.subscribe('heka-tutorial-complete', onTutorialComplete);
     return () => {
       unsubTaskCreated();
       unsubTaskCompleted();
       unsubAchievement();
+      unsubTutorial();
     };
   }, [showImmediateMessage, showNextMessage]);
 

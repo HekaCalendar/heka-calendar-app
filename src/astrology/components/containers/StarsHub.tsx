@@ -40,6 +40,11 @@ import { CelestialErrorBoundary } from '../error/CelestialErrorBoundary';
 import { TwoSelvesModal } from '../modals/TwoSelvesModal';
 import { StarsNotificationSettings } from '../../../components/notification/StarsNotificationSettings';
 
+// Module-level debounce guards — survive rapid remounts
+let globalAstrologyInitTs = 0;
+let globalNotifInitTs = 0;
+let globalGeoRequestTs = 0;
+
 const SYMBOLS: Record<string, string> = {
   sun: '☉', moon: '☽', mercury: '☿', venus: '♀', mars: '♂',
   jupiter: '♃', saturn: '♄', uranus: '♅', neptune: '♆', pluto: '♇'
@@ -148,6 +153,21 @@ export const StarsHub: React.FC = () => {
   
   // Get user geolocation for location-aware calculations
   useEffect(() => {
+    const now = Date.now();
+    if (now - globalGeoRequestTs < 30000) {
+      console.log('[StarsHub] Skipping geolocation request (global debounce)');
+      // Still restore saved location from localStorage if available
+      const saved = localStorage.getItem('ci-location');
+      if (saved) {
+        try {
+          const loc = JSON.parse(saved);
+          setUserLocation(loc);
+        } catch { /* ignore */ }
+      }
+      return;
+    }
+    globalGeoRequestTs = now;
+
     const requestLocation = async () => {
       if (!navigator.geolocation) {
         console.warn('[StarsHub] Geolocation not supported');
@@ -257,8 +277,12 @@ export const StarsHub: React.FC = () => {
   
   // Calculate astronomical data (only when ready)
   // Uses AbortController to cancel stale calculations
+  const calculationInProgressRef = useRef(false);
   useEffect(() => {
     if (!isReady) return;
+    
+    // Skip if a calculation is already in progress (prevents overlapping on rapid re-renders)
+    if (calculationInProgressRef.current) return;
     
     // Cancel any previous calculation
     if (calculationAbortControllerRef.current) {
@@ -270,6 +294,7 @@ export const StarsHub: React.FC = () => {
     const { signal } = abortController;
     
     const calculate = async () => {
+      calculationInProgressRef.current = true;
       try {
         // Calculate current sky positions
         const skyData = await calculateCurrentSky(currentTime);
@@ -321,6 +346,8 @@ export const StarsHub: React.FC = () => {
         if (!signal.aborted) {
           console.error('[StarsHub] Calculation error:', error);
         }
+      } finally {
+        calculationInProgressRef.current = false;
       }
     };
     
@@ -332,13 +359,31 @@ export const StarsHub: React.FC = () => {
     };
   }, [currentTime, isReady, userLocation, zodiacSystem, zodiacFrame, signCount]);
   
-  // Initialize astrology on mount
+  // Initialize astrology on mount — guard against rapid remounts
+  const initAstrologyDispatchedRef = useRef(false);
   useEffect(() => {
+    if (initAstrologyDispatchedRef.current) return;
+    initAstrologyDispatchedRef.current = true;
+    const now = Date.now();
+    if (now - globalAstrologyInitTs < 5000) {
+      console.log('[StarsHub] Skipping initializeAstrology (global debounce)');
+      return;
+    }
+    globalAstrologyInitTs = now;
     dispatch(initializeAstrology());
   }, [dispatch]);
   
-  // Initialize notifications on mount
+  // Initialize notifications on mount — guard against rapid remounts
+  const notifInitRef = useRef(false);
   useEffect(() => {
+    if (notifInitRef.current) return;
+    notifInitRef.current = true;
+    const now = Date.now();
+    if (now - globalNotifInitTs < 5000) {
+      console.log('[StarsHub] Skipping NotificationEngine.init (global debounce)');
+      return;
+    }
+    globalNotifInitTs = now;
     void NotificationEngine.initialize();
   }, []);
   

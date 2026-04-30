@@ -162,6 +162,18 @@ export const SUN_IN_SIGN: Record<string, PlanetInSignInterpretation> = {
     advice: 'Boundaries are illusions, but so is saving everyone.',
     affirmation: 'I am the ocean and every wave within it.',
     hekaIntegration: 'Let your HEKA practice be a spiritual meditation.'
+  },
+  'sun-ophiuchus': {
+    planet: 'Sun', sign: 'Ophiuchus', title: 'The Initiate',
+    essence: 'You are here to learn healing, transformation, and the alchemy of turning wound into gift.',
+    psychological: 'Your identity is fluid, perpetually dying and reborn through crisis.',
+    spiritual: 'Your soul path is the wounded healer — curing others by embracing your own brokenness.',
+    challenges: ['Compulsive fixing', 'Refusing to be healed', 'Boundary dissolution'],
+    gifts: ['Transformation', 'Healing presence', 'Bridge-building between worlds'],
+    lifeThemes: ['Healing', 'Initiation', 'Alchemy', 'Death and rebirth'],
+    advice: 'The healer must also be healed. Receive the medicine you so freely offer.',
+    affirmation: 'I am the serpent that rises, the wound that becomes wisdom.',
+    hekaIntegration: 'Let your HEKA practice be an initiatory journey through shadow into light.'
   }
 };
 

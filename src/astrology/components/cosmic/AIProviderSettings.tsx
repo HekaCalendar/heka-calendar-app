@@ -42,7 +42,7 @@ const PROVIDER_SETUP: Record<AIProviderType, ProviderInfo> = {
   template: {
     type: 'template',
     name: 'Template Library',
-    description: '26,000+ pre-written astrological interpretations. Always free, always instant, no setup required.',
+    description: '169+ hand-crafted planet-sign templates, woven into unique readings by moon phase, aspect, and life category. Always free, always instant, no setup required.',
     website: '',
     signupUrl: '',
     apiKeysUrl: '',
@@ -728,7 +728,7 @@ export const AIProviderSettings: React.FC<AIProviderSettingsProps> = ({ onConfig
           <span className="ai-info-icon">📚</span>
           <div>
             <strong>Template Library</strong>
-            <p>26,000+ pre-written readings covering all major celestial events. Always free, always instant.</p>
+            <p>169+ hand-crafted templates covering all planets in all 13 signs, woven into unique readings by phase, aspect, and category. Always free, always instant.</p>
           </div>
         </div>
         <div className="ai-info-item">

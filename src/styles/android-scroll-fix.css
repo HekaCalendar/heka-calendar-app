@@ -9,10 +9,13 @@
 .celestial-panel {
   /* Allow horizontal scrolling */
   overflow-x: auto !important;
-  overflow-y: visible !important;
+  overflow-y: hidden !important;
   
-  /* CRITICAL: Allow BOTH horizontal pan for cards AND vertical scroll for page */
-  touch-action: pan-x pan-y !important;
+  /* CRITICAL: Only pan-x on the panel so vertical scroll bubbles up to the page.
+     overflow-x:auto forces overflow-y:auto per spec, but we override with !important.
+     The browser sees the panel as a horizontal-only scroll container, so vertical
+     gestures pass through to the page. */
+  touch-action: pan-x !important;
   
   /* Smooth scrolling on iOS */
   -webkit-overflow-scrolling: touch !important;
@@ -34,9 +37,6 @@
   
   /* Remove containment that blocks scroll */
   contain: none !important;
-  
-  /* FIXED: Cards should NOT have touch-action, let panel handle it */
-  touch-action: auto !important;
 }
 
 /* Card children inherit from card */
@@ -48,13 +48,11 @@
 .celestial-panel .celestial-info-badge,
 .celestial-panel .celestial-info-badge * {
   contain: none !important;
-  /* FIXED: No touch-action, inherit from parent */
-  touch-action: auto !important;
 }
 
 /* === CELESTIAL CARD HEADER - Critical for scroll === */
 .celestial-panel .celestial-expandable-card__header {
-  /* FIXED: manipulation = taps only, scroll passes to parent panel */
+  /* manipulation = taps only, scroll passes to parent panel */
   touch-action: manipulation !important;
   /* Ensure clicks still work but don't block scroll */
   user-select: none !important;

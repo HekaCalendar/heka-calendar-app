@@ -141,7 +141,7 @@ function detectGrandTrines(
   const trines = aspects.filter(a => a.type === 'trine' && a.orb < 3);
   
   // Group by element
-  const elements: Record<string, Aspect[]> = { fire: [], earth: [], air: [], water: [] };
+  const elements: Record<string, Aspect[]> = { fire: [], earth: [], air: [], water: [], ether: [] };
   
   for (const trine of trines) {
     const body1 = bodies[trine.body1];

@@ -37,6 +37,7 @@ export interface NatalChart {
     earth: number;
     air: number;
     water: number;
+    ether: number;
   };
   modalities: {
     cardinal: number;
@@ -146,14 +147,14 @@ export function deleteNatalChart(profileId: string = 'default'): void {
  * Calculate elemental balance from chart
  */
 export function calculateElementalBalance(planets: Record<string, NatalPlanet>): NatalChart['elements'] {
-  const elements = { fire: 0, earth: 0, air: 0, water: 0 };
+  const elements = { fire: 0, earth: 0, air: 0, water: 0, ether: 0 };
   
   const signElements: Record<string, keyof typeof elements> = {
     aries: 'fire', leo: 'fire', sagittarius: 'fire',
     taurus: 'earth', virgo: 'earth', capricorn: 'earth',
     gemini: 'air', libra: 'air', aquarius: 'air',
     cancer: 'water', scorpio: 'water', pisces: 'water',
-    ophiuchus: 'water',
+    ophiuchus: 'ether',
   };
   
   Object.values(planets).forEach(planet => {

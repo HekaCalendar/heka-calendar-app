@@ -5,6 +5,7 @@
 
 import type { CelestialBody, Aspect, PlanetId } from '../../types';
 import type { AspectCalculationOptions } from './aspects';
+import { calculateAspectBetweenBodies } from './aspects';
 
 export interface DailyTransit {
   readonly transitingPlanet: PlanetId;
@@ -72,8 +73,6 @@ function calculateAspectsBetweenBodies(
   body2: CelestialBody,
   options: AspectCalculationOptions
 ): Aspect | null {
-  // Import and use the aspect calculator
-  const { calculateAspectBetweenBodies } = require('./aspects');
   return calculateAspectBetweenBodies(body1, body2, options);
 }
 

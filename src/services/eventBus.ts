@@ -45,6 +45,7 @@ export interface EventMap {
 
   // ─── Notifications ───
   'heka:notification:navigate': { target: string };
+  'heka-notification-sent': { type: string; title: string };
 
   // ─── Planner ───
   'heka-task-created': { task: PlannerTask; isFirstTask: boolean };
@@ -53,6 +54,9 @@ export interface EventMap {
   // ─── Gamification ───
   'heka-achievement-detected': { achievement: UnlockedAchievement };
   'heka-achievement-unlocked': { achievement: UnlockedAchievement };
+
+  // ─── Tutorial ───
+  'heka-tutorial-complete': { aiEnabled: boolean };
 }
 
 export type EventName = keyof EventMap;

@@ -3,21 +3,7 @@
  * Handles invite links, task shares, and navigation to specific app sections
  */
 
-// Type definition for Capacitor App plugin (avoids direct dependency)
-interface CapacitorAppPlugin {
-  addListener: (event: string, callback: (data: { url: string }) => void) => Promise<{ remove: () => void }>;
-  getLaunchUrl: () => Promise<{ url?: string }>;
-}
-
-// Conditionally import Capacitor App plugin (only available in native builds)
-let App: CapacitorAppPlugin | null = null;
-try {
-  // eslint-disable-next-line @typescript-eslint/no-var-requires
-  const capacitorApp = require('@capacitor/app');
-  App = capacitorApp.App;
-} catch (e) {
-  // Capacitor app plugin not available (web build)
-}
+import { App } from '@capacitor/app';
 
 export interface DeepLinkData {
   type: 'invite' | 'task' | 'profile' | 'date';
@@ -135,8 +121,8 @@ export function initializeDeepLinks(
     });
 
     // Also check if app was opened with a URL initially
-    void App.getLaunchUrl().then((result: { url?: string }) => {
-      if (result.url) {
+    void App.getLaunchUrl().then((result) => {
+      if (result?.url) {
         console.log('[DeepLink] Launch URL:', result.url);
         handleAppUrl(result.url);
       }

@@ -340,8 +340,6 @@ class AIConfigService {
 
   setProvider(provider: UnifiedAIConfig['provider']): void {
     this.updateConfig({ provider });
-    // Hydrate key for new provider
-    void this.hydrateApiKey();
   }
 
   async setApiKey(apiKey: string): Promise<void> {
@@ -387,6 +385,11 @@ class AIConfigService {
     const config = this.getConfig();
     if (!config.globalEnabled) return false;
     return Object.values(config.areas).some(Boolean);
+  }
+
+  isRealProviderConfigured(): boolean {
+    const config = this.getConfig();
+    return config.provider !== 'template' && !!config.apiKey;
   }
 
   subscribe(listener: ConfigListener): () => void {

@@ -29,6 +29,7 @@ import {
 } from '../types/notifications';
 import { generateNotificationContent } from './notificationTemplates';
 import { store } from '../store';
+import { eventBus } from './eventBus';
 import { civilToHeka, getDaysInMonth, HEKA_MONTHS } from './calendarService';
 import { calculateVoidMoonStatus, getNextSignBoundary, calculateCurrentSky } from '../astrology/services/calculations/swissCalculations';
 import { getSignFromLongitude } from '../astrology/types/core';
@@ -232,6 +233,9 @@ class NotificationEngineClass {
           }]
         });
 
+        // Record in history immediately so all sent notifications are logged
+        this.recordSent(req, idString);
+
         console.log(`[NotificationEngine] Scheduled native ${req.type} at ${req.scheduleAt.toISOString()}`);
         return idString;
       } catch (error) {
@@ -245,11 +249,13 @@ class NotificationEngineClass {
     if (delay <= 0) {
       // Immediate
       this.showWebNotification(req.title, { body: req.body });
+      this.recordSent(req, idString);
       return idString;
     }
 
     setTimeout(() => {
       this.showWebNotification(req.title, { body: req.body });
+      this.recordSent(req, idString);
     }, delay);
 
     return idString;
@@ -346,8 +352,42 @@ class NotificationEngineClass {
   }
 
   /**
+   * Record that a notification was sent/scheduled.
+   * Adds to history WITHOUT incrementing tier caps (caps were already checked
+   * in shouldDeliver). Emits event for real-time UI updates.
+   */
+  private recordSent(req: NotificationRequest, id: string): void {
+    const today = getTodayKey();
+    if (!this.state.dailyLedgers[today]) {
+      this.state.dailyLedgers[today] = { date: today, counts: { core: 0, standard: 0, ambient: 0 }, delivered: [] };
+    }
+    const ledger = this.state.dailyLedgers[today];
+
+    // Dedup: don't record the same ID twice
+    if (ledger.delivered.some(d => d.id === id)) {
+      return;
+    }
+
+    ledger.delivered.push({
+      id,
+      type: req.type,
+      tier: req.tier,
+      section: req.section,
+      title: req.title,
+      body: req.body,
+      deliveredAt: Date.now(),
+      extra: req.extra,
+    });
+    saveEngineState(this.state);
+
+    // Notify UI in real time
+    eventBus.emit('heka-notification-sent', { type: req.type, title: req.title });
+  }
+
+  /**
    * Record that a notification was actually interacted with (tapped).
    * Call this from the tap handler, NOT at schedule time.
+   * This also increments tier engagement counts.
    */
   recordDelivery(req: NotificationRequest, id: string): void {
     const today = getTodayKey();

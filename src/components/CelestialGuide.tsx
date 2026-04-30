@@ -7,12 +7,18 @@
  * ═══════════════════════════════════════════════════════════════════════════════
  */
 
-import { useState, useEffect, useLayoutEffect, useMemo, memo, useRef } from 'react';
+import { useState, useEffect, useLayoutEffect, useMemo, memo, useRef, useCallback } from 'react';
 import { useSelector, shallowEqual } from 'react-redux';
 import type { RootState } from '../store';
 import { useFeatureDiscovery } from '../hooks/useGamification';
 import { LOCATIONS, SUB_REGIONS } from '../types';
 import { hekaToCivil, HEKA_MONTHS } from '../services/calendarService';
+
+interface DetectedLocation {
+  latitude: number;
+  longitude: number;
+  name: string;
+}
 import { getZodiacSystemPreference, getZodiacFramePreference, getSignCountPreference } from '../astrology/services/natal/zodiacHelpers';
 import { setZodiacSystem, setZodiacFrame, setSignCount } from '../astrology/services/swiss-ephemeris/engine';
 import '../styles/celestial-scrollbar.css';
@@ -94,6 +100,48 @@ const CelestialGuideComponent: React.FC = () => {
     discover('openedCelestialGuide');
   }, [discover]);
 
+  // ═══════════════════════════════════════════════════════════════════════════════
+  // BROWSER GEOLOCATION — for premium precise location feel
+  // ═══════════════════════════════════════════════════════════════════════════════
+  const [detectedLocation, setDetectedLocation] = useState<DetectedLocation | null>(null);
+
+  const fetchReverseGeocode = useCallback(async (lat: number, lon: number): Promise<string> => {
+    try {
+      const controller = new AbortController();
+      const timeout = setTimeout(() => controller.abort(), 3000);
+      const res = await fetch(
+        `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${lon}&localityLanguage=en`,
+        { signal: controller.signal }
+      );
+      clearTimeout(timeout);
+      if (!res.ok) return 'Your Location';
+      const data = await res.json();
+      return data.city || data.locality || data.principalSubdivision || 'Your Location';
+    } catch {
+      return 'Your Location';
+    }
+  }, []);
+
+  useEffect(() => {
+    if (!navigator.geolocation) return;
+
+    // Silently attempt geolocation — don't prompt aggressively
+    navigator.geolocation.getCurrentPosition(
+      async (pos) => {
+        const name = await fetchReverseGeocode(pos.coords.latitude, pos.coords.longitude);
+        setDetectedLocation({
+          latitude: pos.coords.latitude,
+          longitude: pos.coords.longitude,
+          name,
+        });
+      },
+      () => {
+        // Silent fail — fallback to selected location
+      },
+      { timeout: 8000, maximumAge: 600000 }
+    );
+  }, [fetchReverseGeocode]);
+
   // Set zodiac system on mount
   useEffect(() => {
     const zodiacSystem = getZodiacSystemPreference();
@@ -104,16 +152,123 @@ const CelestialGuideComponent: React.FC = () => {
     setSignCount(signCount);
   }, []);
 
-  // Location data with sub-region support
+  // ═══════════════════════════════════════════════════════════════════════════════
+  // ANDROID WEBVIEW SCROLL FIX — vertical scroll forward from panel to page
+  // CSS touch-action alone does not work on Android WebView because the
+  // compositor treats overflow-x:auto flex containers as bidirectional scroll
+  // layers. We detect vertical swipes on the panel and forward them to the page.
+  // ═══════════════════════════════════════════════════════════════════════════════
+  useEffect(() => {
+    const panel = panelRef.current;
+    if (!panel) return;
+
+    let startX = 0;
+    let startY = 0;
+    let lastY = 0;
+    let isVertical = false;
+    let isHorizontal = false;
+    let rafId = 0;
+
+    const SLOP = 10; // pixels before we commit to a direction
+
+    const onTouchStart = (e: TouchEvent) => {
+      if (e.touches.length !== 1) return;
+      startX = e.touches[0].clientX;
+      startY = e.touches[0].clientY;
+      lastY = startY;
+      isVertical = false;
+      isHorizontal = false;
+    };
+
+    const onTouchMove = (e: TouchEvent) => {
+      if (e.touches.length !== 1) return;
+
+      const x = e.touches[0].clientX;
+      const y = e.touches[0].clientY;
+      const dx = x - startX;
+      const dy = y - startY;
+      const adx = Math.abs(dx);
+      const ady = Math.abs(dy);
+
+      // Not enough movement to determine direction yet
+      if (!isVertical && !isHorizontal && Math.max(adx, ady) < SLOP) return;
+
+      // First time we've moved enough — lock to a direction
+      if (!isVertical && !isHorizontal) {
+        if (ady > adx) {
+          isVertical = true;
+        } else {
+          isHorizontal = true;
+        }
+      }
+
+      if (isVertical) {
+        // Stop the WebView from trying to scroll the panel/compositor layer
+        e.preventDefault();
+        const deltaY = lastY - y;
+        if (rafId) cancelAnimationFrame(rafId);
+        rafId = requestAnimationFrame(() => {
+          window.scrollBy(0, deltaY);
+        });
+        lastY = y;
+      }
+      // If horizontal — do nothing, let native horizontal scroll work
+    };
+
+    const onTouchEnd = () => {
+      isVertical = false;
+      isHorizontal = false;
+    };
+
+    panel.addEventListener('touchstart', onTouchStart, { passive: true });
+    panel.addEventListener('touchmove', onTouchMove, { passive: false });
+    panel.addEventListener('touchend', onTouchEnd);
+    panel.addEventListener('touchcancel', onTouchEnd);
+
+    return () => {
+      panel.removeEventListener('touchstart', onTouchStart);
+      panel.removeEventListener('touchmove', onTouchMove);
+      panel.removeEventListener('touchend', onTouchEnd);
+      panel.removeEventListener('touchcancel', onTouchEnd);
+      if (rafId) cancelAnimationFrame(rafId);
+    };
+  }, []);
+
+  // Location data with sub-region support + browser geolocation fallback
   const locationData = useMemo(() => {
+    const countryData = LOCATIONS[location];
+
+    // 1. Browser geolocation is most precise — use if available
+    if (detectedLocation) {
+      const subRegionData = subRegion ? SUB_REGIONS[location]?.find(r => r.code === subRegion) : null;
+      return {
+        country: location,
+        timezone: subRegionData?.timezone || countryData.timezone,
+        latitude: detectedLocation.latitude,
+        longitude: detectedLocation.longitude,
+        name: `${detectedLocation.name}, ${countryData.name}`,
+        region: countryData.region,
+      };
+    }
+
+    // 2. Sub-region selected
     if (subRegion) {
       const subRegionData = SUB_REGIONS[location]?.find(r => r.code === subRegion);
       if (subRegionData) {
-        return { country: location, timezone: subRegionData.timezone, latitude: subRegionData.latitude, longitude: subRegionData.longitude, name: subRegionData.name, region: LOCATIONS[location].region };
+        return {
+          country: location,
+          timezone: subRegionData.timezone,
+          latitude: subRegionData.latitude,
+          longitude: subRegionData.longitude,
+          name: `${subRegionData.name}, ${countryData.name}`,
+          region: countryData.region,
+        };
       }
     }
-    return LOCATIONS[location];
-  }, [location, subRegion]);
+
+    // 3. Country-level fallback
+    return countryData;
+  }, [location, subRegion, detectedLocation]);
 
   const targetHekaDate = selectedDate || viewDate;
   const civilDate = useMemo(() => {

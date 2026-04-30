@@ -23,13 +23,27 @@
   background: var(--heka-bg-primary);
   border: 1px solid var(--heka-border);
   border-radius: 24px;
-  overflow: hidden;
+  /* CRITICAL: overflow:visible prevents Android WebView from creating a scroll
+     container that traps vertical touch gestures. clip-path handles visual clipping
+     of the border-radius without the scroll-container side-effect. */
+  overflow: visible;
+  clip-path: inset(0 round 24px);
   position: relative;
-  margin-bottom: 16px;
+  margin-bottom: 12px;
   box-shadow: 
     0 8px 32px rgba(0, 0, 0, 0.4),
     inset 0 1px 1px rgba(255, 255, 255, 0.05);
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  /* Only allow horizontal panning on the card; vertical gestures bubble up to page */
+  touch-action: pan-x;
+}
+
+/* Fallback for browsers without clip-path support (old WebViews) */
+@supports not (clip-path: inset(0 round 24px)) {
+  .heka-card {
+    overflow: hidden;
+    clip-path: none;
+  }
 }
 
 .heka-card::before {
@@ -68,12 +82,21 @@
 .heka-card__header {
   display: flex;
   align-items: center;
-  padding: 20px 24px;
+  padding: 14px 20px;
   cursor: pointer;
-  gap: 16px;
+  gap: 14px;
   background: var(--heka-bg-elevated);
   position: relative;
-  overflow: hidden;
+  /* CRITICAL: overflow:visible so the header doesn't trap vertical scroll.
+     Border-radius handles the rounded top corners visually. */
+  overflow: visible;
+  border-radius: 24px;
+  /* manipulation = taps work, scroll passes through to parent */
+  touch-action: manipulation;
+}
+
+.heka-card.expanded .heka-card__header {
+  border-radius: 24px 24px 0 0;
 }
 
 .heka-card__header::after {
@@ -88,14 +111,14 @@
 
 /* Icon with Glow Effect */
 .heka-card__icon {
-  font-size: 32px;
-  width: 52px;
-  height: 52px;
+  font-size: 28px;
+  width: 44px;
+  height: 44px;
   display: flex;
   align-items: center;
   justify-content: center;
   background: rgba(0, 0, 0, 0.3);
-  border-radius: 16px;
+  border-radius: 14px;
   border: 1px solid rgba(255, 255, 255, 0.08);
   box-shadow: 
     inset 0 2px 4px rgba(0, 0, 0, 0.3),
@@ -121,7 +144,7 @@
 }
 
 .heka-card__title {
-  font-size: 20px;
+  font-size: 18px;
   font-weight: 600;
   color: var(--heka-text-primary);
   letter-spacing: -0.3px;
@@ -132,12 +155,13 @@
 }
 
 .heka-card__subtitle {
-  font-size: 13px;
+  font-size: 12px;
   color: var(--heka-text-secondary);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
   font-weight: 500;
+  touch-action: manipulation;
 }
 
 /* Chevron with Animation */
@@ -170,18 +194,22 @@
   width: 48px;
   height: 48px;
   flex-shrink: 0;
+  /* Clip everything (including any stray glow) to a perfect circle.
+     This guarantees no square edges are ever visible. */
+  clip-path: circle(50%);
+  border-radius: 50%;
 }
 
 .heka-ring svg {
   width: 100%;
   height: 100%;
   transform: rotate(-90deg);
-  filter: drop-shadow(0 0 4px rgba(212, 175, 55, 0.2));
 }
 
 .heka-ring__bg {
   fill: none;
-  stroke: rgba(255, 255, 255, 0.06);
+  /* Background track fully transparent — no visible circle when empty */
+  stroke: transparent;
   stroke-width: 3;
 }
 
@@ -190,7 +218,8 @@
   stroke-width: 3;
   stroke-linecap: round;
   transition: stroke-dasharray 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-  filter: drop-shadow(0 0 4px currentColor);
+  /* NO drop-shadow — the glow was bleeding past the SVG square boundary.
+     The stroke color alone is bright enough on the dark header. */
 }
 
 .heka-ring__text {
@@ -198,7 +227,7 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  font-size: 10px;
+  font-size: 9px;
   font-weight: 700;
   color: var(--heka-text-secondary);
   font-family: ui-monospace, SFMono-Regular, monospace;
@@ -206,7 +235,7 @@
 
 /* ─── Card Content with Staggered Animation ─── */
 .heka-card__content {
-  padding: 24px;
+  padding: 18px;
   animation: hekaReveal 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
@@ -226,7 +255,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 32px 24px;
+  padding: 22px 18px;
   background: linear-gradient(145deg, rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0.1) 100%);
   border-radius: 20px;
   border: 1px solid rgba(255, 255, 255, 0.06);
@@ -246,12 +275,12 @@
 }
 
 .heka-countdown__value {
-  font-size: 56px;
+  font-size: 42px;
   font-weight: 300;
   color: var(--heka-gold);
   font-family: 'Cinzel', ui-monospace, SFMono-Regular, monospace;
   line-height: 1;
-  margin-bottom: 8px;
+  margin-bottom: 6px;
   letter-spacing: 2px;
   text-shadow: 0 0 30px rgba(212, 175, 55, 0.3);
 }
@@ -268,8 +297,8 @@
 .heka-data-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 12px;
-  margin-bottom: 20px;
+  gap: 10px;
+  margin-bottom: 14px;
 }
 
 .heka-data-grid--2 {
@@ -284,7 +313,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 18px 12px;
+  padding: 14px 10px;
   background: linear-gradient(145deg, rgba(255, 255, 255, 0.03) 0%, rgba(255, 255, 255, 0.01) 100%);
   border-radius: 16px;
   border: 1px solid rgba(255, 255, 255, 0.06);
@@ -300,22 +329,22 @@
 }
 
 .heka-data-cell__icon {
-  font-size: 24px;
-  margin-bottom: 8px;
+  font-size: 20px;
+  margin-bottom: 6px;
   filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
 }
 
 .heka-data-cell__label {
-  font-size: 10px;
+  font-size: 9px;
   text-transform: uppercase;
   letter-spacing: 1px;
   color: var(--heka-text-tertiary);
-  margin-bottom: 6px;
+  margin-bottom: 4px;
   font-weight: 600;
 }
 
 .heka-data-cell__value {
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 600;
   color: var(--heka-text-primary);
   font-family: ui-monospace, SFMono-Regular, monospace;
@@ -333,7 +362,7 @@
 
 /* ─── Section with Elegant Title ─── */
 .heka-section {
-  margin-bottom: 24px;
+  margin-bottom: 18px;
   position: relative;
 }
 
@@ -342,38 +371,38 @@
 }
 
 .heka-section__title {
-  font-size: 11px;
+  font-size: 10px;
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 2px;
   color: var(--heka-gold);
-  margin-bottom: 14px;
+  margin-bottom: 10px;
   display: flex;
   align-items: center;
   gap: 8px;
-  padding-bottom: 8px;
+  padding-bottom: 6px;
   border-bottom: 1px solid rgba(212, 175, 55, 0.1);
 }
 
 /* ─── Progress Bar - Elegant ─── */
 .heka-progress {
-  margin: 20px 0;
+  margin: 14px 0;
   padding: 0 4px;
 }
 
 .heka-progress__labels {
   display: flex;
   justify-content: space-between;
-  font-size: 12px;
+  font-size: 11px;
   color: var(--heka-text-secondary);
-  margin-bottom: 8px;
+  margin-bottom: 6px;
   font-weight: 500;
 }
 
 .heka-progress__track {
-  height: 6px;
+  height: 4px;
   background: rgba(255, 255, 255, 0.06);
-  border-radius: 3px;
+  border-radius: 2px;
   overflow: hidden;
   box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.3);
 }
@@ -399,9 +428,9 @@
 
 .heka-list__item {
   position: relative;
-  padding: 14px 16px;
+  padding: 11px 13px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.04);
-  font-size: 14px;
+  font-size: 13px;
   color: var(--heka-text-secondary);
   line-height: 1.5;
   transition: all 0.2s ease;
@@ -424,11 +453,11 @@
 }
 
 .heka-tag {
-  padding: 8px 14px;
+  padding: 6px 11px;
   background: linear-gradient(145deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.02) 100%);
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 20px;
-  font-size: 12px;
+  font-size: 11px;
   color: var(--heka-text-secondary);
   font-weight: 500;
   transition: all 0.2s ease;
@@ -452,11 +481,11 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 14px 18px;
+  padding: 10px 14px;
   background: rgba(0, 0, 0, 0.2);
   border-radius: 12px;
-  margin-top: 20px;
-  font-size: 12px;
+  margin-top: 14px;
+  font-size: 11px;
   color: var(--heka-text-tertiary);
   border: 1px solid rgba(255, 255, 255, 0.04);
 }
@@ -483,12 +512,12 @@
 .heka-hero {
   display: flex;
   align-items: center;
-  gap: 20px;
-  padding: 24px;
+  gap: 16px;
+  padding: 18px;
   background: linear-gradient(145deg, rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0.1) 100%);
   border-radius: 20px;
   border: 1px solid rgba(255, 255, 255, 0.06);
-  margin-bottom: 20px;
+  margin-bottom: 14px;
   position: relative;
   overflow: hidden;
 }
@@ -504,7 +533,7 @@
 }
 
 .heka-hero__icon {
-  font-size: 52px;
+  font-size: 42px;
   filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.4));
   flex-shrink: 0;
 }
@@ -514,10 +543,10 @@
 }
 
 .heka-hero__title {
-  font-size: 24px;
+  font-size: 20px;
   font-weight: 600;
   color: var(--heka-text-primary);
-  margin-bottom: 6px;
+  margin-bottom: 4px;
   letter-spacing: -0.5px;
 }
 
@@ -526,10 +555,67 @@
   color: var(--heka-text-secondary);
 }
 
+/* ─── Chaldean Timeline ─── */
+.chaldean-timeline {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 4px;
+  padding: 8px;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.chaldean-timeline__slot {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: 6px 2px;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+  position: relative;
+  cursor: default;
+}
+
+.chaldean-timeline__slot:hover {
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.chaldean-timeline__slot.current {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.chaldean-timeline__slot.past {
+  opacity: 0.35;
+}
+
+.chaldean-timeline__symbol {
+  font-size: 14px;
+  line-height: 1;
+}
+
+.chaldean-timeline__label {
+  font-size: 8px;
+  color: var(--heka-text-tertiary);
+  font-family: ui-monospace, SFMono-Regular, monospace;
+  font-weight: 600;
+}
+
+.chaldean-timeline__indicator {
+  position: absolute;
+  bottom: -2px;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  box-shadow: 0 0 6px currentColor;
+}
+
 /* ─── Responsive ─── */
 @media (max-width: 380px) {
   .heka-card__header {
-    padding: 16px 18px;
+    padding: 12px 16px;
   }
   
   .heka-card__title {
@@ -537,7 +623,7 @@
   }
   
   .heka-countdown__value {
-    font-size: 42px;
+    font-size: 36px;
   }
   
   .heka-data-grid {
@@ -546,6 +632,10 @@
   
   .heka-data-grid--3 {
     grid-template-columns: repeat(3, 1fr);
+  }
+
+  .chaldean-timeline {
+    grid-template-columns: repeat(8, 1fr);
   }
 }
 
@@ -571,22 +661,22 @@
 
 /* ─── Enterprise Header ─── */
 .heka-card__header--enterprise {
-  padding: 22px 24px;
-  gap: 18px;
+  padding: 16px 20px;
+  gap: 14px;
 }
 
 .heka-card__header--enterprise .heka-card__icon {
-  width: 58px;
-  height: 58px;
-  font-size: 34px;
-  border-radius: 18px;
+  width: 48px;
+  height: 48px;
+  font-size: 28px;
+  border-radius: 16px;
   background: linear-gradient(145deg, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.2) 100%);
   border: 1px solid rgba(255,255,255,0.1);
   box-shadow: inset 0 2px 4px rgba(0,0,0,0.4), 0 4px 12px rgba(0,0,0,0.3);
 }
 
 .heka-card__header--enterprise .heka-card__title {
-  font-size: 24px;
+  font-size: 20px;
   font-weight: 500;
   letter-spacing: 0.5px;
   font-family: ui-monospace, SFMono-Regular, monospace;
@@ -596,21 +686,21 @@
 .heka-card__header--enterprise .heka-card__subtitle {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
   flex-wrap: wrap;
-  margin-top: 6px;
+  margin-top: 4px;
 }
 
 /* Status Chips */
 .heka-chip {
   display: inline-flex;
   align-items: center;
-  gap: 5px;
-  padding: 5px 10px;
+  gap: 4px;
+  padding: 4px 8px;
   background: rgba(0,0,0,0.35);
   border: 1px solid rgba(255,255,255,0.08);
   border-radius: 20px;
-  font-size: 10px;
+  font-size: 9px;
   font-weight: 600;
   color: var(--heka-text-secondary);
   text-transform: uppercase;
@@ -640,11 +730,11 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 26px 20px;
+  padding: 18px 16px;
   background: linear-gradient(145deg, rgba(0,0,0,0.35) 0%, rgba(0,0,0,0.15) 100%);
   border-radius: 20px;
   border: 1px solid rgba(255,255,255,0.06);
-  margin-bottom: 20px;
+  margin-bottom: 14px;
   position: relative;
   overflow: hidden;
 }
@@ -663,8 +753,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 10px;
-  margin-bottom: 10px;
+  gap: 8px;
+  margin-bottom: 8px;
 }
 
 .heka-epic-counter__segment {
@@ -675,7 +765,7 @@
 }
 
 .heka-epic-counter__number {
-  font-size: 40px;
+  font-size: 32px;
   font-weight: 300;
   color: var(--heka-gold);
   font-family: 'Cinzel', ui-monospace, SFMono-Regular, monospace;
@@ -685,28 +775,28 @@
 }
 
 .heka-epic-counter__label {
-  font-size: 10px;
+  font-size: 9px;
   text-transform: uppercase;
   letter-spacing: 1.5px;
   color: var(--heka-text-tertiary);
-  margin-top: 6px;
+  margin-top: 4px;
   font-weight: 600;
 }
 
 .heka-epic-counter__separator {
-  font-size: 28px;
+  font-size: 24px;
   color: var(--heka-gold);
   opacity: 0.45;
-  margin-top: -10px;
+  margin-top: -8px;
   font-weight: 300;
 }
 
 .heka-epic-counter__title {
-  font-size: 11px;
+  font-size: 10px;
   text-transform: uppercase;
   letter-spacing: 2px;
   color: var(--heka-text-secondary);
-  margin-top: 10px;
+  margin-top: 6px;
   font-weight: 600;
 }
 
@@ -714,20 +804,22 @@
 .heka-forecast {
   display: flex;
   gap: 10px;
-  overflow-x: auto;
+  /* CRITICAL: removed overflow-x:auto which forced overflow-y:auto and created
+     a bidirectional scroll container that trapped vertical touch gestures.
+     The slots use flex:1 and fit within the card width on all screens. */
   padding-bottom: 4px;
 }
 
 .heka-forecast__slot {
   flex: 1;
-  min-width: 72px;
+  min-width: 64px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 6px;
-  padding: 16px 10px;
+  gap: 5px;
+  padding: 12px 8px;
   background: linear-gradient(145deg, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.01) 100%);
-  border-radius: 16px;
+  border-radius: 14px;
   border: 1px solid rgba(255,255,255,0.06);
   text-align: center;
   transition: all 0.2s ease;
@@ -748,7 +840,7 @@
 }
 
 .heka-forecast__icon {
-  font-size: 24px;
+  font-size: 20px;
   filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
 }
 
@@ -769,12 +861,12 @@
 
 /* ─── Ring Large Variant ─── */
 .heka-ring--large {
-  width: 56px;
-  height: 56px;
+  width: 48px;
+  height: 48px;
 }
 
 .heka-ring--large .heka-ring__text {
-  font-size: 11px;
+  font-size: 10px;
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════════
@@ -802,24 +894,23 @@
 
   /* Slightly compact countdowns inside expanded cards */
   .celestial-panel .heka-epic-counter {
-    padding: 22px 18px;
+    padding: 16px 14px;
   }
 
   .celestial-panel .heka-epic-counter__digits {
-    gap: 8px;
+    gap: 6px;
   }
 
   .celestial-panel .heka-epic-counter__segment {
-    min-width: 48px;
+    min-width: 40px;
   }
 
   .celestial-panel .heka-epic-counter__number {
-    font-size: 34px;
+    font-size: 28px;
   }
 
   .celestial-panel .heka-epic-counter__separator {
-    font-size: 24px;
+    font-size: 20px;
   }
 }
-
 

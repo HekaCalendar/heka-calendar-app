@@ -3,8 +3,9 @@
  * Shows recently delivered notifications from the engine ledger.
  */
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { NotificationEngine } from '../../services/notificationEngine';
+import { eventBus } from '../../services/eventBus';
 import type { DeliveredNotification } from '../../types/notifications';
 
 const TIER_ICONS: Record<string, string> = {
@@ -25,11 +26,23 @@ export const NotificationHistory: React.FC = () => {
   const [history, setHistory] = useState<DeliveredNotification[]>([]);
   const [isOpen, setIsOpen] = useState(false);
 
+  const refresh = useCallback(() => {
+    setHistory(NotificationEngine.getHistory(5));
+  }, []);
+
   useEffect(() => {
     if (isOpen) {
-      setHistory(NotificationEngine.getHistory(50));
+      refresh();
     }
-  }, [isOpen]);
+  }, [isOpen, refresh]);
+
+  // Real-time updates: refresh when a new notification is sent
+  useEffect(() => {
+    const unsubscribe = eventBus.subscribe('heka-notification-sent', () => {
+      refresh();
+    });
+    return unsubscribe;
+  }, [refresh]);
 
   if (!isOpen) {
     return (

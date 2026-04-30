@@ -9,6 +9,12 @@ import React, { useEffect, useState, useMemo, useRef } from 'react';
 interface CinematicWelcomeProps {
   onBegin: () => void;
   onSkip: () => void;
+  strings: {
+    tutorialWelcomeSubtitle: string;
+    tutorialWelcomeTagline: string;
+    tutorialBegin: string;
+    tutorialSkip: string;
+  };
 }
 
 interface Star {
@@ -32,7 +38,7 @@ interface ShootingStar {
   maxLife: number;
 }
 
-export const CinematicWelcome: React.FC<CinematicWelcomeProps> = ({ onBegin, onSkip }) => {
+export const CinematicWelcome: React.FC<CinematicWelcomeProps> = ({ onBegin, onSkip, strings }) => {
   const [phase, setPhase] = useState<'stars' | 'logo' | 'tagline' | 'grid' | 'ready'>('stars');
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const starsRef = useRef<Star[]>([]);
@@ -272,7 +278,7 @@ export const CinematicWelcome: React.FC<CinematicWelcomeProps> = ({ onBegin, onS
             transition: 'opacity 1s cubic-bezier(0.22, 1, 0.36, 1) 0.3s, transform 1s cubic-bezier(0.22, 1, 0.36, 1) 0.3s',
           }}
         >
-          The Thirteen-Month Calendar
+          {strings.tutorialWelcomeSubtitle}
         </p>
 
         {/* Tagline */}
@@ -283,7 +289,7 @@ export const CinematicWelcome: React.FC<CinematicWelcomeProps> = ({ onBegin, onS
             transition: 'opacity 1.2s cubic-bezier(0.22, 1, 0.36, 1) 0.6s',
           }}
         >
-          You have never seen a calendar like this.
+          {strings.tutorialWelcomeTagline}
         </p>
 
         {/* Grid preview */}
@@ -321,10 +327,10 @@ export const CinematicWelcome: React.FC<CinematicWelcomeProps> = ({ onBegin, onS
         }}
       >
         <button className="tt-welcome__btn" onClick={onBegin}>
-          Begin Your Journey
+          {strings.tutorialBegin}
         </button>
         <button className="tt-welcome__skip" onClick={onSkip}>
-          Skip Tutorial →
+          {strings.tutorialSkip}
         </button>
       </div>
     </div>

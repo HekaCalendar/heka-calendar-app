@@ -207,7 +207,70 @@ export async function generateOracleMessage(
   const apiKey = config.apiKey;
 
   if (!apiKey || provider === 'template') {
-    return { text: fallbackText, model: 'fallback', cached: false };
+    // ── Template Library Path ──────────────────────────────────────────────
+    // Instead of returning raw fallback text, weave the celestial guidance
+    // (already computed by personalizedEngine) with occasion-specific context
+    // to produce a rich, astrologically-informed coach message.
+    const parts: string[] = [];
+
+    // Base: celestial guidance already contains template-based reading
+    if (context.celestialGuidance) {
+      parts.push(context.celestialGuidance);
+    }
+
+    // Occasion-specific enhancement
+    switch (context.occasion) {
+      case 'daily-briefing':
+        if (context.planetaryHour) {
+          parts.push(`The ${context.planetaryHour}.`);
+        }
+        if (context.season) {
+          parts.push(`${context.season}.`);
+        }
+        break;
+      case 'mood-support':
+        if (context.moodTone) {
+          parts.push(`Your current mood — ${context.moodTone} — is held within this celestial field. The sky does not judge; it simply mirrors.`);
+        }
+        if (context.moonDetails) {
+          parts.push(`${context.moonDetails}.`);
+        }
+        break;
+      case 'transit-alert':
+        if (context.transitSummary) {
+          parts.push(`Active transit: ${context.transitSummary}.`);
+        }
+        break;
+      case 'celebration':
+        if (context.streak > 0) {
+          parts.push(`${context.streak}-day streak — momentum is real. The cosmos rewards consistency.`);
+        }
+        break;
+      case 'task-suggestion':
+        if (context.pendingTasks > 0) {
+          parts.push(`${context.pendingTasks} task${context.pendingTasks > 1 ? 's' : ''} waiting — align your next action with the prevailing energy.`);
+        }
+        break;
+      case 'synchronicity':
+        parts.push(`A pattern in the sky mirrors a pattern in your life. Pay attention to what repeats.`);
+        break;
+    }
+
+    // User context weaving
+    if (context.userArchetype) {
+      parts.push(`As a ${context.userArchetype}, you navigate these currents with your own distinct rhythm.`);
+    }
+    if (context.lastJournalSnippet) {
+      parts.push(`Your recent reflections echo here: "${context.lastJournalSnippet.slice(0, 120)}${context.lastJournalSnippet.length > 120 ? '...' : ''}"`);
+    }
+
+    // Fallback: if no celestial guidance, use the fallback text
+    if (parts.length === 0) {
+      parts.push(fallbackText);
+    }
+
+    const text = parts.filter(Boolean).join(' ');
+    return { text, model: 'template', cached: false };
   }
 
   // ── Provider-specific system prompt tuning ───────────────────────────────

@@ -16,6 +16,7 @@
  */
 
 import { aiProviderManager } from '../astrology/services/ai/aiProvider';
+import { templateLibrary } from '../astrology/services/guidance/templates/templateLibrary';
 import { OracleEngine } from './oracleEngine';
 import { calculatePersonalTransits, getCurrentPlanetaryPositions, type BirthChart, type PersonalTransit } from './birthChartIntegration';
 
@@ -841,10 +842,43 @@ async function tryAIEnhancement(
   birthChartConnection?: EnhancedInsight['birthChartConnection']
 ): Promise<{ text: string; poeticSummary: string; affirmations: string[]; rituals: string[]; journalPrompts: string[] } | null> {
   const activeProvider = aiProviderManager.getActiveProvider();
-  if (activeProvider === 'template') return null;
-  
+  const theme = analysis.themes[0] || 'general';
+  const moonSign = celestialState.moonPhase.sign;
+  const moonPhase = celestialState.moonPhase.phase;
+
+  // ── Template Library Path ──────────────────────────────────────────────
+  // When the user has selected Template Library (no API key), we still enrich
+  // the insight with astrologically-informed content from the template engine.
+  if (activeProvider === 'template') {
+    try {
+      const reading = templateLibrary.generateReading({
+        planet: 'moon',
+        sign: moonSign,
+        moonPhase: moonPhase,
+        category: theme,
+      });
+
+      // Blend the template reading with the base insight text
+      const blendedNarrative = reading.narrative
+        ? `${baseText}\n\n${reading.narrative}`
+        : baseText;
+
+      return {
+        text: blendedNarrative,
+        poeticSummary: reading.title || 'Celestial Reflection',
+        affirmations: reading.affirmation ? [reading.affirmation] : [],
+        rituals: reading.advice || [],
+        journalPrompts: generateLocalJournalPrompts(analysis, originalContent, celestialState, birthChartConnection),
+      };
+    } catch (e) {
+      console.warn('[tryAIEnhancement] Template enrichment failed:', e);
+      // Fall through to local generation
+      return null;
+    }
+  }
+
   const prompt = buildAIInsightPrompt(originalContent, analysis, celestialState, birthChartConnection);
-  
+
   try {
     // Race against a 12-second timeout so the UI never hangs waiting for AI
     const response = await Promise.race([
@@ -852,10 +886,10 @@ async function tryAIEnhancement(
         prompt,
         context: {
           planet: 'moon',
-          sign: celestialState.moonPhase.sign,
-          moonPhase: celestialState.moonPhase.phase,
+          sign: moonSign,
+          moonPhase: moonPhase,
           transits: [],
-          category: analysis.themes[0] || 'general'
+          category: theme
         },
         templateReading: {
           title: 'Oracle Insight',
@@ -866,18 +900,18 @@ async function tryAIEnhancement(
           confidence: 80
         }
       }),
-      new Promise<never>((_, reject) => 
+      new Promise<never>((_, reject) =>
         setTimeout(() => reject(new Error('AI enhancement timed out')), 12000)
       )
     ]);
-    
+
     // If the provider failed internally and fell back to template, the provider field will be 'template'.
     // We only accept genuine AI-generated responses.
     if (response.provider === 'template') {
       console.warn('[tryAIEnhancement] Provider fell back to template; skipping AI result.');
       return null;
     }
-    
+
     const reading = response.reading;
     return {
       text: reading.narrative || baseText,

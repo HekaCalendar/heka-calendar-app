@@ -793,7 +793,7 @@ function buildShapeSection(shape: string, hemisphere: any, elements: any, modali
   content += `Above horizon: ${hemisphere.above} · Below horizon: ${hemisphere.below} · East: ${hemisphere.east} · West: ${hemisphere.west}\n\n`;
 
   content += `### Elemental Balance\n\n`;
-  content += `Fire (${elements.fire}) · Earth (${elements.earth}) · Air (${elements.air}) · Water (${elements.water})\n\n`;
+  content += `Fire (${elements.fire}) · Earth (${elements.earth}) · Air (${elements.air}) · Water (${elements.water}) · Ether (${elements.ether ?? 0})\n\n`;
   if (dominantEl[1] > 3) content += `**${capitalize(dominantEl[0])}-dominant:** ${getElementDescription(dominantEl[0])}\n\n`;
   if (weakestEl[1] < 2) content += `**${capitalize(weakestEl[0])} underrepresented:** ${getElementUnderrep(weakestEl[0])}\n\n`;
 

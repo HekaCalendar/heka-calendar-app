@@ -128,7 +128,7 @@ HEKA Calendar offers optional AI-enhanced astrological readings. **Important:** 
 - AI features may be slow or unavailable if the third-party service is experiencing issues
 - You may stop using AI features at any time by removing your API key in Settings
 
-**Fallback:** If no AI provider is configured, the app uses its built-in template library with 26,000+ pre-written readings (always free, always available).
+**Fallback:** If no AI provider is configured, the app uses its built-in template library with 169+ hand-crafted planet-sign templates, assembled into unique readings by moon phase, aspect, and life category (always free, always available).
 
 ---
 

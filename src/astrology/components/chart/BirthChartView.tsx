@@ -9,14 +9,14 @@
  * ═══════════════════════════════════════════════════════════════════════════════
  */
 
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { 
   profileManager, 
   type ProfileWithChart,
 } from '../../services/natal/profileManager';
 import { generateNatalPromise, type NatalPromise } from '../../services/natal/natalPromise';
 import type { NatalPlanet } from '../../services/natal/natalChart';
-import { getZodiacSystemPreference } from '../../services/natal/zodiacHelpers';
+import { getZodiacFramePreference, getSignCountPreference } from '../../services/natal/zodiacHelpers';
 
 // Import sub-components
 import { ChartWheel } from './ChartWheel';
@@ -443,11 +443,23 @@ export const BirthChartView: React.FC<BirthChartViewProps> = ({ initialProfileId
   }, [initialProfileId, loadProfile]);
   
   // Force reload when zodiac system changes (check on mount and when window regains focus)
+  const checkingRef = useRef(false);
   useEffect(() => {
     const checkZodiacSystem = () => {
-      const currentSystem = getZodiacSystemPreference();
-      if (profile && profile.chart.zodiacSystem !== currentSystem) {
-        loadProfile(profile.id);
+      if (checkingRef.current || !profile) return;
+      checkingRef.current = true;
+
+      const currentFrame = getZodiacFramePreference();
+      const currentCount = getSignCountPreference();
+
+      if (profile.chart.zodiacFrame !== currentFrame || profile.chart.signCount !== currentCount) {
+        console.log('[BirthChartView] Zodiac prefs changed, recalculating...');
+        profileManager.recalculateChartWithZodiacSystem(profile.id, undefined, currentFrame, currentCount)
+          .then(() => loadProfile(profile.id))
+          .catch((err) => console.error('[BirthChartView] Recalculation failed:', err))
+          .finally(() => { checkingRef.current = false; });
+      } else {
+        checkingRef.current = false;
       }
     };
 

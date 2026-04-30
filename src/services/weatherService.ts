@@ -1,6 +1,7 @@
 /**
  * Weather Service
  * Provides current weather data for user location
+ * Uses Open-Meteo (free, no API key required)
  * Auto-detects Celsius/Fahrenheit based on country conventions
  */
 
@@ -18,6 +19,9 @@ export interface WeatherData {
   visibility: number;
   uvIndex: number;
   updatedAt: Date;
+  dailyMax: number;
+  dailyMin: number;
+  precipitation: number;
 }
 
 export interface SunTimes {
@@ -95,43 +99,44 @@ export function calculateSunTimes(date: Date, location: LocationData): SunTimes 
 }
 
 /**
- * Get weather data from API
- * Uses OpenWeatherMap or falls back to mock data
+ * Get weather data from Open-Meteo API
+ * Free, no API key required, accurate global coverage
  */
 export async function getWeatherData(location: LocationData): Promise<WeatherData | null> {
-  // For now, return null to indicate no weather API configured
-  // In production, this would call OpenWeatherMap or similar
-  // with the API key from environment variables
-  
-  const apiKey = import.meta.env.VITE_OPENWEATHER_API_KEY;
-  
-  if (!apiKey) {
-    console.log('[WeatherService] No API key configured');
-    return null;
-  }
-  
   try {
-    const url = `https://api.openweathermap.org/data/2.5/weather?lat=${location.latitude}&lon=${location.longitude}&appid=${apiKey}&units=metric`;
-    const response = await fetch(url);
-    
+    const url = new URL('https://api.open-meteo.com/v1/forecast');
+    url.searchParams.set('latitude', String(location.latitude));
+    url.searchParams.set('longitude', String(location.longitude));
+    url.searchParams.set('current', 'temperature_2m,relative_humidity_2m,apparent_temperature,weather_code,precipitation,wind_speed_10m,wind_direction_10m,surface_pressure');
+    url.searchParams.set('daily', 'temperature_2m_max,temperature_2m_min,precipitation_sum');
+    url.searchParams.set('timezone', 'auto');
+    url.searchParams.set('forecast_days', '1');
+
+    const response = await fetch(url.toString());
+
     if (!response.ok) {
       throw new Error(`Weather API error: ${response.status}`);
     }
-    
+
     const data = await response.json();
-    
+    const current = data.current;
+    const daily = data.daily;
+
     return {
-      temperature: data.main.temp,
-      feelsLike: data.main.feels_like,
-      humidity: data.main.humidity,
-      condition: data.weather[0].main,
-      conditionIcon: getWeatherIcon(data.weather[0].icon),
-      windSpeed: data.wind.speed,
-      windDirection: degreesToDirection(data.wind.deg || 0),
-      pressure: data.main.pressure,
-      visibility: (data.visibility || 10000) / 1000, // km
-      uvIndex: 0, // Would need separate UV API
+      temperature: current.temperature_2m,
+      feelsLike: current.apparent_temperature,
+      humidity: current.relative_humidity_2m,
+      condition: getWeatherCondition(current.weather_code),
+      conditionIcon: getWeatherIcon(current.weather_code),
+      windSpeed: current.wind_speed_10m,
+      windDirection: degreesToDirection(current.wind_direction_10m || 0),
+      pressure: current.surface_pressure,
+      visibility: 10, // Open-Meteo doesn't provide visibility in free tier
+      uvIndex: 0,
       updatedAt: new Date(),
+      dailyMax: daily.temperature_2m_max[0],
+      dailyMin: daily.temperature_2m_min[0],
+      precipitation: daily.precipitation_sum[0],
     };
   } catch (error) {
     console.error('[WeatherService] Failed to fetch weather:', error);
@@ -248,11 +253,14 @@ function getTimezoneOffset(date: Date, timezone: string): number {
   return (local.getTime() - utc.getTime()) / (1000 * 60 * 60); // hours
 }
 
-function utcToLocal(utcFraction: number, _tzOffset: number, baseDate: Date): Date {
+function utcToLocal(utcFraction: number, tzOffset: number, baseDate: Date): Date {
   // utcFraction is the fraction of the UTC day (can be >1 or <0 for cross-day events)
   const ms = utcFraction * 24 * 60 * 60 * 1000;
-  const utcDate = Date.UTC(baseDate.getFullYear(), baseDate.getMonth(), baseDate.getDate());
-  return new Date(utcDate + ms);
+  // Use UTC methods to ensure correct day regardless of browser timezone
+  const utcDate = Date.UTC(baseDate.getUTCFullYear(), baseDate.getUTCMonth(), baseDate.getUTCDate());
+  // Apply timezone offset so returned Date shows correct local time for the location
+  const tzMs = tzOffset * 60 * 60 * 1000;
+  return new Date(utcDate + ms + tzMs);
 }
 
 function degreesToDirection(degrees: number): string {
@@ -261,19 +269,74 @@ function degreesToDirection(degrees: number): string {
   return directions[index];
 }
 
-function getWeatherIcon(iconCode: string): string {
-  const iconMap: Record<string, string> = {
-    '01d': '☀️', '01n': '🌙',
-    '02d': '⛅', '02n': '☁️',
-    '03d': '☁️', '03n': '☁️',
-    '04d': '☁️', '04n': '☁️',
-    '09d': '🌧️', '09n': '🌧️',
-    '10d': '🌦️', '10n': '🌧️',
-    '11d': '⛈️', '11n': '⛈️',
-    '13d': '❄️', '13n': '❄️',
-    '50d': '🌫️', '50n': '🌫️',
+/** Map Open-Meteo WMO weather codes to human-readable conditions */
+function getWeatherCondition(code: number): string {
+  const conditions: Record<number, string> = {
+    0: 'Clear',
+    1: 'Mainly Clear',
+    2: 'Partly Cloudy',
+    3: 'Overcast',
+    45: 'Fog',
+    48: 'Rime Fog',
+    51: 'Light Drizzle',
+    53: 'Drizzle',
+    55: 'Heavy Drizzle',
+    56: 'Freezing Drizzle',
+    57: 'Heavy Freezing Drizzle',
+    61: 'Light Rain',
+    63: 'Rain',
+    65: 'Heavy Rain',
+    66: 'Freezing Rain',
+    67: 'Heavy Freezing Rain',
+    71: 'Light Snow',
+    73: 'Snow',
+    75: 'Heavy Snow',
+    77: 'Snow Grains',
+    80: 'Light Showers',
+    81: 'Showers',
+    82: 'Heavy Showers',
+    85: 'Snow Showers',
+    86: 'Heavy Snow Showers',
+    95: 'Thunderstorm',
+    96: 'Thunderstorm & Hail',
+    99: 'Heavy Thunderstorm',
   };
-  return iconMap[iconCode] || '🌡️';
+  return conditions[code] || 'Unknown';
+}
+
+/** Map Open-Meteo WMO weather codes to emoji icons */
+function getWeatherIcon(code: number): string {
+  const icons: Record<number, string> = {
+    0: '☀️',
+    1: '🌤️',
+    2: '⛅',
+    3: '☁️',
+    45: '🌫️',
+    48: '🌫️',
+    51: '🌦️',
+    53: '🌦️',
+    55: '🌧️',
+    56: '🌨️',
+    57: '🌨️',
+    61: '🌦️',
+    63: '🌧️',
+    65: '🌧️',
+    66: '🌨️',
+    67: '🌨️',
+    71: '🌨️',
+    73: '❄️',
+    75: '❄️',
+    77: '❄️',
+    80: '🌦️',
+    81: '🌧️',
+    82: '🌧️',
+    85: '🌨️',
+    86: '🌨️',
+    95: '⛈️',
+    96: '⛈️',
+    99: '⛈️',
+  };
+  return icons[code] || '🌡️';
 }
 
 // Export service

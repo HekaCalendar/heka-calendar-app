@@ -380,7 +380,11 @@ class LocalStoragePersistence implements PersistenceLayer {
 
   // Helper to get all charts (needed for sync)
   private async getAllCharts(): Promise<NatalChart[]> {
-    return this.getItem<NatalChart[]>(STORAGE_KEYS.CHARTS) || [];
+    const raw = this.getItem<NatalChart[] | Record<string, NatalChart>>(STORAGE_KEYS.CHARTS);
+    if (!raw) return [];
+    if (Array.isArray(raw)) return raw;
+    // Charts may be stored as a Record/map object — convert to array
+    return Object.values(raw);
   }
 
   // Clear all data

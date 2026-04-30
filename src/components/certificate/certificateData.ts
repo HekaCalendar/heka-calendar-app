@@ -54,7 +54,7 @@ export interface CertificateData {
   nakshatra?: string;
   nakshatraSymbol?: string;
   houseCusps?: Array<{ house: number; sign: string; signSymbol: string; degree: string }>;
-  elementalBalance?: { fire: number; earth: number; air: number; water: number };
+  elementalBalance?: { fire: number; earth: number; air: number; water: number; ether: number };
 
   // Calendar
   hekaDate?: string;
@@ -423,7 +423,7 @@ export async function enrichCertificateData(
         });
       }
 
-      const els = { fire: 0, earth: 0, air: 0, water: 0 };
+      const els = { fire: 0, earth: 0, air: 0, water: 0, ether: 0 };
       Object.values(bodies).forEach((body: any) => {
         if (!body || !body.sign) return;
         const sign = String(body.sign).toLowerCase();

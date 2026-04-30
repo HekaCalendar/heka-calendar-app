@@ -1084,7 +1084,13 @@ optgroup {
 }
 
 .calendar-grid--expanded .calendar-grid__week {
-  gap: var(--space-3);
+  row-gap: var(--space-3);
+  column-gap: 6px;
+}
+
+.calendar-grid--expanded .calendar-grid__dow {
+  row-gap: var(--space-3);
+  column-gap: 6px;
 }
 
 .calendar-grid--expanded .day-cell {
@@ -1107,6 +1113,13 @@ optgroup {
   margin-top: var(--space-2);
 }
 
+/* Float celestial badges so moon emoji never expands grid tracks */
+.calendar-grid--expanded .day-cell__celestial-badges {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+}
+
 /* ==========================================================================
    Horizontal Expand Mode - Widescreen Panoramic View
    ========================================================================== */
@@ -1121,46 +1134,48 @@ optgroup {
 }
 
 .calendar-grid--expanded-h .calendar-grid__dow {
-  grid-template-columns: repeat(7, 180px);
-  gap: var(--space-3);
+  grid-template-columns: repeat(7, 1fr);
+  gap: 8px;
+  padding: 0;
 }
 
 .calendar-grid--expanded-h .calendar-grid__week {
-  grid-template-columns: repeat(7, 180px);
-  gap: var(--space-3);
+  grid-template-columns: repeat(7, 1fr);
+  gap: 8px;
+  padding: var(--space-1) 0;
 }
 
 .calendar-grid--expanded-h .day-cell {
-  aspect-ratio: auto;
-  min-height: 140px;
+  aspect-ratio: 1;
+  min-height: 180px;
   padding: var(--space-4);
 }
 
 /* Combined vertical + horizontal expand = large cells with proper grid */
-/* Width = content (7×220 + 6×12 = 1652px) + padding (40px) = 1692px */
+/* Width = content (7×220 + 6×12 = 1612px) + padding (40px) = 1652px */
 .calendar-grid--expanded.calendar-grid--expanded-h {
-  width: 1692px;
-  min-width: 1692px;
+  width: 1652px;
+  min-width: 1652px;
   padding: var(--space-5);
   margin: 0 auto;
 }
 
 .calendar-grid--expanded.calendar-grid--expanded-h .calendar-grid__week {
-  /* Fixed column width instead of minmax to prevent overlap */
-  grid-template-columns: repeat(7, 220px);
-  gap: var(--space-3);
+  grid-template-columns: repeat(7, 1fr);
+  gap: 8px;
+  padding: var(--space-1) 0;
 }
 
 .calendar-grid--expanded.calendar-grid--expanded-h .day-cell {
-  aspect-ratio: auto;
+  aspect-ratio: 1;
   min-height: 220px;
-  min-width: 220px;
   width: 100%;
 }
 
 .calendar-grid--expanded.calendar-grid--expanded-h .calendar-grid__dow {
-  grid-template-columns: repeat(7, 220px);
-  gap: var(--space-3);
+  grid-template-columns: repeat(7, 1fr);
+  gap: 8px;
+  padding: 0;
 }
 
 .calendar-grid--expanded-h .day-cell__heka-num {
@@ -1188,11 +1203,21 @@ optgroup {
   
   .calendar-grid--expanded-h .calendar-grid__week,
   .calendar-grid--expanded-h .calendar-grid__dow {
-    grid-template-columns: repeat(7, 130px);
+    grid-template-columns: repeat(7, 1fr);
+    gap: 8px;
+  }
+  
+  .calendar-grid--expanded-h .calendar-grid__week {
+    padding: var(--space-1) 0;
+  }
+  
+  .calendar-grid--expanded-h .calendar-grid__dow {
+    padding: 0;
   }
   
   .calendar-grid--expanded-h .day-cell {
-    min-height: 120px;
+    aspect-ratio: 1;
+    min-height: 130px;
     padding: var(--space-3);
   }
   
@@ -1205,12 +1230,21 @@ optgroup {
   
   .calendar-grid--expanded.calendar-grid--expanded-h .calendar-grid__week,
   .calendar-grid--expanded.calendar-grid--expanded-h .calendar-grid__dow {
-    grid-template-columns: repeat(7, 150px);
+    grid-template-columns: repeat(7, 1fr);
+    gap: 8px;
+  }
+  
+  .calendar-grid--expanded.calendar-grid--expanded-h .calendar-grid__week {
+    padding: var(--space-1) 0;
+  }
+  
+  .calendar-grid--expanded.calendar-grid--expanded-h .calendar-grid__dow {
+    padding: 0;
   }
   
   .calendar-grid--expanded.calendar-grid--expanded-h .day-cell {
-    min-height: 180px;
-    min-width: 150px;
+    aspect-ratio: 1;
+    min-height: 150px;
   }
 }
 
@@ -4269,9 +4303,10 @@ optgroup {
   gap: var(--space-4);
   padding: var(--space-4);
   padding-bottom: var(--space-6);
-  /* FIXED: Use auto instead of scroll to prevent scroll capture issues */
+  /* FIXED: pan-x on panel + overflow-y:hidden prevents vertical scroll trap.
+     Vertical gestures bubble up to the page; horizontal scrolls the panel. */
   overflow-x: auto;
-  overflow-y: visible;
+  overflow-y: hidden;
   /* FIXED: Removed scroll-snap which was causing scroll issues */
   /* scroll-snap-type: x mandatory; */
   scroll-behavior: smooth;
@@ -5639,10 +5674,11 @@ optgroup {
     padding: 4px 10px;
   }
   
-  /* Thicker header in landscape — avoid narrow strip look */
+  /* Thicker header in landscape — container moves up with more bottom breathing room */
   .app-header {
-    padding-top: 64px !important;
-    padding-bottom: 32px !important;
+    margin-top: 20px !important;      /* was 50px inline — move container UP toward top of screen */
+    padding-top: 50px !important;     /* keep golden line close to heading */
+    padding-bottom: 64px !important;  /* extend downward for thickness */
   }
   
   /* Cap cell sizes - don't expand to fill width */

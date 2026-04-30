@@ -80,6 +80,26 @@
 .celestial-panel-container::before { left: 30px; }
 .celestial-panel-container::after { content: "›"; right: 30px; }
 
+/* Touch devices: hide scrollbar, finger swipe handles horizontal scroll */
+/* NOTE: using (pointer: coarse) alone (not + hover:none) because Samsung foldables
+   report hover: hover on the inner screen, which would leave scrollbars visible. */
+@media (pointer: coarse) {
+  .celestial-panel::-webkit-scrollbar {
+    display: none !important;
+  }
+  .celestial-panel {
+    scrollbar-width: none !important;
+    -ms-overflow-style: none !important;
+  }
+  .celestial-panel-top-scroll {
+    display: none !important;
+  }
+  /* Remove top padding when top scrollbar is hidden on touch */
+  .celestial-panel-container.has-top-scroll {
+    padding-top: 0 !important;
+  }
+}
+
 /* ═══════════════════════════════════════════════════════════════
    TOP SCROLLBAR - Identical to bottom, rendered above cards
    ═══════════════════════════════════════════════════════════════ */

@@ -57,8 +57,8 @@ export function getSignCountPreference(): 12 | 13 {
 export function calculateElementalBalanceWithSystem(
   planets: Record<string, NatalPlanet>,
   elementMap: Record<string, string>
-): { fire: number; earth: number; air: number; water: number } {
-  const elements = { fire: 0, earth: 0, air: 0, water: 0 };
+): { fire: number; earth: number; air: number; water: number; ether: number } {
+  const elements = { fire: 0, earth: 0, air: 0, water: 0, ether: 0 };
   
   Object.values(planets).forEach((planet) => {
     const element = elementMap[planet.sign];

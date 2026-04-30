@@ -4,6 +4,7 @@
  */
 
 import { useState, useEffect, useRef, useCallback, useMemo } from 'react';
+import { Share } from '@capacitor/share';
 import { useSelector, useDispatch } from 'react-redux';
 import type { AppDispatch } from '../store';
 import type { RootState } from '../store';
@@ -186,29 +187,19 @@ export const FriendsModal: React.FC<FriendsModalProps> = ({ isOpen, onClose }) =
 
   const handleShareInvite = useCallback(async () => {
     if (!inviteCode) return;
-    
-    const deepLink = generateInviteLink(inviteCode);
+
     const webLink = generateWebInviteLink(inviteCode, currentUser?.displayName || undefined, 'friend');
-    const shareText = `Join my Cosmic Circle on HEKA Calendar!\n\nUse invite code: ${inviteCode}\n\nOpen in app: ${deepLink}\n\nOr visit: ${webLink}`;
-    
-    // Try native share if available (mobile)
-    if (navigator.share) {
-      try {
-        await navigator.share({
-          title: 'Join my Cosmic Circle',
-          text: `Use invite code ${inviteCode} to join my Cosmic Circle on HEKA Calendar!`,
-          url: webLink,
-        });
-        return;
-      } catch (e) {
-        // User cancelled or share failed, fall back to clipboard
-      }
+
+    try {
+      await Share.share({
+        title: 'Join my Cosmic Circle',
+        text: `Use invite code ${inviteCode} to join my Cosmic Circle on HEKA Calendar!`,
+        url: webLink,
+        dialogTitle: 'Invite a Friend',
+      });
+    } catch (e) {
+      // User cancelled or native share unavailable — silently ignore
     }
-    
-    // Fall back to copying to clipboard
-    navigator.clipboard.writeText(shareText);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
   }, [inviteCode]);
 
   const handleCreateShareableTask = useCallback(async () => {
@@ -415,7 +406,12 @@ export const FriendsModal: React.FC<FriendsModalProps> = ({ isOpen, onClose }) =
             pendingTasks={tasks.filter(t => t.status === 'pending' && t.assigneeId === currentUser?.uid).length}
             unreadMessages={unreadTotal}
             activeTab={activeTab}
-            onInvite={() => dispatch(setActiveTab('invite'))}
+            onInvite={() => {
+              dispatch(setActiveTab('invite'));
+              if (!inviteCode) {
+                void dispatch(generateInviteCode());
+              }
+            }}
             onViewTasks={() => dispatch(setActiveTab('tasks'))}
           />
         )}
@@ -1292,17 +1288,21 @@ function CircleAICoachBanner({
       <p style={{ margin: 0, flex: 1, lineHeight: 1.5 }}>{message.text}</p>
       {message.action && (
         <button
+          type="button"
           onClick={message.action.onClick}
           style={{
-            padding: '6px 12px',
+            padding: '10px 16px',
             background: 'rgba(212,175,55,0.15)',
             border: '1px solid rgba(212,175,55,0.3)',
             borderRadius: '8px',
             color: '#f8f7f5',
-            fontSize: '12px',
+            fontSize: '13px',
             fontWeight: 500,
             cursor: 'pointer',
             whiteSpace: 'nowrap',
+            minHeight: '40px',
+            touchAction: 'manipulation',
+            WebkitTapHighlightColor: 'rgba(212,175,55,0.2)',
           }}
         >
           {message.action.label}

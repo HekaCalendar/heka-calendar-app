@@ -1,74 +1,64 @@
 /**
  * CELESTIAL PANEL SCROLL OVERRIDE
- * Nuclear option for scroll blocking issues
+ * Clean, minimal overrides for horizontal card scrolling
  * 
- * This file exists because the celestial panel has been
- * possessed by a ghost that prevents vertical scrolling.
- * These are the exorcism rites.
+ * Principle: the panel handles horizontal panning (pan-x). Vertical
+ * gestures are NOT handled by the panel and bubble up to the page.
+ * Cards use touch-action: auto so they don't override the parent.
  */
 
 /* ═══════════════════════════════════════════════════════════════════════════════
-   ROOT CELESTIAL PANEL - The main culprit
+   ROOT CELESTIAL PANEL
    ═══════════════════════════════════════════════════════════════════════════════ */
 
 .celestial-panel {
-  /* CRITICAL: Must allow both directions */
-  touch-action: pan-x pan-y !important;
+  /* Only handle horizontal panning on the panel */
+  touch-action: pan-x !important;
   
-  /* Allow horizontal scroll for cards, but DON'T capture vertical */
+  /* Horizontal scroll enabled; vertical scroll explicitly disabled */
   overflow-x: auto !important;
-  overflow-y: visible !important;
+  overflow-y: hidden !important;
   
-  /* Ensure it doesn't create a scroll trap */
-  overscroll-behavior: auto !important;
+  /* Don't trap overscroll */
+  overscroll-behavior-x: contain !important;
   -webkit-overflow-scrolling: touch !important;
   
   /* Remove any containment that blocks events */
   contain: none !important;
-  
-  /* Ensure pointer events pass through for vertical */
-  pointer-events: auto !important;
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════════
-   CELESTIAL CARDS - The suspects
+   CELESTIAL CARDS (legacy .celestial-expandable-card)
    ═══════════════════════════════════════════════════════════════════════════════ */
 
 .celestial-panel .celestial-expandable-card {
-  /* Cards should NOT capture scroll events */
-  touch-action: pan-y !important;
+  touch-action: auto !important;
   overflow: visible !important;
   contain: none !important;
-  
-  /* Ensure they don't block pointer events */
   pointer-events: auto !important;
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════════
-   CARD HEADER - The accomplice
+   CARD HEADER
    ═══════════════════════════════════════════════════════════════════════════════ */
 
 .celestial-panel .celestial-expandable-card__header {
-  /* Header clicks should work, but scroll should pass through */
-  touch-action: pan-y !important;
+  touch-action: manipulation !important;
   pointer-events: auto !important;
-  
-  /* Remove any drag behavior */
   -webkit-user-drag: none !important;
   user-select: none !important;
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════════
-   ALL CARD CHILDREN - The accessories
+   ALL CARD CHILDREN
    ═══════════════════════════════════════════════════════════════════════════════ */
 
 .celestial-panel .celestial-expandable-card * {
-  /* Every child must allow vertical scroll */
-  touch-action: pan-y !important;
+  touch-action: auto !important;
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════════
-   SPECIFIC TEXT ELEMENTS - The witnesses
+   SPECIFIC TEXT ELEMENTS
    ═══════════════════════════════════════════════════════════════════════════════ */
 
 .celestial-panel .celestial-expandable-card__icon,
@@ -78,53 +68,51 @@
 .celestial-panel .celestial-info-section__title,
 .celestial-panel .celestial-info-list__item,
 .celestial-panel .celestial-info-badge {
-  touch-action: pan-y !important;
+  touch-action: auto !important;
   pointer-events: auto !important;
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════════
-   CARD CONTENT - The inside man
+   CARD CONTENT
    ═══════════════════════════════════════════════════════════════════════════════ */
 
 .celestial-panel .celestial-expandable-card__content {
-  /* Content should expand, not scroll internally */
   overflow: visible !important;
-  touch-action: pan-y !important;
+  touch-action: auto !important;
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════════
-   LANDSCAPE SPECIFIC - The alternate reality
+   LANDSCAPE SPECIFIC
    ═══════════════════════════════════════════════════════════════════════════════ */
 
 @media (orientation: landscape) {
   .celestial-panel {
-    touch-action: pan-x pan-y !important;
-    overscroll-behavior: auto auto !important;
+    touch-action: pan-x !important;
+    overscroll-behavior-x: contain !important;
   }
   
   .celestial-panel .celestial-expandable-card {
-    touch-action: pan-x pan-y !important;
+    touch-action: auto !important;
   }
   
   .celestial-panel .celestial-expandable-card__header {
-    touch-action: pan-y !important;
+    touch-action: manipulation !important;
   }
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════════
-   MOBILE SPECIFIC - The crime scene
+   MOBILE / TOUCH SPECIFIC
    ═══════════════════════════════════════════════════════════════════════════════ */
 
 @media (pointer: coarse) {
   .celestial-panel {
-    /* Extra aggressive for touch devices */
-    touch-action: pan-x pan-y !important;
+    touch-action: pan-x !important;
     -webkit-overflow-scrolling: touch !important;
   }
   
-  /* Ensure scrolling works on iOS Safari */
+  /* Prevent callout menu on iOS Safari — do NOT force touch-action here,
+     as that overrides the pan-x values we set on individual elements. */
   .celestial-panel * {
     -webkit-touch-callout: none !important;
-    touch-action: pan-y !important;
   }
 }

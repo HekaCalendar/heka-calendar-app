@@ -1,0 +1,142 @@
+{
+  "title": "Today's Celestial Guide",
+  "titlePast": "Celestial Guide for {{days}} days ago",
+  "titleFuture": "Celestial Guide in {{days}} days",
+  "historicalView": "Historical View",
+  "futureView": "Future View",
+  "selectedDate": "Selected HEKA Date",
+  "civilDate": "Civil Date",
+  "dayOfYear": "Day of Year",
+  "lookingBack": "Looking Back",
+  "lookingForward": "Looking Forward",
+  "dragToScroll": "Drag to scroll",
+  "cards": {
+    "sunTimes": {
+      "title": "Sun Times",
+      "sunrise": "Sunrise",
+      "sunset": "Sunset",
+      "dayLength": "Day Length",
+      "weather": "Weather",
+      "accuracy": "Accuracy",
+      "accuracyLevels": {
+        "exact": "Exact",
+        "high": "High",
+        "estimated": "Estimated",
+        "approximate": "Approximate"
+      }
+    },
+    "moonPhase": {
+      "title": "Moon Phase",
+      "phase": "Phase",
+      "illumination": "Illumination",
+      "age": "Age",
+      "waxing": "Waxing",
+      "waning": "Waning",
+      "voidOfCourse": "Void of Course",
+      "lunarNewYear": "Lunar New Year",
+      "daysUntil": "{{days}} days until",
+      "illuminated": "illuminated",
+      "dayOfCycle": "Day {{day}} of 29.5"
+    },
+    "seasons": {
+      "title": "Seasons",
+      "currentSeason": "Current Season",
+      "nextSolstice": "Next Solstice",
+      "daysUntil": "{{days}} days until",
+      "spring": "Spring",
+      "summer": "Summer",
+      "autumn": "Autumn",
+      "winter": "Winter",
+      "springEquinox": "Spring Equinox",
+      "summerSolstice": "Summer Solstice",
+      "autumnEquinox": "Autumn Equinox",
+      "winterSolstice": "Winter Solstice"
+    },
+    "agriculture": {
+      "title": "Agriculture",
+      "plantToday": "What to plant today",
+      "byLocation": "By your location and moon phase",
+      "favorable": "Favorable",
+      "unfavorable": "Unfavorable",
+      "neutral": "Neutral"
+    },
+    "digitalClock": {
+      "title": "Digital Clock",
+      "countdowns": "Four simultaneous live countdowns",
+      "days": "Days",
+      "hours": "Hours",
+      "minutes": "Minutes",
+      "seconds": "Seconds"
+    },
+    "planetaryHours": {
+      "title": "Planetary Hours",
+      "currentHour": "Current Hour",
+      "favors": "Favors",
+      "chaldeanOrder": "Chaldean Order",
+      "hourOf": "Hour of {{planet}}"
+    },
+    "dayOfWeek": {
+      "title": "Day of Week",
+      "planet": "Ruling Planet",
+      "energy": "Energy",
+      "favorableActivities": "Favorable Activities"
+    }
+  },
+  "moonPhases": {
+    "newMoon": "New Moon",
+    "waxingCrescent": "Waxing Crescent",
+    "firstQuarter": "First Quarter",
+    "waxingGibbous": "Waxing Gibbous",
+    "fullMoon": "Full Moon",
+    "waningGibbous": "Waning Gibbous",
+    "lastQuarter": "Last Quarter",
+    "waningCrescent": "Waning Crescent"
+  },
+  "moonPhaseMeanings": {
+    "newMoon": "Beginnings",
+    "waxingCrescent": "Growth",
+    "firstQuarter": "Action",
+    "waxingGibbous": "Refinement",
+    "fullMoon": "Completion",
+    "waningGibbous": "Gratitude",
+    "lastQuarter": "Release",
+    "waningCrescent": "Rest"
+  },
+  "zodiacSigns": {
+    "aries": "Aries",
+    "taurus": "Taurus",
+    "gemini": "Gemini",
+    "cancer": "Cancer",
+    "leo": "Leo",
+    "virgo": "Virgo",
+    "libra": "Libra",
+    "scorpio": "Scorpio",
+    "sagittarius": "Sagittarius",
+    "capricorn": "Capricorn",
+    "aquarius": "Aquarius",
+    "pisces": "Pisces",
+    "ophiuchus": "Ophiuchus"
+  },
+  "planets": {
+    "sun": "Sun",
+    "moon": "Moon",
+    "mercury": "Mercury",
+    "venus": "Venus",
+    "mars": "Mars",
+    "jupiter": "Jupiter",
+    "saturn": "Saturn"
+  },
+  "elements": {
+    "fire": "Fire",
+    "water": "Water",
+    "earth": "Earth",
+    "air": "Air"
+  },
+  "hemispheres": {
+    "northern": "Northern Hemisphere",
+    "southern": "Southern Hemisphere"
+  },
+  "swissEphemeris": "Swiss Ephemeris",
+  "calculating": "Calculating lunar position...",
+  "dataUnavailable": "Celestial data unavailable"
+}

@@ -1,0 +1,24 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist2",
+  "framework": "vite",
+  "rewrites": [
+    { "source": "/invite", "destination": "/invite/index.html" },
+    { "source": "/task", "destination": "/task/index.html" }
+  ],
+  "headers": [
+    {
+      "source": "/invite/index.html",
+      "headers": [
+        { "key": "Cache-Control", "value": "no-store, no-cache, must-revalidate" }
+      ]
+    },
+    {
+      "source": "/task/index.html",
+      "headers": [
+        { "key": "Cache-Control", "value": "no-store, no-cache, must-revalidate" }
+      ]
+    }
+  ]
+}

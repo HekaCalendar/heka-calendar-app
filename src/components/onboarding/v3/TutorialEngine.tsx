@@ -5,6 +5,7 @@
  */
 
 import React, { createContext, useContext, useState, useCallback, useMemo } from 'react';
+import { tutorialService } from '../../../services/tutorialService';
 
 export type TutorialStepId =
   | 'welcome'
@@ -241,7 +242,6 @@ export const TutorialEngine: React.FC<{ children: React.ReactNode; onComplete: (
       return next;
     });
     try {
-      const { tutorialService } = require('../../services/tutorialService');
       tutorialService.markTutorialCompleted('celestial-awakening-v1');
       tutorialService.markTutorialCompleted('first-visit-grid');
       tutorialService.markTutorialCompleted('first-visit-day-panel');

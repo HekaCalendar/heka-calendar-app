@@ -4,6 +4,7 @@
  */
 
 import { configureStore, createSlice, createSelector } from '@reduxjs/toolkit';
+import { setupReducer } from './setupSlice';
 
 // ─── Extracted Reducer Modules ───
 import * as navReducers from './slices/reducers/navigationReducers';
@@ -471,6 +472,7 @@ const preloadedState: { calendar: CalendarState; diary?: any } | undefined = per
 import { default as astrologyReducer } from '../astrology/store/slice';
 import diaryReducer from './diarySlice';
 import tutorialReducer from './tutorialSlice';
+import { persistSetupState } from './setupSlice';
 import friendsReducer from './friendsSlice';
 import plannerReducer from './plannerSlice';
 
@@ -482,6 +484,7 @@ export const store = configureStore({
     tutorial: tutorialReducer,
     friends: friendsReducer,
     planner: plannerReducer,
+    setup: setupReducer,
   },
   preloadedState,
   middleware: (getDefaultMiddleware) =>
@@ -592,7 +595,7 @@ store.subscribe(() => {
     return;
   }
   
-  // Only persist if calendar state actually changed
+  // Persist calendar state when it changes
   if (currentState.calendar !== previousState.calendar) {
     // Debounce persistence to prevent excessive writes
     if (persistTimeout) {
@@ -602,10 +605,16 @@ store.subscribe(() => {
       persistState(currentState);
       // Only log occasionally to reduce console spam
       if (Math.random() < 0.1) {
-        console.log('[Persistence] State saved to localStorage');
+        console.log('[Persistence] Calendar state saved');
       }
     }, 500);
   }
+
+  // Persist setup state when it changes (safety net — also persisted by SetupWizard)
+  if (currentState.setup !== previousState.setup) {
+    persistSetupState(currentState.setup);
+  }
+
   previousState = currentState;
 });
 

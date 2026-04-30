@@ -53,7 +53,7 @@ export const STANDARD_ASPECTS: AspectOrb[] = [
 ];
 
 // Elemental Qualities
-export type Element = 'fire' | 'earth' | 'air' | 'water';
+export type Element = 'fire' | 'earth' | 'air' | 'water' | 'ether';
 export type Modality = 'cardinal' | 'fixed' | 'mutable';
 
 // Zodiac Sign Data

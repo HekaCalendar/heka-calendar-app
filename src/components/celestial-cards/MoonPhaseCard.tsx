@@ -168,7 +168,7 @@ const MoonPhaseCardComponent: React.FC<Props> = ({ date }) => {
 
           {/* Moon Intelligence Hero */}
           {moonDetails && (
-            <div className="heka-hero" style={{ marginBottom: '20px', borderColor: moonDetails.isVoid ? 'rgba(239,68,68,0.3)' : undefined }}>
+            <div className="heka-hero" style={{ marginBottom: '14px', borderColor: moonDetails.isVoid ? 'rgba(239,68,68,0.3)' : undefined }}>
               <span className="heka-hero__icon">☽</span>
               <div className="heka-hero__content">
                 <div className="heka-hero__title">{moonDetails.sign} {moonDetails.degree}°</div>
@@ -191,7 +191,7 @@ const MoonPhaseCardComponent: React.FC<Props> = ({ date }) => {
           </div>
 
           {/* Phase Meaning */}
-          <div className="heka-section" style={{ marginTop: '16px' }}>
+          <div className="heka-section" style={{ marginTop: '12px' }}>
             <div className="heka-section__title">🌙 {info.meaning}</div>
             <p style={{ fontSize: '13px', color: 'rgba(255,255,255,0.7)', lineHeight: '1.5', margin: 0 }}>
               {info.energy}
@@ -216,7 +216,7 @@ const MoonPhaseCardComponent: React.FC<Props> = ({ date }) => {
                 <span className="heka-data-cell__value">{zodiac.yinYang}</span>
               </div>
             </div>
-            <div className="heka-tags" style={{ marginTop: '12px' }}>
+            <div className="heka-tags" style={{ marginTop: '8px' }}>
               {zodiac.characteristics.slice(0, 5).map((c, i) => (
                 <span key={i} className="heka-tag" style={{ borderColor: `${elementColor}30` }}>{c}</span>
               ))}

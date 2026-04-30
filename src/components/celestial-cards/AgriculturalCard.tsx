@@ -146,7 +146,7 @@ const AgriculturalCardComponent: React.FC<Props> = ({ date, location }) => {
               <span className="heka-epic-counter__title" style={{ color: guidance.isGrowingSeason ? '#4ade80' : '#93c5fd' }}>
                 Until {nextEvent.name}
               </span>
-              <span style={{ fontSize: '10px', color: 'rgba(255,255,255,0.45)', marginTop: '6px' }}>
+              <span style={{ fontSize: '10px', color: 'rgba(255,255,255,0.45)', marginTop: '4px' }}>
                 {plantingContext}
               </span>
             </div>
@@ -183,7 +183,7 @@ const AgriculturalCardComponent: React.FC<Props> = ({ date, location }) => {
                         background: `${URGENCY_COLORS.now}20`, color: URGENCY_COLORS.now
                       }}>now</span>
                     </div>
-                    <div style={{ fontSize: '11px', color: 'rgba(255,255,255,0.5)', marginTop: '3px' }}>
+                    <div style={{ fontSize: '11px', color: 'rgba(255,255,255,0.5)', marginTop: '2px' }}>
                       {rec.daysToHarvest} to harvest • {rec.difficulty}
                     </div>
                   </div>

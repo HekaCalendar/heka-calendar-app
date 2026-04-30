@@ -6,13 +6,13 @@
  * Embeddable in JournalSettings, Calendar SettingsPanel, StarsHub, etc.
  */
 
-import React, { useState, useEffect, useCallback, useRef } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { aiConfigService, type UnifiedAIConfig, type AIArea } from '../services/aiConfigService';
 import { secureKeyStore } from '../services/secureKeyStore';
 import { aiProviderManager, type AIProviderType } from '../astrology/services/ai/aiProvider';
 
 const PROVIDER_META: Record<AIProviderType, { name: string; icon: string; description: string; color: string }> = {
-  template: { name: 'Template Library', icon: '📚', description: '26,000+ pre-written interpretations. Free, instant, no API key.', color: '#fbbf24' },
+  template: { name: 'Template Library', icon: '📚', description: '169+ hand-crafted templates woven into thousands of unique readings. Free, instant, no API key.', color: '#fbbf24' },
   groq: { name: 'Groq', icon: '⚡', description: 'Llama 3 via Groq. Free tier: 1M tokens/day.', color: '#f43f5e' },
   openai: { name: 'OpenAI', icon: '🤖', description: 'GPT-4 / GPT-4o-mini. Requires API key.', color: '#10a37f' },
   anthropic: { name: 'Anthropic', icon: '🧠', description: 'Claude AI. Requires API key.', color: '#d97757' },
@@ -112,42 +112,40 @@ export const AISettingsPanel: React.FC<AISettingsPanelProps> = ({ compact, highl
   const [isProviderSet, setIsProviderSet] = useState(false);
   const [isEditingProvider, setIsEditingProvider] = useState(false);
   const [showSetupGuide, setShowSetupGuide] = useState(false);
-  const mountedRef = useRef(true);
-
   // Hydrate apiKey input from secure storage whenever provider changes
   const hydrateKey = useCallback(async (provider: AIProviderType) => {
     if (provider === 'template') {
       setApiKeyInput('');
-      setIsProviderSet(false);
+      setIsProviderSet(true); // Template is always "configured"
       return;
     }
     const storageKey = provider === 'ollama' ? 'heka-ai-ollama' : `heka-ai-${provider}`;
-    const key = await secureKeyStore.get(storageKey);
-    setApiKeyInput(key || '');
-    setIsProviderSet(!!key);
+    try {
+      const key = await secureKeyStore.get(storageKey);
+      setApiKeyInput(key || '');
+      setIsProviderSet(!!key);
+    } catch (err) {
+      console.warn('[AISettingsPanel] Failed to hydrate key:', err);
+      setApiKeyInput('');
+      setIsProviderSet(false);
+    }
   }, []);
 
   useEffect(() => {
     const unsubscribe = aiConfigService.subscribe((next) => {
-      if (mountedRef.current) {
-        setConfig(next);
-        void hydrateKey(next.provider);
-      }
+      setConfig(next);
     });
-    // Initial hydration
+    // Hydrate whenever provider changes
     void hydrateKey(config.provider);
     return () => {
-      mountedRef.current = false;
       unsubscribe();
     };
   }, [config.provider, hydrateKey]);
 
   const handleProviderChange = useCallback((provider: AIProviderType) => {
     aiConfigService.setProvider(provider);
-    aiProviderManager.setActiveProvider(provider);
-    void hydrateKey(provider);
     setTestResult(null);
-  }, [hydrateKey]);
+  }, []);
 
   const handleApiKeySave = useCallback(async () => {
     if (apiKeyInput.trim()) {
@@ -538,7 +536,7 @@ export const AISettingsPanel: React.FC<AISettingsPanelProps> = ({ compact, highl
         </div>
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '12px', color: '#a1a1aa' }}>
           <span>📚</span>
-          <span><strong style={{ color: '#f8f7f5' }}>Template Library:</strong> Works instantly with 26,000+ pre-written readings. No API key needed. Always free.</span>
+          <span><strong style={{ color: '#f8f7f5' }}>Template Library:</strong> 169+ hand-crafted planet-sign templates, woven into unique readings by phase, aspect, and category. No API key needed. Always free.</span>
         </div>
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '12px', color: '#a1a1aa' }}>
           <span>🤖</span>

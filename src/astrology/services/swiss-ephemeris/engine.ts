@@ -577,6 +577,11 @@ export function calculateHouses(jd: number, loc: { latitude: number; longitude: 
   // Real WASM: houses_ex receives (jd, iflag, lat, lon, hsys)
   // Fallback/mock ignores iflag and returns tropical cusps
   const h = swissModule.houses_ex(jd, flags, loc.latitude, loc.longitude, sc);
+  // Defensive: if houses_ex returns null/undefined, fall back to safe defaults
+  if (!h) {
+    console.warn('[calculateHouses] houses_ex returned null/undefined, using fallback');
+    return { ascendant: 0, mc: 0, ic: 180, dsc: 180, cusps: Array(12).fill({ longitude: 0, sign: 'aries' }) };
+  }
   const cusps = [];
   for (let i = 0; i < 12; i++) {
     const lon = h[i] || 0;
@@ -717,7 +722,7 @@ export async function generateNatalChart(params: any): Promise<any> {
     aspects: [],
     patterns: [],
     dignities: [],
-    elementalBalance: { fire: 0, earth: 0, air: 0, water: 0 },
+    elementalBalance: { fire: 0, earth: 0, air: 0, water: 0, ether: 0 },
     modalBalance: { cardinal: 0, fixed: 0, mutable: 0 },
     julianDay: jd,
     calculatedAt: new Date().toISOString(),

@@ -48,6 +48,7 @@ import { syncNoteNotifications, hasNotificationPermission } from '../services/no
 import { initializePlannerNotificationTapHandler, scheduleDailyBriefing, scheduleStreakSaverIfNeeded } from '../services/plannerNotificationService';
 import { NotificationEngine } from '../services/notificationEngine';
 import { tutorialService } from '../services/tutorialService';
+import { changeLanguage } from '../i18n';
 import { initializeEngagementTracking, stopSessionTracking, markActivity } from '../services/engagementService';
 import { initializeDeepLinks, getPendingInviteCode, getPendingTaskCode } from '../services/deepLinkService';
 import { useCapacitorBackButton } from '../services/backButtonService';
@@ -55,6 +56,7 @@ import { setAICoachZone } from '../services/aiCoachContextService';
 
 import { WelcomeModal } from './WelcomeModal';
 import { InteractiveTutorial } from './onboarding/v3';
+import { SetupWizard } from './setup/SetupWizard';
 import { setActiveTab, acceptInvite } from '../store/friendsSlice';
 import { clearPendingInvite } from '../services/deepLinkService';
 import { TaskNotification } from './TaskNotification';
@@ -83,6 +85,7 @@ import '../styles/celestial-scroll-override.css';
 import '../components/achievement-dashboard.css';
 import '../styles/pure-calendar.css';
 import '../styles/tracker-panel.css';
+import '../styles/foldable-optimizations.css';
 
 /**
  * Custom hook for debouncing function calls
@@ -183,7 +186,15 @@ const AppContentComponent: React.FC = () => {
 
   // Auth state for protected features
   const auth = useSelector((state: RootState) => state.calendar.auth);
-  
+  const setup = useSelector((state: RootState) => state.setup);
+
+  // Sync language changes to i18next
+  useEffect(() => {
+    if (setup.language) {
+      changeLanguage(setup.language).catch(() => {});
+    }
+  }, [setup.language]);
+
   // Pending invite code from deep links (deferred until after tutorial)
   const [pendingInviteCode, setPendingInviteCode] = useState<string | null>(null);
 
@@ -388,18 +399,20 @@ const AppContentComponent: React.FC = () => {
         }
       });
 
-      // Initialize unified notification engine
-      void NotificationEngine.initialize();
-      NotificationEngine.startRecurringChecks();
-
-      // Initialize planner notification tap handler
+      // Initialize planner notification tap handler (always needed for taps)
       const unsubscribeNotificationTaps = initializePlannerNotificationTapHandler();
 
-      // Schedule daily briefing and check streak saver periodically
-      void scheduleDailyBriefing();
-      const streakSaverInterval = setInterval(() => {
-        void scheduleStreakSaverIfNeeded();
-      }, 1000 * 60 * 60); // Check every hour
+      // Only start notification scheduling AFTER setup wizard is complete
+      // to avoid permission prompts during first-boot experience
+      let streakSaverInterval: ReturnType<typeof setInterval> | null = null;
+      if (setup.isComplete) {
+        void NotificationEngine.initialize();
+        NotificationEngine.startRecurringChecks();
+        void scheduleDailyBriefing();
+        streakSaverInterval = setInterval(() => {
+          void scheduleStreakSaverIfNeeded();
+        }, 1000 * 60 * 60); // Check every hour
+      }
       
       return () => {
         stopSessionTracking(dispatch);
@@ -420,13 +433,13 @@ const AppContentComponent: React.FC = () => {
         unsubTogglePureMode();
         unsubAchievementDetected();
         unsubscribeNotificationTaps();
-        clearInterval(streakSaverInterval);
+        if (streakSaverInterval) clearInterval(streakSaverInterval);
         NotificationEngine.stopRecurringChecks();
       };
     } catch (e) {
       console.warn('[HEKA] Engagement tracking failed:', e);
     }
-  }, [dispatch]);
+  }, [dispatch, setup.isComplete]);
   
   // Auto-process pending invite after tutorial + auth, then show toast
   useEffect(() => {
@@ -578,9 +591,10 @@ const AppContentComponent: React.FC = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch, timeMode]);
 
-  // ─── Router ↔ Redux Bidirectional Sync ───
-
-  // Router → Redux: when URL changes, update Redux currentView
+  // ─── Router ↔ Redux Sync (ONE-WAY: Router → Redux only) ───
+  // The bidirectional sync caused infinite navigation oscillation on StarsHub
+  // because both effects would fire in the same render cycle with stale state.
+  // URL is the single source of truth; Redux currentView follows it.
   useEffect(() => {
     const path = location.pathname;
     const pathToView: Record<string, string> = {
@@ -596,6 +610,7 @@ const AppContentComponent: React.FC = () => {
     };
     const view = pathToView[path];
     if (view && view !== currentView) {
+      console.log('[RouterSync] Router → Redux:', path, '→', view, '(current:', currentView, ')');
       dispatch(setView(view as any));
     }
     // Handle /month/:year/:month path
@@ -609,24 +624,6 @@ const AppContentComponent: React.FC = () => {
       }
     }
   }, [location.pathname, dispatch, currentView]);
-
-  // Redux → Router: when Redux currentView changes, update URL
-  useEffect(() => {
-    const viewToPath: Record<string, string> = {
-      month: '/',
-      stars: '/stars',
-      'astrology-hub': '/astrology-hub',
-      'print-preview': '/print',
-      'certificate-builder': '/certificate',
-      'routine-builder': '/routine',
-      'natal-report': '/natal-report',
-      store: '/store',
-    };
-    const targetPath = viewToPath[currentView];
-    if (targetPath && targetPath !== location.pathname) {
-      navigate(targetPath, { replace: true });
-    }
-  }, [currentView, navigate, location.pathname]);
 
   // Parse hash-based query params (for hash-aware share links)
   useEffect(() => {
@@ -698,7 +695,9 @@ const AppContentComponent: React.FC = () => {
   }, [timeMode, dispatch]);
   
   // Sync notifications when notes change - debounced
+  // Only run after setup wizard is complete to avoid premature permission checks
   useEffect(() => {
+    if (!setup.isComplete) return;
     const syncNotifications = async () => {
       const hasPermission = await hasNotificationPermission();
       if (hasPermission && Object.keys(notes).length > 0) {
@@ -708,7 +707,7 @@ const AppContentComponent: React.FC = () => {
     
     const timeoutId = setTimeout(syncNotifications, 1000);
     return () => clearTimeout(timeoutId);
-  }, [notes]);
+  }, [notes, setup.isComplete]);
   
   // Calendar expand states
   const [isCalendarExpanded, setIsCalendarExpanded] = useState(false);
@@ -849,233 +848,251 @@ const AppContentComponent: React.FC = () => {
         </div>
       )}
       
-      <main className="app-main">
-        {location.pathname === '/print' ? (
-          <PrintPreview />
-        ) : location.pathname === '/stars' ? (
-          <StarsHub />
-        ) : location.pathname === '/astrology-hub' ? (
-          <AstrologyHub />
-        ) : location.pathname === '/certificate' ? (
-          <CertificateBuilder />
-        ) : location.pathname === '/routine' ? (
-          <RoutineBuilder />
-        ) : location.pathname === '/natal-report' ? (
-          <NatalReportBuilder />
-        ) : isPureMode ? (
-          <>
-            <PureCalendarView
-              isExpanded={isPureCalendarExpanded}
-              isExpandedHorizontal={isPureCalendarExpandedHorizontal}
-              settingsSlot={
-                <SettingsPanel
-                  onAuthClick={() => modalState.setShowAuthModal(true)}
-                  onPureModeClick={togglePureMode}
-                  isPureMode={true}
-                  monthHeaderSlot={
-                    <MonthHeader
-                      {...headerProps}
-                      isCalendarExpanded={isPureCalendarExpanded}
-                      onToggleExpand={togglePureCalendarExpand}
-                      isCalendarExpandedHorizontal={isPureCalendarExpandedHorizontal}
-                      onToggleExpandHorizontal={togglePureCalendarExpandHorizontal}
+      {/* ═══════════════════════════════════════════════════════════════════
+          APP CONTENT — Completely blocked until setup wizard finishes.
+          This prevents StarsHub, CelestialGuide, and all other components
+          from mounting and triggering notification permission dialogs
+          before the user has even chosen a language.
+          ═══════════════════════════════════════════════════════════════════ */}
+      {setup.isComplete && (
+        <>
+          <main className="app-main">
+            {location.pathname === '/print' ? (
+              <PrintPreview />
+            ) : location.pathname === '/stars' ? (
+              <StarsHub />
+            ) : location.pathname === '/astrology-hub' ? (
+              <AstrologyHub />
+            ) : location.pathname === '/certificate' ? (
+              <CertificateBuilder />
+            ) : location.pathname === '/routine' ? (
+              <RoutineBuilder />
+            ) : location.pathname === '/natal-report' ? (
+              <NatalReportBuilder />
+            ) : isPureMode ? (
+              <>
+                <PureCalendarView
+                  isExpanded={isPureCalendarExpanded}
+                  isExpandedHorizontal={isPureCalendarExpandedHorizontal}
+                  settingsSlot={
+                    <SettingsPanel
+                      onAuthClick={() => modalState.setShowAuthModal(true)}
+                      onPureModeClick={togglePureMode}
+                      isPureMode={true}
+                      monthHeaderSlot={
+                        <MonthHeader
+                          {...headerProps}
+                          isCalendarExpanded={isPureCalendarExpanded}
+                          onToggleExpand={togglePureCalendarExpand}
+                          isCalendarExpandedHorizontal={isPureCalendarExpandedHorizontal}
+                          onToggleExpandHorizontal={togglePureCalendarExpandHorizontal}
+                        />
+                      }
                     />
                   }
                 />
-              }
-            />
-            {selectedDate && pureModeDay && (
-              <PureModeDayPanel
-                day={pureModeDay}
-                isOpen={true}
-                onClose={(preserveSelection) => {
-                  if (!preserveSelection) {
-                    setPureModeSelectedNotesMap(new Map());
-                    setPureModeIsSelectionMode(false);
-                  }
-                  dispatch(selectDate(null));
-                }}
-                isSelectionMode={pureModeIsSelectionMode}
-                selectedNotesMap={pureModeSelectedNotesMap}
-                onToggleNoteSelection={(noteId, dayKey) => {
-                  setPureModeSelectedNotesMap(prev => {
-                    const next = new Map(prev);
-                    if (next.has(noteId)) next.delete(noteId);
-                    else next.set(noteId, dayKey);
-                    return next;
-                  });
-                }}
-                onEnterSelectionMode={(noteId, dayKey) => {
-                  setPureModeIsSelectionMode(true);
-                  setPureModeSelectedNotesMap(prev => {
-                    const next = new Map(prev);
-                    next.set(noteId, dayKey);
-                    return next;
-                  });
-                }}
-                onExitSelectionMode={() => {
-                  setPureModeSelectedNotesMap(new Map());
-                  setPureModeIsSelectionMode(false);
-                }}
-              />
+                {selectedDate && pureModeDay && (
+                  <PureModeDayPanel
+                    day={pureModeDay}
+                    isOpen={true}
+                    onClose={(preserveSelection) => {
+                      if (!preserveSelection) {
+                        setPureModeSelectedNotesMap(new Map());
+                        setPureModeIsSelectionMode(false);
+                      }
+                      dispatch(selectDate(null));
+                    }}
+                    isSelectionMode={pureModeIsSelectionMode}
+                    selectedNotesMap={pureModeSelectedNotesMap}
+                    onToggleNoteSelection={(noteId, dayKey) => {
+                      setPureModeSelectedNotesMap(prev => {
+                        const next = new Map(prev);
+                        if (next.has(noteId)) next.delete(noteId);
+                        else next.set(noteId, dayKey);
+                        return next;
+                      });
+                    }}
+                    onEnterSelectionMode={(noteId, dayKey) => {
+                      setPureModeIsSelectionMode(true);
+                      setPureModeSelectedNotesMap(prev => {
+                        const next = new Map(prev);
+                        next.set(noteId, dayKey);
+                        return next;
+                      });
+                    }}
+                    onExitSelectionMode={() => {
+                      setPureModeSelectedNotesMap(new Map());
+                      setPureModeIsSelectionMode(false);
+                    }}
+                  />
+                )}
+              </>
+            ) : (
+              <>
+                {/* Header */}
+                <header
+                  className="app-header"
+                  style={{
+                    marginTop: '50px',
+                    paddingTop: '45px',
+                    paddingBottom: '45px',
+                    position: 'relative'
+                  }}
+                >
+                  <div className="app-header__top-line" />
+                  <h1 className="app-title">The Modern HEKA Calendar</h1>
+                  <p className={`app-subtitle ${timeMode === 'TRUE' ? 'app-subtitle--true' : ''}`}>
+                    {subtitle}
+                  </p>
+                  <div className={`mode-indicator mode-indicator--${timeMode.toLowerCase()}`}>
+                    {timeMode === 'TRUE' ? '⚡ TRUE HEKA Mode' : '🌐 SYNC Mode'}
+                  </div>
+                  {/* Store hidden for v1.0 launch */}
+                  {/* <button
+                    className="app-header__pro-btn"
+                    onClick={() => dispatch(setView('store'))}
+                    title="HEKA Pro Store"
+                  >
+                    <span className="app-header__pro-diamond">◈</span>
+                    <span className="app-header__pro-label">Pro</span>
+                  </button> */}
+                </header>
+
+                {/* Settings below header - collapsed by default on mobile */}
+                <SettingsPanel
+                  onAuthClick={() => modalState.setShowAuthModal(true)}
+                  onPureModeClick={togglePureMode}
+                  isPureMode={isPureMode}
+                />
+
+                {/* Celestial Guide - Swiss Ephemeris Powered */}
+                <CelestialGuide />
+
+                <MonthHeader {...headerProps} />
+
+                <div className={`calendar-wrapper ${isCalendarExpandedHorizontal ? 'calendar-wrapper--expanded-h' : ''}`}>
+                  <div className={`calendar-grid-wrapper ${isCalendarExpanded ? 'calendar-grid-wrapper--expanded' : ''} ${isCalendarExpandedHorizontal ? 'calendar-grid-wrapper--expanded-h' : ''}`}>
+                    <CalendarGrid isExpanded={isCalendarExpanded} isExpandedHorizontal={isCalendarExpandedHorizontal} />
+                  </div>
+                  <div ref={dayPanelRef}>
+                    <DayPanel />
+                  </div>
+                </div>
+              </>
             )}
-          </>
-        ) : (
-          <>
-            {/* Header */}
-            <header
-              className="app-header"
-              style={{
-                marginTop: '50px',
-                paddingTop: '45px',
-                paddingBottom: '45px',
-                position: 'relative'
+          </main>
+          
+          {/* Only render modals when open */}
+          {modalState.showYearModal && (
+            <YearModal isOpen={true} onClose={() => modalState.setShowYearModal(false)} />
+          )}
+          {modalState.showSearchModal && (
+            <SearchModal isOpen={true} onClose={() => modalState.setShowSearchModal(false)} />
+          )}
+          {modalState.showFriendsModal && (
+            <FriendsModal isOpen={true} onClose={() => modalState.setShowFriendsModal(false)} />
+          )}
+          {modalState.showStatsModal && (
+            <StatsModal isOpen={true} onClose={() => modalState.setShowStatsModal(false)} />
+          )}
+          {modalState.showCommunityModal && (
+            <CommunityHub isOpen={true} onClose={() => modalState.setShowCommunityModal(false)} />
+          )}
+          {modalState.showJournalModal && (
+            <OracleJournal isOpen={true} onClose={() => modalState.setShowJournalModal(false)} />
+          )}
+          {modalState.showInfoModal && (
+            <InfoModal isOpen={true} onClose={() => modalState.setShowInfoModal(false)} />
+          )}
+          
+          {modalState.showAuthModal && (
+            <AuthModalEnterprise isOpen={true} onClose={() => modalState.setShowAuthModal(false)} />
+          )}
+          
+          {/* Welcome Modal - For invited users */}
+          {modalState.showWelcomeModal && (
+            <WelcomeModal
+              isOpen={true}
+              inviteCode={pendingInviteCode}
+              onClose={() => modalState.setShowWelcomeModal(false)}
+              onAccepted={() => {
+                modalState.setShowWelcomeModal(false);
+                // Open the Circle modal to show the new friend
+                modalState.setShowFriendsModal(true);
+              }}
+            />
+          )}
+          
+          {/* Task Preview Modal - For shared tasks */}
+          {showTaskPreview && pendingTaskShare && (
+            <TaskPreviewModal
+              shareCode={pendingTaskShare}
+              isOpen={true}
+              onClose={() => {
+                setShowTaskPreview(false);
+                setPendingTaskShare(null);
+              }}
+              onAccepted={() => {
+                setShowTaskPreview(false);
+                setPendingTaskShare(null);
+                // Open the Circle modal to show the task
+                modalState.setShowFriendsModal(true);
+              }}
+            />
+          )}
+          
+          {/* Friend Request Toast - Shows after tutorial for pending invites/task shares */}
+          {friendRequestToast.show && (
+            <div
+              className="fixed bottom-20 left-1/2 -translate-x-1/2 z-[60] flex items-center gap-3 px-4 py-3 rounded-2xl bg-slate-900/95 backdrop-blur-md border border-amber-400/40 shadow-xl cursor-pointer transition-all hover:scale-[1.02] active:scale-[0.98]"
+              onClick={() => {
+                const type = friendRequestToast.type;
+                setFriendRequestToast({ show: false, message: '', type: 'invite' });
+                if (type === 'task') {
+                  setShowTaskPreview(true);
+                } else {
+                  dispatch(setActiveTab('requests'));
+                  modalState.setShowFriendsModal(true);
+                }
               }}
             >
-              <div className="app-header__top-line" />
-              <h1 className="app-title">The Modern HEKA Calendar</h1>
-              <p className={`app-subtitle ${timeMode === 'TRUE' ? 'app-subtitle--true' : ''}`}>
-                {subtitle}
-              </p>
-              <div className={`mode-indicator mode-indicator--${timeMode.toLowerCase()}`}>
-                {timeMode === 'TRUE' ? '⚡ TRUE HEKA Mode' : '🌐 SYNC Mode'}
-              </div>
-              {/* Store hidden for v1.0 launch */}
-              {/* <button
-                className="app-header__pro-btn"
-                onClick={() => dispatch(setView('store'))}
-                title="HEKA Pro Store"
+              <span className="text-xl">{friendRequestToast.type === 'invite' ? '✨' : '📜'}</span>
+              <span className="text-sm font-medium text-slate-100">{friendRequestToast.message}</span>
+              <span className="text-xs font-semibold text-amber-400 ml-1">View</span>
+              <button
+                className="ml-1 text-slate-400 hover:text-slate-200"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setFriendRequestToast({ show: false, message: '', type: 'invite' });
+                }}
               >
-                <span className="app-header__pro-diamond">◈</span>
-                <span className="app-header__pro-label">Pro</span>
-              </button> */}
-            </header>
-
-            {/* Settings below header - collapsed by default on mobile */}
-            <SettingsPanel
-              onAuthClick={() => modalState.setShowAuthModal(true)}
-              onPureModeClick={togglePureMode}
-              isPureMode={isPureMode}
-            />
-
-            {/* Celestial Guide - Swiss Ephemeris Powered */}
-            <CelestialGuide />
-
-            <MonthHeader {...headerProps} />
-
-            <div className={`calendar-wrapper ${isCalendarExpandedHorizontal ? 'calendar-wrapper--expanded-h' : ''}`}>
-              <div className={`calendar-grid-wrapper ${isCalendarExpanded ? 'calendar-grid-wrapper--expanded' : ''} ${isCalendarExpandedHorizontal ? 'calendar-grid-wrapper--expanded-h' : ''}`}>
-                <CalendarGrid isExpanded={isCalendarExpanded} isExpandedHorizontal={isCalendarExpandedHorizontal} />
-              </div>
-              <div ref={dayPanelRef}>
-                <DayPanel />
-              </div>
+                ✕
+              </button>
             </div>
-          </>
-        )}
-      </main>
-      
-      {/* Only render modals when open */}
-      {modalState.showYearModal && (
-        <YearModal isOpen={true} onClose={() => modalState.setShowYearModal(false)} />
+          )}
+        </>
       )}
-      {modalState.showSearchModal && (
-        <SearchModal isOpen={true} onClose={() => modalState.setShowSearchModal(false)} />
-      )}
-      {modalState.showFriendsModal && (
-        <FriendsModal isOpen={true} onClose={() => modalState.setShowFriendsModal(false)} />
-      )}
-      {modalState.showStatsModal && (
-        <StatsModal isOpen={true} onClose={() => modalState.setShowStatsModal(false)} />
-      )}
-      {modalState.showCommunityModal && (
-        <CommunityHub isOpen={true} onClose={() => modalState.setShowCommunityModal(false)} />
-      )}
-      {modalState.showJournalModal && (
-        <OracleJournal isOpen={true} onClose={() => modalState.setShowJournalModal(false)} />
-      )}
-      {modalState.showInfoModal && (
-        <InfoModal isOpen={true} onClose={() => modalState.setShowInfoModal(false)} />
-      )}
-      
-      {modalState.showAuthModal && (
-        <AuthModalEnterprise isOpen={true} onClose={() => modalState.setShowAuthModal(false)} />
-      )}
-      
-      {/* Welcome Modal - For invited users */}
-      {modalState.showWelcomeModal && (
-        <WelcomeModal
-          isOpen={true}
-          inviteCode={pendingInviteCode}
-          onClose={() => modalState.setShowWelcomeModal(false)}
-          onAccepted={() => {
-            modalState.setShowWelcomeModal(false);
-            // Open the Circle modal to show the new friend
-            modalState.setShowFriendsModal(true);
-          }}
-        />
-      )}
-      
-      {/* Task Preview Modal - For shared tasks */}
-      {showTaskPreview && pendingTaskShare && (
-        <TaskPreviewModal
-          shareCode={pendingTaskShare}
-          isOpen={true}
-          onClose={() => {
-            setShowTaskPreview(false);
-            setPendingTaskShare(null);
-          }}
-          onAccepted={() => {
-            setShowTaskPreview(false);
-            setPendingTaskShare(null);
-            // Open the Circle modal to show the task
-            modalState.setShowFriendsModal(true);
-          }}
-        />
-      )}
-      
-      {/* Friend Request Toast - Shows after tutorial for pending invites/task shares */}
-      {friendRequestToast.show && (
-        <div
-          className="fixed bottom-20 left-1/2 -translate-x-1/2 z-[60] flex items-center gap-3 px-4 py-3 rounded-2xl bg-slate-900/95 backdrop-blur-md border border-amber-400/40 shadow-xl cursor-pointer transition-all hover:scale-[1.02] active:scale-[0.98]"
-          onClick={() => {
-            const type = friendRequestToast.type;
-            setFriendRequestToast({ show: false, message: '', type: 'invite' });
-            if (type === 'task') {
-              setShowTaskPreview(true);
-            } else {
-              dispatch(setActiveTab('requests'));
-              modalState.setShowFriendsModal(true);
+
+      {/* ═══════════════════════════════════════════════════════════════════
+          SETUP WIZARD — First-boot experience (Phased build)
+          Runs BEFORE tutorial. Unskippable. Language, Mode, Permissions, AI.
+          The ONLY thing rendered when setup.isComplete === false.
+          ═══════════════════════════════════════════════════════════════════ */}
+      {!setup.isComplete && <SetupWizard />}
+
+      {/* Interactive Tutorial v3 — Comprehensive real-app onboarding. Only shown after setup wizard is complete. */}
+      {setup.isComplete && showNewOnboarding && (
+        <InteractiveTutorial
+          language={setup.language}
+          onComplete={() => {
+            try {
+              localStorage.setItem(TUTORIAL_V3_KEY, JSON.stringify({ completed: true }));
+            } catch {
+              // Non-fatal
             }
+            setShowNewOnboarding(false);
           }}
-        >
-          <span className="text-xl">{friendRequestToast.type === 'invite' ? '✨' : '📜'}</span>
-          <span className="text-sm font-medium text-slate-100">{friendRequestToast.message}</span>
-          <span className="text-xs font-semibold text-amber-400 ml-1">View</span>
-          <button
-            className="ml-1 text-slate-400 hover:text-slate-200"
-            onClick={(e) => {
-              e.stopPropagation();
-              setFriendRequestToast({ show: false, message: '', type: 'invite' });
-            }}
-          >
-            ✕
-          </button>
-        </div>
-      )}
-      
-      {/* Interactive Tutorial v3 — Comprehensive real-app onboarding */}
-      {showNewOnboarding && (
-        <InteractiveTutorial onComplete={() => {
-          try {
-            localStorage.setItem(TUTORIAL_V3_KEY, JSON.stringify({ completed: true }));
-          } catch {
-            // Non-fatal
-          }
-          setShowNewOnboarding(false);
-        }}>
-          {/* Tutorial overlays are rendered as siblings; app content stays interactive */}
-        </InteractiveTutorial>
+        />
       )}
       
 

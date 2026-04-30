@@ -130,7 +130,7 @@ const SeasonCardComponent: React.FC<Props> = ({ date, location }) => {
           </div>
 
           {/* Element & Energy */}
-          <div className="heka-section" style={{ marginTop: '16px' }}>
+          <div className="heka-section" style={{ marginTop: '12px' }}>
             <div className="heka-section__title">⚡ {season.element} Element</div>
             <div className="heka-data-grid heka-data-grid--2">
               <div className="heka-data-cell">
