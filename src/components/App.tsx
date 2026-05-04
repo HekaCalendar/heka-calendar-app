@@ -12,8 +12,10 @@
 import { useEffect, useState, useCallback, useMemo, memo, useRef } from 'react';
 import { HashRouter, useLocation, useNavigate } from 'react-router-dom';
 import { Provider, useSelector, useDispatch, shallowEqual } from 'react-redux';
+import { I18nextProvider } from 'react-i18next';
 import { store, loadNotes } from '../store';
 import type { RootState, AppDispatch } from '../store';
+import i18n from '../i18n';
 import { CalendarGrid } from './CalendarGrid';
 import { MonthHeader } from './MonthHeader';
 import { SettingsPanel } from './SettingsPanel';
@@ -48,7 +50,6 @@ import { syncNoteNotifications, hasNotificationPermission } from '../services/no
 import { initializePlannerNotificationTapHandler, scheduleDailyBriefing, scheduleStreakSaverIfNeeded } from '../services/plannerNotificationService';
 import { NotificationEngine } from '../services/notificationEngine';
 import { tutorialService } from '../services/tutorialService';
-import { changeLanguage } from '../i18n';
 import { initializeEngagementTracking, stopSessionTracking, markActivity } from '../services/engagementService';
 import { initializeDeepLinks, getPendingInviteCode, getPendingTaskCode } from '../services/deepLinkService';
 import { useCapacitorBackButton } from '../services/backButtonService';
@@ -187,13 +188,6 @@ const AppContentComponent: React.FC = () => {
   // Auth state for protected features
   const auth = useSelector((state: RootState) => state.calendar.auth);
   const setup = useSelector((state: RootState) => state.setup);
-
-  // Sync language changes to i18next
-  useEffect(() => {
-    if (setup.language) {
-      changeLanguage(setup.language).catch(() => {});
-    }
-  }, [setup.language]);
 
   // Pending invite code from deep links (deferred until after tutorial)
   const [pendingInviteCode, setPendingInviteCode] = useState<string | null>(null);
@@ -1131,11 +1125,13 @@ export function App() {
   return (
     <ErrorBoundary>
       <Provider store={store}>
-        <ThemeProvider>
-          <HashRouter>
-            <AppContent />
-          </HashRouter>
-        </ThemeProvider>
+        <I18nextProvider i18n={i18n}>
+          <ThemeProvider>
+            <HashRouter>
+              <AppContent />
+            </HashRouter>
+          </ThemeProvider>
+        </I18nextProvider>
       </Provider>
     </ErrorBoundary>
   );

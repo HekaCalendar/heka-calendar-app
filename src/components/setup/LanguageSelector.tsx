@@ -11,13 +11,13 @@
  */
 
 import React, { useState, useMemo, useCallback, useRef, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import { SUPPORTED_LANGUAGES, getWizardStrings } from '../../data/languages';
 import type { Language } from '../../data/languages';
-import { changeLanguage } from '../../i18n';
+import { setLanguage } from '../../store/setupSlice';
 
 interface LanguageSelectorProps {
   selectedLanguage: string;
-  onSelect: (code: string) => void;
   onNext: () => void;
 }
 
@@ -32,9 +32,9 @@ function useDebouncedValue<T>(value: T, delay: number): T {
 
 export const LanguageSelector: React.FC<LanguageSelectorProps> = ({
   selectedLanguage,
-  onSelect,
   onNext,
 }) => {
+  const dispatch = useDispatch();
   const [isListOpen, setIsListOpen] = useState(true);
   const [search, setSearch] = useState('');
   const [typewriterText, setTypewriterText] = useState('');
@@ -96,21 +96,13 @@ export const LanguageSelector: React.FC<LanguageSelectorProps> = ({
     return () => clearInterval(timer);
   }, [isListOpen, strings.welcome]);
 
-  // Keep the global i18n instance aligned with the wizard language
-  useEffect(() => {
-    if (selectedLanguage) {
-      changeLanguage(selectedLanguage).catch(() => {});
-    }
-  }, [selectedLanguage]);
-
   const handleSelect = useCallback(
     (lang: Language) => {
-      onSelect(lang.code);
-      changeLanguage(lang.code).catch(() => {});
+      dispatch(setLanguage(lang.code));
       setIsListOpen(false);
       setSearch('');
     },
-    [onSelect]
+    [dispatch]
   );
 
   const handleReopenList = useCallback(() => {

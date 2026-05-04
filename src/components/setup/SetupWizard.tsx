@@ -11,7 +11,7 @@
 import React, { useState, useCallback, useEffect, useRef, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import type { AppDispatch, RootState } from '../../store';
-import { setLanguage, completeSetup, persistSetupState } from '../../store/setupSlice';
+import { completeSetup, persistSetupState } from '../../store/setupSlice';
 import { getWizardStrings } from '../../data/languages';
 import { LanguageSelector } from './LanguageSelector';
 import { ModeSelector } from './ModeSelector';
@@ -111,10 +111,6 @@ export const SetupWizard: React.FC = () => {
     dispatch(completeSetup());
   }, [dispatch, setup]);
 
-  const handleLanguageSelect = useCallback((langCode: string) => {
-    dispatch(setLanguage(langCode));
-  }, [dispatch]);
-
   const strings = useMemo(() => {
     return getWizardStrings(setup.language);
   }, [setup.language]);
@@ -125,7 +121,6 @@ export const SetupWizard: React.FC = () => {
         return (
           <LanguageSelector
             selectedLanguage={setup.language}
-            onSelect={handleLanguageSelect}
             onNext={goNext}
           />
         );

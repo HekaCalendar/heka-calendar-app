@@ -5,6 +5,7 @@
 
 import { configureStore, createSlice, createSelector } from '@reduxjs/toolkit';
 import { setupReducer } from './setupSlice';
+import { changeLanguage } from '../i18n';
 
 // ─── Extracted Reducer Modules ───
 import * as navReducers from './slices/reducers/navigationReducers';
@@ -633,6 +634,11 @@ store.subscribe(() => {
   // Persist setup state when it changes (safety net — also persisted by SetupWizard)
   if (currentState.setup !== previousState.setup) {
     persistSetupState(currentState.setup);
+  }
+
+  // Sync i18n when language changes
+  if (currentState.setup.language !== previousState.setup.language) {
+    changeLanguage(currentState.setup.language).catch(() => {});
   }
 
   previousState = currentState;
