@@ -56,7 +56,7 @@ const NOTIF_CATEGORIES = [
 export const PermissionsSelector: React.FC<PermissionsSelectorProps> = ({
   initialLocation,
   initialNotifications,
-  strings,
+  strings: _strings,
 }) => {
   const dispatch = useDispatch<AppDispatch>();
   const [location, setLocationState] = useState<boolean | null>(initialLocation);
