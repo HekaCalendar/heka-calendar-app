@@ -12,10 +12,11 @@
 
 import { useMemo, useCallback, memo, useState, useEffect, useRef } from 'react';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 import type { RootState } from '../store';
 import { selectDate, addNote } from '../store';
-import { generateMonthGrid, HEKA_MONTHS, getNoteKey, getArcType } from '../services/calendarService';
-import { getHolidaysForDateWithSubRegion, ARC_NAMES, type SubRegionCode } from '../types';
+import { generateMonthGrid, getNoteKey, getArcType } from '../services/calendarService';
+import { getHolidaysForDateWithSubRegion, type SubRegionCode } from '../types';
 import type { CalendarDay, ArcType, DayItem } from '../types';
 import { calculateMoonPhaseBatch } from '../astrology/services/calculations/swissCalculations';
 import { calculateTrueSolarReturn } from '../astrology/services/calculations/nakshatras';
@@ -97,6 +98,7 @@ BlankCell.displayName = 'BlankCell';
 
 // Separate component for day cells with hooks
 const DayCellContent = memo(({ day, isSelected, onClick, onLongPress, showCivil, showMoon, showHolidays, location, subRegion, dayNotes, isExpanded = false, isExpandedHorizontal = false }: DayCellProps) => {
+  const { t } = useTranslation('calendar');
   // Memoize holiday check - expensive operation
   const hasHoliday = useMemo(() => {
     if (!showHolidays || location === 'NONE') return false;
@@ -197,7 +199,7 @@ const DayCellContent = memo(({ day, isSelected, onClick, onLongPress, showCivil,
       onTouchEnd={handleTouchEnd}
       onTouchMove={handleTouchMove}
       onContextMenu={(e) => e.preventDefault()}
-      aria-label={`${HEKA_MONTHS[day.hekaDate.month].name} ${day.hekaDate.day}`}
+      aria-label={`${t(`months.${day.hekaDate.month}`)} ${day.hekaDate.day}`}
       aria-selected={isSelected}
       role="gridcell"
       style={{ contain: 'layout style paint' }}
@@ -209,7 +211,7 @@ const DayCellContent = memo(({ day, isSelected, onClick, onLongPress, showCivil,
             <span 
               className="day-cell__moon" 
               aria-hidden="true"
-              title={day.moonPhaseName || 'Moon phase'}
+              title={day.moonPhaseName || t('moonPhase')}
             >
               {day.moonPhase}
             </span>
@@ -228,7 +230,7 @@ const DayCellContent = memo(({ day, isSelected, onClick, onLongPress, showCivil,
       
       {showCivil && (
         <div className="day-cell__civil">
-          {day.civilDate.getDate()} {['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][day.civilDate.getMonth()]}
+          {day.civilDate.getDate()} {t(`civilMonths.${day.civilDate.getMonth()}`)}
         </div>
       )}
       
@@ -245,12 +247,12 @@ const DayCellContent = memo(({ day, isSelected, onClick, onLongPress, showCivil,
               </div>
             );
           })}
-          {hasMoreNotes && <span className="note-more-indicator">+{dayNotes.length - maxNotesToShow} more</span>}
+          {hasMoreNotes && <span className="note-more-indicator">{t('moreNotes', { count: dayNotes.length - maxNotesToShow })}</span>}
         </div>
       )}
       
       {hasHoliday && (
-        <div className="day-cell__holiday-indicator" aria-label="Holiday" />
+        <div className="day-cell__holiday-indicator" aria-label={t('holiday')} />
       )}
     </button>
   );
@@ -286,11 +288,6 @@ DayCell.displayName = 'DayCell';
 // Main Calendar Grid
 // ============================================================================
 
-// Pre-computed day of week headers
-const DOW_HEADERS = ['Sat', 'Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri'];
-
-
-
 interface CalendarGridProps {
   isExpanded?: boolean;
   isExpandedHorizontal?: boolean;
@@ -301,6 +298,7 @@ interface CalendarGridProps {
 
 export const CalendarGrid = memo(({ isExpanded = false, isExpandedHorizontal = false, isPureMode, isLightMode, onToggleLightDark }: CalendarGridProps) => {
   const dispatch = useDispatch();
+  const { t } = useTranslation('calendar');
   const { discover } = useFeatureDiscovery();
   
   // Use individual selectors for granular updates
@@ -513,7 +511,7 @@ export const CalendarGrid = memo(({ isExpanded = false, isExpandedHorizontal = f
   const { showCivilDates, showMoonPhases, showHolidays } = display;
   
   // Month info for header
-  const monthName = HEKA_MONTHS[viewDate.month].name;
+  const monthName = t(`months.${viewDate.month}`);
   const arc = getArcType(viewDate.month);
   const arcColors = ARC_COLORS[arc];
   const getYearDisplay = () => {
@@ -522,12 +520,15 @@ export const CalendarGrid = memo(({ isExpanded = false, isExpandedHorizontal = f
     }
     return viewDate.year.toString();
   };
+
+  // HEKA week starts Saturday
+  const dowOrder = [6, 0, 1, 2, 3, 4, 5];
   
   return (
     <div 
       className={`calendar-grid ${isExpanded ? 'calendar-grid--expanded' : ''} ${isExpandedHorizontal ? 'calendar-grid--expanded-h' : ''}`}
       role="grid" 
-      aria-label="HEKA Calendar"
+      aria-label={t('appTitle')}
       data-expanded={isExpanded}
       data-expanded-h={isExpandedHorizontal}
       // CSS containment for the entire grid
@@ -560,8 +561,8 @@ export const CalendarGrid = memo(({ isExpanded = false, isExpandedHorizontal = f
             <button
               className="pure-yin-yang"
               onClick={onToggleLightDark}
-              aria-label={isLightMode ? 'Switch to dark mode' : 'Switch to light mode'}
-              title={isLightMode ? 'Switch to dark mode' : 'Switch to light mode'}
+              aria-label={isLightMode ? t('switchDarkMode') : t('switchLightMode')}
+              title={isLightMode ? t('switchDarkMode') : t('switchLightMode')}
             >
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                 <circle cx="12" cy="12" r="10" />
@@ -584,18 +585,18 @@ export const CalendarGrid = memo(({ isExpanded = false, isExpandedHorizontal = f
             boxShadow: `0 0 15px ${arcColors.glow}`,
           }}
         >
-          {ARC_NAMES[arc]} Arc
+          {t(`arcs.${arc.toLowerCase()}`)} {t('arcSuffix')}
         </div>
       </div>
       
       {/* Center: Month/13 */}
-      <div className="calendar-grid__month-index">Month {viewDate.month + 1}/13</div>
+      <div className="calendar-grid__month-index">{t('monthLabel', { month: viewDate.month + 1 })}</div>
       
-      {/* Day of week header - memoized */}
+      {/* Day of week header - localized from i18n */}
       <div className="calendar-grid__dow" role="row">
-        {DOW_HEADERS.map((day) => (
-          <div key={day} className="calendar-grid__dow-cell" role="columnheader">
-            {day}
+        {dowOrder.map((dayIndex) => (
+          <div key={dayIndex} className="calendar-grid__dow-cell" role="columnheader">
+            {t(`daysShort.${dayIndex}`)}
           </div>
         ))}
       </div>
