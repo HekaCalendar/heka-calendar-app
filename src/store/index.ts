@@ -41,6 +41,8 @@ const initialStatistics: UsageStatistics = {
   currentStreak: 0,
   longestStreak: 0,
   moodAverage: 0,
+  moodEntryCount: 0,
+  moodEntriesByMonth: {},
   moodByMonth: {},
   mostActiveMonth: { month: '', count: 0 },
   totalWords: 0,
@@ -330,6 +332,7 @@ export const {
   toggleNotificationPreference,
   setGlobalNotificationsEnabled,
   resetNotificationPreferences,
+  setNotificationMode,
   setTheme,
   setFont,
   setAuthState,
@@ -436,14 +439,31 @@ const preloadedState: { calendar: CalendarState; diary?: any } | undefined = per
           stars: {
             ...DEFAULT_NOTIFICATION_PREFERENCES.stars,
             ...(persistedState.notificationPreferences?.stars || {}),
-            dailyCelestialTips: persistedState.astroPreferences?.enableDailyTips ?? DEFAULT_NOTIFICATION_PREFERENCES.stars.dailyCelestialTips,
-            retrogradeAlerts: persistedState.astroPreferences?.enableRetrogradeAlerts ?? DEFAULT_NOTIFICATION_PREFERENCES.stars.retrogradeAlerts,
+            dailyCelestialTips: persistedState.astroPreferences?.enableDailyTips ?? (persistedState.notificationPreferences?.stars?.dailyCelestialTips ?? DEFAULT_NOTIFICATION_PREFERENCES.stars.dailyCelestialTips),
+            retrogradeAlerts: persistedState.astroPreferences?.enableRetrogradeAlerts ?? (persistedState.notificationPreferences?.stars?.retrogradeAlerts ?? DEFAULT_NOTIFICATION_PREFERENCES.stars.retrogradeAlerts),
           },
           // Migration: map old planner preferences
           planner: {
             ...DEFAULT_NOTIFICATION_PREFERENCES.planner,
             ...(persistedState.notificationPreferences?.planner || {}),
-            taskReminders: persistedState.plannerPreferences?.enableTaskNotifications ?? DEFAULT_NOTIFICATION_PREFERENCES.planner.taskReminders,
+            taskReminders: persistedState.plannerPreferences?.enableTaskNotifications ?? (persistedState.notificationPreferences?.planner?.taskReminders ?? DEFAULT_NOTIFICATION_PREFERENCES.planner.taskReminders),
+          },
+          // Ensure all sections get deep-merged defaults
+          calendar: {
+            ...DEFAULT_NOTIFICATION_PREFERENCES.calendar,
+            ...(persistedState.notificationPreferences?.calendar || {}),
+          },
+          circle: {
+            ...DEFAULT_NOTIFICATION_PREFERENCES.circle,
+            ...(persistedState.notificationPreferences?.circle || {}),
+          },
+          journal: {
+            ...DEFAULT_NOTIFICATION_PREFERENCES.journal,
+            ...(persistedState.notificationPreferences?.journal || {}),
+          },
+          quietHours: {
+            ...DEFAULT_NOTIFICATION_PREFERENCES.quietHours,
+            ...(persistedState.notificationPreferences?.quietHours || {}),
           },
         },
       },

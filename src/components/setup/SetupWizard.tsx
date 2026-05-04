@@ -30,7 +30,7 @@ const STEP_TITLES: Record<SetupStep, string> = {
   language: 'Language',
   mode: 'Calendar Mode',
   permissions: 'Permissions',
-  ai: 'HEKA AI',
+  ai: 'Intelligence',
   complete: 'Ready',
 };
 

@@ -792,7 +792,7 @@ const AppContentComponent: React.FC = () => {
   }, [navigate]);
   
   const handleAstrologyClick = useCallback(() => {
-    console.log('[DEBUG] Stars button clicked, navigating to /stars');
+    // Stars navigation triggered
     navigate('/stars');
   }, [navigate]);
   
