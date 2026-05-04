@@ -13,6 +13,7 @@
 import React, { useState, useMemo, useCallback, useRef, useEffect } from 'react';
 import { SUPPORTED_LANGUAGES, getWizardStrings } from '../../data/languages';
 import type { Language } from '../../data/languages';
+import { changeLanguage } from '../../i18n';
 
 interface LanguageSelectorProps {
   selectedLanguage: string;
@@ -95,9 +96,17 @@ export const LanguageSelector: React.FC<LanguageSelectorProps> = ({
     return () => clearInterval(timer);
   }, [isListOpen, strings.welcome]);
 
+  // Keep the global i18n instance aligned with the wizard language
+  useEffect(() => {
+    if (selectedLanguage) {
+      changeLanguage(selectedLanguage).catch(() => {});
+    }
+  }, [selectedLanguage]);
+
   const handleSelect = useCallback(
     (lang: Language) => {
       onSelect(lang.code);
+      changeLanguage(lang.code).catch(() => {});
       setIsListOpen(false);
       setSearch('');
     },

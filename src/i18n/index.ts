@@ -103,6 +103,9 @@ export function applyRTLDirection(language: string): void {
 }
 
 export function changeLanguage(language: string): Promise<any> {
+  if (!initialized) {
+    return initI18n(language);
+  }
   applyRTLDirection(language);
   return i18n.changeLanguage(language);
 }
