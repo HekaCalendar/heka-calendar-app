@@ -18,11 +18,7 @@ import { setTimeMode, setZodiacSigns } from '../../store/setupSlice';
 
 interface ModeSelectorProps {
   initialMode: 'SYNC' | 'TRUE' | null;
-  onNext: () => void;
-  onBack: () => void;
   strings: {
-    next: string;
-    back: string;
     modeTitle: string;
     modeSubtitle: string;
     syncTitle: string;
@@ -112,8 +108,6 @@ const ModeMath: React.FC<{ mode: 'SYNC' | 'TRUE' }> = ({ mode }) => {
 
 export const ModeSelector: React.FC<ModeSelectorProps> = ({
   initialMode,
-  onNext,
-  onBack,
   strings,
 }) => {
   const dispatch = useDispatch<AppDispatch>();
@@ -217,12 +211,6 @@ export const ModeSelector: React.FC<ModeSelectorProps> = ({
           <span className="mode-persist__divider" aria-hidden="true">—</span>
           <span className="mode-persist__detail">{mode === 'SYNC' ? 'Gregorian Aligned' : 'Pure Solar Cycle'}</span>
         </div>
-      </div>
-
-      {/* Actions */}
-      <div className="setup-step__actions">
-        <button className="setup-btn setup-btn--ghost" onClick={onBack} type="button">{strings.back}</button>
-        <button className="setup-btn setup-btn--primary" onClick={onNext} type="button">{strings.next}</button>
       </div>
     </div>
   );

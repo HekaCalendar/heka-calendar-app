@@ -15,12 +15,8 @@ import { requestNotificationPermission } from '../../services/notificationServic
 interface PermissionsSelectorProps {
   initialLocation: boolean | null;
   initialNotifications: boolean | null;
-  onNext: () => void;
-  onBack: () => void;
   strings: {
-    next: string;
-    back: string;
-    skip: string;
+    hekaAI: string;
   };
 }
 
@@ -60,8 +56,6 @@ const NOTIF_CATEGORIES = [
 export const PermissionsSelector: React.FC<PermissionsSelectorProps> = ({
   initialLocation,
   initialNotifications,
-  onNext,
-  onBack,
   strings,
 }) => {
   const dispatch = useDispatch<AppDispatch>();
@@ -124,12 +118,6 @@ export const PermissionsSelector: React.FC<PermissionsSelectorProps> = ({
       setNotifLoading(false);
     }
   }, []);
-
-  const handleSkip = useCallback(() => {
-    dispatch(setLocationEnabled(false));
-    dispatch(setNotificationsEnabled(false));
-    onNext();
-  }, [dispatch, onNext]);
 
   return (
     <div className="setup-step setup-step--permissions" tabIndex={-1}>
@@ -225,13 +213,6 @@ export const PermissionsSelector: React.FC<PermissionsSelectorProps> = ({
         >
           {notifLoading ? '⏳ Requesting...' : notifications === true ? '✓ Notifications Active' : 'Enable Notifications'}
         </button>
-      </div>
-
-      {/* Actions */}
-      <div className="setup-step__actions">
-        <button className="setup-btn setup-btn--ghost" onClick={onBack} type="button">{strings.back}</button>
-        <button className="setup-btn setup-btn--ghost" onClick={handleSkip} type="button">{strings.skip}</button>
-        <button className="setup-btn setup-btn--primary" onClick={onNext} type="button">{strings.next}</button>
       </div>
     </div>
   );

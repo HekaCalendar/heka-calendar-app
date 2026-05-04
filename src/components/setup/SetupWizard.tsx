@@ -127,8 +127,6 @@ export const SetupWizard: React.FC = () => {
         return (
           <ModeSelector
             initialMode={setup.timeMode}
-            onNext={goNext}
-            onBack={goBack}
             strings={strings}
           />
         );
@@ -137,8 +135,6 @@ export const SetupWizard: React.FC = () => {
           <PermissionsSelector
             initialLocation={setup.locationEnabled}
             initialNotifications={setup.notificationsEnabled}
-            onNext={goNext}
-            onBack={goBack}
             strings={strings}
           />
         );
@@ -148,8 +144,6 @@ export const SetupWizard: React.FC = () => {
             initialProvider={setup.aiProvider}
             initialModel={setup.aiModel}
             initialConfigured={setup.aiApiKeyConfigured}
-            onNext={goNext}
-            onBack={goBack}
             strings={strings}
           />
         );

@@ -22,12 +22,7 @@ interface AISelectorProps {
   initialProvider: string | null;
   initialModel: string | null;
   initialConfigured: boolean;
-  onNext: () => void;
-  onBack: () => void;
   strings: {
-    next: string;
-    back: string;
-    skip: string;
     hekaAI: string;
     aiDescription: string;
     aiSelectProvider: string;
@@ -38,7 +33,6 @@ interface AISelectorProps {
     aiSkipDescription: string;
     aiUsingTemplate: string;
     aiModelSelect: string;
-    aiSetUpLater: string;
     hekaCoachTitle: string;
     hekaCoachDesc: string;
     hekaAIDesc: string;
@@ -131,8 +125,6 @@ const API_PROVIDERS: ProviderMeta[] = [
 export const AISelector: React.FC<AISelectorProps> = ({
   initialProvider,
   initialModel,
-  onNext,
-  onBack,
   strings,
 }) => {
   const dispatch = useDispatch<AppDispatch>();
@@ -144,7 +136,6 @@ export const AISelector: React.FC<AISelectorProps> = ({
   const [selectedModel, setSelectedModel] = useState<string>(initialModel || '');
   const [isTesting, setIsTesting] = useState(false);
   const [testResult, setTestResult] = useState<{ ok: boolean; message: string } | null>(null);
-  const [isSaving, setIsSaving] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
 
   const providerMeta = API_PROVIDERS.find((p) => p.type === selectedProvider);
@@ -179,6 +170,46 @@ export const AISelector: React.FC<AISelectorProps> = ({
     }
   }, [selectedProvider, providerMeta]);
 
+  // Persist AI configuration when the user advances to the next step
+  const stateRef = useRef({ selectedProvider, apiKey, selectedModel });
+  stateRef.current = { selectedProvider, apiKey, selectedModel };
+
+  useEffect(() => {
+    return () => {
+      const { selectedProvider, apiKey, selectedModel } = stateRef.current;
+      try {
+        if (selectedProvider === 'template') {
+          aiConfigService.setProvider('template');
+          aiConfigService.setGlobalEnabled(true);
+          aiConfigService.setAreaEnabled('stars', true);
+          aiConfigService.setAreaEnabled('journal', true);
+          aiConfigService.setAreaEnabled('calendar', false);
+          aiConfigService.setAreaEnabled('circle', true);
+          aiConfigService.updateConfig({ model: undefined });
+          aiProviderManager.setActiveProvider('template');
+          dispatch(setAIProvider('template'));
+          dispatch(setAIModel(null));
+          dispatch(setAIApiKeyConfigured(false));
+        } else {
+          if (apiKey.trim()) {
+            void aiProviderManager.saveApiKey(selectedProvider, apiKey.trim());
+          }
+          aiConfigService.setProvider(selectedProvider);
+          aiConfigService.setGlobalEnabled(true);
+          if (selectedModel) {
+            aiConfigService.updateConfig({ model: selectedModel });
+          }
+          aiProviderManager.setActiveProvider(selectedProvider);
+          dispatch(setAIProvider(selectedProvider));
+          dispatch(setAIModel(selectedModel || null));
+          dispatch(setAIApiKeyConfigured(!!apiKey.trim()));
+        }
+      } catch (err) {
+        console.error('[AISelector] Unmount save error:', err);
+      }
+    };
+  }, [dispatch]);
+
   const handleProviderSelect = useCallback((type: AIProviderType) => {
     setSelectedProvider(type);
     setTestResult(null);
@@ -201,58 +232,6 @@ export const AISelector: React.FC<AISelectorProps> = ({
       setIsTesting(false);
     }
   }, [apiKey, selectedProvider, strings]);
-
-  const handleNext = useCallback(async () => {
-    setIsSaving(true);
-    try {
-      if (selectedProvider === 'template') {
-        aiConfigService.setProvider('template');
-        aiConfigService.setGlobalEnabled(true);
-        aiConfigService.setAreaEnabled('stars', true);
-        aiConfigService.setAreaEnabled('journal', true);
-        aiConfigService.setAreaEnabled('calendar', false);
-        aiConfigService.setAreaEnabled('circle', true);
-        aiConfigService.updateConfig({ model: undefined });
-        aiProviderManager.setActiveProvider('template');
-        dispatch(setAIProvider('template'));
-        dispatch(setAIModel(null));
-        dispatch(setAIApiKeyConfigured(false));
-      } else {
-        if (apiKey.trim()) {
-          await aiProviderManager.saveApiKey(selectedProvider, apiKey.trim());
-        }
-        aiConfigService.setProvider(selectedProvider);
-        aiConfigService.setGlobalEnabled(true);
-        if (selectedModel) {
-          aiConfigService.updateConfig({ model: selectedModel });
-        }
-        aiProviderManager.setActiveProvider(selectedProvider);
-        dispatch(setAIProvider(selectedProvider));
-        dispatch(setAIModel(selectedModel || null));
-        dispatch(setAIApiKeyConfigured(!!apiKey.trim()));
-      }
-      onNext();
-    } catch (err) {
-      console.error('[AISelector] Save error:', err);
-      onNext();
-    } finally {
-      setIsSaving(false);
-    }
-  }, [selectedProvider, apiKey, selectedModel, dispatch, onNext]);
-
-  const handleSkip = useCallback(() => {
-    aiConfigService.setProvider('template');
-    aiConfigService.setGlobalEnabled(true);
-    aiConfigService.setAreaEnabled('stars', true);
-    aiConfigService.setAreaEnabled('journal', true);
-    aiConfigService.setAreaEnabled('calendar', false);
-    aiConfigService.setAreaEnabled('circle', true);
-    aiProviderManager.setActiveProvider('template');
-    dispatch(setAIProvider('template'));
-    dispatch(setAIModel(null));
-    dispatch(setAIApiKeyConfigured(false));
-    onNext();
-  }, [dispatch, onNext]);
 
   const openHelpUrl = (url: string) => {
     if (typeof window !== 'undefined') {
@@ -447,31 +426,6 @@ export const AISelector: React.FC<AISelectorProps> = ({
 
       {/* Skip hint */}
       <p className="ai-skip-hint">{strings.aiSkipDescription}</p>
-
-      {/* Navigation */}
-      <div className="setup-step__actions">
-        <button className="setup-btn setup-btn--ghost" onClick={onBack} type="button" disabled={isSaving}>
-          {strings.back}
-        </button>
-        <button className="setup-btn setup-btn--ghost" onClick={handleSkip} type="button" disabled={isSaving}>
-          {strings.aiSetUpLater}
-        </button>
-        <button
-          className="setup-btn setup-btn--primary"
-          onClick={handleNext}
-          type="button"
-          disabled={isSaving}
-        >
-          {isSaving ? (
-            <>
-              <span className="ai-spinner ai-spinner--light" aria-hidden="true" />
-              {strings.next}
-            </>
-          ) : (
-            strings.next
-          )}
-        </button>
-      </div>
     </div>
   );
 };
