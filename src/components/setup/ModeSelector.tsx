@@ -4,9 +4,9 @@
  *
  * Two modes, one clear choice:
  *   SYNC  → Follows the civil calendar. Locked to April 1.
- *   TRUE  → Follows the sun. Pure 13-month cycle.
+ *   TRUE  → Follows the sun. 12 months of 28 days + March of 29–30.
  *
- * Visual: 13-month strip showing where the leap day lives.
+ * Visual: Clean month grid showing day counts + leap visualization.
  * ═══════════════════════════════════════════════════════════════════════════════
  */
 
@@ -35,28 +35,77 @@ interface ModeSelectorProps {
   };
 }
 
-const MONTHS_13 = ['Apr', 'May', 'Jun', 'Jul', 'Aug', 'Hex', 'Sep', 'Oct', 'Nov', 'Dec', 'Jan', 'Feb', 'Mar'];
+const MONTHS = [
+  { abbr: 'Apr', days: 28 },
+  { abbr: 'May', days: 28 },
+  { abbr: 'Jun', days: 28 },
+  { abbr: 'Jul', days: 28 },
+  { abbr: 'Aug', days: 28 },
+  { abbr: 'Hex', days: 28 },
+  { abbr: 'Sep', days: 28 },
+  { abbr: 'Oct', days: 28 },
+  { abbr: 'Nov', days: 28 },
+  { abbr: 'Dec', days: 28 },
+  { abbr: 'Jan', days: 28 },
+  { abbr: 'Feb', days: 28 },
+  { abbr: 'Mar', days: 29, leapDays: 30 },
+];
 
-const HekaMonthStrip: React.FC<{ mode: 'SYNC' | 'TRUE'; isActive: boolean }> = ({ mode, isActive }) => {
+const MonthGrid: React.FC<{ mode: 'SYNC' | 'TRUE'; isActive: boolean }> = ({ mode, isActive }) => {
   return (
-    <div className="mode-month-strip" aria-hidden="true">
-      {MONTHS_13.map((m, i) => {
+    <div className="mode-month-grid" aria-hidden="true">
+      {MONTHS.map((m, i) => {
         const isMarch = i === 12;
-        const isLeap = isMarch;
+        const dayCount = isMarch ? `${m.days}–${m.leapDays}` : m.days;
         return (
           <div
-            key={m}
-            className={`mode-month-strip__cell ${isLeap ? 'mode-month-strip__cell--leap' : ''} ${isActive && isLeap ? `mode-month-strip__cell--leap-${mode.toLowerCase()}` : ''}`}
+            key={m.abbr}
+            className={`mode-month-grid__cell ${isMarch ? 'mode-month-grid__cell--march' : ''} ${isActive ? `mode-month-grid__cell--active-${mode.toLowerCase()}` : ''}`}
           >
-            <span className="mode-month-strip__label">{m}</span>
-            {isLeap && (
-              <span className={`mode-month-strip__badge mode-month-strip__badge--${mode.toLowerCase()}`}>
-                {mode === 'SYNC' ? '🔗' : '☀️'}
-              </span>
-            )}
+            <span className="mode-month-grid__abbr">{m.abbr}</span>
+            <span className="mode-month-grid__days">{dayCount}</span>
           </div>
         );
       })}
+    </div>
+  );
+};
+
+const ModeMath: React.FC<{ mode: 'SYNC' | 'TRUE' }> = ({ mode }) => {
+  if (mode === 'SYNC') {
+    return (
+      <div className="mode-math" aria-hidden="true">
+        <div className="mode-math__line">
+          <span className="mode-math__num">13</span>
+          <span className="mode-math__op">×</span>
+          <span className="mode-math__num">28</span>
+          <span className="mode-math__op">+</span>
+          <span className="mode-math__num mode-math__num--leap">1</span>
+          <span className="mode-math__eq">=</span>
+          <span className="mode-math__num mode-math__num--total">365</span>
+          <span className="mode-math__op">/</span>
+          <span className="mode-math__num mode-math__num--leap">366</span>
+        </div>
+        <div className="mode-math__label">Aligned to Gregorian calendar</div>
+      </div>
+    );
+  }
+  return (
+    <div className="mode-math" aria-hidden="true">
+      <div className="mode-math__line">
+        <span className="mode-math__num">12</span>
+        <span className="mode-math__op">×</span>
+        <span className="mode-math__num">28</span>
+        <span className="mode-math__op">+</span>
+        <span className="mode-math__num mode-math__num--leap">29</span>
+        <span className="mode-math__op">/</span>
+        <span className="mode-math__num mode-math__num--leap">30</span>
+        <span className="mode-math__eq">=</span>
+        <span className="mode-math__num mode-math__num--total">365</span>
+        <span className="mode-math__op">/</span>
+        <span className="mode-math__num mode-math__num--leap">366</span>
+      </div>
+      <div className="mode-math__label">Pure astronomical cycle</div>
     </div>
   );
 };
@@ -87,18 +136,6 @@ export const ModeSelector: React.FC<ModeSelectorProps> = ({
     setHasInteracted(true);
   }, []);
 
-  const syncFacts = [
-    'Year starts exactly on April 1',
-    'March leap day follows Gregorian rule',
-    'Zero drift from civil calendar',
-  ];
-
-  const trueFacts = [
-    'Year start drifts independently',
-    'March leap day every 4 years (except 128th)',
-    'Closer to actual solar year',
-  ];
-
   return (
     <div className="setup-step setup-step--mode" tabIndex={-1}>
       {/* Title */}
@@ -119,26 +156,19 @@ export const ModeSelector: React.FC<ModeSelectorProps> = ({
         >
           <div className="mode-card__glow" aria-hidden="true" />
 
-          <HekaMonthStrip mode="SYNC" isActive={mode === 'SYNC'} />
-
-          <div className="mode-card__header">
-            <span className="mode-card__icon">🌐</span>
-            <div className="mode-card__titles">
-              <span className="mode-card__label">{strings.syncTitle}</span>
-              <span className="mode-card__sublabel">{strings.syncSubtitle}</span>
+          <div className="mode-card__top">
+            <div className="mode-card__header">
+              <span className="mode-card__icon">🌐</span>
+              <div className="mode-card__titles">
+                <span className="mode-card__label">{strings.syncTitle}</span>
+                <span className="mode-card__sublabel">{strings.syncSubtitle}</span>
+              </div>
             </div>
+            <p className="mode-card__desc">{strings.syncDesc}</p>
           </div>
 
-          <p className="mode-card__desc">{strings.syncDesc}</p>
-
-          <ul className="mode-card__facts">
-            {syncFacts.map((fact, i) => (
-              <li key={i} className="mode-card__fact">
-                <span className="mode-card__fact-dot" aria-hidden="true" />
-                {fact}
-              </li>
-            ))}
-          </ul>
+          <MonthGrid mode="SYNC" isActive={mode === 'SYNC'} />
+          <ModeMath mode="SYNC" />
 
           {mode === 'SYNC' && (
             <div className="mode-card__selected-badge">
@@ -157,26 +187,19 @@ export const ModeSelector: React.FC<ModeSelectorProps> = ({
         >
           <div className="mode-card__glow mode-card__glow--true" aria-hidden="true" />
 
-          <HekaMonthStrip mode="TRUE" isActive={mode === 'TRUE'} />
-
-          <div className="mode-card__header">
-            <span className="mode-card__icon">⚡</span>
-            <div className="mode-card__titles">
-              <span className="mode-card__label">{strings.trueTitle}</span>
-              <span className="mode-card__sublabel">{strings.trueSubtitle}</span>
+          <div className="mode-card__top">
+            <div className="mode-card__header">
+              <span className="mode-card__icon">⚡</span>
+              <div className="mode-card__titles">
+                <span className="mode-card__label">{strings.trueTitle}</span>
+                <span className="mode-card__sublabel">{strings.trueSubtitle}</span>
+              </div>
             </div>
+            <p className="mode-card__desc">{strings.trueDesc}</p>
           </div>
 
-          <p className="mode-card__desc">{strings.trueDesc}</p>
-
-          <ul className="mode-card__facts">
-            {trueFacts.map((fact, i) => (
-              <li key={i} className="mode-card__fact">
-                <span className="mode-card__fact-dot mode-card__fact-dot--true" aria-hidden="true" />
-                {fact}
-              </li>
-            ))}
-          </ul>
+          <MonthGrid mode="TRUE" isActive={mode === 'TRUE'} />
+          <ModeMath mode="TRUE" />
 
           {mode === 'TRUE' && (
             <div className="mode-card__selected-badge mode-card__selected-badge--true">

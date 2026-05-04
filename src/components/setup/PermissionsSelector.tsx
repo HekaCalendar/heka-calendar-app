@@ -1,7 +1,7 @@
 /**
  * ═══════════════════════════════════════════════════════════════════════════════
  * PERMISSIONS SELECTOR — Location & Notifications
- * Visual cards explaining features. Native permission requests.
+ * Clean cards with categorized notification types.
  * Skippable. Enterprise grade.
  * ═══════════════════════════════════════════════════════════════════════════════
  */
@@ -10,9 +10,7 @@ import React, { useState, useCallback, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import type { AppDispatch } from '../../store';
 import { setLocationEnabled, setNotificationsEnabled } from '../../store/setupSlice';
-import { resetNotificationPreferences } from '../../store';
 import { requestNotificationPermission } from '../../services/notificationService';
-
 
 interface PermissionsSelectorProps {
   initialLocation: boolean | null;
@@ -25,6 +23,39 @@ interface PermissionsSelectorProps {
     skip: string;
   };
 }
+
+const NOTIF_CATEGORIES = [
+  {
+    icon: '📅',
+    label: 'Calendar',
+    items: ['Holiday reminders', 'Civil ↔ HEKA transitions', 'Note alerts'],
+  },
+  {
+    icon: '🌙',
+    label: 'Celestial',
+    items: ['Moon phase & degree', 'Void moon alerts', 'Retrograde warnings', 'Daily celestial tips', 'Transit insights'],
+  },
+  {
+    icon: '📜',
+    label: 'Tasks',
+    items: ['Due reminders', 'Daily briefings', 'Completion celebrations', 'Streak protection'],
+  },
+  {
+    icon: '✨',
+    label: 'Cosmic Circle',
+    items: ['Friend requests', 'Messages', 'Shared tasks'],
+  },
+  {
+    icon: '🩸',
+    label: 'Body & Mind',
+    items: ['Cycle tracking', 'Mood checks', 'Sleep logs', 'Energy checks'],
+  },
+  {
+    icon: '🌑',
+    label: 'Reflection',
+    items: ['Evening journal prompts', 'Celestial insight alerts'],
+  },
+];
 
 export const PermissionsSelector: React.FC<PermissionsSelectorProps> = ({
   initialLocation,
@@ -41,24 +72,18 @@ export const PermissionsSelector: React.FC<PermissionsSelectorProps> = ({
   const [locationError, setLocationError] = useState<string | null>(null);
   const [notifError, setNotifError] = useState<string | null>(null);
 
-  // Apply to Redux whenever state changes
   useEffect(() => {
     dispatch(setLocationEnabled(location ?? false));
   }, [dispatch, location]);
 
   useEffect(() => {
     dispatch(setNotificationsEnabled(notifications ?? false));
-    if (notifications === true) {
-      // Enable ALL notification channels with defaults
-      dispatch(resetNotificationPreferences());
-    }
   }, [dispatch, notifications]);
 
   const requestLocation = useCallback(async () => {
     setLocationLoading(true);
     setLocationError(null);
     try {
-      // Try browser geolocation first (works in Capacitor WebView too)
       if (!navigator.geolocation) {
         setLocationError('Geolocation not supported on this device');
         setLocationState(false);
@@ -101,7 +126,6 @@ export const PermissionsSelector: React.FC<PermissionsSelectorProps> = ({
   }, []);
 
   const handleSkip = useCallback(() => {
-    // Mark as "set up later" — null in setup, but store false for now
     dispatch(setLocationEnabled(false));
     dispatch(setNotificationsEnabled(false));
     onNext();
@@ -128,34 +152,18 @@ export const PermissionsSelector: React.FC<PermissionsSelectorProps> = ({
           </div>
         </div>
 
-        <div className="perm-card__features">
-          <div className="perm-feature">
-            <span className="perm-feature__icon">🌤️</span>
-            <div>
-              <span className="perm-feature__name">Local Weather</span>
-              <span className="perm-feature__desc">Current conditions &amp; forecasts for your area</span>
-            </div>
-          </div>
+        <div className="perm-card__features perm-card__features--compact">
           <div className="perm-feature">
             <span className="perm-feature__icon">🌅</span>
-            <div>
-              <span className="perm-feature__name">Sunrise &amp; Sunset</span>
-              <span className="perm-feature__desc">Accurate solar times for your coordinates</span>
-            </div>
+            <span className="perm-feature__name">Sunrise, sunset & solar times</span>
           </div>
           <div className="perm-feature">
             <span className="perm-feature__icon">🌙</span>
-            <div>
-              <span className="perm-feature__name">Moon &amp; Transits</span>
-              <span className="perm-feature__desc">Swiss Ephemeris celestial calculations for your location</span>
-            </div>
+            <span className="perm-feature__name">Accurate moon & planetary transits</span>
           </div>
           <div className="perm-feature">
             <span className="perm-feature__icon">🌿</span>
-            <div>
-              <span className="perm-feature__name">Agricultural Guidance</span>
-              <span className="perm-feature__desc">Planting advice based on local climate &amp; moon phase</span>
-            </div>
+            <span className="perm-feature__name">Local weather & agricultural guidance</span>
           </div>
         </div>
 
@@ -189,42 +197,20 @@ export const PermissionsSelector: React.FC<PermissionsSelectorProps> = ({
           </div>
         </div>
 
-        <div className="perm-card__features">
-          <div className="perm-feature">
-            <span className="perm-feature__icon">📅</span>
-            <div>
-              <span className="perm-feature__name">Calendar Alerts</span>
-              <span className="perm-feature__desc">Holiday reminders &amp; HEKA date transitions</span>
+        <div className="perm-notif-grid">
+          {NOTIF_CATEGORIES.map((cat) => (
+            <div key={cat.label} className="perm-notif-category">
+              <div className="perm-notif-category__header">
+                <span className="perm-notif-category__icon">{cat.icon}</span>
+                <span className="perm-notif-category__label">{cat.label}</span>
+              </div>
+              <ul className="perm-notif-category__list">
+                {cat.items.map((item) => (
+                  <li key={item} className="perm-notif-category__item">{item}</li>
+                ))}
+              </ul>
             </div>
-          </div>
-          <div className="perm-feature">
-            <span className="perm-feature__icon">✨</span>
-            <div>
-              <span className="perm-feature__name">Celestial Events</span>
-              <span className="perm-feature__desc">Retrograde alerts, void moon, daily tips</span>
-            </div>
-          </div>
-          <div className="perm-feature">
-            <span className="perm-feature__icon">📜</span>
-            <div>
-              <span className="perm-feature__name">Task Reminders</span>
-              <span className="perm-feature__desc">Due dates, daily briefings &amp; streak savers</span>
-            </div>
-          </div>
-          <div className="perm-feature">
-            <span className="perm-feature__icon">🌟</span>
-            <div>
-              <span className="perm-feature__name">Cosmic Circle</span>
-              <span className="perm-feature__desc">Friend requests, messages &amp; shared tasks</span>
-            </div>
-          </div>
-          <div className="perm-feature">
-            <span className="perm-feature__icon">🤖</span>
-            <div>
-              <span className="perm-feature__name">HEKA AI Coach</span>
-              <span className="perm-feature__desc">Personalized celestial guidance &amp; synchronicity alerts</span>
-            </div>
-          </div>
+          ))}
         </div>
 
         {notifError && (
