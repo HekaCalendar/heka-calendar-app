@@ -121,7 +121,6 @@ export const SetupWizard: React.FC = () => {
         return (
           <LanguageSelector
             selectedLanguage={setup.language}
-            onNext={goNext}
           />
         );
       case 'mode':
@@ -204,6 +203,34 @@ export const SetupWizard: React.FC = () => {
         >
           {renderStep()}
         </div>
+
+        {/* Persistent navigation footer — safety net so no step can trap the user */}
+        {currentStep !== 'complete' && (
+          <div className="setup-wizard__footer">
+            <div className="setup-wizard__footer-inner">
+              {currentStepIndex > 0 && (
+                <button
+                  className="setup-btn setup-btn--ghost"
+                  onClick={goBack}
+                  disabled={isAnimating}
+                  type="button"
+                >
+                  {strings.back}
+                </button>
+              )}
+              {currentStepIndex < totalSteps - 1 && (
+                <button
+                  className="setup-btn setup-btn--primary"
+                  onClick={goNext}
+                  disabled={isAnimating}
+                  type="button"
+                >
+                  {strings.next}
+                </button>
+              )}
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

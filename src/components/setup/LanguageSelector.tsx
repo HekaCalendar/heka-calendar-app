@@ -18,7 +18,6 @@ import { setLanguage } from '../../store/setupSlice';
 
 interface LanguageSelectorProps {
   selectedLanguage: string;
-  onNext: () => void;
 }
 
 function useDebouncedValue<T>(value: T, delay: number): T {
@@ -32,7 +31,6 @@ function useDebouncedValue<T>(value: T, delay: number): T {
 
 export const LanguageSelector: React.FC<LanguageSelectorProps> = ({
   selectedLanguage,
-  onNext,
 }) => {
   const dispatch = useDispatch();
   const [isListOpen, setIsListOpen] = useState(true);
@@ -112,13 +110,7 @@ export const LanguageSelector: React.FC<LanguageSelectorProps> = ({
 
   const handleKeyDown = useCallback(
     (e: React.KeyboardEvent) => {
-      if (!isListOpen) {
-        if (e.key === 'Enter' || e.key === ' ') {
-          e.preventDefault();
-          onNext();
-        }
-        return;
-      }
+      if (!isListOpen) return;
       const max = filteredLanguages.length - 1;
       switch (e.key) {
         case 'ArrowDown':
@@ -162,7 +154,7 @@ export const LanguageSelector: React.FC<LanguageSelectorProps> = ({
           break;
       }
     },
-    [filteredLanguages, highlightedIndex, handleSelect, search, isListOpen, onNext]
+    [filteredLanguages, highlightedIndex, handleSelect, search, isListOpen]
   );
 
   const activeDescendant = filteredLanguages[highlightedIndex]?.code
@@ -305,18 +297,6 @@ export const LanguageSelector: React.FC<LanguageSelectorProps> = ({
             </div>
           )}
         </div>
-      </div>
-
-      {/* ═══ Action ═══ */}
-      <div className="setup-step__actions setup-step__actions--single">
-        <button
-          className="setup-btn setup-btn--primary setup-btn--full"
-          onClick={onNext}
-          disabled={!selectedLanguage}
-          type="button"
-        >
-          {strings.next}
-        </button>
       </div>
     </div>
   );
