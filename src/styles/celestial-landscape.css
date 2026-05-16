@@ -460,3 +460,13 @@
     color: var(--color-gold) !important;
   }
 }
+
+
+/* ── RTL Overrides ── */
+[dir="rtl"] .celestial-panel .celestial-info-list {
+    padding-right: var(--space-4)
+}
+
+[dir="rtl"] .celestial-panel .celestial-info-badge {
+    margin-left: var(--space-2)
+}

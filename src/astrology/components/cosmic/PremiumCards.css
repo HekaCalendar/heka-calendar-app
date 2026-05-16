@@ -1671,3 +1671,37 @@
     height: 70px;
   }
 }
+
+
+/* ── RTL Overrides ── */
+[dir="rtl"] .hour-info {
+    text-align: right
+}
+
+[dir="rtl"] .planet-row {
+    border-right: 3px solid transparent
+}
+
+[dir="rtl"] .planet-row.retro {
+    border-right-color: var(--ci-danger, #f43f5e)
+}
+
+[dir="rtl"] .planet-row.strong {
+    border-right-color: var(--ci-success, #34d399)
+}
+
+[dir="rtl"] .planet-row.debilitated {
+    border-right-color: var(--ci-warning, #fbbf24)
+}
+
+[dir="rtl"] .eb-count {
+    text-align: left
+}
+
+[dir="rtl"] .planet-sphere {
+    border-right: 3px solid transparent
+}
+
+[dir="rtl"] .planet-sphere.retro {
+    border-right-color: var(--ci-danger, #f43f5e)
+}

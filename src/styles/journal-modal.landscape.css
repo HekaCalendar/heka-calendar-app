@@ -189,3 +189,17 @@
     padding: 20px !important;
   }
 }
+
+
+/* ── RTL Overrides ── */
+[dir="rtl"] .journal-sidebar {
+    border-left: 1px solid rgba(0,0,0,0.1)
+}
+
+[dir="rtl"] .journal-sidebar {
+    border-left: 1px solid rgba(0,0,0,0.1)
+}
+
+[dir="rtl"] .journal-sidebar {
+    border-left: 1px solid rgba(0,0,0,0.1)
+}

@@ -2691,3 +2691,41 @@
     font-size: 7px;
   }
 }
+
+
+/* ── RTL Overrides ── */
+[dir="rtl"] .language-preview__cursor {
+    margin-right: 2px
+}
+
+[dir="rtl"] .language-row {
+    text-align: right
+}
+
+[dir="rtl"] .language-row__check {
+    margin-right: auto
+}
+
+[dir="rtl"] .mode-card {
+    text-align: right
+}
+
+[dir="rtl"] .perm-section__features {
+    padding-right: 4px
+}
+
+[dir="rtl"] .perm-section__feature {
+    padding-right: 18px
+}
+
+[dir="rtl"] .ai-provider-card {
+    text-align: right
+}
+
+[dir="rtl"] .ai-config-field__select {
+    padding-left: 36px
+}
+
+[dir="rtl"] .perm-constellation__row:hover {
+    padding-right: 16px
+}

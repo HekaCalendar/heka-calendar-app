@@ -655,3 +655,13 @@
   color: var(--color-gold);
   background: rgba(212, 175, 55, 0.05);
 }
+
+
+/* ── RTL Overrides ── */
+[dir="rtl"] .auth-form__password-wrapper .auth-form__input {
+    padding-left: 2.75rem
+}
+
+[dir="rtl"] .auth-form__submit:disabled::after {
+    margin-right: 0.5rem
+}

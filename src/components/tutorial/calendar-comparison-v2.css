@@ -479,3 +479,14 @@
     padding-right: 12px;
   }
 }
+
+
+/* ── RTL Overrides ── */
+[dir="rtl"] .hemisphere.northern {
+    border-left: 1px solid rgba(255, 255, 255, 0.1);
+    padding-left: 16px
+}
+
+[dir="rtl"] .hemisphere.northern {
+    padding-left: 12px
+}

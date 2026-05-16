@@ -319,3 +319,9 @@
     grid-template-columns: 1fr;
   }
 }
+
+
+/* ── RTL Overrides ── */
+[dir="rtl"] .ut-retro-item {
+    border-right: 3px solid #ef4444
+}

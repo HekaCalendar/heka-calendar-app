@@ -575,3 +575,13 @@
     padding: 12px 14px;
   }
 }
+
+
+/* ── RTL Overrides ── */
+[dir="rtl"] .journal-font-option {
+    text-align: right
+}
+
+[dir="rtl"] .journal-font-check {
+    margin-right: auto
+}

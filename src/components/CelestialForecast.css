@@ -1217,3 +1217,57 @@
     grid-template-columns: repeat(4, 1fr);
   }
 }
+
+
+/* ── RTL Overrides ── */
+[dir="rtl"] .timing-pill {
+    border-right: 3px solid #9d4edd
+}
+
+[dir="rtl"] .section-title .timestamp {
+    margin-right: auto
+}
+
+[dir="rtl"] .planet-forecast-header {
+    text-align: right
+}
+
+[dir="rtl"] .r-section.shadow {
+    border-right: 2px solid #ef4444
+}
+
+[dir="rtl"] .phase-event {
+    border-right: 3px solid transparent
+}
+
+[dir="rtl"] .phase-event.current {
+    border-right-color: #9d4edd
+}
+
+[dir="rtl"] .transit-forecast-item.harmonious {
+    border-right: 3px solid #22c55e
+}
+
+[dir="rtl"] .transit-forecast-item.challenging {
+    border-right: 3px solid #ef4444
+}
+
+[dir="rtl"] .transit-forecast-item.neutral {
+    border-right: 3px solid #9d4edd
+}
+
+[dir="rtl"] .transit-forecast-header {
+    text-align: right
+}
+
+[dir="rtl"] .transit-dates {
+    text-align: left
+}
+
+[dir="rtl"] .t-guidance {
+    border-right: 3px solid #22c55e
+}
+
+[dir="rtl"] .transit-dates {
+    text-align: right
+}

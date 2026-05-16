@@ -585,3 +585,37 @@
     width: 100%;
   }
 }
+
+
+/* ── RTL Overrides ── */
+[dir="rtl"] .vm-status-time {
+    text-align: left
+}
+
+[dir="rtl"] .vm-edu-item {
+    border-right: 3px solid
+}
+
+[dir="rtl"] .vm-edu-item.avoid {
+    border-right-color: #ef4444
+}
+
+[dir="rtl"] .vm-edu-item.favor {
+    border-right-color: #4ade80
+}
+
+[dir="rtl"] .vm-edu-item ul {
+    padding-right: 16px
+}
+
+[dir="rtl"] .vm-legend-note {
+    margin-right: auto
+}
+
+[dir="rtl"] .vm-up-dur {
+    margin-right: auto
+}
+
+[dir="rtl"] .vm-up-dur {
+    margin-right: 0
+}

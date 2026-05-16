@@ -690,3 +690,22 @@
     padding-right: var(--space-4);
   }
 }
+
+
+/* ── RTL Overrides ── */
+[dir="rtl"] .auth-profile__data {
+    text-align: right
+}
+
+[dir="rtl"] .auth-not-configured__steps {
+    text-align: right
+}
+
+[dir="rtl"] .auth-not-configured__steps ol {
+    padding-right: var(--space-4)
+}
+
+[dir="rtl"] .auth-modal__header, [dir="rtl"] .auth-modal__content, [dir="rtl"] .auth-modal__footer {
+    padding-right: var(--space-4);
+    padding-left: var(--space-4)
+}

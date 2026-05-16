@@ -896,3 +896,53 @@
     opacity: 1;
   }
 }
+
+
+/* ── RTL Overrides ── */
+[dir="rtl"] .weather-opportunities ul, [dir="rtl"] .weather-challenges ul {
+    padding-right: 1.25rem
+}
+
+[dir="rtl"] .planet-header {
+    text-align: right
+}
+
+[dir="rtl"] .transit-edu-card.harmonious {
+    border-right: 3px solid #22c55e
+}
+
+[dir="rtl"] .transit-edu-card.challenging {
+    border-right: 3px solid #ef4444
+}
+
+[dir="rtl"] .transit-edu-card.neutral {
+    border-right: 3px solid #9d4edd
+}
+
+[dir="rtl"] .transit-header {
+    text-align: right
+}
+
+[dir="rtl"] .house-card {
+    text-align: right
+}
+
+[dir="rtl"] .house-life-areas ul {
+    padding-right: 1.25rem
+}
+
+[dir="rtl"] .aspect-edu-card.harmonious {
+    border-right: 3px solid #22c55e
+}
+
+[dir="rtl"] .aspect-edu-card.challenging {
+    border-right: 3px solid #ef4444
+}
+
+[dir="rtl"] .aspect-edu-card.neutral {
+    border-right: 3px solid #9d4edd
+}
+
+[dir="rtl"] .aspect-header {
+    text-align: right
+}

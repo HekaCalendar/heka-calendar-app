@@ -103,3 +103,17 @@
   font-size: 16px;
   color: #a1a1aa;
 }
+
+
+/* ── RTL Overrides ── */
+[dir="rtl"] .pb-rating {
+    text-align: left
+}
+
+[dir="rtl"] .pb-section.positive {
+    border-right: 3px solid #22c55e
+}
+
+[dir="rtl"] .pb-section.challenging {
+    border-right: 3px solid #ef4444
+}

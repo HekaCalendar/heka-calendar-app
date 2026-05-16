@@ -431,3 +431,17 @@
     text-align: center;
   }
 }
+
+
+/* ── RTL Overrides ── */
+[dir="rtl"] .diary-search-reset {
+    margin-right: auto
+}
+
+[dir="rtl"] .diary-search-stats-breakdown {
+    margin-right: auto
+}
+
+[dir="rtl"] .diary-search-reset {
+    margin-right: 0
+}

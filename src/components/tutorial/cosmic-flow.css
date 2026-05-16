@@ -385,3 +385,13 @@
     font-size: 11px;
   }
 }
+
+
+/* ── RTL Overrides ── */
+[dir="rtl"] .sun-ray {
+    margin-right: 60px
+}
+
+[dir="rtl"] .sun-ray {
+    margin-right: 32px
+}

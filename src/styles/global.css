@@ -6995,3 +6995,198 @@ optgroup {
   background: var(--color-gold);
   border-radius: 3px;
 }
+
+
+/* ── RTL Overrides ── */
+[dir="rtl"] select {
+    padding-left: 2.5rem
+}
+
+[dir="rtl"] .app-header::before {
+    margin-right: calc(50% - var(--header-symbol-half))
+}
+
+[dir="rtl"] .sacred-header__motion {
+    margin-right: calc(50% - var(--header-symbol-half))
+}
+
+[dir="rtl"] .settings-group__control--stack .btn {
+    text-align: right
+}
+
+[dir="rtl"] .day-cell {
+    text-align: right
+}
+
+[dir="rtl"] .note-preview-text {
+    border-right: 2px solid var(--color-gold)
+}
+
+[dir="rtl"] .note-more-indicator {
+    margin-right: 4px
+}
+
+[dir="rtl"] .theme-settings__title {
+    text-align: right
+}
+
+[dir="rtl"] .theme-settings__current {
+    margin-left: var(--space-2)
+}
+
+[dir="rtl"] .theme-card {
+    text-align: right
+}
+
+[dir="rtl"] .font-card {
+    text-align: right
+}
+
+[dir="rtl"] .font-card__desc {
+    margin-right: 1.8rem
+}
+
+[dir="rtl"] .font-card__check {
+    margin-right: auto
+}
+
+[dir="rtl"] .print-preview__content {
+    padding-left: var(--space-2)
+}
+
+[dir="rtl"] .theme-select {
+    padding-left: 40px
+}
+
+[dir="rtl"] .ag-card {
+    border-right: 3px solid
+}
+
+[dir="rtl"] .ag-plant {
+    border-right-color: #22c55e
+}
+
+[dir="rtl"] .ag-transplant {
+    border-right-color: #3b82f6
+}
+
+[dir="rtl"] .ag-harvest {
+    border-right-color: #eab308
+}
+
+[dir="rtl"] .ag-prune {
+    border-right-color: #8b5cf6
+}
+
+[dir="rtl"] .ag-fertilize {
+    border-right-color: #06b6d4
+}
+
+[dir="rtl"] .ag-rest {
+    border-right-color: #6b7280
+}
+
+[dir="rtl"] .holiday-card.approved {
+    border-right: 3px solid #22c55e
+}
+
+[dir="rtl"] .holiday-card.pending {
+    border-right: 3px solid #eab308
+}
+
+[dir="rtl"] .duplicate-options .btn {
+    text-align: right
+}
+
+[dir="rtl"] .note-item--selectable {
+    padding-right: 40px
+}
+
+[dir="rtl"] .notes-list.selection-active .note-item {
+    padding-right: 40px
+}
+
+[dir="rtl"] .calendar-container {
+    padding-right: 4px;
+    padding-left: 4px
+}
+
+[dir="rtl"] .calendar-grid {
+    padding-right: var(--space-2);
+    padding-left: var(--space-2)
+}
+
+[dir="rtl"] .journal-sidebar {
+    border-left: 1px solid var(--color-border);
+    padding-left: var(--space-4)
+}
+
+[dir="rtl"] .journal-content {
+    padding-right: var(--space-2)
+}
+
+[dir="rtl"] .journal-entry-btn {
+    text-align: right
+}
+
+[dir="rtl"] .celestial-panel .celestial-info-list {
+    padding-right: var(--space-4)
+}
+
+[dir="rtl"] .celestial-panel .celestial-info-badge {
+    margin-left: var(--space-2)
+}
+
+[dir="rtl"] .celestial-panel .zodiac-card__label {
+    margin-left: var(--space-2)
+}
+
+[dir="rtl"] .celestial-panel .zodiac-card__trait {
+    margin-left: var(--space-1)
+}
+
+[dir="rtl"] .year-modal-overlay {
+    padding-right: 0;
+    padding-left: 0
+}
+
+[dir="rtl"] .calendar-grid {
+    padding-right: 6px;
+    padding-left: 6px
+}
+
+[dir="rtl"] .celestial-tooltip__section ul {
+    padding-right: var(--space-4)
+}
+
+[dir="rtl"] .mansion-mode-badge {
+    margin-right: auto
+}
+
+[dir="rtl"] .solar-return-mode-badge {
+    margin-right: auto
+}
+
+[dir="rtl"] .solar-return-card {
+    border-right: 3px solid #fbbf24
+}
+
+[dir="rtl"] .astro-card--moon {
+    border-right: 3px solid #8b5cf6
+}
+
+[dir="rtl"] .astro-guidance {
+    border-right: 3px solid #3b82f6
+}
+
+[dir="rtl"] .astro-prompt {
+    border-right: 3px solid #10b981
+}
+
+[dir="rtl"] .astro-affirmation {
+    border-right: 3px solid #ec4899
+}
+
+[dir="rtl"] .welcome-modal__info {
+    text-align: right
+}

@@ -407,3 +407,17 @@
     background: linear-gradient(145deg, rgba(30, 30, 60, 0.95), rgba(40, 40, 70, 0.9));
   }
 }
+
+
+/* ── RTL Overrides ── */
+[dir="rtl"] .void-moon-guide {
+    border-right: 3px solid #d4af37
+}
+
+[dir="rtl"] .void-moon-event-duration {
+    text-align: left
+}
+
+[dir="rtl"] .void-moon-mini-time {
+    margin-right: auto
+}

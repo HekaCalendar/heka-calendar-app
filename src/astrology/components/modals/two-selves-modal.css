@@ -500,3 +500,13 @@
     gap: 14px;
   }
 }
+
+
+/* ── RTL Overrides ── */
+[dir="rtl"] .tsm-side-badge {
+    margin-right: auto
+}
+
+[dir="rtl"] .tsm-change-badge {
+    margin-right: 4px
+}

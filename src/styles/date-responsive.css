@@ -93,3 +93,9 @@
   border-color: rgba(134, 239, 172, 0.3);
   color: #86efac;
 }
+
+
+/* ── RTL Overrides ── */
+[dir="rtl"] .celestial-date-context {
+    margin-right: var(--space-2)
+}

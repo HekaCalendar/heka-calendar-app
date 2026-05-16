@@ -508,3 +508,17 @@
   color: #c9a227;
   font-weight: 600;
 }
+
+
+/* ── RTL Overrides ── */
+[dir="rtl"] .v3-journal-page {
+    text-align: right
+}
+
+[dir="rtl"] .v3-feature-item {
+    text-align: right
+}
+
+[dir="rtl"] .v3-accuracy-label {
+    text-align: right
+}

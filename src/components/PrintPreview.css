@@ -475,3 +475,13 @@
     margin-bottom: 24px;
   }
 }
+
+
+/* ── RTL Overrides ── */
+[dir="rtl"] .print-options__section-title {
+    padding-right: 4px
+}
+
+[dir="rtl"] .print-options__theme-label {
+    text-align: right
+}

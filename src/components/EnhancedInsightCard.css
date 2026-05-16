@@ -637,3 +637,17 @@
     justify-content: flex-end;
   }
 }
+
+
+/* ── RTL Overrides ── */
+[dir="rtl"] .poetic-summary {
+    border-right: 3px solid var(--module-accent)
+}
+
+[dir="rtl"] .section-name {
+    text-align: right
+}
+
+[dir="rtl"] .uniqueness-badge {
+    margin-right: 0.5rem
+}

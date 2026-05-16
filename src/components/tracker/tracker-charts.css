@@ -150,3 +150,13 @@
   font-family: 'JetBrains Mono', monospace;
   text-align: right;
 }
+
+
+/* ── RTL Overrides ── */
+[dir="rtl"] .tracker-chart__legend .dot {
+    margin-left: 6px
+}
+
+[dir="rtl"] .tracker-correlation-item__value {
+    text-align: left
+}

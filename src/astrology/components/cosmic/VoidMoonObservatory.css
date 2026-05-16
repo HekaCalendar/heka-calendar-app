@@ -478,3 +478,9 @@
     grid-template-columns: repeat(2, 1fr);
   }
 }
+
+
+/* ── RTL Overrides ── */
+[dir="rtl"] .vm-hero-timer {
+    text-align: left
+}

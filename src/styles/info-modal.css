@@ -1145,3 +1145,37 @@
     animation: none;
   }
 }
+
+
+/* ── RTL Overrides ── */
+[dir="rtl"] .info-modal__close {
+    margin-right: var(--space-4)
+}
+
+[dir="rtl"] .info-home__card--changes {
+    border-right: 3px solid #4ade80
+}
+
+[dir="rtl"] .info-home__card--keeps {
+    border-right: 3px solid #60a5fa
+}
+
+[dir="rtl"] .info-home__card--use {
+    border-right: 3px solid #caa24a
+}
+
+[dir="rtl"] .info-home__card ul {
+    padding-right: var(--space-4)
+}
+
+[dir="rtl"] .info-home__chapter-btn {
+    text-align: right
+}
+
+[dir="rtl"] .info-chapter__lead {
+    border-right: 3px solid var(--color-gold)
+}
+
+[dir="rtl"] .info-gate__btn {
+    text-align: right
+}

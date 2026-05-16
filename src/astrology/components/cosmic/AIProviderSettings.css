@@ -833,3 +833,34 @@
     transform: none;
   }
 }
+
+
+/* ── RTL Overrides ── */
+[dir="rtl"] .ai-status-provider {
+    padding-right: 8px;
+    border-right: 1px solid currentColor
+}
+
+[dir="rtl"] .ai-provider-card {
+    text-align: right
+}
+
+[dir="rtl"] .ai-step-header {
+    text-align: right
+}
+
+[dir="rtl"] .ai-setup-note {
+    border-right: 3px solid
+}
+
+[dir="rtl"] .ai-spinner {
+    border-left-color: transparent
+}
+
+[dir="rtl"] .ai-collapse-toggle {
+    margin-right: auto
+}
+
+[dir="rtl"] .ai-collapsed-configure {
+    margin-right: 4px
+}

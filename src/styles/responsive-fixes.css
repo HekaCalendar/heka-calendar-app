@@ -519,3 +519,13 @@
     display: none;
   }
 }
+
+
+/* ── RTL Overrides ── */
+[dir="rtl"] .day-panel {
+    border-right: none
+}
+
+[dir="rtl"] .journal-sidebar {
+    border-left: none
+}

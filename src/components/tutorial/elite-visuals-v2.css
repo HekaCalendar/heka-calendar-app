@@ -1352,3 +1352,13 @@
   font-size: 11px;
   color: #86efac;
 }
+
+
+/* ── RTL Overrides ── */
+[dir="rtl"] .v2-phase-item {
+    margin-right: -25px
+}
+
+[dir="rtl"] .v2-zodiac-mark {
+    margin-right: -7px
+}

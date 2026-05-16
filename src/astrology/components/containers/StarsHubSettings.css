@@ -133,3 +133,9 @@
     gap: 12px;
   }
 }
+
+
+/* ── RTL Overrides ── */
+[dir="rtl"] .sh-font-option {
+    text-align: right
+}

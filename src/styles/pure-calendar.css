@@ -1650,3 +1650,36 @@
   border-color: rgba(220, 38, 38, 0.3);
   color: #dc2626;
 }
+
+
+/* ── RTL Overrides ── */
+[dir="rtl"] .pure-calendar-view .calendar-grid--expanded-h .calendar-grid__month-header, [dir="rtl"] .pure-calendar-view .calendar-grid--expanded.calendar-grid--expanded-h .calendar-grid__month-header {
+    margin-right: 0;
+    margin-left: 0
+}
+
+[dir="rtl"] .pure-calendar-view .calendar-grid--expanded-h .calendar-grid__month-index, [dir="rtl"] .pure-calendar-view .calendar-grid--expanded.calendar-grid--expanded-h .calendar-grid__month-index {
+    margin-right: 0;
+    margin-left: 0
+}
+
+[dir="rtl"] .pure-day-panel__recurring-badge {
+    margin-right: 4px
+}
+
+[dir="rtl"] .settings-modal--pure-mode.settings-modal--compact .settings-grid {
+    padding-right: var(--space-3);
+    padding-left: var(--space-3)
+}
+
+[dir="rtl"] .settings-modal--pure-mode.settings-modal--compact .settings-group--pure-header--compact {
+    margin-right: calc(-1 * var(--space-3));
+    margin-left: calc(-1 * var(--space-3));
+    padding-right: var(--space-3);
+    padding-left: var(--space-3)
+}
+
+[dir="rtl"] .pure-calendar-view .calendar-grid__month-header {
+    padding-right: 4px;
+    padding-left: 4px
+}

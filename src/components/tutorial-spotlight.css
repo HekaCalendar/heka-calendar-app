@@ -1433,3 +1433,37 @@
     font-size: 16px;
   }
 }
+
+
+/* ── RTL Overrides ── */
+[dir="rtl"] .choice-option {
+    text-align: right
+}
+
+[dir="rtl"] .checkpoint-option {
+    text-align: right
+}
+
+[dir="rtl"] .tutorial-header-panel__content {
+    padding-right: 52px;
+    padding-left: 60px
+}
+
+[dir="rtl"] .tutorial-header-panel--large .tutorial-header-panel__content {
+    padding-right: 60px;
+    padding-left: 70px
+}
+
+[dir="rtl"] .tutorial-progress__text {
+    text-align: left
+}
+
+[dir="rtl"] .tutorial-header-panel__content {
+    padding-right: 0;
+    padding-left: 50px
+}
+
+[dir="rtl"] .tutorial-header-panel--large .tutorial-header-panel__content {
+    padding-right: 0;
+    padding-left: 55px
+}

@@ -2852,3 +2852,42 @@
     grid-template-columns: repeat(2, 1fr);
   }
 }
+
+
+/* ── RTL Overrides ── */
+[dir="rtl"] .oracle-journal {
+    border-right: 1px solid var(--oj-border-subtle);
+    border-left: 1px solid var(--oj-border-subtle)
+}
+
+[dir="rtl"] .theme-option {
+    text-align: right
+}
+
+[dir="rtl"] .entry-card.has-insight {
+    border-right: 3px solid var(--module-accent)
+}
+
+[dir="rtl"] .entry-card.calendar-note {
+    border-right: 3px solid #3b82f6
+}
+
+[dir="rtl"] .theme-current .theme-arrow {
+    margin-right: 0.25rem
+}
+
+[dir="rtl"] .theme-dropdown .theme-option {
+    text-align: right
+}
+
+[dir="rtl"] .template-option {
+    text-align: right
+}
+
+[dir="rtl"] .tag-chip .tag-remove {
+    margin-right: 0.15rem
+}
+
+[dir="rtl"] .birthchart-panel {
+    border-right: 2px solid #c9a84c
+}

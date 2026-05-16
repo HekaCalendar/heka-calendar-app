@@ -205,3 +205,17 @@
     font-size: 9px;
   }
 }
+
+
+/* ── RTL Overrides ── */
+[dir="rtl"] .nyr-hemi.northern {
+    border-right: 2px solid rgba(59, 130, 246, 0.5)
+}
+
+[dir="rtl"] .nyr-hemi.southern {
+    border-right: 2px solid rgba(245, 158, 11, 0.5)
+}
+
+[dir="rtl"] .nyr-energy-value {
+    text-align: left
+}

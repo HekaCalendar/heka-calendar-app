@@ -783,3 +783,25 @@
     grid-template-columns: 1fr;
   }
 }
+
+
+/* ── RTL Overrides ── */
+[dir="rtl"] .transit-section-subtitle {
+    margin-right: auto
+}
+
+[dir="rtl"] .transit-retrograde {
+    margin-right: var(--space-1)
+}
+
+[dir="rtl"] .transit-notification {
+    border-right: 4px solid
+}
+
+[dir="rtl"] .transit-category-sub {
+    margin-right: auto
+}
+
+[dir="rtl"] .transit-card-strength {
+    text-align: left
+}

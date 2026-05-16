@@ -748,3 +748,49 @@
     grid-template-columns: 1fr;
   }
 }
+
+
+/* ── RTL Overrides ── */
+[dir="rtl"] .sky-aspect-card.harmonious {
+    border-right: 3px solid #22c55e
+}
+
+[dir="rtl"] .sky-aspect-card.challenging {
+    border-right: 3px solid #ef4444
+}
+
+[dir="rtl"] .sky-aspect-card.neutral {
+    border-right: 3px solid #9d4edd
+}
+
+[dir="rtl"] .strength-val {
+    text-align: left
+}
+
+[dir="rtl"] .position-pill .p-loc {
+    margin-right: auto
+}
+
+[dir="rtl"] .transit-event-card.harmonious {
+    border-right: 3px solid #22c55e
+}
+
+[dir="rtl"] .transit-event-card.challenging {
+    border-right: 3px solid #ef4444
+}
+
+[dir="rtl"] .transit-event-card.neutral {
+    border-right: 3px solid #9d4edd
+}
+
+[dir="rtl"] .transit-header {
+    text-align: right
+}
+
+[dir="rtl"] .transit-indicators .orb {
+    text-align: left
+}
+
+[dir="rtl"] .transit-details .guidance {
+    border-right: 3px solid
+}

@@ -192,3 +192,13 @@
     display: none;
   }
 }
+
+
+/* ── RTL Overrides ── */
+[dir="rtl"] .ci-theme-arrow {
+    margin-right: 4px
+}
+
+[dir="rtl"] .ci-theme-option {
+    text-align: right
+}

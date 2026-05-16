@@ -290,3 +290,9 @@
   }
 
 }
+
+
+/* ── RTL Overrides ── */
+[dir="rtl"] .day-panel {
+    border-right: none
+}

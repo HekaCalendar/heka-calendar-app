@@ -229,3 +229,9 @@
     padding: 24px !important;
   }
 }
+
+
+/* ── RTL Overrides ── */
+[dir="rtl"] .oracle-sidebar {
+    border-left: 1px solid var(--oj-border-subtle)
+}

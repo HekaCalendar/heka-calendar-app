@@ -315,3 +315,13 @@
     top: var(--space-2);
   }
 }
+
+
+/* ── RTL Overrides ── */
+[dir="rtl"] .transit-notification-card {
+    border-right: 4px solid
+}
+
+[dir="rtl"] .transit-notification-actions-list ul {
+    padding-right: var(--space-4)
+}

@@ -1938,3 +1938,21 @@
   color: #8b5cf6;
   font-size: 16px;
 }
+
+
+/* ── RTL Overrides ── */
+[dir="rtl"] .elite-mini-ellipsis {
+    margin-right: 4px
+}
+
+[dir="rtl"] .phase-node {
+    margin-right: -30px
+}
+
+[dir="rtl"] .zodiac-marker {
+    margin-right: -8px
+}
+
+[dir="rtl"] .guide-chat-preview {
+    text-align: right
+}

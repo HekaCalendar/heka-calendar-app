@@ -399,3 +399,9 @@
     font-size: 22px;
   }
 }
+
+
+/* ── RTL Overrides ── */
+[dir="rtl"] .ca-progress__text {
+    margin-right: 6px
+}

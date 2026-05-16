@@ -310,3 +310,9 @@
     touch-action: manipulation;
   }
 }
+
+
+/* ── RTL Overrides ── */
+[dir="rtl"] .energy-vote-guidance {
+    border-right: 2px solid #caa24a
+}

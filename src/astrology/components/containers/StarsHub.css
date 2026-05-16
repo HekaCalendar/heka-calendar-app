@@ -1005,3 +1005,29 @@
     grid-template-columns: repeat(2, 1fr);
   }
 }
+
+
+/* ── RTL Overrides ── */
+[dir="rtl"] .sh-pos-card.retro {
+    border-right: 3px solid var(--ci-danger)
+}
+
+[dir="rtl"] .sh-pos-retro {
+    margin-right: auto
+}
+
+[dir="rtl"] .sh-insight-card {
+    border-right: 3px solid
+}
+
+[dir="rtl"] .sh-insight-card.hour {
+    border-right-color: var(--ci-primary)
+}
+
+[dir="rtl"] .sh-insight-card.moon {
+    border-right-color: var(--ci-info)
+}
+
+[dir="rtl"] .sh-insight-card.retro {
+    border-right-color: var(--ci-danger)
+}

@@ -925,3 +925,37 @@
     width: 100%;
   }
 }
+
+
+/* ── RTL Overrides ── */
+[dir="rtl"] .astro-personalized-badge {
+    margin-right: auto
+}
+
+[dir="rtl"] .astro-transit-item.strength-4 {
+    border-right: 3px solid #22c55e
+}
+
+[dir="rtl"] .astro-transit-item.strength-3 {
+    border-right: 3px solid #3b82f6
+}
+
+[dir="rtl"] .astro-transit-item.strength-2 {
+    border-right: 3px solid #eab308
+}
+
+[dir="rtl"] .astro-transit-item.strength-1, [dir="rtl"] .astro-transit-item.strength-0 {
+    border-right: 3px solid #71717a
+}
+
+[dir="rtl"] .astro-card--moon {
+    border-right: 3px solid #8b5cf6
+}
+
+[dir="rtl"] .mansion-mode-badge {
+    margin-right: auto
+}
+
+[dir="rtl"] .solar-return-mode-badge {
+    margin-right: auto
+}

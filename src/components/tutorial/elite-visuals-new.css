@@ -785,3 +785,37 @@
   color: rgba(255, 255, 255, 0.7);
   line-height: 1.5;
 }
+
+
+/* ── RTL Overrides ── */
+[dir="rtl"] .ss-compare-label {
+    text-align: right
+}
+
+[dir="rtl"] .tf-icon {
+    margin-left: 8px
+}
+
+[dir="rtl"] .tf-section {
+    text-align: right
+}
+
+[dir="rtl"] .tf-desc {
+    padding-right: 32px
+}
+
+[dir="rtl"] .mp-cycle-icon {
+    margin-left: 6px
+}
+
+[dir="rtl"] .bc-zodiac {
+    margin-right: -7px
+}
+
+[dir="rtl"] .pt-planet {
+    text-align: right
+}
+
+[dir="rtl"] .pt-advice {
+    text-align: left
+}

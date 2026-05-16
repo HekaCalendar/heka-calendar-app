@@ -1162,3 +1162,9 @@
     transition: none !important;
   }
 }
+
+
+/* ── RTL Overrides ── */
+[dir="rtl"] .tracker-date-nav__cycle {
+    margin-right: var(--t-space-4)
+}
