@@ -16,6 +16,7 @@ const FOCUSABLE_SELECTOR = [
 
 export function useFocusTrap(active: boolean, containerRef: React.RefObject<HTMLElement | null>) {
   const previouslyFocusedRef = useRef<HTMLElement | null>(null);
+  const handlerRef = useRef<((e: KeyboardEvent) => void) | null>(null);
 
   useEffect(() => {
     if (!active) return;
@@ -29,39 +30,47 @@ export function useFocusTrap(active: boolean, containerRef: React.RefObject<HTML
 
       const focusables = Array.from(container.querySelectorAll<HTMLElement>(FOCUSABLE_SELECTOR));
       const first = focusables[0];
-      const last = focusables[focusables.length - 1];
 
       if (first) first.focus();
 
       const handleKeyDown = (e: KeyboardEvent) => {
         if (e.key !== 'Tab') return;
 
-        if (focusables.length === 0) {
+        // Re-query focusables to catch dynamically added elements
+        const currentFocusables = Array.from(
+          container.querySelectorAll<HTMLElement>(FOCUSABLE_SELECTOR)
+        );
+        if (currentFocusables.length === 0) {
           e.preventDefault();
           return;
         }
 
+        const currentFirst = currentFocusables[0];
+        const currentLast = currentFocusables[currentFocusables.length - 1];
+
         if (e.shiftKey) {
-          if (document.activeElement === first) {
+          if (document.activeElement === currentFirst) {
             e.preventDefault();
-            last?.focus();
+            currentLast?.focus();
           }
         } else {
-          if (document.activeElement === last) {
+          if (document.activeElement === currentLast) {
             e.preventDefault();
-            first?.focus();
+            currentFirst?.focus();
           }
         }
       };
 
+      handlerRef.current = handleKeyDown;
       document.addEventListener('keydown', handleKeyDown);
-      return () => {
-        document.removeEventListener('keydown', handleKeyDown);
-      };
     }, 50);
 
     return () => {
       clearTimeout(timer);
+      if (handlerRef.current) {
+        document.removeEventListener('keydown', handlerRef.current);
+        handlerRef.current = null;
+      }
       previouslyFocusedRef.current?.focus();
     };
   }, [active, containerRef]);

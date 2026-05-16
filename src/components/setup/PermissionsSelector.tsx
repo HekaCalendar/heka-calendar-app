@@ -1,64 +1,73 @@
 /**
  * ═══════════════════════════════════════════════════════════════════════════════
  * PERMISSIONS SELECTOR — Location & Notifications
- * Clean cards with categorized notification types.
- * Skippable. Enterprise grade.
+ * Cinematic floating layout. No boxes. No borders. Just breath and light.
  * ═══════════════════════════════════════════════════════════════════════════════
  */
 
 import React, { useState, useCallback, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 import type { AppDispatch } from '../../store';
 import { setLocationEnabled, setNotificationsEnabled } from '../../store/setupSlice';
 import { requestNotificationPermission } from '../../services/notificationService';
+import {
+  IconCalendar, IconMoon, IconScroll, IconSparkle,
+  IconHeartPulse, IconCrescent, IconPin,
+  IconBell, IconHourglass, IconCheck,
+  IconArrowRight,
+} from './SetupIcons';
 
 interface PermissionsSelectorProps {
   initialLocation: boolean | null;
   initialNotifications: boolean | null;
-  strings: {
-    hekaAI: string;
-  };
 }
 
-const NOTIF_CATEGORIES = [
+interface NotifCategory {
+  icon: React.ReactNode;
+  labelKey: string;
+  items: string[];
+}
+
+const NOTIF_CATEGORIES: NotifCategory[] = [
   {
-    icon: '📅',
-    label: 'Calendar',
-    items: ['Holiday reminders', 'Civil ↔ HEKA transitions', 'Note alerts'],
+    icon: <IconCalendar size={16} color="rgba(201,162,39,0.6)" />,
+    labelKey: 'notifCategoryCalendar',
+    items: ['notifItemHolidayReminders', 'notifItemTransitions', 'notifItemNoteAlerts'],
   },
   {
-    icon: '🌙',
-    label: 'Celestial',
-    items: ['Moon phase & degree', 'Void moon alerts', 'Retrograde warnings', 'Daily celestial tips', 'Transit insights'],
+    icon: <IconMoon size={16} color="rgba(201,162,39,0.6)" />,
+    labelKey: 'notifCategoryCelestial',
+    items: ['notifItemMoonPhase', 'notifItemVoidMoon', 'notifItemRetrograde', 'notifItemCelestialTips', 'notifItemTransitInsights'],
   },
   {
-    icon: '📜',
-    label: 'Tasks',
-    items: ['Due reminders', 'Daily briefings', 'Completion celebrations', 'Streak protection'],
+    icon: <IconScroll size={16} color="rgba(201,162,39,0.6)" />,
+    labelKey: 'notifCategoryTasks',
+    items: ['notifItemDueReminders', 'notifItemDailyBriefings', 'notifItemCompletionCelebrations', 'notifItemStreakProtection'],
   },
   {
-    icon: '✨',
-    label: 'Cosmic Circle',
-    items: ['Friend requests', 'Messages', 'Shared tasks'],
+    icon: <IconSparkle size={16} color="rgba(201,162,39,0.6)" />,
+    labelKey: 'notifCategoryCosmicCircle',
+    items: ['notifItemFriendRequests', 'notifItemSharedTasks'],
   },
   {
-    icon: '🩸',
-    label: 'Body & Mind',
-    items: ['Cycle tracking', 'Mood checks', 'Sleep logs', 'Energy checks'],
+    icon: <IconHeartPulse size={16} color="rgba(201,162,39,0.6)" />,
+    labelKey: 'notifCategoryBodyMind',
+    items: ['notifItemCycleTracking', 'notifItemMoodChecks', 'notifItemSleepLogs', 'notifItemEnergyChecks'],
   },
   {
-    icon: '🌑',
-    label: 'Reflection',
-    items: ['Evening journal prompts', 'Celestial insight alerts'],
+    icon: <IconCrescent size={16} color="rgba(201,162,39,0.6)" />,
+    labelKey: 'notifCategoryReflection',
+    items: ['notifItemEveningPrompts', 'notifItemInsightAlerts'],
   },
 ];
 
 export const PermissionsSelector: React.FC<PermissionsSelectorProps> = ({
   initialLocation,
   initialNotifications,
-  strings: _strings,
 }) => {
   const dispatch = useDispatch<AppDispatch>();
+  const { t } = useTranslation('wizard');
   const [location, setLocationState] = useState<boolean | null>(initialLocation);
   const [notifications, setNotificationsState] = useState<boolean | null>(initialNotifications);
   const [locationLoading, setLocationLoading] = useState(false);
@@ -70,8 +79,13 @@ export const PermissionsSelector: React.FC<PermissionsSelectorProps> = ({
     dispatch(setLocationEnabled(location ?? false));
   }, [dispatch, location]);
 
+  // Only sync to Redux when user has explicitly made a choice.
+  // Don't convert null → false on first render — that permanently disables
+  // notifications if the user simply clicks "Next" without engaging the button.
   useEffect(() => {
-    dispatch(setNotificationsEnabled(notifications ?? false));
+    if (notifications !== null) {
+      dispatch(setNotificationsEnabled(notifications));
+    }
   }, [dispatch, notifications]);
 
   const requestLocation = useCallback(async () => {
@@ -79,7 +93,7 @@ export const PermissionsSelector: React.FC<PermissionsSelectorProps> = ({
     setLocationError(null);
     try {
       if (!navigator.geolocation) {
-        setLocationError('Geolocation not supported on this device');
+        setLocationError(t('geolocationNotSupported'));
         setLocationState(false);
         return;
       }
@@ -94,12 +108,14 @@ export const PermissionsSelector: React.FC<PermissionsSelectorProps> = ({
       setLocationState(true);
     } catch (err: any) {
       console.error('[Setup] Location denied:', err);
-      setLocationError(err?.message?.includes('denied') ? 'Permission denied' : 'Unable to get location');
+      setLocationError(
+        err?.message?.includes('denied') ? t('permissionDenied') : t('unableToGetLocation')
+      );
       setLocationState(false);
     } finally {
       setLocationLoading(false);
     }
-  }, []);
+  }, [t]);
 
   const requestNotifications = useCallback(async () => {
     setNotifLoading(true);
@@ -108,110 +124,131 @@ export const PermissionsSelector: React.FC<PermissionsSelectorProps> = ({
       const granted = await requestNotificationPermission();
       setNotificationsState(granted);
       if (!granted) {
-        setNotifError('Permission denied');
+        setNotifError(t('permissionDenied'));
       }
     } catch (err) {
       console.error('[Setup] Notification error:', err);
-      setNotifError('Unable to request permission');
+      setNotifError(t('unableToRequestPermission'));
       setNotificationsState(false);
     } finally {
       setNotifLoading(false);
     }
-  }, []);
+  }, [t]);
+
+  // Auto-request notification permission on first visit to this step
+  useEffect(() => {
+    if (initialNotifications === null) {
+      const timer = setTimeout(() => {
+        void requestNotifications();
+      }, 800);
+      return () => clearTimeout(timer);
+    }
+  }, [initialNotifications, requestNotifications]);
+
+  const getStatusText = (state: boolean | null) => {
+    if (state === true) return t('statusEnabled');
+    if (state === false) return t('statusNotEnabled');
+    return t('statusNotSet');
+  };
+
+  const getStatusClass = (state: boolean | null) => {
+    if (state === true) return 'perm-status--enabled';
+    if (state === false) return 'perm-status--disabled';
+    return 'perm-status--pending';
+  };
 
   return (
     <div className="setup-step setup-step--permissions" tabIndex={-1}>
-      <h2 className="setup-step__title" tabIndex={-1}>Permissions</h2>
-      <p className="setup-step__subtitle">Enable the features that power your celestial experience. You can change these anytime in Settings.</p>
+      <div className="sw-ornament" />
+      <h2 className="setup-step__title" tabIndex={-1}>{t('permissionsTitle')}</h2>
+      <p className="setup-step__subtitle">{t('permissionsSubtitle')}</p>
 
-      {/* Location Card */}
-      <div className={`perm-card ${location === true ? 'perm-card--enabled' : ''} ${location === false ? 'perm-card--disabled' : ''}`}>
-        <div className="perm-card__header">
-          <div className="perm-card__icon-ring">
-            <span>📍</span>
-          </div>
-          <div className="perm-card__title-group">
-            <h3 className="perm-card__title">Location Services</h3>
-            <p className="perm-card__status">
-              {location === true && <span className="perm-status perm-status--enabled">● Enabled</span>}
-              {location === false && <span className="perm-status perm-status--disabled">● Not Enabled</span>}
-              {location === null && <span className="perm-status perm-status--pending">○ Not Set</span>}
-            </p>
+      {/* Location Section */}
+      <div className="perm-section">
+        <div className="perm-section__header">
+          <span className="perm-section__icon"><IconPin size={22} color="#c9a227" /></span>
+          <div className="perm-section__title-group">
+            <h3 className="perm-section__title">{t('locationServicesTitle')}</h3>
+            <span className={`perm-status ${getStatusClass(location)}`}>{getStatusText(location)}</span>
           </div>
         </div>
 
-        <div className="perm-card__features perm-card__features--compact">
-          <div className="perm-feature">
-            <span className="perm-feature__icon">🌅</span>
-            <span className="perm-feature__name">Sunrise, sunset & solar times</span>
-          </div>
-          <div className="perm-feature">
-            <span className="perm-feature__icon">🌙</span>
-            <span className="perm-feature__name">Accurate moon & planetary transits</span>
-          </div>
-          <div className="perm-feature">
-            <span className="perm-feature__icon">🌿</span>
-            <span className="perm-feature__name">Local weather & agricultural guidance</span>
-          </div>
+        <div className="perm-section__features">
+          <span className="perm-section__feature">{t('locationFeature1')}</span>
+          <span className="perm-section__feature">{t('locationFeature2')}</span>
+          <span className="perm-section__feature">{t('locationFeature3')}</span>
         </div>
 
         {locationError && (
-          <div className="perm-card__error" role="alert">{locationError}</div>
+          <div className="perm-section__error" role="alert">{locationError}</div>
         )}
 
         <button
-          className={`perm-card__btn ${location === true ? 'perm-card__btn--enabled' : ''}`}
+          className={`perm-action ${location === true ? 'perm-action--enabled' : ''}`}
           onClick={requestLocation}
           disabled={locationLoading}
           type="button"
         >
-          {locationLoading ? '⏳ Requesting...' : location === true ? '✓ Location Active' : 'Enable Location'}
+          {locationLoading ? (
+            <><IconHourglass size={14} color="#c9a227" /> {t('requesting')}</>
+          ) : location === true ? (
+            <><IconCheck size={14} color="#81b29a" /> {t('locationActive')}</>
+          ) : (
+            <>{t('enableLocation')} <IconArrowRight size={14} color="currentColor" /></>
+          )}
         </button>
       </div>
 
-      {/* Notifications Card */}
-      <div className={`perm-card ${notifications === true ? 'perm-card--enabled' : ''} ${notifications === false ? 'perm-card--disabled' : ''}`}>
-        <div className="perm-card__header">
-          <div className="perm-card__icon-ring">
-            <span>🔔</span>
-          </div>
-          <div className="perm-card__title-group">
-            <h3 className="perm-card__title">Notifications</h3>
-            <p className="perm-card__status">
-              {notifications === true && <span className="perm-status perm-status--enabled">● Enabled</span>}
-              {notifications === false && <span className="perm-status perm-status--disabled">● Not Enabled</span>}
-              {notifications === null && <span className="perm-status perm-status--pending">○ Not Set</span>}
-            </p>
+      {/* Divider */}
+      <div className="perm-divider" aria-hidden="true" />
+
+      {/* Notifications Section */}
+      <div className="perm-section">
+        <div className="perm-section__header">
+          <span className="perm-section__icon"><IconBell size={22} color="#c9a227" /></span>
+          <div className="perm-section__title-group">
+            <h3 className="perm-section__title">{t('notificationsTitle')}</h3>
+            <span className={`perm-status ${getStatusClass(notifications)}`}>{getStatusText(notifications)}</span>
           </div>
         </div>
 
-        <div className="perm-notif-grid">
+        <div className="perm-constellation">
           {NOTIF_CATEGORIES.map((cat) => (
-            <div key={cat.label} className="perm-notif-category">
-              <div className="perm-notif-category__header">
-                <span className="perm-notif-category__icon">{cat.icon}</span>
-                <span className="perm-notif-category__label">{cat.label}</span>
+            <div key={cat.labelKey} className="perm-constellation__row">
+              <span className="perm-constellation__icon">{cat.icon}</span>
+              <div className="perm-constellation__text">
+                <span className="perm-constellation__label">{t(cat.labelKey)}</span>
+                <span className="perm-constellation__items">
+                  {cat.items.map((itemKey, i) => (
+                    <React.Fragment key={itemKey}>
+                      {t(itemKey)}{i < cat.items.length - 1 && <span className="perm-constellation__sep" aria-hidden="true"> · </span>}
+                    </React.Fragment>
+                  ))}
+                </span>
               </div>
-              <ul className="perm-notif-category__list">
-                {cat.items.map((item) => (
-                  <li key={item} className="perm-notif-category__item">{item}</li>
-                ))}
-              </ul>
             </div>
           ))}
         </div>
 
         {notifError && (
-          <div className="perm-card__error" role="alert">{notifError}</div>
+          <div className="perm-section__error" role="alert">{notifError}</div>
         )}
 
         <button
-          className={`perm-card__btn ${notifications === true ? 'perm-card__btn--enabled' : ''}`}
+          className={`perm-action ${notifications === true ? 'perm-action--enabled' : ''}`}
           onClick={requestNotifications}
           disabled={notifLoading}
           type="button"
         >
-          {notifLoading ? '⏳ Requesting...' : notifications === true ? '✓ Notifications Active' : 'Enable Notifications'}
+          {notifLoading ? (
+            <><IconHourglass size={14} color="#c9a227" /> {t('requesting')}</>
+          ) : notifications === true ? (
+            <><IconCheck size={14} color="#81b29a" /> {t('notificationsActive')}</>
+          ) : notifications === false ? (
+            <>{t('retryNotifications')} <IconArrowRight size={14} color="currentColor" /></>
+          ) : (
+            <>{t('enableNotifications')} <IconArrowRight size={14} color="currentColor" /></>
+          )}
         </button>
       </div>
     </div>

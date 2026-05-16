@@ -9,6 +9,7 @@
  */
 
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import type { MorningBriefing as MorningBriefingType } from '../../services/guidance/personalizedEngine';
 
 interface MorningBriefingProps {
@@ -305,6 +306,7 @@ export const MorningBriefing: React.FC<MorningBriefingProps> = ({
   hasAIProvider,
   onOpenSettings,
 }) => {
+  const { t } = useTranslation('celestial');
   const [isVisible, setIsVisible] = useState(true);
   
   if (!isVisible) return null;
@@ -324,7 +326,7 @@ export const MorningBriefing: React.FC<MorningBriefingProps> = ({
   } = briefing;
   
   const formatDate = (d: Date) => {
-    return new Intl.DateTimeFormat('en-US', {
+    return new Intl.DateTimeFormat('en', {
       weekday: 'long',
       month: 'long',
       day: 'numeric',
@@ -332,15 +334,7 @@ export const MorningBriefing: React.FC<MorningBriefingProps> = ({
   };
   
   const getFocusAreaLabel = (area: string) => {
-    const labels: Record<string, string> = {
-      career: 'Career & Vocation',
-      relationships: 'Love & Relationships',
-      health: 'Health & Vitality',
-      finances: 'Wealth & Resources',
-      personalGrowth: 'Personal Growth',
-      timing: 'Timing & Productivity',
-    };
-    return labels[area] || area;
+    return t(`lifeAreas.${area}`, { defaultValue: area });
   };
   
   const handleDismiss = () => {
@@ -397,15 +391,15 @@ export const MorningBriefing: React.FC<MorningBriefingProps> = ({
       
       {/* Theme of the Day */}
       <div style={styles.themeCard}>
-        <div style={styles.themeLabel}>Today&apos;s Theme</div>
+        <div style={styles.themeLabel}>{t('briefing.todaysTheme')}</div>
         <h2 style={styles.themeValue}>{themeOfTheDay}</h2>
-        <div style={styles.focusArea}>Focus: {getFocusAreaLabel(focusArea)}</div>
+        <div style={styles.focusArea}>{t('briefing.focus', { area: getFocusAreaLabel(focusArea) })}</div>
       </div>
       
       {/* Pattern Alert */}
       {patternMatches.length > 0 && (
         <div style={styles.patternAlert}>
-          <div style={styles.patternTitle}>🔮 Pattern Recognized</div>
+          <div style={styles.patternTitle}>{t('briefing.patternRecognized')}</div>
           <p style={styles.patternText}>{patternMatches[0].insight}</p>
         </div>
       )}
@@ -424,7 +418,7 @@ export const MorningBriefing: React.FC<MorningBriefingProps> = ({
           <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
             <span>⚠️</span>
             <span style={{ fontSize: '0.85rem', color: 'rgba(255,255,255,0.85)' }}>
-              AI enhancement unavailable. Showing template guidance.
+              {t('briefing.aiUnavailable')}
             </span>
           </div>
         </div>
@@ -445,12 +439,12 @@ export const MorningBriefing: React.FC<MorningBriefingProps> = ({
             <span style={{ fontSize: '1.5rem' }}>✨</span>
             <div style={{ flex: 1 }}>
               <div style={{ fontSize: '0.9rem', fontWeight: 600, color: '#e9d5ff', marginBottom: '4px' }}>
-                {hasAIProvider ? 'Enable AI Guidance' : 'Unlock Deeper Insights'}
+                {hasAIProvider ? t('briefing.enableAi') : t('briefing.unlockDeeper')}
               </div>
               <p style={{ fontSize: '0.85rem', color: 'rgba(255,255,255,0.7)', margin: '0 0 12px 0', lineHeight: 1.5 }}>
                 {hasAIProvider
-                  ? 'You have an AI provider configured. Turn on AI guidance for poetic, personalized readings.'
-                  : 'Add an AI provider to receive LLM-enhanced interpretations tailored to your unique chart.'}
+                  ? t('briefing.aiConfigured')
+                  : t('briefing.aiAddProvider')}
               </p>
               {onOpenSettings && (
                 <button
@@ -466,7 +460,7 @@ export const MorningBriefing: React.FC<MorningBriefingProps> = ({
                     cursor: 'pointer',
                   }}
                 >
-                  {hasAIProvider ? 'Turn On in Settings' : 'Set Up AI →'}
+                  {hasAIProvider ? t('briefing.turnOnSettings') : t('briefing.setUpAi')}
                 </button>
               )}
             </div>
@@ -477,18 +471,18 @@ export const MorningBriefing: React.FC<MorningBriefingProps> = ({
       {/* Guidance */}
       <div style={styles.guidanceSection}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 12 }}>
-          <h3 style={styles.guidanceTitle}>Your Guidance</h3>
+          <h3 style={styles.guidanceTitle}>{t('briefing.yourGuidance')}</h3>
           {guidance.aiGenerated ? (
             <span style={{ fontSize: '0.7rem', color: '#a78bfa', background: 'rgba(167,139,250,0.15)', padding: '4px 8px', borderRadius: 12 }}>
-              ✨ AI-Enhanced
+              {t('briefing.aiEnhanced')}
             </span>
           ) : aiFallbackReason ? (
             <span style={{ fontSize: '0.7rem', color: '#fbbf24', background: 'rgba(251,191,36,0.12)', padding: '4px 8px', borderRadius: 12 }}>
-              ⚠️ Template Fallback
+              {t('briefing.templateFallback')}
             </span>
           ) : (
             <span style={{ fontSize: '0.7rem', color: '#60a5fa', background: 'rgba(96,165,250,0.15)', padding: '4px 8px', borderRadius: 12 }}>
-              📚 Template-Powered
+              {t('briefing.templatePowered')}
             </span>
           )}
         </div>
@@ -497,7 +491,7 @@ export const MorningBriefing: React.FC<MorningBriefingProps> = ({
       
       {/* Practical Steps */}
       <div style={styles.stepsSection}>
-        <div style={styles.stepsTitle}>Today&apos;s Focus</div>
+        <div style={styles.stepsTitle}>{t('briefing.todaysFocus')}</div>
         <ul style={styles.stepList}>
           {practicalSteps.map((step, index) => (
             <li key={index} style={styles.stepItem}>
@@ -510,7 +504,7 @@ export const MorningBriefing: React.FC<MorningBriefingProps> = ({
       
       {/* Affirmation */}
       <div style={styles.affirmation}>
-        <div style={styles.affirmationLabel}>Daily Affirmation</div>
+        <div style={styles.affirmationLabel}>{t('briefing.dailyAffirmation')}</div>
         <p style={styles.affirmationText}>&ldquo;{affirmation}&rdquo;</p>
       </div>
       
@@ -528,7 +522,7 @@ export const MorningBriefing: React.FC<MorningBriefingProps> = ({
             e.currentTarget.style.boxShadow = 'none';
           }}
         >
-          View Full Guidance
+          {t('briefing.viewFullGuidance')}
         </button>
         <button 
           style={styles.secondaryButton}
@@ -540,7 +534,7 @@ export const MorningBriefing: React.FC<MorningBriefingProps> = ({
             e.currentTarget.style.background = 'transparent';
           }}
         >
-          Dismiss
+          {t('briefing.dismiss')}
         </button>
       </div>
     </div>

@@ -4,9 +4,11 @@
  */
 
 import { useEffect, useMemo, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useSelector, useDispatch } from 'react-redux';
 import type { RootState, AppDispatch } from '../store';
 import { trackFeatureDiscovery } from '../services/engagementService';
+import i18n from '../i18n';
 import { containsProfanity } from '../services/profanityFilter';
 import {
   attachCommunityHolidaysListener,
@@ -35,12 +37,8 @@ const CATEGORY_COLORS: Record<CommunityFeature['category'], string> = {
   integrations: '#60a5fa',
 };
 
-const STATUS_LABELS: Record<CommunityFeature['status'], string> = {
-  planned: 'Planned',
-  considering: 'Considering',
-  released: 'Released',
-  'in-progress': 'In Progress',
-};
+const getStatusKey = (status: CommunityFeature['status']) =>
+  status === 'in-progress' ? 'inProgress' : status;
 
 const STATUS_BADGE_BG: Record<CommunityFeature['status'], string> = {
   planned: 'rgba(167,139,250,0.15)',
@@ -50,6 +48,7 @@ const STATUS_BADGE_BG: Record<CommunityFeature['status'], string> = {
 };
 
 export const CommunityHub: React.FC<CommunityHubProps> = ({ isOpen, onClose }) => {
+  const { t } = useTranslation('circle');
   const dispatch = useDispatch<AppDispatch>();
   const holidays = useSelector((state: RootState) => state.calendar.communityHolidays);
   const features = useSelector((state: RootState) => state.calendar.communityFeatures);
@@ -95,8 +94,11 @@ export const CommunityHub: React.FC<CommunityHubProps> = ({ isOpen, onClose }) =
     if (!uid) return;
     const hv: Record<string, 'up' | 'down'> = {};
     holidays.forEach((h) => {
-      if (h.voterUids?.includes(uid)) {
-        hv[h.id] = 'up'; // we don't store direction per uid in this schema, assume up for prior votes
+      // Use voterDirections (new schema) first, fall back to voterUids (legacy schema)
+      if (h.voterDirections && h.voterDirections[uid]) {
+        hv[h.id] = h.voterDirections[uid];
+      } else if (h.voterUids?.includes(uid)) {
+        hv[h.id] = 'up'; // legacy data: assume upvote
       }
     });
     const fv: Record<string, boolean> = {};
@@ -126,21 +128,21 @@ export const CommunityHub: React.FC<CommunityHubProps> = ({ isOpen, onClose }) =
   const handleHolidaySubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!holidayForm.name || !holidayForm.date) {
-      showToast('Please fill in the holiday name and date.');
+      showToast(t('community.toast.fillNameDate'));
       return;
     }
     // Validate MM-DD format loosely
     const dateClean = holidayForm.date.trim();
     if (!/^\d{1,2}-\d{1,2}$/.test(dateClean)) {
-      showToast('Date should be in MM-DD format (e.g., 04-22).');
+      showToast(t('community.toast.dateFormat'));
       return;
     }
     if (!currentUser) {
-      showToast('Please sign in to suggest a holiday.');
+      showToast(t('community.toast.signInToSuggest'));
       return;
     }
     if (containsProfanity(holidayForm.name) || containsProfanity(holidayForm.description)) {
-      showToast('❌ Please keep submissions respectful.');
+      showToast(t('community.toast.keepRespectful'));
       return;
     }
     setIsSubmitting(true);
@@ -149,14 +151,14 @@ export const CommunityHub: React.FC<CommunityHubProps> = ({ isOpen, onClose }) =
         name: holidayForm.name.trim(),
         date: dateClean,
         description: holidayForm.description.trim(),
-        suggestedBy: currentUser?.displayName || 'Anonymous Star',
+        suggestedBy: currentUser?.displayName || t('community.anonymousStar'),
       });
       trackFeatureDiscovery(dispatch, () => ({ calendar: { progress: { featureDiscovery: {} } } } as any), 'suggestedHoliday');
       setHolidayForm({ name: '', date: '', description: '' });
       setShowHolidayForm(false);
-      showToast('✅ Holiday submitted for community review!');
+      showToast(t('community.toast.submitted'));
     } catch (err: any) {
-      showToast(err?.message || 'Failed to submit holiday.');
+      showToast(err?.message || t('community.toast.submitFailed'));
     } finally {
       setIsSubmitting(false);
     }
@@ -164,7 +166,7 @@ export const CommunityHub: React.FC<CommunityHubProps> = ({ isOpen, onClose }) =
 
   const handleHolidayVote = async (id: string, dir: 'up' | 'down') => {
     if (!currentUser) {
-      showToast('Please sign in to vote.');
+      showToast(t('community.toast.signInToVote'));
       return;
     }
     if (userVotes.holidays[id]) return;
@@ -173,13 +175,13 @@ export const CommunityHub: React.FC<CommunityHubProps> = ({ isOpen, onClose }) =
       setUserVotes((prev) => ({ ...prev, holidays: { ...prev.holidays, [id]: dir } }));
     } catch (err: any) {
       console.error('[CommunityHub] Holiday vote error:', err);
-      showToast(err?.message || 'Vote failed. Try again.');
+      showToast(err?.message || t('community.toast.voteFailed'));
     }
   };
 
   const handleFeatureVote = async (id: string) => {
     if (!currentUser) {
-      showToast('Please sign in to vote.');
+      showToast(t('community.toast.signInToVote'));
       return;
     }
     if (userVotes.features[id]) return;
@@ -188,14 +190,14 @@ export const CommunityHub: React.FC<CommunityHubProps> = ({ isOpen, onClose }) =
       setUserVotes((prev) => ({ ...prev, features: { ...prev.features, [id]: true } }));
     } catch (err: any) {
       console.error('[CommunityHub] Feature vote error:', err);
-      showToast(err?.message || 'Vote failed. Try again.');
+      showToast(err?.message || t('community.toast.voteFailed'));
     }
   };
 
   const formatDate = (mmdd: string) => {
     const [m, d] = mmdd.split('-');
     const date = new Date(2024, parseInt(m) - 1, parseInt(d));
-    return date.toLocaleDateString('en-US', { month: 'long', day: 'numeric' });
+    return new Intl.DateTimeFormat(i18n.language || 'en', { month: 'long', day: 'numeric' }).format(date);
   };
 
   if (!isOpen) return null;
@@ -206,10 +208,10 @@ export const CommunityHub: React.FC<CommunityHubProps> = ({ isOpen, onClose }) =
         {/* Header */}
         <div style={styles.header}>
           <div>
-            <h2 style={styles.title}>🌌 Community Hub</h2>
-            <p style={styles.subtitle}>Shape the future of HEKA. Vote on holidays and upcoming features.</p>
+            <h2 style={styles.title}>🌌 {t('community.title')}</h2>
+            <p style={styles.subtitle}>{t('community.subtitle')}</p>
           </div>
-          <button className="btn btn--icon" onClick={onClose} aria-label="Close" style={{ color: '#e5e5e5' }}>
+          <button className="btn btn--icon" onClick={onClose} aria-label={t('community.close')} style={{ color: '#e5e5e5' }}>
             ×
           </button>
         </div>
@@ -220,13 +222,13 @@ export const CommunityHub: React.FC<CommunityHubProps> = ({ isOpen, onClose }) =
             onClick={() => setActiveTab('holidays')}
             style={{ ...styles.tab, ...(activeTab === 'holidays' ? styles.tabActive : {}) }}
           >
-            🌍 Holidays
+            {t('community.holidaysTab')}
           </button>
           <button
             onClick={() => setActiveTab('features')}
             style={{ ...styles.tab, ...(activeTab === 'features' ? styles.tabActive : {}) }}
           >
-            ✨ Features
+            {t('community.featuresTab')}
           </button>
         </div>
 
@@ -240,7 +242,7 @@ export const CommunityHub: React.FC<CommunityHubProps> = ({ isOpen, onClose }) =
                 onClick={() => setShowHolidayForm((s) => !s)}
                 style={{ width: '100%' }}
               >
-                {showHolidayForm ? 'Cancel' : '+ Suggest New Holiday'}
+                {showHolidayForm ? t('community.cancel') : t('community.suggestHoliday')}
               </button>
 
               {/* Holiday Form */}
@@ -248,40 +250,40 @@ export const CommunityHub: React.FC<CommunityHubProps> = ({ isOpen, onClose }) =
                 <form onSubmit={handleHolidaySubmit} style={styles.glassPanel}>
                   <div style={styles.formGrid}>
                     <div style={styles.field}>
-                      <label style={styles.label}>Holiday Name</label>
+                      <label style={styles.label}>{t('community.holidayName')}</label>
                       <input
                         type="text"
                         value={holidayForm.name}
                         onChange={(e) => setHolidayForm({ ...holidayForm, name: e.target.value })}
-                        placeholder="e.g., Global Meditation Day"
+                        placeholder={t('community.placeholderHolidayName')}
                         required
                         style={styles.input}
                       />
                     </div>
                     <div style={styles.field}>
-                      <label style={styles.label}>Date (MM-DD)</label>
+                      <label style={styles.label}>{t('community.dateLabel')}</label>
                       <input
                         type="text"
                         value={holidayForm.date}
                         onChange={(e) => setHolidayForm({ ...holidayForm, date: e.target.value })}
-                        placeholder="04-22"
+                        placeholder={t('community.placeholderDate')}
                         required
                         style={styles.input}
                       />
                     </div>
                   </div>
                   <div style={styles.field}>
-                    <label style={styles.label}>Description</label>
+                    <label style={styles.label}>{t('community.description')}</label>
                     <textarea
                       value={holidayForm.description}
                       onChange={(e) => setHolidayForm({ ...holidayForm, description: e.target.value })}
-                      placeholder="Why should this be a HEKA holiday?"
+                      placeholder={t('community.placeholderDescription')}
                       rows={3}
                       style={styles.textarea}
                     />
                   </div>
                   <button type="submit" className="btn btn--primary" disabled={isSubmitting}>
-                    {isSubmitting ? 'Submitting…' : 'Submit Suggestion'}
+                    {isSubmitting ? t('community.submitting') : t('community.submitSuggestion')}
                   </button>
                 </form>
               )}
@@ -289,7 +291,7 @@ export const CommunityHub: React.FC<CommunityHubProps> = ({ isOpen, onClose }) =
               {/* Approved Holidays */}
               {approvedHolidays.length > 0 && (
                 <div>
-                  <h3 style={styles.sectionTitle}>✓ Official Community Holidays</h3>
+                  <h3 style={styles.sectionTitle}>{t('community.officialHolidays')}</h3>
                   <div style={styles.list}>
                     {approvedHolidays.map((h) => (
                       <div key={h.id} style={{ ...styles.card, borderLeft: '4px solid #22c55e' }}>
@@ -318,7 +320,7 @@ export const CommunityHub: React.FC<CommunityHubProps> = ({ isOpen, onClose }) =
               {/* Pending Holidays */}
               {pendingHolidays.length > 0 && (
                 <div>
-                  <h3 style={styles.sectionTitle}>🗳️ Pending Suggestions</h3>
+                  <h3 style={styles.sectionTitle}>{t('community.pendingSuggestions')}</h3>
                   <div style={styles.list}>
                     {pendingHolidays.map((h) => {
                       const score = h.votesUp - h.votesDown;
@@ -328,7 +330,7 @@ export const CommunityHub: React.FC<CommunityHubProps> = ({ isOpen, onClose }) =
                             <div style={styles.cardMeta}>{formatDate(h.date)}</div>
                             <div style={styles.cardTitle}>{h.name}</div>
                             <div style={styles.cardDesc}>{h.description}</div>
-                            <div style={styles.cardMeta}>Suggested by {h.suggestedBy}</div>
+                            <div style={styles.cardMeta}>{t('community.suggestedBy', { name: h.suggestedBy })}</div>
                             <div style={styles.progressWrap}>
                               <div style={styles.progressTrack}>
                                 <div
@@ -339,7 +341,7 @@ export const CommunityHub: React.FC<CommunityHubProps> = ({ isOpen, onClose }) =
                                   }}
                                 />
                               </div>
-                              <span style={styles.progressLabel}>{score}/10 to approve</span>
+                              <span style={styles.progressLabel}>{t('community.approvalProgress', { score })}</span>
                             </div>
                           </div>
                           <div style={styles.voteCol}>
@@ -372,7 +374,7 @@ export const CommunityHub: React.FC<CommunityHubProps> = ({ isOpen, onClose }) =
               {approvedHolidays.length === 0 && pendingHolidays.length === 0 && (
                 <div style={styles.empty}>
                   <div style={styles.emptyIcon}>🌱</div>
-                  <p>No community holidays yet. Be the first to suggest one!</p>
+                  <p>{t('community.noHolidays')}</p>
                 </div>
               )}
             </div>
@@ -380,8 +382,8 @@ export const CommunityHub: React.FC<CommunityHubProps> = ({ isOpen, onClose }) =
             <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
               {/* Intro */}
               <div style={styles.heroBanner}>
-                <div style={styles.heroTitle}>Your voice shapes the cosmos</div>
-                <div style={styles.heroSub}>Vote for the features you want us to build next. Top-voted ideas move to the front of the stellar queue.</div>
+                <div style={styles.heroTitle}>{t('community.heroTitle')}</div>
+                <div style={styles.heroSub}>{t('community.heroSubtitle')}</div>
               </div>
 
               {/* Features Grid */}
@@ -399,14 +401,14 @@ export const CommunityHub: React.FC<CommunityHubProps> = ({ isOpen, onClose }) =
                             color: CATEGORY_COLORS[f.category],
                           }}
                         >
-                          {STATUS_LABELS[f.status]}
+                          {t(`community.status.${getStatusKey(f.status)}`)}
                         </span>
                       </div>
                       <div style={styles.featureTitle}>{f.title}</div>
                       <div style={styles.featureDesc}>{f.description}</div>
                       <div style={styles.featureFooter}>
                         <span style={{ ...styles.categoryPill, color: CATEGORY_COLORS[f.category], borderColor: CATEGORY_COLORS[f.category] }}>
-                          {f.category}
+                          {t(`community.category.${f.category}`)}
                         </span>
                         <button
                           className="btn btn--primary"
@@ -426,7 +428,7 @@ export const CommunityHub: React.FC<CommunityHubProps> = ({ isOpen, onClose }) =
                             gap: '0.35rem',
                           }}
                         >
-                          {hasVoted ? '✓ Voted' : '▲ Vote'}
+                          {hasVoted ? t('community.voted') : t('community.vote')}
                           <span style={{ opacity: 0.9 }}>{f.votes}</span>
                         </button>
                       </div>
@@ -438,7 +440,7 @@ export const CommunityHub: React.FC<CommunityHubProps> = ({ isOpen, onClose }) =
               {features.length === 0 && (
                 <div style={styles.empty}>
                   <div style={styles.emptyIcon}>✨</div>
-                  <p>Showing local feature constellation. Vote counts will sync when connected.</p>
+                  <p>{t('community.noFeatures')}</p>
                 </div>
               )}
             </div>

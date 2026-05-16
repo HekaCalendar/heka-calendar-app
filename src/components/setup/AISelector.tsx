@@ -12,38 +12,27 @@
 
 import React, { useState, useCallback, useEffect, useRef } from 'react';
 import { useDispatch } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 import type { AppDispatch } from '../../store';
 import { setAIProvider, setAIModel, setAIApiKeyConfigured } from '../../store/setupSlice';
 import { aiConfigService } from '../../services/aiConfigService';
 import { aiProviderManager, type AIProviderType } from '../../astrology/services/ai/aiProvider';
 import { secureKeyStore } from '../../services/secureKeyStore';
+import {
+  IconLightning, IconRobot, IconBrain, IconHomeServer,
+  IconBook, IconEye, IconEyeOff, IconLink, IconCheck, IconX,
+} from './SetupIcons';
 
 interface AISelectorProps {
   initialProvider: string | null;
   initialModel: string | null;
   initialConfigured: boolean;
-  strings: {
-    hekaAI: string;
-    aiDescription: string;
-    aiSelectProvider: string;
-    aiApiKey: string;
-    aiTestConnection: string;
-    aiConnectionSuccess: string;
-    aiConnectionFailed: string;
-    aiSkipDescription: string;
-    aiUsingTemplate: string;
-    aiModelSelect: string;
-    hekaCoachTitle: string;
-    hekaCoachDesc: string;
-    hekaAIDesc: string;
-    apiKeyHelp: string;
-  };
 }
 
 interface ProviderMeta {
   type: AIProviderType;
   name: string;
-  icon: string;
+  icon: React.ReactNode;
   description: string;
   color: string;
   requiresKey: boolean;
@@ -58,7 +47,7 @@ const API_PROVIDERS: ProviderMeta[] = [
   {
     type: 'groq',
     name: 'Groq',
-    icon: '⚡',
+    icon: <IconLightning size={20} color="#f43f5e" />,
     description: 'Llama 3 via Groq. Blazing fast. Free tier: 1M tokens/day.',
     color: '#f43f5e',
     requiresKey: true,
@@ -74,7 +63,7 @@ const API_PROVIDERS: ProviderMeta[] = [
   {
     type: 'openai',
     name: 'OpenAI',
-    icon: '🤖',
+    icon: <IconRobot size={20} color="#10a37f" />,
     description: 'GPT-4o / GPT-4o-mini. Industry standard. Requires billing.',
     color: '#10a37f',
     requiresKey: true,
@@ -90,7 +79,7 @@ const API_PROVIDERS: ProviderMeta[] = [
   {
     type: 'anthropic',
     name: 'Anthropic',
-    icon: '🧠',
+    icon: <IconBrain size={20} color="#d97757" />,
     description: 'Claude 3 Haiku / Sonnet. Elegant reasoning. Requires billing.',
     color: '#d97757',
     requiresKey: true,
@@ -106,7 +95,7 @@ const API_PROVIDERS: ProviderMeta[] = [
   {
     type: 'ollama',
     name: 'Ollama',
-    icon: '🏠',
+    icon: <IconHomeServer size={20} color="#8b5cf6" />,
     description: 'Run AI locally on your machine. Free forever. Requires installation.',
     color: '#8b5cf6',
     requiresKey: true,
@@ -125,9 +114,10 @@ const API_PROVIDERS: ProviderMeta[] = [
 export const AISelector: React.FC<AISelectorProps> = ({
   initialProvider,
   initialModel,
-  strings,
+  initialConfigured: _initialConfigured,
 }) => {
   const dispatch = useDispatch<AppDispatch>();
+  const { t } = useTranslation('wizard');
   const [selectedProvider, setSelectedProvider] = useState<AIProviderType>(
     (initialProvider as AIProviderType) || 'template'
   );
@@ -220,18 +210,26 @@ export const AISelector: React.FC<AISelectorProps> = ({
     setIsTesting(true);
     setTestResult(null);
 
+    // Safety timeout: force-reset testing state if something hangs
+    const safetyTimer = setTimeout(() => {
+      setIsTesting(false);
+      setTestResult({ ok: false, message: t('aiConnectionFailed') });
+    }, 20000);
+
     try {
       const ok = await aiProviderManager.validateApiKey(selectedProvider, apiKey.trim());
+      clearTimeout(safetyTimer);
       setTestResult({
         ok,
-        message: ok ? strings.aiConnectionSuccess : strings.aiConnectionFailed,
+        message: ok ? t('aiConnectionSuccess') : t('aiConnectionFailed'),
       });
     } catch {
-      setTestResult({ ok: false, message: strings.aiConnectionFailed });
+      clearTimeout(safetyTimer);
+      setTestResult({ ok: false, message: t('aiConnectionFailed') });
     } finally {
       setIsTesting(false);
     }
-  }, [apiKey, selectedProvider, strings]);
+  }, [apiKey, selectedProvider, t]);
 
   const openHelpUrl = (url: string) => {
     if (typeof window !== 'undefined') {
@@ -241,16 +239,17 @@ export const AISelector: React.FC<AISelectorProps> = ({
 
   return (
     <div className="setup-step setup-step--ai" tabIndex={-1}>
-      <h2 className="setup-step__title" tabIndex={-1}>{strings.hekaAI}</h2>
-      <p className="setup-step__subtitle">{strings.aiDescription}</p>
+      <div className="sw-ornament" />
+      <h2 className="setup-step__title" tabIndex={-1}>{t('hekaAI')}</h2>
+      <p className="setup-step__subtitle">{t('aiDescription')}</p>
 
       {/* ═══ HEKA Coach — Template Library ═══ */}
       <div className="ai-section">
         <div className="ai-section__header">
           <span className="ai-section__badge ai-section__badge--coach">Coach</span>
-          <h3 className="ai-section__title">{strings.hekaCoachTitle}</h3>
+          <h3 className="ai-section__title">{t('hekaCoachTitle')}</h3>
         </div>
-        <p className="ai-section__desc">{strings.hekaCoachDesc}</p>
+        <p className="ai-section__desc">{t('hekaCoachDesc')}</p>
 
         <button
           className={`ai-provider-card ${selectedProvider === 'template' ? 'ai-provider-card--active' : ''}`}
@@ -260,14 +259,14 @@ export const AISelector: React.FC<AISelectorProps> = ({
           type="button"
         >
           <div className="ai-provider-card__header">
-            <span className="ai-provider-card__icon" style={{ color: '#fbbf24' }} aria-hidden="true">📚</span>
+            <span className="ai-provider-card__icon" style={{ color: '#fbbf24' }} aria-hidden="true"><IconBook size={20} color="#fbbf24" /></span>
             <div className="ai-provider-card__info">
               <span className="ai-provider-card__name">Template Library</span>
               <span className="ai-provider-card__desc">169+ hand-crafted celestial readings. Instant. Free. No setup.</span>
             </div>
           </div>
           {selectedProvider === 'template' && (
-            <span className="ai-provider-card__check" aria-hidden="true">✓</span>
+            <span className="ai-provider-card__check" aria-hidden="true"><IconCheck size={18} color="#81b29a" /></span>
           )}
         </button>
       </div>
@@ -278,9 +277,9 @@ export const AISelector: React.FC<AISelectorProps> = ({
           <span className="ai-section__badge ai-section__badge--ai">AI</span>
           <h3 className="ai-section__title">HEKA AI</h3>
         </div>
-        <p className="ai-section__desc">{strings.hekaAIDesc}</p>
+        <p className="ai-section__desc">{t('hekaAIDesc')}</p>
 
-        <div className="ai-provider-grid" role="radiogroup" aria-label={strings.aiSelectProvider}>
+        <div className="ai-provider-grid" role="radiogroup" aria-label={t('aiSelectProvider')}>
           {API_PROVIDERS.map((provider, index) => (
             <button
               key={provider.type}
@@ -294,7 +293,7 @@ export const AISelector: React.FC<AISelectorProps> = ({
               <div className="ai-provider-card__header">
                 <span
                   className="ai-provider-card__icon"
-                  style={{ color: provider.color }}
+                  style={{ color: provider.color, display: 'flex', alignItems: 'center' }}
                   aria-hidden="true"
                 >
                   {provider.icon}
@@ -305,7 +304,7 @@ export const AISelector: React.FC<AISelectorProps> = ({
                 </div>
               </div>
               {selectedProvider === provider.type && (
-                <span className="ai-provider-card__check" aria-hidden="true">✓</span>
+                <span className="ai-provider-card__check" aria-hidden="true"><IconCheck size={18} color="#81b29a" /></span>
               )}
             </button>
           ))}
@@ -342,7 +341,7 @@ export const AISelector: React.FC<AISelectorProps> = ({
                 aria-label={showKey ? 'Hide key' : 'Show key'}
                 tabIndex={-1}
               >
-                {showKey ? '🙈' : '👁️'}
+                {showKey ? <IconEyeOff size={18} color="#a89bc8" /> : <IconEye size={18} color="#a89bc8" />}
               </button>
             </div>
           </div>
@@ -354,8 +353,8 @@ export const AISelector: React.FC<AISelectorProps> = ({
               onClick={() => openHelpUrl(providerMeta.helpUrl)}
               type="button"
             >
-              <span>🔗</span>
-              <span>{strings.apiKeyHelp}</span>
+              <span><IconLink size={16} color="#c9a227" /></span>
+              <span>{t('apiKeyHelp')}</span>
             </button>
             <p className="ai-key-help__text">{providerMeta.helpText}</p>
           </div>
@@ -364,7 +363,7 @@ export const AISelector: React.FC<AISelectorProps> = ({
           {providerMeta.models.length > 0 && (
             <div className="ai-config-field">
               <label className="ai-config-field__label" htmlFor="ai-model-select">
-                {strings.aiModelSelect}
+                {t('aiModelSelect')}
               </label>
               <select
                 id="ai-model-select"
@@ -392,10 +391,10 @@ export const AISelector: React.FC<AISelectorProps> = ({
               {isTesting ? (
                 <>
                   <span className="ai-spinner" aria-hidden="true" />
-                  {strings.aiTestConnection}
+                  {t('aiTestConnection')}
                 </>
               ) : (
-                strings.aiTestConnection
+                t('aiTestConnection')
               )}
             </button>
           </div>
@@ -408,7 +407,7 @@ export const AISelector: React.FC<AISelectorProps> = ({
               aria-live="polite"
             >
               <span className="ai-test-result__icon" aria-hidden="true">
-                {testResult.ok ? '✓' : '✕'}
+                {testResult.ok ? <IconCheck size={18} color="#81b29a" /> : <IconX size={18} color="#e07a5f" />}
               </span>
               <span>{testResult.message}</span>
             </div>
@@ -419,13 +418,13 @@ export const AISelector: React.FC<AISelectorProps> = ({
       {/* Template info */}
       {selectedProvider === 'template' && (
         <div className="ai-template-info">
-          <span aria-hidden="true">📚</span>
-          <span>{strings.aiUsingTemplate}</span>
+          <span aria-hidden="true"><IconBook size={18} color="#fbbf24" /></span>
+          <span>{t('aiUsingTemplate')}</span>
         </div>
       )}
 
       {/* Skip hint */}
-      <p className="ai-skip-hint">{strings.aiSkipDescription}</p>
+      <p className="ai-skip-hint">{t('aiSkipDescription')}</p>
     </div>
   );
 };

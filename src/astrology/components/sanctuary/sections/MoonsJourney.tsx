@@ -19,7 +19,7 @@ import {
   AspectConversation,
   PlanetaryVoice,
 } from '../content/voidNarratives';
-import { getZodiacSystemPreference } from '../../../services/natal/zodiacHelpers';
+import { getZodiacSystemPreference, getSignCountPreference } from '../../../services/natal/zodiacHelpers';
 
 interface MoonsJourneyProps {
   className?: string;
@@ -32,16 +32,19 @@ export const MoonsJourney: React.FC<MoonsJourneyProps> = ({ className = '' }) =>
   const [selectedAspect, setSelectedAspect] = useState<string | null>(null);
   const [selectedPlanet, setSelectedPlanet] = useState<string | null>(null);
   const [zodiacKey, setZodiacKey] = useState(() => getZodiacSystemPreference());
+  const [signCount, setSignCount] = useState(() => getSignCountPreference());
   
-  // Update zodiac key when system changes
+  // Update zodiac key and sign count when system changes
   useEffect(() => {
     const check = () => {
-      const current = getZodiacSystemPreference();
-      if (current !== zodiacKey) setZodiacKey(current);
+      const currentSystem = getZodiacSystemPreference();
+      const currentCount = getSignCountPreference();
+      if (currentSystem !== zodiacKey) setZodiacKey(currentSystem);
+      if (currentCount !== signCount) setSignCount(currentCount);
     };
     const interval = setInterval(check, 1000);
     return () => clearInterval(interval);
-  }, [zodiacKey]);
+  }, [zodiacKey, signCount]);
   
   return (
     <div className={`moons-journey ${className}`} style={{ padding: '24px' }}>
@@ -123,7 +126,7 @@ export const MoonsJourney: React.FC<MoonsJourneyProps> = ({ className = '' }) =>
             onSelectPlanet={setSelectedPlanet}
           />
         )}
-        {viewMode === 'signs' && <SignsView key={zodiacKey} />}
+        {viewMode === 'signs' && <SignsView key={`${zodiacKey}-${signCount}`} />}
       </div>
     </div>
   );
@@ -133,7 +136,7 @@ export const MoonsJourney: React.FC<MoonsJourneyProps> = ({ className = '' }) =>
 // OVERVIEW VIEW
 // ═══════════════════════════════════════════════════════════════════════════════
 
-const overviewCards = [
+const getOverviewCards = (use13Signs: boolean) => [
   {
     id: 'messenger',
     title: moonTeachings.title,
@@ -145,8 +148,15 @@ const overviewCards = [
   {
     id: 'palace',
     title: 'The Zodiac Palace',
-    shortText: 'Imagine the zodiac as a grand palace with twelve rooms...',
-    fullText: moonJourneyContent.introduction,
+    shortText: use13Signs
+      ? 'Imagine the zodiac as a grand palace with thirteen rooms...'
+      : 'Imagine the zodiac as a grand palace with twelve rooms...',
+    fullText: use13Signs
+      ? moonJourneyContent.introduction
+          .replace(/twelve/g, 'thirteen')
+          .replace(/12/g, '13')
+          .replace(/two and a half days/g, 'just over two days')
+      : moonJourneyContent.introduction.replace(/two and a half days/g, 'just over two days'),
     color: '#a78bfa', // Purple
     icon: '✦',
   },
@@ -162,6 +172,8 @@ const overviewCards = [
 
 const OverviewView: React.FC = () => {
   const [expandedCard, setExpandedCard] = useState<string | null>(null);
+  const use13Signs = getSignCountPreference() === 13 || getZodiacSystemPreference() === '13-sign';
+  const overviewCards = getOverviewCards(use13Signs);
   
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
@@ -696,12 +708,14 @@ const PlanetDetail: React.FC<{ planet: PlanetaryVoice; onBack: () => void }> = (
 
 const SignsView: React.FC = () => {
   const [selectedSign, setSelectedSign] = useState<string | null>(null);
-  const [use13Signs, setUse13Signs] = useState(() => getZodiacSystemPreference() === '13-sign');
+  const [use13Signs, setUse13Signs] = useState(() =>
+    getZodiacSystemPreference() === '13-sign' || getSignCountPreference() === 13
+  );
   
   // Listen for zodiac system changes
   useEffect(() => {
     const checkZodiacSystem = () => {
-      const is13Sign = getZodiacSystemPreference() === '13-sign';
+      const is13Sign = getZodiacSystemPreference() === '13-sign' || getSignCountPreference() === 13;
       if (is13Sign !== use13Signs) {
         setUse13Signs(is13Sign);
       }
@@ -720,6 +734,7 @@ const SignsView: React.FC = () => {
     earth: { color: '#22c55e', label: 'Earth' },
     air: { color: '#3b82f6', label: 'Air' },
     water: { color: '#06b6d4', label: 'Water' },
+    ether: { color: '#a855f7', label: 'Ether' },
   };
   
   // Filter signEssences based on zodiac system

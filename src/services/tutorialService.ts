@@ -90,8 +90,6 @@ class TutorialService {
       // Check if we need to reset tutorials due to version change
       const savedVersion = localStorage.getItem(TUTORIAL_VERSION_KEY);
       if (savedVersion !== CURRENT_TUTORIAL_VERSION) {
-        console.log('[Tutorial] Version mismatch or first run - resetting tutorial state');
-        console.log('[Tutorial] Old version:', savedVersion, 'New version:', CURRENT_TUTORIAL_VERSION);
         localStorage.setItem(TUTORIAL_VERSION_KEY, CURRENT_TUTORIAL_VERSION);
         // Clear old tutorial state to force fresh onboarding
         localStorage.removeItem(STORAGE_KEY);
@@ -163,7 +161,6 @@ class TutorialService {
     // Check if already completed
     const progress = this.getTutorialProgress(tutorialId);
     if (progress?.completed && tutorial.maxShows && progress.showCount >= tutorial.maxShows) {
-      console.log(`[Tutorial] Tutorial ${tutorialId} already completed max times`);
       return false;
     }
 
@@ -172,7 +169,6 @@ class TutorialService {
       for (const reqId of tutorial.requiredTutorials) {
         const reqProgress = this.getTutorialProgress(reqId);
         if (!reqProgress?.completed) {
-          console.log(`[Tutorial] Prerequisite not met: ${reqId}`);
           return false;
         }
       }
@@ -437,10 +433,6 @@ class TutorialService {
    * Setup an interactive step with action detection
    */
   private setupInteractiveStep(config: InteractiveConfig): void {
-    const step = this.getCurrentStep();
-    console.log('[Tutorial] Setting up interactive step:', step?.id);
-    console.log('[Tutorial] Validation config:', JSON.stringify(config.validation));
-    
     // Check if target element already exists (for elementAppears validation)
     this.elementInitiallyExists = false;
     this.initialElementRef = null;
@@ -453,12 +445,8 @@ class TutorialService {
       if (initialElement) {
         this.elementFingerprint = initialElement.innerHTML;
       }
-      console.log('[Tutorial] Initial element check for elementAppears:', 
-        config.validation.elementAppears, 
-        'exists:', this.elementInitiallyExists,
-        'fingerprint length:', this.elementFingerprint?.length || 0);
+      // Element check done silently
       if (this.elementInitiallyExists) {
-        console.log('[Tutorial] ⚠️ Element already exists - will wait for user interaction or content change');
       }
     }
     
@@ -469,9 +457,7 @@ class TutorialService {
 
     // Run validation immediately after a short delay (let DOM settle)
     setTimeout(() => {
-      console.log('[Tutorial] Running initial validation check');
-      const isValid = this.validateInteractiveStep();
-      console.log('[Tutorial] Initial validation result:', isValid);
+      this.validateInteractiveStep();
     }, 300);
 
     // Start validation polling
@@ -493,7 +479,6 @@ class TutorialService {
             // Check if click was on/near the target
             const targetEl = document.querySelector(step.targetSelector);
             if (targetEl && (targetEl === target || targetEl.contains(target))) {
-              console.log('[Tutorial] User clicked on target area - marking interaction');
               this.userHasClicked = true;
             }
           }
@@ -506,12 +491,8 @@ class TutorialService {
 
     // Setup mutation observer for DOM changes
     if (config.validation?.elementAppears || config.validation?.elementDisappears) {
-      const targetSelector = config.validation.elementAppears || config.validation.elementDisappears;
-      console.log('[Tutorial] Setting up mutation observer for:', targetSelector);
-      
       this.mutationObserver = new MutationObserver((mutations) => {
         if (!this.state.isWaitingForAction) {
-          console.log('[Tutorial] Observer fired but not waiting for action');
           return;
         }
         
@@ -525,7 +506,6 @@ class TutorialService {
         if (relevantMutations.length > 0) {
           // Reduced logging
           if (Math.random() < 0.3) {
-            console.log('[Tutorial] Mutation observer detected', relevantMutations.length, 'relevant changes');
           }
           
           // Check if element that was initially there has now changed
@@ -534,13 +514,11 @@ class TutorialService {
           if (targetSelector && this.elementInitiallyExists) {
             const currentElement = document.querySelector(targetSelector);
             if (!currentElement) {
-              console.log('[Tutorial] Element disappeared - resetting');
               this.elementInitiallyExists = false;
               this.initialElementRef = null;
               this.elementFingerprint = null;
             } else if (this.userHasClicked && currentElement !== this.initialElementRef) {
               // User clicked and element was replaced
-              console.log('[Tutorial] User clicked and element was replaced - resetting');
               this.elementInitiallyExists = false;
               this.initialElementRef = null;
               this.elementFingerprint = null;
@@ -548,8 +526,6 @@ class TutorialService {
               // User clicked - check if content changed
               const currentFingerprint = currentElement.innerHTML;
               if (currentFingerprint !== this.elementFingerprint) {
-                console.log('[Tutorial] User clicked and element content changed - resetting');
-                console.log('[Tutorial] Fingerprint changed from', this.elementFingerprint?.length, 'to', currentFingerprint?.length);
                 this.elementInitiallyExists = false;
                 this.initialElementRef = null;
                 this.elementFingerprint = null;
@@ -562,7 +538,6 @@ class TutorialService {
             if (this.state.isWaitingForAction) {
               const isValid = this.validateInteractiveStep();
               if (isValid) {
-                console.log('[Tutorial] Validation passed via mutation observer');
               }
             }
           }, 150);
@@ -576,7 +551,6 @@ class TutorialService {
         attributeFilter: ['class', 'style', 'hidden', 'aria-hidden'],
       });
       
-      console.log('[Tutorial] Mutation observer is now watching document.body');
     }
   }
 
@@ -596,7 +570,6 @@ class TutorialService {
   private startValidationPolling(config: InteractiveConfig): void {
     if (!config.validation) return;
 
-    console.log('[Tutorial] Starting validation polling');
     
     // More frequent polling for better responsiveness
     this.validationInterval = window.setInterval(() => {
@@ -611,7 +584,6 @@ class TutorialService {
       
       const isValid = this.validateInteractiveStep();
       if (isValid) {
-        console.log('[Tutorial] Validation passed via polling');
       }
     }, 250); // Check every 250ms
   }
@@ -627,14 +599,14 @@ class TutorialService {
 
     const validation = step.interactive.validation;
     let isValid = false;
-    let checkDescription = '';
+
 
     // Check target has class
     if (!isValid && validation.targetHasClass && step.targetSelector) {
       const target = this.findElement(step.targetSelector);
       if (target?.classList.contains(validation.targetHasClass)) {
         isValid = true;
-        checkDescription = `target has class ${validation.targetHasClass}`;
+        // Validation passed: target has class
       }
     }
 
@@ -643,7 +615,7 @@ class TutorialService {
       const elements = document.querySelectorAll(`.${validation.anyElementHasClass}`);
       if (elements.length > 0) {
         isValid = true;
-        checkDescription = `element has class ${validation.anyElementHasClass}`;
+        // Validation passed: element has class
       }
     }
 
@@ -652,7 +624,7 @@ class TutorialService {
       const value = localStorage.getItem(validation.localStorageKey);
       if (value !== null && value !== 'false') {
         isValid = true;
-        checkDescription = `localStorage key ${validation.localStorageKey} exists`;
+        // Validation passed: localStorage key exists
       }
     }
 
@@ -661,7 +633,7 @@ class TutorialService {
       const value = localStorage.getItem(validation.localStorageValue.key);
       if (value === validation.localStorageValue.value) {
         isValid = true;
-        checkDescription = `localStorage value matches`;
+        // Validation passed: localStorage value matches
       }
     }
 
@@ -670,14 +642,12 @@ class TutorialService {
       const element = document.querySelector(validation.elementAppears);
       // Only validate if element exists AND wasn't there at step start
       if (element && !this.elementInitiallyExists) {
-        console.log('[Tutorial] ✓ Element newly appeared:', validation.elementAppears);
         isValid = true;
-        checkDescription = `element ${validation.elementAppears} newly appeared`;
+        // Validation passed: element appeared
       } else if (element && this.elementInitiallyExists) {
         // Element exists but was already there - don't validate yet
         // Reduced logging to avoid spam
         if (Math.random() < 0.05) {
-          console.log('[Tutorial] Element exists but was already there at step start');
         }
       }
     }
@@ -721,15 +691,12 @@ class TutorialService {
       }
       
       if (!element || !isVisible) {
-        console.log('[Tutorial] ✓ Element disappeared or hidden:', validation.elementDisappears);
         isValid = true;
-        checkDescription = `element ${validation.elementDisappears} disappeared`;
+        // Validation passed: element disappeared
       }
     }
 
     if (isValid && this.state.isWaitingForAction) {
-      console.log('[Tutorial] ✓✓✓ Validation PASSED:', checkDescription);
-      console.log('[Tutorial] Advancing to next step in 1.5s...');
       this.handleActionSuccess();
     }
 
@@ -1006,7 +973,6 @@ class TutorialService {
       localStorage.removeItem(key);
     });
     
-    console.log('[Tutorial] Cleared tutorial localStorage keys');
   }
 
   // ═══════════════════════════════════════════════════════════════════════════════
@@ -1120,38 +1086,25 @@ class TutorialService {
    * Check and auto-start tutorials based on conditions
    */
   checkAutoTriggers(): void {
-    console.log('[Tutorial] checkAutoTriggers called');
-    console.log('[Tutorial] autoShowTutorials:', this.state.preferences.autoShowTutorials);
-    console.log('[Tutorial] isActive:', this.state.isActive);
-    console.log('[Tutorial] skipOnboarding:', this.state.preferences.skipOnboarding);
-    console.log('[Tutorial] completedTutorials:', this.state.completedTutorials);
-    console.log('[Tutorial] progress:', this.state.progress);
     
     if (!this.state.preferences.autoShowTutorials) {
-      console.log('[Tutorial] autoShowTutorials is false, not checking triggers');
       return;
     }
     if (this.state.isActive) {
-      console.log('[Tutorial] Tutorial already active, not checking triggers');
       return;
     }
     if (this.state.preferences.skipOnboarding) {
-      console.log('[Tutorial] skipOnboarding is true, not checking triggers');
       return;
     }
 
-    console.log('[Tutorial] Checking', allTutorials.length, 'tutorials for first-visit triggers');
     
     for (const tutorial of allTutorials) {
-      console.log(`[Tutorial] Checking tutorial: ${tutorial.id}, trigger: ${tutorial.triggerCondition}, seen: ${this.hasUserSeenTutorial(tutorial.id)}`);
       if (tutorial.triggerCondition === 'first-visit' && !this.hasUserSeenTutorial(tutorial.id)) {
-        console.log(`[Tutorial] Starting first-visit tutorial: ${tutorial.id}`);
         this.startTutorial(tutorial.id);
         return;
       }
     }
     
-    console.log('[Tutorial] No first-visit tutorials to show');
   }
 
   /**
@@ -1179,10 +1132,8 @@ class TutorialService {
     
     if (direction === 'prev') {
       localStorage.setItem('tutorial-month-nav-prev', 'true');
-      console.log('[Tutorial] Month navigation: PREV clicked');
     } else {
       localStorage.setItem('tutorial-month-nav-next', 'true');
-      console.log('[Tutorial] Month navigation: NEXT clicked');
     }
     
     // Check if both directions have been clicked
@@ -1191,7 +1142,6 @@ class TutorialService {
     
     if (bothClicked) {
       localStorage.setItem('tutorial-month-navigated', 'true');
-      console.log('[Tutorial] Month navigation: BOTH directions completed!');
     }
     
     // Trigger validation check if we're on a month-navigation step
@@ -1202,7 +1152,6 @@ class TutorialService {
                       currentStep?.id === 'step-06-navigation'; // Elite tutorial (updated)
     
     if (isNavStep && this.state.isWaitingForAction) {
-      console.log('[Tutorial] Month navigation detected during tutorial step');
       this.validateInteractiveStep();
     }
     
@@ -1227,13 +1176,11 @@ class TutorialService {
    */
   trackTodayButton(): void {
     localStorage.setItem('tutorial-today-clicked', 'true');
-    console.log('[Tutorial] Today button clicked');
     
     // Trigger validation check if we're on the today-button step
     const currentStep = this.getCurrentStep();
     if ((currentStep?.id === 'today-button-interactive' || currentStep?.id === 'step-07-today') && 
         this.state.isWaitingForAction) {
-      console.log('[Tutorial] Today button detected during tutorial step');
       localStorage.setItem('elite-step-07-today', 'true');
       this.validateInteractiveStep();
     }
@@ -1244,12 +1191,10 @@ class TutorialService {
    */
   trackCalendarExpand(direction: 'vertical' | 'horizontal'): void {
     localStorage.setItem(`elite-step-08-expand-${direction}`, 'true');
-    console.log('[Tutorial] Calendar expand clicked:', direction);
     
     // Trigger validation check if we're on the expand step
     const currentStep = this.getCurrentStep();
     if (currentStep?.id === 'step-08-expand' && this.state.isWaitingForAction) {
-      console.log('[Tutorial] Calendar expand detected during tutorial step');
       localStorage.setItem(`elite-step-08-expand-${direction}`, 'true');
       this.validateInteractiveStep();
     }
@@ -1260,12 +1205,10 @@ class TutorialService {
    */
   trackNoteEditorOpened(): void {
     localStorage.setItem('elite-step-04-note-opened', 'true');
-    console.log('[Tutorial] Note editor opened');
     
     // Trigger validation check if we're on the note creation step
     const currentStep = this.getCurrentStep();
     if (currentStep?.id === 'step-04-note-creation' && this.state.isWaitingForAction) {
-      console.log('[Tutorial] Note editor opened during tutorial step');
       this.validateInteractiveStep();
     }
   }
@@ -1278,12 +1221,10 @@ class TutorialService {
     if (localStorage.getItem('elite-step-04-typed') === 'true') return;
     
     localStorage.setItem('elite-step-04-typed', 'true');
-    console.log('[Tutorial] Note typing detected');
     
     // Trigger validation check if we're on the note creation step
     const currentStep = this.getCurrentStep();
     if (currentStep?.id === 'step-04-add-note' && this.state.isWaitingForAction) {
-      console.log('[Tutorial] Note typing detected during tutorial step');
       this.validateInteractiveStep();
     }
   }
@@ -1294,12 +1235,10 @@ class TutorialService {
   trackNoteCreated(): void {
     localStorage.setItem('elite-step-04-note-created', 'true');
     localStorage.setItem('tutorial-note-saved', 'true');
-    console.log('[Tutorial] Note created');
     
     // Trigger validation check if we're on the note creation step
     const currentStep = this.getCurrentStep();
     if (currentStep?.id === 'step-04-add-note' && this.state.isWaitingForAction) {
-      console.log('[Tutorial] Note created during tutorial step');
       this.validateInteractiveStep();
     }
   }
@@ -1308,12 +1247,10 @@ class TutorialService {
    * Track Year view button click for tutorial validation
    */
   trackYearView(): void {
-    console.log('[Tutorial] Year view clicked');
     
     // Trigger validation check if we're on the year view step
     const currentStep = this.getCurrentStep();
     if (currentStep?.id === 'step-10-year' && this.state.isWaitingForAction) {
-      console.log('[Tutorial] Year view detected during tutorial step');
       this.validateInteractiveStep();
     }
   }
@@ -1322,12 +1259,10 @@ class TutorialService {
    * Track Journal button click for tutorial validation
    */
   trackJournal(): void {
-    console.log('[Tutorial] Journal clicked');
     
     // Trigger validation check if we're on the journal step
     const currentStep = this.getCurrentStep();
     if (currentStep?.id === 'step-12-journal' && this.state.isWaitingForAction) {
-      console.log('[Tutorial] Journal detected during tutorial step');
       this.validateInteractiveStep();
     }
   }
@@ -1336,12 +1271,10 @@ class TutorialService {
    * Track Stars Hub button click for tutorial validation
    */
   trackStarsHub(): void {
-    console.log('[Tutorial] Stars Hub clicked');
     
     // Trigger validation check if we're on the stars step
     const currentStep = this.getCurrentStep();
     if (currentStep?.id === 'step-14-stars' && this.state.isWaitingForAction) {
-      console.log('[Tutorial] Stars Hub detected during tutorial step');
       this.validateInteractiveStep();
     }
   }
@@ -1352,12 +1285,10 @@ class TutorialService {
   trackThemeSelection(themeId: string): void {
     localStorage.setItem('tutorial-theme-selected', 'true');
     localStorage.setItem('heka-theme', themeId);
-    console.log('[Tutorial] Theme selected:', themeId);
     
     // Trigger validation check if we're on the theme selection step
     const currentStep = this.getCurrentStep();
     if (currentStep?.id === 'settings-theme-task' && this.state.isWaitingForAction) {
-      console.log('[Tutorial] Theme selection detected during tutorial step');
       this.validateInteractiveStep();
     }
   }
@@ -1367,17 +1298,14 @@ class TutorialService {
    */
   trackDisplayToggle(setting: string, enabled: boolean): void {
     localStorage.setItem(`tutorial-display-${setting}`, enabled ? 'true' : 'false');
-    console.log('[Tutorial] Display toggle:', setting, enabled);
     
     // ELITE TUTORIAL: Track moon phases toggle for step 9
     if (setting === 'showMoonPhases' && enabled) {
       localStorage.setItem('elite-step-09-moon', 'true');
-      console.log('[Tutorial] Moon phases enabled for ELITE tutorial');
       
       // Trigger validation for step 9 (guided task - toggle-moon substep)
       const currentStep = this.getCurrentStep();
       if (currentStep?.id === 'step-09-settings' && this.state.isWaitingForAction) {
-        console.log('[Tutorial] Moon toggle detected during ELITE tutorial step 9');
         this.validateInteractiveStep();
       }
     }
@@ -1385,7 +1313,6 @@ class TutorialService {
     // Trigger validation check if we're on the relevant tutorial step
     const currentStep = this.getCurrentStep();
     if (currentStep?.id === `settings-${setting}` && this.state.isWaitingForAction) {
-      console.log('[Tutorial] Display toggle detected during tutorial step');
       this.validateInteractiveStep();
     }
   }
@@ -1395,12 +1322,10 @@ class TutorialService {
    */
   trackCelestialGuideToggle(enabled: boolean): void {
     localStorage.setItem('tutorial-celestial-guide-toggled', enabled ? 'true' : 'false');
-    console.log('[Tutorial] Celestial guide toggle:', enabled);
     
     // Trigger validation check if we're on the celestial guide settings step
     const currentStep = this.getCurrentStep();
     if (currentStep?.id === 'settings-celestial-guide' && this.state.isWaitingForAction) {
-      console.log('[Tutorial] Celestial guide toggle detected during tutorial step');
       this.validateInteractiveStep();
     }
   }
@@ -1419,7 +1344,6 @@ class TutorialService {
     this.guidedTaskTargetSelector = selector;
     // Notify subscribers to update spotlight position
     this.notify();
-    console.log('[Tutorial] Guided task target set to:', selector);
   }
 
   /**
@@ -1434,7 +1358,6 @@ class TutorialService {
    */
   notifySubStepChange(): void {
     this.notify();
-    console.log('[Tutorial] Substep change notified');
   }
 
   /**
@@ -1477,7 +1400,6 @@ class TutorialService {
     this.state = getDefaultState();
     this.saveState();
     this.notify();
-    console.log('[Tutorial] All tutorials reset - ready to restart');
   }
 
   resetAllProgress(): void {

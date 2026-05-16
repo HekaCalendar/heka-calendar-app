@@ -9,6 +9,7 @@
  */
 
 import type { AstroProfile } from '../../types/astrology';
+import i18n from '../../i18n';
 import { generateNatalChart, calculateJulianDay, calculateAllPlanets, calculateAyanamsa } from '../../astrology/services/swiss-ephemeris/engine';
 import {
   calculateElementalBalance, calculateModalityBalance, getNatalThemes,
@@ -855,7 +856,7 @@ function buildTimingSection(profile: AstroProfile, chart: any, planetaryHour: { 
 
   if (sr) {
     content += `### Your Next Solar Return\n\n`;
-    content += `Your personal new year occurs around **${sr.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}**. `;
+    content += `Your personal new year occurs around **${new Intl.DateTimeFormat(i18n.language || 'en', { month: 'long', day: 'numeric', year: 'numeric' }).format(sr)}**. `;
     content += `This is when the Sun returns to its exact natal position. It is the most powerful time for intention-setting, goal-setting, and reviewing the year past. Mark this date in your HEKA calendar.\n\n`;
   }
 

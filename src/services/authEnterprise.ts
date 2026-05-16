@@ -150,7 +150,7 @@ class EnterpriseAuthService {
     }
 
     // In production, send to server
-    console.log('[AUDIT]', logEntry.action, entry.success ? '✓' : '✗', entry.details || '');
+    // Audit logging: details redacted in production
   }
 
   getAuditLog(): AuditLogEntry[] {

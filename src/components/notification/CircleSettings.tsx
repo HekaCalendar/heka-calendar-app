@@ -4,6 +4,7 @@
  */
 
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useSelector, useDispatch } from 'react-redux';
 import type { RootState, AppDispatch } from '../../store';
 import { updateNotificationPreferences } from '../../store';
@@ -24,6 +25,7 @@ interface CircleSettingsProps {
 }
 
 export const CircleSettings: React.FC<CircleSettingsProps> = ({ isOpen, onClose }) => {
+  const { t } = useTranslation('circle');
   const dispatch = useDispatch<AppDispatch>();
   const currentTheme = useSelector((state: RootState) => state.friends.circleTheme);
   const prefs = useSelector((state: RootState) => state.calendar.notificationPreferences.circle);
@@ -131,7 +133,7 @@ export const CircleSettings: React.FC<CircleSettingsProps> = ({ isOpen, onClose 
           justifyContent: 'space-between',
         }}>
           <h2 style={{ margin: 0, fontSize: '18px', fontWeight: 600, color: '#e0e0e0' }}>
-            ⚙️ Circle Settings
+            {t('settings.title')}
           </h2>
           <button onClick={onClose} style={{
             background: 'none',
@@ -170,7 +172,7 @@ export const CircleSettings: React.FC<CircleSettingsProps> = ({ isOpen, onClose 
                 transition: 'all 0.2s',
               }}
             >
-              {tab === 'themes' ? '🎨 Themes' : '🔔 Notifications'}
+              {tab === 'themes' ? t('settings.themesTab') : t('settings.notificationsTab')}
             </button>
           ))}
         </div>
@@ -180,7 +182,7 @@ export const CircleSettings: React.FC<CircleSettingsProps> = ({ isOpen, onClose 
           {activeTab === 'themes' && (
             <div>
               <p style={{ margin: '0 0 16px', fontSize: '13px', color: 'rgba(224,224,224,0.5)' }}>
-                Choose the visual atmosphere for your Cosmic Circle.
+                {t('settings.themesDescription')}
               </p>
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '10px' }}>
                 {CIRCLE_THEMES.map((theme) => (
@@ -201,7 +203,7 @@ export const CircleSettings: React.FC<CircleSettingsProps> = ({ isOpen, onClose 
                     }}
                   >
                     <span style={{ fontSize: '24px' }}>{theme.emoji}</span>
-                    <span style={{ fontSize: '12px', fontWeight: 500, color: '#e0e0e0' }}>{theme.name}</span>
+                    <span style={{ fontSize: '12px', fontWeight: 500, color: '#e0e0e0' }}>{t(`settings.themes.${theme.id}`)}</span>
                   </button>
                 ))}
               </div>
@@ -211,35 +213,29 @@ export const CircleSettings: React.FC<CircleSettingsProps> = ({ isOpen, onClose 
           {activeTab === 'notifications' && (
             <div>
               <p style={{ margin: '0 0 8px', fontSize: '13px', color: 'rgba(224,224,224,0.5)' }}>
-                Control which Circle events notify you.
+                {t('settings.notificationsDescription')}
               </p>
               <Switch
                 checked={prefs.friendRequests}
                 onChange={() => toggle('friendRequests')}
-                label="Friend Requests"
-                description="When someone sends you a Cosmic Circle invite"
-                tier="core"
+                label={t('settings.friendRequests')}
+                description={t('settings.friendRequestsDesc')}
+                tier={t('settings.tierCore')}
               />
               <Switch
                 checked={prefs.taskRequests}
                 onChange={() => toggle('taskRequests')}
-                label="Task Requests"
-                description="When a friend assigns you a task"
-                tier="core"
+                label={t('settings.taskRequests')}
+                description={t('settings.taskRequestsDesc')}
+                tier={t('settings.tierCore')}
               />
-              <Switch
-                checked={prefs.messages}
-                onChange={() => toggle('messages')}
-                label="Messages"
-                description="When you receive a new direct message"
-                tier="standard"
-              />
+              {/* Messages toggle hidden — no trigger implementation yet */}
               <Switch
                 checked={prefs.taskDueReminders}
                 onChange={() => toggle('taskDueReminders')}
-                label="Task Due Reminders"
-                description="When an assigned task is approaching its due date"
-                tier="standard"
+                label={t('settings.taskDueReminders')}
+                description={t('settings.taskDueRemindersDesc')}
+                tier={t('settings.tierStandard')}
               />
             </div>
           )}

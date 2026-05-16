@@ -19,6 +19,7 @@ export interface LLMResponse {
   text: string;
   model: string;
   cached: boolean;
+  fallbackReason?: string;
 }
 
 interface CacheEntry {
@@ -270,7 +271,7 @@ export async function generateOracleMessage(
     }
 
     const text = parts.filter(Boolean).join(' ');
-    return { text, model: 'template', cached: false };
+    return { text, model: 'template', cached: false, fallbackReason: 'No API key configured' };
   }
 
   // ── Provider-specific system prompt tuning ───────────────────────────────
@@ -429,14 +430,15 @@ Generate the oracle message:`;
     }
 
     if (!text || text.length < 10) {
-      return { text: fallbackText, model, cached: false };
+      return { text: fallbackText, model, cached: false, fallbackReason: 'Response too short or empty' };
     }
 
     setCached(cacheKey, text);
     return { text, model, cached: false };
   } catch (error) {
     console.error('[AICoachLLM] Generation failed:', error);
-    return { text: fallbackText, model: 'fallback', cached: false };
+    const reason = error instanceof Error ? error.message : 'Provider unavailable';
+    return { text: fallbackText, model: 'fallback', cached: false, fallbackReason: reason };
   }
 }
 

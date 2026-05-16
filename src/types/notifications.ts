@@ -38,6 +38,10 @@ export interface NotificationRequest {
   section: NotificationSection;
   /** If true, this notification can replace a previously scheduled one of the same type */
   replaceExisting?: boolean;
+  /** Optional dedup key override. Used when multiple sub-types share the same type string
+   *  (e.g. tracker reminders for different trackers, holiday reminders for different holidays).
+   *  Defaults to req.type if not provided. */
+  dedupKey?: string;
 }
 
 export interface DeliveredNotification {
@@ -47,7 +51,8 @@ export interface DeliveredNotification {
   section: NotificationSection;
   title: string;
   body: string;
-  deliveredAt: number; // timestamp
+  deliveredAt: number; // timestamp when scheduled (legacy name — kept for backward compat)
+  confirmedDeliveredAt?: number; // timestamp when OS actually fired the notification
   extra?: Record<string, any>;
 }
 
@@ -55,6 +60,7 @@ export interface DailyStats {
   date: string; // YYYY-MM-DD
   counts: Record<NotificationTier, number>;
   delivered: DeliveredNotification[];
+  tapped: DeliveredNotification[];
 }
 
 // ── Template System ──────────────────────────────────────────────────────────
@@ -73,8 +79,10 @@ export type TemplateLibrary = Record<string, NotificationTemplate[]>;
 export interface CalendarNotificationPrefs {
   holidayReminders: boolean;
   civilHekaTransition: boolean;
-  moonPhaseDegrees: boolean;
   noteReminders: boolean;
+  newYearReminders: boolean;
+  solsticeEquinoxReminders: boolean;
+  monthStartReminders: boolean;
 }
 
 export interface StarsNotificationPrefs {
@@ -82,12 +90,14 @@ export interface StarsNotificationPrefs {
   retrogradeAlerts: boolean;
   voidMoonReminders: boolean;
   moonDegreeNotifications: boolean;
+  newMoonReminders: boolean;
+  fullMoonReminders: boolean;
+  sunriseWakeUp: boolean;
 }
 
 export interface CircleNotificationPrefs {
   friendRequests: boolean;
   taskRequests: boolean;
-  messages: boolean;
   taskDueReminders: boolean;
 }
 
@@ -111,8 +121,11 @@ export interface QuietHoursConfig {
   end: number;   // 0-23, e.g. 7 for 7 AM
 }
 
+export type NotificationMode = 'unified' | 'custom';
+
 export interface NotificationPreferences {
   globalEnabled: boolean;
+  notificationMode: NotificationMode;
   quietHours: QuietHoursConfig;
   calendar: CalendarNotificationPrefs;
   stars: StarsNotificationPrefs;
@@ -126,21 +139,25 @@ export interface NotificationPreferences {
 export const DEFAULT_CALENDAR_NOTIFICATION_PREFS: CalendarNotificationPrefs = {
   holidayReminders: true,
   civilHekaTransition: true,
-  moonPhaseDegrees: false,
   noteReminders: true,
+  newYearReminders: true,
+  solsticeEquinoxReminders: true,
+  monthStartReminders: true,
 };
 
 export const DEFAULT_STARS_NOTIFICATION_PREFS: StarsNotificationPrefs = {
-  dailyCelestialTips: false,
+  dailyCelestialTips: true,
   retrogradeAlerts: true,
-  voidMoonReminders: false,
+  voidMoonReminders: true,
   moonDegreeNotifications: false,
+  newMoonReminders: true,
+  fullMoonReminders: true,
+  sunriseWakeUp: false,
 };
 
 export const DEFAULT_CIRCLE_NOTIFICATION_PREFS: CircleNotificationPrefs = {
   friendRequests: true,
   taskRequests: true,
-  messages: true,
   taskDueReminders: true,
 };
 
@@ -166,6 +183,7 @@ export const DEFAULT_QUIET_HOURS: QuietHoursConfig = {
 
 export const DEFAULT_NOTIFICATION_PREFERENCES: NotificationPreferences = {
   globalEnabled: true,
+  notificationMode: 'unified',
   quietHours: DEFAULT_QUIET_HOURS,
   calendar: DEFAULT_CALENDAR_NOTIFICATION_PREFS,
   stars: DEFAULT_STARS_NOTIFICATION_PREFS,
@@ -182,17 +200,23 @@ export const NOTIFICATION_TYPES = {
   CIVIL_HEKA_TRANSITION: 'civil-heka-transition',
   MOON_DEGREE_UPDATE: 'moon-degree-update',
   NOTE_REMINDER: 'note-reminder',
+  NEW_YEAR_REMINDER: 'new-year-reminder',
+  SOLSTICE_EQUINOX_REMINDER: 'solstice-equinox-reminder',
+  MONTH_START_REMINDER: 'month-start-reminder',
 
   // Stars
   DAILY_CELESTIAL_TIPS: 'daily-celestial-tips',
   RETROGRADE_ALERT: 'retrograde-alert',
   VOID_MOON_ENTERED: 'void-moon-entered',
   VOID_MOON_ENDED: 'void-moon-ended',
+  NEW_MOON_REMINDER: 'new-moon-reminder',
+  FULL_MOON_REMINDER: 'full-moon-reminder',
+  SUNRISE_WAKE_UP: 'sunrise-wake-up',
 
   // Circle
   FRIEND_REQUEST: 'friend-request',
   TASK_ASSIGNED: 'task-assigned',
-  MESSAGE_RECEIVED: 'message-received',
+
   TASK_DUE_SOON: 'task-due-soon',
 
   // Journal
@@ -232,6 +256,10 @@ export interface NotificationEngineState {
   sentTodayFlags: Record<string, string>; // key -> date sent (YYYY-MM-DD)
   templateEngagement: Record<string, Record<number, number>>;
   timezone: string | null;
+  /** Engagement score per notification type (0-100). Higher = user taps more often. */
+  typeEngagement: Record<string, number>;
+  /** Last delivery timestamp per type (for genius spacing) */
+  lastDeliveryTime: Record<string, number>;
 }
 
 export const DEFAULT_ENGINE_STATE: NotificationEngineState = {
@@ -244,4 +272,6 @@ export const DEFAULT_ENGINE_STATE: NotificationEngineState = {
   sentTodayFlags: {},
   templateEngagement: {},
   timezone: null,
+  typeEngagement: {},
+  lastDeliveryTime: {},
 };

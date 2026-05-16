@@ -23,6 +23,9 @@ import {
   doc,
   setDoc,
   getDoc,
+  deleteDoc,
+  collection,
+  getDocs,
   enableIndexedDbPersistence
 } from 'firebase/firestore';
 
@@ -89,7 +92,7 @@ if (isFirebaseConfigured()) {
   console.warn('Firebase not configured. Cloud sync features will be disabled.');
 }
 
-export { auth, db, updateProfile };
+export { app, auth, db, updateProfile };
 
 // Refresh the Firebase ID token (useful when Firestore reports permission errors)
 export async function refreshAuthToken(force = true): Promise<string | null> {
@@ -130,11 +133,21 @@ export interface AuthError {
   message: string;
 }
 
+/** Proper Error subclass so console.error prints a message instead of [object Object] */
+export class FirebaseNotConfiguredError extends Error implements AuthError {
+  code: string;
+  constructor(
+    message = 'Cloud sync is not configured. Please set up Firebase to enable account features.',
+    code = 'auth/not-configured'
+  ) {
+    super(message);
+    this.name = 'FirebaseNotConfiguredError';
+    this.code = code;
+  }
+}
+
 // Error for when Firebase is not configured
-const NOT_CONFIGURED_ERROR: AuthError = {
-  code: 'auth/not-configured',
-  message: 'Cloud sync is not configured. Please set up Firebase to enable account features.'
-};
+const NOT_CONFIGURED_ERROR = new FirebaseNotConfiguredError();
 
 export async function signUp(email: string, password: string, displayName: string): Promise<UserCredential> {
   if (!isFirebaseConfigured() || !auth) {
@@ -242,6 +255,123 @@ export async function loadFromCloud(userId: string): Promise<UserData | null> {
     return snapshot.data() as UserData;
   }
   return null;
+}
+
+// ============================================================================
+// Astrology Cloud Sync — Subcollections
+// ============================================================================
+
+export interface AstroCloudData {
+  profiles: Record<string, any>;
+  charts: Record<string, any>;
+  preferences: any;
+  selectedProfileId: string | null;
+  lastSync: string;
+}
+
+/** Sync a single astrology profile to the cloud */
+export async function syncAstroProfile(userId: string, profile: any): Promise<void> {
+  if (!isFirebaseConfigured() || !db) return;
+  const ref = doc(db, 'users', userId, 'astroProfiles', profile.id);
+  await setDoc(ref, { ...profile, _syncedAt: new Date().toISOString() });
+}
+
+/** Delete an astrology profile from the cloud */
+export async function deleteAstroProfile(userId: string, profileId: string): Promise<void> {
+  if (!isFirebaseConfigured() || !db) return;
+  const ref = doc(db, 'users', userId, 'astroProfiles', profileId);
+  await deleteDoc(ref);
+  // Also delete associated charts
+  const chartsCol = collection(db, 'users', userId, 'astroCharts');
+  const chartsSnap = await getDocs(chartsCol);
+  const deletions: Promise<void>[] = [];
+  chartsSnap.forEach((snap) => {
+    if (snap.data().profileId === profileId) {
+      deletions.push(deleteDoc(snap.ref));
+    }
+  });
+  await Promise.all(deletions);
+}
+
+/** Load all astrology profiles from the cloud */
+export async function loadAstroProfiles(userId: string): Promise<any[]> {
+  if (!isFirebaseConfigured() || !db) return [];
+  const col = collection(db, 'users', userId, 'astroProfiles');
+  const snap = await getDocs(col);
+  return snap.docs.map(d => d.data());
+}
+
+/** Sync a single astrology chart to the cloud */
+export async function syncAstroChart(userId: string, chart: any): Promise<void> {
+  if (!isFirebaseConfigured() || !db) return;
+  const ref = doc(db, 'users', userId, 'astroCharts', chart.id);
+  await setDoc(ref, { ...chart, _syncedAt: new Date().toISOString() });
+}
+
+/** Load all astrology charts from the cloud */
+export async function loadAstroCharts(userId: string): Promise<any[]> {
+  if (!isFirebaseConfigured() || !db) return [];
+  const col = collection(db, 'users', userId, 'astroCharts');
+  const snap = await getDocs(col);
+  return snap.docs.map(d => d.data());
+}
+
+/** Sync astrology preferences to the cloud */
+export async function syncAstroPreferences(userId: string, preferences: any): Promise<void> {
+  if (!isFirebaseConfigured() || !db) return;
+  const ref = doc(db, 'users', userId, 'astroPreferences', 'default');
+  await setDoc(ref, { ...preferences, _syncedAt: new Date().toISOString() });
+}
+
+/** Load astrology preferences from the cloud */
+export async function loadAstroPreferences(userId: string): Promise<any | null> {
+  if (!isFirebaseConfigured() || !db) return null;
+  const ref = doc(db, 'users', userId, 'astroPreferences', 'default');
+  const snap = await getDoc(ref);
+  return snap.exists() ? snap.data() : null;
+}
+
+/** Full astrology sync — push everything to cloud */
+export async function syncAllAstroData(
+  userId: string,
+  data: { profiles: any[]; charts: any[]; preferences: any; selectedProfileId: string | null }
+): Promise<void> {
+  if (!isFirebaseConfigured() || !db) return;
+  await Promise.all([
+    ...data.profiles.map(p => syncAstroProfile(userId, p)),
+    ...data.charts.map(c => syncAstroChart(userId, c)),
+    syncAstroPreferences(userId, data.preferences),
+  ]);
+  // Also store selected profile id on the user doc for quick lookup
+  await setDoc(doc(db, 'users', userId), {
+    astroSelectedProfileId: data.selectedProfileId,
+    astroLastSync: new Date().toISOString(),
+  }, { merge: true });
+}
+
+/** Full astrology load — pull everything from cloud */
+export async function loadAllAstroData(userId: string): Promise<{
+  profiles: any[];
+  charts: any[];
+  preferences: any | null;
+  selectedProfileId: string | null;
+}> {
+  if (!isFirebaseConfigured() || !db) {
+    return { profiles: [], charts: [], preferences: null, selectedProfileId: null };
+  }
+  const [profiles, charts, preferences, userSnap] = await Promise.all([
+    loadAstroProfiles(userId),
+    loadAstroCharts(userId),
+    loadAstroPreferences(userId),
+    getDoc(doc(db, 'users', userId)),
+  ]);
+  const userData = userSnap.exists() ? userSnap.data() : {};
+  return {
+    profiles,
+    charts,
+    preferences,
+    selectedProfileId: userData.astroSelectedProfileId || null,
+  };
 }
 
 // ============================================================================

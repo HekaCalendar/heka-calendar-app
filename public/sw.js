@@ -11,7 +11,7 @@ const STATIC_ASSETS = [
   '/icon-192.png',
   '/icon-512.png',
   '/icon-512-maskable.png',
-  '/manifest.webmanifest'
+  '/manifest.json'
 ];
 
 // Install event - cache static assets
@@ -100,6 +100,55 @@ self.addEventListener('fetch', (event) => {
       }).catch(() => cached);
       
       return cached || fetchPromise;
+    })
+  );
+});
+
+// Push event - handle incoming web push notifications
+self.addEventListener('push', (event) => {
+  console.log('[SW] Push received:', event);
+  
+  let data = {};
+  try {
+    data = event.data?.json() || {};
+  } catch (e) {
+    data = { title: event.data?.text() || 'HEKA Calendar' };
+  }
+  
+  const title = data.notification?.title || data.title || 'HEKA Calendar';
+  const body = data.notification?.body || data.body || '';
+  const icon = data.notification?.icon || '/icon-192.png';
+  
+  event.waitUntil(
+    self.registration.showNotification(title, {
+      body,
+      icon,
+      badge: '/icon-192.png',
+      tag: data.tag || 'heka-push',
+      data: data.data || data,
+      requireInteraction: false,
+    })
+  );
+});
+
+// Notification click event - handle user tapping a push notification
+self.addEventListener('notificationclick', (event) => {
+  console.log('[SW] Notification clicked:', event);
+  event.notification.close();
+  
+  const data = event.notification.data || {};
+  const url = data.url || data.deepLink || '/';
+  
+  event.waitUntil(
+    self.clients.matchAll({ type: 'window', includeUncontrolled: true }).then((clientList) => {
+      // Focus existing tab if open
+      for (const client of clientList) {
+        if (client.url && new URL(client.url).pathname === new URL(url, self.location.origin).pathname) {
+          return client.focus();
+        }
+      }
+      // Open new tab/window
+      return self.clients.openWindow(url);
     })
   );
 });

@@ -19,6 +19,36 @@ export function useBirthChart(isOpen: boolean) {
     if (!isOpen) return;
     
     try {
+      // ── NEW SYSTEM: heka:astrology:* ──────────────────────────────────────
+      const newProfilesJson = localStorage.getItem('heka:astrology:profiles');
+      const newSelectedId = localStorage.getItem('heka:astrology:selected-profile');
+      const newChartsJson = localStorage.getItem('heka:astrology:charts');
+      
+      if (newProfilesJson) {
+        const newProfiles: any[] = JSON.parse(newProfilesJson);
+        if (Array.isArray(newProfiles) && newProfiles.length > 0) {
+          let profile = newProfiles.find((p: any) => p.id === newSelectedId);
+          if (!profile) profile = newProfiles[0];
+          
+          if (newChartsJson) {
+            const charts: Record<string, any> = JSON.parse(newChartsJson);
+            const profileChart = Object.values(charts).find((c: any) => c.profileId === profile.id);
+            if (profileChart) {
+              const planetCount = profileChart.planets || profileChart.bodies
+                ? Object.keys(profileChart.planets || profileChart.bodies).length
+                : 0;
+              setBirthChartInfo({
+                hasChart: planetCount > 0,
+                profileName: profile.name,
+                chart: profileChart,
+              });
+              return; // New system found, done
+            }
+          }
+        }
+      }
+      
+      // ── OLD SYSTEM: celestial-profiles-v1 ─────────────────────────────────
       const profilesJson = localStorage.getItem('celestial-profiles-v1');
       const activeId = localStorage.getItem('celestial-active-profile-id');
       

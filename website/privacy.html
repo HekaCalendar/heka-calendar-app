@@ -6,7 +6,7 @@
     <link rel="icon" type="image/png" href="../icon-192.png">
 
     <title>Privacy | HEKA</title>
-    <meta name="description" content="HEKA Calendar privacy policy. Your data stays on your device. Local-first architecture.">
+    <meta name="description" content="HEKA Calendar privacy policy. Local-first. Your data stays on your device.">
     
     <link rel="stylesheet" href="assets/css/sacred.css">
 </head>
@@ -40,10 +40,11 @@
                 <span class="section-number">PRIVACY</span>
                 <h1 style="font-size: clamp(2.5rem, 5vw, 4rem); margin-bottom: 24px;">Your Data Is Yours</h1>
                 <p style="font-family: var(--font-wisdom); font-size: 1.3rem; color: var(--light-secondary); line-height: 1.8;">
-                    HEKA is built on a local-first principle. Your notes, journal entries, and birth chart data never leave your device unless you explicitly choose to enable cloud sync.
+                    HEKA is built on a local-first principle. By default, everything lives on your device. We cannot see it, sell it, or lose it. You choose when — and if — anything leaves your hands.
                 </p>
             </div>
 
+            <!-- I. DATA STORAGE -->
             <section class="section">
                 <div class="section-header" style="text-align: left;">
                     <span class="section-number">I. THE LOCAL-FIRST OATH</span>
@@ -53,7 +54,11 @@
                 <div class="privacy-oath">
                     <div class="privacy-oath-title"><span class="symbol-lock" style="margin-right: 8px;"></span>By Default, Everything Is Local</div>
                     <p style="color: var(--light-secondary); margin: 0;">
-                        Your notes, journal entries, birth charts, and app preferences are stored on your device using your browser's or operating system's native storage. We cannot access this data. We do not back it up. It cannot be recovered if you lose your device unless you've enabled cloud sync.
+                        Your notes, journal entries, birth charts, tracker data, and app preferences are stored in an 
+                        <strong>IndexedDB database</strong> on your device using the Dexie.js library. This is a structured, 
+                        persistent database that survives browser restarts and app updates. We cannot access this data. 
+                        We do not back it up. It cannot be recovered if you lose your device unless you have enabled 
+                        cloud sync or performed a manual export.
                     </p>
                 </div>
                 
@@ -68,48 +73,74 @@
                     <tbody>
                         <tr>
                             <td><strong>Daily Notes</strong></td>
-                            <td>Calendar day notes with categories</td>
+                            <td>Calendar day notes with categories and timestamps</td>
                             <td class="storage-local">Device Only</td>
                         </tr>
                         <tr>
                             <td><strong>Journal Entries</strong></td>
-                            <td>Oracle Journal with mood tracking</td>
+                            <td>Oracle Journal entries with markdown, tags, mood, revision history (up to 50 per entry)</td>
+                            <td class="storage-local">Device Only</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Journal Attachments</strong></td>
+                            <td>Images, audio recordings, and files attached to journal entries</td>
                             <td class="storage-local">Device Only</td>
                         </tr>
                         <tr>
                             <td><strong>Birth Charts</strong></td>
-                            <td>Astrological profiles and transits</td>
+                            <td>Astrological profiles, natal charts, and transit calculations</td>
+                            <td class="storage-local">Device Only</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Daily Oracle Cards</strong></td>
+                            <td>Generated oracle cards, celestial snapshots, and draw history</td>
+                            <td class="storage-local">Device Only</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Tracker Data</strong></td>
+                            <td>Menstrual cycle, mood, sleep, energy, medication, symptoms, exercise, nutrition</td>
                             <td class="storage-local">Device Only</td>
                         </tr>
                         <tr>
                             <td><strong>App Settings</strong></td>
-                            <td>Theme, location, preferences</td>
+                            <td>Theme, location, zodiac preferences, notification settings, language</td>
                             <td class="storage-local">Device Only</td>
                         </tr>
                         <tr>
                             <td><strong>Notifications</strong></td>
-                            <td>Task reminders & celestial alerts</td>
+                            <td>Task reminders, celestial alerts, tracker reminders, daily reflections</td>
+                            <td class="storage-local">Device Only</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Search Index</strong></td>
+                            <td>Full-text search index of journal entries for fast lookup</td>
                             <td class="storage-local">Device Only</td>
                         </tr>
                         <tr>
                             <td><strong>PDF Export</strong></td>
-                            <td>Print-to-PDF feature output</td>
+                            <td>Print-to-PDF feature output (generated locally)</td>
                             <td class="storage-local">Device Only</td>
                         </tr>
                         <tr>
-                            <td><strong>Community Energy</strong></td>
-                            <td>Anonymous daily voting (optional)</td>
-                            <td class="storage-local">Device Only</td>
+                            <td><strong>Community Voting</strong></td>
+                            <td>Feature requests, holiday submissions, energy voting</td>
+                            <td class="storage-optional">Cloud (with UID)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Social Data</strong></td>
+                            <td>Friends, messages, task shares, online presence (if using Cosmic Circle)</td>
+                            <td class="storage-optional">Cloud (encrypted)</td>
                         </tr>
                         <tr>
                             <td><strong>Crash Analytics</strong></td>
-                            <td>App stability diagnostics</td>
+                            <td>App stability diagnostics and error reports</td>
                             <td class="storage-optional">Cloud (anonymous)</td>
                         </tr>
                     </tbody>
                 </table>
             </section>
 
+            <!-- II. YOUR RIGHTS -->
             <section class="section section-alt">
                 <div class="section-header" style="text-align: left;">
                     <span class="section-number">II. YOUR RIGHTS</span>
@@ -120,24 +151,245 @@
                     <div class="right-card">
                         <div class="right-icon symbol-download"></div>
                         <div class="right-name">Access</div>
-                        <div class="right-desc">Export all your data as JSON at any time</div>
+                        <div class="right-desc">Export all your data as JSON at any time — journal entries, birth charts, tracker history, settings, and achievements</div>
                     </div>
                     <div class="right-card">
                         <div class="right-icon symbol-trash"></div>
                         <div class="right-name">Deletion</div>
-                        <div class="right-desc">Erase all data permanently from device and cloud</div>
+                        <div class="right-desc">Erase all data permanently from device and cloud with one action</div>
                     </div>
                     <div class="right-card">
                         <div class="right-icon symbol-upload"></div>
                         <div class="right-name">Portability</div>
-                        <div class="right-desc">Transfer your data to other systems</div>
+                        <div class="right-desc">Import and export JSON to transfer your data between devices or systems</div>
                     </div>
                 </div>
             </section>
 
+            <!-- III. WHAT WE COLLECT -->
             <section class="section">
                 <div class="section-header" style="text-align: left;">
-                    <span class="section-number">III. NO TRACKING</span>
+                    <span class="section-number">III. WHAT WE COLLECT & WHY</span>
+                    <h2 class="section-title">Data Categories</h2>
+                </div>
+                
+                <div style="display: flex; flex-direction: column; gap: 24px;">
+                    <div class="tablet" style="padding: 24px;">
+                        <h4 style="font-size: 1.1rem; margin-bottom: 12px; color: var(--module-accent);">📓 Journal & Notes</h4>
+                        <p style="color: var(--light-secondary); line-height: 1.7; margin: 0;">
+                            Calendar notes and Oracle Journal entries including text (plain or markdown), tags, mood ratings, 
+                            timestamps, and revision history. Stored in IndexedDB with a full-text search index. 
+                            <strong>AI insights</strong> are generated using template-based analysis by default. 
+                            Optional LLM enhancement sends entry context to your chosen provider only when explicitly enabled.
+                        </p>
+                    </div>
+                    
+                    <div class="tablet" style="padding: 24px;">
+                        <h4 style="font-size: 1.1rem; margin-bottom: 12px; color: var(--module-accent);">🌙 Daily Oracle</h4>
+                        <p style="color: var(--light-secondary); line-height: 1.7; margin: 0;">
+                            One card per day is generated from a real-time celestial snapshot (moon phase, planetary positions, 
+                            retrogrades, dominant element) computed on-device using Swiss Ephemeris. If you have a birth chart, 
+                            a personalized note connects the card to your natal Sun sign. Cards and draw history are stored 
+                            locally in IndexedDB.
+                        </p>
+                    </div>
+                    
+                    <div class="tablet" style="padding: 24px;">
+                        <h4 style="font-size: 1.1rem; margin-bottom: 12px; color: var(--module-accent);">📊 On-Device Analytics</h4>
+                        <p style="color: var(--light-secondary); line-height: 1.7; margin: 0;">
+                            Tutorial progress, onboarding funnel completion, and pattern recognition events are tracked 
+                            <strong>strictly on-device</strong> to improve the user experience. These analytics are never 
+                            transmitted to external servers. We do not use Google Analytics, third-party advertising, 
+                            behavioral tracking cookies, or device fingerprinting.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- IV. HEALTH DATA -->
+            <section class="section section-alt">
+                <div class="section-header" style="text-align: left;">
+                    <span class="section-number">IV. HEALTH & WELLNESS DATA</span>
+                    <h2 class="section-title">Sensitive Tracking</h2>
+                </div>
+                <p style="color: var(--light-secondary); line-height: 1.8;">
+                    HEKA includes comprehensive wellness tracking that may record health-sensitive information. 
+                    <strong>All tracker data is stored locally on your device by default.</strong> If you enable cloud 
+                    synchronization, this data is encrypted before transmission and stored in Firebase.
+                </p>
+                <p style="color: var(--light-secondary); line-height: 1.8; margin-top: 16px;">
+                    <strong>Tracker categories include:</strong> menstrual cycle (flow, cervical mucus, BBT, ovulation tests, 
+                    physical symptoms), mood (1-10 rating, types, triggers), sleep (duration, quality, phases, latency, 
+                    factors), energy (level, type, contributing factors), medication (name, dosage, side effects), 
+                    symptoms (body area, severity, duration, triggers), exercise (type, duration, intensity, heart rate), 
+                    nutrition (meals, calories, macros, water intake), and custom user-defined trackers.
+                </p>
+                <p style="color: var(--light-secondary); line-height: 1.8; margin-top: 16px;">
+                    <strong>On-device insights:</strong> Cycle predictions, fertility windows, PMS predictions, symptom 
+                    patterns, and health alerts are generated entirely on your device using local algorithms. No health 
+                    data is sent to external servers for analysis.
+                </p>
+            </section>
+
+            <!-- V. AI / LLM -->
+            <section class="section">
+                <div class="section-header" style="text-align: left;">
+                    <span class="section-number">V. ARTIFICIAL INTELLIGENCE</span>
+                    <h2 class="section-title">LLM Processing</h2>
+                </div>
+                <p style="color: var(--light-secondary); line-height: 1.8;">
+                    HEKA offers optional AI-powered features that use external Large Language Models (LLMs). 
+                    <strong>AI enhancement is entirely opt-in and disabled by default.</strong> Without enabling it, all 
+                    insights, coaching, and analysis use on-device template-based generation — no data leaves your device.
+                </p>
+                <p style="color: var(--light-secondary); line-height: 1.8; margin-top: 16px;">
+                    <strong>When AI is enabled,</strong> you provide your own API key for one of the following providers: 
+                    Groq, OpenAI, Anthropic, or a self-hosted Ollama instance. The following contextual data may be sent 
+                    to your chosen provider to generate personalized insights:
+                </p>
+                <ul style="color: var(--light-secondary); line-height: 1.8; margin-top: 12px; padding-left: 24px;">
+                    <li>Celestial state and transit summary for the current date</li>
+                    <li>Your archetype and general mood tone (if available)</li>
+                    <li>Pending tasks and task completion count</li>
+                    <li>Writing streak and recent journal activity summary</li>
+                    <li>Location (for planetary hour and sun time calculations)</li>
+                    <li>Zodiac preferences (tropical/sidereal, 12/13 signs)</li>
+                </ul>
+                <p style="color: var(--light-secondary); line-height: 1.8; margin-top: 16px;">
+                    <strong>We do not store or log your API keys.</strong> They are saved in your device's secure storage. 
+                    LLM responses are cached in memory for up to 4 hours to reduce API calls. Sentiment analysis of journal 
+                    entries is performed entirely on-device using a local lexicon — no text is transmitted for this purpose.
+                </p>
+            </section>
+
+            <!-- VI. DAILY ORACLE -->
+            <section class="section section-alt">
+                <div class="section-header" style="text-align: left;">
+                    <span class="section-number">VI. DAILY ORACLE</span>
+                    <h2 class="section-title">Celestial Features</h2>
+                </div>
+                <p style="color: var(--light-secondary); line-height: 1.8;">
+                    The Daily Oracle generates one personalized card per day based on a real-time celestial snapshot. 
+                    Planetary positions, moon phase, retrogrades, and dominant elements are computed on-device using 
+                    Swiss Ephemeris WASM. No astronomical data is transmitted to external servers.
+                </p>
+                <p style="color: var(--light-secondary); line-height: 1.8; margin-top: 16px;">
+                    <strong>Weather data</strong> is fetched from Open-Meteo (<code>open-meteo.com</code>) using your 
+                    latitude and longitude. <strong>Sunrise and sunset times</strong> are fetched from NOAA Sunrise-Sunset 
+                    (<code>sunrise-sunset.org</code>) using the same location. These services receive only coordinates — 
+                    no identifying information.
+                </p>
+                <p style="color: var(--light-secondary); line-height: 1.8; margin-top: 16px;">
+                    <strong>Location:</strong> Your location is stored locally and used for astronomical calculations, 
+                    weather, and sun times. It is never shared with third parties beyond the coordinate-based API calls 
+                    described above.
+                </p>
+            </section>
+
+            <!-- VII. SOCIAL -->
+            <section class="section">
+                <div class="section-header" style="text-align: left;">
+                    <span class="section-number">VII. SOCIAL FEATURES</span>
+                    <h2 class="section-title">Cosmic Circle</h2>
+                </div>
+                <p style="color: var(--light-secondary); line-height: 1.8;">
+                    The Cosmic Circle enables social features including friend connections, messaging, task sharing, 
+                    and collaborative rituals. <strong>Social data is stored in Firebase Firestore</strong> and requires 
+                    cloud sync to be enabled.
+                </p>
+                <p style="color: var(--light-secondary); line-height: 1.8; margin-top: 16px;">
+                    <strong>What is stored:</strong> Friend profiles and friendship connections, direct messages, 
+                    shared tasks and task rituals, online presence and last-active status, invite codes and deep links, 
+                    community holiday submissions, and feature voting (both associated with your Firebase Auth UID).
+                </p>
+                <p style="color: var(--light-secondary); line-height: 1.8; margin-top: 16px;">
+                    <strong>Shared tasks</strong> create public Firestore documents accessible via share code. They include 
+                    the task details and creator display name. <strong>Energy voting</strong> uses a locally-generated 
+                    device ID for anonymous daily participation.
+                </p>
+            </section>
+
+            <!-- VIII. CRISIS DETECTION -->
+            <section class="section section-alt">
+                <div class="section-header" style="text-align: left;">
+                    <span class="section-number">VIII. CONTENT SAFETY</span>
+                    <h2 class="section-title">Crisis Detection</h2>
+                </div>
+                <p style="color: var(--light-secondary); line-height: 1.8;">
+                    To help protect user safety, journal entries are scanned <strong>on-device</strong> for crisis 
+                    indicators including references to self-harm, suicide, severe depression, and violence. This scanning 
+                    uses a local keyword list and occurs entirely on your device — no journal text is transmitted for 
+                    this purpose.
+                </p>
+                <p style="color: var(--light-secondary); line-height: 1.8; margin-top: 16px;">
+                    If concerning language is detected, the app displays local support resources such as the 
+                    988 Suicide & Crisis Lifeline and Crisis Text Line. No alerts are sent to us or any third party. 
+                    This is a user-safety feature designed to provide immediate access to help.
+                </p>
+            </section>
+
+            <!-- IX. THIRD-PARTY -->
+            <section class="section">
+                <div class="section-header" style="text-align: left;">
+                    <span class="section-number">IX. THIRD-PARTY SERVICES</span>
+                    <h2 class="section-title">External Providers</h2>
+                </div>
+                
+                <div style="display: flex; flex-direction: column; gap: 20px;">
+                    <div class="tablet" style="padding: 20px;">
+                        <h4 style="font-size: 1rem; margin-bottom: 8px; color: var(--module-accent);">🔭 Swiss Ephemeris</h4>
+                        <p style="color: var(--light-secondary); line-height: 1.6; margin: 0; font-size: 0.95rem;">
+                            Astronomical calculations run entirely on your device via WASM. No birth chart data, 
+                            location, or personal information is transmitted for astrological computation.
+                        </p>
+                    </div>
+                    
+                    <div class="tablet" style="padding: 20px;">
+                        <h4 style="font-size: 1rem; margin-bottom: 8px; color: var(--module-accent);">🌤️ Open-Meteo</h4>
+                        <p style="color: var(--light-secondary); line-height: 1.6; margin: 0; font-size: 0.95rem;">
+                            Weather data is fetched from <code>open-meteo.com</code> using your latitude and longitude. 
+                            No API key is required. No identifying information is transmitted.
+                        </p>
+                    </div>
+                    
+                    <div class="tablet" style="padding: 20px;">
+                        <h4 style="font-size: 1rem; margin-bottom: 8px; color: var(--module-accent);">🌅 NOAA Sunrise-Sunset</h4>
+                        <p style="color: var(--light-secondary); line-height: 1.6; margin: 0; font-size: 0.95rem;">
+                            Sun rise and set times are fetched from <code>sunrise-sunset.org</code> using your 
+                            coordinates. No identifying information is transmitted.
+                        </p>
+                    </div>
+                    
+                    <div class="tablet" style="padding: 20px;">
+                        <h4 style="font-size: 1rem; margin-bottom: 8px; color: var(--module-accent);">🤖 LLM Providers (Opt-In Only)</h4>
+                        <p style="color: var(--light-secondary); line-height: 1.6; margin: 0; font-size: 0.95rem;">
+                            Groq, OpenAI, Anthropic, or Ollama — only when you enable AI and provide your own API key. 
+                            Data is sent directly to your chosen provider. We are not an intermediary.
+                        </p>
+                    </div>
+                    
+                    <div class="tablet" style="padding: 20px;">
+                        <h4 style="font-size: 1rem; margin-bottom: 8px; color: var(--module-accent);">🔥 Firebase (Google)</h4>
+                        <p style="color: var(--light-secondary); line-height: 1.6; margin: 0; font-size: 0.95rem;">
+                            If you enable cloud sync, encrypted data is stored in Firebase Firestore. Firebase Crashlytics 
+                            is used for anonymous crash reporting. Encryption keys are generated and stored on your device.
+                        </p>
+                    </div>
+                    
+                    <div class="tablet" style="padding: 20px;">
+                        <h4 style="font-size: 1rem; margin-bottom: 8px; color: var(--module-accent);">🔤 Google Fonts</h4>
+                        <p style="color: var(--light-secondary); line-height: 1.6; margin: 0; font-size: 0.95rem;">
+                            The Print-to-PDF feature loads Playfair Display and other fonts from Google's CDN 
+                            (<code>fonts.googleapis.com</code>) for styled PDF output.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- X. NO TRACKING -->
+            <section class="section section-alt">
+                <div class="section-header" style="text-align: left;">
+                    <span class="section-number">X. NO TRACKING</span>
                     <h2 class="section-title">What We Don't Do</h2>
                 </div>
                 
@@ -149,7 +401,8 @@
                                 <li style="padding: 12px 0; border-bottom: 1px solid var(--veil);"><span class="symbol-cross" style="color: #ef4444; margin-right: 8px;"></span>Google Analytics</li>
                                 <li style="padding: 12px 0; border-bottom: 1px solid var(--veil);"><span class="symbol-cross" style="color: #ef4444; margin-right: 8px;"></span>Third-party advertising</li>
                                 <li style="padding: 12px 0; border-bottom: 1px solid var(--veil);"><span class="symbol-cross" style="color: #ef4444; margin-right: 8px;"></span>Behavioral tracking cookies</li>
-                                <li style="padding: 12px 0;"><span class="symbol-cross" style="color: #ef4444; margin-right: 8px;"></span>Device fingerprinting</li>
+                                <li style="padding: 12px 0; border-bottom: 1px solid var(--veil);"><span class="symbol-cross" style="color: #ef4444; margin-right: 8px;"></span>Device fingerprinting</li>
+                                <li style="padding: 12px 0;"><span class="symbol-cross" style="color: #ef4444; margin-right: 8px;"></span>Selling your data</li>
                             </ul>
                         </div>
                     </div>
@@ -159,63 +412,61 @@
                             <ul style="list-style: none; color: var(--light-secondary);">
                                 <li style="padding: 12px 0; border-bottom: 1px solid var(--veil);"><span style="color: var(--gold); margin-right: 8px;">1.</span>App updates (manual)</li>
                                 <li style="padding: 12px 0; border-bottom: 1px solid var(--veil);"><span style="color: var(--gold); margin-right: 8px;">2.</span>Cloud sync (if enabled)</li>
-                                <li style="padding: 12px 0;"><span style="color: var(--gold); margin-right: 8px;">3.</span>Community votes (if participating)</li>
+                                <li style="padding: 12px 0; border-bottom: 1px solid var(--veil);"><span style="color: var(--gold); margin-right: 8px;">3.</span>Weather & sun times (coordinate-only)</li>
+                                <li style="padding: 12px 0; border-bottom: 1px solid var(--veil);"><span style="color: var(--gold); margin-right: 8px;">4.</span>LLM APIs (opt-in only, your key)</li>
+                                <li style="padding: 12px 0;"><span style="color: var(--gold); margin-right: 8px;">5.</span>Community & social (if enabled)</li>
                             </ul>
                         </div>
                     </div>
                 </div>
             </section>
 
-            <section class="section section-alt">
-                <div class="section-header" style="text-align: left;">
-                    <span class="section-number">IV. THIRD-PARTY SERVICES</span>
-                    <h2 class="section-title">External Providers</h2>
-                </div>
-                <p style="color: var(--light-secondary); line-height: 1.8;">
-                    HEKA integrates Swiss Ephemeris for astronomical calculations. This library operates 
-                    entirely on your device—no birth chart data, location, or personal information is 
-                    transmitted to external servers for astrological computation.
-                </p>
-                <p style="color: var(--light-secondary); line-height: 1.8; margin-top: 16px;">
-                    If you opt into cloud synchronization, encrypted data is stored using Firebase (Google). 
-                    We also use Firebase Crashlytics for anonymous crash reporting to improve app stability. 
-                    You retain full ownership of your data. Encryption keys are generated and stored on your 
-                    device—we cannot access or decrypt your information.
-                </p>
-                <p style="color: var(--light-secondary); line-height: 1.8; margin-top: 16px;">
-                    <strong>External Storage:</strong> Storage permissions are used solely for the Print-to-PDF 
-                    feature. We do not access your photos, videos, or personal media.
-                </p>
-            </section>
-
+            <!-- XI. CHILDREN -->
             <section class="section">
                 <div class="section-header" style="text-align: left;">
-                    <span class="section-number">V. CHILDREN'S PRIVACY</span>
+                    <span class="section-number">XI. CHILDREN'S PRIVACY</span>
                     <h2 class="section-title">Age Requirements</h2>
                 </div>
                 <p style="color: var(--light-secondary); line-height: 1.8;">
                     HEKA is not directed to children under 13 years of age. We do not knowingly collect, 
-                    use, or disclose personal data from children. If you believe a child has provided 
+                    use, or disclose personal data from children. The app contains wellness tracking features 
+                    that are intended for adult users. If you believe a child has provided 
                     personal information through our services, please contact us immediately for deletion.
                 </p>
             </section>
 
+            <!-- XII. INTERNATIONAL -->
             <section class="section section-alt">
                 <div class="section-header" style="text-align: left;">
-                    <span class="section-number">VI. INTERNATIONAL DATA</span>
+                    <span class="section-number">XII. INTERNATIONAL DATA</span>
                     <h2 class="section-title">Cross-Border Transfers</h2>
                 </div>
                 <p style="color: var(--light-secondary); line-height: 1.8;">
                     By default, all data remains on your device in your jurisdiction. If you enable cloud 
-                    synchronization, encrypted data may be stored on servers located in your region. For any 
+                    synchronization, encrypted data may be stored on Firebase servers located in your region. For any 
                     transfer outside the European Economic Area, we utilize EU Standard Contractual Clauses 
                     and maintain appropriate safeguards.
                 </p>
             </section>
 
+            <!-- XIII. CHANGES -->
             <section class="section">
                 <div class="section-header" style="text-align: left;">
-                    <span class="section-number">VII. CONTACT</span>
+                    <span class="section-number">XIII. CHANGES TO THIS POLICY</span>
+                    <h2 class="section-title">Updates</h2>
+                </div>
+                <p style="color: var(--light-secondary); line-height: 1.8;">
+                    We may update this privacy policy from time to time to reflect changes in our practices, 
+                    features, or legal requirements. We will notify you of significant changes through the app 
+                    or via email if you have provided one. Continued use of HEKA after changes constitutes 
+                    acceptance of the updated policy.
+                </p>
+            </section>
+
+            <!-- XIV. CONTACT -->
+            <section class="section section-alt">
+                <div class="section-header" style="text-align: left;">
+                    <span class="section-number">XIV. CONTACT</span>
                     <h2 class="section-title">Questions?</h2>
                 </div>
                 
@@ -224,7 +475,7 @@
                 </div>
                 
                 <p style="text-align: center; color: var(--light-tertiary); font-size: 0.9rem; margin-top: 48px;">
-                    Last Updated: April 16, 2026
+                    Last Updated: May 7, 2026
                 </p>
             </section>
         </div>
@@ -277,6 +528,3 @@ function toggleNav() {
 </script>
 </body>
 </html>
-
-
-

@@ -4,6 +4,7 @@
  */
 
 import { useState, useCallback, useMemo, useEffect, useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import type { RootState } from '../../store';
 import { selectDate, addNote, deleteNote, deleteDuplicates } from '../../store';
@@ -53,6 +54,7 @@ function cloneTaskForDuplicate(task: PlannerTask, targetDayKey: string, targetHe
 
 export function useDayPanel() {
   const dispatch = useDispatch();
+  const { t, i18n } = useTranslation('dayPanel');
 
   // Redux selectors
   const selectedDate = useSelector((state: RootState) => state.calendar.selectedDate, shallowEqual);
@@ -249,10 +251,10 @@ export function useDayPanel() {
 
         const sunTimes = await calculateSunTimes(civilDate, lat, long);
         if (sunTimes.sunrise) {
-          setSunriseTime(sunTimes.sunrise.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' }));
+          setSunriseTime(new Intl.DateTimeFormat(i18n.language || 'en', { hour: '2-digit', minute: '2-digit' }).format(sunTimes.sunrise));
         }
         if (sunTimes.sunset) {
-          setSunsetTime(sunTimes.sunset.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' }));
+          setSunsetTime(new Intl.DateTimeFormat(i18n.language || 'en', { hour: '2-digit', minute: '2-digit' }).format(sunTimes.sunset));
         }
 
         const hours = await calculatePlanetaryHours(civilDate, lat, long);
@@ -346,7 +348,6 @@ export function useDayPanel() {
 
   // Actions
   const handleSaveNote = useCallback(async () => {
-    console.log('[handleSaveNote] START — noteKey:', noteKey, 'isTaskMode:', isTaskMode, 'editingTaskId:', editingTaskId, 'selectedDate:', selectedDate);
     if (!noteText.trim() || !noteKey || !selectedDate) {
       console.warn('[handleSaveNote] ABORT — missing text/noteKey/selectedDate');
       return;
@@ -355,9 +356,9 @@ export function useDayPanel() {
     // Preflight auth check for tasks
     if (isTaskMode) {
       const currentUser = getCurrentUser();
-      console.log('[handleSaveNote] Preflight auth check — currentUser:', currentUser?.uid || null);
+      // Auth preflight check — debug logging removed for production
       if (!currentUser) {
-        window.alert('You need to be signed in to save tasks. Please open the Account menu and sign in again.');
+        window.alert(t('alerts.signInToSaveTasks'));
         return;
       }
     }
@@ -365,7 +366,6 @@ export function useDayPanel() {
     try {
       if (isTaskMode) {
         if (editingTaskId) {
-          console.log('[handleSaveNote] Updating existing task', editingTaskId);
           await updatePlannerTaskDoc(editingTaskId, noteKey, {
             content: noteText.trim(),
             category: selectedCategory,
@@ -373,9 +373,7 @@ export function useDayPanel() {
             dueTime: dueTime || undefined,
             reminderMinutesBefore,
           });
-          console.log('[handleSaveNote] Task updated successfully');
         } else {
-          console.log('[handleSaveNote] Creating new task for noteKey:', noteKey);
           const celestialContext = dailyAstrology
             ? {
                 moonPhase: dailyAstrology.moonPhase.phase,
@@ -383,7 +381,7 @@ export function useDayPanel() {
               }
             : undefined;
 
-          const createdTask = await createPlannerTask({
+          await createPlannerTask({
             content: noteText.trim(),
             category: selectedCategory,
             mood: selectedMood,
@@ -392,10 +390,8 @@ export function useDayPanel() {
             reminderMinutesBefore,
             celestialContext,
           });
-          console.log('[handleSaveNote] Task created successfully — task.id:', createdTask.id, 'task.dayKey:', createdTask.dayKey);
         }
       } else {
-        console.log('[handleSaveNote] Creating note for noteKey:', noteKey);
         dispatch(addNote({
           key: noteKey,
           content: noteText.trim(),
@@ -405,7 +401,6 @@ export function useDayPanel() {
       }
 
       // Reset editor only on success
-      console.log('[handleSaveNote] Resetting editor');
       setNoteText('');
       setSelectedMood(undefined);
       setIsEditing(false);
@@ -414,12 +409,11 @@ export function useDayPanel() {
       setReminderMinutesBefore(10);
       setEditingTaskId(null);
       tutorialService.trackNoteCreated();
-      console.log('[handleSaveNote] DONE');
     } catch (err: any) {
       console.error('[handleSaveNote] FAILED:', err?.message || err);
-      window.alert('Unable to save task. Error: ' + (err?.message || 'Unknown'));
+      window.alert(t('alerts.unableToSaveTask', { error: err?.message || 'Unknown' }));
     }
-  }, [dispatch, noteKey, noteText, selectedCategory, selectedMood, isTaskMode, dueTime, reminderMinutesBefore, editingTaskId, selectedDate, dailyAstrology]);
+  }, [dispatch, noteKey, noteText, selectedCategory, selectedMood, isTaskMode, dueTime, reminderMinutesBefore, editingTaskId, selectedDate, dailyAstrology, t]);
 
   const handleDeleteNote = useCallback(async (itemId: string, dayKey?: string) => {
     const targetDayKey = dayKey || noteKey;
@@ -534,7 +528,7 @@ export function useDayPanel() {
     nextWeekCivil.setDate(currentCivil.getDate() + 7);
     const targetHeka = civilToHeka(nextWeekCivil);
     if (!targetHeka) {
-      alert('Could not calculate target date');
+      alert(t('alerts.couldNotCalculateDate'));
       return;
     }
     const targetKey = getNoteKey(targetHeka.year, targetHeka.month, targetHeka.day);
@@ -558,9 +552,9 @@ export function useDayPanel() {
     const parts = [];
     if (noteCount > 0) parts.push(`${noteCount} note(s)`);
     if (taskCount > 0) parts.push(`${taskCount} task(s)`);
-    alert(`Duplicated ${parts.join(' and ')} to next week (${HEKA_MONTHS[targetHeka.month].name} ${targetHeka.day})`);
+    alert(t('alerts.duplicatedToNextWeek', { items: parts.join(' and '), month: HEKA_MONTHS[targetHeka.month].name, day: targetHeka.day }));
     handleExitSelectionMode();
-  }, [selectedDate, selectedNotes, dispatch, handleExitSelectionMode]);
+  }, [selectedDate, selectedNotes, dispatch, handleExitSelectionMode, t]);
 
   const handleDuplicateToNextMonth = useCallback(() => {
     if (!selectedDate || selectedNotes.length === 0) return;
@@ -569,7 +563,7 @@ export function useDayPanel() {
     nextMonthCivil.setDate(currentCivil.getDate() + 28);
     const targetHeka = civilToHeka(nextMonthCivil);
     if (!targetHeka) {
-      alert('Could not calculate target date');
+      alert(t('alerts.couldNotCalculateDate'));
       return;
     }
     const targetKey = getNoteKey(targetHeka.year, targetHeka.month, targetHeka.day);
@@ -593,15 +587,18 @@ export function useDayPanel() {
     const parts = [];
     if (noteCount > 0) parts.push(`${noteCount} note(s)`);
     if (taskCount > 0) parts.push(`${taskCount} task(s)`);
-    alert(`Duplicated ${parts.join(' and ')} to next month (${HEKA_MONTHS[targetHeka.month].name} ${targetHeka.day})`);
+    alert(t('alerts.duplicatedToNextMonth', { items: parts.join(' and '), month: HEKA_MONTHS[targetHeka.month].name, day: targetHeka.day }));
     handleExitSelectionMode();
-  }, [selectedDate, selectedNotes, dispatch, handleExitSelectionMode]);
+  }, [selectedDate, selectedNotes, dispatch, handleExitSelectionMode, t]);
 
   const handleDuplicateToEveryDayOfWeek = useCallback(() => {
     if (!selectedDate || selectedNotes.length === 0) return;
     const currentDayOfWeek = civilDate ? civilDate.getDay() : 0;
-    const dayName = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'][currentDayOfWeek];
-    if (!confirm(`Duplicate these ${selectedNotes.length} item(s) to EVERY ${dayName} for the rest of the year?`)) return;
+    const dayName = [
+      t('dow.sunday'), t('dow.monday'), t('dow.tuesday'), t('dow.wednesday'),
+      t('dow.thursday'), t('dow.friday'), t('dow.saturday')
+    ][currentDayOfWeek];
+    if (!confirm(t('confirmations.duplicateEveryDay', { count: selectedNotes.length, day: dayName }))) return;
     let duplicateCount = 0;
     for (let month = selectedDate.month; month < 13; month++) {
       const daysInMonth = getDaysInMonth(selectedDate.year, month as any);
@@ -626,18 +623,18 @@ export function useDayPanel() {
         }
       }
     }
-    alert(`Duplicated to ${duplicateCount} ${dayName}s`);
+    alert(t('alerts.duplicatedToDays', { count: duplicateCount, day: dayName }));
     handleExitSelectionMode();
-  }, [selectedDate, selectedNotes, civilDate, dispatch, handleExitSelectionMode]);
+  }, [selectedDate, selectedNotes, civilDate, dispatch, handleExitSelectionMode, t]);
 
   const handleUndoDuplicates = useCallback(() => {
-    if (!confirm(`Remove all duplicated instances of these ${notesWithDuplicates.size} note(s)?`)) return;
+    if (!confirm(t('confirmations.undoDuplicates', { count: notesWithDuplicates.size }))) return;
     notesWithDuplicates.forEach(sourceNoteId => {
       dispatch(deleteDuplicates({ sourceNoteId }));
     });
-    alert('Removed duplicated notes');
+    alert(t('alerts.removedDuplicates'));
     handleExitSelectionMode();
-  }, [notesWithDuplicates, dispatch, handleExitSelectionMode]);
+  }, [notesWithDuplicates, dispatch, handleExitSelectionMode, t]);
 
   const handleDuplicateToSpecificDay = useCallback((targetDate: { year: number; month: number; day: number }) => {
     if (selectedNotes.length === 0) return;
@@ -662,10 +659,10 @@ export function useDayPanel() {
     const parts = [];
     if (noteCount > 0) parts.push(`${noteCount} note(s)`);
     if (taskCount > 0) parts.push(`${taskCount} task(s)`);
-    alert(`Duplicated ${parts.join(' and ')}`);
+    alert(t('alerts.duplicatedNotes', { count: `${parts.join(' and ')}` }));
     setShowDayPicker(false);
     handleExitSelectionMode();
-  }, [selectedNotes, dispatch, handleExitSelectionMode]);
+  }, [selectedNotes, dispatch, handleExitSelectionMode, t]);
 
   const handleDuplicateToSpecificDays = useCallback((targetDates: { year: number; month: number; day: number }[]) => {
     if (selectedNotes.length === 0 || targetDates.length === 0) return;
@@ -685,10 +682,10 @@ export function useDayPanel() {
         }
       });
     });
-    alert(`Duplicated selected items to ${targetDates.length} day(s)`);
+    alert(t('alerts.duplicatedSelectedItems', { count: targetDates.length }));
     setShowMultiDayPicker(false);
     handleExitSelectionMode();
-  }, [selectedNotes, dispatch, handleExitSelectionMode]);
+  }, [selectedNotes, dispatch, handleExitSelectionMode, t]);
 
   const handleStartTaskEditing = useCallback(() => {
     tutorialService.trackNoteEditorOpened();

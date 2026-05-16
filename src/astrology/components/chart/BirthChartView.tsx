@@ -10,6 +10,7 @@
  */
 
 import React, { useState, useEffect, useCallback, useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 import { 
   profileManager, 
   type ProfileWithChart,
@@ -372,6 +373,7 @@ const styles: Record<string, React.CSSProperties> = {
 };
 
 export const BirthChartView: React.FC<BirthChartViewProps> = ({ initialProfileId }) => {
+  const { t } = useTranslation('celestial');
   const [viewMode, setViewMode] = useState<ViewMode>('chart');
   const [profile, setProfile] = useState<ProfileWithChart | null>(null);
   const [natalPromise, setNatalPromise] = useState<NatalPromise | null>(null);
@@ -491,13 +493,13 @@ export const BirthChartView: React.FC<BirthChartViewProps> = ({ initialProfileId
         <div style={styles.emptyState}>
           <div style={styles.emptyIcon}>🌙</div>
           <h2 style={{ fontSize: '24px', color: '#fff', marginBottom: '12px' }}>
-            No Birth Chart Found
+            {t('birthChart.noBirthChart')}
           </h2>
           <p style={{ marginBottom: '24px' }}>
-            Create your first birth chart to unlock personalized celestial guidance
+            {t('birthChart.createFirst')}
           </p>
           <button style={styles.button} onClick={() => setViewMode('new')}>
-            ✨ Create Your Chart
+            {t('birthChart.createYourChart')}
           </button>
         </div>
 
@@ -517,7 +519,7 @@ export const BirthChartView: React.FC<BirthChartViewProps> = ({ initialProfileId
         <div style={{ fontSize: '48px', marginBottom: '20px', animation: 'pulse 2s infinite' }}>
           ✦
         </div>
-        <p style={{ color: 'rgba(255,255,255,0.6)' }}>Loading celestial blueprint...</p>
+        <p style={{ color: 'rgba(255,255,255,0.6)' }}>{t('birthChart.loading')}</p>
       </div>
     );
   }
@@ -529,11 +531,11 @@ export const BirthChartView: React.FC<BirthChartViewProps> = ({ initialProfileId
       {/* Header */}
       <div style={styles.header}>
         <div>
-          <h1 style={styles.title}>{profile.name}'s Chart</h1>
+          <h1 style={styles.title}>{t('birthChart.profileChart', { name: profile.name })}</h1>
           <p style={styles.subtitle}>
-            Born {new Date(profile.chart.birthData.date).toLocaleDateString('en-US', { 
+            {t('birthChart.born')} {new Intl.DateTimeFormat('en', { 
               month: 'long', day: 'numeric', year: 'numeric' 
-            })} • {profile.chart.birthData.locationName || 'Unknown location'}
+            }).format(new Date(profile.chart.birthData.date))} • {profile.chart.birthData.locationName || t('birthChart.unknownLocation')}
           </p>
         </div>
         <ProfileSelector 
@@ -588,9 +590,9 @@ export const BirthChartView: React.FC<BirthChartViewProps> = ({ initialProfileId
           {viewMode === 'chart' && (
             <div style={styles.card}>
               <div style={styles.cardHeader}>
-                <h3 style={styles.cardTitle}>◉ Natal Chart</h3>
+                <h3 style={styles.cardTitle}>{t('birthChart.natalChart')}</h3>
                 <span style={{ fontSize: '12px', color: 'rgba(255,255,255,0.5)' }}>
-                  Drag to rotate • Click planets for details
+                  {t('birthChart.dragRotate')}
                 </span>
               </div>
               <div style={styles.chartContainer}>
@@ -608,7 +610,7 @@ export const BirthChartView: React.FC<BirthChartViewProps> = ({ initialProfileId
           {viewMode === 'elements' && (
             <div style={styles.card}>
               <div style={styles.cardHeader}>
-                <h3 style={styles.cardTitle}>🔥 Elemental Temple</h3>
+                <h3 style={styles.cardTitle}>{t('birthChart.elementalTemple')}</h3>
               </div>
               <div style={{ ...styles.cardContent, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                 <ElementTemple chart={profile.chart} size={isMobile ? 320 : 400} />
@@ -637,14 +639,14 @@ export const BirthChartView: React.FC<BirthChartViewProps> = ({ initialProfileId
             <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
               {/* Main Promise */}
               <div style={styles.promiseCard}>
-                <div style={styles.promiseTitle}>✨ Your Soul's Promise</div>
+                <div style={styles.promiseTitle}>{t('birthChart.yourSoulsPromise')}</div>
                 <p style={styles.promiseText}>{natalPromise.summary}</p>
               </div>
 
               {/* Life Themes */}
               <div style={styles.card}>
                 <div style={styles.cardHeader}>
-                  <h3 style={styles.cardTitle}>🌟 Life Themes</h3>
+                  <h3 style={styles.cardTitle}>{t('birthChart.lifeThemes')}</h3>
                 </div>
                 <div style={styles.cardContent}>
                   <div style={styles.themesList}>
@@ -659,7 +661,7 @@ export const BirthChartView: React.FC<BirthChartViewProps> = ({ initialProfileId
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
                 <div style={styles.card}>
                   <div style={styles.cardHeader}>
-                    <h3 style={styles.cardTitle}>🎁 Natural Gifts</h3>
+                    <h3 style={styles.cardTitle}>{t('birthChart.naturalGifts')}</h3>
                   </div>
                   <div style={styles.cardContent}>
                     <ul style={{ margin: 0, paddingLeft: '20px', color: 'rgba(255,255,255,0.8)' }}>
@@ -672,7 +674,7 @@ export const BirthChartView: React.FC<BirthChartViewProps> = ({ initialProfileId
 
                 <div style={styles.card}>
                   <div style={styles.cardHeader}>
-                    <h3 style={styles.cardTitle}>🌱 Growth Edges</h3>
+                    <h3 style={styles.cardTitle}>{t('birthChart.growthEdges')}</h3>
                   </div>
                   <div style={styles.cardContent}>
                     <ul style={{ margin: 0, paddingLeft: '20px', color: 'rgba(255,255,255,0.8)' }}>
@@ -693,7 +695,7 @@ export const BirthChartView: React.FC<BirthChartViewProps> = ({ initialProfileId
             {/* Natal Promise Summary */}
             {natalPromise && (
               <div style={styles.promiseCard}>
-                <div style={styles.promiseTitle}>✨ Soul Promise</div>
+                <div style={styles.promiseTitle}>{t('birthChart.soulPromise')}</div>
                 <p style={{ ...styles.promiseText, fontSize: '15px' }}>
                   {natalPromise.soulPurpose}
                 </p>
@@ -716,7 +718,7 @@ export const BirthChartView: React.FC<BirthChartViewProps> = ({ initialProfileId
                     : 'Unknown'}
                 </div>
                 <div style={{ fontSize: '14px', color: 'rgba(255,255,255,0.6)' }}>
-                  ☉ Sun Sign • You are a {profile.chart.planets.sun?.sign || 'unknown'}
+                  {t('birthChart.sunSign', { sign: profile.chart.planets.sun?.sign || t('birthChart.unknownLocation') })}
                 </div>
                 <div style={{ fontSize: '12px', color: 'rgba(255,255,255,0.4)', marginTop: '4px' }}>
                   {profile.chart.planets.sun && `${Math.floor(profile.chart.planets.sun.degreeInSign)}° ${profile.chart.planets.sun.sign}`}
@@ -730,7 +732,7 @@ export const BirthChartView: React.FC<BirthChartViewProps> = ({ initialProfileId
                     fontSize: '12px',
                     color: '#fca5a5',
                   }}>
-                    ⚠️ Chart data incomplete. <button 
+                    {t('birthChart.chartIncomplete')} <button 
                       onClick={() => setViewMode('new')}
                       style={{ 
                         background: 'none', 
@@ -741,7 +743,7 @@ export const BirthChartView: React.FC<BirthChartViewProps> = ({ initialProfileId
                         padding: 0,
                         fontSize: '12px',
                       }}
-                    >Recreate your chart</button>
+                    >{t('birthChart.recreateChart')}</button>
                   </div>
                 )}
               </div>
@@ -750,7 +752,7 @@ export const BirthChartView: React.FC<BirthChartViewProps> = ({ initialProfileId
             {/* Planet Positions Grid -->
             <div style={styles.card}>
               <div style={styles.cardHeader}>
-                <h3 style={styles.cardTitle}>🪐 Planet Positions</h3>
+                <h3 style={styles.cardTitle}>{t('birthChart.planetPositions')}</h3>
               </div>
               <div style={styles.cardContent}>
                 <div style={styles.planetGrid}>
@@ -795,7 +797,7 @@ export const BirthChartView: React.FC<BirthChartViewProps> = ({ initialProfileId
               return (
                 <div style={styles.card}>
                   <div style={styles.cardHeader}>
-                    <h3 style={styles.cardTitle}>⚡ Major Aspects</h3>
+                    <h3 style={styles.cardTitle}>{t('birthChart.majorAspects')}</h3>
                   </div>
                   <div style={styles.cardContent}>
                     <div style={styles.aspectsList}>
@@ -829,13 +831,13 @@ export const BirthChartView: React.FC<BirthChartViewProps> = ({ initialProfileId
                     style={styles.actionButton}
                     onClick={() => setViewMode('new')}
                   >
-                    + New Chart
+                    {t('birthChart.newChart')}
                   </button>
                   <button 
                     style={styles.actionButton}
                     onClick={() => setViewMode('edit')}
                   >
-                    ✏️ Edit
+                    {t('birthChart.edit')}
                   </button>
                 </div>
               </div>

@@ -93,7 +93,18 @@ function hasCompletedTaskToday(tasks: PlannerTask[]): boolean {
 
 function hasPendingTasks(tasks: PlannerTask[]): boolean {
   const today = new Date().toISOString().split('T')[0];
-  return tasks.some((t) => !t.isCompleted && t.dayKey === today);
+  return tasks.some((t) => {
+    if (t.isCompleted) return false;
+    // dayKey may be heka:Y:M:D or YYYY-MM-DD — normalise before comparing
+    const dk = t.dayKey;
+    if (dk.startsWith('heka:')) {
+      const parts = dk.split(':');
+      // heka:year:month:day → YYYY-MM-DD
+      const normalised = `${parts[1]}-${String(parts[2]).padStart(2, '0')}-${String(parts[3]).padStart(2, '0')}`;
+      return normalised === today;
+    }
+    return dk === today;
+  });
 }
 
 // ── Danger Calculation ───────────────────────────────────────────────────────
@@ -286,7 +297,7 @@ export function evaluateAndProtectStreak(tasks: PlannerTask[]): StreakDangerAsse
   });
 
   // Schedule or cancel notification
-  void scheduleStreakProtectionNotification(assessment);
+  scheduleStreakProtectionNotification(assessment).catch(() => {});
 
   return assessment;
 }

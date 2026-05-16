@@ -110,7 +110,7 @@ export async function calculateCurrentSky(date: Date = new Date()): Promise<{
  * Fallback planet positions when WASM is not available
  * Uses mean orbital elements for approximate positions
  */
-function getFallbackPositions(jd: number, use13Signs?: boolean): Record<string, CelestialBody> {
+export function getFallbackPositions(jd: number, use13Signs?: boolean): Record<string, CelestialBody> {
   const elements: Record<string, { meanLong: number; dailyMotion: number; distance: number }> = {
     sun: { meanLong: 280.46646, dailyMotion: 0.98564736, distance: 1.0 },
     moon: { meanLong: 218.316, dailyMotion: 13.176396, distance: 0.00257 },
@@ -453,15 +453,19 @@ export async function getCurrentPlanetaryHour(
     const dayOfWeek = date.getDay();
     const firstHourIndex = chaldean.indexOf(dayPlanets[dayOfWeek]);
     const civilHour = date.getHours();
-    const hourIndex = (firstHourIndex + civilHour) % 7;
-    const nextIndex = (firstHourIndex + civilHour + 1) % 7;
+    // Approximate: 6 AM–6 PM = daytime hours 0–11, 6 PM–6 AM = night hours 12–23
+    const isDay = civilHour >= 6 && civilHour < 18;
+    const approxSegment = isDay ? civilHour - 6 : (civilHour >= 18 ? civilHour - 18 : civilHour + 6);
+    const hourIndex = (firstHourIndex + approxSegment + (isDay ? 0 : 12)) % 7;
+    const nextIndex = (hourIndex + 1) % 7;
+    const approxHour = isDay ? approxSegment : approxSegment + 12;
     return {
       planet: chaldean[hourIndex],
       symbol: symbols[chaldean[hourIndex]],
-      hour: civilHour,
+      hour: approxHour,
       activities: activities[chaldean[hourIndex]],
       nextHour: chaldean[nextIndex],
-      isDay: civilHour >= 6 && civilHour < 18,
+      isDay,
       progress: ((date.getMinutes() * 60 + date.getSeconds()) / 3600) * 100,
     };
   }
@@ -938,7 +942,9 @@ function analyzeVoidQuality(
  * Enhanced Void of Course Moon calculation
  * Uses exact aspect timing to determine void entry/exit
  */
-export async function calculateVoidMoonStatus(): Promise<VoidMoonData & {
+export async function calculateVoidMoonStatus(
+  date: Date = new Date()
+): Promise<VoidMoonData & {
   quality: 'favorable' | 'challenging' | 'neutral';
   qualityDescription: string;
   currentAspects: Array<{
@@ -950,9 +956,9 @@ export async function calculateVoidMoonStatus(): Promise<VoidMoonData & {
   }>;
 }> {
   try {
-    const { positions } = await calculateCurrentSky();
+    const { positions } = await calculateCurrentSky(date);
     const moon = positions.moon;
-    const now = new Date();
+    const now = date;
     
     if (!moon) {
       throw new Error('Moon position not available');
@@ -1158,6 +1164,20 @@ export async function calculateMoonPhaseSwiss(
   );
   
   const positions = calculateAllPlanets(jd, ['sun', 'moon'], { zodiacFrame: frame, signCount: count });
+  
+  // Fallback when WASM not yet initialized
+  if (!positions?.sun || !positions?.moon) {
+    return {
+      phase: 'Full Moon',
+      glyph: '🌕',
+      illumination: 100,
+      age: 14.77,
+      waxing: false,
+      angle: 180,
+      name: 'Full Moon',
+    };
+  }
+  
   const moonPhase = calculatePreciseMoonPhase(positions.sun, positions.moon);
 
   // Calculate approximate moon age from phase (0-29.53 days)
@@ -1223,6 +1243,20 @@ export async function calculateMoonPhaseBatch(
       );
       
       const positions = calculateAllPlanets(jd, ['sun', 'moon'], { zodiacFrame: frame, signCount: count });
+      
+      // Fallback when WASM not yet initialized
+      if (!positions?.sun || !positions?.moon) {
+        return {
+          phase: 'Full Moon',
+          name: 'Full Moon',
+          glyph: '🌕',
+          illumination: 100,
+          age: 14.77,
+          waxing: false,
+          angle: 180,
+        };
+      }
+      
       const moonPhase = calculatePreciseMoonPhase(positions.sun, positions.moon);
       
       const synodicMonth = 29.53059;

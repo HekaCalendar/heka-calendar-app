@@ -15,6 +15,7 @@
  */
 
 import { useState, useCallback, memo, useMemo, useRef, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import type { RootState } from '../store';
 import { selectDate, addNote, deleteNote, deleteDuplicates } from '../store';
@@ -51,6 +52,7 @@ const MOOD_LABELS: Record<number, string> = {
 const DAY_NAMES = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
 const DayPanelComponent: React.FC = () => {
+  const { t, i18n } = useTranslation('dayPanel');
   const dispatch = useDispatch();
   
   // Use shallowEqual for object selectors to prevent unnecessary re-renders
@@ -222,24 +224,40 @@ const DayPanelComponent: React.FC = () => {
         const sunTimes = await calculateSunTimes(civilDate, lat, long);
         
         if (sunTimes.sunrise) {
-          setSunriseTime(sunTimes.sunrise.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' }));
+          setSunriseTime(new Intl.DateTimeFormat(i18n.language || 'en', { hour: '2-digit', minute: '2-digit' }).format(sunTimes.sunrise));
         }
         if (sunTimes.sunset) {
-          setSunsetTime(sunTimes.sunset.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' }));
+          setSunsetTime(new Intl.DateTimeFormat(i18n.language || 'en', { hour: '2-digit', minute: '2-digit' }).format(sunTimes.sunset));
         }
         
         // Calculate planetary hours
         const hours = await calculatePlanetaryHours(civilDate, lat, long);
-        // Show current planetary hour if available
-        const now = new Date();
-        const currentHour = hours.find(h => now >= h.startTime && now < h.endTime);
-        
-        if (currentHour) {
-          setCurrentPlanetaryHour({ 
-            planet: currentHour.planet, 
-            symbol: currentHour.symbol, 
-            activities: currentHour.activities 
-          });
+        // Show planetary hour for the selected date
+        const isToday = civilDate.toDateString() === new Date().toDateString();
+        if (isToday) {
+          const now = new Date();
+          const currentHour = hours.find(h => now >= h.startTime && now < h.endTime);
+          if (currentHour) {
+            setCurrentPlanetaryHour({ 
+              planet: currentHour.planet, 
+              symbol: currentHour.symbol, 
+              activities: currentHour.activities 
+            });
+          }
+        } else {
+          // For future/past dates, show the planetary hour at solar noon
+          const noonHour = hours.find(h => {
+            const mid = h.startTime.getTime() + (h.endTime.getTime() - h.startTime.getTime()) / 2;
+            const midDate = new Date(mid);
+            return midDate.getHours() >= 11 && midDate.getHours() <= 13;
+          }) || hours[6];
+          if (noonHour) {
+            setCurrentPlanetaryHour({ 
+              planet: noonHour.planet, 
+              symbol: noonHour.symbol, 
+              activities: noonHour.activities 
+            });
+          }
         }
       } catch (err) {
         console.error('[DayPanel] Failed to calculate location data:', err);
@@ -277,10 +295,10 @@ const DayPanelComponent: React.FC = () => {
   }, [dispatch, noteKey, noteText, selectedCategory, selectedMood]);
   
   const handleDeleteNote = useCallback((noteId: string) => {
-    if (confirm('Delete this note?')) {
+    if (confirm(t('confirmations.deleteNote'))) {
       dispatch(deleteNote({ dayKey: noteKey, noteId }));
     }
-  }, [dispatch, noteKey]);
+  }, [dispatch, noteKey, t]);
   
   // Selection mode handlers - now supports multi-day selection
   const handleEnterSelectionMode = useCallback((noteId: string, dayKey: string) => {
@@ -356,7 +374,7 @@ const DayPanelComponent: React.FC = () => {
     // Convert back to HEKA
     const targetHeka = civilToHeka(nextWeekCivil);
     if (!targetHeka) {
-      alert('Could not calculate target date');
+      alert(t('alerts.couldNotCalculateDate'));
       return;
     }
     
@@ -372,15 +390,15 @@ const DayPanelComponent: React.FC = () => {
       }));
     });
     
-    alert(`Duplicated ${selectedNotes.length} note(s) to next week (${HEKA_MONTHS[targetHeka.month].name} ${targetHeka.day})`);
+    alert(t('alerts.duplicatedToNextWeek', { items: `${selectedNotes.length} note(s)`, month: HEKA_MONTHS[targetHeka.month].name, day: targetHeka.day }));
     handleExitSelectionMode();
-  }, [selectedDate, selectedNotes, dispatch]);
+  }, [selectedDate, selectedNotes, dispatch, t]);
   
   const handleDuplicateToEveryDayOfWeek = useCallback(() => {
     if (!selectedDate || selectedNotes.length === 0) return;
     
     const dayName = DAY_NAMES[currentDayOfWeek];
-    if (!confirm(`Duplicate these ${selectedNotes.length} note(s) to EVERY ${dayName} for the rest of the year?`)) {
+    if (!confirm(t('confirmations.duplicateEveryDay', { count: selectedNotes.length, day: dayName }))) {
       return;
     }
     
@@ -408,9 +426,9 @@ const DayPanelComponent: React.FC = () => {
       }
     }
     
-    alert(`Duplicated to ${duplicateCount} ${dayName}s`);
+    alert(t('alerts.duplicatedToDays', { count: duplicateCount, day: dayName }));
     handleExitSelectionMode();
-  }, [selectedDate, selectedNotes, currentDayOfWeek, dispatch]);
+  }, [selectedDate, selectedNotes, currentDayOfWeek, dispatch, t]);
   
   const handleShowDayPicker = useCallback(() => {
     setShowDayPicker(true);
@@ -431,20 +449,20 @@ const DayPanelComponent: React.FC = () => {
       }));
     });
     
-    alert(`Duplicated ${selectedNotes.length} note(s)`);
+    alert(t('alerts.duplicatedNotes', { count: `${selectedNotes.length} note(s)` }));
     setShowDayPicker(false);
     handleExitSelectionMode();
-  }, [selectedNotes, dispatch]);
+  }, [selectedNotes, dispatch, t]);
   
   const handleDeleteSelected = useCallback(() => {
-    if (!confirm(`Delete ${selectedNotesMap.size} selected note(s) from ${selectedDayCount} day(s)?`)) return;
+    if (!confirm(t('confirmations.deleteSelected', { count: selectedNotesMap.size, days: selectedDayCount }))) return;
     
     // Delete from the correct day for each note
     selectedNotesMap.forEach((dayKey, noteId) => {
       dispatch(deleteNote({ dayKey, noteId }));
     });
     handleExitSelectionMode();
-  }, [selectedNotesMap, selectedDayCount, dispatch, handleExitSelectionMode]);
+  }, [selectedNotesMap, selectedDayCount, dispatch, handleExitSelectionMode, t]);
   
   // Check if selected notes have duplicates (for showing Undo option)
   const notesWithDuplicates = useMemo(() => {
@@ -470,9 +488,9 @@ const DayPanelComponent: React.FC = () => {
       dispatch(deleteDuplicates({ sourceNoteId }));
     });
     
-    alert(`Removed duplicated notes`);
+    alert(t('alerts.removedDuplicates'));
     handleExitSelectionMode();
-  }, [notesWithDuplicates, dispatch, handleExitSelectionMode]);
+  }, [notesWithDuplicates, dispatch, handleExitSelectionMode, t]);
   
   // Multi-day duplication handlers
   const handleDuplicateToNextMonth = useCallback(() => {
@@ -486,7 +504,7 @@ const DayPanelComponent: React.FC = () => {
       
       const targetHeka = civilToHeka(nextMonthCivil);
       if (!targetHeka) {
-        alert('Could not calculate target date');
+        alert(t('alerts.couldNotCalculateDate'));
         return;
       }
       
@@ -502,7 +520,7 @@ const DayPanelComponent: React.FC = () => {
         }));
       });
       
-      alert(`Duplicated ${selectedNotes.length} note(s) to next month (${HEKA_MONTHS[targetHeka.month].name} ${targetHeka.day})`);
+      alert(t('alerts.duplicatedToNextMonth', { items: `${selectedNotes.length} note(s)`, month: HEKA_MONTHS[targetHeka.month].name, day: targetHeka.day }));
       handleExitSelectionMode();
       return;
     }
@@ -547,9 +565,9 @@ const DayPanelComponent: React.FC = () => {
       });
     });
     
-    alert(`Duplicated ${duplicateCount} note(s) to next month`);
+    alert(t('alerts.duplicatedToMonth', { count: duplicateCount }));
     handleExitSelectionMode();
-  }, [selectedNotes, selectedNotesWithKeys, selectedDate, isMultiDaySelection, dispatch]);
+  }, [selectedNotes, selectedNotesWithKeys, selectedDate, isMultiDaySelection, dispatch, t]);
   
   const handleDuplicateToSpecificDays = useCallback((targetDates: { year: number; month: number; day: number }[]) => {
     if (selectedNotes.length === 0 || targetDates.length === 0) return;
@@ -571,10 +589,10 @@ const DayPanelComponent: React.FC = () => {
       });
     });
     
-    alert(`Duplicated ${selectedNotes.length} note(s) to ${targetDates.length} day(s)`);
+    alert(t('alerts.duplicatedToDaysCount', { count: selectedNotes.length, days: targetDates.length }));
     setShowMultiDayPicker(false);
     handleExitSelectionMode();
-  }, [selectedNotes, dispatch]);
+  }, [selectedNotes, dispatch, t]);
   
   const handleCancelEdit = () => {
     setIsEditing(false);
@@ -587,7 +605,7 @@ const DayPanelComponent: React.FC = () => {
       <div className="day-panel">
         <div className="day-panel__empty">
           <div style={{ fontSize: '3rem', marginBottom: '1rem' }}>📅</div>
-          <p>Select a day to view details</p>
+          <p>{t('emptyState')}</p>
         </div>
       </div>
     );
@@ -613,7 +631,7 @@ const DayPanelComponent: React.FC = () => {
         <button
           className="btn btn--icon day-panel-close-btn"
           onClick={() => dispatch(selectDate(null))}
-          aria-label="Close panel"
+          aria-label={t('closePanel')}
         >
           ×
         </button>
@@ -625,7 +643,7 @@ const DayPanelComponent: React.FC = () => {
           {moonLoading ? (
             <div className="moon-loading">
               <span className="spinner"></span>
-              <span>Calculating lunar position...</span>
+              <span>{t('moon.calculating')}</span>
             </div>
           ) : swissMoonData ? (
             <>
@@ -634,18 +652,18 @@ const DayPanelComponent: React.FC = () => {
                 <div className="moon-info">
                   <div className="moon-phase">{swissMoonData.name}</div>
                   <div className="moon-details">
-                    {swissMoonData.waxing ? 'Waxing' : 'Waning'} • {swissMoonData.illumination}% illuminated
+                    {swissMoonData.waxing ? t('moon.waxing') : t('moon.waning')} • {t('moon.illuminated', { percent: swissMoonData.illumination })}
                   </div>
-                  <div className="moon-age">Age: {swissMoonData.age} days</div>
-                  <div className="moon-precision">✨ Swiss Ephemeris</div>
+                  <div className="moon-age">{t('moon.age', { age: swissMoonData.age })}</div>
+                  <div className="moon-precision">✨ {t('moon.swissEphemeris')}</div>
                 </div>
               </div>
               <div className="moon-hemisphere">
-                {hemisphere === 'S' ? '🌏 Southern Hemisphere' : '🌍 Northern Hemisphere'}
+                {hemisphere === 'S' ? `🌏 ${t('moon.southernHemisphere')}` : `🌍 ${t('moon.northernHemisphere')}`}
               </div>
             </>
           ) : (
-            <div className="moon-unavailable">Moon phase data unavailable</div>
+            <div className="moon-unavailable">{t('moon.unavailable')}</div>
           )}
         </div>
       )}
@@ -653,7 +671,7 @@ const DayPanelComponent: React.FC = () => {
       {/* Holidays Section - First */}
       {display.showHolidays && holidays.length > 0 && (
         <div className="day-panel__section">
-          <div className="day-panel__label">Holidays in {locationData.name}</div>
+          <div className="day-panel__label">{t('holidays.inLocation', { location: locationData.name })}</div>
           <div className="holiday-list">
             {holidays.map((holiday, idx) => (
               <div key={idx} className={`holiday-badge holiday-badge--${holiday.type}`}>
@@ -670,14 +688,14 @@ const DayPanelComponent: React.FC = () => {
         <div className="day-panel__section day-panel__astrology">
           <div className="day-panel__section-title">
             <span>{hasBirthChart ? '✦' : '✨'}</span> 
-            {hasBirthChart ? `Personalized for ${birthChartName}` : 'Daily Cosmic Guidance'}
+            {hasBirthChart ? t('astrology.personalizedFor', { name: birthChartName }) : t('astrology.dailyCosmicGuidance')}
             {hasBirthChart && <span className="astro-personalized-badge">Birth Chart Active</span>}
           </div>
           
           {astrologyLoading ? (
             <div className="day-panel__astrology-loading">
               <span className="spinner"></span>
-              <span>{hasBirthChart ? 'Calculating your personal transits...' : 'Connecting to celestial intelligence...'}</span>
+              <span>{hasBirthChart ? t('astrology.calculatingTransits') : t('astrology.connectingCelestial')}</span>
             </div>
           ) : dailyAstrology ? (
             <div className="day-panel__astrology-content">
@@ -687,29 +705,29 @@ const DayPanelComponent: React.FC = () => {
                   {sunriseTime && (
                     <div className="astro-time-badge">
                       <span className="astro-time-icon">🌅</span>
-                      <span className="astro-time-label">Sunrise: {sunriseTime}</span>
+                      <span className="astro-time-label">{t('astrology.sunrise', { time: sunriseTime })}</span>
                     </div>
                   )}
                   {sunsetTime && (
                     <div className="astro-time-badge">
                       <span className="astro-time-icon">🌇</span>
-                      <span className="astro-time-label">Sunset: {sunsetTime}</span>
+                      <span className="astro-time-label">{t('astrology.sunset', { time: sunsetTime })}</span>
                     </div>
                   )}
                   {currentPlanetaryHour && (
                     <div className="astro-time-badge astro-planetary-hour">
                       <span className="astro-time-icon">{currentPlanetaryHour.symbol}</span>
-                      <span className="astro-time-label">Planetary Hour: {currentPlanetaryHour.planet}</span>
+                      <span className="astro-time-label">{t('astrology.planetaryHour', { planet: currentPlanetaryHour.planet })}</span>
                     </div>
                   )}
-                  <div className="astro-location-name">📍 {locationData.name}</div>
+                  <div className="astro-location-name">📍 {t('astrology.locationPin', { location: locationData.name })}</div>
                 </div>
               )}
               
               {/* Personal Transits - Only if birth chart exists */}
               {hasBirthChart && personalTransits.length > 0 && (
                 <div className="astro-transits-section">
-                  <div className="astro-transits-title">🌟 Active Transits for You Today</div>
+                  <div className="astro-transits-title">🌟 {t('astrology.activeTransits')}</div>
                   {personalTransits.map((transit, idx) => (
                     <div key={idx} className={`astro-transit-item strength-${Math.floor(transit.strength / 20)}`}>
                       <span className="astro-transit-planets">
@@ -742,7 +760,7 @@ const DayPanelComponent: React.FC = () => {
                 <div className="astro-card__info">
                   <div className="astro-card__title">{dailyAstrology.moonPhase.name}</div>
                   <div className="astro-card__detail">
-                    {Math.round(dailyAstrology.moonPhase.illumination)}% illuminated
+                    {t('moon.illuminated', { percent: Math.round(dailyAstrology.moonPhase.illumination) })}
                   </div>
                 </div>
               </div>
@@ -751,35 +769,35 @@ const DayPanelComponent: React.FC = () => {
               <div className="astro-row">
                 <div className="astro-badge">
                   <span className="astro-badge__icon">☽</span>
-                  <span className="astro-badge__label">Moon in {dailyAstrology.moonSign}</span>
+                  <span className="astro-badge__label">{t('astrology.moonIn', { sign: dailyAstrology.moonSign })}</span>
                 </div>
                 <div className="astro-badge">
                   <span className="astro-badge__icon">☉</span>
-                  <span className="astro-badge__label">Sun in {dailyAstrology.sunSign}</span>
+                  <span className="astro-badge__label">{t('astrology.sunIn', { sign: dailyAstrology.sunSign })}</span>
                 </div>
               </div>
               
               {/* Daily Theme */}
               <div className="astro-theme">
-                <span className="astro-theme__label">Today's Theme:</span>
+                <span className="astro-theme__label">{t('astrology.todaysTheme')}</span>
                 <span className="astro-theme__value">{dailyAstrology.dailyTheme}</span>
               </div>
               
               {/* Guidance */}
               <div className="astro-guidance">
-                <div className="astro-guidance__label">🌟 Cosmic Guidance</div>
+                <div className="astro-guidance__label">🌟 {t('astrology.cosmicGuidance')}</div>
                 <div className="astro-guidance__text">{dailyAstrology.guidance}</div>
               </div>
               
               {/* Journal Prompt */}
               <div className="astro-prompt">
-                <div className="astro-prompt__label">📝 Reflection</div>
+                <div className="astro-prompt__label">📝 {t('astrology.reflection')}</div>
                 <div className="astro-prompt__text">{dailyAstrology.journalPrompt}</div>
               </div>
               
               {/* Affirmation */}
               <div className="astro-affirmation">
-                <div className="astro-affirmation__label">💫 Affirmation</div>
+                <div className="astro-affirmation__label">💫 {t('astrology.affirmation')}</div>
                 <div className="astro-affirmation__text">"{dailyAstrology.affirmation}"</div>
               </div>
               
@@ -794,14 +812,14 @@ const DayPanelComponent: React.FC = () => {
               {/* Add Birth Chart CTA if not present */}
               {!hasBirthChart && (
                 <div className="astro-birthchart-cta">
-                  <p>✨ <strong>Want personalized transits?</strong></p>
-                  <p>Add your birth chart in the Stars section to see how today's cosmic weather affects you personally.</p>
+                  <p>✨ <strong>{t('astrology.birthChartCta.title')}</strong></p>
+                  <p>{t('astrology.birthChartCta.description')}</p>
                 </div>
               )}
             </div>
           ) : (
             <div className="day-panel__astrology-empty">
-              Celestial guidance unavailable. Check the Stars section for detailed astrology.
+              {t('astrology.unavailable')}
             </div>
           )}
         </div>
@@ -823,23 +841,23 @@ const DayPanelComponent: React.FC = () => {
           <div className="selection-toolbar">
             <div className="selection-toolbar__header">
               <span className="selection-count">
-                {selectedNotesMap.size} selected from {selectedDayCount} day{selectedDayCount !== 1 ? 's' : ''}
+                {t('selection.selectedFromDays', { count: selectedNotesMap.size, days: selectedDayCount, suffix: selectedDayCount !== 1 ? 's' : '' })}
               </span>
               <button className="btn btn--sm" onClick={handleExitSelectionMode}>
-                Done
+                {t('selection.done')}
               </button>
             </div>
             
             {!showDuplicateOptions && !showDayPicker && !showMultiDayPicker && (
               <div className="selection-toolbar__actions">
                 <button className="btn btn--sm" onClick={handleSelectAll}>
-                  Select All
+                  {t('selection.selectAll')}
                 </button>
                 <button className="btn btn--sm btn--primary" onClick={() => setShowDuplicateOptions(true)}>
-                  📋 Duplicate...
+                  📋 {t('selection.duplicate')}
                 </button>
                 <button className="btn btn--sm btn--danger" onClick={handleDeleteSelected}>
-                  🗑️ Delete
+                  🗑️ {t('selection.delete')}
                 </button>
               </div>
             )}
@@ -847,29 +865,29 @@ const DayPanelComponent: React.FC = () => {
             {showDuplicateOptions && !showDayPicker && !showMultiDayPicker && (
               <div className="duplicate-options">
                 <div className="duplicate-options__title">
-                  {hasAnyDuplicates ? 'Manage Duplicates:' : 'Duplicate to:'}
+                  {hasAnyDuplicates ? t('selection.manageDuplicates') : t('selection.duplicateTo')}
                 </div>
                 
                 {/* Single day options */}
                 {!isMultiDaySelection && (
                   <>
                     <button className="btn btn--sm" onClick={handleDuplicateToNextWeek}>
-                      📅 Next Week
+                      📅 {t('selection.nextWeek')}
                     </button>
                     <button className="btn btn--sm" onClick={handleDuplicateToNextMonth}>
-                      📅 Next Month
+                      📅 {t('selection.nextMonth')}
                     </button>
                     {!hasAnyDuplicates ? (
                       <button className="btn btn--sm" onClick={handleDuplicateToEveryDayOfWeek}>
-                        🔁 Every {DAY_NAMES[currentDayOfWeek]}
+                        🔁 {t('selection.everyDay', { day: DAY_NAMES[currentDayOfWeek] })}
                       </button>
                     ) : (
                       <button className="btn btn--sm btn--warning" onClick={handleUndoDuplicates}>
-                        ↩️ Undo Every {DAY_NAMES[currentDayOfWeek]}
+                        ↩️ {t('selection.undoEveryDay', { day: DAY_NAMES[currentDayOfWeek] })}
                       </button>
                     )}
                     <button className="btn btn--sm" onClick={handleShowDayPicker}>
-                      📍 Specific Day...
+                      📍 {t('selection.specificDay')}
                     </button>
                   </>
                 )}
@@ -881,13 +899,13 @@ const DayPanelComponent: React.FC = () => {
                       📅 Next Month
                     </button>
                     <button className="btn btn--sm" onClick={() => setShowMultiDayPicker(true)}>
-                      📍 Choose Day(s)...
+                      📍 {t('selection.chooseDays')}
                     </button>
                   </>
                 )}
                 
                 <button className="btn btn--sm btn--secondary" onClick={() => setShowDuplicateOptions(false)}>
-                  ← Back
+                  ← {t('selection.back')}
                 </button>
               </div>
             )}
@@ -910,12 +928,12 @@ const DayPanelComponent: React.FC = () => {
           </div>
         ) : (
           <div className="day-panel__label">
-            <span>Notes ({dayNotes.length})</span>
+            <span>{t('notesSection.notesAndTasks', { count: dayNotes.length })}</span>
             <button className="btn btn--sm" onClick={() => {
               tutorialService.trackNoteEditorOpened();
               setIsEditing(true);
             }}>
-              + Add Note
+              {t('notesSection.addNote')}
             </button>
           </div>
         )}
@@ -924,7 +942,7 @@ const DayPanelComponent: React.FC = () => {
         {dayNotes.length > 0 && !isSelectionMode && !isEditing && (
           <div className="note-hint">
             <span className="note-hint__icon">👇</span>
-            <span className="note-hint__text">Long-hold note for options</span>
+            <span className="note-hint__text">{t('notesSection.longHoldHint')}</span>
           </div>
         )}
         
@@ -966,7 +984,7 @@ const DayPanelComponent: React.FC = () => {
             
             {/* Mood Selection */}
             <div className="mood-selector">
-              <span className="mood-label-text">How are you feeling?</span>
+              <span className="mood-label-text">{t('noteEditor.howAreYouFeeling')}</span>
               <div className="mood-options">
                 {[1, 2, 3, 4, 5].map(mood => (
                   <button
@@ -991,7 +1009,7 @@ const DayPanelComponent: React.FC = () => {
                   tutorialService.trackNoteTyping();
                 }
               }}
-              placeholder="Write your note..."
+              placeholder={t('noteEditor.notePlaceholder')}
               autoFocus
             />
             
@@ -1002,17 +1020,17 @@ const DayPanelComponent: React.FC = () => {
                 onClick={handleSaveNote}
                 disabled={!noteText.trim()}
               >
-                Save Note
+                {t('noteEditor.saveNote')}
               </button>
               <button className="btn" onClick={handleCancelEdit}>
-                Cancel
+                {t('noteEditor.cancel')}
               </button>
             </div>
           </div>
         )}
         
         {dayNotes.length === 0 && !isEditing && (
-          <p className="no-notes">No notes for this day. Click "+ Add Note" to create one.</p>
+          <p className="no-notes">{t('notesSection.noNotesOrTasks')}</p>
         )}
       </div>
     </div>
@@ -1025,6 +1043,7 @@ const DayPicker = memo(({ currentViewDate, onSelectDay, onCancel }: {
   onSelectDay: (date: { year: number; month: number; day: number }) => void;
   onCancel: () => void;
 }) => {
+  const { t } = useTranslation('dayPanel');
   const [pickerYear, setPickerYear] = useState(currentViewDate.year);
   const [pickerMonth, setPickerMonth] = useState(currentViewDate.month);
 
@@ -1093,7 +1112,7 @@ const DayPicker = memo(({ currentViewDate, onSelectDay, onCancel }: {
         ))}
       </div>
       <button className="btn btn--sm btn--secondary" onClick={onCancel}>
-        Cancel
+        {t('dayPicker.cancel')}
       </button>
     </div>
   );
@@ -1107,6 +1126,7 @@ const MultiDayPicker = memo(({ currentViewDate, onSelectDays, onCancel }: {
   onSelectDays: (dates: { year: number; month: number; day: number }[]) => void;
   onCancel: () => void;
 }) => {
+  const { t } = useTranslation('dayPanel');
   const [pickerYear, setPickerYear] = useState(currentViewDate.year);
   const [pickerMonth, setPickerMonth] = useState(currentViewDate.month);
   const [selectedDays, setSelectedDays] = useState<Set<number>>(new Set());
@@ -1201,17 +1221,17 @@ const MultiDayPicker = memo(({ currentViewDate, onSelectDays, onCancel }: {
         ))}
       </div>
       <div className="day-picker__footer">
-        <span className="selected-count">{selectedDays.size} day(s) selected</span>
+        <span className="selected-count">{t('multiDayPicker.selectedCount', { count: selectedDays.size, suffix: selectedDays.size !== 1 ? 's' : '' })}</span>
         <div className="day-picker__actions">
           <button
             className="btn btn--sm btn--primary"
             onClick={handleConfirm}
             disabled={selectedDays.size === 0}
           >
-            Confirm
+            {t('multiDayPicker.confirm')}
           </button>
           <button className="btn btn--sm btn--secondary" onClick={onCancel}>
-            Cancel
+            {t('multiDayPicker.cancel')}
           </button>
         </div>
       </div>
@@ -1232,15 +1252,16 @@ interface NoteItemProps {
   onToggleSelect: () => void;
 }
 
-const NoteItem = memo(({ 
-  note, 
-  index, 
-  isSelected, 
-  isSelectionMode, 
-  onDelete, 
-  onLongPress, 
-  onToggleSelect 
+const NoteItem = memo(({
+  note,
+  index,
+  isSelected,
+  isSelectionMode,
+  onDelete,
+  onLongPress,
+  onToggleSelect
 }: NoteItemProps) => {
+  const [t] = useTranslation('dayPanel');
   const categoryInfo = NOTE_CATEGORIES.find(c => c.id === note.category);
   const longPressTimer = useRef<NodeJS.Timeout | null>(null);
   const isLongPress = useRef(false);
@@ -1325,7 +1346,7 @@ const NoteItem = memo(({
           </span>
         )}
         {!isSelectionMode && (
-          <button className="note-item__delete" onClick={(e) => { e.stopPropagation(); onDelete(); }} title="Delete note">
+          <button className="note-item__delete" onClick={(e) => { e.stopPropagation(); onDelete(); }} title={t('noteItem.delete')}>
             ×
           </button>
         )}

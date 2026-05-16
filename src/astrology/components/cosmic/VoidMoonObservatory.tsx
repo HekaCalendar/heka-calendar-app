@@ -4,6 +4,7 @@
  */
 
 import React, { useState } from 'react';
+import i18n from '../../../i18n';
 import './VoidMoonObservatory.css';
 import { useVoidMoon } from '../../hooks/use-swiss';
 import { VoidMoonCalendar } from './VoidMoonCalendar';
@@ -34,11 +35,11 @@ const formatTimeRemaining = (minutes: number): string => {
 // Format time
 const formatTime = (date: Date | null): string => {
   if (!date) return '--:--';
-  return date.toLocaleTimeString('en-US', { 
+  return new Intl.DateTimeFormat(i18n.language || 'en', { 
     hour: 'numeric', 
     minute: '2-digit',
     hour12: true 
-  });
+  }).format(date);
 };
 
 export const VoidMoonObservatory: React.FC = () => {
@@ -104,7 +105,7 @@ export const VoidMoonObservatory: React.FC = () => {
               {isVoid ? (
                 <>
                   Moon has completed its last aspect and is drifting 
-                  toward {voidData.voidEnd && new Date(voidData.voidEnd).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
+                  toward {voidData.voidEnd && new Intl.DateTimeFormat(i18n.language || 'en', { month: 'short', day: 'numeric' }).format(new Date(voidData.voidEnd))}
                 </>
               ) : (
                 <>

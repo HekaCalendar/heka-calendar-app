@@ -6,6 +6,7 @@
  * ╚═══════════════════════════════════════════════════════════════════════════╝
  */
 
+import i18n from '../../i18n';
 import { useState, useMemo } from 'react';
 import { TrackerAnalytics, type SmartInsight } from '../../oracle/trackerAnalytics';
 import { TrackerManager } from '../../services/trackerManager';
@@ -144,7 +145,7 @@ export const InsightsDashboard: React.FC<InsightsDashboardProps> = ({ onClose })
           />
           <MetricCard
             label="Next Period"
-            value={prediction ? new Date(prediction.nextPeriodStart).toLocaleDateString('en-US', { month: 'short', day: 'numeric' }) : '--'}
+            value={prediction ? new Intl.DateTimeFormat(i18n.language || 'en', { month: 'short', day: 'numeric' }).format(new Date(prediction.nextPeriodStart)) : '--'}
             subtext={prediction ? `${prediction.confidence} confidence` : 'Not enough data'}
           />
           <MetricCard

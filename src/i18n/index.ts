@@ -1,39 +1,29 @@
 /**
  * ═══════════════════════════════════════════════════════════════════════════════
  * I18N CONFIGURATION — Full app localization for 30 languages
- * Initialized with user's wizard-selected language from setupSlice
+ * ALL translations are bundled at build time for Capacitor compatibility.
+ * No fetch/XHR backend — avoids file:// CORS issues in WebView.
  * ═══════════════════════════════════════════════════════════════════════════════
  */
 
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 
-// Import English base translations directly (bundled) so they're always available
-import enCommon from './locales/en/common.json';
-import enCalendar from './locales/en/calendar.json';
-import enDayPanel from './locales/en/dayPanel.json';
-import enCelestial from './locales/en/celestial.json';
-import enSettings from './locales/en/settings.json';
-import enCoach from './locales/en/coach.json';
-import enJournal from './locales/en/journal.json';
-import enCircle from './locales/en/circle.json';
-import enAchievements from './locales/en/achievements.json';
-import enPrint from './locales/en/print.json';
+// ── Bundle ALL translations at build time ──────────────────────────────────
+// Vite's import.meta.glob eagerly loads every JSON under ./locales/
+// This works in web, Capacitor, and Tauri without any runtime fetch.
 
-const bundledResources = {
-  en: {
-    common: enCommon,
-    calendar: enCalendar,
-    dayPanel: enDayPanel,
-    celestial: enCelestial,
-    settings: enSettings,
-    coach: enCoach,
-    journal: enJournal,
-    circle: enCircle,
-    achievements: enAchievements,
-    print: enPrint,
-  },
-};
+const allModules = import.meta.glob('./locales/**/*.json', { eager: true });
+
+const bundledResources: Record<string, Record<string, any>> = {};
+
+for (const [path, module] of Object.entries(allModules)) {
+  const match = path.match(/\.\/locales\/([^/]+)\/([^/]+)\.json$/);
+  if (!match) continue;
+  const [, lang, ns] = match;
+  if (!bundledResources[lang]) bundledResources[lang] = {};
+  bundledResources[lang][ns] = (module as any).default ?? module;
+}
 
 export const SUPPORTED_I18N_LANGUAGES = [
   'en', 'es', 'fr', 'de', 'it', 'pt', 'zh', 'ja', 'ko', 'ar', 'hi', 'ru',
@@ -49,24 +39,6 @@ export function isRTLLanguage(lang: string): boolean {
 
 let initialized = false;
 
-/**
- * Custom fetch-based backend for i18next.
- * Replaces i18next-http-backend to avoid Node.js `require` issues in Capacitor.
- */
-const fetchBackend = {
-  type: 'backend' as const,
-  init() {},
-  read(language: string, namespace: string, callback: (err: Error | null, data?: any) => void) {
-    fetch(`/locales/${language}/${namespace}.json`)
-      .then((res) => {
-        if (!res.ok) throw new Error(`Failed to load ${language}/${namespace}`);
-        return res.json();
-      })
-      .then((data) => callback(null, data))
-      .catch((err) => callback(err as Error));
-  },
-};
-
 export async function initI18n(language: string): Promise<void> {
   if (initialized) {
     await i18n.changeLanguage(language);
@@ -75,14 +47,14 @@ export async function initI18n(language: string): Promise<void> {
   }
 
   await i18n
-    .use(fetchBackend)
     .use(initReactI18next)
     .init({
       lng: language,
       fallbackLng: 'en',
       supportedLngs: SUPPORTED_I18N_LANGUAGES,
-      ns: ['common', 'calendar', 'dayPanel', 'celestial', 'settings', 'coach', 'journal', 'circle', 'achievements', 'print'],
+      ns: ['common', 'calendar', 'dayPanel', 'celestial', 'settings', 'coach', 'journal', 'circle', 'achievements', 'print', 'wizard', 'auth'],
       defaultNS: 'common',
+      fallbackNS: 'common',
       resources: bundledResources,
       interpolation: {
         escapeValue: false,

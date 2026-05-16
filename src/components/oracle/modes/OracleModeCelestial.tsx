@@ -1,16 +1,17 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { eventBus } from '../../../services/eventBus';
 import type { PersonalTransit } from '../../../oracle/birthChartIntegration';
 import type { BirthChartData, CelestialState } from '../types';
 import {
   getMoonEmoji,
-  getMoonPhaseName,
   getZodiacSymbol,
   getSignElementColor,
   getPlanetSymbol,
   getAspectSymbol,
   generateCosmicPrompt,
-  ZODIAC_ORDER,
+  ZODIAC_ORDER_12,
+  ZODIAC_ORDER_13,
 } from '../utils';
 
 interface OracleModeCelestialProps {
@@ -32,6 +33,13 @@ export const OracleModeCelestial: React.FC<OracleModeCelestialProps> = ({
   onJournalTransit,
   onTrackEnergy,
 }) => {
+  const { t } = useTranslation(['journal', 'celestial']);
+  // Auto-detect 13-sign mode from position data
+  const is13SignMode = Object.values(celestial.positions).some(
+    (pos: any) => String(pos.sign).toLowerCase() === 'ophiuchus'
+  );
+  const zodiacOrder = is13SignMode ? ZODIAC_ORDER_13 : ZODIAC_ORDER_12;
+
   if (celestial.loading) {
     return (
       <div className="oracle-mode-celestial">
@@ -40,7 +48,7 @@ export const OracleModeCelestial: React.FC<OracleModeCelestialProps> = ({
             <div className="orb-ring" />
             <div className="orb-core">✨</div>
           </div>
-          <p>Consulting the Swiss Ephemeris...</p>
+          <p>{t('journal:celestial.consultingEphemeris')}</p>
         </div>
       </div>
     );
@@ -56,25 +64,25 @@ export const OracleModeCelestial: React.FC<OracleModeCelestialProps> = ({
             <div className="moon-ring" />
           </div>
           <div className="hero-text">
-            <h2 className="hero-phase">{getMoonPhaseName(celestial.moonPhase.phase)} Moon</h2>
+            <h2 className="hero-phase">{t('journal:moonPhase.' + celestial.moonPhase.phase)} {t('journal:celestial.moon')}</h2>
             <p className="hero-meta">
               in <span className="sign-badge">{getZodiacSymbol(celestial.moonPhase.sign)} {celestial.moonPhase.sign}</span>
               <span className="illumination-dot" />
-              {Math.round(celestial.moonPhase.illumination)}% illuminated
+              {Math.round(celestial.moonPhase.illumination)}% {t('celestial:cards.moonPhase.illuminated')}
             </p>
           </div>
           <div className="celestial-microstats">
             <div className="microstat">
               <span className="microstat-value">{personalTransits.filter(t => t.strength >= 30).length}</span>
-              <span className="microstat-label">Active Transits</span>
+              <span className="microstat-label">{t('journal:celestial.activeTransits')}</span>
             </div>
             <div className="microstat">
               <span className="microstat-value">{celestial.retrogrades.length}</span>
-              <span className="microstat-label">Retrograde</span>
+              <span className="microstat-label">{t('journal:celestial.retrograde')}</span>
             </div>
             <div className="microstat">
               <span className="microstat-value">{Object.keys(celestial.positions).length}</span>
-              <span className="microstat-label">Planets</span>
+              <span className="microstat-label">{t('journal:celestial.planets')}</span>
             </div>
           </div>
         </div>
@@ -84,8 +92,7 @@ export const OracleModeCelestial: React.FC<OracleModeCelestialProps> = ({
           <div className="retro-banner">
             <span className="retro-banner-icon">℞</span>
             <span className="retro-banner-text">
-              {celestial.retrogrades.map(p => `${getPlanetSymbol(p)} ${p}`).join(', ')}
-              {' '}currently retrograde — a time for review and inward reflection.
+              {t('journal:celestial.retrogradeBanner', { planets: celestial.retrogrades.map(p => `${getPlanetSymbol(p)} ${p}`).join(', ') })}
             </span>
           </div>
         )}
@@ -94,24 +101,24 @@ export const OracleModeCelestial: React.FC<OracleModeCelestialProps> = ({
         <div className="cosmic-prompt-panel">
           <div className="prompt-icon">✦</div>
           <div className="prompt-content">
-            <h4>Today's Cosmic Prompt</h4>
-            <p>{generateCosmicPrompt(personalTransits, celestial.moonPhase)}</p>
+            <h4>{t('journal:celestial.cosmicPrompt')}</h4>
+            <p>{generateCosmicPrompt(personalTransits, celestial.moonPhase, t)}</p>
           </div>
           <button className="prompt-cta" onClick={() => {
-            const prompt = generateCosmicPrompt(personalTransits, celestial.moonPhase);
+            const prompt = generateCosmicPrompt(personalTransits, celestial.moonPhase, t);
             // Parent will handle setting scribe content and mode
             // We use a custom event for decoupling
             eventBus.emit('heka-journal-prompt', { prompt });
           }}>
-            Write Reflection
+            {t('journal:celestial.writeReflection')}
           </button>
         </div>
 
         {/* SKY MAP */}
         <div className="celestial-section sky-map-section">
-          <h3 className="section-title"><span>🌌</span> The Living Sky</h3>
-          <div className="zodiac-sky-map">
-            {ZODIAC_ORDER.map(sign => {
+          <h3 className="section-title"><span>🌌</span> {t('journal:celestial.livingSky')}</h3>
+          <div className={`zodiac-sky-map ${is13SignMode ? 'zodiac-sky-map--13' : ''}`}>
+            {zodiacOrder.map(sign => {
               const planetsHere = Object.entries(celestial.positions).filter(([_, pos]) =>
                 String(pos.sign).toLowerCase() === sign
               );
@@ -142,7 +149,7 @@ export const OracleModeCelestial: React.FC<OracleModeCelestialProps> = ({
         {/* BIRTH CHART TRINITY */}
         {hasBirthChart && birthChartData && (
           <div className="celestial-section trinity-section">
-            <h3 className="section-title"><span>✦</span> Your Celestial Trinity</h3>
+            <h3 className="section-title"><span>✦</span> {t('journal:celestial.celestialTrinity')}</h3>
             <div className="trinity-cards">
               {(['sun', 'moon'] as const).map(key => {
                 const planet = birthChartData.planets?.[key];
@@ -151,7 +158,7 @@ export const OracleModeCelestial: React.FC<OracleModeCelestialProps> = ({
                   <div key={key} className="trinity-card" style={{ ['--sign-color' as any]: getSignElementColor(planet.sign) }}>
                     <span className="trinity-planet-symbol">{getPlanetSymbol(key)}</span>
                     <div className="trinity-sign">{getZodiacSymbol(planet.sign)}</div>
-                    <div className="trinity-title">{key === 'sun' ? 'Sun Sign' : 'Moon Sign'}</div>
+                    <div className="trinity-title">{key === 'sun' ? t('journal:celestial.sunSign') : t('journal:celestial.moonSign')}</div>
                     <div className="trinity-detail">{planet.sign} {planet.degree}°</div>
                   </div>
                 );
@@ -160,7 +167,7 @@ export const OracleModeCelestial: React.FC<OracleModeCelestialProps> = ({
                 <div className="trinity-card" style={{ ['--sign-color' as any]: getSignElementColor(birthChartData.ascendant.sign) }}>
                   <span className="trinity-planet-symbol">AC</span>
                   <div className="trinity-sign">{getZodiacSymbol(birthChartData.ascendant.sign)}</div>
-                  <div className="trinity-title">Rising</div>
+                  <div className="trinity-title">{t('journal:celestial.rising')}</div>
                   <div className="trinity-detail">{birthChartData.ascendant.sign} {birthChartData.ascendant.degree}°</div>
                 </div>
               )}
@@ -171,11 +178,11 @@ export const OracleModeCelestial: React.FC<OracleModeCelestialProps> = ({
         {/* PERSONAL TRANSITS THEATRE */}
         {hasBirthChart && (
           <div className="celestial-section transits-theatre">
-            <h3 className="section-title"><span>🎭</span> Your Personal Transits</h3>
+            <h3 className="section-title"><span>🎭</span> {t('journal:celestial.personalTransits')}</h3>
             {personalTransits.length === 0 ? (
               <div className="transits-empty-state">
                 <span className="transits-empty-icon">✧</span>
-                <p>The sky is quiet today.<br/>No major personal transits are active.</p>
+                <p>{t('journal:celestial.quietSky')}<br/>{t('journal:celestial.noTransits')}</p>
               </div>
             ) : (
               <div className="transits-grid">
@@ -198,8 +205,8 @@ export const OracleModeCelestial: React.FC<OracleModeCelestialProps> = ({
                       <div className="ttc-strength-badge">{transit.strength}%</div>
                     </div>
                     <div className="ttc-body">
-                      <div className="ttc-name">{transit.transitingPlanet} {transit.aspect} your {transit.natalPlanet}</div>
-                      <div className="ttc-houses">House {transit.activatedHouse} activated · Natal House {transit.natalHouse}</div>
+                      <div className="ttc-name">{t('journal:celestial.transitDescription', { transitingPlanet: transit.transitingPlanet, aspect: transit.aspect, natalPlanet: transit.natalPlanet })}</div>
+                      <div className="ttc-houses">{t('journal:celestial.houseActivated', { house: transit.activatedHouse })} · {t('journal:celestial.natalHouse', { house: transit.natalHouse })}</div>
                       <p className="ttc-interpretation">{transit.interpretation}</p>
                     </div>
                     <div className="ttc-actions">
@@ -207,13 +214,13 @@ export const OracleModeCelestial: React.FC<OracleModeCelestialProps> = ({
                         e.stopPropagation();
                         onJournalTransit(transit);
                       }}>
-                        ✍️ Journal This
+                        {t('journal:celestial.journalThis')}
                       </button>
                       <button className="ttc-btn track" onClick={(e) => {
                         e.stopPropagation();
                         onTrackEnergy();
                       }}>
-                        🌙 Track Energy
+                        {t('journal:celestial.trackEnergy')}
                       </button>
                     </div>
                   </div>

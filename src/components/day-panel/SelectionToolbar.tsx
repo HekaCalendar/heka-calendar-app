@@ -4,6 +4,7 @@
  */
 
 import { memo } from 'react';
+import { useTranslation } from 'react-i18next';
 import { DayPicker } from './DayPicker';
 import { MultiDayPicker } from './MultiDayPicker';
 import { DAY_NAMES } from './constants';
@@ -33,27 +34,29 @@ export const SelectionToolbar = memo(({
   onDuplicateToSpecificDays,
   onDeleteSelected,
 }: SelectionToolbarProps) => {
+  const { t } = useTranslation('dayPanel');
+
   return (
     <div className="selection-toolbar">
       <div className="selection-toolbar__header">
         <span className="selection-count">
-          {selectedCount} selected from {selectedDayCount} day{selectedDayCount !== 1 ? 's' : ''}
+          {t('selection.selectedFromDays', { count: selectedCount, days: selectedDayCount, suffix: selectedDayCount !== 1 ? 's' : '' })}
         </span>
         <button className="btn btn--sm" onClick={onExitSelectionMode}>
-          Done
+          {t('selection.done')}
         </button>
       </div>
 
       {!showDuplicateOptions && !showDayPicker && !showMultiDayPicker && (
         <div className="selection-toolbar__actions">
           <button className="btn btn--sm" onClick={onSelectAll}>
-            Select All
+            {t('selection.selectAll')}
           </button>
           <button className="btn btn--sm btn--primary" onClick={onShowDuplicateOptions}>
-            📋 Duplicate...
+            📋 {t('selection.duplicate')}
           </button>
           <button className="btn btn--sm btn--danger" onClick={onDeleteSelected}>
-            🗑️ Delete
+            🗑️ {t('selection.delete')}
           </button>
         </div>
       )}
@@ -61,29 +64,29 @@ export const SelectionToolbar = memo(({
       {showDuplicateOptions && !showDayPicker && !showMultiDayPicker && (
         <div className="duplicate-options">
           <div className="duplicate-options__title">
-            {hasAnyDuplicates ? 'Manage Duplicates:' : 'Duplicate to:'}
+            {hasAnyDuplicates ? t('selection.manageDuplicates') : t('selection.duplicateTo')}
           </div>
 
           {/* Single day options */}
           {!isMultiDaySelection && (
             <>
               <button className="btn btn--sm" onClick={onDuplicateToNextWeek}>
-                📅 Next Week
+                📅 {t('selection.nextWeek')}
               </button>
               <button className="btn btn--sm" onClick={onDuplicateToNextMonth}>
-                📅 Next Month
+                📅 {t('selection.nextMonth')}
               </button>
               {!hasAnyDuplicates ? (
                 <button className="btn btn--sm" onClick={onDuplicateToEveryDayOfWeek}>
-                  🔁 Every {DAY_NAMES[currentDayOfWeek]}
+                  🔁 {t('selection.everyDay', { day: DAY_NAMES[currentDayOfWeek] })}
                 </button>
               ) : (
                 <button className="btn btn--sm btn--warning" onClick={onUndoDuplicates}>
-                  ↩️ Undo Every {DAY_NAMES[currentDayOfWeek]}
+                  ↩️ {t('selection.undoEveryDay', { day: DAY_NAMES[currentDayOfWeek] })}
                 </button>
               )}
               <button className="btn btn--sm" onClick={onShowDayPicker}>
-                📍 Specific Day...
+                📍 {t('selection.specificDay')}
               </button>
             </>
           )}
@@ -92,16 +95,16 @@ export const SelectionToolbar = memo(({
           {isMultiDaySelection && (
             <>
               <button className="btn btn--sm" onClick={onDuplicateToNextMonth}>
-                📅 Next Month
+                📅 {t('selection.nextMonth')}
               </button>
               <button className="btn btn--sm" onClick={onShowMultiDayPicker}>
-                📍 Choose Day(s)...
+                📍 {t('selection.chooseDays')}
               </button>
             </>
           )}
 
           <button className="btn btn--sm btn--secondary" onClick={onHideDuplicateOptions}>
-            ← Back
+            ← {t('selection.back')}
           </button>
         </div>
       )}

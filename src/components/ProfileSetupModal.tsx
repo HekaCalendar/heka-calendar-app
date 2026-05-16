@@ -4,6 +4,7 @@
  */
 
 import React, { useState, useCallback, useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import type { RootState, AppDispatch } from '../store';
 import { updateUserProfile } from '../store';
@@ -33,6 +34,7 @@ export const ProfileSetupModal: React.FC<ProfileSetupModalProps> = ({
   isOpen,
   onComplete,
 }) => {
+  const { t } = useTranslation('circle');
   const dispatch = useDispatch<AppDispatch>();
   const auth = useSelector((state: RootState) => state.calendar.auth);
   
@@ -58,11 +60,11 @@ export const ProfileSetupModal: React.FC<ProfileSetupModalProps> = ({
 
     // Validate file type and size
     if (!file.type.startsWith('image/')) {
-      setError('Please select an image file');
+      setError(t('profileSetup.errorImageType'));
       return;
     }
     if (file.size > 2 * 1024 * 1024) {
-      setError('Image must be less than 2MB');
+      setError(t('profileSetup.errorImageSize'));
       return;
     }
 
@@ -75,7 +77,7 @@ export const ProfileSetupModal: React.FC<ProfileSetupModalProps> = ({
 
   const handleSubmit = useCallback(async () => {
     if (!validateUsername(username)) {
-      setError('Username must be 2-30 characters and contain only letters, numbers, spaces, hyphens, or periods');
+      setError(t('profileSetup.errorValidation'));
       return;
     }
 
@@ -85,7 +87,7 @@ export const ProfileSetupModal: React.FC<ProfileSetupModalProps> = ({
     try {
       const user = getCurrentUser();
       if (!user) {
-        setError('You must be logged in to set up your profile');
+        setError(t('profileSetup.errorNotLoggedIn'));
         return;
       }
 
@@ -106,7 +108,7 @@ export const ProfileSetupModal: React.FC<ProfileSetupModalProps> = ({
 
       onComplete();
     } catch (err: any) {
-      setError(err.message || 'Failed to update profile. Please try again.');
+      setError(err.message || t('profileSetup.errorUpdateFailed'));
     } finally {
       setIsLoading(false);
     }
@@ -120,7 +122,7 @@ export const ProfileSetupModal: React.FC<ProfileSetupModalProps> = ({
     <div className="modal-overlay" onClick={(e) => e.stopPropagation()}>
       <div className="modal profile-setup-modal" style={{ maxWidth: '480px' }}>
         <div className="modal__header">
-          <h2 className="modal__title">✨ Create Your Cosmic Identity</h2>
+          <h2 className="modal__title">{t('profileSetup.title')}</h2>
         </div>
         
         <div className="profile-setup__content" style={{ padding: 'var(--space-6)' }}>
@@ -129,7 +131,7 @@ export const ProfileSetupModal: React.FC<ProfileSetupModalProps> = ({
             color: 'var(--color-text-secondary)',
             marginBottom: 'var(--space-5)'
           }}>
-            Before entering the Cosmic Circle, create your identity that friends will see.
+            {t('profileSetup.intro')}
           </p>
 
           {/* Avatar Preview */}
@@ -153,7 +155,7 @@ export const ProfileSetupModal: React.FC<ProfileSetupModalProps> = ({
               marginBottom: 'var(--space-3)',
             }}>
               {customPhoto ? (
-                <img src={customPhoto} alt="Profile" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                <img src={customPhoto} alt={t('profileSetup.profileFallback')} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
               ) : (
                 finalAvatar
               )}
@@ -172,7 +174,7 @@ export const ProfileSetupModal: React.FC<ProfileSetupModalProps> = ({
               onClick={() => fileInputRef.current?.click()}
               style={{ marginBottom: 'var(--space-2)' }}
             >
-              📷 Upload Photo
+              {t('profileSetup.uploadPhoto')}
             </button>
             
             {customPhoto && (
@@ -180,7 +182,7 @@ export const ProfileSetupModal: React.FC<ProfileSetupModalProps> = ({
                 className="btn btn--sm btn--ghost"
                 onClick={() => setCustomPhoto(null)}
               >
-                Use Emoji Avatar Instead
+                {t('profileSetup.useEmojiInstead')}
               </button>
             )}
           </div>
@@ -194,7 +196,7 @@ export const ProfileSetupModal: React.FC<ProfileSetupModalProps> = ({
                 color: 'var(--color-text-secondary)',
                 marginBottom: 'var(--space-2)'
               }}>
-                Or choose an emoji avatar:
+                {t('profileSetup.chooseEmoji')}
               </label>
               <div style={{
                 display: 'grid',
@@ -218,7 +220,7 @@ export const ProfileSetupModal: React.FC<ProfileSetupModalProps> = ({
                       cursor: 'pointer',
                       transition: 'all 0.2s',
                     }}
-                    title={avatar.name}
+                    title={t(`profileSetup.avatars.${avatar.name.toLowerCase().replace(/\s+/g, '')}`)}
                   >
                     {avatar.emoji}
                   </button>
@@ -238,14 +240,14 @@ export const ProfileSetupModal: React.FC<ProfileSetupModalProps> = ({
                 marginBottom: 'var(--space-2)'
               }}
             >
-              Your Cosmic Name *
+              {t('profileSetup.cosmicName')}
             </label>
             <input
               id="username"
               type="text"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
-              placeholder="Enter your name (2-30 characters)"
+              placeholder={t('profileSetup.placeholderName')}
               maxLength={30}
               style={{
                 width: '100%',
@@ -262,7 +264,7 @@ export const ProfileSetupModal: React.FC<ProfileSetupModalProps> = ({
               color: 'var(--color-text-muted)',
               marginTop: 'var(--space-1)'
             }}>
-              This is how your friends will see you in the Cosmic Circle
+              {t('profileSetup.nameHint')}
             </div>
           </div>
 
@@ -288,7 +290,7 @@ export const ProfileSetupModal: React.FC<ProfileSetupModalProps> = ({
             disabled={isLoading || !username.trim()}
             style={{ width: '100%', padding: 'var(--space-3)' }}
           >
-            {isLoading ? '✨ Creating...' : '🌟 Enter Cosmic Circle'}
+            {isLoading ? t('profileSetup.creating') : t('profileSetup.enterCircle')}
           </button>
         </div>
       </div>

@@ -1,7 +1,7 @@
 # Terms of Service
 
-**Last Updated:** March 27, 2026  
-**Effective Date:** March 27, 2026
+**Last Updated:** May 6, 2026  
+**Effective Date:** May 6, 2026
 
 ---
 
@@ -46,7 +46,6 @@ HEKA Calendar is a calendar and timekeeping application that provides:
 You may use HEKA Calendar without creating an account. An account is only required for:
 - Cloud sync across devices
 - Data backup and recovery
-- Accessing premium features (if applicable)
 
 ### 3.2 Account Security
 
@@ -62,7 +61,7 @@ We reserve the right to suspend or terminate accounts that:
 - Engage in fraudulent or abusive behavior
 - Infringe on intellectual property rights
 
-You may delete your account at any time through the app settings. Deletion removes cloud data but does not affect locally stored data on your devices.
+You may delete your account at any time through the app settings. Deletion removes your Firebase Authentication record. Locally stored data on your devices remains under your control.
 
 ---
 
@@ -224,9 +223,9 @@ HEKA Calendar is provided on an "AS IS" and "AS AVAILABLE" basis. We make no war
 
 **Astrology is not scientifically proven.** Celestial events and planetary positions should not be used as a substitute for professional advice in medical, legal, financial, or psychological matters. Always consult qualified professionals for such advice.
 
-### 9.3 Beta Features
+### 9.3 Beta / Upcoming Features
 
-Some features may be labeled as "beta" or "experimental." These features are provided for testing purposes and may contain bugs or be discontinued at any time.
+Some features may be labeled as "beta," "experimental," or "coming soon." These features are provided for testing purposes and may contain bugs or be discontinued at any time. Premium subscription features are not yet available.
 
 ---
 
@@ -259,7 +258,7 @@ You agree to defend, indemnify, and hold harmless HEKA Calendar and its operator
 
 ### 12.1 By You
 
-You may stop using HEKA Calendar at any time. To delete your account and cloud data, use the in-app settings or contact us.
+You may stop using HEKA Calendar at any time. To delete your account, use the in-app settings or contact us.
 
 ### 12.2 By Us
 
@@ -365,4 +364,4 @@ If you downloaded HEKA Calendar from the Google Play Store:
 
 ---
 
-*Last Updated: April 2, 2026*
+*Last Updated: May 6, 2026*

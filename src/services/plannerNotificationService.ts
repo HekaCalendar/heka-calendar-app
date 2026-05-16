@@ -10,6 +10,7 @@ import { LocalNotifications, type LocalNotificationSchema } from '@capacitor/loc
 import { NotificationEngine } from './notificationEngine';
 import { seededRandom } from './notificationTemplates';
 import type { PlannerTask } from '../types';
+import { calculateCurrentSky, calculatePreciseMoonPhase } from '../astrology/services/calculations/swissCalculations';
 import { store } from '../store';
 import { selectDate, setView } from '../store';
 import { eventBus } from './eventBus';
@@ -37,7 +38,7 @@ function getMoonPhaseCategory(phase: string): string {
   return 'general';
 }
 
-function generateDailyBriefingVars(): Record<string, string> {
+async function generateDailyBriefingVars(): Promise<Record<string, string>> {
   const today = new Date().toISOString().split('T')[0];
   const seed = today;
 
@@ -45,6 +46,20 @@ function generateDailyBriefingVars(): Record<string, string> {
   const state = store.getState();
   let moonPhase = 'waxing gibbous';
   let moonSign = 'Gemini';
+
+  try {
+    const { positions } = await calculateCurrentSky();
+    if (positions.moon) {
+      moonSign = String(positions.moon.sign).charAt(0).toUpperCase() + String(positions.moon.sign).slice(1);
+      if (positions.sun) {
+        const precise = calculatePreciseMoonPhase(positions.sun, positions.moon);
+        moonPhase = precise.name.toLowerCase();
+      }
+    }
+  } catch (e) {
+    // Fallback to defaults if Swiss Ephemeris isn't ready
+    console.warn('[PlannerNotificationService] Astro calc failed, using fallback moon data:', e);
+  }
 
   // Get pending tasks
   const plannerTasks = state.planner.tasks;
@@ -112,10 +127,10 @@ export async function scheduleDailyBriefing(timeStr: string = '07:00'): Promise<
     briefingTime.setDate(briefingTime.getDate() + 1);
   }
 
-  const vars = generateDailyBriefingVars();
+  const vars = await generateDailyBriefingVars();
   const seed = new Date().toISOString().split('T')[0];
 
-  await NotificationEngine.scheduleTemplated(
+  const result = await NotificationEngine.scheduleTemplated(
     'daily-briefing',
     'standard',
     'planner',
@@ -126,7 +141,11 @@ export async function scheduleDailyBriefing(timeStr: string = '07:00'): Promise<
     DAILY_BRIEFING_ID
   );
 
-  NotificationEngine.markSentToday('daily-briefing');
+  if (result) {
+    NotificationEngine.markSentToday('daily-briefing');
+  } else {
+    console.warn('[PlannerNotificationService] Daily briefing schedule failed — will retry on next interval');
+  }
 }
 
 /**
@@ -191,7 +210,7 @@ export async function scheduleStreakSaverIfNeeded(): Promise<void> {
     return;
   }
 
-  await NotificationEngine.schedule({
+  const result = await NotificationEngine.schedule({
     type: 'streak-saver',
     tier: 'standard',
     title: 'The Cosmos Still Believes in You',
@@ -203,7 +222,11 @@ export async function scheduleStreakSaverIfNeeded(): Promise<void> {
     extra: { type: 'streak-saver' },
   });
 
-  NotificationEngine.markSentToday('streak-saver');
+  if (result) {
+    NotificationEngine.markSentToday('streak-saver');
+  } else {
+    console.warn('[PlannerNotificationService] Streak saver schedule failed — will retry on next interval');
+  }
 }
 
 /**
@@ -402,13 +425,6 @@ export function initializePlannerNotificationTapHandler(): () => void {
       dispatchNav('journal');
       return;
     }
-  }).then((handle) => {
-    cleanups.push(() => handle.remove());
-  }).catch(() => {});
-
-  // Handle notifications delivered while app is in foreground
-  LocalNotifications.addListener('localNotificationReceived', (notification) => {
-    recordNotificationDelivery(notification);
   }).then((handle) => {
     cleanups.push(() => handle.remove());
   }).catch(() => {});

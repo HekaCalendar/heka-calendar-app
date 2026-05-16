@@ -7,25 +7,23 @@ import {
   collection,
   doc,
   setDoc,
-  updateDoc,
   onSnapshot,
   query,
   orderBy,
   serverTimestamp,
-  arrayUnion,
-  increment,
-  getDoc,
+  runTransaction,
   type Unsubscribe,
 } from 'firebase/firestore';
 import { db, getCurrentUser } from './firebase';
 import { store } from '../store';
+import i18n from '../i18n';
 import {
   setCommunityHolidays,
   addCommunityHoliday,
   updateCommunityHoliday,
   setCommunityFeatures,
   addCommunityFeature,
-  voteForFeature as voteForFeatureAction,
+  updateCommunityFeature,
 } from '../store';
 import type { CommunityHoliday, CommunityFeature } from '../types';
 
@@ -157,7 +155,7 @@ export async function submitCommunityHoliday(
   holiday: Pick<CommunityHoliday, 'name' | 'date' | 'description' | 'suggestedBy'>
 ): Promise<string> {
   const user = getCurrentUser();
-  if (!user) throw new Error('Not authenticated');
+  if (!user) throw new Error(i18n.t('errors.notAuthenticated', { ns: 'circle' }));
 
   const ref = doc(collection(db, 'communityHolidays'));
   const payload: Omit<CommunityHoliday, 'id'> = {
@@ -188,27 +186,68 @@ export async function voteHoliday(holidayId: string, direction: 'up' | 'down'): 
   if (!user) throw new Error('Not authenticated');
 
   const ref = doc(db, 'communityHolidays', holidayId);
-  const incField = direction === 'up' ? 'votesUp' : 'votesDown';
 
-  await updateDoc(ref, {
-    [incField]: increment(1),
-    voterUids: arrayUnion(user.uid),
-  });
+  const result = await runTransaction(db, async (transaction) => {
+    const snap = await transaction.get(ref);
+    if (!snap.exists()) {
+      throw new Error(i18n.t('errors.holidayNotFound', { ns: 'circle' }));
+    }
 
-  // Evaluate auto-approval/rejection
-  const snap = await getDoc(ref);
-  if (snap.exists()) {
     const data = snap.data() as CommunityHoliday;
-    const score = (data.votesUp || 0) - (data.votesDown || 0);
+    const voterDirections: Record<string, 'up' | 'down'> = data.voterDirections || {};
+    const existingDirection = voterDirections[user.uid];
+
+    // Already voted same direction — no-op
+    if (existingDirection === direction) {
+      return { action: 'noop' as const, data };
+    }
+
+    let votesUp = data.votesUp || 0;
+    let votesDown = data.votesDown || 0;
+
+    // Switching direction: decrement old, increment new
+    if (existingDirection) {
+      if (existingDirection === 'up') votesUp = Math.max(0, votesUp - 1);
+      else votesDown = Math.max(0, votesDown - 1);
+    }
+
+    if (direction === 'up') votesUp++;
+    else votesDown++;
+
+    voterDirections[user.uid] = direction;
+
+    // Evaluate auto-approval/rejection
+    const score = votesUp - votesDown;
     let newStatus = data.status;
     if (data.status === 'pending') {
       if (score >= APPROVAL_THRESHOLD) newStatus = 'approved';
       else if (score <= REJECTION_THRESHOLD) newStatus = 'rejected';
     }
+
+    const update: Record<string, unknown> = {
+      votesUp,
+      votesDown,
+      voterDirections,
+    };
+
+    // Keep voterUids in sync for backwards compatibility
+    const voterUids = Object.keys(voterDirections);
+    update.voterUids = voterUids;
+
     if (newStatus !== data.status) {
-      await updateDoc(ref, { status: newStatus });
-      store.dispatch(updateCommunityHoliday({ ...data, id: holidayId, status: newStatus }));
+      update.status = newStatus;
     }
+
+    transaction.update(ref, update);
+
+    return {
+      action: 'voted' as const,
+      data: { ...data, id: holidayId, votesUp, votesDown, voterDirections, voterUids, status: newStatus },
+    };
+  });
+
+  if (result.action === 'voted') {
+    store.dispatch(updateCommunityHoliday(result.data));
   }
 }
 
@@ -260,37 +299,52 @@ export async function voteFeature(featureId: string): Promise<void> {
   if (!user) throw new Error('Not authenticated');
 
   const ref = doc(db, 'communityFeatures', featureId);
+
   try {
-    const snap = await getDoc(ref);
+    const result = await runTransaction(db, async (transaction) => {
+      const snap = await transaction.get(ref);
 
-    if (!snap.exists()) {
-      // On-demand seed if this feature hasn't been written to Firestore yet
-      const defaultFeature = DEFAULT_FEATURES.find((f) => f.id === featureId);
-      if (defaultFeature) {
-        const seeded: CommunityFeature = {
-          ...defaultFeature,
-          voterUids: [user.uid],
-          votes: 1,
-          createdAt: new Date().toISOString(),
-        };
-        await setDoc(ref, {
-          ...defaultFeature,
-          voterUids: [user.uid],
-          votes: 1,
-          createdAt: serverTimestamp(),
-        });
-        store.dispatch(addCommunityFeature(seeded));
-        return;
+      if (!snap.exists()) {
+        // On-demand seed if this feature hasn't been written to Firestore yet
+        const defaultFeature = DEFAULT_FEATURES.find((f) => f.id === featureId);
+        if (defaultFeature) {
+          const seeded = {
+            ...defaultFeature,
+            voterUids: [user.uid],
+            votes: 1,
+            createdAt: serverTimestamp(),
+          };
+          transaction.set(ref, seeded);
+          return { action: 'seeded' as const, data: { ...defaultFeature, voterUids: [user.uid], votes: 1, createdAt: new Date().toISOString() } as CommunityFeature };
+        }
+        throw new Error(i18n.t('errors.featureNotFound', { ns: 'circle' }));
       }
-      throw new Error('Feature not found');
-    }
 
-    await updateDoc(ref, {
-      votes: increment(1),
-      voterUids: arrayUnion(user.uid),
+      const data = snap.data() as CommunityFeature;
+      const voterUids = data.voterUids || [];
+
+      // Already voted — no-op
+      if (voterUids.includes(user.uid)) {
+        return { action: 'noop' as const, data };
+      }
+
+      const votes = (data.votes || 0) + 1;
+      voterUids.push(user.uid);
+
+      transaction.update(ref, { votes, voterUids });
+
+      return {
+        action: 'voted' as const,
+        data: { ...data, id: featureId, votes, voterUids } as CommunityFeature,
+      };
     });
 
-    store.dispatch(voteForFeatureAction(featureId));
+    if (result.action === 'seeded') {
+      store.dispatch(addCommunityFeature(result.data));
+    } else if (result.action === 'voted') {
+      store.dispatch(updateCommunityFeature(result.data));
+    }
+    // noop: don't dispatch anything
   } catch (err: any) {
     console.error('[CommunityService] voteFeature failed:', err?.code, err?.message, err);
     throw err;

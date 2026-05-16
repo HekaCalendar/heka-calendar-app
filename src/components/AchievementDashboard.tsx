@@ -6,20 +6,21 @@
  */
 
 import React, { useState, useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useGamification, useUserLevel } from '../hooks/useGamification';
 import { ACHIEVEMENTS, getAchievementsByCategory, type AchievementCategory } from '../services/gamificationService';
 import './achievement-dashboard.css';
 
-// Category display configuration
-const CATEGORY_CONFIG: Record<AchievementCategory, { label: string; color: string; icon: string }> = {
-  beginner: { label: 'Beginner', color: '#22c55e', icon: '🌱' },
-  intermediate: { label: 'Intermediate', color: '#3b82f6', icon: '🌿' },
-  advanced: { label: 'Advanced', color: '#8b5cf6', icon: '🌳' },
-  master: { label: 'Master', color: '#d4af37', icon: '👑' },
-  special: { label: 'Special', color: '#ec4899', icon: '✨' },
-  explorer: { label: 'Explorer', color: '#f59e0b', icon: '🔭' },
-  discoverer: { label: 'Discoverer', color: '#14b8a6', icon: '🔍' },
-  engager: { label: 'Engager', color: '#ef4444', icon: '🔥' },
+// Category display configuration (labels come from i18n)
+const CATEGORY_CONFIG: Record<AchievementCategory, { color: string; icon: string }> = {
+  beginner: { color: '#22c55e', icon: '🌱' },
+  intermediate: { color: '#3b82f6', icon: '🌿' },
+  advanced: { color: '#8b5cf6', icon: '🌳' },
+  master: { color: '#d4af37', icon: '👑' },
+  special: { color: '#ec4899', icon: '✨' },
+  explorer: { color: '#f59e0b', icon: '🔭' },
+  discoverer: { color: '#14b8a6', icon: '🔍' },
+  engager: { color: '#ef4444', icon: '🔥' },
 };
 
 interface AchievementCardProps {
@@ -29,6 +30,7 @@ interface AchievementCardProps {
 }
 
 const AchievementCard: React.FC<AchievementCardProps> = ({ achievement, unlocked, unlockedAt }) => {
+  const { t } = useTranslation('achievements');
   const category = CATEGORY_CONFIG[achievement.category];
   
   return (
@@ -40,15 +42,15 @@ const AchievementCard: React.FC<AchievementCardProps> = ({ achievement, unlocked
       </div>
       <div className="achievement-card__content">
         <div className="achievement-card__name">
-          {achievement.secret && !unlocked ? 'Hidden Achievement' : achievement.name}
-          {achievement.secret && unlocked && <span className="achievement-card__secret-badge">SECRET</span>}
+          {achievement.secret && !unlocked ? t('hiddenAchievement') : achievement.name}
+          {achievement.secret && unlocked && <span className="achievement-card__secret-badge">{t('secret')}</span>}
         </div>
         <div className="achievement-card__description">
           {achievement.secret && !unlocked ? '???' : achievement.description}
         </div>
         <div className="achievement-card__meta">
           <span className="achievement-card__category" style={{ color: category.color }}>
-            {category.icon} {category.label}
+            {category.icon} {t(`categoryLabels.${achievement.category}`)}
           </span>
           {achievement.tier && (
             <span className="achievement-card__tier">
@@ -58,7 +60,7 @@ const AchievementCard: React.FC<AchievementCardProps> = ({ achievement, unlocked
         </div>
         {unlocked && unlockedAt && (
           <div className="achievement-card__unlocked">
-            Unlocked {new Date(unlockedAt).toLocaleDateString()}
+            {t('unlocked')} {new Date(unlockedAt).toLocaleDateString()}
           </div>
         )}
       </div>
@@ -67,6 +69,7 @@ const AchievementCard: React.FC<AchievementCardProps> = ({ achievement, unlocked
 };
 
 export const AchievementDashboard: React.FC = () => {
+  const { t } = useTranslation('achievements');
   const [activeTab, setActiveTab] = useState<'all' | AchievementCategory>('all');
   const [showSecret, setShowSecret] = useState(false);
   
@@ -135,7 +138,7 @@ export const AchievementDashboard: React.FC = () => {
     <div className="achievement-dashboard">
       {/* Header */}
       <div className="achievement-dashboard__header">
-        <h2 className="achievement-dashboard__title">🏆 Achievements</h2>
+        <h2 className="achievement-dashboard__title">🏆 {t('title')}</h2>
         <div className="achievement-dashboard__subtitle">
           {stats.unlocked} of {stats.total} unlocked ({stats.progress}%)
         </div>
@@ -166,19 +169,19 @@ export const AchievementDashboard: React.FC = () => {
       <div className="achievement-dashboard__stats">
         <div className="stat-card">
           <div className="stat-card__value">{engagementStats.totalAppOpens}</div>
-          <div className="stat-card__label">App Opens</div>
+          <div className="stat-card__label">{t('stats.appOpens')}</div>
         </div>
         <div className="stat-card">
           <div className="stat-card__value">{engagementStats.longestOpenStreak}</div>
-          <div className="stat-card__label">Day Streak</div>
+          <div className="stat-card__label">{t('stats.dayStreak')}</div>
         </div>
         <div className="stat-card">
           <div className="stat-card__value">{Math.floor(engagementStats.totalTimeSpent / 60)}</div>
-          <div className="stat-card__label">Hours Spent</div>
+          <div className="stat-card__label">{t('stats.hoursSpent')}</div>
         </div>
         <div className="stat-card">
           <div className="stat-card__value">{discoveryProgress}%</div>
-          <div className="stat-card__label">Features Found</div>
+          <div className="stat-card__label">{t('stats.featuresFound')}</div>
         </div>
       </div>
       
@@ -194,7 +197,7 @@ export const AchievementDashboard: React.FC = () => {
             } as React.CSSProperties}
           >
             <span className="category-pill__icon">{config.icon}</span>
-            <span className="category-pill__label">{config.label}</span>
+            <span className="category-pill__label">{t(`categoryLabels.${category}`)}</span>
             <span className="category-pill__count">{unlocked}/{total}</span>
             <div className="category-pill__progress" style={{ width: `${progress}%` }} />
           </button>
@@ -207,7 +210,7 @@ export const AchievementDashboard: React.FC = () => {
           className={`filter-btn ${activeTab === 'all' ? 'filter-btn--active' : ''}`}
           onClick={() => setActiveTab('all')}
         >
-          All
+          {t('all')}
         </button>
         <label className="filter-checkbox">
           <input 
@@ -215,7 +218,7 @@ export const AchievementDashboard: React.FC = () => {
             checked={showSecret}
             onChange={(e) => setShowSecret(e.target.checked)}
           />
-          Show hidden
+          {t('showHidden')}
         </label>
       </div>
       
@@ -235,7 +238,7 @@ export const AchievementDashboard: React.FC = () => {
         <div className="achievement-dashboard__empty">
           <div className="empty-state">
             <div className="empty-state__icon">🔍</div>
-            <div className="empty-state__text">No achievements found in this category</div>
+            <div className="empty-state__text">{t('noAchievements')}</div>
           </div>
         </div>
       )}

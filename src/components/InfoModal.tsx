@@ -1,9 +1,11 @@
 /**
- * Info Modal Component
- * A beautiful chapter-based guide to the HEKA Calendar
+ * Info Modal Component — Visual Storybook Edition
+ * An immersive chapter-based guide to the HEKA Calendar
+ * with cinematic animations, keyboard navigation, and progress tracking.
  */
 
-import { useState, useCallback, memo } from 'react';
+import React, { useState, useCallback, memo, useEffect, useRef, useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
 
 interface InfoModalProps {
   isOpen: boolean;
@@ -31,16 +33,7 @@ interface Gate {
   b: string;
 }
 
-const chapters: Chapter[] = [
-  { id: 'home', num: 'HOME', chip: 'BEGIN', title: 'The HEKA Calendar', hook: 'Time is the structure we live inside. What if it fit better?' },
-  { id: 'ch1', num: '01', chip: 'ESSENCE', title: 'What Is HEKA?', hook: 'A calendar is more than a counting system. It is the rhythm of your life.' },
-  { id: 'ch2', num: '02', chip: 'STRUCTURE', title: 'The Shape of a Year', hook: 'April begins. March closes. Everything in between makes sense.' },
-  { id: 'ch3', num: '03', chip: 'PRACTICE', title: 'Living in HEKA', hook: 'You do not need permission to use a better tool.' },
-  { id: 'ch4', num: '04', chip: 'PRECISION', title: 'The Two Modes', hook: 'One calendar. Two ways of honoring the sun. You choose.' },
-  { id: 'ch5', num: '05', chip: 'LINEAGE', title: 'The Calendar Revolution', hook: 'Gregorian was a patch. HEKA is a redesign.' },
-  { id: 'ch6', num: '06', chip: 'BEGINNING', title: 'Start Using HEKA Today', hook: 'No institutions need to change. Only your view.' },
-  { id: 'ch7', num: '07', chip: 'MEANING', title: 'Time That Serves You', hook: 'The calendar you use shapes the life you live.' },
-];
+const chapterOrder: ChapterId[] = ['home', 'ch1', 'ch2', 'ch3', 'ch4', 'ch5', 'ch6', 'ch7'];
 
 const cardsByChapter: Record<string, Card[]> = {
   ch1: [
@@ -118,24 +111,49 @@ const gatesByChapter: Record<string, Gate[]> = {
   ],
 };
 
-const chapterLeads: Record<string, string> = {
-  ch1: 'You have felt it. The slight confusion when planning across months. The mental calculation: "How many days until...?" The irregular rhythm of a year that stumbles from January through December with no coherent shape. HEKA is the response.',
-  ch2: 'A year is not merely a count of days. It is a narrative arc. HEKA structures the solar year into three distinct movements: the Opening, the Core, and the Closing. Each with its own character. Each serving a different purpose in the rhythm of work and rest, growth and harvest.',
-  ch3: 'Theory becomes useful only when practiced. HEKA is designed for immediate adoption without disruption. Civil dates remain visible. Your appointments stay synchronized. You simply gain a clearer, more regular framework for navigating your days.',
-  ch4: 'Every solar calendar must correct for the mismatch between day-cycles and year-cycles. HEKA offers two approaches to this correction: one that harmonizes with civil expectations, and one that follows pure astronomical precision. The structure stays constant. Only the correction mechanism changes.',
-  ch5: 'The Gregorian calendar is not bad. It is a successful standard that fixed critical drift problems. But it is also a patch on a patch—a structure shaped by Roman politics, religious councils, and historical accidents rather than human needs. Understanding this history clarifies why redesign is worth attempting.',
-  ch6: 'Institutional change is slow. Personal change is immediate. You do not need governments or corporations to adopt HEKA for you to benefit from it. Start today. Use it as your personal planning layer. Let the tool prove its value in your own experience.',
-  ch7: 'We live inside our calendars. They shape our sense of time, progress, and possibility. An irregular calendar creates low-level friction throughout the year. A regular calendar creates flow. The choice of which structure to inhabit is ultimately a choice about what kind of temporal environment you want to live within.',
-};
+
 
 const InfoModalComponent: React.FC<InfoModalProps> = ({ isOpen, onClose }) => {
+  const { t } = useTranslation('common');
+  const chapters = useMemo(() =>
+    chapterOrder.map(id => ({
+      id,
+      num: t(`infoModal.chapters.${id}.num`),
+      chip: t(`infoModal.chapters.${id}.chip`),
+      title: t(`infoModal.chapters.${id}.title`),
+      hook: t(`infoModal.chapters.${id}.hook`),
+    })), [t]);
+
   const [currentChapter, setCurrentChapter] = useState<ChapterId>('home');
+  const [visitedChapters, setVisitedChapters] = useState<Set<ChapterId>>(new Set(['home']));
   const [openGates, setOpenGates] = useState<Set<string>>(new Set());
+  const [transitionKey, setTransitionKey] = useState(0);
+  const contentRef = useRef<HTMLDivElement>(null);
 
   const handleChapterClick = useCallback((id: ChapterId) => {
+    setTransitionKey(k => k + 1);
     setCurrentChapter(id);
     setOpenGates(new Set());
+    setVisitedChapters(prev => new Set(prev).add(id));
+    // Scroll content to top
+    if (contentRef.current) {
+      contentRef.current.scrollTop = 0;
+    }
   }, []);
+
+  const goNext = useCallback(() => {
+    const idx = chapterOrder.indexOf(currentChapter);
+    if (idx < chapterOrder.length - 1) {
+      handleChapterClick(chapterOrder[idx + 1]);
+    }
+  }, [currentChapter, handleChapterClick]);
+
+  const goPrev = useCallback(() => {
+    const idx = chapterOrder.indexOf(currentChapter);
+    if (idx > 0) {
+      handleChapterClick(chapterOrder[idx - 1]);
+    }
+  }, [currentChapter, handleChapterClick]);
 
   const toggleGate = useCallback((key: string) => {
     setOpenGates(prev => {
@@ -149,34 +167,78 @@ const InfoModalComponent: React.FC<InfoModalProps> = ({ isOpen, onClose }) => {
     });
   }, []);
 
+  // Keyboard navigation
+  useEffect(() => {
+    if (!isOpen) return;
+    
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'ArrowRight') {
+        e.preventDefault();
+        goNext();
+      } else if (e.key === 'ArrowLeft') {
+        e.preventDefault();
+        goPrev();
+      } else if (e.key === 'Escape') {
+        onClose();
+      }
+    };
+    
+    document.addEventListener('keydown', handleKeyDown);
+    return () => document.removeEventListener('keydown', handleKeyDown);
+  }, [isOpen, goNext, goPrev, onClose]);
+
   if (!isOpen) return null;
 
   const currentChapterData = chapters.find(c => c.id === currentChapter);
   const isHome = currentChapter === 'home';
+  const chapterIndex = chapterOrder.indexOf(currentChapter);
 
   return (
     <div className="info-modal-overlay" onClick={onClose}>
       <div className="info-modal" onClick={e => e.stopPropagation()}>
+        {/* Progress Path */}
+        <div className="info-modal__progress">
+          {chapterOrder.map((id, i) => (
+            <React.Fragment key={id}>
+              <button
+                className="info-modal__progress-dot"
+                data-active={id === currentChapter}
+                data-visited={visitedChapters.has(id) && id !== currentChapter}
+                onClick={() => handleChapterClick(id)}
+                title={chapters.find(c => c.id === id) ? t(`infoModal.chapters.${id}.title`) : ''}
+                aria-label={t('infoModal.goTo', { title: chapters.find(c => c.id === id)?.title || '' })}
+              />
+              {i < chapterOrder.length - 1 && (
+                <div 
+                  className="info-modal__progress-line" 
+                  data-active={i < chapterIndex}
+                />
+              )}
+            </React.Fragment>
+          ))}
+        </div>
+
         {/* Header */}
         <div className="info-modal__header">
           <div className="info-modal__title-group">
             <span className="info-modal__chip">{currentChapterData?.chip}</span>
-            <h2 className="info-modal__title">{currentChapterData?.title}</h2>
-            <p className="info-modal__hook">{currentChapterData?.hook}</p>
+            <h2 className="info-modal__title">{currentChapterData ? t(`infoModal.chapters.${currentChapterData.id}.title`) : ''}</h2>
+            <p className="info-modal__hook">{currentChapterData ? t(`infoModal.chapters.${currentChapterData.id}.hook`) : ''}</p>
           </div>
-          <button className="info-modal__close" onClick={onClose} aria-label="Close">×</button>
+          <button className="info-modal__close" onClick={onClose} aria-label={t('close')}>×</button>
         </div>
 
         {/* Content */}
-        <div className="info-modal__content">
+        <div className="info-modal__content" ref={contentRef} key={transitionKey}>
           {isHome ? (
-            <HomeView onChapterClick={handleChapterClick} />
+            <HomeView onChapterClick={handleChapterClick} t={t} chapters={chapters} />
           ) : (
-            <ChapterView 
+            <ChapterView
               chapterId={currentChapter}
               onBack={() => handleChapterClick('home')}
               openGates={openGates}
               toggleGate={toggleGate}
+              t={t}
             />
           )}
         </div>
@@ -188,7 +250,7 @@ const InfoModalComponent: React.FC<InfoModalProps> = ({ isOpen, onClose }) => {
             onClick={() => handleChapterClick('home')}
             data-active={isHome}
           >
-            Home
+            {t('infoModal.home')}
           </button>
           {chapters.slice(1).map(ch => (
             <button
@@ -196,7 +258,7 @@ const InfoModalComponent: React.FC<InfoModalProps> = ({ isOpen, onClose }) => {
               className="info-modal__nav-dot"
               onClick={() => handleChapterClick(ch.id)}
               data-active={currentChapter === ch.id}
-              title={ch.title}
+              title={t(`infoModal.chapters.${ch.id}.title`)}
             >
               {ch.num}
             </button>
@@ -207,51 +269,51 @@ const InfoModalComponent: React.FC<InfoModalProps> = ({ isOpen, onClose }) => {
   );
 };
 
-const HomeView: React.FC<{ onChapterClick: (id: ChapterId) => void }> = ({ onChapterClick }) => (
+const HomeView: React.FC<{ onChapterClick: (id: ChapterId) => void; t: any; chapters: Chapter[] }> = ({ onChapterClick, t, chapters }) => (
   <div className="info-home">
     <div className="info-home__hero">
       <div className="info-home__logo">✦</div>
-      <h1 className="info-home__title">The HEKA Calendar</h1>
-      <p className="info-home__subtitle">Time is the structure we live inside.<br />What if it fit better?</p>
+      <h1 className="info-home__title">{t('infoModal.hero.title')}</h1>
+      <p className="info-home__subtitle">{t('infoModal.hero.subtitleLine1')}<br />{t('infoModal.hero.subtitleLine2')}</p>
     </div>
 
     <div className="info-home__grid">
       <div className="info-home__card info-home__card--changes">
-        <h3>What Changes</h3>
+        <h3>{t('infoModal.cards.whatChanges.title')}</h3>
         <ul>
-          <li>Thirteen months, all equal</li>
-          <li>Four weeks per month, always</li>
-          <li>Year begins in April, ends in March</li>
-          <li>Opening, Core, and Closing arcs</li>
-          <li>Correction contained in one month</li>
+          <li>{t('infoModal.cards.whatChanges.items.0')}</li>
+          <li>{t('infoModal.cards.whatChanges.items.1')}</li>
+          <li>{t('infoModal.cards.whatChanges.items.2')}</li>
+          <li>{t('infoModal.cards.whatChanges.items.3')}</li>
+          <li>{t('infoModal.cards.whatChanges.items.4')}</li>
         </ul>
       </div>
 
       <div className="info-home__card info-home__card--keeps">
-        <h3>What Stays</h3>
+        <h3>{t('infoModal.cards.whatStays.title')}</h3>
         <ul>
-          <li>Seven-day weeks unchanged</li>
-          <li>Seasons remain aligned</li>
-          <li>Civil dates always visible</li>
-          <li>Your appointments synchronized</li>
-          <li>The world needs no notice</li>
+          <li>{t('infoModal.cards.whatStays.items.0')}</li>
+          <li>{t('infoModal.cards.whatStays.items.1')}</li>
+          <li>{t('infoModal.cards.whatStays.items.2')}</li>
+          <li>{t('infoModal.cards.whatStays.items.3')}</li>
+          <li>{t('infoModal.cards.whatStays.items.4')}</li>
         </ul>
       </div>
 
       <div className="info-home__card info-home__card--use">
-        <h3>Begin Here</h3>
+        <h3>{t('infoModal.cards.beginHere.title')}</h3>
         <ul>
-          <li>Read "What Is HEKA?" first</li>
-          <li>Explore "The Shape of a Year"</li>
-          <li>Enable the civil overlay</li>
-          <li>Choose SYNC or TRUE mode</li>
-          <li>Live inside it for a month</li>
+          <li>{t('infoModal.cards.beginHere.items.0')}</li>
+          <li>{t('infoModal.cards.beginHere.items.1')}</li>
+          <li>{t('infoModal.cards.beginHere.items.2')}</li>
+          <li>{t('infoModal.cards.beginHere.items.3')}</li>
+          <li>{t('infoModal.cards.beginHere.items.4')}</li>
         </ul>
       </div>
     </div>
 
     <div className="info-home__chapters">
-      <h3>Seven Chapters</h3>
+      <h3>{t('infoModal.chaptersLabel')}</h3>
       <div className="info-home__chapter-list">
         {chapters.slice(1).map(ch => (
           <button
@@ -260,7 +322,7 @@ const HomeView: React.FC<{ onChapterClick: (id: ChapterId) => void }> = ({ onCha
             onClick={() => onChapterClick(ch.id)}
           >
             <span className="info-home__chapter-num">{ch.num}</span>
-            <span className="info-home__chapter-title">{ch.title}</span>
+            <span className="info-home__chapter-title">{t(`infoModal.chapters.${ch.id}.title`)}</span>
             <span className="info-home__chapter-arrow">→</span>
           </button>
         ))}
@@ -291,7 +353,7 @@ const HomeView: React.FC<{ onChapterClick: (id: ChapterId) => void }> = ({ onCha
         onMouseEnter={(e) => e.currentTarget.style.color = '#c9a227'}
         onMouseLeave={(e) => e.currentTarget.style.color = '#a1a1aa'}
       >
-        Privacy Policy
+        {t('privacy')}
       </a>
       <a 
         href="terms-of-service.html" 
@@ -306,10 +368,10 @@ const HomeView: React.FC<{ onChapterClick: (id: ChapterId) => void }> = ({ onCha
         onMouseEnter={(e) => e.currentTarget.style.color = '#c9a227'}
         onMouseLeave={(e) => e.currentTarget.style.color = '#a1a1aa'}
       >
-        Terms of Service
+        {t('terms')}
       </a>
       <span style={{ color: '#71717a', fontSize: '13px' }}>
-        Version 2.2.0
+        {t('version')} 2.2.0
       </span>
     </div>
   </div>
@@ -320,29 +382,29 @@ const ChapterView: React.FC<{
   onBack: () => void;
   openGates: Set<string>;
   toggleGate: (key: string) => void;
-}> = ({ chapterId, onBack, openGates, toggleGate }) => {
+  t: any;
+}> = ({ chapterId, onBack, openGates, toggleGate, t }) => {
   const cards = cardsByChapter[chapterId] || [];
   const gates = gatesByChapter[chapterId] || [];
-  const lead = chapterLeads[chapterId] || '';
 
   return (
     <div className="info-chapter">
-      <button className="info-chapter__back" onClick={onBack}>← Back to Home</button>
+      <button className="info-chapter__back" onClick={onBack}>← {t('infoModal.backToHome')}</button>
       
-      <p className="info-chapter__lead">{lead}</p>
+      <p className="info-chapter__lead">{t(`infoModal.chapterLeads.${chapterId}`)}</p>
 
       <div className="info-chapter__cards">
-        {cards.map((card, i) => (
+        {cards.map((_card, i) => (
           <div key={i} className="info-card">
-            <h4 className="info-card__title">{card.h}</h4>
-            <p className="info-card__body">{card.b}</p>
+            <h4 className="info-card__title">{t(`infoModal.cardsByChapter.${chapterId}.${i}.h`)}</h4>
+            <p className="info-card__body">{t(`infoModal.cardsByChapter.${chapterId}.${i}.b`)}</p>
           </div>
         ))}
       </div>
 
       <div className="info-chapter__gates">
-        <h4 className="info-chapter__gates-title">Deeper Questions</h4>
-        {gates.map((gate, i) => {
+        <h4 className="info-chapter__gates-title">{t('infoModal.deeperQuestions')}</h4>
+        {gates.map((_gate, i) => {
           const key = `${chapterId}-gate-${i}`;
           const isOpen = openGates.has(key);
           return (
@@ -351,13 +413,13 @@ const ChapterView: React.FC<{
                 className="info-gate__btn"
                 onClick={() => toggleGate(key)}
               >
-                <span className="info-gate__tag">{gate.tag}</span>
-                <span className="info-gate__title">{gate.t}</span>
+                <span className="info-gate__tag">{t(`infoModal.gatesByChapter.${chapterId}.${i}.tag`)}</span>
+                <span className="info-gate__title">{t(`infoModal.gatesByChapter.${chapterId}.${i}.t`)}</span>
                 <span className="info-gate__chevron">▼</span>
               </button>
               {isOpen && (
                 <div className="info-gate__content">
-                  <p>{gate.b}</p>
+                  <p>{t(`infoModal.gatesByChapter.${chapterId}.${i}.b`)}</p>
                 </div>
               )}
             </div>

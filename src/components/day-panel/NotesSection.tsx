@@ -4,6 +4,8 @@
  */
 
 import { memo, useCallback } from 'react';
+import { useTranslation } from 'react-i18next';
+import { Trans } from 'react-i18next';
 import { NoteItem } from './NoteItem';
 import { NoteEditor } from './NoteEditor';
 import { SelectionToolbar } from './SelectionToolbar';
@@ -59,6 +61,7 @@ export const NotesSection = memo(({
   onDuplicateToSpecificDay,
   onDuplicateToSpecificDays,
 }: NotesSectionProps) => {
+  const { t } = useTranslation('dayPanel');
   const currentDayOfWeek = new Date().getDay();
 
   // Handle deleting all selected notes
@@ -71,6 +74,12 @@ export const NotesSection = memo(({
 
   const taskCount = dayItems.filter((i) => isPlannerTask(i)).length;
   const noteCount = dayItems.length - taskCount;
+
+  const labelText = taskCount > 0 && noteCount > 0
+    ? t('notesSection.tasksAndNotes', { tasks: taskCount, notes: noteCount })
+    : taskCount > 0
+    ? t('notesSection.tasksOnly', { count: taskCount })
+    : t('notesSection.notesAndTasks', { count: dayItems.length });
 
   return (
     <div className="day-panel__section notes-section">
@@ -107,11 +116,7 @@ export const NotesSection = memo(({
       ) : (
         <div className="day-panel__label" style={{ alignItems: 'flex-start' }}>
           <span style={{ lineHeight: 1.4 }}>
-            {taskCount > 0 && noteCount > 0
-              ? `Tasks (${taskCount}) · Notes (${noteCount})`
-              : taskCount > 0
-              ? `Tasks (${taskCount})`
-              : `Notes & Tasks (${dayItems.length})`}
+            {labelText}
           </span>
           <div style={{ display: 'flex', gap: '0.5rem', flexShrink: 0 }}>
             <button
@@ -125,7 +130,7 @@ export const NotesSection = memo(({
                 border: '1px solid rgba(255,255,255,0.15)',
               }}
             >
-              + Note
+              {t('notesSection.addNote')}
             </button>
 
           </div>
@@ -136,7 +141,7 @@ export const NotesSection = memo(({
       {dayItems.length > 0 && !isSelectionMode && !isEditing && (
         <div className="note-hint">
           <span className="note-hint__icon">👇</span>
-          <span className="note-hint__text">Long-hold for options · Double-tap a task to edit</span>
+          <span className="note-hint__text">{t('notesSection.longHoldHint')}</span>
         </div>
       )}
 
@@ -182,8 +187,11 @@ export const NotesSection = memo(({
 
       {dayItems.length === 0 && !isEditing && (
         <p className="no-notes" style={{ color: '#a1a1aa', fontSize: '13px', marginTop: 8 }}>
-          No notes or tasks for this day.<br />
-          Click <strong style={{ color: '#f8f7f5' }}>+ Note</strong> or <strong style={{ color: '#d4af37' }}>⚡ Add Task</strong> above to create one.
+          {t('notesSection.noNotesOrTasks')}<br />
+          <Trans i18nKey="dayPanel:notesSection.createNoteHint" components={{
+            0: <strong style={{ color: '#f8f7f5' }} />,
+            1: <strong style={{ color: '#d4af37' }} />,
+          }} />
         </p>
       )}
     </div>

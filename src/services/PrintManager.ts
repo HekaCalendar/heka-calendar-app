@@ -73,7 +73,6 @@ export class PrintManager {
     saveToDownloads: boolean = true,
     onProgress?: (event: { currentPage: number; totalPages: number; progress: number }) => void
   ): Promise<PDFResult> {
-    console.log('[PrintManager] Generating PDF with', pages.length, 'pages', 'paperSize:', paperSize, 'saveToDownloads:', saveToDownloads);
     let listener: PluginListenerHandle | null = null;
     if (onProgress) {
       listener = HekaPrint.addListener('pdfProgress', onProgress);
@@ -88,7 +87,6 @@ export class PrintManager {
         filename: `HEKA_Calendar_${new Date().getFullYear()}`,
         saveToDownloads
       });
-      console.log('[PrintManager] PDF generated:', result.filePath);
       return result;
     } catch (error) {
       console.error('[PrintManager] PDF generation failed:', error);
@@ -105,11 +103,9 @@ export class PrintManager {
    * @param paperSize Paper size ('A4', 'A3', 'Letter', 'Legal')
    */
   static async printPDF(filePath: string, orientation: Orientation = 'portrait', paperSize: PaperSize = 'A4'): Promise<void> {
-    console.log('[PrintManager] Printing PDF:', filePath, 'orientation:', orientation, 'paperSize:', paperSize);
     
     try {
       await HekaPrint.printPDF({ filePath, orientation, paperSize });
-      console.log('[PrintManager] Print job sent');
     } catch (error: any) {
       console.error('[PrintManager] Print failed:', error);
       
@@ -129,11 +125,9 @@ export class PrintManager {
    * @param filename Optional display name
    */
   static async openPDF(filePath: string, filename?: string): Promise<void> {
-    console.log('[PrintManager] Opening PDF:', filePath);
     
     try {
       await HekaPrint.openPDF({ filePath, filename });
-      console.log('[PrintManager] PDF viewer opened');
     } catch (error) {
       console.error('[PrintManager] Open failed:', error);
       throw error;
@@ -146,11 +140,9 @@ export class PrintManager {
    * @param filename Optional display name
    */
   static async sharePDF(filePath: string, filename?: string): Promise<void> {
-    console.log('[PrintManager] Sharing PDF:', filePath);
     
     try {
       await HekaPrint.sharePDF({ filePath, filename });
-      console.log('[PrintManager] Share dialog opened');
     } catch (error) {
       console.error('[PrintManager] Share failed:', error);
       throw error;

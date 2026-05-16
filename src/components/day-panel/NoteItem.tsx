@@ -4,6 +4,7 @@
  */
 
 import { memo, useRef, useCallback, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import type { NoteItemProps } from './types';
 import { MOOD_EMOJIS, MOOD_LABELS } from './constants';
 import { NOTE_CATEGORIES } from '../../types';
@@ -23,6 +24,7 @@ export const NoteItem = memo(({
   onToggleComplete,
   onDoubleTap,
 }: NoteItemProps) => {
+  const { t } = useTranslation('dayPanel');
   const categoryInfo = NOTE_CATEGORIES.find(c => c.id === item.category);
   const longPressTimer = useRef<NodeJS.Timeout | null>(null);
   const isLongPress = useRef(false);
@@ -143,7 +145,7 @@ export const NoteItem = memo(({
             flexShrink: 0,
             marginRight: '0.5rem',
           }}
-          title={task.isCompleted ? 'Completed' : 'Mark complete'}
+          title={task.isCompleted ? t('noteItem.completed') : t('noteItem.markComplete')}
           type="button"
         >
           {task.isCompleted && '✓'}
@@ -218,7 +220,7 @@ export const NoteItem = memo(({
                   longPressTimer.current = null;
                 }
               }}
-              title="Delete"
+              title={t('noteItem.delete')}
               type="button"
             >
               ×
@@ -238,7 +240,7 @@ export const NoteItem = memo(({
           {new Date(item.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
           {task && (
             <span style={{ marginLeft: 8, color: task.isCompleted ? '#22c55e' : '#a1a1aa' }}>
-              {task.isCompleted ? '· Completed' : '· Task'}
+              {task.isCompleted ? `· ${t('noteItem.completed')}` : `· ${t('noteItem.task')}`}
             </span>
           )}
         </div>

@@ -352,14 +352,18 @@ export async function acceptSharedTask(
   await batch.commit();
 
   // Notify creator
-  void NotificationEngine.notifyCore(
-    'task-completed',
-    'circle',
-    'Task Accepted',
-    `${currentUser.displayName || 'Someone'} accepted your task: ${sharedTask.title}`,
-    { taskId: taskRef.id },
-    parseInt(taskRef.id.slice(-8), 16) || undefined
-  );
+  try {
+    await NotificationEngine.notifyCore(
+      'task-completed',
+      'circle',
+      'Task Accepted',
+      `${currentUser.displayName || 'Someone'} accepted your task: ${sharedTask.title}`,
+      { taskId: taskRef.id },
+      parseInt(taskRef.id.slice(-8), 16) || undefined
+    );
+  } catch (err) {
+    console.error('[TaskShareService] Failed to send task completion notification:', err);
+  }
 
   return {
     success: true,
@@ -402,14 +406,18 @@ export async function declineSharedTask(
   });
 
   // Notify creator
-  void NotificationEngine.notifyCore(
-    'task-declined',
-    'circle',
-    'Task Declined',
-    `${currentUser.displayName || 'Someone'} declined your task: ${sharedTask.title}${reason ? ` - ${reason}` : ''}`,
-    { shareCode },
-    parseInt(shareCode.slice(-8), 36) || undefined
-  );
+  try {
+    await NotificationEngine.notifyCore(
+      'task-declined',
+      'circle',
+      'Task Declined',
+      `${currentUser.displayName || 'Someone'} declined your task: ${sharedTask.title}${reason ? ` - ${reason}` : ''}`,
+      { shareCode },
+      parseInt(shareCode.slice(-8), 36) || undefined
+    );
+  } catch (err) {
+    console.error('[TaskShareService] Failed to send task declined notification:', err);
+  }
 
   return { success: true };
 }

@@ -55,18 +55,26 @@ import { initI18n } from './i18n';
   const SENSITIVE_PATTERNS = [
     /sk-[a-zA-Z0-9]{48,}/g,
     /sk-proj-[a-zA-Z0-9_-]{100,}/g,
+    /gsk_[a-zA-Z0-9_-]{30,}/g,
+    /sk-ant-[a-zA-Z0-9_-]{60,}/g,
+    /AIzaSy[a-zA-Z0-9_-]{30,}/g,
+    /[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/g,
+    /[\w-]{20,}\.[\w-]{20,}\.[\w-]{20,}/g,
   ];
+
+  function redact(str: string): string {
+    return SENSITIVE_PATTERNS.reduce((s, pattern) => s.replace(pattern, '[REDACTED]'), str);
+  }
 
   function sanitize(args: any[]): any[] {
     return args.map((arg) => {
       if (typeof arg === 'string') {
-        return arg.replace(SENSITIVE_PATTERNS[0], '[REDACTED]').replace(SENSITIVE_PATTERNS[1], '[REDACTED]');
+        return redact(arg);
       }
       if (typeof arg === 'object' && arg !== null) {
         try {
           const str = JSON.stringify(arg);
-          const redacted = str.replace(SENSITIVE_PATTERNS[0], '[REDACTED]').replace(SENSITIVE_PATTERNS[1], '[REDACTED]');
-          return JSON.parse(redacted);
+          return JSON.parse(redact(str));
         } catch {
           return arg;
         }
@@ -89,7 +97,6 @@ import { initI18n } from './i18n';
 const APP_VERSION = '2.2.1';
 const BUILD_TIME = Date.now().toString();
 
-console.log('[HEKA] Version:', APP_VERSION, 'Build:', BUILD_TIME);
 
 // Safe localStorage wrapper
 function safeLocalStorageSet(key: string, value: string): boolean {
@@ -123,10 +130,8 @@ safeLocalStorageSet('heka-build', BUILD_TIME);
 
 // Check version - force reload if mismatch
 const stored = safeLocalStorageGet('heka-version');
-console.log('[HEKA] Stored version:', stored);
 
 if (stored && stored !== APP_VERSION) {
-  console.log('[HEKA] VERSION MISMATCH - clearing caches');
   safeLocalStorageSet('heka-version', APP_VERSION);
   
   // Clear caches before reload
@@ -153,11 +158,9 @@ if (isFirebaseConfigured()) {
         photoURL: user.photoURL,
       }));
       attachPlannerListener();
-      console.log('[HEKA] User authenticated:', user.email);
     } else {
       store.dispatch(setUnauthenticated());
       detachPlannerListener();
-      console.log('[HEKA] User not authenticated');
     }
   });
 }
@@ -178,7 +181,6 @@ function getUserLanguage(): string {
 const root = document.getElementById('root');
 if (root) {
   const userLanguage = getUserLanguage();
-  console.log('[HEKA] User language:', userLanguage);
 
   // Initialize WASM and i18n in parallel (with timeout to prevent blocking)
   const initPromise = Promise.race([
@@ -190,7 +192,6 @@ if (root) {
   ]);
 
   initPromise.then(() => {
-    console.log('[HEKA] Swiss Ephemeris & i18n initialized');
   }).catch(() => {
     console.warn('[HEKA] Init failed, using fallbacks');
   }).finally(() => {
@@ -237,8 +238,9 @@ if (root) {
   console.error('[HEKA] Root element not found');
 }
 
-// Expose utilities
-(window as any).heka = {
+// Expose utilities (development only)
+if (import.meta.env.DEV) {
+  (window as any).heka = {
   version: APP_VERSION,
   reset: () => {
     safeLocalStorageRemove('heka-version');
@@ -256,17 +258,14 @@ if (root) {
     safeLocalStorageRemove('heka-tutorial-analytics-v2');
     safeLocalStorageRemove('heka-tutorial-data-version');
     safeLocalStorageRemove('heka-tutorial-v3');
-    console.log('[HEKA] Tutorial state cleared. Refresh to see onboarding.');
     window.location.reload();
   },
   checkTutorial: () => {
     const tutorialState = safeLocalStorageGet('heka-tutorial-state-v2');
     if (tutorialState) {
       const parsed = JSON.parse(tutorialState);
-      console.log('[HEKA] Tutorial state:', parsed);
       return parsed;
     } else {
-      console.log('[HEKA] No tutorial state found');
       return null;
     }
   },
@@ -275,7 +274,8 @@ if (root) {
     stored: safeLocalStorageGet('heka-version'),
     last: safeLocalStorageGet('heka-last-version')
   })
-};
+  };
+}
 
 // Service Worker Registration - with error handling
 if ('serviceWorker' in navigator) {
@@ -283,18 +283,46 @@ if ('serviceWorker' in navigator) {
     // Skip SW registration in Capacitor to avoid conflicts
     const isCapacitor = (window as any).Capacitor !== undefined;
     if (isCapacitor) {
-      console.log('[HEKA] Skipping service worker in Capacitor');
       return;
     }
-    
+
+    // Register app cache worker
     navigator.serviceWorker.register('/sw.js')
-      .then(registration => {
-        console.log('[HEKA] SW registered:', registration.scope);
-      })
       .catch(error => {
         console.warn('[HEKA] SW registration failed:', error);
+      });
+
+    // Register Firebase Messaging worker for web push
+    navigator.serviceWorker.register('/firebase-messaging-sw.js')
+      .then((registration) => {
+        // Send Firebase config to the messaging SW so it can initialize
+        const firebaseConfig = {
+          apiKey: import.meta.env.VITE_FIREBASE_API_KEY || '',
+          authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN || '',
+          projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID || '',
+          storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET || '',
+          messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID || '',
+          appId: import.meta.env.VITE_FIREBASE_APP_ID || '',
+        };
+        if (firebaseConfig.apiKey) {
+          registration.active?.postMessage({
+            type: 'HEKA_FIREBASE_CONFIG',
+            config: firebaseConfig,
+          });
+          // Also send to waiting/activating workers
+          registration.waiting?.postMessage({
+            type: 'HEKA_FIREBASE_CONFIG',
+            config: firebaseConfig,
+          });
+          registration.installing?.postMessage({
+            type: 'HEKA_FIREBASE_CONFIG',
+            config: firebaseConfig,
+          });
+        }
+      })
+      .catch(error => {
+        console.warn('[HEKA] FCM SW registration failed:', error);
       });
   });
 }
 
-console.log('[HEKA] Ready');

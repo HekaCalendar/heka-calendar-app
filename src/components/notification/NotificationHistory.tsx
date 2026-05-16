@@ -1,6 +1,7 @@
 /**
  * Notification History
  * Shows recently delivered notifications from the engine ledger.
+ * Displays delivery status: scheduled, delivered, or failed.
  */
 
 import { useState, useEffect, useCallback } from 'react';
@@ -22,6 +23,28 @@ const SECTION_ICONS: Record<string, string> = {
   planner: '📋',
 };
 
+type DeliveryStatus = 'scheduled' | 'delivered';
+
+function getDeliveryStatus(item: DeliveredNotification): DeliveryStatus {
+  if (item.confirmedDeliveredAt) return 'delivered';
+  return 'scheduled';
+}
+
+const STATUS_STYLES: Record<DeliveryStatus, { bg: string; border: string; color: string; label: string }> = {
+  scheduled: {
+    bg: 'rgba(245, 158, 11, 0.12)',
+    border: 'rgba(245, 158, 11, 0.35)',
+    color: '#f59e0b',
+    label: 'Scheduled',
+  },
+  delivered: {
+    bg: 'rgba(16, 185, 129, 0.12)',
+    border: 'rgba(16, 185, 129, 0.35)',
+    color: '#10b981',
+    label: 'Delivered',
+  },
+};
+
 export const NotificationHistory: React.FC = () => {
   const [history, setHistory] = useState<DeliveredNotification[]>([]);
   const [isOpen, setIsOpen] = useState(false);
@@ -36,12 +59,18 @@ export const NotificationHistory: React.FC = () => {
     }
   }, [isOpen, refresh]);
 
-  // Real-time updates: refresh when a new notification is sent
+  // Real-time updates: refresh when a new notification is sent or delivered
   useEffect(() => {
-    const unsubscribe = eventBus.subscribe('heka-notification-sent', () => {
+    const unsubSent = eventBus.subscribe('heka-notification-sent', () => {
       refresh();
     });
-    return unsubscribe;
+    const unsubDelivered = eventBus.subscribe('heka-notification-delivered', () => {
+      refresh();
+    });
+    return () => {
+      unsubSent();
+      unsubDelivered();
+    };
   }, [refresh]);
 
   if (!isOpen) {
@@ -118,6 +147,25 @@ export const NotificationHistory: React.FC = () => {
           }}>×</button>
         </div>
 
+        {/* Legend */}
+        <div style={{
+          padding: '10px 20px',
+          borderBottom: '1px solid rgba(255,255,255,0.04)',
+          display: 'flex',
+          gap: '16px',
+          fontSize: '11px',
+          color: 'rgba(224,224,224,0.5)',
+        }}>
+          <span style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+            <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#f59e0b' }} />
+            Scheduled
+          </span>
+          <span style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+            <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#10b981' }} />
+            Delivered
+          </span>
+        </div>
+
         {/* List */}
         <div style={{ padding: '12px 20px', overflowY: 'auto', flex: 1 }}>
           {history.length === 0 ? (
@@ -130,6 +178,8 @@ export const NotificationHistory: React.FC = () => {
                 const date = new Date(item.deliveredAt);
                 const timeStr = date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
                 const dateStr = date.toLocaleDateString([], { month: 'short', day: 'numeric' });
+                const status = getDeliveryStatus(item);
+                const style = STATUS_STYLES[status];
                 return (
                   <div key={`${item.id}-${i}`} style={{
                     padding: '10px 12px',
@@ -142,11 +192,27 @@ export const NotificationHistory: React.FC = () => {
                       <span style={{ fontSize: '11px', color: 'rgba(224,224,224,0.4)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
                         {item.type}
                       </span>
-                      <span style={{ marginLeft: 'auto', fontSize: '11px', color: 'rgba(224,224,224,0.35)' }}>
+                      <span style={{
+                        marginLeft: 'auto',
+                        fontSize: '10px',
+                        fontWeight: 600,
+                        textTransform: 'uppercase',
+                        letterSpacing: '0.05em',
+                        padding: '2px 8px',
+                        borderRadius: '999px',
+                        background: style.bg,
+                        border: `1px solid ${style.border}`,
+                        color: style.color,
+                      }}>
+                        {style.label}
+                      </span>
+                    </div>
+                    <div style={{ display: 'flex', alignItems: 'baseline', gap: '8px' }}>
+                      <span style={{ fontSize: '11px', color: 'rgba(224,224,224,0.35)' }}>
                         {dateStr} {timeStr}
                       </span>
                     </div>
-                    <div style={{ fontSize: '13px', fontWeight: 500, color: '#e0e0e0', lineHeight: 1.4 }}>
+                    <div style={{ fontSize: '13px', fontWeight: 500, color: '#e0e0e0', lineHeight: 1.4, marginTop: '2px' }}>
                       {item.title}
                     </div>
                     <div style={{ fontSize: '12px', color: 'rgba(224,224,224,0.5)', marginTop: '2px', lineHeight: 1.4 }}>

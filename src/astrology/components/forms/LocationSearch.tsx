@@ -205,12 +205,14 @@ export const LocationSearch: React.FC<LocationSearchProps> = ({ onLocationSelect
       const cc = countryCode.current;
       const countryParam = cc ? `&countrycodes=${encodeURIComponent(cc)}` : '';
 
-      const response = await fetch(
+      const { fetchWithTimeout } = await import('../../../utils/fetchWithTimeout');
+      const response = await fetchWithTimeout(
         `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(searchQuery)}&limit=10&addressdetails=1&dedupe=1${countryParam}`,
         {
           headers: {
             'Accept-Language': 'en-US,en',
           },
+          timeout: 10000,
         }
       );
 

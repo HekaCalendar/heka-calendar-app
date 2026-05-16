@@ -1,7 +1,7 @@
 ext {
     minSdkVersion = 24
     compileSdkVersion = 36
-    targetSdkVersion = 36
+    targetSdkVersion = 35
     ndkVersion = "28.0.13004108"  // NDK r28+ required for 16KB page size support
     androidxActivityVersion = '1.11.0'
     androidxAppCompatVersion = '1.7.1'

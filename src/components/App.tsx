@@ -12,8 +12,9 @@
 import { useEffect, useState, useCallback, useMemo, memo, useRef } from 'react';
 import { HashRouter, useLocation, useNavigate } from 'react-router-dom';
 import { Provider, useSelector, useDispatch, shallowEqual } from 'react-redux';
-import { I18nextProvider } from 'react-i18next';
+import { I18nextProvider, useTranslation } from 'react-i18next';
 import { store, loadNotes } from '../store';
+import { initDiary } from '../store/diarySlice';
 import type { RootState, AppDispatch } from '../store';
 import i18n from '../i18n';
 import { CalendarGrid } from './CalendarGrid';
@@ -45,17 +46,24 @@ import { AuthModalEnterprise } from './AuthModalEnterprise';
 
 import { setTimeMode } from '../services/calendarService';
 import { setSiderealMode, setZodiacFrame, setSignCount } from '../astrology/services/swiss-ephemeris/engine';
-import { setView, navigateToMonth, selectDate, updateAstroPreferences } from '../store';
+import { setView, navigateToMonth, selectDate, updateAstroPreferences, setGlobalNotificationsEnabled } from '../store';
 import { syncNoteNotifications, hasNotificationPermission } from '../services/notificationService';
+import { safeVoid } from '../utils/safeVoid';
 import { initializePlannerNotificationTapHandler, scheduleDailyBriefing, scheduleStreakSaverIfNeeded } from '../services/plannerNotificationService';
+import { initializePushNotifications } from '../services/pushNotificationService';
+import { scheduleDailyTips } from '../astrology/services/notifications/astroNotifications';
 import { NotificationEngine } from '../services/notificationEngine';
+import { LocalNotifications } from '@capacitor/local-notifications';
 import { tutorialService } from '../services/tutorialService';
 import { initializeEngagementTracking, stopSessionTracking, markActivity } from '../services/engagementService';
 import { initializeDeepLinks, getPendingInviteCode, getPendingTaskCode } from '../services/deepLinkService';
+import { App as CapacitorApp } from '@capacitor/app';
 import { useCapacitorBackButton } from '../services/backButtonService';
 import { setAICoachZone } from '../services/aiCoachContextService';
 
 import { WelcomeModal } from './WelcomeModal';
+import { SacredField } from './sacred-geometry/SacredField';
+import { HeaderGeometry } from './sacred-geometry/HeaderGeometry';
 import { InteractiveTutorial } from './onboarding/v3';
 import { SetupWizard } from './setup/SetupWizard';
 import { setActiveTab, acceptInvite } from '../store/friendsSlice';
@@ -73,6 +81,7 @@ import '../styles/celestial-cards.css';
 import '../styles/date-responsive.css';
 import '../styles/energy-vote.css';
 import '../styles/day-panel-energy.css';
+import '../styles/day-panel-astrology.css';
 import '../styles/android-scroll-fix.css';
 import '../styles/info-modal.css';
 import '../styles/modals.landscape.css';
@@ -166,8 +175,14 @@ const useModalState = () => {
 };
 
 const AppContentComponent: React.FC = () => {
+  const { t } = useTranslation('common');
   const dispatch = useDispatch<AppDispatch>();
-  
+
+  // Initialise IndexedDB journal layer (one-time localStorage migration)
+  useEffect(() => {
+    dispatch(initDiary());
+  }, [dispatch]);
+
   // Use granular selectors to prevent unnecessary re-renders
   const currentView = useSelector((state: RootState) => state.calendar.currentView);
   const error = useSelector((state: RootState) => state.calendar.ui.error);
@@ -188,6 +203,7 @@ const AppContentComponent: React.FC = () => {
   // Auth state for protected features
   const auth = useSelector((state: RootState) => state.calendar.auth);
   const setup = useSelector((state: RootState) => state.setup);
+  const headerGeometry = useSelector((state: RootState) => state.calendar.headerGeometry);
 
   // Pending invite code from deep links (deferred until after tutorial)
   const [pendingInviteCode, setPendingInviteCode] = useState<string | null>(null);
@@ -198,14 +214,11 @@ const AppContentComponent: React.FC = () => {
   const [showNewOnboarding, setShowNewOnboarding] = useState(() => {
     try {
       const raw = localStorage.getItem(TUTORIAL_V3_KEY);
-      console.log('[HEKA] Tutorial init raw:', raw);
       if (!raw) return true;
       const parsed = JSON.parse(raw);
       const shouldShow = parsed.completed !== true;
-      console.log('[HEKA] Tutorial init parsed:', parsed, 'shouldShow:', shouldShow);
       return shouldShow;
     } catch (e) {
-      console.log('[HEKA] Tutorial init error:', e);
       return true;
     }
   });
@@ -216,7 +229,6 @@ const AppContentComponent: React.FC = () => {
       const raw = localStorage.getItem(TUTORIAL_V3_KEY);
       const shouldShow = !raw || JSON.parse(raw).completed !== true;
       if (shouldShow && !showNewOnboarding) {
-        console.log('[HEKA] Tutorial safety net triggered');
         setShowNewOnboarding(true);
       }
     } catch {}
@@ -233,6 +245,19 @@ const AppContentComponent: React.FC = () => {
   // Pure mode and tracker states
   const [isPureMode, setIsPureMode] = useState(false);
   const [showTracker, setShowTracker] = useState(false);
+  
+  // Deferred mount for non-critical decorative components
+  // This prevents jank by letting the calendar grid paint first
+  const [deferCelestial, setDeferCelestial] = useState(false);
+  const [deferCoach, setDeferCoach] = useState(false);
+  useEffect(() => {
+    const raf1 = requestAnimationFrame(() => {
+      setDeferCelestial(true);
+      const raf2 = requestAnimationFrame(() => setDeferCoach(true));
+      return () => cancelAnimationFrame(raf2);
+    });
+    return () => cancelAnimationFrame(raf1);
+  }, []);
 
   // Sync AI Coach zone with current app context
   useEffect(() => {
@@ -266,9 +291,9 @@ const AppContentComponent: React.FC = () => {
   // Memoized subtitle to prevent recalculation
   const subtitle = useMemo(() => 
     timeMode === 'TRUE'
-      ? 'True HEKA Timekeeping • March correction (4-year cycle, except 128th) • Astronomical precision'
-      : 'HEKA Gregorian synchronised timekeeping • April to March • 13-month harmonic calendar',
-    [timeMode]
+      ? t('trueHekaSubtitle')
+      : t('syncSubtitle'),
+    [timeMode, t]
   );
   
   // Initialize engagement tracking, tutorial service, and deep links on mount
@@ -287,19 +312,17 @@ const AppContentComponent: React.FC = () => {
         }, 1500);
       }
       
-      initializeEngagementTracking(dispatch);
+      const unsubscribeVisibility = initializeEngagementTracking(dispatch);
       
       // Initialize deep link handling - store codes but don't show modals yet
       const unsubscribeDeepLinks = initializeDeepLinks(
         // Handle invite codes
         (code) => {
-          console.log('[DeepLink] Received invite code:', code);
           setPendingInviteCode(code);
           // Don't show welcome modal immediately - wait for tutorial
         },
         // Handle task share codes
         (code) => {
-          console.log('[DeepLink] Received task share code:', code);
           setPendingTaskShare(code);
           // Don't show task preview immediately - wait for tutorial
         }
@@ -315,7 +338,6 @@ const AppContentComponent: React.FC = () => {
       // Check for pending task shares on mount (but don't show yet)
       const pendingTask = getPendingTaskCode();
       if (pendingTask) {
-        console.log('[DeepLink] Pending task share from launch:', pendingTask);
         setPendingTaskShare(pendingTask);
       }
       
@@ -399,17 +421,104 @@ const AppContentComponent: React.FC = () => {
       // Only start notification scheduling AFTER setup wizard is complete
       // to avoid permission prompts during first-boot experience
       let streakSaverInterval: ReturnType<typeof setInterval> | null = null;
+      let dailyBriefingInterval: ReturnType<typeof setInterval> | null = null;
+      let dailyTipsInterval: ReturnType<typeof setInterval> | null = null;
+      let appStateUnsub: { remove: () => void } | null = null;
+
+      // Register native delivery confirmation listeners BEFORE any scheduling
+      // These fire when the OS actually shows the notification (even if app was killed)
+      let unsubLocalReceived: { remove: () => void } | null = null;
+      let unsubLocalAction: { remove: () => void } | null = null;
+
+      void LocalNotifications.addListener('localNotificationReceived', (notification) => {
+        const id = String(notification.id);
+        NotificationEngine.confirmDelivery(id);
+      }).then((handle) => { unsubLocalReceived = handle; });
+
+      void LocalNotifications.addListener('localNotificationActionPerformed', (action) => {
+        const type = action.notification.extra?._engineType;
+        if (type) {
+          NotificationEngine.updateEngagement(type, 1);
+        }
+        // Route deep-link if present
+        const target = action.notification.extra?.target || action.notification.extra?.type;
+        if (target) {
+          eventBus.emit('heka:notification:navigate', { target });
+        }
+      }).then((handle) => { unsubLocalAction = handle; });
+
+      // Listen for app foreground/background — pause/resume background work
+      void CapacitorApp.addListener('appStateChange', ({ isActive }: { isActive: boolean }) => {
+        if (isActive && setup.isComplete) {
+          // Resume background work
+          NotificationEngine.startRecurringChecks();
+          // Reconcile missed notifications after background suspension
+          safeVoid(NotificationEngine.reconcile(), 'reconcile-on-resume');
+          // Flush any genius queue proposals that were buffered while backgrounded
+          NotificationEngine.flushGeniusQueueOnResume();
+          // Re-schedule daily celestial tips in case the alarm fired while backgrounded
+          safeVoid(scheduleDailyTips(store.getState().calendar.notificationPreferences.stars.dailyCelestialTips), 'tips-on-resume');
+          // Re-schedule sunrise wake-up (sunrise time changes daily)
+          safeVoid(NotificationEngine.scheduleSunriseWakeUp(), 'sunrise-on-resume');
+          // Restart engagement tracking interval
+          if (!streakSaverInterval) {
+            streakSaverInterval = setInterval(() => {
+              safeVoid(scheduleStreakSaverIfNeeded(), 'streak-saver');
+            }, 1000 * 60 * 60);
+          }
+          if (!dailyBriefingInterval) {
+            dailyBriefingInterval = setInterval(() => {
+              safeVoid(scheduleDailyBriefing(), 'daily-briefing');
+            }, 1000 * 60 * 60 * 6);
+          }
+          if (!dailyTipsInterval) {
+            dailyTipsInterval = setInterval(() => {
+              safeVoid(scheduleDailyTips(store.getState().calendar.notificationPreferences.stars.dailyCelestialTips), 'daily-tips');
+            }, 1000 * 60 * 60 * 6);
+          }
+        } else if (!isActive) {
+          // Pause background work to save battery
+          NotificationEngine.stopRecurringChecks();
+          if (streakSaverInterval) { clearInterval(streakSaverInterval); streakSaverInterval = null; }
+          if (dailyBriefingInterval) { clearInterval(dailyBriefingInterval); dailyBriefingInterval = null; }
+          if (dailyTipsInterval) { clearInterval(dailyTipsInterval); dailyTipsInterval = null; }
+        }
+      }).then((handle: { remove: () => void }) => {
+        appStateUnsub = handle;
+      });
+
       if (setup.isComplete) {
-        void NotificationEngine.initialize();
+        safeVoid(NotificationEngine.initialize(), 'engine-init');
         NotificationEngine.startRecurringChecks();
-        void scheduleDailyBriefing();
+        safeVoid(initializePushNotifications(), 'push-init');
+        safeVoid(scheduleDailyBriefing(), 'briefing-init');
+        safeVoid(scheduleDailyTips(store.getState().calendar.notificationPreferences.stars.dailyCelestialTips), 'tips-init');
         streakSaverInterval = setInterval(() => {
-          void scheduleStreakSaverIfNeeded();
+          safeVoid(scheduleStreakSaverIfNeeded(), 'streak-saver');
         }, 1000 * 60 * 60); // Check every hour
+        // Re-schedule daily briefing every 6 hours to ensure it always has the next one queued
+        dailyBriefingInterval = setInterval(() => {
+          safeVoid(scheduleDailyBriefing(), 'daily-briefing');
+        }, 1000 * 60 * 60 * 6);
+        // Re-schedule daily celestial tips every 6 hours to ensure the next day's alarm is set
+        dailyTipsInterval = setInterval(() => {
+          safeVoid(scheduleDailyTips(store.getState().calendar.notificationPreferences.stars.dailyCelestialTips), 'daily-tips');
+        }, 1000 * 60 * 60 * 6);
+        // Schedule sunrise wake-up notification (re-computes sunrise time daily)
+        safeVoid(NotificationEngine.scheduleSunriseWakeUp(), 'sunrise-init');
+        // Bidirectional sync: setup wizard notifications <-> main notification system
+        // This ensures wizard choice persists, AND settings-panel changes persist back to wizard state
+        if (setup.notificationsEnabled !== null) {
+          const mainGlobal = store.getState().calendar.notificationPreferences.globalEnabled;
+          if (mainGlobal !== setup.notificationsEnabled) {
+            dispatch(setGlobalNotificationsEnabled(setup.notificationsEnabled));
+          }
+        }
       }
       
       return () => {
         stopSessionTracking(dispatch);
+        unsubscribeVisibility();
         unsubscribeDeepLinks();
         window.removeEventListener('click', handleActivity);
         window.removeEventListener('scroll', handleActivity);
@@ -428,12 +537,17 @@ const AppContentComponent: React.FC = () => {
         unsubAchievementDetected();
         unsubscribeNotificationTaps();
         if (streakSaverInterval) clearInterval(streakSaverInterval);
+        if (dailyBriefingInterval) clearInterval(dailyBriefingInterval);
+        if (dailyTipsInterval) clearInterval(dailyTipsInterval);
+        if (appStateUnsub) appStateUnsub.remove();
+        if (unsubLocalReceived) unsubLocalReceived.remove();
+        if (unsubLocalAction) unsubLocalAction.remove();
         NotificationEngine.stopRecurringChecks();
       };
     } catch (e) {
       console.warn('[HEKA] Engagement tracking failed:', e);
     }
-  }, [dispatch, setup.isComplete]);
+  }, [dispatch, setup.isComplete, setup.notificationsEnabled]);
   
   // Auto-process pending invite after tutorial + auth, then show toast
   useEffect(() => {
@@ -457,15 +571,13 @@ const AppContentComponent: React.FC = () => {
       // Don't show multiple toasts
       if (friendRequestToast.show) return;
       
-      console.log('[DeepLink] Auto-processing invite code:', pendingInviteCode);
       
       try {
         await dispatch(acceptInvite(pendingInviteCode)).unwrap();
         if (!cancelled) {
-          console.log('[DeepLink] Invite processed, showing toast');
           setFriendRequestToast({
             show: true,
-            message: '✨ Someone wants to connect with you in the Cosmic Circle',
+            message: t('friendRequestToast'),
             type: 'invite',
           });
           clearPendingInvite();
@@ -476,7 +588,7 @@ const AppContentComponent: React.FC = () => {
         if (!cancelled) {
           setFriendRequestToast({
             show: true,
-            message: '✨ Someone wants to connect with you in the Cosmic Circle',
+            message: t('friendRequestToast'),
             type: 'invite',
           });
         }
@@ -512,10 +624,9 @@ const AppContentComponent: React.FC = () => {
         const v3IsComplete = tutorialV3Raw ? JSON.parse(tutorialV3Raw).completed === true : false;
         
         if ((legacyOnboardingCompleted || onboardingSkipped || v3IsComplete) && !friendRequestToast.show) {
-          console.log('[DeepLink] Tutorial complete, showing task share toast');
           setFriendRequestToast({
             show: true,
-            message: '📜 Someone shared a task ritual with you',
+            message: t('taskShareToast'),
             type: 'task',
           });
         }
@@ -604,7 +715,6 @@ const AppContentComponent: React.FC = () => {
     };
     const view = pathToView[path];
     if (view && view !== currentView) {
-      console.log('[RouterSync] Router → Redux:', path, '→', view, '(current:', currentView, ')');
       dispatch(setView(view as any));
     }
     // Handle /month/:year/:month path
@@ -693,9 +803,13 @@ const AppContentComponent: React.FC = () => {
   useEffect(() => {
     if (!setup.isComplete) return;
     const syncNotifications = async () => {
-      const hasPermission = await hasNotificationPermission();
-      if (hasPermission && Object.keys(notes).length > 0) {
-        await syncNoteNotifications(notes);
+      try {
+        const hasPermission = await hasNotificationPermission();
+        if (hasPermission && Object.keys(notes).length > 0) {
+          await syncNoteNotifications(notes);
+        }
+      } catch {
+        /* silently ignore sync errors */
       }
     };
     
@@ -832,16 +946,18 @@ const AppContentComponent: React.FC = () => {
   }), [handlePrintClick, handleAstrologyClick, handleYearClick, handleSearchClick, handleFriendsClick, handleStatsClick, handleCommunityClick, handleJournalClick, handleInfoClick, isCalendarExpanded, toggleCalendarExpand, isCalendarExpandedHorizontal, toggleCalendarExpandHorizontal]);
   
   return (
-    <div className="app">
+    <>
+      <SacredField isPureMode={isPureMode} />
+      <div className="app">
       {error && (
         <div className="error-banner" role="alert">
           <span>{error}</span>
           <button onClick={dismissError}>
-            Dismiss
+            {t('dismiss')}
           </button>
         </div>
       )}
-      
+
       {/* ═══════════════════════════════════════════════════════════════════
           APP CONTENT — Completely blocked until setup wizard finishes.
           This prevents StarsHub, CelestialGuide, and all other components
@@ -925,7 +1041,7 @@ const AppContentComponent: React.FC = () => {
               <>
                 {/* Header */}
                 <header
-                  className="app-header"
+                  className={`app-header ${headerGeometry !== 'flower-of-life' ? 'app-header--custom-geo' : ''}`}
                   style={{
                     marginTop: '50px',
                     paddingTop: '45px',
@@ -933,13 +1049,14 @@ const AppContentComponent: React.FC = () => {
                     position: 'relative'
                   }}
                 >
+                  {headerGeometry !== 'flower-of-life' && headerGeometry !== 'none' && <HeaderGeometry isPureMode={isPureMode} />}
                   <div className="app-header__top-line" />
-                  <h1 className="app-title">The Modern HEKA Calendar</h1>
+                  <h1 className="app-title">{t('modernHekaCalendar')}</h1>
                   <p className={`app-subtitle ${timeMode === 'TRUE' ? 'app-subtitle--true' : ''}`}>
                     {subtitle}
                   </p>
                   <div className={`mode-indicator mode-indicator--${timeMode.toLowerCase()}`}>
-                    {timeMode === 'TRUE' ? '⚡ TRUE HEKA Mode' : '🌐 SYNC Mode'}
+                    {timeMode === 'TRUE' ? t('trueHekaMode') : t('syncMode')}
                   </div>
                   {/* Store hidden for v1.0 launch */}
                   {/* <button
@@ -959,8 +1076,8 @@ const AppContentComponent: React.FC = () => {
                   isPureMode={isPureMode}
                 />
 
-                {/* Celestial Guide - Swiss Ephemeris Powered */}
-                <CelestialGuide />
+                {/* Celestial Guide - Swiss Ephemeris Powered (deferred to reduce startup jank) */}
+                {deferCelestial && <CelestialGuide />}
 
                 <MonthHeader {...headerProps} />
 
@@ -1052,9 +1169,10 @@ const AppContentComponent: React.FC = () => {
             >
               <span className="text-xl">{friendRequestToast.type === 'invite' ? '✨' : '📜'}</span>
               <span className="text-sm font-medium text-slate-100">{friendRequestToast.message}</span>
-              <span className="text-xs font-semibold text-amber-400 ml-1">View</span>
+              <span className="text-xs font-semibold text-amber-400 ml-1">{t('view')}</span>
               <button
                 className="ml-1 text-slate-400 hover:text-slate-200"
+                aria-label={t('close')}
                 onClick={(e) => {
                   e.stopPropagation();
                   setFriendRequestToast({ show: false, message: '', type: 'invite' });
@@ -1110,10 +1228,11 @@ const AppContentComponent: React.FC = () => {
         />
       )}
 
-      {/* AI Coach Overlay */}
-      <CalendarAICoach focusedDate={selectedDate} />
+      {/* AI Coach Overlay (deferred to reduce startup jank) */}
+      {deferCoach && <CalendarAICoach focusedDate={selectedDate} />}
       <AchievementWatcher />
  </div>
+    </>
   );
 };
 

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  HEKA Calendar notification icon.
+  Must be white-on-transparent; Android tints it automatically.
+  Simple hexagon outline — sacred geometry, scalable to all densities.
+-->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M12,2.5l7.5,4.33v8.66L12,19.82 4.5,15.49V6.83L12,2.5M12,1L3,6.2v11.6l9,5.2 9,-5.2V6.2L12,1z"/>
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M12,8.5c1.93,0 3.5,1.57 3.5,3.5s-1.57,3.5 -3.5,3.5 -3.5,-1.57 -3.5,-3.5 1.57,-3.5 3.5,-3.5m0,-1c-2.48,0 -4.5,2.02 -4.5,4.5s2.02,4.5 4.5,4.5 4.5,-2.02 4.5,-4.5 -2.02,-4.5 -4.5,-4.5z"/>
+</vector>

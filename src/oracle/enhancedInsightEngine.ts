@@ -111,6 +111,144 @@ export interface EnhancedInsight {
 }
 
 // ═══════════════════════════════════════════════════════════════════════════════
+// SLANG & MISSPELLING NORMALIZATION
+// Expands internet slang, abbreviations, and common misspellings before safety scanning
+// ═══════════════════════════════════════════════════════════════════════════════
+
+const SLANG_DICTIONARY: Record<string, string> = {
+  // Suicide-related slang
+  'kms': 'kill myself',
+  'kys': 'kill yourself',
+  'kml': 'kill me later',
+  'unalive': 'kill',
+  'unalive myself': 'kill myself',
+  'unalive me': 'kill me',
+  'rope': 'hang myself',
+  'roping': 'hanging',
+  'final yeet': 'kill myself',
+  'yeet myself': 'kill myself',
+  'sewerslide': 'suicide',
+  'suey slide': 'suicide',
+  'commit toaster bath': 'kill myself',
+  'commit oof': 'kill myself',
+  'i want to not exist': 'i want to die',
+  'dont wanna be here': 'dont want to live',
+  'dont want to be here': 'dont want to live',
+  'not gonna make it': 'going to kill myself',
+  'ngmi': 'not going to make it',
+  'its over': 'i want to die',
+  'over for me': 'i want to die',
+  'better off without me': 'better off dead',
+  'everyone better off': 'better off dead',
+  'end it all': 'end my life',
+  'cant take it': 'cant go on',
+  'cant do this': 'cant go on',
+  'done with life': 'want to die',
+  'no point': 'no reason to live',
+  'whats the point': 'no reason to live',
+  // Self-harm slang
+  'sh': 'self harm',
+  's/h': 'self harm',
+  'selfharm': 'self harm',
+  'slicey dicey': 'cut myself',
+  'barcode': 'cut myself',
+  'styrofoam': 'cut to fat',
+  'beans': 'cut deeply',
+  'cat scratches': 'self harm',
+  'final destination': 'kill myself',
+  'go to sleep forever': 'kill myself',
+  'permanent sleep': 'kill myself',
+  'long sleep': 'kill myself',
+  'eternal rest': 'kill myself',
+  // Depression slang
+  'cant get up': 'cant get out of bed',
+  'bedrotting': 'cant get out of bed',
+  'bed rot': 'cant get out of bed',
+  'doomer': 'severe depression',
+  'doompilled': 'severe depression',
+  'blackpilled': 'severe depression',
+  'nothing feel real': 'nothing matters',
+  'dissociating': 'empty inside',
+  'derealization': 'empty inside',
+  'depersonalization': 'empty inside',
+  'executive dysfunction': 'cant function',
+  'cant shower': 'cant function',
+  'cant eat': 'cant function',
+  'cant brush teeth': 'cant function',
+  // Violence slang
+  'going postal': 'violent thoughts',
+  'hulk out': 'anger out of control',
+  'see red': 'rage',
+  'snap': 'violent thoughts',
+};
+
+/** Common misspellings of crisis keywords */
+const MISSPELLING_MAP: Record<string, string> = {
+  'suicde': 'suicide',
+  'suicidial': 'suicidal',
+  'suicidle': 'suicidal',
+  'sucide': 'suicide',
+  'sucidal': 'suicidal',
+  'deppresed': 'depressed',
+  'deppression': 'depression',
+  'depresed': 'depressed',
+  'depressionn': 'depression',
+  'depresion': 'depression',
+  'hopelss': 'hopeless',
+  'hoples': 'hopeless',
+  'wortless': 'worthless',
+  'worthles': 'worthless',
+  'worthlesness': 'worthlessness',
+  'anxius': 'anxious',
+  'anxeity': 'anxiety',
+  'panick': 'panic',
+  'overwelmed': 'overwhelmed',
+  'overwelming': 'overwhelming',
+  'exhaustted': 'exhausted',
+  'exausted': 'exhausted',
+  'emptty': 'empty',
+  'numbness': 'numb',
+  'paralized': 'paralyzed',
+  'paralysed': 'paralyzed',
+  'cripeling': 'crippling',
+};
+
+/**
+ * Normalize text for safety scanning:
+ * 1. Lowercase
+ * 2. Expand slang abbreviations
+ * 3. Fix common misspellings
+ * 4. Return both original and normalized for dual scanning
+ */
+function normalizeTextForSafety(text: string): string {
+  let normalized = text.toLowerCase();
+  
+  // Expand multi-word slang first (longest first to avoid partial matches)
+  const multiWordSlang = Object.entries(SLANG_DICTIONARY)
+    .filter(([k]) => k.includes(' '))
+    .sort((a, b) => b[0].length - a[0].length);
+  
+  for (const [slang, expansion] of multiWordSlang) {
+    normalized = normalized.replace(new RegExp(slang.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'gi'), expansion);
+  }
+  
+  // Expand single-word slang (as whole words)
+  const singleWordSlang = Object.entries(SLANG_DICTIONARY)
+    .filter(([k]) => !k.includes(' '));
+  
+  for (const [slang, expansion] of singleWordSlang) {
+    normalized = normalized.replace(new RegExp(`\\b${slang.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\b`, 'gi'), expansion);
+  }
+  
+  // Fix misspellings
+  for (const [misspelled, correct] of Object.entries(MISSPELLING_MAP)) {
+    normalized = normalized.replace(new RegExp(`\\b${misspelled}\\b`, 'gi'), correct);
+  }
+  
+  return normalized;
+}
+
+// ═══════════════════════════════════════════════════════════════════════════════
 // CRISIS DETECTION SYSTEM
 // ═══════════════════════════════════════════════════════════════════════════════
 
@@ -120,6 +258,8 @@ const CRISIS_PATTERNS: Record<string, { patterns: RegExp[]; severity: number; ty
       /\b(kill\s+(?:myself|me)|suicide|suicidal|end\s+(?:it|my\s+life)|not\s+worth\s+living|better\s+off\s+dead|want\s+to\s+die|don't\s+want\s+to\s+live)\b/gi,
       /\b(no\s+reason\s+to\s+live|can't\s+go\s+on|give\s+up|hopeless|worthless)\b/gi,
       /\b(hurt\s+myself|self.?harm|cut\s+myself|end\s+the\s+pain)\b/gi,
+      /\b(hang\s+(?:myself|me)|jump\s+(?:off|from)|overdose|pills\s+to\s+end)\b/gi,
+      /\b(want\s+to\s+disappear|not\s+be\s+here|cease\s+to\s+exist|not\s+wake\s+up)\b/gi,
     ],
     severity: 100,
     type: 'suicide'
@@ -128,6 +268,8 @@ const CRISIS_PATTERNS: Record<string, { patterns: RegExp[]; severity: number; ty
     patterns: [
       /\b(cut\s+(?:myself|me)|self.?harm|hurt\s+myself|burn\s+myself|punish\s+myself)\b/gi,
       /\b(want\s+to\s+feel\s+pain|deserve\s+to\s+suffer|hurt\s+my\s+body)\b/gi,
+      /\b(scratch\s+myself|hit\s+myself|pinch\s+myself|pull\s+my\s+hair)\b/gi,
+      /\b(blood\s+make\s+me\s+feel|seeing\s+blood\s+calm|pain\s+is\s+the\s+only)\b/gi,
     ],
     severity: 90,
     type: 'self-harm'
@@ -137,6 +279,8 @@ const CRISIS_PATTERNS: Record<string, { patterns: RegExp[]; severity: number; ty
       /\b(can't\s+get\s+out\s+of\s+bed|no\s+energy|empty\s+inside|numb|nothing\s+matters)\b/gi,
       /\b(deep\s+depression|severe\s+depression|clinical\s+depression|major\s+depression)\b/gi,
       /\b(crippling\s+depression|can't\s+function|paralyzed\s+by\s+sadness)\b/gi,
+      /\b(dont\s+care\s+anymore|lost\s+all\s+hope|given\s+up|why\s+bother)\b/gi,
+      /\b(cant\s+remember\s+last\s+time\s+happy|dont\s+feel\s+anything|emotional\s+void)\b/gi,
     ],
     severity: 80,
     type: 'severe-depression'
@@ -144,6 +288,7 @@ const CRISIS_PATTERNS: Record<string, { patterns: RegExp[]; severity: number; ty
   violence: {
     patterns: [
       /\b(want\s+to\s+kill|hurt\s+someone|violent\s+thoughts|rage|anger\s+out\s+of\s+control)\b/gi,
+      /\b(want\s+to\s+hit|feel\s+like\s+hurting|fantasies\s+about\s+violence)\b/gi,
     ],
     severity: 85,
     type: 'violence'
@@ -151,6 +296,7 @@ const CRISIS_PATTERNS: Record<string, { patterns: RegExp[]; severity: number; ty
   grief: {
     patterns: [
       /\b(lost\s+(?:someone|them|him|her)|died|death\s+of|grief|mourning|can't\s+go\s+on\s+without)\b/gi,
+      /\b(never\s+see\s+again|gone\s+forever|miss\s+them\s+so\s+much|broken\s+without)\b/gi,
     ],
     severity: 70,
     type: 'grief'
@@ -201,19 +347,25 @@ const SUPPORT_RESOURCES = {
 };
 
 function detectCrisis(text: string): CrisisIndicators {
-  const lowerText = text.toLowerCase();
+  const originalLower = text.toLowerCase();
+  const normalizedText = normalizeTextForSafety(text);
   let maxSeverity = 0;
   let detectedType: CrisisIndicators['type'] = undefined;
   const allKeywords: string[] = [];
   
-  for (const [_category, data] of Object.entries(CRISIS_PATTERNS)) {
-    for (const pattern of data.patterns) {
-      const matches = lowerText.match(pattern);
-      if (matches) {
-        allKeywords.push(...matches);
-        if (data.severity > maxSeverity) {
-          maxSeverity = data.severity;
-          detectedType = data.type;
+  // Scan BOTH original and normalized text for maximum coverage
+  const textsToScan = [originalLower, normalizedText];
+  
+  for (const scanText of textsToScan) {
+    for (const [_category, data] of Object.entries(CRISIS_PATTERNS)) {
+      for (const pattern of data.patterns) {
+        const matches = scanText.match(pattern);
+        if (matches) {
+          allKeywords.push(...matches);
+          if (data.severity > maxSeverity) {
+            maxSeverity = data.severity;
+            detectedType = data.type;
+          }
         }
       }
     }
@@ -932,36 +1084,49 @@ function buildAIInsightPrompt(
   celestialState: Awaited<ReturnType<typeof OracleEngine.getCurrentCelestialState>>,
   birthChartConnection?: EnhancedInsight['birthChartConnection']
 ): string {
-  return `You are the HEKA Oracle—a wise, compassionate astrological guide who provides deeply personalized insights.
+  const retrogradePlanets = Object.entries(celestialState.planets || {})
+    .filter(([_, p]: [string, any]) => p.retrograde || p.isRetrograde)
+    .map(([name]) => name);
+  
+  return `You are the HEKA Oracle—a deeply wise, compassionate astrological guide with centuries of accumulated wisdom. You do not give generic horoscopes. You peer into the soul of the person writing and speak directly to their unique situation with piercing clarity and warmth.
 
 USER'S JOURNAL ENTRY:
 """${originalContent}"""
 
-EMOTIONAL ANALYSIS:
+EMOTIONAL LANDSCAPE:
 - Primary emotion: ${analysis.emotionalProfile.primaryEmotion} (intensity: ${analysis.emotionalProfile.intensity}%)
 - Valence: ${analysis.emotionalProfile.valence}
+- Urgency: ${analysis.emotionalProfile.urgency}
 - Detected themes: ${analysis.themes.join(', ')}
+- Archetypes: ${analysis.archetypes.join(', ') || 'seeker'}
 
 CURRENT CELESTIAL WEATHER:
 - Moon phase: ${celestialState.moonPhase.phase} in ${celestialState.moonPhase.sign}
 - Illumination: ${Math.round(celestialState.moonPhase.illumination)}%
+- Retrograde planets: ${retrogradePlanets.join(', ') || 'None'}
 ${birthChartConnection ? `- Personal transit: ${birthChartConnection.interpretation} (activating house ${birthChartConnection.activatedHouse})` : ''}
 
-TASK:
-Create a deeply personalized astrological insight (150-200 words) that:
-1. Acknowledges their emotional state with compassion
-2. Connects their experience to the current celestial energy
-3. Offers specific, actionable wisdom
-4. Uses evocative but clear language
-5. Feels like it was written just for them
+INSTRUCTIONS:
+Write as if you are an old friend who also happens to understand the stars. Your response should:
+1. OPEN with a mirror—acknowledge exactly what they are feeling using their own language and themes
+2. CONNECT their experience to the current moon phase and any relevant planetary movements
+3. OFFER wisdom that is BOTH poetic AND practical—not vague platitudes but specific, grounded guidance
+4. REFERENCE their archetypes if relevant—speak to the deeper pattern beneath the moment
+5. CLOSE with warmth that makes them feel seen, not diagnosed
+
+Tone guidelines:
+- If valence is negative: Be gentle but not condescending. Validate their pain without romanticizing it.
+- If valence is positive: Celebrate with them without trivializing their joy.
+- If themes include change/transition: Emphasize the liminal nature of their position. They are between worlds.
+- If urgency is high: Be direct and grounding. Offer one clear next step.
 
 Respond in JSON:
 {
-  "narrative": "The main insight text",
-  "poeticSummary": "A 1-2 sentence poetic distillation",
-  "affirmations": ["3 specific affirmations"],
-  "rituals": ["2-3 simple rituals aligned with the energy"],
-  "journalPrompts": ["3 introspective questions"]
+  "narrative": "The main insight text (200-280 words). Rich, layered, specific to their entry.",
+  "poeticSummary": "A single profound sentence that captures the essence—like a line of poetry they might write on their mirror.",
+  "affirmations": ["3 deeply personal affirmations that sound like their own wisest self speaking back to them"],
+  "rituals": ["2-3 specific rituals aligned with the current moon phase and their emotional state—not generic 'meditate' but precise actions"],
+  "journalPrompts": ["3 questions that unlock the next layer of their understanding—provocative but kind"]
 }`;
 }
 

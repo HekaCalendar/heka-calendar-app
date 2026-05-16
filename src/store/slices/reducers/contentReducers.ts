@@ -12,10 +12,14 @@ import type { UsageStatistics, CommunityHoliday, CommunityFeature, CalendarInvit
 function updateStatisticsOnNoteAdd(
   stats: UsageStatistics,
   note: NoteData,
-  isFirstNoteOfDay: boolean
+  isFirstNoteOfDay: boolean,
+  dayKey: string,
+  timestamp?: number
 ): UsageStatistics {
-  const now = new Date();
-  const monthKey = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}`;
+  // Derive month from the note's dayKey (e.g. "2026-04-15" → "2026-04"), not current real time
+  const dayDate = new Date(dayKey + 'T00:00:00');
+  const monthKey = `${dayDate.getFullYear()}-${String(dayDate.getMonth() + 1).padStart(2, '0')}`;
+  const now = timestamp ? new Date(timestamp) : new Date();
 
   const newTotalNotes = stats.totalNotes + 1;
   const newNotesByCategory = {
@@ -33,7 +37,7 @@ function updateStatisticsOnNoteAdd(
 
   if (isFirstNoteOfDay) {
     const lastNoteDate = stats.lastNoteDate ? new Date(stats.lastNoteDate) : null;
-    const today = new Date();
+    const today = timestamp ? new Date(timestamp) : new Date();
     today.setHours(0, 0, 0, 0);
 
     if (lastNoteDate) {
@@ -57,17 +61,20 @@ function updateStatisticsOnNoteAdd(
     newLastNoteDate = now.toISOString();
   }
 
+  // Mood tracking — use moodEntryCount for correct weighted average
   let newMoodAverage = stats.moodAverage;
-  if (note.mood) {
-    const totalMoodEntries = Object.values(stats.notesByCategory).reduce((a, b) => a + b, 0);
-    newMoodAverage = ((stats.moodAverage * totalMoodEntries) + note.mood) / (totalMoodEntries + 1);
-  }
-
+  let newMoodEntryCount = stats.moodEntryCount;
   const newMoodByMonth = { ...stats.moodByMonth };
+  const newMoodEntriesByMonth = { ...stats.moodEntriesByMonth };
+
   if (note.mood) {
-    const monthMoodTotal = (stats.moodByMonth[monthKey] || 0) * (stats.notesByMonth[monthKey] || 0);
-    const monthCount = (stats.notesByMonth[monthKey] || 0) + 1;
-    newMoodByMonth[monthKey] = (monthMoodTotal + note.mood) / monthCount;
+    newMoodEntryCount = stats.moodEntryCount + 1;
+    newMoodAverage = ((stats.moodAverage * stats.moodEntryCount) + note.mood) / newMoodEntryCount;
+
+    const prevMonthMoodCount = stats.moodEntriesByMonth[monthKey] || 0;
+    const prevMonthMoodAvg = stats.moodByMonth[monthKey] || 0;
+    newMoodEntriesByMonth[monthKey] = prevMonthMoodCount + 1;
+    newMoodByMonth[monthKey] = ((prevMonthMoodAvg * prevMonthMoodCount) + note.mood) / (prevMonthMoodCount + 1);
   }
 
   const wordCount = note.content.trim().split(/\s+/).filter(w => w.length > 0).length;
@@ -86,6 +93,8 @@ function updateStatisticsOnNoteAdd(
     longestStreak: newLongestStreak,
     lastNoteDate: newLastNoteDate,
     moodAverage: Math.round(newMoodAverage * 10) / 10,
+    moodEntryCount: newMoodEntryCount,
+    moodEntriesByMonth: newMoodEntriesByMonth,
     moodByMonth: newMoodByMonth,
     mostActiveMonth: newMostActiveMonth,
     totalWords: newTotalWords,
@@ -101,11 +110,13 @@ function recomputeStatistics(notes: Record<string, NoteData[]>): UsageStatistics
     notesByCategory[note.category] = (notesByCategory[note.category] || 0) + 1;
   }
 
+  // Derive month keys from dayKey (calendar date), not createdAt (real time)
   const notesByMonth: Record<string, number> = {};
-  for (const note of allNotes) {
-    const d = new Date(note.createdAt);
+  for (const [dayKey, dayNotes] of Object.entries(notes)) {
+    if (dayNotes.length === 0) continue;
+    const d = new Date(dayKey + 'T00:00:00');
     const monthKey = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}`;
-    notesByMonth[monthKey] = (notesByMonth[monthKey] || 0) + 1;
+    notesByMonth[monthKey] = (notesByMonth[monthKey] || 0) + dayNotes.length;
   }
 
   const daySet = new Set<string>();
@@ -136,6 +147,7 @@ function recomputeStatistics(notes: Record<string, NoteData[]>): UsageStatistics
     }
     longestStreak = Math.max(longestStreak, run);
 
+    // Current streak: count backwards from last note day, but decay if gap > 1 day
     run = 1;
     for (let i = sortedDays.length - 1; i > 0; i--) {
       const prev = new Date(sortedDays[i - 1]);
@@ -149,24 +161,36 @@ function recomputeStatistics(notes: Record<string, NoteData[]>): UsageStatistics
         break;
       }
     }
-    currentStreak = run;
+    // Decay: if last note wasn't today or yesterday, streak is 0
+    const lastDay = new Date(lastNoteDate);
+    lastDay.setHours(0, 0, 0, 0);
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const daysSinceLastNote = Math.floor((today.getTime() - lastDay.getTime()) / (1000 * 60 * 60 * 24));
+    currentStreak = daysSinceLastNote > 1 ? 0 : run;
   }
 
   const notesWithMood = allNotes.filter((n) => n.mood != null);
   const moodSum = notesWithMood.reduce((sum, n) => sum + (n.mood || 0), 0);
   const moodAverage = notesWithMood.length > 0 ? Math.round((moodSum / notesWithMood.length) * 10) / 10 : 0;
 
+  // Derive mood month keys from dayKey, not createdAt
   const moodByMonth: Record<string, number> = {};
+  const moodEntriesByMonth: Record<string, number> = {};
   const monthMoodTotals: Record<string, { sum: number; count: number }> = {};
-  for (const note of notesWithMood) {
-    const d = new Date(note.createdAt);
+  for (const [dayKey, dayNotes] of Object.entries(notes)) {
+    const d = new Date(dayKey + 'T00:00:00');
     const monthKey = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}`;
-    if (!monthMoodTotals[monthKey]) monthMoodTotals[monthKey] = { sum: 0, count: 0 };
-    monthMoodTotals[monthKey].sum += note.mood || 0;
-    monthMoodTotals[monthKey].count++;
+    for (const note of dayNotes) {
+      if (note.mood == null) continue;
+      if (!monthMoodTotals[monthKey]) monthMoodTotals[monthKey] = { sum: 0, count: 0 };
+      monthMoodTotals[monthKey].sum += note.mood;
+      monthMoodTotals[monthKey].count++;
+    }
   }
   for (const [monthKey, { sum, count }] of Object.entries(monthMoodTotals)) {
     moodByMonth[monthKey] = Math.round((sum / count) * 10) / 10;
+    moodEntriesByMonth[monthKey] = count;
   }
 
   const totalWords = allNotes.reduce((sum, n) => {
@@ -187,6 +211,8 @@ function recomputeStatistics(notes: Record<string, NoteData[]>): UsageStatistics
     longestStreak,
     lastNoteDate,
     moodAverage,
+    moodEntryCount: notesWithMood.length,
+    moodEntriesByMonth,
     moodByMonth,
     mostActiveMonth,
     totalWords,
@@ -204,9 +230,10 @@ export const addNote = (state: CalendarState, action: PayloadAction<{
   duplicatedFrom?: string;
   tags?: string[];
 }>) => {
-  const now = new Date().toISOString();
+  const timestamp = (action as any).meta?.timestamp || Date.now();
+  const now = new Date(timestamp).toISOString();
   const noteData: NoteData = {
-    id: `${action.payload.key}-${Date.now()}`,
+    id: `${action.payload.key}-${timestamp}`,
     content: action.payload.content,
     category: action.payload.category || 'general',
     mood: action.payload.mood,
@@ -224,18 +251,19 @@ export const addNote = (state: CalendarState, action: PayloadAction<{
   }
 
   state.notes[action.payload.key].push(noteData);
-  state.statistics = updateStatisticsOnNoteAdd(state.statistics, noteData, isFirstNoteOfDay);
+  state.statistics = updateStatisticsOnNoteAdd(state.statistics, noteData, isFirstNoteOfDay, action.payload.key, timestamp);
 };
 
 export const updateNote = (state: CalendarState, action: PayloadAction<{ dayKey: string; noteId: string; updates: { content: string; category?: NoteCategory; recurring?: RecurringConfig } }>) => {
   const { dayKey, noteId, updates } = action.payload;
+  const timestamp = (action as any).meta?.timestamp || Date.now();
   if (state.notes[dayKey]) {
     const note = state.notes[dayKey].find(n => n.id === noteId);
     if (note) {
       note.content = updates.content;
       if (updates.category) note.category = updates.category;
       if (updates.recurring !== undefined) note.recurring = updates.recurring;
-      note.updatedAt = new Date().toISOString();
+      note.updatedAt = new Date(timestamp).toISOString();
     }
   }
   state.statistics = recomputeStatistics(state.notes);
@@ -269,11 +297,12 @@ export const loadNotes = (state: CalendarState, action: PayloadAction<Record<str
 
 export const moveNote = (state: CalendarState, action: PayloadAction<{ fromKey: string; toKey: string; noteId: string }>) => {
   const { fromKey, toKey, noteId } = action.payload;
+  const timestamp = (action as any).meta?.timestamp || Date.now();
   if (state.notes[fromKey]) {
     const noteIndex = state.notes[fromKey].findIndex(n => n.id === noteId);
     if (noteIndex >= 0) {
       const [note] = state.notes[fromKey].splice(noteIndex, 1);
-      note.updatedAt = new Date().toISOString();
+      note.updatedAt = new Date(timestamp).toISOString();
 
       if (!state.notes[toKey]) {
         state.notes[toKey] = [];
@@ -283,6 +312,8 @@ export const moveNote = (state: CalendarState, action: PayloadAction<{ fromKey: 
       if (state.notes[fromKey].length === 0) {
         delete state.notes[fromKey];
       }
+
+      state.statistics = recomputeStatistics(state.notes);
     }
   }
 };
@@ -298,7 +329,10 @@ export const resetStatistics = (state: CalendarState) => {
     notesByMonth: {},
     currentStreak: 0,
     longestStreak: 0,
+    lastNoteDate: undefined,
     moodAverage: 0,
+    moodEntryCount: 0,
+    moodEntriesByMonth: {},
     moodByMonth: {},
     mostActiveMonth: { month: '', count: 0 },
     totalWords: 0,
@@ -335,6 +369,11 @@ export const setCommunityFeatures = (state: CalendarState, action: PayloadAction
 export const addCommunityFeature = (state: CalendarState, action: PayloadAction<CommunityFeature>) => {
   const exists = state.communityFeatures.find(f => f.id === action.payload.id);
   if (!exists) state.communityFeatures.push(action.payload);
+};
+
+export const updateCommunityFeature = (state: CalendarState, action: PayloadAction<CommunityFeature>) => {
+  const idx = state.communityFeatures.findIndex(f => f.id === action.payload.id);
+  if (idx !== -1) state.communityFeatures[idx] = action.payload;
 };
 
 export const voteForFeature = (state: CalendarState, action: PayloadAction<string>) => {

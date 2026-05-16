@@ -26,6 +26,7 @@ export interface CoachMessage {
   };
   icon: string;
   color: string;
+  fallbackReason?: string;
 }
 
 export interface CandidateMessage extends CoachMessage {

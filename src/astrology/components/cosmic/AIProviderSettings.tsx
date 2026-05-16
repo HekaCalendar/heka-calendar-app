@@ -4,6 +4,7 @@
  */
 
 import React, { useState, useEffect, useCallback } from 'react';
+import { useTranslation } from 'react-i18next';
 import { aiProviderManager, type AIProviderType } from '../../services/ai/aiProvider';
 import { aiConfigService } from '../../../services/aiConfigService';
 import { secureKeyStore } from '../../../services/secureKeyStore';
@@ -268,6 +269,7 @@ const PROVIDER_SETUP: Record<AIProviderType, ProviderInfo> = {
 };
 
 export const AIProviderSettings: React.FC<AIProviderSettingsProps> = ({ onConfigChange }) => {
+  const { t } = useTranslation('celestial');
   const [selectedProvider, setSelectedProvider] = useState<AIProviderType>('template');
   const [apiKey, setApiKey] = useState('');
   const [isKeyVisible, setIsKeyVisible] = useState(false);
@@ -368,11 +370,11 @@ export const AIProviderSettings: React.FC<AIProviderSettingsProps> = ({ onConfig
         
         setActiveProvider('template');
         setIsEnabled(false);
-        setTestResult({ success: true, message: '✓ Using Template Library' });
+        setTestResult({ success: true, message: t('aiSettings.usingTemplateShort') });
         onConfigChange?.(false);
       } else {
         if (!apiKey.trim()) {
-          setTestResult({ success: false, message: 'Please enter an API key' });
+          setTestResult({ success: false, message: t('aiSettings.pleaseEnterKey') });
           return;
         }
         
@@ -392,13 +394,13 @@ export const AIProviderSettings: React.FC<AIProviderSettingsProps> = ({ onConfig
         
         setActiveProvider(selectedProvider);
         setIsEnabled(true);
-        setTestResult({ success: true, message: `✓ ${PROVIDER_SETUP[selectedProvider].name} connected` });
+        setTestResult({ success: true, message: t('aiSettings.connectedShort', { provider: t(`dictionaries.providerSetup.${selectedProvider}.name`) }) });
         onConfigChange?.(true);
       }
     } catch (error) {
       setTestResult({ 
         success: false, 
-        message: error instanceof Error ? error.message : 'Failed to save' 
+        message: error instanceof Error ? error.message : t('aiSettings.failedToSave')
       });
     } finally {
       setIsSaving(false);
@@ -407,12 +409,12 @@ export const AIProviderSettings: React.FC<AIProviderSettingsProps> = ({ onConfig
 
   const handleTestConnection = useCallback(async () => {
     if (selectedProvider === 'template') {
-      setTestResult({ success: true, message: '✓ Template Library is always available' });
+      setTestResult({ success: true, message: t('aiSettings.templateAvailable') });
       return;
     }
     
     if (!apiKey.trim()) {
-      setTestResult({ success: false, message: 'Please enter an API key first' });
+      setTestResult({ success: false, message: t('aiSettings.pleaseEnterKeyFirst') });
       return;
     }
     
@@ -428,14 +430,14 @@ export const AIProviderSettings: React.FC<AIProviderSettingsProps> = ({ onConfig
       const isValid = await aiProviderManager.validateApiKey(selectedProvider, apiKey.trim());
       
       if (isValid) {
-        setTestResult({ success: true, message: '✓ Connection successful! API key is valid.' });
+        setTestResult({ success: true, message: t('aiSettings.connectionSuccess') });
       } else {
-        setTestResult({ success: false, message: '✗ Invalid API key. Please check and try again.' });
+        setTestResult({ success: false, message: t('aiSettings.connectionInvalid') });
       }
     } catch (error) {
       setTestResult({ 
         success: false, 
-        message: '✗ Connection failed. Check your internet and API key.' 
+        message: t('aiSettings.connectionFailed')
       });
     } finally {
       setIsTesting(false);
@@ -480,14 +482,14 @@ export const AIProviderSettings: React.FC<AIProviderSettingsProps> = ({ onConfig
           {selectedProviderInfo.logo}
         </div>
         <div className="ai-settings-title">
-          <h4>AI-Enhanced Readings</h4>
-          <p>Connect your AI provider for enhanced astrological interpretations</p>
+          <h4>{t('aiSettings.title')}</h4>
+          <p>{t('aiSettings.connectProvider')}</p>
         </div>
         {isEnabled && activeProvider !== 'template' && (
           <button
             onClick={() => setIsCollapsed(!isCollapsed)}
             className="ai-collapse-toggle"
-            title={isCollapsed ? 'Expand' : 'Collapse'}
+            title={isCollapsed ? t('aiSettings.expand') : t('aiSettings.collapse')}
           >
             {isCollapsed ? '⚙️' : '✕'}
           </button>
@@ -500,16 +502,16 @@ export const AIProviderSettings: React.FC<AIProviderSettingsProps> = ({ onConfig
           <div className="ai-collapsed-status">
             <span className="ai-status-dot active"></span>
             <span className="ai-collapsed-provider">
-              Connected to {PROVIDER_SETUP[activeProvider].name}
+              {t('aiSettings.connectedTo', { provider: PROVIDER_SETUP[activeProvider].name })}
             </span>
           </div>
           <p className="ai-collapsed-note">
-            Your readings are being enhanced with AI. 
+            {t('aiSettings.readingsEnhanced')}
             <button 
               onClick={() => setIsCollapsed(false)}
               className="ai-collapsed-configure"
             >
-              Change settings
+              {t('aiSettings.changeSettings')}
             </button>
           </p>
         </div>
@@ -520,11 +522,11 @@ export const AIProviderSettings: React.FC<AIProviderSettingsProps> = ({ onConfig
         <span className="ai-status-dot"></span>
         {isActive ? (
           <>
-            <span className="ai-status-text">Active</span>
-            <span className="ai-status-provider">{PROVIDER_SETUP[activeProvider].name}</span>
+            <span className="ai-status-text">{t('aiSettings.active')}</span>
+            <span className="ai-status-provider">{t(`dictionaries.providerSetup.${activeProvider}.name`)}</span>
           </>
         ) : (
-          <span className="ai-status-text">Using Template Library (Free)</span>
+          <span className="ai-status-text">{t('aiSettings.usingTemplate')}</span>
         )}
       </div>
 
@@ -544,14 +546,14 @@ export const AIProviderSettings: React.FC<AIProviderSettingsProps> = ({ onConfig
                 <span className="ai-active-indicator">✓</span>
               )}
             </div>
-            <div className="ai-provider-card-name">{provider.name}</div>
-            <div className="ai-provider-card-desc">{provider.description}</div>
+            <div className="ai-provider-card-name">{t(`dictionaries.providerSetup.${provider.type}.name`)}</div>
+            <div className="ai-provider-card-desc">{t(`dictionaries.providerSetup.${provider.type}.description`)}</div>
             <div className="ai-provider-card-pricing">
               <span className="ai-pricing-badge" style={{ 
                 background: `${provider.color}15`,
                 color: provider.color 
               }}>
-                {provider.freeTierInfo}
+                {t(`dictionaries.providerSetup.${provider.type}.freeTierInfo`)}
               </span>
             </div>
           </button>
@@ -563,12 +565,12 @@ export const AIProviderSettings: React.FC<AIProviderSettingsProps> = ({ onConfig
         {selectedProvider !== 'template' && showSetupGuide && !apiKey && (
           <div className="ai-setup-guide">
             <div className="ai-setup-header">
-              <h5>Setup Guide: {selectedProviderInfo.name}</h5>
+              <h5>{t('aiSettings.setupGuide', { provider: t(`dictionaries.providerSetup.${selectedProvider}.name`) })}</h5>
               <button 
                 className="ai-toggle-guide"
                 onClick={() => setShowSetupGuide(!showSetupGuide)}
               >
-                {showSetupGuide ? 'Hide' : 'Show'} Guide
+                {showSetupGuide ? t('aiSettings.hideGuide') : t('aiSettings.showGuide')}
               </button>
             </div>
             
@@ -583,13 +585,13 @@ export const AIProviderSettings: React.FC<AIProviderSettingsProps> = ({ onConfig
                     onClick={() => setExpandedStep(expandedStep === step.number ? null : step.number)}
                   >
                     <span className="ai-step-number">{step.number}</span>
-                    <span className="ai-step-title">{step.title}</span>
+                    <span className="ai-step-title">{t(`dictionaries.providerSetup.${selectedProvider}.setupSteps.${step.number}.title`)}</span>
                     <span className="ai-step-toggle">{expandedStep === step.number ? '−' : '+'}</span>
                   </button>
                   
                   {expandedStep === step.number && (
                     <div className="ai-step-content">
-                      <p className="ai-step-description">{step.description}</p>
+                      <p className="ai-step-description">{t(`dictionaries.providerSetup.${selectedProvider}.setupSteps.${step.number}.description`)}</p>
                       
                       {step.action && step.link && (
                         <a 
@@ -599,14 +601,14 @@ export const AIProviderSettings: React.FC<AIProviderSettingsProps> = ({ onConfig
                           className="ai-step-action"
                           style={{ background: selectedProviderInfo.color }}
                         >
-                          {step.action}
+                          {t(`dictionaries.providerSetup.${selectedProvider}.setupSteps.${step.number}.action`)}
                         </a>
                       )}
                       
                       {step.tip && (
                         <div className="ai-step-tip">
                           <span className="ai-tip-icon">💡</span>
-                          {step.tip}
+                          {t(`dictionaries.providerSetup.${selectedProvider}.setupSteps.${step.number}.tip`)}
                         </div>
                       )}
                     </div>
@@ -616,7 +618,7 @@ export const AIProviderSettings: React.FC<AIProviderSettingsProps> = ({ onConfig
             </div>
 
             <div className="ai-setup-note" style={{ borderColor: selectedProviderInfo.color }}>
-              <strong>Pricing:</strong> {selectedProviderInfo.pricingNote}
+              <strong>{t('aiSettings.pricing')}:</strong> {t(`dictionaries.providerSetup.${selectedProvider}.pricingNote`)}
             </div>
           </div>
         )}
@@ -626,10 +628,10 @@ export const AIProviderSettings: React.FC<AIProviderSettingsProps> = ({ onConfig
           <div className="ai-key-section">
             <div className="ai-key-header">
               <label className="ai-key-label">
-                {selectedProvider === 'ollama' ? 'Server URL' : 'API Key'}
+                {selectedProvider === 'ollama' ? t('aiSettings.serverUrl') : t('aiSettings.apiKey')}
               </label>
               <span className="ai-key-format">
-                Format: {selectedProviderInfo.keyFormat}
+                {t('aiSettings.format')}: {selectedProviderInfo.keyFormat}
               </span>
             </div>
             
@@ -638,7 +640,7 @@ export const AIProviderSettings: React.FC<AIProviderSettingsProps> = ({ onConfig
                 type={isKeyVisible ? 'text' : 'password'}
                 value={apiKey}
                 onChange={(e) => setApiKey(e.target.value)}
-                placeholder={selectedProviderInfo.keyPlaceholder}
+                placeholder={t(`dictionaries.providerSetup.${selectedProvider}.keyPlaceholder`)}
                 className="ai-key-input"
               />
               <button
@@ -654,8 +656,7 @@ export const AIProviderSettings: React.FC<AIProviderSettingsProps> = ({ onConfig
             <div className="ai-key-security">
               <span className="ai-security-icon">🔒</span>
               <span className="ai-security-text">
-                Your {selectedProvider === 'ollama' ? 'URL' : 'key'} is stored <strong>only on this device</strong> in encrypted local storage.
-                We never transmit it to our servers.
+                {t('aiSettings.storedLocally', { type: selectedProvider === 'ollama' ? t('aiSettings.serverUrl') : t('aiSettings.apiKey') })}
               </span>
             </div>
           </div>
@@ -672,10 +673,10 @@ export const AIProviderSettings: React.FC<AIProviderSettingsProps> = ({ onConfig
               {isTesting ? (
                 <>
                   <span className="ai-spinner"></span>
-                  Testing...
+                  {t('aiSettings.testing')}
                 </>
               ) : (
-                'Test Connection'
+                t('aiSettings.testConnection')
               )}
             </button>
           )}
@@ -693,14 +694,14 @@ export const AIProviderSettings: React.FC<AIProviderSettingsProps> = ({ onConfig
             {isSaving ? (
               <>
                 <span className="ai-spinner"></span>
-                Saving...
+                {t('aiSettings.testing')}
               </>
             ) : selectedProvider === 'template' ? (
-              'Use Template Library'
+              t('aiSettings.useTemplate')
             ) : isActive ? (
-              'Update Configuration'
+              t('aiSettings.updateConfig')
             ) : (
-              'Connect Provider'
+              t('aiSettings.connectProviderBtn')
             )}
           </button>
           
@@ -709,7 +710,7 @@ export const AIProviderSettings: React.FC<AIProviderSettingsProps> = ({ onConfig
               onClick={handleClearKey}
               className="ai-btn ai-btn-danger"
             >
-              Disconnect
+              {t('aiSettings.disconnect')}
             </button>
           )}
         </div>
@@ -727,22 +728,22 @@ export const AIProviderSettings: React.FC<AIProviderSettingsProps> = ({ onConfig
         <div className="ai-info-item">
           <span className="ai-info-icon">📚</span>
           <div>
-            <strong>Template Library</strong>
-            <p>169+ hand-crafted templates covering all planets in all 13 signs, woven into unique readings by phase, aspect, and category. Always free, always instant.</p>
+            <strong>{t('aiSettings.templateLibrary')}</strong>
+            <p>{t('aiSettings.templateDesc')}</p>
           </div>
         </div>
         <div className="ai-info-item">
           <span className="ai-info-icon">🤖</span>
           <div>
-            <strong>AI Enhancement</strong>
-            <p>Optional AI-generated readings for more nuanced, personalized interpretations.</p>
+            <strong>{t('aiSettings.aiEnhancement')}</strong>
+            <p>{t('aiSettings.aiEnhancementDesc')}</p>
           </div>
         </div>
         <div className="ai-info-item">
           <span className="ai-info-icon">🔒</span>
           <div>
-            <strong>Your Data Stays Private</strong>
-            <p>API keys are stored locally. We never see them or your astrological data.</p>
+            <strong>{t('aiSettings.dataPrivate')}</strong>
+            <p>{t('aiSettings.dataPrivateDesc')}</p>
           </div>
         </div>
       </div>

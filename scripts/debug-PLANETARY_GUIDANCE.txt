@@ -1,0 +1,7 @@
+{ 
+  title: string; 
+  description: string; 
+  do: string[]; 
+  dont: string[];
+  quality: string;
+}

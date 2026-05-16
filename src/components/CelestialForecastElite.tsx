@@ -11,6 +11,8 @@
  */
 
 import React, { useState, useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
+import i18n from '../i18n';
 import { 
   CelestialWeatherEngine,
   type SkyAspect,
@@ -37,7 +39,7 @@ export const CelestialForecastElite: React.FC<Props> = ({
   positions,
   transits,
   hasBirthChart,
-  currentDate = new Date()
+  currentDate = new Date(),
 }) => {
   const [view, setView] = useState<ViewType>(hasBirthChart ? 'personal' : 'sky');
   const [selectedTransit, setSelectedTransit] = useState<string | null>(null);
@@ -67,9 +69,9 @@ export const CelestialForecastElite: React.FC<Props> = ({
           <div>
             <h1>Celestial Weather</h1>
             <time className="exact-time">
-              {currentDate.toLocaleDateString('en-US', { 
+              {new Intl.DateTimeFormat(i18n.language || 'en', { 
                 weekday: 'long', month: 'long', day: 'numeric'
-              })}
+              }).format(currentDate)}
             </time>
           </div>
         </div>
@@ -124,6 +126,7 @@ const SkyWeatherView: React.FC<{
   weather: ReturnType<typeof CelestialWeatherEngine.generateDailyWeather>;
   positions: Record<string, PlanetPosition>;
 }> = ({ weather, positions }) => {
+  const { t } = useTranslation('celestial');
   return (
     <div className="view-sky">
       {/* Weather Summary */}
@@ -132,7 +135,7 @@ const SkyWeatherView: React.FC<{
           <span className="moon-emoji">{weather.moonPhase.emoji}</span>
           <div>
             <span className="phase-name">{weather.moonPhase.name}</span>
-            <span className="illumination">{weather.moonPhase.illumination}% illuminated</span>
+            <span className="illumination">{weather.moonPhase.illumination}% {t('cards.moonPhase.illuminated')}</span>
           </div>
         </div>
         
@@ -243,9 +246,9 @@ const SkyAspectCard: React.FC<{
       <p className="aspect-meaning">{aspect.interpretation}</p>
       
       <div className="aspect-timing">
-        <span>Exact: {aspect.exactDate.toLocaleDateString('en-US', { 
+        <span>Exact: {new Intl.DateTimeFormat(i18n.language || 'en', { 
           month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' 
-        })}</span>
+        }).format(aspect.exactDate)}</span>
       </div>
     </div>
   );
@@ -441,15 +444,15 @@ const TransitEventCard: React.FC<{
           <div className="timing-details">
             <div className="time-row">
               <span>Started:</span>
-              <span>{timing.start.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}</span>
+              <span>{new Intl.DateTimeFormat(i18n.language || 'en', { month: 'short', day: 'numeric' }).format(timing.start)}</span>
             </div>
             <div className="time-row highlight">
               <span>Exact:</span>
-              <span>{timing.exact.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}</span>
+              <span>{new Intl.DateTimeFormat(i18n.language || 'en', { month: 'long', day: 'numeric', year: 'numeric' }).format(timing.exact)}</span>
             </div>
             <div className="time-row">
               <span>Ends:</span>
-              <span>{timing.end.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}</span>
+              <span>{new Intl.DateTimeFormat(i18n.language || 'en', { month: 'short', day: 'numeric' }).format(timing.end)}</span>
             </div>
           </div>
           

@@ -4,6 +4,7 @@
  */
 
 import { persistence } from '../astrology/services/persistence';
+import { aiConfigService } from './aiConfigService';
 
 export interface ExportData {
   exportDate: string;
@@ -132,25 +133,15 @@ export async function exportAllUserData(): Promise<ExportData> {
     }
 
     // Export AI config (without API keys for security)
-    const aiConfig = localStorage.getItem('celestial-ai-config');
-    if (aiConfig) {
-      try {
-        const config = JSON.parse(aiConfig);
-        exportData.aiConfig = {
-          provider: config.type,
-          hasCustomKeys: !!(localStorage.getItem('celestial-groq-key') || 
-                          localStorage.getItem('celestial-openai-key')),
-        };
-      } catch {
-        exportData.aiConfig = { hasCustomKeys: false };
-      }
+    try {
+      const config = aiConfigService.getConfig();
+      exportData.aiConfig = {
+        provider: config.provider,
+        hasCustomKeys: !!(config.apiKey && config.provider !== 'template'),
+      };
+    } catch {
+      exportData.aiConfig = { hasCustomKeys: false };
     }
-
-    // Check for custom API keys (don't export the keys, just note they exist)
-    exportData.aiConfig.hasCustomKeys = !!(
-      localStorage.getItem('celestial-groq-key') ||
-      localStorage.getItem('celestial-openai-key')
-    );
 
     return exportData;
   } catch (error) {

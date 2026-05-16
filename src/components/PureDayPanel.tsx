@@ -14,6 +14,7 @@ import { useState, useMemo, useCallback, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { addNote, deleteNote, updateNote, type RootState } from '../store';
 import { HEKA_MONTHS, getNoteKey } from '../services/calendarService';
+import i18n from '../i18n';
 import { getHolidaysForDateWithSubRegion, type SubRegionCode, type NoteCategory, type RecurringConfig } from '../types';
 import type { CalendarDay } from '../types';
 
@@ -253,11 +254,11 @@ export const PureDayPanel: React.FC<PureDayPanelProps> = ({
           <div className="pure-day-panel__meta">
             {showCivil && (
               <span className="pure-day-panel__civil">
-                {civilDate.toLocaleDateString('en-US', { 
+                {new Intl.DateTimeFormat(i18n.language || 'en', { 
                   weekday: 'short', 
                   month: 'short', 
                   day: 'numeric' 
-                })}
+                }).format(civilDate)}
               </span>
             )}
             {showMoon && day.moonPhase && (

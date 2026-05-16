@@ -8,6 +8,7 @@
 
 import type { BirthData as AstroBirthData } from '../../astrology/types/core';
 import { generateNatalChart } from '../../astrology/services/swiss-ephemeris/engine';
+import i18n from '../../i18n';
 import { calculatePreciseMoonPhase } from '../../astrology/services/calculations/swissCalculations';
 import { calculateMansionsForJD } from '../../astrology/services/calculations/nakshatras';
 import { getSignFromLongitude, SIGN_SYMBOLS, SIGN_SYMBOLS_13 } from '../../astrology/types/core';
@@ -303,7 +304,8 @@ function formatDms(degree: number): string {
 function formatDateNice(dateStr: string): string {
   const [y, m, d] = dateStr.split('-').map(Number);
   const date = new Date(y, m - 1, d);
-  return new Intl.DateTimeFormat('en-US', {
+  const lang = i18n.language || 'en';
+  return new Intl.DateTimeFormat(lang, {
     weekday: 'long',
     year: 'numeric',
     month: 'long',
@@ -317,8 +319,8 @@ export function formatHekaDate(hekaDate: string | undefined): string | null {
   if (!hekaDate) return null;
   const [y, m, d] = hekaDate.split('-').map(Number);
   if (!y || !m || !d) return null;
-  const months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
-  return `${months[m - 1]} ${d}, ${y}`;
+  const monthName = i18n.t(`calendar:months.${m - 1}`, { lng: i18n.language || 'en' });
+  return `${monthName} ${d}, ${y}`;
 }
 
 // ── Astrological Enrichment ──────────────────────────────────────────────────

@@ -13,6 +13,8 @@
  */
 
 import React, { useState, useEffect, useCallback, useMemo, useRef } from 'react';
+import { useTranslation } from 'react-i18next';
+import i18n from '../../../i18n';
 import { 
   getRegionForLocation,
   type CelestialRegion,
@@ -56,10 +58,10 @@ interface CelestialGuidanceV2Props {
 type ViewMode = 'briefing' | 'full' | 'patterns' | 'natal-input' | 'history';
 type TimeFrame = 'daily' | 'weekly' | 'yearly';
 
-const TIMEFRAME_LABELS: Record<TimeFrame, { label: string; subtitle: string }> = {
-  daily: { label: 'Today', subtitle: 'Current celestial weather' },
-  weekly: { label: 'This Week', subtitle: '7-day cosmic forecast' },
-  yearly: { label: 'This Year', subtitle: `${new Date().getFullYear()} overview` },
+const TIMEFRAME_LABELS: Record<TimeFrame, { labelKey: string; subtitleKey: string }> = {
+  daily: { labelKey: 'guidance.today', subtitleKey: 'guidance.todaySubtitle' },
+  weekly: { labelKey: 'guidance.thisWeek', subtitleKey: 'guidance.thisWeekSubtitle' },
+  yearly: { labelKey: 'guidance.thisYear', subtitleKey: 'guidance.thisYearSubtitle' },
 };
 
 const LIFE_AREA_ICONS: Record<LifeArea, string> = {
@@ -80,6 +82,7 @@ export const CelestialGuidanceV2: React.FC<CelestialGuidanceV2Props> = ({
   planetaryHour,
   onOpenSettings,
 }) => {
+  const { t } = useTranslation('celestial');
   const [viewMode, setViewMode] = useState<ViewMode>('briefing');
   const [timeframe, setTimeframe] = useState<TimeFrame>('daily');
   const [loading, setLoading] = useState(true);
@@ -163,7 +166,7 @@ export const CelestialGuidanceV2: React.FC<CelestialGuidanceV2Props> = ({
       });
       
       if (briefing.aiFallbackReason) {
-        setToast({ message: `AI enhancement unavailable: ${briefing.aiFallbackReason}. Showing template guidance.`, type: 'warning' });
+        setToast({ message: t('guidanceV2.aiUnavailable', { reason: briefing.aiFallbackReason }), type: 'warning' });
       }
       
       setMorningBriefing(briefing);
@@ -218,7 +221,7 @@ export const CelestialGuidanceV2: React.FC<CelestialGuidanceV2Props> = ({
       setFullGuidance(guidance);
       
       if (guidance.aiFallbackReason) {
-        setToast({ message: `AI enhancement unavailable: ${guidance.aiFallbackReason}. Showing template guidance.`, type: 'warning' });
+        setToast({ message: t('guidanceV2.aiUnavailable', { reason: guidance.aiFallbackReason }), type: 'warning' });
       }
     } catch (error) {
       console.error('[GuidanceV2] Error generating guidance:', error);
@@ -269,7 +272,7 @@ export const CelestialGuidanceV2: React.FC<CelestialGuidanceV2Props> = ({
           marginBottom: 20,
           animation: 'pulse 2s infinite',
         }}>✦</div>
-        <p>Consulting the celestial spheres...</p>
+        <p>{t('guidanceV2.consulting')}</p>
       </div>
     );
   }
@@ -369,23 +372,23 @@ export const CelestialGuidanceV2: React.FC<CelestialGuidanceV2Props> = ({
             flexWrap: 'wrap',
           }}>
             <NavButton 
-              label="Morning Briefing" 
+              label={t('guidanceV2.morningBriefing')}
               active={false}
               onClick={() => setViewMode('briefing')}
             />
             <NavButton 
-              label={natalChart ? 'Your Chart ✓' : 'Add Birth Chart'}
+              label={natalChart ? t('guidanceV2.yourChart') : t('guidanceV2.addBirthChart')}
               active={false}
               highlight={!natalChart}
               onClick={() => setViewMode('natal-input')}
             />
             <NavButton 
-              label="Your Patterns"
+              label={t('guidanceV2.yourPatterns')}
               active={false}
               onClick={() => setViewMode('patterns')}
             />
             <NavButton 
-              label="History"
+              label={t('guidanceV2.history')}
               active={false}
               onClick={() => setViewMode('history')}
             />
@@ -401,7 +404,7 @@ export const CelestialGuidanceV2: React.FC<CelestialGuidanceV2Props> = ({
               borderRadius: 12,
             }}>
               <div style={{ fontSize: 12, color: 'rgba(255,255,255,0.5)', marginBottom: 4 }}>
-                Your Celestial Region
+                {t('guidanceV2.yourCelestialRegion')}
               </div>
               <div style={{ fontSize: 18, color: 'rgba(255,255,255,0.9)', marginBottom: 4 }}>
                 {region.name}
@@ -428,7 +431,7 @@ export const CelestialGuidanceV2: React.FC<CelestialGuidanceV2Props> = ({
                 marginBottom: 12,
               }}>
                 <span style={{ fontSize: 14, color: 'rgba(255,255,255,0.9)' }}>
-                  ✨ Personalized for You
+                  {t('guidanceV2.personalizedForYou')}
                 </span>
                 <button
                   onClick={() => setViewMode('natal-input')}
@@ -440,7 +443,7 @@ export const CelestialGuidanceV2: React.FC<CelestialGuidanceV2Props> = ({
                     cursor: 'pointer',
                   }}
                 >
-                  Edit
+                  {t('guidanceV2.edit')}
                 </button>
               </div>
               
@@ -504,7 +507,7 @@ export const CelestialGuidanceV2: React.FC<CelestialGuidanceV2Props> = ({
                   color: timeframe === tf ? 'rgba(255,255,255,0.9)' : 'rgba(255,255,255,0.6)',
                   fontWeight: timeframe === tf ? 500 : 400,
                 }}>
-                  {TIMEFRAME_LABELS[tf].label}
+                  {t(TIMEFRAME_LABELS[tf].labelKey)}
                 </div>
               </button>
             ))}
@@ -524,7 +527,7 @@ export const CelestialGuidanceV2: React.FC<CelestialGuidanceV2Props> = ({
             />
           ) : (
             <div style={{ textAlign: 'center', padding: '40px', color: 'rgba(255,255,255,0.5)' }}>
-              <p>Loading your personalized guidance...</p>
+              <p>{t('guidanceV2.loadingGuidance')}</p>
             </div>
           )}
         </div>
@@ -567,6 +570,7 @@ const FullGuidanceContent: React.FC<{
   onRefresh?: () => void;
   isRefreshing?: boolean;
 }> = ({ guidance, selectedLifeArea, onSelectLifeArea, isAIEnabled, hasAIProvider, onOpenSettings, onRefresh, isRefreshing }) => {
+  const { t } = useTranslation('celestial');
   const currentReading = selectedLifeArea 
     ? guidance.lifeAreaReadings[selectedLifeArea]
     : guidance.overallReading;
@@ -647,21 +651,21 @@ const FullGuidanceContent: React.FC<{
         <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
           {currentReading.aiGenerated ? (
             <span style={{ fontSize: 12, color: '#a78bfa', background: 'rgba(167,139,250,0.15)', padding: '6px 12px', borderRadius: 20, border: '1px solid rgba(167,139,250,0.3)' }}>
-              ✨ AI-Enhanced
+              {t('guidanceV2.aiEnhanced')}
             </span>
           ) : (
             <span style={{ fontSize: 12, color: '#60a5fa', background: 'rgba(96,165,250,0.15)', padding: '6px 12px', borderRadius: 20, border: '1px solid rgba(96,165,250,0.3)' }}>
-              📚 Template-Powered
+              {t('guidanceV2.templatePowered')}
             </span>
           )}
           {guidance.natalChart && (
             <span style={{ fontSize: 12, color: '#4ade80', background: 'rgba(74,222,128,0.1)', padding: '6px 12px', borderRadius: 20, border: '1px solid rgba(74,222,128,0.2)' }}>
-              ✓ Natal Chart
+              {t('guidanceV2.natalChart')}
             </span>
           )}
           {guidance.planetaryHour && (
             <span style={{ fontSize: 12, color: '#fbbf24', background: 'rgba(251,191,36,0.1)', padding: '6px 12px', borderRadius: 20, border: '1px solid rgba(251,191,36,0.2)' }}>
-              ⏰ {guidance.planetaryHour.charAt(0).toUpperCase() + guidance.planetaryHour.slice(1)} Hour
+              ⏰ {t('guidanceV2.hour', { planet: guidance.planetaryHour.charAt(0).toUpperCase() + guidance.planetaryHour.slice(1) })}
             </span>
           )}
         </div>
@@ -683,7 +687,7 @@ const FullGuidanceContent: React.FC<{
             }}
           >
             <span>{copied ? '✓' : '📋'}</span>
-            {copied ? 'Copied' : 'Copy'}
+            {copied ? t('guidanceV2.copied') : t('guidanceV2.copy')}
           </button>
           <button
             onClick={handleShare}
@@ -701,7 +705,7 @@ const FullGuidanceContent: React.FC<{
             }}
           >
             <span>↗</span>
-            Share
+            {t('guidanceV2.share')}
           </button>
           <button
             onClick={() => setShowExportModal(true)}
@@ -719,7 +723,7 @@ const FullGuidanceContent: React.FC<{
             }}
           >
             <span>🖼️</span>
-            Card
+            {t('guidanceV2.card')}
           </button>
           {onRefresh && (
             <button
@@ -740,7 +744,7 @@ const FullGuidanceContent: React.FC<{
               }}
             >
               <span style={{ display: 'inline-block', animation: isRefreshing ? 'spin 1s linear infinite' : 'none' }}>↻</span>
-              {isRefreshing ? 'Refreshing...' : 'Refresh'}
+              {isRefreshing ? t('guidanceV2.refreshing') : t('guidanceV2.refresh')}
             </button>
           )}
         </div>
@@ -757,7 +761,7 @@ const FullGuidanceContent: React.FC<{
       }}>
         <div style={{ fontSize: 48, marginBottom: 8 }}>✦</div>
         <div style={{ fontSize: 14, color: 'rgba(255,255,255,0.6)', marginBottom: 4 }}>
-          Guidance Confidence
+          {t('guidanceV2.guidanceConfidence')}
         </div>
         <div style={{ 
           fontSize: 36, 
@@ -768,7 +772,7 @@ const FullGuidanceContent: React.FC<{
         </div>
         {currentReading.aiGenerated && (
           <div style={{ fontSize: 12, color: '#a78bfa', marginTop: 8 }}>
-            ✨ AI-Enhanced via {currentReading.aiProvider} ({currentReading.aiModel})
+            {t('guidanceV2.aiEnhancedVia', { provider: currentReading.aiProvider, model: currentReading.aiModel })}
           </div>
         )}
       </div>
@@ -786,12 +790,12 @@ const FullGuidanceContent: React.FC<{
             <span style={{ fontSize: '1.5rem' }}>✨</span>
             <div style={{ flex: 1 }}>
               <div style={{ fontSize: '0.95rem', fontWeight: 600, color: '#e9d5ff', marginBottom: '4px' }}>
-                {hasAIProvider ? 'Enable AI Guidance' : 'Unlock Deeper Insights'}
+                {hasAIProvider ? t('guidanceV2.enableAiGuidance') : t('guidanceV2.unlockDeeper')}
               </div>
               <p style={{ fontSize: '0.85rem', color: 'rgba(255,255,255,0.75)', margin: '0 0 14px 0', lineHeight: 1.5 }}>
                 {hasAIProvider
-                  ? 'You have an AI provider configured. Turn on AI guidance for poetic, personalized readings woven from your natal chart and the live sky.'
-                  : 'Add an AI provider (Groq, OpenAI, or local Ollama) to receive LLM-enhanced interpretations tailored to your unique chart.'}
+                  ? t('guidanceV2.aiConfigured')
+                  : t('guidanceV2.aiAddProvider')}
               </p>
               {onOpenSettings && (
                 <button
@@ -814,7 +818,7 @@ const FullGuidanceContent: React.FC<{
                     e.currentTarget.style.background = 'rgba(147,51,234,0.25)';
                   }}
                 >
-                  {hasAIProvider ? 'Turn On in Settings' : 'Set Up AI →'}
+                  {hasAIProvider ? t('guidanceV2.turnOnSettings') : t('guidanceV2.setUpAi')}
                 </button>
               )}
             </div>
@@ -872,7 +876,7 @@ const FullGuidanceContent: React.FC<{
           textTransform: 'uppercase',
           letterSpacing: '0.1em',
         }}>
-          Focus Areas
+          {t('guidanceV2.focusAreas')}
         </div>
         <div style={{
           display: 'grid',
@@ -919,7 +923,7 @@ const FullGuidanceContent: React.FC<{
           textTransform: 'uppercase',
           letterSpacing: '0.1em',
         }}>
-          Practical Guidance
+          {t('guidanceV2.practicalGuidance')}
         </div>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
           {currentReading.advice.map((advice, i) => (
@@ -981,7 +985,7 @@ const FullGuidanceContent: React.FC<{
             gap: 8,
           }}>
             <span>✨</span>
-            <span>Celestial Essence {currentReading.aiGenerated && '(AI-Enhanced)'}</span>
+            <span>{t('guidanceV2.celestialEssence')} {currentReading.aiGenerated && t('guidanceV2.aiEnhancedSuffix')}</span>
           </div>
           <p style={{
             fontSize: 16,
@@ -1062,7 +1066,7 @@ const FullGuidanceContent: React.FC<{
           color: 'rgba(251,191,36,0.8)',
           marginBottom: currentReading.affirmations && currentReading.affirmations.length > 1 ? 16 : 8,
         }}>
-          {currentReading.affirmations && currentReading.affirmations.length > 1 ? 'Daily Affirmations' : 'Daily Affirmation'}
+          {currentReading.affirmations && currentReading.affirmations.length > 1 ? t('guidanceV2.dailyAffirmations') : t('guidanceV2.dailyAffirmation')}
           {currentReading.aiGenerated && ' ✨'}
         </div>
         
@@ -1196,14 +1200,14 @@ const FullGuidanceContent: React.FC<{
                       </p>
                       <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
                         <span style={{ fontSize: 11, color: '#93c5fd' }}>
-                          Confidence: {pattern.confidence}%
+                          {t('guidanceV2.confidence')} {pattern.confidence}%
                         </span>
                         <span style={{ fontSize: 11, color: '#93c5fd' }}>
-                          Strength: {pattern.correlationStrength > 0 ? '+' : ''}{pattern.correlationStrength.toFixed(2)}
+                          {t('guidanceV2.strength')} {pattern.correlationStrength > 0 ? '+' : ''}{pattern.correlationStrength.toFixed(2)}
                         </span>
                         {pattern.celestialSignature && (
                           <span style={{ fontSize: 11, color: '#93c5fd' }}>
-                            Signature: {pattern.celestialSignature}
+                            {t('guidanceV2.signature')} {pattern.celestialSignature}
                           </span>
                         )}
                       </div>
@@ -1228,11 +1232,12 @@ const HistoryView: React.FC<{
   onClose: () => void;
   onClear: () => void;
 }> = ({ historyDates, selectedDate, reading, onSelectDate, onClose, onClear }) => {
+  const { t } = useTranslation('celestial');
   const [showConfirmClear, setShowConfirmClear] = useState(false);
   
   const formatDate = (dateStr: string) => {
     const date = new Date(dateStr);
-    return new Intl.DateTimeFormat('en-US', {
+    return new Intl.DateTimeFormat(i18n.language || 'en', {
       weekday: 'short',
       month: 'short',
       day: 'numeric',
@@ -1251,7 +1256,7 @@ const HistoryView: React.FC<{
         marginBottom: 24,
       }}>
         <h2 style={{ fontSize: 20, fontWeight: 500, color: 'rgba(255,255,255,0.9)', margin: 0 }}>
-          📜 Guidance History
+          {t('guidanceV2.guidanceHistory')}
         </h2>
         <button
           onClick={onClose}
@@ -1265,7 +1270,7 @@ const HistoryView: React.FC<{
             cursor: 'pointer',
           }}
         >
-          Close
+          {t('guidanceV2.close')}
         </button>
       </div>
       
@@ -1279,9 +1284,9 @@ const HistoryView: React.FC<{
           border: '1px solid rgba(255,255,255,0.08)',
         }}>
           <div style={{ fontSize: 48, marginBottom: 16 }}>🌙</div>
-          <p style={{ fontSize: 16, margin: '0 0 8px 0' }}>No saved guidance yet</p>
+          <p style={{ fontSize: 16, margin: '0 0 8px 0' }}>{t('guidanceV2.noSavedGuidance')}</p>
           <p style={{ fontSize: 13, margin: 0, opacity: 0.7 }}>
-            Your daily readings will appear here automatically.
+            {t('guidanceV2.readingsAppearHere')}
           </p>
         </div>
       ) : (
@@ -1295,7 +1300,7 @@ const HistoryView: React.FC<{
               textTransform: 'uppercase',
               letterSpacing: '0.1em',
             }}>
-              Select a Date
+              {t('guidanceV2.selectDate')}
             </div>
             <div style={{
               display: 'flex',
@@ -1326,7 +1331,7 @@ const HistoryView: React.FC<{
                     {formatDate(date)}
                   </div>
                   {isToday(date) && (
-                    <div style={{ fontSize: 10, opacity: 0.8, marginTop: 2 }}>Today</div>
+                    <div style={{ fontSize: 10, opacity: 0.8, marginTop: 2 }}>{t('guidanceV2.today')}</div>
                   )}
                 </button>
               ))}
@@ -1344,7 +1349,7 @@ const HistoryView: React.FC<{
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 16 }}>
                 <div>
                   <div style={{ fontSize: 12, color: 'rgba(255,255,255,0.5)', marginBottom: 4 }}>
-                    {new Date(reading.date).toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}
+                    {new Intl.DateTimeFormat(i18n.language || 'en', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }).format(new Date(reading.date))}
                   </div>
                   <h3 style={{ fontSize: 18, fontWeight: 500, color: '#fbbf24', margin: 0 }}>
                     {reading.overallReading.title}
@@ -1387,7 +1392,7 @@ const HistoryView: React.FC<{
                     textTransform: 'uppercase',
                     letterSpacing: '0.1em',
                   }}>
-                    Practical Guidance
+                    {t('guidanceV2.practicalGuidanceTitle')}
                   </div>
                   <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
                     {reading.overallReading.advice.map((advice, i) => (
@@ -1433,7 +1438,7 @@ const HistoryView: React.FC<{
                 border: '1px solid rgba(251,191,36,0.15)',
               }}>
                 <div style={{ fontSize: 10, color: 'rgba(251,191,36,0.8)', marginBottom: 6, textTransform: 'uppercase', letterSpacing: '0.1em' }}>
-                  Affirmation
+                  {t('guidanceV2.affirmation')}
                 </div>
                 <p style={{ fontSize: 14, fontStyle: 'italic', color: '#fbbf24', margin: 0, lineHeight: 1.5 }}>
                   &ldquo;{reading.overallReading.affirmation}&rdquo;
@@ -1449,14 +1454,14 @@ const HistoryView: React.FC<{
                   border: '1px solid rgba(245,158,11,0.2)',
                 }}>
                   <span style={{ fontSize: 12, color: '#fbbf24' }}>
-                    ⚠️ AI enhancement was unavailable on this date. Template guidance shown.
+                    {t('guidanceV2.aiUnavailableDate')}
                   </span>
                 </div>
               )}
             </div>
           ) : (
             <div style={{ textAlign: 'center', padding: '40px', color: 'rgba(255,255,255,0.5)' }}>
-              <p>Select a date to view your saved guidance.</p>
+              <p>{t('guidanceV2.selectDateToView')}</p>
             </div>
           )}
           
@@ -1475,11 +1480,11 @@ const HistoryView: React.FC<{
                   cursor: 'pointer',
                 }}
               >
-                Clear History
+                {t('guidanceV2.clearHistory')}
               </button>
             ) : (
               <div style={{ display: 'flex', gap: 10, justifyContent: 'center', alignItems: 'center' }}>
-                <span style={{ fontSize: 13, color: 'rgba(255,255,255,0.7)' }}>Are you sure?</span>
+                <span style={{ fontSize: 13, color: 'rgba(255,255,255,0.7)' }}>{t('guidanceV2.areYouSure')}</span>
                 <button
                   onClick={onClear}
                   style={{
@@ -1492,7 +1497,7 @@ const HistoryView: React.FC<{
                     cursor: 'pointer',
                   }}
                 >
-                  Yes, Clear
+                  {t('guidanceV2.yesClear')}
                 </button>
                 <button
                   onClick={() => setShowConfirmClear(false)}
@@ -1506,7 +1511,7 @@ const HistoryView: React.FC<{
                     cursor: 'pointer',
                   }}
                 >
-                  Cancel
+                  {t('guidanceV2.cancel')}
                 </button>
               </div>
             )}

@@ -1,6 +1,6 @@
 import type { PlanetPosition } from '../../oracle/birthChartIntegration';
 
-export type JournalMode = 'oracle' | 'entries' | 'celestial' | 'scribe' | 'tracker';
+export type JournalMode = 'oracle' | 'entries' | 'draw' | 'scribe' | 'tracker';
 export type EntryFilter = 'all' | 'insights' | 'transits';
 
 export interface CalendarNoteEntry {

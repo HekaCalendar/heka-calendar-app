@@ -10,6 +10,7 @@
  */
 
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import type { EnhancedInsight } from '../oracle/enhancedInsightEngine';
 import './EnhancedInsightCard.css';
 
@@ -28,6 +29,7 @@ export const EnhancedInsightCard: React.FC<EnhancedInsightCardProps> = ({
   onShare,
   isLoading = false
 }) => {
+  const { t } = useTranslation('journal');
   const [expandedSection, setExpandedSection] = useState<string | null>(null);
   const [showCrisisResources, setShowCrisisResources] = useState(true);
   
@@ -38,7 +40,7 @@ export const EnhancedInsightCard: React.FC<EnhancedInsightCardProps> = ({
           <div className="loading-ring"></div>
           <div className="loading-core">✨</div>
         </div>
-        <p>Consulting the celestial spheres...</p>
+        <p>{t('insight.consulting')}</p>
         <span className="loading-dots">...</span>
       </div>
     );
@@ -59,7 +61,7 @@ export const EnhancedInsightCard: React.FC<EnhancedInsightCardProps> = ({
         <div className="crisis-banner">
           <div className="crisis-header">
             <span className="crisis-icon">🆘</span>
-            <span className="crisis-title">Support Resources Available</span>
+            <span className="crisis-title">{t('insight.supportResources')}</span>
           </div>
           
           {showCrisisResources && (
@@ -78,7 +80,7 @@ export const EnhancedInsightCard: React.FC<EnhancedInsightCardProps> = ({
                 className="crisis-dismiss-btn"
                 onClick={() => setShowCrisisResources(false)}
               >
-                I have the resources I need
+                {t('insight.haveResources')}
               </button>
             </div>
           )}
@@ -93,11 +95,11 @@ export const EnhancedInsightCard: React.FC<EnhancedInsightCardProps> = ({
         <div className="insight-meta">
           <span className="insight-type">{insight.type.charAt(0).toUpperCase() + insight.type.slice(1)}</span>
           {insight.aiEnhanced && (
-            <span className="ai-badge">✨ AI-Enhanced</span>
+            <span className="ai-badge">{t('insight.aiEnhanced')}</span>
           )}
         </div>
         <div className="insight-strength">
-          <span className="strength-label">Strength</span>
+          <span className="strength-label">{t('insight.strength')}</span>
           <div className="strength-bar">
             <div 
               className="strength-fill" 
@@ -133,18 +135,18 @@ export const EnhancedInsightCard: React.FC<EnhancedInsightCardProps> = ({
       {/* Birth Chart Connection */}
       {insight.birthChartConnection && (
         <div className="birth-chart-connection">
-          <h4 className="connection-title">📍 Your Birth Chart Connection</h4>
+          <h4 className="connection-title">{t('insight.birthChartConnection')}</h4>
           <div className="connection-details">
             <div className="connection-item">
-              <span className="connection-label">Transit:</span>
+              <span className="connection-label">{t('insight.transit')}</span>
               <span className="connection-value">{insight.birthChartConnection.interpretation}</span>
             </div>
             <div className="connection-item">
-              <span className="connection-label">Activates:</span>
-              <span className="connection-value">House {insight.birthChartConnection.activatedHouse}</span>
+              <span className="connection-label">{t('insight.activates')}</span>
+              <span className="connection-value">{t('insight.houseValue', { house: insight.birthChartConnection.activatedHouse })}</span>
             </div>
             <div className="connection-item">
-              <span className="connection-label">Natal Position:</span>
+              <span className="connection-label">{t('insight.natalPosition')}</span>
               <span className="connection-value">{insight.birthChartConnection.natalPosition}</span>
             </div>
           </div>
@@ -161,7 +163,7 @@ export const EnhancedInsightCard: React.FC<EnhancedInsightCardProps> = ({
               onClick={() => setExpandedSection(expandedSection === 'affirmations' ? null : 'affirmations')}
             >
               <span className="section-icon">💫</span>
-              <span className="section-name">Affirmations ({insight.affirmations.length})</span>
+              <span className="section-name">{t('insight.affirmations', { count: insight.affirmations.length })}</span>
               <span className="section-arrow">{expandedSection === 'affirmations' ? '▼' : '▶'}</span>
             </button>
             {expandedSection === 'affirmations' && (
@@ -185,7 +187,7 @@ export const EnhancedInsightCard: React.FC<EnhancedInsightCardProps> = ({
               onClick={() => setExpandedSection(expandedSection === 'rituals' ? null : 'rituals')}
             >
               <span className="section-icon">🕯️</span>
-              <span className="section-name">Rituals ({insight.rituals.length})</span>
+              <span className="section-name">{t('insight.rituals', { count: insight.rituals.length })}</span>
               <span className="section-arrow">{expandedSection === 'rituals' ? '▼' : '▶'}</span>
             </button>
             {expandedSection === 'rituals' && (
@@ -209,7 +211,7 @@ export const EnhancedInsightCard: React.FC<EnhancedInsightCardProps> = ({
               onClick={() => setExpandedSection(expandedSection === 'prompts' ? null : 'prompts')}
             >
               <span className="section-icon">📝</span>
-              <span className="section-name">Journal Prompts ({insight.journalPrompts.length})</span>
+              <span className="section-name">{t('insight.journalPrompts', { count: insight.journalPrompts.length })}</span>
               <span className="section-arrow">{expandedSection === 'prompts' ? '▼' : '▶'}</span>
             </button>
             {expandedSection === 'prompts' && (
@@ -233,7 +235,7 @@ export const EnhancedInsightCard: React.FC<EnhancedInsightCardProps> = ({
               onClick={() => setExpandedSection(expandedSection === 'actions' ? null : 'actions')}
             >
               <span className="section-icon">⚡</span>
-              <span className="section-name">Action Items ({insight.actionItems.length})</span>
+              <span className="section-name">{t('insight.actionItems', { count: insight.actionItems.length })}</span>
               <span className="section-arrow">{expandedSection === 'actions' ? '▼' : '▶'}</span>
             </button>
             {expandedSection === 'actions' && (
@@ -253,26 +255,26 @@ export const EnhancedInsightCard: React.FC<EnhancedInsightCardProps> = ({
       {/* Insight Footer */}
       <div className="insight-footer">
         <div className="insight-confidence">
-          <span className="confidence-label">Confidence:</span>
+          <span className="confidence-label">{t('insight.confidence')}</span>
           <span className="confidence-value">{insight.confidence}%</span>
           {insight.uniqueness > 70 && (
-            <span className="uniqueness-badge">🌟 Highly Personal</span>
+            <span className="uniqueness-badge">{t('insight.highlyPersonal')}</span>
           )}
         </div>
         <div className="insight-actions">
           {onSave && (
             <button className="insight-btn save" onClick={onSave} title="Save Insight">
-              💾 Save
+              {t('insight.save')}
             </button>
           )}
           {onShare && (
             <button className="insight-btn share" onClick={onShare} title="Share">
-              📤 Share
+              {t('insight.share')}
             </button>
           )}
           {onDismiss && (
             <button className="insight-btn dismiss" onClick={onDismiss} title="Dismiss">
-              ✕
+              {t('insight.dismiss')}
             </button>
           )}
         </div>

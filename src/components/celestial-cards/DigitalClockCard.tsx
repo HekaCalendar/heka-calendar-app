@@ -13,14 +13,19 @@ interface Props {
   location: LocationData;
 }
 
-const DigitalClockCardComponent: React.FC<Props> = ({ date: _date, location }) => {
-  const [now, setNow] = useState(new Date());
+const DigitalClockCardComponent: React.FC<Props> = ({ date, location }) => {
   const [expanded, setExpanded] = useState(false);
+  // Live ticking elapsed time so the card remains animated,
+  // but the base "now" is the selected calendar date.
+  const [elapsedMs, setElapsedMs] = useState(0);
 
   useEffect(() => {
-    const i = setInterval(() => setNow(new Date()), 1000);
+    const start = Date.now();
+    const i = setInterval(() => setElapsedMs(Date.now() - start), 1000);
     return () => clearInterval(i);
-  }, []);
+  }, [date]);
+
+  const now = useMemo(() => new Date(date.getTime() + elapsedMs), [date, elapsedMs]);
 
   const counters = useMemo(() => {
     const year = now.getFullYear();
@@ -69,7 +74,7 @@ const DigitalClockCardComponent: React.FC<Props> = ({ date: _date, location }) =
 
   return (
     <div className={`heka-card ${expanded ? 'expanded' : ''}`}>
-      <div className="heka-card__header heka-card__header--enterprise" onClick={() => setExpanded(!expanded)}>
+      <div className="heka-card__header heka-card__header--enterprise" onClick={() => setExpanded(!expanded)} role="button" tabIndex={0} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setExpanded(!expanded); } }}>
         <span className="heka-card__icon">{urgent.icon}</span>
         <div className="heka-card__title-group">
           <span className="heka-card__title">{urgent.name}</span>

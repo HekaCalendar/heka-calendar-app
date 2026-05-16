@@ -12,7 +12,8 @@
  */
 
 import { calculateJulianDay, calculateAllPlanets } from '../astrology/services/swiss-ephemeris/engine';
-import { calculateVoidMoonStatus } from '../astrology/services/calculations/swissCalculations';
+import { calculateVoidMoonStatus, getFallbackPositions } from '../astrology/services/calculations/swissCalculations';
+import { getSignCount } from '../astrology/services/swiss-ephemeris/engine';
 import type { CelestialBody } from '../astrology/types';
 
 // ============================================================================
@@ -224,7 +225,12 @@ export async function getCurrentCelestialState(date: Date = new Date()): Promise
     date.getUTCSeconds()
   );
   
-  const positions = calculateAllPlanets(jd);
+  let positions = calculateAllPlanets(jd);
+  
+  // Fallback when WASM is not yet initialized (mobile cold start)
+  if (!positions || !positions.sun || !positions.moon) {
+    positions = getFallbackPositions(jd, getSignCount() === 13);
+  }
   
   const sun = positions.sun;
   const moon = positions.moon;

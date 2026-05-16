@@ -476,3 +476,61 @@ export const FONTS: Record<FontId, FontTheme> = {
 export const DEFAULT_FONT: FontId = 'elegant';
 
 export const FONT_LIST: FontTheme[] = Object.values(FONTS);
+
+// ============================================================================
+// Sacred Geometry Patterns — Header & Background
+// ============================================================================
+
+export type GeometryPattern =
+  | 'flower-of-life'
+  | 'seed-of-life'
+  | 'metatrons-cube'
+  | 'sri-yantra'
+  | 'merkaba'
+  | 'fruit-of-life'
+  | 'golden-spiral'
+  | 'none';
+
+export type BackgroundGeometryPattern =
+  | 'hex-flower-grid'
+  | 'metatrons-lattice'
+  | 'sri-yantra-mandala'
+  | 'torus-field'
+  | 'tree-of-life'
+  | 'vesica-wave'
+  | 'phyllotaxis-field'
+  | 'none';
+
+export interface GeometryOption {
+  id: GeometryPattern;
+  name: string;
+  icon: string;
+}
+
+export interface BackgroundGeometryOption {
+  id: BackgroundGeometryPattern;
+  name: string;
+  icon: string;
+}
+
+export const HEADER_GEOMETRIES: GeometryOption[] = [
+  { id: 'flower-of-life', name: 'Flower of Life', icon: '🌸' },
+  { id: 'seed-of-life', name: 'Seed of Life', icon: '🌱' },
+  { id: 'metatrons-cube', name: "Metatron's Cube", icon: '◈' },
+  { id: 'sri-yantra', name: 'Sri Yantra', icon: '🔺' },
+  { id: 'merkaba', name: 'Merkaba', icon: '✡' },
+  { id: 'fruit-of-life', name: 'Fruit of Life', icon: '🍇' },
+  { id: 'golden-spiral', name: 'Golden Spiral', icon: '🌀' },
+  { id: 'none', name: 'None', icon: '⛔' },
+];
+
+export const BACKGROUND_GEOMETRIES: BackgroundGeometryOption[] = [
+  { id: 'hex-flower-grid', name: 'Hex Flower Grid', icon: '🌸' },
+  { id: 'metatrons-lattice', name: "Metatron's Lattice", icon: '◈' },
+  { id: 'sri-yantra-mandala', name: 'Sri Yantra Mandala', icon: '🔺' },
+  { id: 'torus-field', name: 'Torus Field', icon: '〰' },
+  { id: 'tree-of-life', name: 'Tree of Life', icon: '🌳' },
+  { id: 'vesica-wave', name: 'Vesica Wave', icon: '🌊' },
+  { id: 'phyllotaxis-field', name: 'Phyllotaxis Field', icon: '🌻' },
+  { id: 'none', name: 'None', icon: '⛔' },
+];

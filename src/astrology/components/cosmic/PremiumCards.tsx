@@ -10,7 +10,9 @@
  */
 
 import React, { useState, useCallback, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { getArcLabel, HEKA_MONTHS, getTodayHekaDate, getHekaYearStart } from '../../../services/calendarService';
+import i18n from '../../../i18n';
 import { SIGN_SYMBOLS, SIGN_ELEMENTS, SIGN_ELEMENTS_13, SIGN_MODALITIES, PLANET_NAMES, type CelestialBody, type ZodiacSign, type PlanetId } from '../../types/core';
 import { getZodiacSystemPreference } from '../../services/natal/zodiacHelpers';
 import type { HekaMonthIndex } from '../../../types';
@@ -62,6 +64,7 @@ interface ChronosCardProps {
 }
 
 const ChronosCard: React.FC<ChronosCardProps> = ({ currentTime, julianDay, positions, isExpanded, onToggle }) => {
+  const { t } = useTranslation('celestial');
   const [displayTime, setDisplayTime] = useState(currentTime);
   const hekaDate = getTodayHekaDate();
   const hekaMonth = HEKA_MONTHS[hekaDate.month];
@@ -83,8 +86,8 @@ const ChronosCard: React.FC<ChronosCardProps> = ({ currentTime, julianDay, posit
   const dayOfYear = Math.floor((displayTime.getTime() - yearStart.getTime()) / (1000 * 60 * 60 * 24));
   
   // Civil date formatting
-  const civilWeekday = displayTime.toLocaleDateString('en-US', { weekday: 'long' });
-  const civilDate = displayTime.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+  const civilWeekday = new Intl.DateTimeFormat(i18n.language || 'en', { weekday: 'long' }).format(displayTime);
+  const civilDate = new Intl.DateTimeFormat(i18n.language || 'en', { month: 'long', day: 'numeric', year: 'numeric' }).format(displayTime);
   
   // Next celestial event (mock - would come from ephemeris)
   const nextEvent = positions?.moon ? `☽ enters ${getNextSign(positions.moon.sign)} in ~3 hours` : 'Calculating...';
@@ -121,7 +124,7 @@ const ChronosCard: React.FC<ChronosCardProps> = ({ currentTime, julianDay, posit
             <span className="heka-day">{hekaDate.day}</span>
             <span className="heka-year">{hekaDate.year}</span>
           </div>
-          <div className="heka-label">HEKA DATE</div>
+          <div className="heka-label">{t('premiumCards.hekaDate')}</div>
         </div>
         <div className="card-secondary-content">
           <div className="civil-time">{displayTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' })}</div>
@@ -129,7 +132,7 @@ const ChronosCard: React.FC<ChronosCardProps> = ({ currentTime, julianDay, posit
         </div>
         <div className="expand-hint">
           <span className="expand-icon">↓</span>
-          <span>Expand</span>
+          <span>{t('premiumCards.expand')}</span>
         </div>
       </div>
 
@@ -137,13 +140,13 @@ const ChronosCard: React.FC<ChronosCardProps> = ({ currentTime, julianDay, posit
       {isExpanded && (
         <div className="card-expanded" onClick={(e) => e.stopPropagation()}>
           <div className="expanded-header">
-            <div className="expanded-title">THE AEON GATE</div>
+            <div className="expanded-title">{t('premiumCards.aeonGate')}</div>
             <button className="close-btn" onClick={onToggle}>×</button>
           </div>
           
           {/* HEKA Section */}
           <div className="expanded-section heka-section">
-            <div className="section-label">◈ HEKA CALENDAR</div>
+            <div className="section-label">{t('premiumCards.hekaCalendar')}</div>
             <div className="heka-expanded-display">
               <span className="heka-month-large">{hekaMonth.name}</span>
               <span className="heka-day-large">{hekaDate.day}</span>
@@ -151,21 +154,21 @@ const ChronosCard: React.FC<ChronosCardProps> = ({ currentTime, julianDay, posit
             </div>
             <div className="heka-meta">
               <span className="arc-tag">{arcLabel}</span>
-              <span className="month-tag">Month {hekaDate.month + 1} of 13</span>
-              <span className="day-tag">Day {dayOfYear} of {yearEnd.getTime() - yearStart.getTime() > 366 * 86400000 ? 366 : 365}</span>
+              <span className="month-tag">{t('premiumCards.monthOf13', { month: hekaDate.month + 1 })}</span>
+              <span className="day-tag">{t('premiumCards.dayOfYear', { day: dayOfYear, total: yearEnd.getTime() - yearStart.getTime() > 366 * 86400000 ? 366 : 365 })}</span>
             </div>
           </div>
 
           {/* Year Progress */}
           <div className="expanded-section">
-            <div className="section-label">YEAR PROGRESS</div>
+            <div className="section-label">{t('premiumCards.yearProgress')}</div>
             <div className="progress-container">
               <div className="progress-track">
                 <div className="progress-fill" style={{ width: `${Math.min(yearProgress, 100)}%` }} />
                 <div className="progress-glow" style={{ left: `${Math.min(yearProgress, 100)}%` }} />
               </div>
               <div className="progress-labels">
-                <span>{dayOfYear} days elapsed</span>
+                <span>{t('premiumCards.daysElapsed', { days: dayOfYear })}</span>
                 <span>{yearProgress.toFixed(1)}%</span>
               </div>
             </div>
@@ -173,7 +176,7 @@ const ChronosCard: React.FC<ChronosCardProps> = ({ currentTime, julianDay, posit
 
           {/* Civil Time Section */}
           <div className="expanded-section">
-            <div className="section-label">🌍 CIVIL TIME</div>
+            <div className="section-label">{t('premiumCards.civilTime')}</div>
             <div className="civil-expanded">
               <div className="civil-weekday">{civilWeekday}</div>
               <div className="civil-full-date">{civilDate}</div>
@@ -183,12 +186,12 @@ const ChronosCard: React.FC<ChronosCardProps> = ({ currentTime, julianDay, posit
           {/* Luminaries Now */}
           {positions && (
             <div className="expanded-section luminaries">
-              <div className="section-label">LUMINARIES NOW</div>
+              <div className="section-label">{t('premiumCards.luminariesNow')}</div>
               <div className="luminaries-grid">
                 {positions.sun && (
                   <div className="luminary-item">
                     <span className="lum-symbol">☉</span>
-                    <span className="lum-name">Sun</span>
+                    <span className="lum-name">{t('premiumCards.sun')}</span>
                     <span className="lum-position">
                       {SIGN_SYMBOLS[positions.sun.sign as ZodiacSign]} {(positions.sun.degreeInSign ?? 0).toFixed(0)}°
                     </span>
@@ -201,7 +204,7 @@ const ChronosCard: React.FC<ChronosCardProps> = ({ currentTime, julianDay, posit
                 {positions.moon && (
                   <div className="luminary-item">
                     <span className="lum-symbol">☽</span>
-                    <span className="lum-name">Moon</span>
+                    <span className="lum-name">{t('premiumCards.moon')}</span>
                     <span className="lum-position">
                       {SIGN_SYMBOLS[positions.moon.sign as ZodiacSign]} {(positions.moon.degreeInSign ?? 0).toFixed(0)}°
                     </span>
@@ -217,16 +220,16 @@ const ChronosCard: React.FC<ChronosCardProps> = ({ currentTime, julianDay, posit
 
           {/* Julian Day */}
           <div className="expanded-section">
-            <div className="section-label">JULIAN DAY</div>
+            <div className="section-label">{t('premiumCards.julianDay')}</div>
             <div className="jd-display">
               <code className="jd-value">{julianDay.toFixed(5)}</code>
-              <button className="jd-action" onClick={copyJulianDay}>Copy</button>
+              <button className="jd-action" onClick={copyJulianDay}>{t('premiumCards.copy')}</button>
             </div>
           </div>
 
           {/* Next Event */}
           <div className="expanded-section next-event">
-            <div className="section-label">NEXT CELESTIAL EVENT</div>
+            <div className="section-label">{t('premiumCards.nextCelestialEvent')}</div>
             <div className="event-text">{nextEvent}</div>
           </div>
         </div>
@@ -258,70 +261,24 @@ interface LunaCardProps {
   onToggle: () => void;
 }
 
-// Poetic oracle messages for each phase
-const MOON_ORACLES: Record<string, { title: string; poem: string; favors: string[]; warnings: string[] }> = {
-  'New Moon': {
-    title: 'THE DARK MYSTERY',
-    poem: 'In the void between breaths, all potential dwells. The seed waits in darkness, gathering courage to split its shell. Plant intentions now—they will grow with the light.',
-    favors: ['Setting intentions', 'Planting seeds', 'Beginning new ventures', 'Inner vision work'],
-    warnings: ['Don\'t push for immediate results', 'Avoid major launches']
-  },
-  'Waxing Crescent': {
-    title: 'THE FIRST BREATH',
-    poem: 'A sliver of silver pierces the night. The dream begins to breathe, taking its first steps into form. Trust the unfolding.',
-    favors: ['Taking first steps', 'Building momentum', 'Learning new skills', 'Making connections'],
-    warnings: ['Don\'t overcommit', 'Stay flexible']
-  },
-  'First Quarter': {
-    title: 'THE CROSSROADS',
-    poem: 'Half light, half shadow—decision hangs in the balance. The path forward requires action. Choose, and the universe conspires.',
-    favors: ['Making decisions', 'Taking action', 'Pushing through obstacles', 'Committing'],
-    warnings: ['Avoid hesitation', 'Don\'t look back']
-  },
-  'Waxing Gibbous': {
-    title: 'THE GATHERING',
-    poem: 'Almost full, almost complete. The momentum builds like a wave cresting. Refine, adjust, prepare for the revelation.',
-    favors: ['Refining projects', 'Adjusting plans', 'Preparing for launch', 'Gathering resources'],
-    warnings: ['Don\'t rush to completion', 'Patience rewards']
-  },
-  'Full Moon': {
-    title: 'THE GREAT REVEALING',
-    poem: 'All that was hidden in darkness is now revealed in light. The seed planted at the New Moon breaks through soil. Your work culminates. The world witnesses your fullness.',
-    favors: ['Celebration', 'Releasing what no longer serves', 'Public visibility', 'Gratitude practices'],
-    warnings: ['Emotions run high', 'Sleep may be disturbed']
-  },
-  'Waning Gibbous': {
-    title: 'THE SHARING',
-    poem: 'The light begins its gentle retreat, but wisdom remains. Share what you have learned. Teach others what the fullness taught you.',
-    favors: ['Sharing knowledge', 'Teaching', 'Giving back', 'Gratitude'],
-    warnings: ['Don\'t cling to the peak', 'Let the cycle complete']
-  },
-  'Last Quarter': {
-    title: 'THE RELEASING',
-    poem: 'Half remains, half must go. What will you carry forward? What will you leave behind? The choice is yours, and yours alone.',
-    favors: ['Letting go', 'Releasing attachments', 'Clearing space', 'Forgiveness'],
-    warnings: ['Don\'t start new projects', 'Complete what you can']
-  },
-  'Waning Crescent': {
-    title: 'THE SURRENDER',
-    poem: 'A silver whisper fading into black. Rest now. The work is done. Surrender to the darkness, knowing light will return.',
-    favors: ['Deep rest', 'Surrender', 'Meditation', 'Preparation', 'Dream work'],
-    warnings: ['Avoid major decisions', 'Conserve energy']
-  }
-};
-
 const LunaCard: React.FC<LunaCardProps> = ({ moonPhase, moonPosition, isExpanded, onToggle }) => {
+  const { t } = useTranslation('celestial');
   if (!moonPhase) {
     return (
       <div className="premium-card luna loading">
         <div className="card-sheen" />
         <div className="loading-spinner">☽</div>
-        <div>Calculating lunar data...</div>
+        <div>{t('premiumCards.calculatingLunar')}</div>
       </div>
     );
   }
 
-  const oracle = MOON_ORACLES[moonPhase.phase] || MOON_ORACLES['New Moon'];
+  const oracle = {
+    title: t(`dictionaries.moonOracle.${moonPhase.phase}.title`, { defaultValue: t('dictionaries.moonOracle.New Moon.title') }),
+    poem: t(`dictionaries.moonOracle.${moonPhase.phase}.poem`, { defaultValue: t('dictionaries.moonOracle.New Moon.poem') }),
+    favors: t(`dictionaries.moonOracle.${moonPhase.phase}.favors`, { defaultValue: t('dictionaries.moonOracle.New Moon.favors'), returnObjects: true }) as string[],
+    warnings: t(`dictionaries.moonOracle.${moonPhase.phase}.warnings`, { defaultValue: t('dictionaries.moonOracle.New Moon.warnings'), returnObjects: true }) as string[],
+  };
   
   // Calculate moon age percentage through cycle (approximate from angle)
   const synodicMonth = 29.53059;
@@ -370,12 +327,12 @@ const LunaCard: React.FC<LunaCardProps> = ({ moonPhase, moonPosition, isExpanded
         <div className="card-primary-content centered">
           <div className="moon-phase-name">{moonPhase.name.toUpperCase()}</div>
           <div className="moon-trend">
-            {moonPhase.isWaxing ? 'Waxing → Growing' : 'Waning → Diminishing'}
+            {moonPhase.isWaxing ? t('premiumCards.waxingTrend') : t('premiumCards.waningTrend')}
           </div>
         </div>
         <div className="expand-hint">
           <span className="expand-icon">↓</span>
-          <span>Read the Oracle</span>
+          <span>{t('premiumCards.readOracle')}</span>
         </div>
       </div>
 
@@ -383,7 +340,7 @@ const LunaCard: React.FC<LunaCardProps> = ({ moonPhase, moonPosition, isExpanded
       {isExpanded && (
         <div className="card-expanded" onClick={(e) => e.stopPropagation()}>
           <div className="expanded-header">
-            <div className="expanded-title">THE LUNAR TEMPLE</div>
+            <div className="expanded-title">{t('premiumCards.lunarTemple')}</div>
             <button className="close-btn" onClick={onToggle}>×</button>
           </div>
 
@@ -416,7 +373,7 @@ const LunaCard: React.FC<LunaCardProps> = ({ moonPhase, moonPosition, isExpanded
           {/* Moon Position */}
           {moonPosition && (
             <div className="expanded-section">
-              <div className="section-label">☽ MOON'S CURRENT THRONE</div>
+              <div className="section-label">{t('premiumCards.moonsCurrentThrone')}</div>
               <div className="moon-position-card">
                 <span className="mp-sign">{SIGN_SYMBOLS[moonPosition.sign as ZodiacSign]}</span>
                 <span className="mp-degree">{(moonPosition.degreeInSign ?? 0).toFixed(1)}°</span>
@@ -437,7 +394,7 @@ const LunaCard: React.FC<LunaCardProps> = ({ moonPhase, moonPosition, isExpanded
 
           {/* Phase Guidance */}
           <div className="expanded-section">
-            <div className="section-label">THIS PHASE FAVORS</div>
+            <div className="section-label">{t('premiumCards.thisPhaseFavors')}</div>
             <div className="favors-list">
               {oracle.favors.map((favor, i) => (
                 <div key={i} className="favor-item">
@@ -449,7 +406,7 @@ const LunaCard: React.FC<LunaCardProps> = ({ moonPhase, moonPosition, isExpanded
           </div>
 
           <div className="expanded-section">
-            <div className="section-label">BE MINDFUL OF</div>
+            <div className="section-label">{t('premiumCards.beMindful')}</div>
             <div className="warnings-list">
               {oracle.warnings.map((warning, i) => (
                 <div key={i} className="warning-item">
@@ -462,7 +419,7 @@ const LunaCard: React.FC<LunaCardProps> = ({ moonPhase, moonPosition, isExpanded
 
           {/* Next Phase (calculated) */}
           <div className="expanded-section next-phase">
-            <div className="section-label">NEXT PHASE</div>
+            <div className="section-label">{t('premiumCards.nextPhase')}</div>
             <div className="next-phase-info">
               <span className="next-phase-name">
                 {moonPhase.isWaxing 
@@ -505,76 +462,25 @@ interface KronosCardProps {
 
 const CHALDEAN_ORDER: PlanetId[] = ['saturn', 'jupiter', 'mars', 'sun', 'venus', 'mercury', 'moon'];
 
-const PLANETARY_GUIDANCE: Record<string, { 
-  title: string; 
-  description: string; 
-  do: string[]; 
-  dont: string[];
-  quality: string;
-}> = {
-  sun: {
-    title: 'THE SOLAR HOUR',
-    description: 'The Sun illuminates all it touches. This hour favors visibility, leadership, and matters of the heart and ego.',
-    do: ['Take leadership', 'Make important requests', 'Focus on visibility', 'Express yourself', 'Seek recognition'],
-    dont: ['Hide in the shadows', 'Avoid responsibility', 'Dim your light'],
-    quality: 'Vitality & Recognition'
-  },
-  moon: {
-    title: 'THE LUNAR HOUR',
-    description: 'The Moon rules the tides of emotion and intuition. A time for nurturing, home, and psychic receptivity.',
-    do: ['Nurture relationships', 'Trust intuition', 'Home and family matters', 'Emotional processing', 'Dream work'],
-    dont: ['Force rational decisions', 'Ignore feelings', 'Push too hard'],
-    quality: 'Emotion & Intuition'
-  },
-  mars: {
-    title: 'THE MARTIAN HOUR',
-    description: 'Mars brings fire, drive, and competitive energy. Physical action and confrontation are favored.',
-    do: ['Physical activity', 'Handle conflicts directly', 'Exercise', 'Competitive pursuits', 'Take bold action'],
-    dont: ['Avoid necessary confrontation', 'Repress anger', 'Start arguments'],
-    quality: 'Action & Drive'
-  },
-  mercury: {
-    title: 'THE MERCURIAL HOUR',
-    description: 'Mercury quickens the mind and tongue. Communication, learning, and commerce flow easily now.',
-    do: ['Send important messages', 'Sign contracts (if direct)', 'Write and study', 'Negotiate', 'Travel short distances'],
-    dont: ['Engage in deception', 'Spread gossip', 'Sign if Mercury retrograde'],
-    quality: 'Mind & Communication'
-  },
-  jupiter: {
-    title: 'THE JOVIAN HOUR',
-    description: 'Jupiter expands all it touches. Fortune, wisdom, and growth are blessed in this hour.',
-    do: ['Business dealings', 'Seek wisdom', 'Expand horizons', 'Teach and learn', 'Acts of generosity'],
-    dont: ['Be miserly', 'Think small', 'Limit yourself'],
-    quality: 'Expansion & Fortune'
-  },
-  venus: {
-    title: 'THE VENUSIAN HOUR',
-    description: 'Venus bathes the world in beauty and desire. Love, art, and harmony reign supreme.',
-    do: ['Romance and courtship', 'Artistic creation', 'Socialize', 'Create beauty', 'Resolve conflicts peacefully'],
-    dont: ['Force outcomes', 'Ignore aesthetics', 'Rush intimacy'],
-    quality: 'Love & Beauty'
-  },
-  saturn: {
-    title: 'THE SATURNINE HOUR',
-    description: 'Saturn demands discipline and structure. Hard work now yields lasting results.',
-    do: ['Focus on responsibilities', 'Study and organize', 'Plan ahead', 'Build foundations', 'Accept limitations'],
-    dont: ['Cut corners', 'Avoid duties', 'Expect instant results'],
-    quality: 'Discipline & Structure'
-  }
-};
-
 const KronosCard: React.FC<KronosCardProps> = ({ planetaryHour, isExpanded, onToggle }) => {
+  const { t } = useTranslation('celestial');
   if (!planetaryHour) {
     return (
       <div className="premium-card kronos loading">
         <div className="card-sheen" />
         <div className="loading-spinner">◷</div>
-        <div>Calculating planetary hour...</div>
+        <div>{t('premiumCards.calculatingPlanetary')}</div>
       </div>
     );
   }
 
-  const hourData = PLANETARY_GUIDANCE[planetaryHour.planet] || PLANETARY_GUIDANCE.sun;
+  const hourData = {
+    title: t(`dictionaries.planetaryGuidance.${planetaryHour.planet}.title`, { defaultValue: t('dictionaries.planetaryGuidance.sun.title') }),
+    description: t(`dictionaries.planetaryGuidance.${planetaryHour.planet}.description`, { defaultValue: t('dictionaries.planetaryGuidance.sun.description') }),
+    do: t(`dictionaries.planetaryGuidance.${planetaryHour.planet}.do`, { defaultValue: t('dictionaries.planetaryGuidance.sun.do'), returnObjects: true }) as string[],
+    dont: t(`dictionaries.planetaryGuidance.${planetaryHour.planet}.dont`, { defaultValue: t('dictionaries.planetaryGuidance.sun.dont'), returnObjects: true }) as string[],
+    quality: t(`dictionaries.planetaryGuidance.${planetaryHour.planet}.quality`, { defaultValue: t('dictionaries.planetaryGuidance.sun.quality') }),
+  };
   const currentHourIndex = CHALDEAN_ORDER.indexOf(planetaryHour.planet as PlanetId);
   
   // Calculate current hour progress (mock - would use actual sunrise/sunset)
@@ -593,12 +499,12 @@ const KronosCard: React.FC<KronosCardProps> = ({ planetaryHour, isExpanded, onTo
         </div>
         <div className="card-primary-content centered">
           <div className="hour-planet-name">{planetaryHour.planet.toUpperCase()}</div>
-          <div className="hour-ruler-label">Hour Ruler</div>
+          <div className="hour-ruler-label">{t('premiumCards.hourRuler')}</div>
           <div className="hour-quality">{hourData.quality}</div>
         </div>
         <div className="expand-hint">
           <span className="expand-icon">↓</span>
-          <span>The Chaldean Order</span>
+          <span>{t('premiumCards.chaldeanOrder')}</span>
         </div>
       </div>
 
@@ -606,7 +512,7 @@ const KronosCard: React.FC<KronosCardProps> = ({ planetaryHour, isExpanded, onTo
       {isExpanded && (
         <div className="card-expanded" onClick={(e) => e.stopPropagation()}>
           <div className="expanded-header">
-            <div className="expanded-title">THE CHALDEAN HOURGLASS</div>
+            <div className="expanded-title">{t('premiumCards.chaldeanHourglass')}</div>
             <button className="close-btn" onClick={onToggle}>×</button>
           </div>
 
@@ -630,13 +536,13 @@ const KronosCard: React.FC<KronosCardProps> = ({ planetaryHour, isExpanded, onTo
               <div className="hour-progress-track">
                 <div className="hour-progress-fill" style={{ width: `${hourProgress}%` }} />
               </div>
-              <span className="hour-progress-label">{Math.round(100 - hourProgress)} minutes remaining</span>
+              <span className="hour-progress-label">{t('premiumCards.minutesRemaining', { minutes: Math.round(100 - hourProgress) })}</span>
             </div>
           </div>
 
           {/* Chaldean Order Visual */}
           <div className="expanded-section">
-            <div className="section-label">THE CHALDEAN ORDER</div>
+            <div className="section-label">{t('premiumCards.chaldeanOrder')}</div>
             <div className="chaldean-order">
               {CHALDEAN_ORDER.map((planet, i) => {
                 const isCurrent = i === currentHourIndex;
@@ -655,7 +561,7 @@ const KronosCard: React.FC<KronosCardProps> = ({ planetaryHour, isExpanded, onTo
           {/* Sunrise/Sunset Times */}
           {(planetaryHour.sunrise || planetaryHour.sunset) && (
             <div className="expanded-section">
-              <div className="section-label">☀ LOCAL SOLAR TIMES</div>
+              <div className="section-label">{t('premiumCards.localSolarTimes')}</div>
               <div style={{ 
                 display: 'grid', 
                 gridTemplateColumns: '1fr 1fr', 
@@ -667,7 +573,7 @@ const KronosCard: React.FC<KronosCardProps> = ({ planetaryHour, isExpanded, onTo
                 {planetaryHour.sunrise && (
                   <div style={{ textAlign: 'center' }}>
                     <div style={{ fontSize: '20px', marginBottom: '4px' }}>🌅</div>
-                    <div style={{ fontSize: '11px', opacity: 0.7 }}>Sunrise</div>
+                    <div style={{ fontSize: '11px', opacity: 0.7 }}>{t('premiumCards.sunrise')}</div>
                     <div style={{ fontSize: '16px', fontWeight: 600 }}>
                       {planetaryHour.sunrise.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                     </div>
@@ -676,7 +582,7 @@ const KronosCard: React.FC<KronosCardProps> = ({ planetaryHour, isExpanded, onTo
                 {planetaryHour.sunset && (
                   <div style={{ textAlign: 'center' }}>
                     <div style={{ fontSize: '20px', marginBottom: '4px' }}>🌇</div>
-                    <div style={{ fontSize: '11px', opacity: 0.7 }}>Sunset</div>
+                    <div style={{ fontSize: '11px', opacity: 0.7 }}>{t('premiumCards.sunset')}</div>
                     <div style={{ fontSize: '16px', fontWeight: 600 }}>
                       {planetaryHour.sunset.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                     </div>
@@ -688,13 +594,13 @@ const KronosCard: React.FC<KronosCardProps> = ({ planetaryHour, isExpanded, onTo
 
           {/* Why This Hour */}
           <div className="expanded-section">
-            <div className="section-label">WHY {planetaryHour.planet.toUpperCase()} NOW?</div>
+            <div className="section-label">{t('premiumCards.whyNow', { planet: planetaryHour.planet.toUpperCase() })}</div>
             <p className="hour-description">{hourData.description}</p>
           </div>
 
           {/* Do's and Don'ts */}
           <div className="expanded-section">
-            <div className="section-label">✓ FAVORED ACTIVITIES</div>
+            <div className="section-label">{t('premiumCards.favoredActivities')}</div>
             <div className="activities-list do">
               {hourData.do.map((activity, i) => (
                 <div key={i} className="activity-item">
@@ -706,7 +612,7 @@ const KronosCard: React.FC<KronosCardProps> = ({ planetaryHour, isExpanded, onTo
           </div>
 
           <div className="expanded-section">
-            <div className="section-label">✗ BEST TO AVOID</div>
+            <div className="section-label">{t('premiumCards.bestToAvoid')}</div>
             <div className="activities-list dont">
               {hourData.dont.map((activity, i) => (
                 <div key={i} className="activity-item">
@@ -746,15 +652,16 @@ const PLANET_DIGNITY: Record<string, Record<string, 'strong' | 'weak' | 'neutral
 };
 
 const StationCard: React.FC<StationCardProps> = ({ retrogrades, positions, isExpanded, onToggle }) => {
+  const { t } = useTranslation('celestial');
   const retroCount = retrogrades.length;
   const directCount = positions ? Object.keys(positions).filter(p => !positions[p].isRetrograde).length : 0;
   
   // Weather rating
   const getWeatherRating = () => {
-    if (retroCount === 0) return { label: 'Clear Skies', icon: '☀️', color: '#34d399' };
-    if (retroCount <= 2) return { label: 'Partly Cloudy', icon: '⛅', color: '#fbbf24' };
-    if (retroCount <= 4) return { label: 'Stormy', icon: '⛈️', color: '#f97316' };
-    return { label: 'Heavy Weather', icon: '🌪️', color: '#ef4444' };
+    if (retroCount === 0) return { label: t('premiumCards.clearSkies'), icon: '☀️', color: '#34d399' };
+    if (retroCount <= 2) return { label: t('premiumCards.partlyCloudy'), icon: '⛅', color: '#fbbf24' };
+    if (retroCount <= 4) return { label: t('premiumCards.stormy'), icon: '⛈️', color: '#f97316' };
+    return { label: t('premiumCards.heavyWeather'), icon: '🌪️', color: '#ef4444' };
   };
   
   const weather = getWeatherRating();
@@ -774,7 +681,7 @@ const StationCard: React.FC<StationCardProps> = ({ retrogrades, positions, isExp
           <div className="retro-planets">
             {retroCount > 0 
               ? retrogrades.map(r => SYMBOLS[r.planet as PlanetId]).join(' ')
-              : 'All planets direct'
+              : t('premiumCards.allPlanetsDirect')
             }
           </div>
           <div className="weather-label" style={{ color: weather.color }}>{weather.label}</div>
@@ -789,7 +696,7 @@ const StationCard: React.FC<StationCardProps> = ({ retrogrades, positions, isExp
       {isExpanded && (
         <div className="card-expanded" onClick={(e) => e.stopPropagation()}>
           <div className="expanded-header">
-            <div className="expanded-title">THE CELESTIAL WEATHER</div>
+            <div className="expanded-title">{t('premiumCards.celestialWeather')}</div>
             <button className="close-btn" onClick={onToggle}>×</button>
           </div>
 
@@ -799,14 +706,14 @@ const StationCard: React.FC<StationCardProps> = ({ retrogrades, positions, isExp
               <span className="wr-icon">{weather.icon}</span>
               <div className="wr-info">
                 <span className="wr-label">{weather.label}</span>
-                <span className="wr-count">{directCount} direct, {retroCount} retrograde</span>
+                <span className="wr-count">{t('premiumCards.directRetrograde', { direct: directCount, retrograde: retroCount })}</span>
               </div>
             </div>
           </div>
 
           {/* Planet Status List */}
           <div className="expanded-section">
-            <div className="section-label">PLANETARY STATIONS</div>
+            <div className="section-label">{t('premiumCards.planetaryStations')}</div>
             <div className="planet-status-list">
               {positions && PLANET_ORDER.map(planetId => {
                 const body = positions[planetId];
@@ -834,7 +741,7 @@ const StationCard: React.FC<StationCardProps> = ({ retrogrades, positions, isExp
                       </div>
                     </div>
                     <div className="pr-motion">
-                      {isRetro ? '← Retrograde' : '→ Direct'}
+                      {isRetro ? t('premiumCards.retrograde') : t('premiumCards.direct')}
                     </div>
                   </div>
                 );
@@ -874,6 +781,7 @@ interface StelliumCardProps {
 }
 
 const StelliumCard: React.FC<StelliumCardProps> = ({ positions, isExpanded, onToggle }) => {
+  const { t } = useTranslation('celestial');
   // Calculate elemental balance
   const getElementalBalance = () => {
     if (!positions) return { fire: 0, earth: 0, air: 0, water: 0 };
@@ -923,14 +831,14 @@ const StelliumCard: React.FC<StelliumCardProps> = ({ positions, isExpanded, onTo
           })}
         </div>
         <div className="card-primary-content centered">
-          <div className="stellium-title">CURRENT ALIGNMENTS</div>
+          <div className="stellium-title">{t('premiumCards.currentAlignments')}</div>
           <div className="stellium-count">
-            {positions ? Object.keys(positions).length : 0} celestial bodies tracked
+            {t('premiumCards.celestialBodiesTracked', { count: positions ? Object.keys(positions).length : 0 })}
           </div>
         </div>
         <div className="expand-hint">
           <span className="expand-icon">↓</span>
-          <span>View Planetary Spheres</span>
+          <span>{t('premiumCards.viewPlanetary')}</span>
         </div>
       </div>
 
@@ -938,13 +846,13 @@ const StelliumCard: React.FC<StelliumCardProps> = ({ positions, isExpanded, onTo
       {isExpanded && (
         <div className="card-expanded" onClick={(e) => e.stopPropagation()}>
           <div className="expanded-header">
-            <div className="expanded-title">THE PLANETARY SPHERES</div>
+            <div className="expanded-title">{t('premiumCards.planetarySpheres')}</div>
             <button className="close-btn" onClick={onToggle}>×</button>
           </div>
 
           {/* Elemental Balance */}
           <div className="expanded-section balance-section">
-            <div className="section-label">ELEMENTAL BALANCE</div>
+            <div className="section-label">{t('premiumCards.elementalBalance')}</div>
             <div className="elemental-bars">
               {Object.entries(elements).map(([element, count]) => (
                 <div key={element} className="element-bar">
@@ -966,7 +874,7 @@ const StelliumCard: React.FC<StelliumCardProps> = ({ positions, isExpanded, onTo
 
           {/* Modal Balance */}
           <div className="expanded-section balance-section">
-            <div className="section-label">MODAL BALANCE</div>
+            <div className="section-label">{t('premiumCards.modalBalance')}</div>
             <div className="modal-chips">
               {Object.entries(modalities).map(([modality, count]) => (
                 <div key={modality} className={`modal-chip ${count > 0 ? 'active' : ''}`}>
@@ -980,7 +888,7 @@ const StelliumCard: React.FC<StelliumCardProps> = ({ positions, isExpanded, onTo
 
           {/* Planet Spheres */}
           <div className="expanded-section">
-            <div className="section-label">CURRENT POSITIONS</div>
+            <div className="section-label">{t('premiumCards.currentPositions')}</div>
             <div className="planet-spheres">
               {positions && PLANET_ORDER.map(planetId => {
                 const body = positions[planetId];

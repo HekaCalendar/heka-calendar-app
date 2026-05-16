@@ -1,0 +1,122 @@
+{
+  "en": {
+    "title": "HEKA Calendar v2.2.1",
+    "description": "HEKA Calendar v2.2.1 - The 13-month calendar aligned with celestial rhythms"
+  },
+  "es": {
+    "title": "HEKA Calendar v2.2.1",
+    "description": "HEKA Calendar v2.2.1 - El calendario de 13 meses alineado con los ritmos celestiales"
+  },
+  "fr": {
+    "title": "HEKA Calendrier v2.2.1",
+    "description": "HEKA Calendrier v2.2.1 - Le calendrier de 13 mois aligné avec les rythmes célestes"
+  },
+  "de": {
+    "title": "HEKA Kalender v2.2.1",
+    "description": "HEKA Kalender v2.2.1 - Der 13-monatige Kalender, der den himmlischen Rhythmen entspricht."
+  },
+  "it": {
+    "title": "HEKA Calendar v2.2.1",
+    "description": "HEKA Calendar v2.2.1 - Il calendario di 13 mesi allineato ai ritmi celesti"
+  },
+  "pt": {
+    "title": "Calendário HEKA v2.2.1",
+    "description": "HEKA Calendário v2.2.1 - O calendário de 13 meses alinhado com os ritmos celestiais"
+  },
+  "zh": {
+    "title": "HEKA 日历 v2.2.1",
+    "description": "HEKA日历v2.2.1 - 与天体节奏对齐的13个月日历"
+  },
+  "ja": {
+    "title": "HEKA カレンダー v2.2.1",
+    "description": "HEKA カレンダー v2.2.1 - 天体リズムに合った13ヶ月カレンダー"
+  },
+  "ko": {
+    "title": "HEKA 캘린더 v2.2.1",
+    "description": "HEKA 캘린더 v2.2.1 - 천체 리듬과 맞춘 13개월 캘린더"
+  },
+  "ar": {
+    "title": "HEKA التقويم v2.2.1",
+    "description": "HEKA التقويم v2.2.1 - التقويم الذي يحتوي على 13 شهرًا متناغمًا مع الإيقاع السماوي"
+  },
+  "hi": {
+    "title": "HEKA कैलेंडर v2.2.1",
+    "description": "HEKA कैलेंडर v2.2.1 - स्वर्गीय लयों के साथ संरेखित 13 महीने का कैलेंडर"
+  },
+  "ru": {
+    "title": "HEKA Календарь v2.2.1",
+    "description": "HEKA Календарь v2.2.1 - 13-месячный календарь, согласованный с небесными ритмами"
+  },
+  "tr": {
+    "title": "HEKA Takvim v2.2.1",
+    "description": "HEKA Takvim v2.2.1 - Gök cisimleriyle uyumlu 13 aylık takvim"
+  },
+  "pl": {
+    "title": "Kalendarz HEKA v2.2.1",
+    "description": "HEKA Kalendarz v2.2.1 - 13-miesięczny kalendarz dostosowany do rytmiów niebios"
+  },
+  "nl": {
+    "title": "HEKA Agenda v2.2.1",
+    "description": "HEKA Kalender v2.2.1 - De 13-maanden kalender uitgelijnd met hemelse ritmpjes"
+  },
+  "sv": {
+    "title": "HEKA Kalender v2.2.1",
+    "description": "HEKA Kalender v2.2.1 - Den 13-månaderskalender som är anpassad till himlakropars rytm"
+  },
+  "el": {
+    "title": "Ημερολόγιο HEKA v2.2.1",
+    "description": "ΗKA Ημερολόγιο v2.2.1 - Το 13-μηνο ημερολόγιο που συντονίζεται με τους ουρανίους ρυθμούς"
+  },
+  "he": {
+    "title": "לוח שנה HEKA v2.2.1",
+    "description": "לוח שנה HEKA v2.2.1 - לוח השנה ה-13 חולק עם ריטמים שמיים"
+  },
+  "th": {
+    "title": "ปฏิทิน HEKA v2.2.1",
+    "description": "HEKA ปฏิทิน v2.2.1 - ปฏิทิน 13 เดือนที่จัดเต็มกับจังหวะของดาราจักร"
+  },
+  "vi": {
+    "title": "Lịch HEKA phiên bản v2.2.1",
+    "description": "Lịch HEKA v2.2.1 - Lịch 13 tháng được canh lề với nhịp đập của các vì sao chưởng"
+  },
+  "id": {
+    "title": "Kalender HEKA v2.2.1",
+    "description": "HEKA Kalender v2.2.1 - Kalender 13 bulan yang sejalan dengan ritme langit"
+  },
+  "uk": {
+    "title": "КАлендар HEKA версії v2.2.1",
+    "description": "HEKA Календар v2.2.1 - 13-місячний календар, що вирівнюється з небесними ритмами"
+  },
+  "ro": {
+    "title": "HEKA Calendar v2.2.1",
+    "description": "HEKA Calendar v2.2.1 - Calendarul de 13 luni aliniat cu ritmurile cereşti"
+  },
+  "cs": {
+    "title": "HEKA Kalendář v2.2.1",
+    "description": "HEKA Kalendář v2.2.1 - 13měsíční kalendář zarovnaný s nebeskými rytmy"
+  },
+  "hu": {
+    "title": "HEKA Naptár v2.2.1",
+    "description": "HEKA Naptár v2.2.1 - A 13 hónapos naptár, amely az égi ritmusokkal összhangban van"
+  },
+  "da": {
+    "title": "HEKA Kalender v2.2.1",
+    "description": "HEKA Kalender v2.2.1 - Den 13-måneders kalender, der er afstemt efter himmelige rytmer"
+  },
+  "fi": {
+    "title": "HEKA Kalenteri v2.2.1",
+    "description": "HEKA Kalenteri v2.2.1 - 13 kuukautta pitkä kalenteri, joka on suunniteltu tärmätahtiin mukautumaan"
+  },
+  "no": {
+    "title": "HEKA Kalender v2.2.1",
+    "description": "HEKA Kalender v2.2.1 - Den 13-måneders kalender som er i samklang med himmelrytmer"
+  },
+  "sk": {
+    "title": "HEKA Kalendár v2.2.1",
+    "description": "HEKA Kalendár v2.2.1 - 13-mesičný kalendár zarovnávaný s nebeskými rytmy"
+  },
+  "bg": {
+    "title": "HEKA Календар v2.2.1",
+    "description": "HEKA Календар v2.2.1 - 13-месечен календар, подравнен с небесни ритми"
+  }
+}

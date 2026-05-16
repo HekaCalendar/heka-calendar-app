@@ -4,21 +4,24 @@
  */
 
 import { memo } from 'react';
+import { useTranslation } from 'react-i18next';
 import type { LunarMansionSectionProps } from './types';
 
 export const LunarMansionSection = memo(({
   mansion,
   isLoading,
 }: LunarMansionSectionProps) => {
+  const { t } = useTranslation('dayPanel');
+
   if (isLoading) {
     return (
       <div className="day-panel__section day-panel__mansion">
         <div className="day-panel__section-title">
-          <span>🌟</span> Lunar Mansion
+          <span>🌟</span> {t('lunarMansion.title')}
         </div>
         <div className="day-panel__mansion-loading">
           <span className="spinner"></span>
-          <span>Calculating sidereal moon position...</span>
+          <span>{t('lunarMansion.calculating')}</span>
         </div>
       </div>
     );
@@ -30,18 +33,18 @@ export const LunarMansionSection = memo(({
 
   const { moonMansion, moonQuarter, sunMansion } = mansion;
   const quarterLabels = [
-    'Initiation — the seed is planted',
-    'Deepening — roots take hold',
-    'Crisis — the test arrives',
-    'Completion — the fruit ripens',
+    t('lunarMansion.quarters.initiation'),
+    t('lunarMansion.quarters.deepening'),
+    t('lunarMansion.quarters.crisis'),
+    t('lunarMansion.quarters.completion'),
   ];
   const quarterLabel = quarterLabels[Math.min(moonQuarter - 1, 3)] || 'Unknown quarter';
 
   return (
     <div className="day-panel__section day-panel__mansion">
       <div className="day-panel__section-title">
-        <span>🌟</span> Lunar Mansion
-        <span className="mansion-mode-badge">TRUE Mode</span>
+        <span>🌟</span> {t('lunarMansion.title')}
+        <span className="mansion-mode-badge">{t('lunarMansion.trueMode')}</span>
       </div>
 
       {/* Moon's Mansion — Primary */}
@@ -57,27 +60,27 @@ export const LunarMansionSection = memo(({
         <div className="mansion-card__theme">{moonMansion.theme}</div>
 
         <div className="mansion-card__totem">
-          <span className="mansion-totem-label">Totem</span>
+          <span className="mansion-totem-label">{t('lunarMansion.totem')}</span>
           <span className="mansion-totem-value">{moonMansion.totem}</span>
         </div>
 
         <div className="mansion-card__details">
           <div className="mansion-detail">
-            <span className="mansion-detail__label">Gift</span>
+            <span className="mansion-detail__label">{t('lunarMansion.gift')}</span>
             <span className="mansion-detail__value">{moonMansion.gift}</span>
           </div>
           <div className="mansion-detail">
-            <span className="mansion-detail__label">Ruler</span>
+            <span className="mansion-detail__label">{t('lunarMansion.ruler')}</span>
             <span className="mansion-detail__value">{moonMansion.ruler}</span>
           </div>
           <div className="mansion-detail">
-            <span className="mansion-detail__label">Quality</span>
+            <span className="mansion-detail__label">{t('lunarMansion.quality')}</span>
             <span className={`mansion-detail__value mansion-quality--${moonMansion.quality}`}>
               {moonMansion.quality}
             </span>
           </div>
           <div className="mansion-detail">
-            <span className="mansion-detail__label">Quarter</span>
+            <span className="mansion-detail__label">{t('lunarMansion.quarter')}</span>
             <span className="mansion-detail__value">{moonQuarter} — {quarterLabel}</span>
           </div>
         </div>
@@ -88,7 +91,7 @@ export const LunarMansionSection = memo(({
         <div className="mansion-card__header">
           <span className="mansion-card__symbol">{sunMansion?.symbol || '?'}</span>
           <div className="mansion-card__title-group">
-            <div className="mansion-card__name mansion-card__name--small">Sun travels through {sunMansion.universalName}</div>
+            <div className="mansion-card__name mansion-card__name--small">{t('lunarMansion.sunTravelsThrough', { name: sunMansion.universalName })}</div>
           </div>
         </div>
       </div>

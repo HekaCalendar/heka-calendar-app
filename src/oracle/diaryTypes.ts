@@ -12,31 +12,43 @@ import type { ContentTheme } from './oracleEngine';
 export interface DiaryEntry {
   /** Unique identifier */
   id: string;
-  
+
   /** Date string (YYYY-MM-DD) */
   date: string;
-  
+
   /** ISO timestamp when entry was created */
   timestamp: string;
-  
-  /** Entry content (plain text with newlines) */
+
+  /** Entry content (plain text or markdown) */
   content: string;
-  
+
   /** Visual theme for this entry */
   theme?: JournalTheme;
-  
+
   /** Font for this entry */
   font?: JournalFont;
-  
+
   /** Auto-detected themes from content analysis */
   detectedThemes?: ContentTheme[];
-  
+
   /** Oracle insight attached to this entry (if any) */
   insight?: DiaryInsight;
-  
+
   /** Celestial context at time of writing */
   celestialContext?: CelestialContext;
-  
+
+  /** User-defined tags */
+  tags?: string[];
+
+  /** Whether content is markdown */
+  isMarkdown?: boolean;
+
+  /** Revision count (managed by DB layer) */
+  revisionCount?: number;
+
+  /** Sync status (managed by DB layer) */
+  syncStatus?: 'synced' | 'pending' | 'failed';
+
   /** Creation metadata */
   createdAt: string;
   updatedAt: string;

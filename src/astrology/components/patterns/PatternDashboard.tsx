@@ -9,6 +9,7 @@
  */
 
 import React, { useState, useEffect } from 'react';
+import i18n from '../../../i18n';
 import { patternEngine, type UserEvent, type PatternCorrelation } from '../../services/patterns/patternRecognition';
 
 interface PatternDashboardProps {
@@ -432,11 +433,11 @@ export const PatternDashboard: React.FC<PatternDashboardProps> = ({ onClose }) =
                   <div style={styles.eventContent}>
                     <div style={styles.eventTitle}>{event.description}</div>
                     <div style={styles.eventDate}>
-                      {new Date(event.date).toLocaleDateString('en-US', {
+                      {new Intl.DateTimeFormat(i18n.language || 'en', {
                         month: 'short',
                         day: 'numeric',
                         year: 'numeric',
-                      })}
+                      }).format(new Date(event.date))}
                     </div>
                   </div>
                   <div style={styles.intensityBar}>

@@ -50,6 +50,23 @@ export async function getDailyAstrology(
   const jd = calculateJulianDay(year, month, day, 12, 0);
   const positions = calculateAllPlanets(jd, ['sun', 'moon']);
   
+  // Fallback when WASM not yet initialized
+  if (!positions?.sun || !positions?.moon) {
+    return {
+      date: civilDate.toISOString().split('T')[0],
+      hekaDate,
+      moonPhase: { phase: 'full', name: 'Full Moon', illumination: 100, meaning: 'Completion and illumination', guidance: 'A time to celebrate achievements and release what no longer serves you.' },
+      moonSign: 'leo',
+      sunSign: 'leo',
+      dailyTheme: 'Balance and reflection',
+      guidance: 'The cosmos aligns in harmony. Trust your inner wisdom.',
+      journalPrompt: 'What are you ready to release under this Full Moon?',
+      affirmation: 'I am in harmony with the cosmic flow.',
+      powerMoment: null,
+      voidOfCourse: false,
+    };
+  }
+  
   const moonPhase = calculateMoonPhase(positions.moon.longitude, positions.sun.longitude);
   const dailyTheme = generateDailyTheme(moonPhase);
   const guidance = generateDailyGuidance(moonPhase, positions);
@@ -125,17 +142,29 @@ function generateDailyAffirmation(moonSign: string): string {
     'sagittarius': 'I expand into my highest potential.',
     'capricorn': 'I build my dreams.',
     'aquarius': 'I celebrate my uniqueness.',
-    'pisces': 'I trust my intuition.'
+    'pisces': 'I trust my intuition.',
+    'ophiuchus': 'I heal and transform with ancient wisdom.'
   };
   return affirmations[moonSign] || 'I am whole and connected.';
 }
 
 function calculatePowerMoment(date: Date): string | null {
-  const hour = date.getHours();
-  if (hour >= 6 && hour <= 9) return 'Sunrise - New beginnings';
-  if (hour >= 11 && hour <= 13) return 'Solar noon - Peak energy';
-  if (hour >= 17 && hour <= 19) return 'Sunset - Reflection';
-  return null;
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  const target = new Date(date);
+  target.setHours(0, 0, 0, 0);
+  const isToday = today.getTime() === target.getTime();
+
+  if (isToday) {
+    const hour = date.getHours();
+    if (hour >= 6 && hour <= 9) return 'Sunrise - New beginnings';
+    if (hour >= 11 && hour <= 13) return 'Solar noon - Peak energy';
+    if (hour >= 17 && hour <= 19) return 'Sunset - Reflection';
+    return null;
+  }
+
+  // For future/past dates, list all key power moments
+  return 'Sunrise • Solar Noon • Sunset — Key moments for this day';
 }
 
 export default { getDailyAstrology };

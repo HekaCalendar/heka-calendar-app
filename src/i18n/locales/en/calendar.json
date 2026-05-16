@@ -95,5 +95,72 @@
   "note": "Note",
   "task": "Task",
   "moonPhase": "Moon Phase",
-  "selectDay": "Select a day to view details"
+  "selectDay": "Select a day to view details",
+  "arcSuffix": "Arc",
+  "navigation": {
+    "previousMonth": "Previous month",
+    "nextMonth": "Next month",
+    "goToToday": "Go to today",
+    "today": "Today"
+  },
+  "print": {
+    "title": "Print calendar",
+    "label": "Print"
+  },
+  "expand": {
+    "shrinkHorizontal": "Shrink horizontally",
+    "expandHorizontal": "Expand horizontally",
+    "shrinkVertical": "Shrink vertically",
+    "expandVertical": "Expand vertically"
+  },
+  "year": {
+    "viewEntireYear": "View entire year",
+    "label": "Year"
+  },
+  "search": {
+    "title": "Search dates",
+    "label": "Search"
+  },
+  "features": {
+    "astrologyHub": "Astrology Hub",
+    "stars": "Stars",
+    "cosmicCircle": "Cosmic Circle",
+    "circle": "Circle",
+    "oracleJournal": "Oracle Journal",
+    "journal": "Journal",
+    "aboutHeka": "About HEKA Calendar",
+    "about": "About",
+    "yourStatistics": "Your statistics",
+    "stats": "Stats",
+    "communityHolidays": "Community holidays",
+    "community": "Community"
+  },
+  "toggles": {
+    "civilDates": "Toggle civil dates",
+    "civil": "Civil",
+    "moonPhases": "Toggle moon phases",
+    "moon": "Moon",
+    "holidays": "Toggle holidays",
+    "holidayLabel": "Holidays"
+  },
+  "prev": "Prev",
+  "next": "Next",
+  "printYear": "Print Year",
+  "close": "Close",
+  "quickNote": "Quick Note",
+  "quickNoteTag": "quick note",
+  "addingTo": "Adding to",
+  "typeYourNote": "Type your note...",
+  "saveNote": "Save Note",
+  "ctrlEnterToSave": "Ctrl + Enter to save • Esc to cancel",
+  "hekaPrefix": "HEKA:",
+  "civilPrefix": "Civil:",
+  "moodPrefix": "Mood:",
+  "searchTips": {
+    "tip1": "\"31st of january\" or \"today\"",
+    "tip2": "\"hexa 15\" or \"april 5\"",
+    "tip3": "Note content or category",
+    "tip4": "\"Christmas\" or \"Australia Day\"",
+    "tip5": "\"2026-01-31\" (ISO format)"
+  }
 }

@@ -109,6 +109,13 @@ export const StarsNotificationSettings: React.FC = () => {
         description="Exact degree, sign, and meaning each time the Moon changes degree"
         tier="ambient"
       />
+      <Switch
+        checked={prefs.sunriseWakeUp}
+        onChange={() => toggle('sunriseWakeUp')}
+        label="Sunrise Wake-Up"
+        description="A gentle notification at sunrise with the planetary hour and moon sign"
+        tier="standard"
+      />
     </div>
   );
 };

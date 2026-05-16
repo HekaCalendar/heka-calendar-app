@@ -146,6 +146,8 @@ const initialState: CalendarState = {
   subRegion: null,
   theme: 'egyptian-gold',
   font: 'elegant',
+  headerGeometry: 'none',
+  backgroundGeometry: 'none',
   auth: {
     isAuthenticated: false,
     userId: null,
@@ -160,7 +162,7 @@ const initialState: CalendarState = {
     showCivilDates: true,
     showMoonPhases: true,
     showHolidays: true,
-    showCelestialCards: false,  // OFF by default
+    showCelestialCards: true,
     pureModeLight: false,
   },
   ui: {
@@ -182,10 +184,10 @@ const initialState: CalendarState = {
   astroProfiles: [],
   selectedAstroProfileId: null,
   astroPreferences: {
-    enableDailyTips: false,
-    enableRetrogradeAlerts: false,
-    enableMoonPhaseAlerts: false,
-    showTransitsOnCalendar: false,
+    enableDailyTips: true,
+    enableRetrogradeAlerts: true,
+    enableMoonPhaseAlerts: true,
+    showTransitsOnCalendar: true,
     zodiacSystem: '12-sign',
     zodiacFrame: 'tropical',
     signCount: 12,
@@ -314,6 +316,7 @@ export const {
   voteForHoliday,
   setCommunityFeatures,
   addCommunityFeature,
+  updateCommunityFeature,
   voteForFeature,
   addInvite,
   respondToInvite,
@@ -336,6 +339,8 @@ export const {
   setNotificationMode,
   setTheme,
   setFont,
+  setHeaderGeometry,
+  setBackgroundGeometry,
   setAuthState,
   setAuthenticated,
   setUnauthenticated,
@@ -368,6 +373,8 @@ interface PersistedState {
   timeMode?: CalendarState['timeMode'];
   theme?: CalendarState['theme'];
   font?: CalendarState['font'];
+  headerGeometry?: CalendarState['headerGeometry'];
+  backgroundGeometry?: CalendarState['backgroundGeometry'];
   auth?: CalendarState['auth'];
   notes?: CalendarState['notes'];
   statistics?: CalendarState['statistics'];
@@ -424,6 +431,8 @@ const preloadedState: { calendar: CalendarState; diary?: any } | undefined = per
         progress: persistedState.progress || initialState.progress,
         theme: persistedState.theme || initialState.theme,
         font: persistedState.font || initialState.font,
+        headerGeometry: persistedState.headerGeometry || initialState.headerGeometry,
+        backgroundGeometry: persistedState.backgroundGeometry || initialState.backgroundGeometry,
         auth: initialState.auth, // Reset auth - Firebase will restore actual state
         // Preserve persisted notes!
         notes: persistedState.notes || {},
@@ -440,14 +449,14 @@ const preloadedState: { calendar: CalendarState; diary?: any } | undefined = per
           stars: {
             ...DEFAULT_NOTIFICATION_PREFERENCES.stars,
             ...(persistedState.notificationPreferences?.stars || {}),
-            dailyCelestialTips: persistedState.astroPreferences?.enableDailyTips ?? (persistedState.notificationPreferences?.stars?.dailyCelestialTips ?? DEFAULT_NOTIFICATION_PREFERENCES.stars.dailyCelestialTips),
-            retrogradeAlerts: persistedState.astroPreferences?.enableRetrogradeAlerts ?? (persistedState.notificationPreferences?.stars?.retrogradeAlerts ?? DEFAULT_NOTIFICATION_PREFERENCES.stars.retrogradeAlerts),
+            dailyCelestialTips: persistedState.notificationPreferences?.stars?.dailyCelestialTips ?? persistedState.astroPreferences?.enableDailyTips ?? DEFAULT_NOTIFICATION_PREFERENCES.stars.dailyCelestialTips,
+            retrogradeAlerts: persistedState.notificationPreferences?.stars?.retrogradeAlerts ?? persistedState.astroPreferences?.enableRetrogradeAlerts ?? DEFAULT_NOTIFICATION_PREFERENCES.stars.retrogradeAlerts,
           },
           // Migration: map old planner preferences
           planner: {
             ...DEFAULT_NOTIFICATION_PREFERENCES.planner,
             ...(persistedState.notificationPreferences?.planner || {}),
-            taskReminders: persistedState.plannerPreferences?.enableTaskNotifications ?? (persistedState.notificationPreferences?.planner?.taskReminders ?? DEFAULT_NOTIFICATION_PREFERENCES.planner.taskReminders),
+            taskReminders: persistedState.notificationPreferences?.planner?.taskReminders ?? persistedState.plannerPreferences?.enableTaskNotifications ?? DEFAULT_NOTIFICATION_PREFERENCES.planner.taskReminders,
           },
           // Ensure all sections get deep-merged defaults
           calendar: {
@@ -497,6 +506,25 @@ import { persistSetupState } from './setupSlice';
 import friendsReducer from './friendsSlice';
 import plannerReducer from './plannerSlice';
 
+// Inject deterministic timestamp into all plain actions to keep reducers pure
+const timestampMiddleware = (_storeAPI: any) => (next: any) => (action: any) => {
+  if (
+    typeof action === 'object' &&
+    action !== null &&
+    typeof action.type === 'string' &&
+    !action.meta?.timestamp
+  ) {
+    return next({
+      ...action,
+      meta: {
+        ...action.meta,
+        timestamp: Date.now(),
+      },
+    });
+  }
+  return next(action);
+};
+
 export const store = configureStore({
   reducer: {
     calendar: calendarSlice.reducer,
@@ -515,7 +543,7 @@ export const store = configureStore({
         ignoredPaths: ['calendar.auth.lastSync', 'calendar.notes'],
       },
       immutableCheck: true,
-    }),
+    }).concat(timestampMiddleware),
   devTools: false,
 });
 
@@ -579,6 +607,8 @@ export function persistState(state: RootState): void {
       timeMode: state.calendar.timeMode,
       theme: state.calendar.theme,
       font: state.calendar.font,
+      headerGeometry: state.calendar.headerGeometry,
+      backgroundGeometry: state.calendar.backgroundGeometry,
       auth: state.calendar.auth,
       notes: state.calendar.notes,
       statistics: state.calendar.statistics,

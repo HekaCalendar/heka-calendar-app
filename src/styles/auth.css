@@ -73,8 +73,8 @@
 }
 
 .auth-modal__close {
-  width: 36px;
-  height: 36px;
+  width: 48px;
+  height: 48px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -242,6 +242,74 @@
 .auth-link:hover {
   color: var(--color-gold);
   text-decoration: underline;
+}
+
+/* ==========================================================================
+   Social Auth Buttons
+   ========================================================================== */
+
+.auth-divider {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  margin: var(--space-3) 0;
+  color: var(--color-text-muted);
+  font-size: var(--text-xs);
+}
+
+.auth-divider::before,
+.auth-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--color-border);
+}
+
+.auth-social-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-3);
+  width: 100%;
+  padding: var(--space-3) var(--space-4);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-surface-elevated);
+  color: var(--color-text);
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.auth-social-btn:hover:not(:disabled) {
+  background: var(--color-surface);
+  border-color: var(--color-gold-dim);
+  transform: translateY(-1px);
+}
+
+.auth-social-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.auth-social-btn--google {
+  border-color: rgba(66, 133, 244, 0.3);
+}
+
+.auth-social-btn--google:hover:not(:disabled) {
+  border-color: rgba(66, 133, 244, 0.6);
+  box-shadow: 0 0 12px rgba(66, 133, 244, 0.15);
+}
+
+.auth-social-btn__icon {
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
 }
 
 /* ==========================================================================

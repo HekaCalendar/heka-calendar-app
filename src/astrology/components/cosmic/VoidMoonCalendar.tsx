@@ -5,6 +5,7 @@
  */
 
 import React, { useState, useMemo } from 'react';
+import i18n from '../../../i18n';
 import { useSelector } from 'react-redux';
 import './VoidMoonCalendar.css';
 import { useVoidMoon, useVoidMoonEvents } from '../../hooks/use-swiss';
@@ -40,7 +41,7 @@ const getDaysInMonth = (year: number, month: number): number => {
 };
 
 // Format time
-const formatTime = (date: Date): string => date.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true });
+const formatTime = (date: Date): string => new Intl.DateTimeFormat(i18n.language || 'en', { hour: 'numeric', minute: '2-digit', hour12: true }).format(date);
 const formatDuration = (minutes: number): string => {
   const h = Math.floor(minutes / 60);
   const m = Math.round(minutes % 60);

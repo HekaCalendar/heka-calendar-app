@@ -12,8 +12,10 @@
    ═══════════════════════════════════════════════════════════════════════════════ */
 
 .celestial-panel {
-  /* Only handle horizontal panning on the panel */
-  touch-action: pan-x !important;
+  /* auto: let the browser evaluate gestures naturally.
+     Since overflow-y:hidden, vertical gestures bubble up to the page.
+     Since overflow-x:auto, horizontal gestures scroll the panel. */
+  touch-action: pan-x pan-y !important;
   
   /* Horizontal scroll enabled; vertical scroll explicitly disabled */
   overflow-x: auto !important;
@@ -21,25 +23,36 @@
   
   /* Don't trap overscroll */
   overscroll-behavior-x: contain !important;
-  -webkit-overflow-scrolling: touch !important;
+  
+  /* REMOVED: -webkit-overflow-scrolling: touch causes compositor issues on
+     Android WebView when combined with backdrop-filter + overflow-x:auto.
+     The layer is misclassified as bidirectionally scrollable, trapping
+     vertical gestures that should bubble up to the page. */
+  -webkit-overflow-scrolling: auto !important;
+  
+  /* backdrop-filter creates a composited layer. On Android WebView this
+     combined with overflow-x:auto traps vertical scroll gestures. */
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
   
   /* Remove any containment that blocks events */
   contain: none !important;
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════════
-   CELESTIAL CARDS (legacy .celestial-expandable-card)
+   LEGACY CELESTIAL CARDS (.celestial-expandable-card only)
+   New .heka-card styles are managed in UnifiedCards.css — do NOT override here.
    ═══════════════════════════════════════════════════════════════════════════════ */
 
 .celestial-panel .celestial-expandable-card {
-  touch-action: auto !important;
+  touch-action: pan-x pan-y !important;
   overflow: visible !important;
   contain: none !important;
   pointer-events: auto !important;
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════════
-   CARD HEADER
+   LEGACY CARD HEADER
    ═══════════════════════════════════════════════════════════════════════════════ */
 
 .celestial-panel .celestial-expandable-card__header {
@@ -50,15 +63,15 @@
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════════
-   ALL CARD CHILDREN
+   ALL LEGACY CARD CHILDREN
    ═══════════════════════════════════════════════════════════════════════════════ */
 
 .celestial-panel .celestial-expandable-card * {
-  touch-action: auto !important;
+  touch-action: pan-x pan-y !important;
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════════
-   SPECIFIC TEXT ELEMENTS
+   LEGACY CARD SPECIFIC ELEMENTS
    ═══════════════════════════════════════════════════════════════════════════════ */
 
 .celestial-panel .celestial-expandable-card__icon,
@@ -68,31 +81,31 @@
 .celestial-panel .celestial-info-section__title,
 .celestial-panel .celestial-info-list__item,
 .celestial-panel .celestial-info-badge {
-  touch-action: auto !important;
+  touch-action: pan-x pan-y !important;
   pointer-events: auto !important;
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════════
-   CARD CONTENT
+   LEGACY CARD CONTENT
    ═══════════════════════════════════════════════════════════════════════════════ */
 
 .celestial-panel .celestial-expandable-card__content {
   overflow: visible !important;
-  touch-action: auto !important;
+  touch-action: pan-x pan-y !important;
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════════
-   LANDSCAPE SPECIFIC
+   LANDSCAPE SPECIFIC — legacy cards only
    ═══════════════════════════════════════════════════════════════════════════════ */
 
 @media (orientation: landscape) {
   .celestial-panel {
-    touch-action: pan-x !important;
+    touch-action: pan-x pan-y !important;
     overscroll-behavior-x: contain !important;
   }
   
   .celestial-panel .celestial-expandable-card {
-    touch-action: auto !important;
+    touch-action: pan-x pan-y !important;
   }
   
   .celestial-panel .celestial-expandable-card__header {
@@ -106,8 +119,11 @@
 
 @media (pointer: coarse) {
   .celestial-panel {
-    touch-action: pan-x !important;
-    -webkit-overflow-scrolling: touch !important;
+    touch-action: pan-x pan-y !important;
+    /* CRITICAL: -webkit-overflow-scrolling:touch causes Android WebView compositor
+       to trap vertical scroll gestures on elements with overflow-x:auto.
+       Changed to auto to let the browser handle scroll naturally. */
+    -webkit-overflow-scrolling: auto !important;
   }
   
   /* Prevent callout menu on iOS Safari — do NOT force touch-action here,

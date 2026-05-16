@@ -14,6 +14,8 @@
  */
 
 import React, { useState, useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
+import i18n from '../i18n';
 import { 
   PLANET_MEANINGS,
   SIGN_MEANINGS,
@@ -46,6 +48,7 @@ export const CelestialForecast: React.FC<CelestialForecastProps> = ({
   moonPhase,
   currentDate = new Date()
 }) => {
+  const { t } = useTranslation('celestial');
   const [activeView, setActiveView] = useState<'now' | 'today' | 'week' | 'transits'>('now');
   const [selectedEvent, setSelectedEvent] = useState<string | null>(null);
   
@@ -59,16 +62,16 @@ export const CelestialForecast: React.FC<CelestialForecastProps> = ({
         <div className="forecast-branding">
           <span className="forecast-logo">🌤️</span>
           <div>
-            <h2>Celestial Forecast</h2>
+            <h2>{t('forecastTitle')}</h2>
             <span className="forecast-datetime">
-              {currentDate.toLocaleDateString('en-US', { 
+              {new Intl.DateTimeFormat(i18n.language || 'en', { 
                 weekday: 'long', 
                 year: 'numeric', 
                 month: 'long', 
                 day: 'numeric',
                 hour: '2-digit',
                 minute: '2-digit'
-              })}
+              }).format(currentDate)}
             </span>
           </div>
         </div>
@@ -140,7 +143,7 @@ export const CelestialForecast: React.FC<CelestialForecastProps> = ({
           <span>Swiss Ephemeris • Real-time calculations • {transits.length} personal transits active</span>
         </div>
         <div className="last-updated">
-          Updated: {currentDate.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })}
+          Updated: {new Intl.DateTimeFormat(i18n.language || 'en', { hour: '2-digit', minute: '2-digit' }).format(currentDate)}
         </div>
       </footer>
     </div>
@@ -158,6 +161,7 @@ const RightNowView: React.FC<{
   onSelectEvent: (id: string) => void;
   selectedEvent: string | null;
 }> = ({ positions, moonPhase, timing, onSelectEvent, selectedEvent }) => {
+  const { t } = useTranslation('celestial');
   const moonData = SIGN_MEANINGS[moonPhase.sign.toLowerCase()];
   
   return (
@@ -201,7 +205,7 @@ const RightNowView: React.FC<{
         </div>
         
         <div className="hero-interpretation">
-          <h3>What This Means Right Now</h3>
+          <h3>{t('whatThisMeans')}</h3>
           <p className="primary-meaning">
             The {moonPhase.phase} Moon in {moonPhase.sign} creates a {moonData?.element} energy atmosphere. 
             {getMoonPhaseNarrative(moonPhase.phase, moonPhase.sign)}
@@ -218,7 +222,7 @@ const RightNowView: React.FC<{
       <section className="active-planets-section">
         <h3 className="section-title">
           <span>🪐</span>
-          <span>Planets Active Right Now</span>
+          <span>{t('planetsActive')}</span>
           <span className="timestamp">{timing.currentTime}</span>
         </h3>
         
@@ -263,11 +267,11 @@ const RightNowView: React.FC<{
                       <p className="reading-lead">{reading.meaning}</p>
                       <div className="reading-sections">
                         <div className="r-section">
-                          <h5>Psychological Impact</h5>
+                          <h5>{t('psychologicalImpact')}</h5>
                           <p>{reading.psychological}</p>
                         </div>
                         <div className="r-section">
-                          <h5>Practical Expression</h5>
+                          <h5>{t('practicalExpression')}</h5>
                           <p>{reading.practical}</p>
                         </div>
                         <div className="r-section shadow">
@@ -277,9 +281,9 @@ const RightNowView: React.FC<{
                       </div>
                     </div>
                     <div className="position-precision">
-                      <span>Exact Position: {pos.sign} {pos.degree.toFixed(2)}°</span>
-                      <span>Speed: {pos.speed?.toFixed(2) || '0'}°/day</span>
-                      {pos.retrograde && <span className="rx-note">Retrograde: Reconsideration period</span>}
+                      <span>{t('exactPosition')}: {pos.sign} {pos.degree.toFixed(2)}°</span>
+                      <span>{t('speed')}: {pos.speed?.toFixed(2) || '0'}°/day</span>
+                      {pos.retrograde && <span className="rx-note">{t('retrogradeNote')}</span>}
                     </div>
                   </div>
                 )}
@@ -301,11 +305,12 @@ const TodayView: React.FC<{
   moonPhase: { phase: string; sign: string };
   timing: TimingData;
 }> = ({ moonPhase, timing }) => {
+  const { t } = useTranslation('celestial');
   return (
     <div className="today-view">
       <div className="day-summary-card">
         <div className="day-header">
-          <h3>Today's Celestial Weather</h3>
+          <h3>{t('todaysCelestialWeather')}</h3>
           <span className="day-date">{timing.today.date}</span>
         </div>
         
@@ -317,28 +322,28 @@ const TodayView: React.FC<{
           <div className="highlight-item">
             <span className="h-icon">🌙</span>
             <div>
-              <span className="h-label">Moon Phase</span>
+              <span className="h-label">{t('moonPhaseLabel')}</span>
               <span className="h-value">{moonPhase.phase} in {moonPhase.sign}</span>
             </div>
           </div>
           <div className="highlight-item">
             <span className="h-icon">⏰</span>
             <div>
-              <span className="h-label">Moon Void</span>
+              <span className="h-label">{t('moonVoidLabel')}</span>
               <span className="h-value">{timing.today.voidOfCourse || 'None today'}</span>
             </div>
           </div>
           <div className="highlight-item">
             <span className="h-icon">💫</span>
             <div>
-              <span className="h-label">Best For</span>
+              <span className="h-label">{t('bestFor')}</span>
               <span className="h-value">{timing.today.bestFor.join(', ')}</span>
             </div>
           </div>
           <div className="highlight-item">
             <span className="h-icon">⚠️</span>
             <div>
-              <span className="h-label">Avoid</span>
+              <span className="h-label">{t('avoid')}</span>
               <span className="h-value">{timing.today.avoid.join(', ')}</span>
             </div>
           </div>
@@ -346,7 +351,7 @@ const TodayView: React.FC<{
       </div>
       
       <div className="hourly-forecast">
-        <h4>Hourly Moon Mood</h4>
+        <h4>{t('hourlyMoonMood')}</h4>
         <div className="hourly-grid">
           {timing.today.hourly.map((hour, i) => (
             <div key={i} className={`hour-slot ${hour.quality}`}>
@@ -369,9 +374,10 @@ const WeekView: React.FC<{
   moonPhase: { phase: string; sign: string };
   timing: TimingData;
 }> = ({ timing }) => {
+  const { t } = useTranslation('celestial');
   return (
     <div className="week-view">
-      <h3 className="week-title">Upcoming Celestial Events</h3>
+      <h3 className="week-title">{t('upcomingEvents')}</h3>
       
       <div className="moon-phase-timeline">
         {timing.week.phases.map((phase, i) => (
@@ -401,7 +407,7 @@ const WeekView: React.FC<{
       </div>
       
       <div className="week-insights">
-        <h4>This Week's Themes</h4>
+        <h4>{t('thisWeeksThemes')}</h4>
         <div className="theme-cards">
           {timing.week.themes.map((theme, i) => (
             <div key={i} className="theme-card">
@@ -426,15 +432,16 @@ const TransitsForecastView: React.FC<{
   onSelectTransit: (id: string) => void;
   selectedTransit: string | null;
 }> = ({ transits, timing, onSelectTransit, selectedTransit }) => {
+  const { t } = useTranslation('celestial');
   if (transits.length === 0) {
     return (
       <div className="transits-empty">
         <div className="empty-icon">✦</div>
-        <h3>No Major Personal Transits</h3>
+        <h3>{t('noMajorTransits')}</h3>
         <p>Current planetary movements aren't forming strong aspects to your birth chart.</p>
         <p className="empty-sub">Check back tomorrow - the celestial weather changes constantly.</p>
         <div className="next-check">
-          <span>Next check: {timing.tomorrow.date} at {timing.tomorrow.time}</span>
+          <span>{t('nextCheck')}: {timing.tomorrow.date} at {timing.tomorrow.time}</span>
         </div>
       </div>
     );
@@ -443,7 +450,7 @@ const TransitsForecastView: React.FC<{
   return (
     <div className="transits-forecast-view">
       <div className="transits-header">
-        <h3>Your Personal Transits</h3>
+        <h3>{t('yourPersonalTransits')}</h3>
         <span className="transits-count">{transits.length} active</span>
       </div>
       
@@ -489,13 +496,13 @@ const TransitsForecastView: React.FC<{
                       <span className="actor-symbol">
                         {PLANET_MEANINGS[transit.natalPlanet.toLowerCase()]?.symbol}
                       </span>
-                      <span className="actor-name">Natal {transit.natalPlanet}</span>
+                      <span className="actor-name">{t('natal')} {transit.natalPlanet}</span>
                       <span className="actor-position">{transit.natalSign}</span>
                     </div>
                   </div>
                   
                   <div className="transit-house-info">
-                    <span className="house-badge">House {transit.activatedHouse}</span>
+                    <span className="house-badge">{t('house')} {transit.activatedHouse}</span>
                     <span className="house-name">{houseData?.name}</span>
                   </div>
                   
@@ -505,7 +512,7 @@ const TransitsForecastView: React.FC<{
                   </div>
                   
                   <div className="transit-dates">
-                    <span className="date-exact">Exact: {timing.exactDate}</span>
+                    <span className="date-exact">{t('exact')}: {timing.exactDate}</span>
                     <span className="date-range">{timing.startDate} → {timing.endDate}</span>
                   </div>
                   
@@ -522,19 +529,19 @@ const TransitsForecastView: React.FC<{
                     
                     <div className="t-timing-details">
                       <div className="timing-row">
-                        <span className="t-label">Began:</span>
+                        <span className="t-label">{t('began')}:</span>
                         <span className="t-value">{timing.startDate}</span>
                       </div>
                       <div className="timing-row">
-                        <span className="t-label">Exact:</span>
+                        <span className="t-label">{t('exact')}:</span>
                         <span className="t-value highlight">{timing.exactDate} at {timing.exactTime}</span>
                       </div>
                       <div className="timing-row">
-                        <span className="t-label">Ends:</span>
+                        <span className="t-label">{t('ends')}:</span>
                         <span className="t-value">{timing.endDate}</span>
                       </div>
                       <div className="timing-row">
-                        <span className="t-label">Duration:</span>
+                        <span className="t-label">{t('duration')}:</span>
                         <span className="t-value">{timing.totalDays} days total</span>
                       </div>
                     </div>
@@ -597,8 +604,8 @@ interface TimingData {
 function calculateTimingData(date: Date, moonPhase: any, _transits: PersonalTransit[]): TimingData {
   // Helper for date formatting
   const fmt = (d: Date, opts?: Intl.DateTimeFormatOptions) => 
-    d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', ...opts });
-  const fmtTime = (d: Date) => d.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
+    new Intl.DateTimeFormat(i18n.language || 'en', { month: 'short', day: 'numeric', ...opts }).format(d);
+  const fmtTime = (d: Date) => new Intl.DateTimeFormat(i18n.language || 'en', { hour: '2-digit', minute: '2-digit' }).format(d);
   
   // Calculate moon phase dates
   const lunarCycle = 29.53;
@@ -632,7 +639,7 @@ function calculateTimingData(date: Date, moonPhase: any, _transits: PersonalTran
     
     weekPhases.push({
       ...phaseInfo,
-      dayName: d.toLocaleDateString('en-US', { weekday: 'short' }),
+      dayName: new Intl.DateTimeFormat(i18n.language || 'en', { weekday: 'short' }).format(d),
       date: fmt(d),
       time: 'Exact: 12:00 PM', // Simplified
       sign: moonPhase.sign, // Would need actual calculation
@@ -693,10 +700,10 @@ function calculateTransitTiming(transit: PersonalTransit) {
   const totalDays = Math.floor((endDate.getTime() - startDate.getTime()) / 86400000);
   
   return {
-    startDate: startDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }),
-    exactDate: exactDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }),
-    exactTime: exactDate.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' }),
-    endDate: endDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }),
+    startDate: new Intl.DateTimeFormat(i18n.language || 'en', { month: 'short', day: 'numeric' }).format(startDate),
+    exactDate: new Intl.DateTimeFormat(i18n.language || 'en', { month: 'short', day: 'numeric' }).format(exactDate),
+    exactTime: new Intl.DateTimeFormat(i18n.language || 'en', { hour: '2-digit', minute: '2-digit' }).format(exactDate),
+    endDate: new Intl.DateTimeFormat(i18n.language || 'en', { month: 'short', day: 'numeric' }).format(endDate),
     totalDays
   };
 }

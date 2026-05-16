@@ -4,6 +4,7 @@
  */
 
 import { useState, useEffect, useMemo, memo } from 'react';
+import { useTranslation } from 'react-i18next';
 import type { LocationData } from '../../types';
 import { getAgriculturalGuidance } from '../../services/agriculturalService';
 import { getMoonPhase, getNextSeasonalEvent } from '../../services/astronomyService';
@@ -29,6 +30,7 @@ const AgriculturalCardComponent: React.FC<Props> = ({ date, location }) => {
   const [expanded, setExpanded] = useState(false);
   const [loading, setLoading] = useState(true);
   const [now, setNow] = useState(new Date());
+  const { t } = useTranslation(['celestial', 'common']);
 
   useEffect(() => {
     const i = setInterval(() => setNow(new Date()), 1000);
@@ -70,8 +72,8 @@ const AgriculturalCardComponent: React.FC<Props> = ({ date, location }) => {
         <div className="heka-card__header">
           <span className="heka-card__icon">🌾</span>
           <div className="heka-card__title-group">
-            <span className="heka-card__title">Loading...</span>
-            <span className="heka-card__subtitle">Agricultural guidance</span>
+            <span className="heka-card__title">{t('common:loading')}</span>
+            <span className="heka-card__subtitle">{t('celestial:agriculturalGuidance')}</span>
           </div>
         </div>
       </div>
@@ -93,7 +95,7 @@ const AgriculturalCardComponent: React.FC<Props> = ({ date, location }) => {
 
   return (
     <div className={`heka-card ${expanded ? 'expanded' : ''}`}>
-      <div className="heka-card__header heka-card__header--enterprise" onClick={() => setExpanded(!expanded)}>
+      <div className="heka-card__header heka-card__header--enterprise" onClick={() => setExpanded(!expanded)} role="button" tabIndex={0} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setExpanded(!expanded); } }}>
         <span className="heka-card__icon">🌾</span>
         <div className="heka-card__title-group">
           <span className="heka-card__title">

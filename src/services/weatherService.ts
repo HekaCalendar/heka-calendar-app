@@ -112,7 +112,8 @@ export async function getWeatherData(location: LocationData): Promise<WeatherDat
     url.searchParams.set('timezone', 'auto');
     url.searchParams.set('forecast_days', '1');
 
-    const response = await fetch(url.toString());
+    const { fetchWithTimeout } = await import('../utils/fetchWithTimeout');
+    const response = await fetchWithTimeout(url.toString(), { timeout: 10000 });
 
     if (!response.ok) {
       throw new Error(`Weather API error: ${response.status}`);

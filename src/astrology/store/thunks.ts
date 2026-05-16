@@ -38,7 +38,17 @@ import {
 } from '../services/persistence';
 
 import {
+  syncAstroProfile,
+  deleteAstroProfile as deleteCloudAstroProfile,
+  syncAstroChart,
+  syncAstroPreferences,
+  loadAllAstroData,
+  syncAllAstroData,
+} from '../../services/firebase';
+
+import {
   setProfiles,
+  setCharts,
   addProfile as addProfileAction,
   removeProfile as removeProfileAction,
   setLoading,
@@ -209,10 +219,103 @@ function dispatchCalendarProfileSync(
   dispatch(addAstroProfile(buildCalendarProfile(astrologyProfile, calendarChart)));
 }
 
+// Helper: get userId from Redux state
+function getUserId(state: RootState): string | null {
+  const auth = state.calendar.auth;
+  return auth?.isAuthenticated && auth?.userId ? auth.userId : null;
+}
+
+// Merge cloud astro data with local data. Cloud data with newer timestamps wins.
+async function mergeCloudAstroData(
+  dispatch: any,
+  userId: string
+): Promise<void> {
+  const cloud = await loadAllAstroData(userId);
+  if (cloud.profiles.length === 0 && cloud.charts.length === 0 && !cloud.preferences) {
+    // No cloud data — push local data up instead
+    const localProfiles = await persistence.getAllProfiles();
+    const localCharts = await Promise.all(
+      localProfiles.map(p => persistence.getChartsForProfile(p.id))
+    ).then(arr => arr.flat());
+    const localPrefs = await persistence.getPreferences();
+    const localSelected = await persistence.getSelectedProfile();
+    if (localProfiles.length > 0) {
+      await syncAllAstroData(userId, {
+        profiles: localProfiles,
+        charts: localCharts,
+        preferences: localPrefs || DEFAULT_PROFILE_PREFERENCES,
+        selectedProfileId: localSelected,
+      });
+    }
+    return;
+  }
+
+  // Merge profiles: cloud wins if newer (compare _syncedAt or updatedAt)
+  const localProfiles = await persistence.getAllProfiles();
+  const localProfileMap = new Map(localProfiles.map(p => [p.id, p]));
+  for (const cloudProfile of cloud.profiles) {
+    const local = localProfileMap.get(cloudProfile.id);
+    const cloudTime = new Date(cloudProfile._syncedAt || cloudProfile.updatedAt || 0).getTime();
+    const localTime = local ? new Date((local as any).updatedAt || 0).getTime() : 0;
+    if (!local || cloudTime > localTime) {
+      await persistence.saveProfile(cloudProfile as AstroProfile);
+      localProfileMap.set(cloudProfile.id, cloudProfile as AstroProfile);
+    }
+  }
+
+  // Merge charts
+  const allProfiles = Array.from(localProfileMap.values());
+  const localCharts = await Promise.all(
+    allProfiles.map(p => persistence.getChartsForProfile(p.id))
+  ).then(arr => arr.flat());
+  const localChartMap = new Map(localCharts.map(c => [c.id, c]));
+  for (const cloudChart of cloud.charts) {
+    const local = localChartMap.get(cloudChart.id);
+    const cloudTime = new Date(cloudChart._syncedAt || cloudChart.calculatedAt || 0).getTime();
+    const localTime = local ? new Date((local as any).calculatedAt || 0).getTime() : 0;
+    if (!local || cloudTime > localTime) {
+      await persistence.saveChart(cloudChart as NatalChart);
+      localChartMap.set(cloudChart.id, cloudChart as NatalChart);
+    }
+  }
+
+  // Merge preferences
+  if (cloud.preferences) {
+    const localPrefs = await persistence.getPreferences();
+    const cloudTime = new Date(cloud.preferences._syncedAt || 0).getTime();
+    const localTime = localPrefs ? new Date((localPrefs as any)._syncedAt || 0).getTime() : 0;
+    if (!localPrefs || cloudTime > localTime) {
+      await persistence.savePreferences(cloud.preferences);
+    }
+  }
+
+  // Merge selected profile
+  if (cloud.selectedProfileId) {
+    const localSelected = await persistence.getSelectedProfile();
+    if (!localSelected) {
+      await persistence.setSelectedProfile(cloud.selectedProfileId as ProfileId);
+    }
+  }
+
+  // Re-dispatch merged local state
+  const mergedProfiles = await persistence.getAllProfiles();
+  const mergedCharts = await Promise.all(
+    mergedProfiles.map(p => persistence.getChartsForProfile(p.id))
+  ).then(arr => arr.flat());
+  dispatch(setProfiles(mergedProfiles));
+  dispatch(setCharts(mergedCharts));
+  const mergedPrefs = await persistence.getPreferences();
+  if (mergedPrefs) dispatch(setPreferences(mergedPrefs));
+  const mergedSelected = await persistence.getSelectedProfile();
+  if (mergedSelected && mergedProfiles.find(p => p.id === mergedSelected)) {
+    dispatch(selectProfile(mergedSelected));
+  }
+}
+
 // Initialize astrology system
 export const initializeAstrology = createAsyncThunk(
   'astrology/initialize',
-  async (_, { dispatch }) => {
+  async (_, { dispatch, getState }) => {
     dispatch(setLoading({ key: 'initialization', loading: true }));
     
     try {
@@ -224,6 +327,12 @@ export const initializeAstrology = createAsyncThunk(
       
       const profiles = await persistence.getAllProfiles();
       dispatch(setProfiles(profiles));
+
+      // Load charts for all profiles into Redux state (was missing — charts disappeared on reload)
+      const charts = await Promise.all(
+        profiles.map(p => persistence.getChartsForProfile(p.id))
+      ).then(chartArrays => chartArrays.flat());
+      dispatch(setCharts(charts));
       
       const selectedId = await persistence.getSelectedProfile();
       if (selectedId && profiles.find(p => p.id === selectedId)) {
@@ -233,6 +342,29 @@ export const initializeAstrology = createAsyncThunk(
       const prefs = await persistence.getPreferences();
       if (prefs) {
         dispatch(setPreferences(prefs));
+      }
+
+      // Cloud sync: if user is logged in, merge with cloud data
+      const userId = getUserId(getState() as RootState);
+      if (userId) {
+        try {
+          await mergeCloudAstroData(dispatch, userId);
+          // Push merged local state back to cloud
+          const finalProfiles = await persistence.getAllProfiles();
+          const finalCharts = await Promise.all(
+            finalProfiles.map(p => persistence.getChartsForProfile(p.id))
+          ).then(arr => arr.flat());
+          const finalPrefs = await persistence.getPreferences();
+          const finalSelected = await persistence.getSelectedProfile();
+          await syncAllAstroData(userId, {
+            profiles: finalProfiles,
+            charts: finalCharts,
+            preferences: finalPrefs || DEFAULT_PROFILE_PREFERENCES,
+            selectedProfileId: finalSelected,
+          });
+        } catch (cloudErr) {
+          console.warn('[Astrology] Cloud sync failed during init:', cloudErr);
+        }
       }
       
       return { success: true };
@@ -249,7 +381,7 @@ export const initializeAstrology = createAsyncThunk(
 // Create profile
 export const createProfile = createAsyncThunk(
   'astrology/createProfile',
-  async (input: CreateProfileInput, { dispatch }) => {
+  async (input: CreateProfileInput, { dispatch, getState }) => {
     dispatch(setLoading({ key: 'createProfile', loading: true }));
     
     try {
@@ -281,6 +413,12 @@ export const createProfile = createAsyncThunk(
       
       // Generate chart for profile
       await dispatch(generateChartForProfile(profile.id));
+
+      // Cloud sync
+      const userId = getUserId(getState() as RootState);
+      if (userId) {
+        await syncAstroProfile(userId, profile);
+      }
       
       return profile;
     } catch (error) {
@@ -296,12 +434,19 @@ export const createProfile = createAsyncThunk(
 // Delete profile
 export const deleteProfile = createAsyncThunk(
   'astrology/deleteProfile',
-  async (profileId: ProfileId, { dispatch }) => {
+  async (profileId: ProfileId, { dispatch, getState }) => {
     dispatch(setLoading({ key: 'deleteProfile', loading: true }));
     
     try {
       await persistence.deleteProfile(profileId);
       dispatch(removeProfileAction(profileId));
+
+      // Cloud sync
+      const userId = getUserId(getState() as RootState);
+      if (userId) {
+        await deleteCloudAstroProfile(userId, profileId as string);
+      }
+
       return profileId;
     } catch (error) {
       const message = error instanceof Error ? error.message : 'Failed to delete profile';
@@ -382,6 +527,12 @@ export const generateChartForProfile = createAsyncThunk(
       if (updatedProfile) {
         dispatchCalendarProfileSync(dispatch, updatedProfile, completeChart);
       }
+
+      // Cloud sync
+      const userId = getUserId(getState() as RootState);
+      if (userId) {
+        await syncAstroChart(userId, completeChart);
+      }
       
       return completeChart;
     } catch (error) {
@@ -420,6 +571,15 @@ export const updateProfilePreferences = createAsyncThunk(
     
     // Sync preferences update to calendar slice
     dispatchCalendarProfileSync(dispatch, updatedProfile);
+
+    // Cloud sync
+    const userId = getUserId(getState() as RootState);
+    if (userId) {
+      await syncAstroProfile(userId, updatedProfile);
+      if (preferences) {
+        await syncAstroPreferences(userId, { ...state.astrology.preferences, ...preferences });
+      }
+    }
     
     // Regenerate chart if zodiac frame, sign count, or house system changed
     if (preferences.zodiacSystem || preferences.zodiacFrame || preferences.signCount || preferences.houseSystem) {
@@ -441,9 +601,10 @@ export const loadProfiles = createAsyncThunk(
       dispatch(setProfiles(profiles));
       
       // Load charts for profiles
-      const charts = await persistence.getAllProfiles().then(profiles =>
-        Promise.all(profiles.map(p => persistence.getChartsForProfile(p.id)))
+      const charts = await Promise.all(
+        profiles.map(p => persistence.getChartsForProfile(p.id))
       ).then(chartArrays => chartArrays.flat());
+      dispatch(setCharts(charts)); // Was missing — charts fetched but never dispatched
       
       return { profiles, charts };
     } catch (error) {

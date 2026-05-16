@@ -8,6 +8,7 @@ import { useState, useEffect, useMemo, memo, useCallback } from 'react';
 import { getDayOfWeekData } from '../../services/dayOfWeekService';
 import { getCurrentPlanetaryHour } from '../../astrology/services/calculations/swissCalculations';
 import type { LocationData } from '../../types';
+import i18n from '../../i18n';
 import './UnifiedCards.css';
 
 interface Props {
@@ -187,7 +188,7 @@ const DayOfWeekCardComponent: React.FC<Props> = ({ date, location }) => {
   return (
     <div className={`heka-card heka-card--day ${expanded ? 'expanded' : ''}`}>
       {/* ── Collapsed Header ── */}
-      <div className="heka-card__header" onClick={() => setExpanded(!expanded)}>
+      <div className="heka-card__header" onClick={() => setExpanded(!expanded)} role="button" tabIndex={0} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setExpanded(!expanded); } }}>
         <span className="heka-card__icon">{dayData.icon}</span>
         <div className="heka-card__title-group">
           <span className="heka-card__title">{dayData.day}</span>
@@ -271,7 +272,7 @@ const DayOfWeekCardComponent: React.FC<Props> = ({ date, location }) => {
                       <span className="heka-data-cell__icon">🌅</span>
                       <span className="heka-data-cell__label">Sunrise</span>
                       <span className="heka-data-cell__value">
-                        {planetaryHour.sunrise.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', timeZone: location.timezone })}
+                        {new Intl.DateTimeFormat(i18n.language || 'en', { hour: '2-digit', minute: '2-digit', timeZone: location.timezone }).format(planetaryHour.sunrise)}
                       </span>
                     </div>
                   )}
@@ -280,7 +281,7 @@ const DayOfWeekCardComponent: React.FC<Props> = ({ date, location }) => {
                       <span className="heka-data-cell__icon">🌇</span>
                       <span className="heka-data-cell__label">Sunset</span>
                       <span className="heka-data-cell__value">
-                        {planetaryHour.sunset.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', timeZone: location.timezone })}
+                        {new Intl.DateTimeFormat(i18n.language || 'en', { hour: '2-digit', minute: '2-digit', timeZone: location.timezone }).format(planetaryHour.sunset)}
                       </span>
                     </div>
                   )}
@@ -312,7 +313,12 @@ const DayOfWeekCardComponent: React.FC<Props> = ({ date, location }) => {
               })}
             </div>
             <div style={{ fontSize: '10px', color: 'rgba(255,255,255,0.3)', textAlign: 'center', marginTop: '6px' }}>
-              Hour 1 begins at sunrise • Hours 13–24 are night hours
+              {planetaryHour && !planetaryHour.isDay
+                ? `Hour ${planetaryHour.hour + 1} of the night • Next sunrise at ${planetaryHour.sunrise ? new Intl.DateTimeFormat(i18n.language || 'en', { hour: '2-digit', minute: '2-digit', timeZone: location.timezone }).format(planetaryHour.sunrise) : '...'}`
+                : planetaryHour
+                  ? `Hour ${planetaryHour.hour + 1} of the day • Next sunset at ${planetaryHour.sunset ? new Intl.DateTimeFormat(i18n.language || 'en', { hour: '2-digit', minute: '2-digit', timeZone: location.timezone }).format(planetaryHour.sunset) : '...'}`
+                  : 'Hour 1 begins at sunrise • Hours 13–24 are night hours'
+              }
             </div>
           </div>
 

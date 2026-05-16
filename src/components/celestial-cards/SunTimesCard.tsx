@@ -4,6 +4,7 @@
  */
 
 import { useState, useEffect, useMemo, memo, useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 import type { LocationData } from '../../types';
 import { getWeatherData, formatTemperature, usesFahrenheit, type WeatherData } from '../../services/weatherService';
 import { getEliteSunTimes, type EliteSunData } from '../../services/eliteSunService';
@@ -123,6 +124,7 @@ const SunTimesCardComponent: React.FC<Props> = ({ date, location }) => {
   const [now, setNow] = useState(new Date());
   const tickRef = useRef<number>(0);
   const fetchingRef = useRef(false);
+  const { t, i18n } = useTranslation('celestial');
 
   // Live clock - every second
   useEffect(() => {
@@ -203,7 +205,7 @@ const SunTimesCardComponent: React.FC<Props> = ({ date, location }) => {
     return { nextEvent: event, nextEventCounter: { d, h, m, s, showSeconds: d === 0 } };
   }, [sunTimes, now]);
 
-  const formatTime = (d?: Date | null) => d ? d.toLocaleTimeString('en-US', { timeZone: location.timezone, hour: '2-digit', minute: '2-digit', hour12: true }) : '--:--';
+  const formatTime = (d?: Date | null) => d ? new Intl.DateTimeFormat(i18n.language || 'en', { timeZone: location.timezone, hour: '2-digit', minute: '2-digit', hour12: true }).format(d) : '--:--';
 
   // Daily outlook based on current weather + daily high/low from Open-Meteo
   const forecast = useMemo(() => {
@@ -227,7 +229,7 @@ const SunTimesCardComponent: React.FC<Props> = ({ date, location }) => {
           <span className="heka-card__icon">☀️</span>
           <div className="heka-card__title-group">
             <span className="heka-card__title">--:--:--</span>
-            <span className="heka-card__subtitle">Calculating solar times...</span>
+            <span className="heka-card__subtitle">{t('calculatingSolarTimes')}</span>
           </div>
         </div>
       </div>
@@ -236,11 +238,11 @@ const SunTimesCardComponent: React.FC<Props> = ({ date, location }) => {
 
   return (
     <div className={`heka-card ${expanded ? 'expanded' : ''}`}>
-      <div className="heka-card__header heka-card__header--enterprise" onClick={() => setExpanded(!expanded)}>
+      <div className="heka-card__header heka-card__header--enterprise" onClick={() => setExpanded(!expanded)} role="button" tabIndex={0} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setExpanded(!expanded); } }}>
         <span className="heka-card__icon">{isDay ? '☀️' : '🌙'}</span>
         <div className="heka-card__title-group">
           <span className="heka-card__title">
-            {now.toLocaleTimeString('en-US', { timeZone: location.timezone, hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true })}
+            {new Intl.DateTimeFormat(i18n.language || 'en', { timeZone: location.timezone, hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true }).format(now)}
           </span>
           <span className="heka-card__subtitle">
             {nextEvent && (

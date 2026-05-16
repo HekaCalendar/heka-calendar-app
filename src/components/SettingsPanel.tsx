@@ -8,18 +8,24 @@
 import { useState, useRef, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import type { RootState } from '../store';
-import { setLocation, setSubRegion, toggleDisplay, toggleTimeMode, toggleAstroPreference, updateAstroPreferences, setGlobalNotificationsEnabled } from '../store';
+import { setLocation, setSubRegion, toggleDisplay, toggleTimeMode, toggleAstroPreference, updateAstroPreferences, setGlobalNotificationsEnabled, setNotificationMode } from '../store';
+import { setNotificationsEnabled } from '../store/setupSlice';
 import { LOCATIONS, SUB_REGIONS } from '../types';
 import { CalendarNotificationSettings } from './notification/CalendarNotificationSettings';
+import { StarsNotificationSettings } from './notification/StarsNotificationSettings';
+import { JournalNotificationSettings } from './notification/JournalNotificationSettings';
+import { UnifiedNotificationSettings } from './notification/UnifiedNotificationSettings';
 import { NotificationHistory } from './notification/NotificationHistory';
 import { ThemeSettings } from './ThemeSettings';
 import { AISettingsPanel } from './AISettingsPanel';
 import { useFeatureDiscovery, useSettingsTracking } from '../hooks/useGamification';
 import { tutorialService } from '../services/tutorialService';
+import { useTranslation } from 'react-i18next';
 
 const GlobalNotificationSwitch: React.FC = () => {
   const dispatch = useDispatch();
   const globalEnabled = useSelector((state: RootState) => state.calendar.notificationPreferences.globalEnabled);
+  const { t } = useTranslation('settings');
 
   return (
     <label style={{
@@ -55,16 +61,83 @@ const GlobalNotificationSwitch: React.FC = () => {
       <input
         type="checkbox"
         checked={globalEnabled}
-        onChange={() => dispatch(setGlobalNotificationsEnabled(!globalEnabled))}
+        onChange={() => {
+          const next = !globalEnabled;
+          dispatch(setGlobalNotificationsEnabled(next));
+          dispatch(setNotificationsEnabled(next));
+        }}
         style={{ position: 'absolute', opacity: 0, width: 0, height: 0 }}
       />
       <div style={{ flex: 1 }}>
-        <div style={{ fontSize: '14px', fontWeight: 600, color: '#e0e0e0' }}>All Notifications</div>
+        <div style={{ fontSize: '14px', fontWeight: 600, color: '#e0e0e0' }}>{t('notificationSettings.allNotifications')}</div>
         <div style={{ fontSize: '12px', color: 'rgba(224,224,224,0.5)', marginTop: '2px' }}>
-          {globalEnabled ? 'Notifications are enabled across all sections' : 'Notifications are paused — no alerts will be sent'}
+          {globalEnabled ? t('notificationSettings.enabledDescription') : t('notificationSettings.pausedDescription')}
         </div>
       </div>
     </label>
+  );
+};
+
+const NotificationModeSelector: React.FC = () => {
+  const dispatch = useDispatch();
+  const mode = useSelector((state: RootState) => state.calendar.notificationPreferences.notificationMode);
+  const { t } = useTranslation('settings');
+
+  return (
+    <div style={{
+      display: 'flex',
+      gap: '4px',
+      padding: '4px',
+      background: 'rgba(255,255,255,0.06)',
+      borderRadius: '10px',
+      marginBottom: '16px',
+    }}>
+      {(['unified', 'custom'] as const).map((m) => (
+        <button
+          key={m}
+          onClick={() => dispatch(setNotificationMode(m))}
+          style={{
+            flex: 1,
+            padding: '8px 12px',
+            borderRadius: '8px',
+            border: 'none',
+            background: mode === m ? 'rgba(201,162,39,0.25)' : 'transparent',
+            color: mode === m ? '#fde68a' : 'rgba(224,224,224,0.5)',
+            fontSize: '13px',
+            fontWeight: mode === m ? 600 : 400,
+            cursor: 'pointer',
+            transition: 'all 0.2s',
+            fontFamily: "'Cormorant Garamond', Georgia, serif",
+          }}
+        >
+          {m === 'unified' ? `✨ ${t('notificationSettings.simple')}` : `⚙️ ${t('notificationSettings.custom')}`}
+        </button>
+      ))}
+    </div>
+  );
+};
+
+const NotificationSettingsBody: React.FC = () => {
+  const mode = useSelector((state: RootState) => state.calendar.notificationPreferences.notificationMode);
+  const { t } = useTranslation('settings');
+
+  if (mode === 'unified') {
+    return <UnifiedNotificationSettings />;
+  }
+
+  return (
+    <div>
+      <div style={{ fontSize: '13px', fontWeight: 600, color: '#c9a227', marginBottom: '8px', textTransform: 'uppercase', letterSpacing: '0.5px' }}>{t('notificationSettings.calendarSection')}</div>
+      <CalendarNotificationSettings />
+      <div style={{ fontSize: '13px', fontWeight: 600, color: '#c9a227', marginTop: '20px', marginBottom: '8px', textTransform: 'uppercase', letterSpacing: '0.5px' }}>{t('notificationSettings.celestialSection')}</div>
+      <StarsNotificationSettings />
+      <div style={{ fontSize: '13px', fontWeight: 600, color: '#c9a227', marginTop: '20px', marginBottom: '8px', textTransform: 'uppercase', letterSpacing: '0.5px' }}>{t('notificationSettings.journalSection')}</div>
+      <JournalNotificationSettings />
+      <div style={{ fontSize: '13px', fontWeight: 600, color: '#c9a227', marginTop: '20px', marginBottom: '8px', textTransform: 'uppercase', letterSpacing: '0.5px' }}>{t('notificationSettings.circleSection')}</div>
+      <p style={{ fontSize: '13px', color: 'rgba(224,224,224,0.5)', margin: '0 0 8px' }}>
+        {t('notificationSettings.circleHint')}
+      </p>
+    </div>
   );
 };
 
@@ -85,6 +158,8 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({ onAuthClick, onPur
   const astroPreferences = useSelector((state: RootState) => state.calendar.astroPreferences);
   const { discover } = useFeatureDiscovery();
   const { trackLocation, trackDisplay } = useSettingsTracking();
+  const { t, i18n } = useTranslation('settings');
+  const isEnglish = i18n.language === 'en';
   
   // Get available sub-regions for current location
   const availableSubRegions = SUB_REGIONS[location] || [];
@@ -139,21 +214,21 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({ onAuthClick, onPur
             discover('openedSettings');
             setIsOpen(true);
           }}
-          aria-label="Open settings"
+          aria-label={t('openSettings')}
           style={{
             background: 'rgba(220, 38, 38, 0.15)',
             borderColor: 'rgba(220, 38, 38, 0.4)',
             color: '#fca5a5',
           }}
         >
-          <span>⚙️</span> Show Settings
+          <span>⚙️</span> <span className="toggle-text">{t('controlPanel')}</span>
         </button>
 
         {onAuthClick && (
           <button
             className="settings-toggle-btn"
             onClick={onAuthClick}
-            aria-label={auth.isAuthenticated ? 'Account' : 'Sign In'}
+            aria-label={auth.isAuthenticated ? t('account') : t('signIn')}
             style={{
               background: 'rgba(34, 197, 94, 0.15)',
               borderColor: 'rgba(34, 197, 94, 0.4)',
@@ -163,12 +238,12 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({ onAuthClick, onPur
             {auth.isAuthenticated ? (
               <>
                 <span>{auth.displayName?.charAt(0) || auth.email?.charAt(0) || '?'}</span>
-                <span>Account</span>
+                <span className="toggle-text">{t('account')}</span>
               </>
             ) : (
               <>
                 <span>🔐</span>
-                <span>Sign In</span>
+                <span className="toggle-text">{t('signIn')}</span>
               </>
             )}
           </button>
@@ -178,7 +253,7 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({ onAuthClick, onPur
           <button
             className="settings-toggle-btn"
             onClick={onPureModeClick}
-            aria-label={isPureMode ? 'Exit Pure Mode' : 'Pure Mode'}
+            aria-label={isPureMode ? t('exitPureMode') : t('pureMode')}
             style={{
               background: 'rgba(124, 58, 237, 0.15)',
               borderColor: 'rgba(124, 58, 237, 0.4)',
@@ -186,7 +261,7 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({ onAuthClick, onPur
             }}
           >
             <span>☯</span>
-            {isPureMode ? 'Exit Pure' : 'Pure Mode'}
+            <span className="toggle-text">{isPureMode ? t('exitPure') : t('pureMode')}</span>
           </button>
         )}
       </div>
@@ -201,16 +276,16 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({ onAuthClick, onPur
           />
           <div 
             ref={panelRef} 
-            className={`settings-modal ${isPureMode ? 'settings-modal--pure-mode' : ''}`}
+            className={`settings-modal ${isPureMode ? 'settings-modal--pure-mode' : ''} ${!isEnglish ? 'settings-modal--compact' : ''}`}
             role="dialog"
-            aria-label="Calendar Settings"
+            aria-label={t('calendarSettingsTitle')}
           >
             <div className="settings-modal__header">
-              <div className="settings-modal__title">Calendar Settings</div>
+              <div className="settings-modal__title">{t('calendarSettingsTitle')}</div>
               <button 
                 className="settings-modal__close"
                 onClick={() => setIsOpen(false)}
-                aria-label="Close settings"
+                aria-label={t('closeSettings')}
               >
                 ✕
               </button>
@@ -220,8 +295,8 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({ onAuthClick, onPur
               <div className="settings-grid">
                 {/* Pure Mode: Full MonthHeader inside settings modal */}
                 {isPureMode && monthHeaderSlot && (
-                  <div className="settings-group settings-group--pure-header">
-                    <label className="settings-group__label">🎛️ Calendar Controls</label>
+                  <div className={`settings-group settings-group--pure-header ${!isEnglish ? 'settings-group--pure-header--compact' : ''}`}>
+                    <label className="settings-group__label">🎛️ {t('calendarControls')}</label>
                     <div className="settings-group__control settings-group__control--column">
                       {monthHeaderSlot}
                     </div>
@@ -232,7 +307,7 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({ onAuthClick, onPur
                 {isChangingLocation && (
                   <>
                     <div className="settings-group">
-                      <label className="settings-group__label">📍 Select New Location</label>
+                      <label className="settings-group__label">📍 {t('selectNewLocation')}</label>
                       <select 
                         value={location} 
                         onChange={(e) => {
@@ -243,7 +318,7 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({ onAuthClick, onPur
                           setIsChangingLocation(false);
                         }}
                       >
-                        <optgroup label="Select region">
+                        <optgroup label={t('selectRegion')}>
                           {Object.entries(LOCATIONS)
                             .filter(([code]) => code !== 'NONE' && code !== 'ALL')
                             .map(([code, data]) => (
@@ -256,7 +331,7 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({ onAuthClick, onPur
                     {/* Sub-region (State/Province) */}
                     {availableSubRegions.length > 0 && (
                       <div className="settings-group">
-                        <label className="settings-group__label">🏛️ State/Province</label>
+                        <label className="settings-group__label">🏛️ {t('stateProvince')}</label>
                         <select 
                           value={subRegion || ''} 
                           onChange={(e) => {
@@ -266,7 +341,7 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({ onAuthClick, onPur
                             trackLocation(location, newSubRegion);
                           }}
                         >
-                          <option value="">Default (Capital)</option>
+                          <option value="">{t('defaultCapital')}</option>
                           {availableSubRegions.map((region) => (
                             <option key={region.code} value={region.code}>{region.name}</option>
                           ))}
@@ -279,7 +354,7 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({ onAuthClick, onPur
                 {/* Location Detection */}
                 <div className="settings-group settings-group--note">
                   <p>
-                    🌍 <strong>Current Location:</strong>{' '}
+                    🌍 <strong>{t('currentLocation')}</strong>{' '}
                     {subRegion && availableSubRegions.find(r => r.code === subRegion)?.name ? (
                       <>
                         {availableSubRegions.find(r => r.code === subRegion)?.name}, {LOCATIONS[location].name}
@@ -292,27 +367,27 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({ onAuthClick, onPur
                     <button 
                       className="btn btn--sm"
                       onClick={() => setIsChangingLocation(true)}
-                      title="Change your location"
+                      title={t('changeYourLocation')}
                     >
-                      🌏 Change Location
+                      🌏 {t('changeLocation')}
                     </button>
                   ) : (
                     <button 
                       className="btn btn--sm btn--active"
                       onClick={() => setIsChangingLocation(false)}
                     >
-                      ✓ Keep Current Location
+                      ✓ {t('keepCurrentLocation')}
                     </button>
                   )}
                   <p style={{ fontSize: '11px', opacity: 0.7, marginTop: '8px' }}>
-                    💡 <strong>Tip:</strong> Swiss Ephemeris uses your location for celestial calculations. HEKA dates are universal worldwide.
+                    💡 <strong>{t('tip')}</strong> {t('locationTip')}
                   </p>
                 </div>
                 
                 {/* Celestial - hidden in Pure Mode */}
                 {!isPureMode && (
                 <div className="settings-group settings-group-celestial">
-                  <label className="settings-group__label">✦ Celestial Cards</label>
+                  <label className="settings-group__label">✦ {t('celestialCards')}</label>
                   <div className="settings-group__control">
                     <button 
                       className={`btn btn-celestial-toggle ${display.showCelestialCards ? 'btn--active' : ''}`} 
@@ -325,7 +400,7 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({ onAuthClick, onPur
                         tutorialService.trackCelestialGuideToggle(!display.showCelestialCards);
                       }}
                     >
-                      {display.showCelestialCards ? '✓ Show Celestial Cards' : 'Show Celestial Cards'}
+                      {display.showCelestialCards ? `✓ ${t('showCelestialCards')}` : t('showCelestialCards')}
                     </button>
                   </div>
                 </div>
@@ -333,58 +408,59 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({ onAuthClick, onPur
                 
                 {/* Mode */}
                 <div className="settings-group">
-                  <label className="settings-group__label">⚡ Mode</label>
+                  <label className="settings-group__label">⚡ {t('mode')}</label>
                   <div className="settings-group__control">
                     <button className={`btn ${timeMode === 'SYNC' ? 'btn--active' : ''}`} onClick={() => timeMode !== 'SYNC' && dispatch(toggleTimeMode())}>
-                      SYNC
+                      {t('syncMode')}
                     </button>
                     <button className={`btn ${timeMode === 'TRUE' ? 'btn--active' : ''}`} onClick={() => timeMode !== 'TRUE' && dispatch(toggleTimeMode())}>
-                      TRUE
+                      {t('trueMode')}
                     </button>
                   </div>
                 </div>
                 
                 {/* Theme Options - Expandable with Colors and Fonts */}
                 <div className="settings-group">
-                  <label className="settings-group__label">🎭 Theme Options</label>
+                  <label className="settings-group__label">🎭 {t('themeOptions')}</label>
                   <ThemeSettings />
                 </div>
                 
                 {/* Astrology Settings - Calendar Display Only */}
                 <div className="settings-group">
-                  <label className="settings-group__label">✨ Astrology</label>
+                  <label className="settings-group__label">✨ {t('astrology')}</label>
                   <div className="settings-group__control settings-group__control--stack">
                     <button
                       className={`btn ${astroPreferences.showTransitsOnCalendar ? 'btn--active' : ''}`}
                       onClick={() => dispatch(toggleAstroPreference('showTransitsOnCalendar'))}
                       title="Show moon signs and planetary transits in the day panel"
                     >
-                      {astroPreferences.showTransitsOnCalendar ? '✓ ' : ''}Show on Day Panel
+                      {astroPreferences.showTransitsOnCalendar ? '✓ ' : ''}{t('showOnDayPanel')}
                     </button>
                     <button
                       className={`btn ${astroPreferences.showNakshatras ? 'btn--active' : ''}`}
                       onClick={() => dispatch(updateAstroPreferences({ showNakshatras: !astroPreferences.showNakshatras }))}
                       title="Show Lunar Mansions (Nakshatras) in TRUE mode"
                     >
-                      {astroPreferences.showNakshatras ? '✓ ' : ''}Show Lunar Mansions
+                      {astroPreferences.showNakshatras ? '✓ ' : ''}{t('showLunarMansions')}
                     </button>
                   </div>
                   <p className="settings-group__hint">
-                    Configure zodiac system and notification preferences in the ✨ Stars section
+                    {t('astrologyHint')}
                   </p>
                 </div>
                 
                 {/* AI Integration */}
                 <div className="settings-group">
-                  <label className="settings-group__label">🤖 HEKA AI</label>
+                  <label className="settings-group__label">🤖 {t('hekaAi')}</label>
                   <AISettingsPanel highlightArea="calendar" />
                 </div>
 
                 {/* Notifications */}
                 <div className="settings-group">
-                  <label className="settings-group__label">🔔 Notifications</label>
+                  <label className="settings-group__label">🔔 {t('notificationSettings.title')}</label>
                   <GlobalNotificationSwitch />
-                  <CalendarNotificationSettings />
+                  <NotificationModeSelector />
+                  <NotificationSettingsBody />
                   <div style={{ marginTop: '12px' }}>
                     <NotificationHistory />
                   </div>
@@ -392,9 +468,9 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({ onAuthClick, onPur
                 
                 {/* Report Issue */}
                 <div className="settings-group settings-group--footer">
-                  <label className="settings-group__label">🐞 Found a Bug?</label>
+                  <label className="settings-group__label">🐞 {t('foundABug')}</label>
                   <p>
-                    Help us improve HEKA Calendar by reporting issues.
+                    {t('helpImprove')}
                   </p>
                   <button 
                     className="btn btn--sm"
@@ -426,7 +502,7 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({ onAuthClick, onPur
                       window.location.href = `mailto:hekacalendar@gmail.com?subject=${subject}&body=${body}`;
                     }}
                   >
-                    📧 Report Issue
+                    📧 {t('reportIssue')}
                   </button>
                 </div>
               </div>

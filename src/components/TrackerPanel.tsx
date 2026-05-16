@@ -24,6 +24,7 @@ import {
   SLEEP_QUALITY_OPTIONS 
 } from '../oracle/trackerTypes';
 import { InsightsDashboard } from './tracker/InsightsDashboard';
+import i18n from '../i18n';
 import '../styles/tracker-panel.css';
 
 // ═════════════════════════════════════════════════════════════════════════════
@@ -125,11 +126,11 @@ export const TrackerPanel: React.FC<TrackerPanelProps> = ({ date, isOpen, onClos
     const d = new Date(currentDate);
     return {
       day: d.getDate(),
-      full: d.toLocaleDateString('en-US', { 
+      full: new Intl.DateTimeFormat(i18n.language || 'en', { 
         weekday: 'long', 
         year: 'numeric', 
         month: 'long' 
-      }),
+      }).format(d),
     };
   }, [currentDate]);
 
@@ -278,10 +279,10 @@ export const TrackerPanel: React.FC<TrackerPanelProps> = ({ date, isOpen, onClos
                   </span>
                 </div>
                 <span className="tracker-entry__time">
-                  {new Date(entry.timestamp).toLocaleTimeString('en-US', {
+                  {new Intl.DateTimeFormat(i18n.language || 'en', {
                     hour: '2-digit',
                     minute: '2-digit',
-                  })}
+                  }).format(new Date(entry.timestamp))}
                 </span>
               </div>
               <div className="tracker-entry__content">
@@ -341,7 +342,7 @@ export const TrackerPanel: React.FC<TrackerPanelProps> = ({ date, isOpen, onClos
             {typeEntries.map(entry => (
               <div key={entry.id} className="tracker-entry-card">
                 <div className="tracker-entry-card__time">
-                  {new Date(entry.timestamp).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })}
+                  {new Intl.DateTimeFormat(i18n.language || 'en', { hour: '2-digit', minute: '2-digit' }).format(new Date(entry.timestamp))}
                 </div>
                 <div className="tracker-entry-card__content">
                   {(entry.data as MenstrualData).flow !== 'none' && (

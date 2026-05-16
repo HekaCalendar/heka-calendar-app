@@ -11,14 +11,20 @@
   overflow-x: auto !important;
   overflow-y: hidden !important;
   
-  /* CRITICAL: Only pan-x on the panel so vertical scroll bubbles up to the page.
-     overflow-x:auto forces overflow-y:auto per spec, but we override with !important.
-     The browser sees the panel as a horizontal-only scroll container, so vertical
-     gestures pass through to the page. */
-  touch-action: pan-x !important;
+  /* auto: let the browser evaluate gestures naturally.
+     Since overflow-y:hidden, vertical gestures bubble up to the page.
+     Since overflow-x:auto, horizontal gestures scroll the panel. */
+  touch-action: pan-x pan-y !important;
   
-  /* Smooth scrolling on iOS */
-  -webkit-overflow-scrolling: touch !important;
+  /* REMOVED: -webkit-overflow-scrolling: touch causes vertical scroll trap
+     on Android WebView when combined with backdrop-filter and overflow-x:auto.
+     The compositor misclassifies the layer as bidirectionally scrollable. */
+  -webkit-overflow-scrolling: auto !important;
+  
+  /* backdrop-filter creates a composited layer that traps scroll gestures
+     on Android WebView when the element is also a scroll container. */
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
   
   /* Flex layout for horizontal cards */
   display: flex !important;
@@ -83,6 +89,19 @@
   overflow: visible !important;
   touch-action: auto !important;
   contain: none !important;
+}
+
+/* === SACRED GEOMETRY — Ensure no touch interception === */
+.sacred-field,
+.sacred-header {
+  pointer-events: none !important;
+}
+.sacred-field > svg,
+.sacred-field__svg,
+.sacred-header__motion > svg,
+.sacred-geometry--header,
+.sacred-geometry--background {
+  pointer-events: none !important;
 }
 
 /* === NATIVE APP PRINT SUPPORT === */

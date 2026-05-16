@@ -1,12 +1,16 @@
 /**
  * Energy Vote Card Component
  * Allows users to vote on daily energy (1-10) and see community results
+ * Shows real-time aggregated data from Firebase when available
  */
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
+import { useTranslation } from 'react-i18next';
+import type { Unsubscribe } from 'firebase/firestore';
 import { 
   castVote, 
   getDailyEnergyResult, 
+  subscribeToCommunityEnergy,
   getEnergyLevelDescription,
   getCommunityGuidance,
   type DailyEnergyResult 
@@ -17,35 +21,63 @@ interface EnergyVoteCardProps {
 }
 
 export const EnergyVoteCard: React.FC<EnergyVoteCardProps> = ({ date = new Date() }) => {
+  const { t } = useTranslation('circle');
   const [result, setResult] = useState<DailyEnergyResult | null>(null);
   const [selectedRating, setSelectedRating] = useState<number | null>(null);
   const [hasVoted, setHasVoted] = useState(false);
   const [showVoteForm, setShowVoteForm] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  const unsubRef = useRef<Unsubscribe | null>(null);
   
   useEffect(() => {
-    const data = getDailyEnergyResult(date);
-    setResult(data);
-    if (data.userVote) {
-      setSelectedRating(data.userVote);
+    setIsLoading(true);
+    
+    // Start with local data for immediate render
+    const localData = getDailyEnergyResult(date);
+    setResult(localData);
+    if (localData.userVote) {
+      setSelectedRating(localData.userVote);
       setHasVoted(true);
     }
+    setIsLoading(false);
+    
+    // Subscribe to real-time community data from Firebase
+    const unsub = subscribeToCommunityEnergy(date, (communityData) => {
+      setResult(communityData);
+      if (communityData.userVote) {
+        setSelectedRating(communityData.userVote);
+        setHasVoted(true);
+      }
+    });
+    
+    if (unsub) {
+      unsubRef.current = unsub;
+    }
+    
+    return () => {
+      if (unsubRef.current) {
+        unsubRef.current();
+        unsubRef.current = null;
+      }
+    };
   }, [date]);
   
   const handleVote = () => {
     if (selectedRating && castVote(selectedRating, date)) {
       setHasVoted(true);
+      // Optimistically update the local result
       setResult(getDailyEnergyResult(date));
       setShowVoteForm(false);
     }
   };
   
-  if (!result) return null;
+  if (isLoading || !result) return null;
   
   // Check if we have actual vote data
   const hasVotes = result.averageRating !== null && result.totalVotes > 0;
   
-  const energyLevel = hasVotes ? getEnergyLevelDescription(result.averageRating!) : null;
-  const communityGuidance = hasVotes ? getCommunityGuidance(result.averageRating!) : null;
+  const energyLevelKey = hasVotes ? getEnergyLevelDescription(result.averageRating!) : null;
+  const communityGuidanceKey = hasVotes ? getCommunityGuidance(result.averageRating!) : null;
   
   // Calculate percentage for visual bar
   const percentage = hasVotes ? (result.averageRating! / 10) * 100 : 0;
@@ -55,9 +87,9 @@ export const EnergyVoteCard: React.FC<EnergyVoteCardProps> = ({ date = new Date(
       <div className="energy-vote-card__header">
         <span className="energy-vote-card__icon">🌍</span>
         <div className="energy-vote-card__title-group">
-          <span className="energy-vote-card__title">Community Energy</span>
+          <span className="energy-vote-card__title">{t('voting.title')}</span>
           <span className="energy-vote-card__subtitle">
-            {result.totalVotes} contributors worldwide
+            {t('voting.contributors', { count: result.totalVotes })}
           </span>
         </div>
       </div>
@@ -70,9 +102,9 @@ export const EnergyVoteCard: React.FC<EnergyVoteCardProps> = ({ date = new Date(
             <span className="energy-vote-outof">/10</span>
           </div>
           <div className="energy-vote-level">
-            <span className="energy-vote-emoji">{energyLevel!.emoji}</span>
-            <span className="energy-vote-label" style={{ color: energyLevel!.color }}>
-              {energyLevel!.label}
+            <span className="energy-vote-emoji">{energyLevelKey!.emoji}</span>
+            <span className="energy-vote-label" style={{ color: energyLevelKey!.color }}>
+              {t(energyLevelKey!.label)}
             </span>
           </div>
           
@@ -83,7 +115,7 @@ export const EnergyVoteCard: React.FC<EnergyVoteCardProps> = ({ date = new Date(
                 className="energy-vote-bar-fill"
                 style={{ 
                   width: `${percentage}%`,
-                  background: `linear-gradient(90deg, ${energyLevel!.color}80, ${energyLevel!.color})`
+                  background: `linear-gradient(90deg, ${energyLevelKey!.color}80, ${energyLevelKey!.color})`
                 }}
               />
             </div>
@@ -98,7 +130,7 @@ export const EnergyVoteCard: React.FC<EnergyVoteCardProps> = ({ date = new Date(
         <div className="energy-vote-display energy-vote-display--empty">
           <div className="energy-vote-empty">
             <span className="energy-vote-empty-icon">🌍</span>
-            <span className="energy-vote-empty-text">No energy votes recorded</span>
+            <span className="energy-vote-empty-text">{t('voting.noVotes')}</span>
           </div>
         </div>
       )}
@@ -106,7 +138,7 @@ export const EnergyVoteCard: React.FC<EnergyVoteCardProps> = ({ date = new Date(
       {/* Community Guidance - only show when we have votes */}
       {hasVotes && (
         <div className="energy-vote-guidance">
-          <p>{communityGuidance}</p>
+          <p>{communityGuidanceKey ? t(communityGuidanceKey) : ''}</p>
         </div>
       )}
       
@@ -116,18 +148,18 @@ export const EnergyVoteCard: React.FC<EnergyVoteCardProps> = ({ date = new Date(
           {hasVoted ? (
             <div className="energy-vote-thanks">
               <span className="energy-vote-check">✓</span>
-              <span>Thank you for voting! Results shared tomorrow.</span>
+              <span>{t('voting.thanks')}</span>
             </div>
           ) : showVoteForm ? (
             <div className="energy-vote-form">
-              <p className="energy-vote-question">How was your energy today? (1-10)</p>
+              <p className="energy-vote-question">{t('voting.question')}</p>
               <div className="energy-vote-options">
                 {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((num) => (
                   <button
                     key={num}
                     className={`energy-vote-option ${selectedRating === num ? 'selected' : ''}`}
                     onClick={() => setSelectedRating(num)}
-                    title={getEnergyLevelDescription(num).label}
+                    title={t(getEnergyLevelDescription(num).label)}
                   >
                     {num}
                   </button>
@@ -151,20 +183,20 @@ export const EnergyVoteCard: React.FC<EnergyVoteCardProps> = ({ date = new Date(
             </div>
           ) : (
             <div className="energy-vote-cta">
-              <p>Voting closes at {result.votingClosesAt}</p>
+              <p>{t('voting.closesAt', { time: result.votingClosesAt })}</p>
               <button 
                 className="btn btn--primary energy-vote-btn"
                 onClick={() => setShowVoteForm(true)}
               >
-                🗳️ Vote Your Energy
+                {t('voting.cta')}
               </button>
             </div>
           )}
         </div>
       ) : (
         <div className="energy-vote-closed">
-          <p>Voting closed at {result.votingClosesAt}</p>
-          <p className="energy-vote-next">Tomorrow's voting opens at midnight</p>
+          <p>{t('voting.closedAt', { time: result.votingClosesAt })}</p>
+          <p className="energy-vote-next">{t('voting.opensTomorrow')}</p>
         </div>
       )}
     </div>

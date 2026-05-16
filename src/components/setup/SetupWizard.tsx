@@ -8,11 +8,11 @@
  * ═══════════════════════════════════════════════════════════════════════════════
  */
 
-import React, { useState, useCallback, useEffect, useRef, useMemo } from 'react';
+import React, { useState, useCallback, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import type { AppDispatch, RootState } from '../../store';
 import { completeSetup, persistSetupState } from '../../store/setupSlice';
-import { getWizardStrings } from '../../data/languages';
+import { useTranslation } from 'react-i18next';
 import { LanguageSelector } from './LanguageSelector';
 import { ModeSelector } from './ModeSelector';
 import { PermissionsSelector } from './PermissionsSelector';
@@ -21,17 +21,18 @@ import { useFocusTrap } from './useFocusTrap';
 import { useScrollLock } from './useScrollLock';
 import { StarfieldBackground } from './StarfieldBackground';
 import '../../styles/setup-wizard.css';
+import '../../styles/setup-wizard-cinematic.css';
 
 export type SetupStep = 'language' | 'mode' | 'permissions' | 'ai' | 'complete';
 
 const STEPS: SetupStep[] = ['language', 'mode', 'permissions', 'ai', 'complete'];
 
-const STEP_TITLES: Record<SetupStep, string> = {
-  language: 'Language',
-  mode: 'Calendar Mode',
-  permissions: 'Permissions',
-  ai: 'Intelligence',
-  complete: 'Ready',
+const STEP_TITLE_KEYS: Record<SetupStep, string> = {
+  language: 'stepLanguage',
+  mode: 'stepMode',
+  permissions: 'stepPermissions',
+  ai: 'stepIntelligence',
+  complete: 'stepReady',
 };
 
 export const SetupWizard: React.FC = () => {
@@ -55,6 +56,8 @@ export const SetupWizard: React.FC = () => {
     return () => clearTimeout(timer);
   }, []);
 
+  const { t } = useTranslation('wizard');
+
   // Focus trap + scroll lock
   useFocusTrap(true, containerRef);
   useScrollLock(true);
@@ -68,9 +71,13 @@ export const SetupWizard: React.FC = () => {
   useEffect(() => {
     const announcer = document.getElementById('setup-announcer');
     if (announcer) {
-      announcer.textContent = `Step ${currentStepIndex + 1} of ${totalSteps}: ${STEP_TITLES[currentStep]}`;
+      announcer.textContent = t('stepAnnouncement', {
+        current: currentStepIndex + 1,
+        total: totalSteps,
+        title: t(STEP_TITLE_KEYS[currentStep]),
+      });
     }
-  }, [currentStepIndex, currentStep, totalSteps]);
+  }, [currentStepIndex, currentStep, totalSteps, t]);
 
   // Focus step content after transition
   useEffect(() => {
@@ -111,10 +118,6 @@ export const SetupWizard: React.FC = () => {
     dispatch(completeSetup());
   }, [dispatch, setup]);
 
-  const strings = useMemo(() => {
-    return getWizardStrings(setup.language);
-  }, [setup.language]);
-
   const renderStep = () => {
     switch (currentStep) {
       case 'language':
@@ -127,7 +130,6 @@ export const SetupWizard: React.FC = () => {
         return (
           <ModeSelector
             initialMode={setup.timeMode}
-            strings={strings}
           />
         );
       case 'permissions':
@@ -135,7 +137,6 @@ export const SetupWizard: React.FC = () => {
           <PermissionsSelector
             initialLocation={setup.locationEnabled}
             initialNotifications={setup.notificationsEnabled}
-            strings={strings}
           />
         );
       case 'ai':
@@ -144,11 +145,10 @@ export const SetupWizard: React.FC = () => {
             initialProvider={setup.aiProvider}
             initialModel={setup.aiModel}
             initialConfigured={setup.aiApiKeyConfigured}
-            strings={strings}
           />
         );
       case 'complete':
-        return <CompleteStep onEnter={handleComplete} language={setup.language} />;
+        return <CompleteStep onEnter={handleComplete} />;
       default:
         return null;
     }
@@ -172,110 +172,86 @@ export const SetupWizard: React.FC = () => {
       />
 
       <StarfieldBackground />
-      <div className="setup-wizard">
-        {/* Progress bar */}
-        <div className="setup-wizard__progress-track" role="progressbar" aria-valuenow={Math.round(progress)} aria-valuemin={0} aria-valuemax={100} aria-label="Setup progress">
-          <div
-            className="setup-wizard__progress-fill"
-            style={{ width: `${progress}%` }}
-          />
-        </div>
 
-        {/* Step indicator */}
-        <div className="setup-wizard__step-indicator" aria-hidden="true">
-          <span className="setup-wizard__step-current">{currentStepIndex + 1}</span>
-          <span className="setup-wizard__step-divider">/</span>
-          <span className="setup-wizard__step-total">{totalSteps}</span>
-        </div>
-
-        {/* Content */}
+      {/* Progress bar — thin gold line at top */}
+      <div className="setup-wizard__progress-track" role="progressbar" aria-valuenow={Math.round(progress)} aria-valuemin={0} aria-valuemax={100} aria-label={t('setupProgress')}>
         <div
-          ref={contentRef}
-          className={`setup-wizard__content ${isAnimating ? `slide-${direction}` : ''}`}
-          key={currentStep}
-          tabIndex={-1}
-        >
-          {renderStep()}
-        </div>
-
-        {/* Persistent navigation footer — safety net so no step can trap the user */}
-        {currentStep !== 'complete' && (
-          <div className="setup-wizard__footer">
-            <div className="setup-wizard__footer-inner">
-              {currentStepIndex > 0 && (
-                <button
-                  className="setup-btn setup-btn--ghost"
-                  onClick={goBack}
-                  disabled={isAnimating}
-                  type="button"
-                >
-                  {strings.back}
-                </button>
-              )}
-              {currentStepIndex < totalSteps - 1 && (
-                <button
-                  className="setup-btn setup-btn--primary"
-                  onClick={goNext}
-                  disabled={isAnimating}
-                  type="button"
-                >
-                  {strings.next}
-                </button>
-              )}
-            </div>
-          </div>
-        )}
+          className="setup-wizard__progress-fill"
+          style={{ width: `${progress}%` }}
+        />
       </div>
+
+      {/* Content — full viewport, no container prison */}
+      <div
+        ref={contentRef}
+        className={`setup-wizard__scene ${isAnimating ? `slide-${direction}` : ''}`}
+        key={currentStep}
+        tabIndex={-1}
+      >
+        {renderStep()}
+      </div>
+
+      {/* Constellation progress dots */}
+      <div className="setup-wizard__dots" aria-hidden="true">
+        {STEPS.map((_, i) => (
+          <div
+            key={i}
+            className={`setup-wizard__dot ${i === currentStepIndex ? 'setup-wizard__dot--active' : ''} ${i < currentStepIndex ? 'setup-wizard__dot--completed' : ''}`}
+          />
+        ))}
+      </div>
+
+      {/* Persistent navigation footer */}
+      {currentStep !== 'complete' && (
+        <div className="setup-wizard__nav">
+          {currentStepIndex > 0 && (
+            <button
+              className="setup-wizard__nav-btn setup-wizard__nav-btn--back"
+              onClick={goBack}
+              disabled={isAnimating}
+              type="button"
+            >
+              {t('back')}
+            </button>
+          )}
+          {currentStepIndex < totalSteps - 1 && (
+            <button
+              className="setup-wizard__nav-btn setup-wizard__nav-btn--next"
+              onClick={goNext}
+              disabled={isAnimating}
+              type="button"
+            >
+              {t('next')}
+            </button>
+          )}
+        </div>
+      )}
     </div>
   );
 };
 
-const CompleteStep: React.FC<{ onEnter: () => void; language: string }> = ({ onEnter, language }) => {
-  const strings = useMemo(() => {
-    const map: Record<string, { ready: string; enter: string }> = {
-      en: { ready: 'You are ready.', enter: 'Enter HEKA' },
-      es: { ready: 'Estás listo.', enter: 'Entrar a HEKA' },
-      fr: { ready: 'Vous êtes prêt.', enter: 'Entrer dans HEKA' },
-      de: { ready: 'Du bist bereit.', enter: 'HEKA betreten' },
-      it: { ready: 'Sei pronto.', enter: 'Entra in HEKA' },
-      pt: { ready: 'Você está pronto.', enter: 'Entrar no HEKA' },
-      zh: { ready: '您已准备就绪。', enter: '进入 HEKA' },
-      ja: { ready: '準備ができました。', enter: 'HEKA に入る' },
-      ko: { ready: '준비가 되었습니다.', enter: 'HEKA 입장' },
-      ar: { ready: 'أنت جاهز.', enter: 'دخول HEKA' },
-      hi: { ready: 'आप तैयार हैं।', enter: 'HEKA में प्रवेश करें' },
-      ru: { ready: 'Вы готовы.', enter: 'Войти в HEKA' },
-      tr: { ready: 'Hazırsınız.', enter: "HEKA'ya Gir" },
-      pl: { ready: 'Jesteś gotowy.', enter: 'Wejdź do HEKA' },
-      nl: { ready: 'Je bent klaar.', enter: 'Ga HEKA binnen' },
-      sv: { ready: 'Du är redo.', enter: 'Gå in i HEKA' },
-      el: { ready: 'Είστε έτοιμοι.', enter: 'Είσοδος στο HEKA' },
-      he: { ready: 'אתה מוכן.', enter: 'היכנס ל-HEKA' },
-      th: { ready: 'คุณพร้อมแล้ว', enter: 'เข้าสู่ HEKA' },
-      vi: { ready: 'Bạn đã sẵn sàng.', enter: 'Vào HEKA' },
-      id: { ready: 'Anda siap.', enter: 'Masuk ke HEKA' },
-      uk: { ready: 'Ви готові.', enter: 'Увійти в HEKA' },
-      ro: { ready: 'Ești pregătit.', enter: 'Intră în HEKA' },
-      cs: { ready: 'Jste připraveni.', enter: 'Vstupte do HEKA' },
-      hu: { ready: 'Készen áll.', enter: 'Belépés a HEKA-ba' },
-      da: { ready: 'Du er klar.', enter: 'Gå ind i HEKA' },
-      fi: { ready: 'Olet valmis.', enter: 'Siirry HEKAan' },
-      no: { ready: 'Du er klar.', enter: 'Gå inn i HEKA' },
-      sk: { ready: 'Ste pripravení.', enter: 'Vstúpiť do HEKA' },
-      bg: { ready: 'Готови сте.', enter: 'Влезте в HEKA' },
-    };
-    return map[language] || map.en;
-  }, [language]);
+const CompleteStep: React.FC<{ onEnter: () => void }> = ({ onEnter }) => {
+  const { t } = useTranslation('wizard');
 
   return (
     <div className="setup-step setup-step--complete" tabIndex={-1}>
+      <div className="sw-ornament" />
       <div className="setup-step__glow-icon" aria-hidden="true">
-        <span>✦</span>
+        <svg width="56" height="56" viewBox="0 0 48 48" fill="none">
+          <path d="M24 2L27.5 18.5L44 24L27.5 29.5L24 46L20.5 29.5L4 24L20.5 18.5L24 2Z" fill="#d4af37" />
+          <circle cx="24" cy="24" r="8" fill="#05040a" />
+          <circle cx="24" cy="24" r="4" fill="#d4af37" />
+        </svg>
       </div>
-      <h2 className="setup-step__title" tabIndex={-1}>{strings.ready}</h2>
-      <p className="setup-step__subtitle">The calendar is yours. The sky is yours.</p>
-      <button className="setup-btn setup-btn--primary setup-btn--large" onClick={onEnter} autoFocus>
-        {strings.enter}
+      <h2 className="setup-step__title" tabIndex={-1}>{t('setupComplete')}</h2>
+      <p className="setup-step__subtitle">{t('setupCompleteSubtitle')}</p>
+      <button
+        className="setup-wizard__nav-btn setup-wizard__nav-btn--next"
+        style={{ marginTop: 8, padding: '18px 48px', fontSize: 16 }}
+        onClick={onEnter}
+        autoFocus
+      >
+        {t('enterHeka')}
       </button>
     </div>
   );

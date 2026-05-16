@@ -11,6 +11,7 @@
 
 import { useState, useEffect, useMemo, useRef, memo } from 'react';
 import { useSelector, shallowEqual } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 import type { RootState } from '../store';
 import { LOCATIONS, SUB_REGIONS, type LocationData } from '../types';
 import { 
@@ -112,6 +113,7 @@ const CountdownDisplay = memo(({
   label: string;
   symbol: string;
 }) => {
+  const { t } = useTranslation('celestial');
   const [timeLeft, setTimeLeft] = useState<CountdownTime>(() => 
     calculateCountdown(targetDate, fromDate)
   );
@@ -167,22 +169,22 @@ const CountdownDisplay = memo(({
       <div className="countdown-time">
         <div className="countdown-unit">
           <span className="countdown-value">{timeLeft.days}</span>
-          <span className="countdown-unit-label">days</span>
+          <span className="countdown-unit-label">{t('countdown.days')}</span>
         </div>
         <div className="countdown-separator">:</div>
         <div className="countdown-unit">
           <span className="countdown-value">{String(timeLeft.hours).padStart(2, '0')}</span>
-          <span className="countdown-unit-label">hrs</span>
+          <span className="countdown-unit-label">{t('countdown.hours')}</span>
         </div>
         <div className="countdown-separator">:</div>
         <div className="countdown-unit">
           <span className="countdown-value">{String(timeLeft.minutes).padStart(2, '0')}</span>
-          <span className="countdown-unit-label">min</span>
+          <span className="countdown-unit-label">{t('countdown.minutes')}</span>
         </div>
         <div className="countdown-separator">:</div>
         <div className="countdown-unit">
           <span className="countdown-value">{String(timeLeft.seconds).padStart(2, '0')}</span>
-          <span className="countdown-unit-label">sec</span>
+          <span className="countdown-unit-label">{t('countdown.seconds')}</span>
         </div>
       </div>
     </div>
@@ -244,6 +246,7 @@ function useCelestialData(
 }
 
 const CelestialPanelComponent: React.FC = () => {
+  const { t, i18n } = useTranslation('celestial');
   // Use individual selectors with shallowEqual for objects
   const viewDate = useSelector((state: RootState) => state.calendar.viewDate, shallowEqual);
   const selectedDate = useSelector((state: RootState) => state.calendar.selectedDate, shallowEqual);
@@ -274,16 +277,14 @@ const CelestialPanelComponent: React.FC = () => {
   // Use SELECTED date for all calculations, fall back to view date
   const targetHekaDate = selectedDate || viewDate;
   
-  // Create a stable reference date that includes current time
-  const now = useMemo(() => new Date(), []);
-  
   // Build civilDate with current time preserved (not midnight)
   const civilDate = useMemo(() => {
     const baseDate = hekaToCivil(targetHekaDate);
+    const now = new Date();
     // Preserve the current time of day for accurate countdown calculations
     baseDate.setHours(now.getHours(), now.getMinutes(), now.getSeconds(), now.getMilliseconds());
     return baseDate;
-  }, [targetHekaDate, now]);
+  }, [targetHekaDate]);
   
   // NOTE: HEKA Calendar is Universal (like Gregorian calendar)
   // HEKA Year 2026, Month 11 (January), Day 7 is the SAME moment worldwide
@@ -320,10 +321,13 @@ const CelestialPanelComponent: React.FC = () => {
   
   // Determine view type - memoized
   const { isHistoricalView, isFutureView } = useMemo(() => {
-    const todayYear = new Date().getFullYear();
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const selected = new Date(civilDate);
+    selected.setHours(0, 0, 0, 0);
     return {
-      isHistoricalView: civilDate.getFullYear() < todayYear,
-      isFutureView: civilDate.getFullYear() > todayYear,
+      isHistoricalView: selected.getTime() < today.getTime(),
+      isFutureView: selected.getTime() > today.getTime(),
     };
   }, [civilDate]);
   
@@ -348,10 +352,10 @@ const CelestialPanelComponent: React.FC = () => {
   
   // Generate contextual title - memoized
   const contextualTitle = useMemo(() => {
-    if (dateContext.isToday) return "Today's Celestial Guide";
-    if (dateContext.isPast) return `Celestial Guide for ${dateContext.diffDays} days ago`;
-    return `Celestial Guide in ${dateContext.diffDays} days`;
-  }, [dateContext]);
+    if (dateContext.isToday) return t('title');
+    if (dateContext.isPast) return t('titlePast', { days: dateContext.diffDays });
+    return t('titleFuture', { days: dateContext.diffDays });
+  }, [dateContext, t]);
   
   // Calculate day of year - memoized
   const dayOfYear = useMemo(() => {
@@ -369,10 +373,10 @@ const CelestialPanelComponent: React.FC = () => {
       <div className="celestial-panel__title" style={{ padding: '0 var(--space-4)' }}>
         <span>✦</span> {contextualTitle}
         <span className="celestial-date-context">
-          {isHistoricalView && " 📜 Historical View"}
-          {isFutureView && " 🔮 Future View"}
+          {isHistoricalView && `📜 ${t('historicalView')}`}
+          {isFutureView && `🔮 ${t('futureView')}`}
         </span>
-        <span style={{ opacity: 0.5 }}>(scroll →)</span>
+        <span style={{ opacity: 0.5 }}>{t('scrollHint')}</span>
       </div>
       
       {/* General Disclaimer */}
@@ -384,37 +388,37 @@ const CelestialPanelComponent: React.FC = () => {
         borderBottom: '1px solid rgba(255,255,255,0.1)',
         marginBottom: '8px'
       }}>
-        ℹ️ <strong>HEKA Calendar is Universal:</strong> Dates are the same worldwide (like Gregorian calendar). Civil date/times vary by timezone. Celestial calculations (solar noon, moon phases) are mathematical approximations ±30 min for educational purposes.
+        ℹ️ <strong>{t('hekaCalendarIsUniversal')}</strong> {t('universalCalendarDescription')}
       </div>
       
       {/* Selected Date Info Card */}
-      {(isHistoricalView || isFutureView) && (
+      {(dateContext.isPast || dateContext.isFuture) && (
         <ExpandableCelestialCard
           title={`${HEKA_MONTHS[targetHekaDate.month].name} ${targetHekaDate.day}, ${targetHekaDate.year}`}
-          subtitle="Selected HEKA Date"
+          subtitle={t('selectedDate')}
           icon="📅"
           accentColor="#c9a227"
           defaultExpanded={true}
         >
           <div className="selected-date-info">
             <InfoBadge 
-              label="Civil Date" 
-              value={civilDate.toLocaleDateString('en-US', { 
+              label={t('civilDate')} 
+              value={new Intl.DateTimeFormat(i18n.language || 'en', { 
                 weekday: 'long', 
                 year: 'numeric', 
                 month: 'long', 
                 day: 'numeric' 
-              })} 
+              }).format(civilDate)} 
             />
-            <InfoBadge label="Day of Year" value={`Day ${dayOfYear}`} />
+            <InfoBadge label={t('dayOfYear')} value={t('dayOfYearValue', { day: dayOfYear })} />
             {dateContext.isPast && (
-              <InfoSection title="Looking Back">
-                <p>This date has passed. Review what celestial energies were present on this day.</p>
+              <InfoSection title={t('lookingBack')}>
+                <p>{t('lookingBackDescription')}</p>
               </InfoSection>
             )}
             {dateContext.isFuture && (
-              <InfoSection title="Looking Forward">
-                <p>This date is in the future. Plan ahead using these upcoming celestial energies.</p>
+              <InfoSection title={t('lookingForward')}>
+                <p>{t('lookingForwardDescription')}</p>
               </InfoSection>
             )}
           </div>
@@ -425,10 +429,10 @@ const CelestialPanelComponent: React.FC = () => {
       
       {/* Always show: HEKA New Year */}
       <ExpandableCelestialCard
-        title={`HEKA Year ${hekaYearNumber} Begins`}
+        title={t('hekaYearBegins', { year: hekaYearNumber })}
         subtitle={civilDate.getTime() < hekaNewYear.getTime() 
-          ? `Starting (Civil): ${hekaNewYear.toLocaleDateString()}` 
-          : `Began (Civil): ${hekaNewYear.toLocaleDateString()}`}
+          ? t('startingCivil', { date: hekaNewYear.toLocaleDateString() }) 
+          : t('beganCivil', { date: hekaNewYear.toLocaleDateString() })}
         icon="🌅"
         accentColor="#c9a227"
       >
@@ -436,107 +440,58 @@ const CelestialPanelComponent: React.FC = () => {
           <CountdownDisplay 
             targetDate={hekaNewYear}
             fromDate={civilDate}
-            label={`HEKA Year ${hekaYearNumber}`}
+            label={t('hekaYearLabel', { year: hekaYearNumber })}
             symbol="🌅"
           />
         )}
-        <InfoSection title="About This HEKA Year">
-          <p>The HEKA year {hekaYearNumber} begins on April 1st, {hekaNewYear.getFullYear()}. Each HEKA year contains 12 months of 28 days, plus March with 29 days (30 in leap/correction years).</p>
+        <InfoSection title={t('aboutThisHekaYear')}>
+          <p>{t('aboutThisHekaYearDescription', { year: hekaYearNumber, civilYear: hekaNewYear.getFullYear() })}</p>
           <p style={{ marginTop: '8px', fontSize: '12px', opacity: 0.8 }}>
-            <strong>🌍 Universal Calendar:</strong> Like the Gregorian calendar, HEKA dates are the same worldwide. HEKA Month {targetHekaDate.month + 1}, Day {targetHekaDate.day} is the same moment whether you're in Sydney, New York, or London - only the local civil time differs.
+            <strong>🌍 {t('universalCalendar')}:</strong> {t('universalCalendarNote', { month: targetHekaDate.month + 1, day: targetHekaDate.day })}
           </p>
         </InfoSection>
         {!showNewYearCountdown && (
-          <InfoSection title="Status">
-            <p>This HEKA year has begun. The next cycle begins April 1st, {hekaNewYear.getFullYear() + 1}.</p>
+          <InfoSection title={t('status')}>
+            <p>{t('hekaYearBegunDescription', { nextYear: hekaNewYear.getFullYear() + 1 })}</p>
           </InfoSection>
         )}
       </ExpandableCelestialCard>
       
       {/* Day of the Week - Planetary Energy */}
       {(() => {
-        const dayOfWeekData = [
-          { 
-            day: 'Sunday', 
-            planet: 'Sun ☉', 
-            symbol: '☀️', 
-            color: '#fbbf24',
-            qualities: ['Vitality', 'Leadership', 'Success', 'Visibility'],
-            activities: ['Start new ventures', 'Seek recognition', 'Creative projects', 'Physical exercise'],
-            description: 'The day of the Sun brings vitality, confidence, and creative energy. Ideal for new beginnings and seeking visibility.'
-          },
-          { 
-            day: 'Monday', 
-            planet: 'Moon ☽', 
-            symbol: '🌙', 
-            color: '#c4b5fd',
-            qualities: ['Intuition', 'Emotions', 'Nurturing', 'Reflection'],
-            activities: ['Self-care', 'Home activities', 'Introspection', 'Family time'],
-            description: 'The day of the Moon emphasizes emotions, intuition, and inner work. Perfect for rest and emotional processing.'
-          },
-          { 
-            day: 'Tuesday', 
-            planet: 'Mars ♂', 
-            symbol: '⚔️', 
-            color: '#ef4444',
-            qualities: ['Action', 'Courage', 'Drive', 'Passion'],
-            activities: ['Tackle challenges', 'Physical work', 'Assertiveness', 'Competition'],
-            description: 'The day of Mars brings energy, courage, and drive. Best for taking action and overcoming obstacles.'
-          },
-          { 
-            day: 'Wednesday', 
-            planet: 'Mercury ☿', 
-            symbol: '📜', 
-            color: '#22c55e',
-            qualities: ['Communication', 'Intellect', 'Learning', 'Travel'],
-            activities: ['Writing', 'Negotiations', 'Study', 'Short trips'],
-            description: 'The day of Mercury favors communication, learning, and mental agility. Ideal for negotiations and writing.'
-          },
-          { 
-            day: 'Thursday', 
-            planet: 'Jupiter ♃', 
-            symbol: '⚡', 
-            color: '#a78bfa',
-            qualities: ['Expansion', 'Luck', 'Wisdom', 'Abundance'],
-            activities: ['Big decisions', 'Financial matters', 'Teaching', 'Travel planning'],
-            description: 'The day of Jupiter brings abundance, wisdom, and expansion. Favorable for growth and prosperity.'
-          },
-          { 
-            day: 'Friday', 
-            planet: 'Venus ♀', 
-            symbol: '💕', 
-            color: '#ec4899',
-            qualities: ['Love', 'Beauty', 'Harmony', 'Creativity'],
-            activities: ['Social gatherings', 'Artistic pursuits', 'Romance', 'Self-pampering'],
-            description: 'The day of Venus emphasizes love, beauty, and harmony. Perfect for social activities and artistic expression.'
-          },
-          { 
-            day: 'Saturday', 
-            planet: 'Saturn ♄', 
-            symbol: '🪐', 
-            color: '#6b7280',
-            qualities: ['Discipline', 'Structure', 'Responsibility', 'Wisdom'],
-            activities: ['Organization', 'Planning', 'Review work', 'Set boundaries'],
-            description: 'The day of Saturn calls for discipline and structure. Best for organization, planning, and responsibility.'
-          },
-        ];
-        const dayInfo = dayOfWeekData[civilDate.getDay()];
-        
+        const dayKeys = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'] as const;
+        const daySymbols = ['☉', '☽', '♂', '☿', '♃', '♀', '♄'] as const;
+        const planetKeys = ['sun', 'moon', 'mars', 'mercury', 'jupiter', 'venus', 'saturn'] as const;
+        const dayEmojis = ['☀️', '🌙', '⚔️', '📜', '⚡', '💕', '🪐'] as const;
+        const dayColors = ['#fbbf24', '#c4b5fd', '#ef4444', '#22c55e', '#a78bfa', '#ec4899', '#6b7280'] as const;
+
+        const dayIndex = civilDate.getDay();
+        const dayKey = dayKeys[dayIndex];
+        const dayInfo = {
+          day: t(`planetaryDays.${dayKey}.day`),
+          planet: `${t(`planets.${planetKeys[dayIndex]}`)} ${daySymbols[dayIndex]}`,
+          symbol: dayEmojis[dayIndex],
+          color: dayColors[dayIndex],
+          qualities: t(`planetaryDays.${dayKey}.qualities`, { returnObjects: true }) as string[],
+          activities: t(`planetaryDays.${dayKey}.activities`, { returnObjects: true }) as string[],
+          description: t(`planetaryDays.${dayKey}.description`),
+        };
+
         return (
           <ExpandableCelestialCard
-            title={`${dayInfo.day}: Day of ${dayInfo.planet}`}
+            title={t('dayOfPlanet', { day: dayInfo.day, planet: dayInfo.planet })}
             subtitle={dayInfo.description}
             icon={dayInfo.symbol}
             accentColor={dayInfo.color}
           >
-            <InfoSection title="Planetary Qualities">
+            <InfoSection title={t('planetaryQualities')}>
               <InfoList items={dayInfo.qualities} />
             </InfoSection>
-            <InfoSection title="Favorable Activities">
+            <InfoSection title={t('favorableActivities')}>
               <InfoList items={dayInfo.activities} />
             </InfoSection>
             <div style={{ fontSize: '11px', opacity: 0.6, marginTop: '8px', fontStyle: 'italic' }}>
-              ℹ️ Planetary day associations draw from traditional astrology and cultural symbolism.
+              ℹ️ {t('planetaryDayDisclaimer')}
             </div>
           </ExpandableCelestialCard>
         );
@@ -544,8 +499,8 @@ const CelestialPanelComponent: React.FC = () => {
       
       {/* Always show: Moon Phase */}
       <ExpandableCelestialCard
-        title="Moon Phase"
-        subtitle={`${celestialData.moonPhase.phase} • ${Math.round(celestialData.moonPhase.illumination)}% illuminated`}
+        title={t('cards.moonPhase.title')}
+        subtitle={`${celestialData.moonPhase.phase} • ${Math.round(celestialData.moonPhase.illumination)}% ${t('cards.moonPhase.illuminated')}`}
         icon={celestialData.moonPhase.glyph}
         accentColor="#c4b5fd"
       >
@@ -553,22 +508,22 @@ const CelestialPanelComponent: React.FC = () => {
           <span className="moon-phase-glyph">{celestialData.moonPhase.glyph}</span>
           <div className="moon-phase-details">
             <span className="moon-phase-name">{celestialData.moonPhase.phase}</span>
-            <span className="moon-illumination">{Math.round(celestialData.moonPhase.illumination)}% illuminated</span>
-            <span className="moon-age">Age: {Math.round(celestialData.moonPhase.age)} days</span>
+            <span className="moon-illumination">{Math.round(celestialData.moonPhase.illumination)}% {t('cards.moonPhase.illuminated')}</span>
+            <span className="moon-age">{t('cards.moonPhase.age')}: {Math.round(celestialData.moonPhase.age)} {t('countdown.days')}</span>
           </div>
         </div>
-        <InfoSection title="Energetic Influence">
+        <InfoSection title={t('energeticInfluence')}>
           <InfoList items={[
-            celestialData.moonPhase.waxing ? "Waxing: Building energy, growth, accumulation" : "Waning: Releasing, letting go, completion",
-            celestialData.moonPhase.illumination > 50 ? "More than half: Peak manifestation power" : "Less than half: Introspection and planning",
-            celestialData.moonPhase.age < 7 ? "New to First Quarter: Begin new projects" : 
-              celestialData.moonPhase.age < 14 ? "First Quarter to Full: Build momentum" :
-              celestialData.moonPhase.age < 21 ? "Full to Last Quarter: Harvest results" :
-              "Last Quarter to New: Release and rest"
+            celestialData.moonPhase.waxing ? t('waxingDescription') : t('waningDescription'),
+            celestialData.moonPhase.illumination > 50 ? t('illuminationMoreThanHalf') : t('illuminationLessThanHalf'),
+            celestialData.moonPhase.age < 7 ? t('newToFirstQuarter') : 
+              celestialData.moonPhase.age < 14 ? t('firstQuarterToFull') :
+              celestialData.moonPhase.age < 21 ? t('fullToLastQuarter') :
+              t('lastQuarterToNew')
           ]} />
         </InfoSection>
         <div style={{ fontSize: '11px', opacity: 0.6, marginTop: '8px', fontStyle: 'italic' }}>
-          ℹ️ Moon phases are calculated mathematically and may vary slightly from astronomical observations.
+          ℹ️ {t('moonPhaseDisclaimer')}
         </div>
       </ExpandableCelestialCard>
       
@@ -576,21 +531,21 @@ const CelestialPanelComponent: React.FC = () => {
       {display.showCelestialCards && celestialData.currentSeason && (
         <ExpandableCelestialCard
           title={`${celestialData.currentSeason.emoji} ${celestialData.currentSeason.name}`}
-          subtitle={`Element: ${celestialData.currentSeason.element} • ${celestialData.daysUntilNextSeason} days until next season`}
+          subtitle={`${t('element')}: ${t(`elements.${celestialData.currentSeason.element.toLowerCase()}`)} • ${celestialData.daysUntilNextSeason} ${t('daysUntilNextSeason')}`}
           icon={celestialData.currentSeason.emoji}
           accentColor={getSeasonElementColor(celestialData.currentSeason.element)}
         >
           <div className="season-display">
-            <InfoBadge label="Element" value={celestialData.currentSeason.element} color={getSeasonElementColor(celestialData.currentSeason.element)} />
-            <InfoBadge label="Days Remaining" value={`${celestialData.daysUntilNextSeason} days`} />
+            <InfoBadge label={t('element')} value={t(`elements.${celestialData.currentSeason.element.toLowerCase()}`)} color={getSeasonElementColor(celestialData.currentSeason.element)} />
+            <InfoBadge label={t('daysRemaining')} value={`${celestialData.daysUntilNextSeason} ${t('countdown.days')}`} />
           </div>
-          <InfoSection title="About This Season">
+          <InfoSection title={t('aboutThisSeason')}>
             <p>{celestialData.currentSeason.description}</p>
           </InfoSection>
-          <InfoSection title="Characteristics">
+          <InfoSection title={t('characteristics')}>
             <InfoList items={celestialData.currentSeason.characteristics} />
           </InfoSection>
-          <InfoSection title="Seasonal Activities">
+          <InfoSection title={t('seasonalActivities')}>
             <InfoList items={celestialData.currentSeason.activities} />
           </InfoSection>
         </ExpandableCelestialCard>
@@ -600,7 +555,7 @@ const CelestialPanelComponent: React.FC = () => {
       {display.showCelestialCards && celestialData.nextSeasonalEvent && seasonalEventInfo && (
         <ExpandableCelestialCard
           title={seasonalEventInfo.name}
-          subtitle={`From ${HEKA_MONTHS[targetHekaDate.month].name} ${targetHekaDate.day}`}
+          subtitle={t('fromDate', { month: HEKA_MONTHS[targetHekaDate.month].name, day: targetHekaDate.day })}
           icon={seasonalEventInfo.symbol}
           accentColor="#e8c97a"
         >
@@ -612,17 +567,17 @@ const CelestialPanelComponent: React.FC = () => {
               symbol={celestialData.nextSeasonalEvent.symbol}
             />
           )}
-          <InfoSection title="What is it?">
+          <InfoSection title={t('whatIsIt')}>
             <p>{seasonalEventInfo.description}</p>
           </InfoSection>
-          <InfoSection title="Significance">
+          <InfoSection title={t('significance')}>
             <p>{seasonalEventInfo.significance}</p>
           </InfoSection>
-          <InfoSection title="How to Observe">
+          <InfoSection title={t('howToObserve')}>
             <p>{seasonalEventInfo.observance}</p>
           </InfoSection>
           {seasonalEventInfo.traditions.length > 0 && (
-            <InfoSection title="Traditions">
+            <InfoSection title={t('traditions')}>
               <InfoList items={seasonalEventInfo.traditions.slice(0, 4)} />
             </InfoSection>
           )}
@@ -632,30 +587,30 @@ const CelestialPanelComponent: React.FC = () => {
       {/* Solar Noon - always show if available */}
       {celestialData.solarNoon && (
         <ExpandableCelestialCard
-          title="Solar Noon"
-          subtitle={`Sun at highest point on this day`}
+          title={t('solarNoon')}
+          subtitle={t('solarNoonSubtitle')}
           icon="☀️"
           accentColor="#fbbf24"
         >
           <div className="solar-noon-display">
             <span className="solar-noon-time">
-              {celestialData.solarNoon.time.toLocaleTimeString('en-US', { 
+              {new Intl.DateTimeFormat(i18n.language || 'en', { 
                 hour: '2-digit', 
                 minute: '2-digit',
-              })}
+              }).format(celestialData.solarNoon.time)}
             </span>
             <span className="solar-noon-elevation">
-              Sun elevation: {celestialData.solarNoon.elevation}°
+              {t('sunElevation', { elevation: celestialData.solarNoon.elevation })}
             </span>
           </div>
-          <InfoSection title="About Solar Noon">
-            <p><strong>Local Time:</strong> The Sun reaches its highest point at {celestialData.solarNoon.time.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })} ({locationData.timezone})</p>
+          <InfoSection title={t('aboutSolarNoon')}>
+            <p><strong>{t('localTime')}</strong> {t('solarNoonLocalTimeDescription', { time: new Intl.DateTimeFormat(i18n.language || 'en', { hour: '2-digit', minute: '2-digit' }).format(celestialData.solarNoon.time), timezone: locationData.timezone })}</p>
           </InfoSection>
-          <InfoSection title="Historical Significance">
-            <p>Ancient cultures used solar noon for timekeeping. Stone circles and sundials were aligned to mark this moment.</p>
+          <InfoSection title={t('historicalSignificance')}>
+            <p>{t('solarNoonHistoricalDescription')}</p>
           </InfoSection>
           <div style={{ fontSize: '11px', opacity: 0.6, marginTop: '8px', fontStyle: 'italic' }}>
-            ℹ️ Times are mathematical approximations (±10-15 min). Precise solar noon varies by your exact location and date.
+            ℹ️ {t('solarNoonDisclaimer')}
           </div>
         </ExpandableCelestialCard>
       )}
@@ -663,24 +618,24 @@ const CelestialPanelComponent: React.FC = () => {
       {/* Lunar Month - always show */}
       {celestialData.lunarMonth && (
         <ExpandableCelestialCard
-          title="Lunar Cycle"
+          title={t('lunarCycle')}
           subtitle={celestialData.lunarMonth.name}
           icon="🌙"
           accentColor="#c4b5fd"
         >
           <div className="lunar-month-display">
-            <InfoBadge label="New Moon (Civil)" value={celestialData.lunarMonth.newMoon.toLocaleDateString()} />
-            <InfoBadge label="Full Moon (Civil)" value={celestialData.lunarMonth.fullMoon.toLocaleDateString()} />
+            <InfoBadge label={t('newMoonCivil')} value={celestialData.lunarMonth.newMoon.toLocaleDateString()} />
+            <InfoBadge label={t('fullMoonCivil')} value={celestialData.lunarMonth.fullMoon.toLocaleDateString()} />
           </div>
-          <InfoSection title="This Moon Cycle">
-            <p><strong>Civil Date:</strong> {civilDate.toLocaleDateString()} — The Moon was in the {celestialData.lunarMonth.name} cycle.</p>
+          <InfoSection title={t('thisMoonCycle')}>
+            <p><strong>{t('civilDate')}:</strong> {civilDate.toLocaleDateString()} — {t('thisMoonCycleDescription', { name: celestialData.lunarMonth.name })}</p>
           </InfoSection>
-          <InfoSection title="Energetic Qualities">
+          <InfoSection title={t('energeticQualities')}>
             <InfoList items={[
-              "New Moon: Beginnings, setting intentions",
-              "Waxing: Growth, building momentum",
-              "Full Moon: Peak energy, manifestation",
-              "Waning: Release, reflection, completion"
+              t('newMoonQuality'),
+              t('waxingQuality'),
+              t('fullMoonQuality'),
+              t('waningQuality')
             ]} />
           </InfoSection>
         </ExpandableCelestialCard>
@@ -689,22 +644,22 @@ const CelestialPanelComponent: React.FC = () => {
       {/* Agricultural Guidance - only when enabled */}
       {display.showCelestialCards && celestialData.agGuidance && (
         <ExpandableCelestialCard
-          title="Agricultural Guidance"
-          subtitle={`For ${HEKA_MONTHS[targetHekaDate.month].name} ${targetHekaDate.day}`}
+          title={t('agriculturalGuidance')}
+          subtitle={t('forDate', { month: HEKA_MONTHS[targetHekaDate.month].name, day: targetHekaDate.day })}
           icon={activityIcons[celestialData.agGuidance.activity] || '🌱'}
           accentColor="#86efac"
         >
           <div className="ag-guidance-display">
             <span className="ag-activity">{activityIcons[celestialData.agGuidance.activity]} {celestialData.agGuidance.description}</span>
             <span className={`ag-confidence ag-confidence--${celestialData.agGuidance.confidence}`}>
-              Confidence: {celestialData.agGuidance.confidence}
+              {t('confidence')} {celestialData.agGuidance.confidence}
             </span>
           </div>
-          <InfoSection title="Why This Day?">
-            <p><strong>Civil Date:</strong> {civilDate.toLocaleDateString()} — The moon phase and seasonal factors indicated optimal conditions for {celestialData.agGuidance.activity} activities.</p>
+          <InfoSection title={t('whyThisDay')}>
+            <p><strong>{t('civilDate')}:</strong> {civilDate.toLocaleDateString()} — {t('whyThisDayDescription', { activity: t(`activities.${celestialData.agGuidance.activity}`) })}</p>
           </InfoSection>
-          <InfoSection title="Biodynamic Principle">
-            <p>This guidance follows the cosmic rhythms affecting plant vitality and soil conditions.</p>
+          <InfoSection title={t('biodynamicPrinciple')}>
+            <p>{t('biodynamicPrincipleDescription')}</p>
           </InfoSection>
         </ExpandableCelestialCard>
       )}
@@ -712,8 +667,8 @@ const CelestialPanelComponent: React.FC = () => {
       {/* Energy Forecast - only when enabled */}
       {display.showCelestialCards && celestialData.energyForecast && (
         <ExpandableCelestialCard
-          title="Cosmic Energy"
-          subtitle={`Civil: ${civilDate.toLocaleDateString()}`}
+          title={t('cosmicEnergy')}
+          subtitle={`${t('civil')}: ${civilDate.toLocaleDateString()}`}
           icon="⚡"
           accentColor={energyColors[celestialData.energyForecast.level]}
         >
@@ -737,14 +692,14 @@ const CelestialPanelComponent: React.FC = () => {
               ))}
             </div>
           </div>
-          <InfoSection title="Cosmic Conditions">
-            <p>The energy forecast for <strong>Civil Date:</strong> {civilDate.toLocaleDateString()} combines lunar phase, planetary positions, and seasonal rhythms.</p>
+          <InfoSection title={t('cosmicConditions')}>
+            <p>{t('energyForecastPrefix')} <strong>{t('civilDate')}:</strong> {t('energyForecastSuffix', { date: civilDate.toLocaleDateString() })}</p>
           </InfoSection>
-          <InfoSection title="How to Use This">
+          <InfoSection title={t('howToUseThis')}>
             <InfoList items={[
-              "High energy: Start projects, take action, be social",
-              "Moderate energy: Routine work, steady progress",
-              "Low energy: Rest, reflection, planning"
+              t('highEnergy'),
+              t('moderateEnergy'),
+              t('lowEnergy')
             ]} />
           </InfoSection>
         </ExpandableCelestialCard>
@@ -752,8 +707,8 @@ const CelestialPanelComponent: React.FC = () => {
       
       {/* Numerology - always show */}
       <ExpandableCelestialCard
-        title={`Numerology: Day ${celestialData.numerology.dayNumber}`}
-        subtitle={`Civil: ${civilDate.toLocaleDateString()}`}
+        title={t('numerologyTitle', { day: celestialData.numerology.dayNumber })}
+        subtitle={`${t('civil')}: ${civilDate.toLocaleDateString()}`}
         icon="🔢"
         accentColor="#d4bc7a"
       >
@@ -763,18 +718,18 @@ const CelestialPanelComponent: React.FC = () => {
           </span>
           <span className="numerology-meaning">{celestialData.numerology.meaning}</span>
         </div>
-        <InfoSection title="Today's Energy">
+        <InfoSection title={t('todaysEnergy')}>
           <p>{celestialData.numerology.energy}</p>
         </InfoSection>
-        <InfoSection title="Focus Areas">
+        <InfoSection title={t('focusAreas')}>
           <InfoList items={celestialData.numerology.focus} />
         </InfoSection>
-        <InfoSection title="Guidance">
+        <InfoSection title={t('guidance')}>
           <p>{celestialData.numerology.guidance}</p>
         </InfoSection>
         <div className="numerology-meta">
-          <InfoBadge label="Compatible" value={celestialData.numerology.compatibleNumbers.join(', ')} color="#86efac" />
-          <InfoBadge label="Lucky Hours" value={celestialData.numerology.luckyHours.join(', ')} color="#fbbf24" />
+          <InfoBadge label={t('compatible')} value={celestialData.numerology.compatibleNumbers.join(', ')} color="#86efac" />
+          <InfoBadge label={t('luckyHours')} value={celestialData.numerology.luckyHours.join(', ')} color="#fbbf24" />
         </div>
       </ExpandableCelestialCard>
       

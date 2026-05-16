@@ -4,6 +4,7 @@
  */
 
 import { memo } from 'react';
+import { useTranslation } from 'react-i18next';
 import type { SolarReturnSectionProps } from './types';
 
 export const SolarReturnSection = memo(({
@@ -14,18 +15,20 @@ export const SolarReturnSection = memo(({
   orb,
   birthSign,
 }: SolarReturnSectionProps) => {
+  const { t, i18n } = useTranslation('dayPanel');
+
   if (!isToday && !isApproaching) return null;
 
   const exactDateStr = exactDate
-    ? exactDate.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })
+    ? new Intl.DateTimeFormat(i18n.language || 'en', { month: 'long', day: 'numeric', year: 'numeric' }).format(exactDate)
     : '';
 
   return (
     <div className="day-panel__section day-panel__solar-return">
       <div className="day-panel__section-title">
         <span>☀️</span>
-        {isToday ? 'True Solar Return' : `True Solar Return in ${daysUntil} day${daysUntil !== 1 ? 's' : ''}`}
-        <span className="solar-return-mode-badge">TRUE Mode</span>
+        {isToday ? t('solarReturn.title') : t('solarReturn.titleInDays', { count: daysUntil, suffix: daysUntil !== 1 ? 's' : '' })}
+        <span className="solar-return-mode-badge">{t('solarReturn.trueMode')}</span>
       </div>
 
       <div className="solar-return-card">
@@ -33,13 +36,13 @@ export const SolarReturnSection = memo(({
         <div className="solar-return-card__body">
           <div className="solar-return-card__title">
             {isToday
-              ? 'The Sun returns to your sidereal birth longitude today.'
-              : `The Sun will return to your sidereal ${birthSign} position on ${exactDateStr}.`}
+              ? t('solarReturn.today')
+              : t('solarReturn.approaching', { sign: birthSign, date: exactDateStr })}
           </div>
           <div className="solar-return-card__detail">
-            In TRUE HEKA mode, your birthday is determined by the stars, not the civil calendar.
+            {t('solarReturn.description')}
             {orb > 0 && (
-              <span className="solar-return-orb"> Exact to within {orb.toFixed(1)} arcminutes.</span>
+              <span className="solar-return-orb"> {t('solarReturn.exactOrb', { orb: orb.toFixed(1) })}</span>
             )}
           </div>
         </div>
@@ -49,3 +52,5 @@ export const SolarReturnSection = memo(({
 });
 
 SolarReturnSection.displayName = 'SolarReturnSection';
+
+export default SolarReturnSection;

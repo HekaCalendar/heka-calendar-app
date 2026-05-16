@@ -6,6 +6,7 @@
 import React from 'react';
 import type { CertificateData, CertificateOptions } from '../certificateData';
 import { formatHekaDate } from '../certificateData';
+import i18n from '../../../i18n';
 
 interface Props {
   data: CertificateData;
@@ -89,7 +90,7 @@ export const AncientParchmentTemplate: React.FC<Props> = ({ data, options }) => 
         <div style={{ textAlign: 'center' }}>
           <div style={{ fontSize: 10, color: 'rgba(139,69,19,0.3)', letterSpacing: 1.5, fontFamily: "'Inter', sans-serif" }}>SEALED BY HEKA CALENDAR PRO</div>
           <div style={{ fontSize: 9, color: 'rgba(139,69,19,0.2)', marginTop: 4 }}>
-            {new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
+            {new Intl.DateTimeFormat(i18n.language || 'en', { year: 'numeric', month: 'long', day: 'numeric' }).format(new Date())}
           </div>
         </div>
       </div>

@@ -16,6 +16,7 @@
  */
 
 import React, { useState, useEffect, useCallback, useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 import { aiConfigService } from '../services/aiConfigService';
 import { OracleEngine } from '../oracle/oracleEngine';
 import { civilToHeka, hekaToCivil } from '../services/calendarService';
@@ -140,7 +141,7 @@ async function getSolarReturnContext(
 
       if (returnDate) {
         returnDate.setHours(0, 0, 0, 0);
-        if (returnDate.getTime() <= today.getTime()) {
+        if (returnDate.getTime() < today.getTime()) {
           targetYear++;
           returnDate = await calculateSiderealSolarReturnDate(natalSunLongitude, targetYear, birth);
           if (returnDate) returnDate.setHours(0, 0, 0, 0);
@@ -159,7 +160,7 @@ async function getSolarReturnContext(
       let targetYear = today.getFullYear();
       nextBirthday = new Date(targetYear, birthMonth, effectiveBirthDay);
       nextBirthday.setHours(0, 0, 0, 0);
-      if (nextBirthday.getTime() <= today.getTime()) {
+      if (nextBirthday.getTime() < today.getTime()) {
         targetYear++;
         const nextEffectiveBirthDay = birthMonth === 1 && birthDay === 29 && !isLeapYear(targetYear) ? 28 : birthDay;
         nextBirthday = new Date(targetYear, birthMonth, nextEffectiveBirthDay);
@@ -174,7 +175,7 @@ async function getSolarReturnContext(
     let targetYear = today.getFullYear();
     nextBirthday = new Date(targetYear, birthMonth, effectiveBirthDay);
     nextBirthday.setHours(0, 0, 0, 0);
-    if (nextBirthday.getTime() <= today.getTime()) {
+    if (nextBirthday.getTime() < today.getTime()) {
       targetYear++;
       const nextEffectiveBirthDay = birthMonth === 1 && birthDay === 29 && !isLeapYear(targetYear) ? 28 : birthDay;
       nextBirthday = new Date(targetYear, birthMonth, nextEffectiveBirthDay);
@@ -1901,6 +1902,7 @@ interface CalendarAICoachProps {
 }
 
 export const CalendarAICoach: React.FC<CalendarAICoachProps> = ({ focusedDate }) => {
+  const { t } = useTranslation('coach');
   const astroProfiles = useSelector((s: RootState) => s.calendar.astroProfiles);
   const selectedAstroProfileId = useSelector((s: RootState) => s.calendar.selectedAstroProfileId);
   const timeMode = useSelector((s: RootState) => s.calendar.timeMode);
@@ -2032,7 +2034,6 @@ export const CalendarAICoach: React.FC<CalendarAICoachProps> = ({ focusedDate })
   useEffect(() => {
     const refreshTransitCache = () => {
       aiConfigService.setUserContext({ lastTransitData: '', lastTransitCalculatedAt: 0 });
-      console.log('[CalendarAICoach] Transit cache invalidated due to profile change');
     };
     const unsubscribe = profileManager.subscribe((event) => {
       if (
@@ -2091,7 +2092,7 @@ export const CalendarAICoach: React.FC<CalendarAICoachProps> = ({ focusedDate })
           `Moon: ${ctx.celestial.moonPhase} in ${ctx.celestial.moonSign}`,
           `Sun: ${ctx.celestial.sunSign}`,
           ctx.celestial.retrogrades.length > 0 ? `Retrogrades: ${ctx.celestial.retrogrades.join(', ')}` : null,
-          ctx.isVoidMoon ? 'Void of Course Moon' : null,
+          ctx.isVoidMoon ? 'Void Moon' : null,
         ].filter(Boolean).join('; ');
 
         const occasion: Parameters<typeof generateOracleMessage>[0]['occasion'] =
@@ -2189,6 +2190,9 @@ export const CalendarAICoach: React.FC<CalendarAICoachProps> = ({ focusedDate })
             winner.icon = '✨';
           }
         }
+        if (llmResult.fallbackReason) {
+          winner.fallbackReason = llmResult.fallbackReason;
+        }
       } catch (e) {
         console.warn('[CalendarAICoach] LLM enhancement failed:', e);
       }
@@ -2250,7 +2254,7 @@ export const CalendarAICoach: React.FC<CalendarAICoachProps> = ({ focusedDate })
         icon: '✨',
         color: '#9d4edd',
       };
-      startTypewriter(fallbackMsg, 35, (completedMsg) => setCurrentMessage(completedMsg));
+      startTypewriter({ ...fallbackMsg, fallbackReason: 'Generation failed' }, 35, (completedMsg) => setCurrentMessage(completedMsg));
       if (canAutoExpand()) setMinimized(false);
     } finally {
       generationLockRef.current = false;
@@ -2477,11 +2481,15 @@ export const CalendarAICoach: React.FC<CalendarAICoachProps> = ({ focusedDate })
   useEffect(() => {
     const handleArrow = (e: KeyboardEvent) => {
       if (minimized) return;
+      const target = e.target as HTMLElement;
+      if (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA' || target.isContentEditable) return;
       const nudge = 20;
-      if (e.key === 'ArrowUp') setDragOffset((p) => ({ ...p, y: p.y - nudge }));
-      if (e.key === 'ArrowDown') setDragOffset((p) => ({ ...p, y: p.y + nudge }));
-      if (e.key === 'ArrowLeft') setDragOffset((p) => ({ ...p, x: p.x - nudge }));
-      if (e.key === 'ArrowRight') setDragOffset((p) => ({ ...p, x: p.x + nudge }));
+      let handled = false;
+      if (e.key === 'ArrowUp') { setDragOffset((p) => ({ ...p, y: p.y - nudge })); handled = true; }
+      if (e.key === 'ArrowDown') { setDragOffset((p) => ({ ...p, y: p.y + nudge })); handled = true; }
+      if (e.key === 'ArrowLeft') { setDragOffset((p) => ({ ...p, x: p.x - nudge })); handled = true; }
+      if (e.key === 'ArrowRight') { setDragOffset((p) => ({ ...p, x: p.x + nudge })); handled = true; }
+      if (handled) e.preventDefault();
     };
     window.addEventListener('keydown', handleArrow);
     return () => window.removeEventListener('keydown', handleArrow);
@@ -2503,13 +2511,13 @@ export const CalendarAICoach: React.FC<CalendarAICoachProps> = ({ focusedDate })
           onClick={() => setMinimized(false)}
           onMouseDown={handleDragStart}
           onTouchStart={handleDragStart}
-          aria-label="Open AI Coach"
+          aria-label={t('aiCoach')}
           aria-expanded={!minimized}
           aria-controls="coach-card"
           style={{ background: 'linear-gradient(135deg, rgba(212,175,55,0.2), rgba(157,78,221,0.2))' }}
         >
           <span className="coach-pill-icon" role="img" aria-label="sparkles">✨</span>
-          <span className="coach-pill-text">AI Coach</span>
+          <span className="coach-pill-text">{t('aiCoach')}</span>
         </button>
       ) : (
         <div
@@ -2531,12 +2539,12 @@ export const CalendarAICoach: React.FC<CalendarAICoachProps> = ({ focusedDate })
               <span role="img" aria-label="sparkles">✨</span>
               <div className="coach-avatar-pulse" />
             </div>
-            <div id="coach-title" className="coach-title">HEKA AI</div>
+            <div id="coach-title" className="coach-title">{t('hekaAI')}</div>
             <div className="coach-controls">
-              <button className="coach-btn" onClick={() => setMinimized(true)} title="Minimize" aria-label="Minimize coach">
+              <button className="coach-btn" onClick={() => setMinimized(true)} title={t('minimize')} aria-label={t('minimize')}>
                 −
               </button>
-              <button className="coach-btn" onClick={handleDismiss} title="Hide for 1 hour" aria-label="Hide coach for one hour">
+              <button className="coach-btn" onClick={handleDismiss} title={t('hideForOneHour')} aria-label={t('hideCoachForOneHour')}>
                 ×
               </button>
             </div>
@@ -2552,8 +2560,15 @@ export const CalendarAICoach: React.FC<CalendarAICoachProps> = ({ focusedDate })
             ) : revealedMessage || currentMessage ? (
               <>
                 <div className="coach-message">
-                  <span className="coach-message-icon" style={{ color: (revealedMessage || currentMessage)!.color }}>
+                  <span
+                    className="coach-message-icon"
+                    style={{ color: (revealedMessage || currentMessage)!.color }}
+                    title={(revealedMessage || currentMessage)?.fallbackReason || undefined}
+                  >
                     {(revealedMessage || currentMessage)!.icon}
+                    {(revealedMessage || currentMessage)?.fallbackReason && (
+                      <span style={{ fontSize: '0.6em', opacity: 0.6, marginLeft: 2 }}>·</span>
+                    )}
                   </span>
                   <p id="coach-message-text" style={{ whiteSpace: 'pre-line', margin: 0 }}>
                     {revealedMessage
@@ -2568,22 +2583,22 @@ export const CalendarAICoach: React.FC<CalendarAICoachProps> = ({ focusedDate })
                     aria-busy={isActionLoading}
                     disabled={isActionLoading}
                   >
-                    {isActionLoading ? 'Opening...' : (revealedMessage || currentMessage)!.action!.label}
+                    {isActionLoading ? t('opening') : (revealedMessage || currentMessage)!.action!.label}
                   </button>
                 )}
               </>
             ) : (
-              <p className="coach-empty">Your AI coach is observing the celestial weather...</p>
+              <p className="coach-empty">{t('coachEmpty')}</p>
             )}
           </div>
 
           {!isTyping && !revealedMessage && currentMessage && (
             <div className="coach-footer">
               <button className="coach-footer-btn" onClick={() => void showNextMessage()}>
-                🔄 New Prompt
+                🔄 {t('newPrompt')}
               </button>
               <button className="coach-footer-btn coach-footer-btn--secondary" onClick={handleDismiss}>
-                Hide for 1 hour
+                {t('hideForOneHour')}
               </button>
             </div>
           )}

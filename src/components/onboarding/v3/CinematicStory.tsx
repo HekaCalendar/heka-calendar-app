@@ -7,7 +7,17 @@
  */
 
 import React, { useEffect, useState, useRef, useCallback } from 'react';
+import { useTranslation } from 'react-i18next';
 import { StarfieldCanvas } from './StarfieldCanvas';
+import { CelestialScribe } from './CelestialScribe';
+import { LivingJournal } from './LivingJournal';
+import { SwissEphemerisVisual } from './SwissEphemerisVisual';
+import { SacredGeometryShowcase } from './SacredGeometryShowcase';
+import { CelestialCardsShowcase } from './CelestialCardsShowcase';
+import { ThemeShowcase } from './ThemeShowcase';
+import { CircleShowcase } from './CircleShowcase';
+import { CommunityShowcase } from './CommunityShowcase';
+import { PureModeShowcase } from './PureModeShowcase';
 
 interface CinematicStoryProps {
   strings: {
@@ -17,6 +27,27 @@ interface CinematicStoryProps {
     tutorialTeaser2Title: string;
     tutorialTeaser2Subtitle: string;
     tutorialTeaser2Body: string;
+    tutorialPrecisionTitle: string;
+    tutorialPrecisionSubtitle: string;
+    tutorialPrecisionBody: string;
+    tutorialTempleTitle: string;
+    tutorialTempleSubtitle: string;
+    tutorialTempleBody: string;
+    tutorialCelestialTitle: string;
+    tutorialCelestialSubtitle: string;
+    tutorialCelestialBody: string;
+    tutorialVeilTitle: string;
+    tutorialVeilSubtitle: string;
+    tutorialVeilBody: string;
+    tutorialCircleTitle: string;
+    tutorialCircleSubtitle: string;
+    tutorialCircleBody: string;
+    tutorialAssemblyTitle: string;
+    tutorialAssemblySubtitle: string;
+    tutorialAssemblyBody: string;
+    tutorialSilenceTitle: string;
+    tutorialSilenceSubtitle: string;
+    tutorialSilenceBody: string;
     tutorialEnterSubtitle: string;
     tutorialEnterBody: string;
     tutorialEnterButton: string;
@@ -89,96 +120,8 @@ const SlideContainer: React.FC<{ phase: Phase; children: React.ReactNode }> = ({
 );
 
 // ═══════════════════════════════════════════════════════════════════════════════
-// VISUALS: Drifting celestial symbols for the "Sky Writes Back" slide
+// VISUALS: CelestialScribe and LivingJournal imported from dedicated components
 // ═══════════════════════════════════════════════════════════════════════════════
-
-const DriftingSymbols: React.FC = () => {
-  const symbols = ['🌙', '☀️', '♈', '♉', '♊', '♋', '♌', '♍', '♎', '♏', '♐', '♑', '♒', '♓'];
-  return (
-    <div style={{ position: 'relative', width: '100%', maxWidth: 600, height: 100, marginTop: 32, overflow: 'hidden' }}>
-      {symbols.map((s, i) => (
-        <div
-          key={i}
-          style={{
-            position: 'absolute',
-            left: `${(i / symbols.length) * 100}%`,
-            top: `${30 + Math.sin(i * 1.7) * 25}%`,
-            fontSize: `${18 + Math.sin(i) * 8}px`,
-            opacity: 0.15 + Math.sin(i * 2.3) * 0.1,
-            color: i % 3 === 0 ? '#c9a227' : i % 3 === 1 ? '#a89bc8' : '#81b29a',
-            animation: `driftFloat ${8 + i * 0.7}s ease-in-out infinite`,
-            animationDelay: `${i * 0.4}s`,
-            filter: 'blur(0.5px)',
-          }}
-        >
-          {s}
-        </div>
-      ))}
-      <style>{`
-        @keyframes driftFloat {
-          0%, 100% { transform: translateY(0) rotate(0deg); }
-          50% { transform: translateY(-14px) rotate(6deg); }
-        }
-        @media (prefers-reduced-motion: reduce) {
-          @keyframes driftFloat {
-            0%, 100% { transform: none; }
-          }
-        }
-      `}</style>
-    </div>
-  );
-};
-
-// ═══════════════════════════════════════════════════════════════════════════════
-// VISUALS: Fading text fragments for the "Marks Become Maps" slide
-// ═══════════════════════════════════════════════════════════════════════════════
-
-const FadingFragments: React.FC = () => {
-  const fragments = [
-    { text: 'Tuesday', x: 15, y: 20, delay: 0 },
-    { text: 'a note', x: 65, y: 15, delay: 1.2 },
-    { text: 'waxing', x: 30, y: 55, delay: 2.4 },
-    { text: 'mood = 7', x: 70, y: 50, delay: 0.8 },
-    { text: 'pattern', x: 45, y: 80, delay: 3.2 },
-    { text: 'insight', x: 10, y: 70, delay: 1.8 },
-    { text: 'Friday', x: 80, y: 75, delay: 2.0 },
-    { text: '...', x: 50, y: 35, delay: 0.4 },
-  ];
-  return (
-    <div style={{ position: 'relative', width: '100%', maxWidth: 520, height: 120, marginTop: 32, overflow: 'hidden' }}>
-      {fragments.map((f, i) => (
-        <div
-          key={i}
-          style={{
-            position: 'absolute',
-            left: `${f.x}%`,
-            top: `${f.y}%`,
-            fontFamily: "'Cormorant Garamond', Georgia, serif",
-            fontSize: `${13 + Math.sin(i * 3) * 3}px`,
-            fontStyle: 'italic',
-            color: i % 2 === 0 ? 'rgba(201, 162, 39, 0.35)' : 'rgba(129, 178, 154, 0.3)',
-            animation: `fragmentFade ${6 + i * 0.5}s ease-in-out infinite`,
-            animationDelay: `${f.delay}s`,
-            whiteSpace: 'nowrap',
-          }}
-        >
-          {f.text}
-        </div>
-      ))}
-      <style>{`
-        @keyframes fragmentFade {
-          0%, 100% { opacity: 0; transform: translateY(6px); }
-          40%, 60% { opacity: 1; transform: translateY(0); }
-        }
-        @media (prefers-reduced-motion: reduce) {
-          @keyframes fragmentFade {
-            0%, 100% { opacity: 0.6; transform: none; }
-          }
-        }
-      `}</style>
-    </div>
-  );
-};
 
 // ═══════════════════════════════════════════════════════════════════════════════
 // SLIDE DEFINITIONS
@@ -205,11 +148,29 @@ function buildSlides(strings: CinematicStoryProps['strings']): SlideDef[] {
           <Body>
             {strings.tutorialTeaser1Body.split('. ').slice(3).join('. ')}.
           </Body>
-          <DriftingSymbols />
+          <CelestialScribe />
         </SlideContainer>
       ),
     },
-    // SLIDE 3: YOUR MARKS BECOME MAPS
+    // SLIDE 3: THE PRECISION
+    {
+      id: 'precision',
+      render: (phase) => (
+        <SlideContainer phase={phase}>
+          <Ornament />
+          <Title>{strings.tutorialPrecisionTitle}</Title>
+          <Subtitle>{strings.tutorialPrecisionSubtitle}</Subtitle>
+          <Body>
+            {strings.tutorialPrecisionBody.split('. ').slice(0, 3).join('. ')}.
+          </Body>
+          <Body>
+            {strings.tutorialPrecisionBody.split('. ').slice(3).join('. ')}.
+          </Body>
+          <SwissEphemerisVisual />
+        </SlideContainer>
+      ),
+    },
+    // SLIDE 4: YOUR MARKS BECOME MAPS
     {
       id: 'maps',
       render: (phase) => (
@@ -223,11 +184,119 @@ function buildSlides(strings: CinematicStoryProps['strings']): SlideDef[] {
           <Body>
             {strings.tutorialTeaser2Body.split('. ').slice(3).join('. ')}.
           </Body>
-          <FadingFragments />
+          <LivingJournal />
         </SlideContainer>
       ),
     },
-    // SLIDE 4: ENTER
+    // SLIDE 5: SHAPE YOUR TEMPLE
+    {
+      id: 'temple',
+      render: (phase) => (
+        <SlideContainer phase={phase}>
+          <Ornament />
+          <Title>{strings.tutorialTempleTitle}</Title>
+          <Subtitle>{strings.tutorialTempleSubtitle}</Subtitle>
+          <Body>
+            {strings.tutorialTempleBody.split('. ').slice(0, 3).join('. ')}.
+          </Body>
+          <Body>
+            {strings.tutorialTempleBody.split('. ').slice(3).join('. ')}.
+          </Body>
+          <SacredGeometryShowcase />
+        </SlideContainer>
+      ),
+    },
+    // SLIDE 6: THE CELESTIAL COMMAND
+    {
+      id: 'celestial',
+      render: (phase) => (
+        <SlideContainer phase={phase}>
+          <Ornament />
+          <Title>{strings.tutorialCelestialTitle}</Title>
+          <Subtitle>{strings.tutorialCelestialSubtitle}</Subtitle>
+          <Body>
+            {strings.tutorialCelestialBody.split('. ').slice(0, 3).join('. ')}.
+          </Body>
+          <Body>
+            {strings.tutorialCelestialBody.split('. ').slice(3).join('. ')}.
+          </Body>
+          <CelestialCardsShowcase />
+        </SlideContainer>
+      ),
+    },
+    // SLIDE 7: THE VEIL OF FORMS
+    {
+      id: 'veil',
+      render: (phase) => (
+        <SlideContainer phase={phase}>
+          <Ornament />
+          <Title>{strings.tutorialVeilTitle}</Title>
+          <Subtitle>{strings.tutorialVeilSubtitle}</Subtitle>
+          <Body>
+            {strings.tutorialVeilBody.split('. ').slice(0, 3).join('. ')}.
+          </Body>
+          <Body>
+            {strings.tutorialVeilBody.split('. ').slice(3).join('. ')}.
+          </Body>
+          <ThemeShowcase />
+        </SlideContainer>
+      ),
+    },
+    // SLIDE 8: THE CIRCLE
+    {
+      id: 'circle',
+      render: (phase) => (
+        <SlideContainer phase={phase}>
+          <Ornament />
+          <Title>{strings.tutorialCircleTitle}</Title>
+          <Subtitle>{strings.tutorialCircleSubtitle}</Subtitle>
+          <Body>
+            {strings.tutorialCircleBody.split('. ').slice(0, 3).join('. ')}.
+          </Body>
+          <Body>
+            {strings.tutorialCircleBody.split('. ').slice(3).join('. ')}.
+          </Body>
+          <CircleShowcase />
+        </SlideContainer>
+      ),
+    },
+    // SLIDE 9: THE ASSEMBLY
+    {
+      id: 'assembly',
+      render: (phase) => (
+        <SlideContainer phase={phase}>
+          <Ornament />
+          <Title>{strings.tutorialAssemblyTitle}</Title>
+          <Subtitle>{strings.tutorialAssemblySubtitle}</Subtitle>
+          <Body>
+            {strings.tutorialAssemblyBody.split('. ').slice(0, 3).join('. ')}.
+          </Body>
+          <Body>
+            {strings.tutorialAssemblyBody.split('. ').slice(3).join('. ')}.
+          </Body>
+          <CommunityShowcase />
+        </SlideContainer>
+      ),
+    },
+    // SLIDE 10: THE SILENCE
+    {
+      id: 'silence',
+      render: (phase) => (
+        <SlideContainer phase={phase}>
+          <Ornament />
+          <Title>{strings.tutorialSilenceTitle}</Title>
+          <Subtitle>{strings.tutorialSilenceSubtitle}</Subtitle>
+          <Body>
+            {strings.tutorialSilenceBody.split('. ').slice(0, 3).join('. ')}.
+          </Body>
+          <Body>
+            {strings.tutorialSilenceBody.split('. ').slice(3).join('. ')}.
+          </Body>
+          <PureModeShowcase />
+        </SlideContainer>
+      ),
+    },
+    // SLIDE 11: ENTER
     {
       id: 'enter',
       render: (phase) => (
@@ -250,6 +319,7 @@ export const CinematicStory: React.FC<CinematicStoryProps> = ({ strings, onCompl
   const [slideIndex, setSlideIndex] = useState(0);
   const [phase, setPhase] = useState<Phase>('entering');
   const touchStartRef = useRef<{ x: number; y: number } | null>(null);
+  const { t } = useTranslation('wizard');
 
   const SLIDES = React.useMemo(() => buildSlides(strings), [strings]);
   const totalSlides = SLIDES.length;
@@ -352,7 +422,7 @@ export const CinematicStory: React.FC<CinematicStoryProps> = ({ strings, onCompl
             fontSize: 12, color: 'rgba(255, 255, 255, 0.25)',
             letterSpacing: '0.15em', textTransform: 'uppercase',
             fontFamily: "'Cinzel', Georgia, serif",
-          }}>Tap or press space to continue</span>
+          }}>{t('tutorialContinueHint')}</span>
         </div>
       )}
 

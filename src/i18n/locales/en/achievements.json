@@ -74,5 +74,26 @@
       "name": "First Print",
       "description": "Print your first calendar page"
     }
-  }
+  },
+  "categoryLabels": {
+    "beginner": "Beginner",
+    "intermediate": "Intermediate",
+    "advanced": "Advanced",
+    "master": "Master",
+    "special": "Special",
+    "explorer": "Explorer",
+    "discoverer": "Discoverer",
+    "engager": "Engager"
+  },
+  "stats": {
+    "appOpens": "App Opens",
+    "dayStreak": "Day Streak",
+    "hoursSpent": "Hours Spent",
+    "featuresFound": "Features Found"
+  },
+  "all": "All",
+  "showHidden": "Show hidden",
+  "noAchievements": "No achievements found in this category",
+  "hiddenAchievement": "Hidden Achievement",
+  "secret": "SECRET"
 }

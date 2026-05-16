@@ -4,6 +4,7 @@
  */
 
 import { useState, useEffect, useRef, useCallback, useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Share } from '@capacitor/share';
 import { useSelector, useDispatch } from 'react-redux';
 import type { AppDispatch } from '../store';
@@ -31,6 +32,7 @@ import { TaskShareService } from '../services/taskShareService';
 import { aiConfigService } from '../services/aiConfigService';
 import { getCurrentUser } from '../services/firebase';
 import { generateInviteLink, generateWebInviteLink } from '../services/deepLinkService';
+import i18n from '../i18n';
 import { ProfileSetupModal } from './ProfileSetupModal';
 import { CircleSettings } from './notification/CircleSettings';
 import '../styles/cosmic-circle.css';
@@ -44,6 +46,7 @@ interface FriendsModalProps {
 // const REACTIONS = ['🌙', '☀️', '⭐', '🔥', '💧', '🌍', '✨', '🕯️'];
 
 export const FriendsModal: React.FC<FriendsModalProps> = ({ isOpen, onClose }) => {
+  const { t } = useTranslation('circle');
   const dispatch = useDispatch<AppDispatch>();
   const {
     circleTheme,
@@ -192,10 +195,10 @@ export const FriendsModal: React.FC<FriendsModalProps> = ({ isOpen, onClose }) =
 
     try {
       await Share.share({
-        title: 'Join my Cosmic Circle',
-        text: `Use invite code ${inviteCode} to join my Cosmic Circle on HEKA Calendar!`,
+        title: t('invite.shareTitle'),
+        text: t('invite.shareText', { code: inviteCode }),
         url: webLink,
-        dialogTitle: 'Invite a Friend',
+        dialogTitle: t('invite.shareDialogTitle'),
       });
     } catch (e) {
       // User cancelled or native share unavailable — silently ignore
@@ -238,7 +241,7 @@ export const FriendsModal: React.FC<FriendsModalProps> = ({ isOpen, onClose }) =
     const shareText = TaskShareService.generateTaskShareText(
       taskForm.title,
       shareableTaskCode,
-      currentUser?.displayName || 'A friend'
+      currentUser?.displayName || t('invite.aFriend')
     );
     navigator.clipboard.writeText(shareText);
     setTaskCopied(true);
@@ -257,7 +260,7 @@ export const FriendsModal: React.FC<FriendsModalProps> = ({ isOpen, onClose }) =
     if (navigator.share) {
       try {
         await navigator.share({
-          title: `Task: ${taskForm.title}`,
+          title: t('invite.taskShareTitle', { title: taskForm.title }),
           text: shareText,
         });
         return;
@@ -326,7 +329,7 @@ export const FriendsModal: React.FC<FriendsModalProps> = ({ isOpen, onClose }) =
         <header className="cosmic-circle__header">
           <h2 className="cosmic-circle__title">
             <span className="cosmic-circle__title-icon">✦</span>
-            Cosmic Circle
+            {t('modal.title')}
           </h2>
           
           <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-4)' }}>
@@ -334,18 +337,18 @@ export const FriendsModal: React.FC<FriendsModalProps> = ({ isOpen, onClose }) =
             <button
               className="btn btn--sm"
               onClick={() => setShowProfileSetup(true)}
-              title="Edit My Profile"
+              title={t('profile.editProfile')}
               style={{ display: 'flex', alignItems: 'center', gap: '4px' }}
             >
               <span>{auth.photoURL || '👤'}</span>
-              <span>{auth.displayName || 'Profile'}</span>
+              <span>{auth.displayName || t('profile.profileFallback')}</span>
             </button>
             
             {/* Settings */}
             <button
               className="btn btn--sm"
               onClick={() => setShowSettings(true)}
-              title="Circle Settings"
+              title={t('profile.settings')}
               style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '32px', height: '32px' }}
             >
               ⚙️
@@ -361,21 +364,21 @@ export const FriendsModal: React.FC<FriendsModalProps> = ({ isOpen, onClose }) =
             className={`cosmic-circle__tab ${activeTab === 'friends' ? 'cosmic-circle__tab--active' : ''}`}
             onClick={() => dispatch(setActiveTab('friends'))}
           >
-            🌟 Friends
+            {t('tabs.friends')}
             {friends.length > 0 && <span className="cosmic-circle__tab-badge">{friends.length}</span>}
           </button>
           <button
             className={`cosmic-circle__tab ${activeTab === 'messages' ? 'cosmic-circle__tab--active' : ''}`}
             onClick={() => dispatch(setActiveTab('messages'))}
           >
-            💬 Messages
+            {t('tabs.messages')}
             {unreadTotal > 0 && <span className="cosmic-circle__tab-badge">{unreadTotal}</span>}
           </button>
           <button
             className={`cosmic-circle__tab ${activeTab === 'requests' ? 'cosmic-circle__tab--active' : ''}`}
             onClick={() => dispatch(setActiveTab('requests'))}
           >
-            🔔 Requests
+            {t('tabs.requests')}
             {friendRequests.length > 0 && (
               <span className="cosmic-circle__tab-badge">{friendRequests.length}</span>
             )}
@@ -384,7 +387,7 @@ export const FriendsModal: React.FC<FriendsModalProps> = ({ isOpen, onClose }) =
             className={`cosmic-circle__tab ${activeTab === 'tasks' ? 'cosmic-circle__tab--active' : ''}`}
             onClick={() => dispatch(setActiveTab('tasks'))}
           >
-            📜 Tasks
+            {t('tabs.tasks')}
             {tasks.filter(t => t.status === 'pending').length > 0 && (
               <span className="cosmic-circle__tab-badge">
                 {tasks.filter(t => t.status === 'pending').length}
@@ -395,7 +398,7 @@ export const FriendsModal: React.FC<FriendsModalProps> = ({ isOpen, onClose }) =
             className={`cosmic-circle__tab ${activeTab === 'invite' ? 'cosmic-circle__tab--active' : ''}`}
             onClick={() => dispatch(setActiveTab('invite'))}
           >
-            ⚡ Invite
+            {t('tabs.invite')}
           </button>
         </nav>
 
@@ -424,9 +427,9 @@ export const FriendsModal: React.FC<FriendsModalProps> = ({ isOpen, onClose }) =
               {friends.length === 0 ? (
                 <div className="circle-friends__empty">
                   <div className="circle-friends__empty-icon">🌌</div>
-                  <p>No friends in your circle yet</p>
+                  <p>{t('friendsList.emptyTitle')}</p>
                   <p style={{ fontSize: 'var(--text-sm)', marginTop: 'var(--space-2)' }}>
-                    Generate an invite code to bring someone into your cosmic journey
+                    {t('friendsList.emptyDescription')}
                   </p>
                 </div>
               ) : (
@@ -444,8 +447,8 @@ export const FriendsModal: React.FC<FriendsModalProps> = ({ isOpen, onClose }) =
                         <div className="circle-friend__name">{friend.displayName}</div>
                         <div className="circle-friend__status">
                           {friend.isOnline 
-                            ? `🟢 Online${friend.currentView ? ` • ${friend.currentView}` : ''}`
-                            : `⚪ Offline${friend.lastActive ? ` • ${formatLastActive(friend.lastActive)}` : ''}`
+                            ? `${t('friendsList.online')}${friend.currentView ? t('friendsList.currentView', { view: friend.currentView }) : ''}`
+                            : `${t('friendsList.offline')}${friend.lastActive ? t('friendsList.lastActive', { time: formatLastActive(friend.lastActive) }) : ''}`
                           }
                         </div>
                       </div>
@@ -456,7 +459,7 @@ export const FriendsModal: React.FC<FriendsModalProps> = ({ isOpen, onClose }) =
                             e.stopPropagation();
                             dispatch(setSelectedFriend(friend));
                           }}
-                          title="Message"
+                          title={t('friendsList.message')}
                         >
                           💬
                         </button>
@@ -467,7 +470,7 @@ export const FriendsModal: React.FC<FriendsModalProps> = ({ isOpen, onClose }) =
                             dispatch(setSelectedFriend(friend));
                             setShowCreateTask(true);
                           }}
-                          title="Send Task"
+                          title={t('friendsList.sendTask')}
                         >
                           📜
                         </button>
@@ -485,13 +488,13 @@ export const FriendsModal: React.FC<FriendsModalProps> = ({ isOpen, onClose }) =
               {!selectedFriend ? (
                 <div className="circle-friends__empty">
                   <div className="circle-friends__empty-icon">💬</div>
-                  <p>Select a friend to start a cosmic conversation</p>
+                  <p>{t('messages.emptyTitle')}</p>
                   <button 
                     className="circle-invite__btn"
                     style={{ marginTop: 'var(--space-4)', maxWidth: '200px' }}
                     onClick={() => dispatch(setActiveTab('friends'))}
                   >
-                    View Friends
+                    {t('messages.viewFriends')}
                   </button>
                 </div>
               ) : (
@@ -514,9 +517,9 @@ export const FriendsModal: React.FC<FriendsModalProps> = ({ isOpen, onClose }) =
                   <div className="circle-messages__list">
                     {currentMessages.length === 0 ? (
                       <div className="circle-friends__empty" style={{ padding: 'var(--space-8)' }}>
-                        <p>No messages yet</p>
+                        <p>{t('messages.noMessages')}</p>
                         <p style={{ fontSize: 'var(--text-sm)', marginTop: 'var(--space-2)' }}>
-                          Begin your sacred conversation...
+                          {t('messages.startConversation')}
                         </p>
                       </div>
                     ) : (
@@ -541,13 +544,13 @@ export const FriendsModal: React.FC<FriendsModalProps> = ({ isOpen, onClose }) =
                     <input
                       type="text"
                       className="circle-message__input"
-                      placeholder="Type a sacred message..."
+                      placeholder={t('messages.placeholder')}
                       value={messageInput}
                       onChange={(e) => setMessageInput(e.target.value)}
                       onKeyDown={(e) => e.key === 'Enter' && handleSendMessage()}
                     />
                     <button className="circle-message__send" onClick={handleSendMessage}>
-                      🌙 Send
+                      {t('messages.send')}
                     </button>
                   </div>
                 </div>
@@ -569,7 +572,7 @@ export const FriendsModal: React.FC<FriendsModalProps> = ({ isOpen, onClose }) =
                   onClick={() => setShowShareTask(true)}
                   style={{ width: '100%' }}
                 >
-                  📤 Create & Share Task
+                  {t('tasks.createAndShare')}
                 </button>
                 <p style={{ 
                   fontSize: 'var(--text-xs)', 
@@ -578,7 +581,7 @@ export const FriendsModal: React.FC<FriendsModalProps> = ({ isOpen, onClose }) =
                   marginTop: 'var(--space-2)',
                   marginBottom: 0,
                 }}>
-                  Create a task and share it with anyone - they'll become your friend when they accept!
+                  {t('tasks.createDescription')}
                 </p>
               </div>
 
@@ -587,52 +590,52 @@ export const FriendsModal: React.FC<FriendsModalProps> = ({ isOpen, onClose }) =
                   className={`circle-tasks__tab ${taskTab === 'assigned' ? 'circle-tasks__tab--active' : ''}`}
                   onClick={() => setTaskTab('assigned')}
                 >
-                  📜 Assigned to You ({assignedTasks.length})
+                  {t('tasks.assignedToYou', { count: assignedTasks.length })}
                 </button>
                 <button
                   className={`circle-tasks__tab ${taskTab === 'created' ? 'circle-tasks__tab--active' : ''}`}
                   onClick={() => setTaskTab('created')}
                 >
-                  ✨ Created by You ({myTasks.length})
+                  {t('tasks.createdByYou', { count: myTasks.length })}
                 </button>
                 <button
                   className={`circle-tasks__tab ${taskTab === 'shared' ? 'circle-tasks__tab--active' : ''}`}
                   onClick={() => setTaskTab('shared')}
                 >
-                  🔗 Shared by You ({sharedTasks.length})
+                  {t('tasks.sharedByYou', { count: sharedTasks.length })}
                 </button>
               </div>
 
               {(() => {
                 const currentList = taskTab === 'assigned' ? assignedTasks : taskTab === 'created' ? myTasks : sharedTasks;
-                const emptyMessage = taskTab === 'assigned' ? 'tasks assigned to you' : taskTab === 'created' ? 'tasks created by you' : 'shared tasks';
+                const emptyMessageKey = taskTab === 'assigned' ? 'tasks.emptyAssigned' : taskTab === 'created' ? 'tasks.emptyCreated' : 'tasks.emptyShared';
 
                 if (currentList.length === 0) {
                   return (
                     <div className="circle-friends__empty">
                       <div className="circle-friends__empty-icon">📜</div>
-                      <p>No {emptyMessage}</p>
+                      <p>{t('tasks.noEmpty', { message: t(emptyMessageKey) })}</p>
                       {taskTab === 'assigned' && (
                         <p style={{ fontSize: 'var(--text-sm)', marginTop: 'var(--space-2)' }}>
-                          Friends can send you ritual tasks tied to celestial dates
+                          {t('tasks.assignedHint')}
                         </p>
                       )}
                       {taskTab === 'created' && friends.length === 0 && (
                         <div style={{ marginTop: 'var(--space-3)', textAlign: 'center' }}>
                           <p style={{ fontSize: 'var(--text-sm)', color: 'var(--color-text-muted)', marginBottom: 'var(--space-2)' }}>
-                            No friends yet? No problem!
+                            {t('tasks.noFriendsHint')}
                           </p>
                           <button
                             className="btn btn--sm"
                             onClick={() => setShowShareTask(true)}
                           >
-                            🌟 Share Your First Task
+                            {t('tasks.shareFirstTask')}
                           </button>
                         </div>
                       )}
                       {taskTab === 'shared' && (
                         <p style={{ fontSize: 'var(--text-sm)', marginTop: 'var(--space-2)' }}>
-                          Use "Create & Share Task" to share tasks with anyone
+                          {t('tasks.sharedHint')}
                         </p>
                       )}
                     </div>
@@ -646,35 +649,35 @@ export const FriendsModal: React.FC<FriendsModalProps> = ({ isOpen, onClose }) =
                       ? Math.ceil((task.expiresAt.toMillis() - Date.now()) / (1000 * 60 * 60 * 24))
                       : 0;
                     const expiryText = isExpired
-                      ? 'Expired'
+                      ? t('tasks.expired')
                       : daysUntilExpiry <= 0
-                        ? 'Expires today'
+                        ? t('tasks.expiresToday')
                         : daysUntilExpiry === 1
-                          ? 'Expires in 1 day'
-                          : `Expires in ${daysUntilExpiry} days`;
+                          ? t('tasks.expiresInOneDay')
+                          : t('tasks.expiresInDays', { days: daysUntilExpiry });
 
                     return (
                       <div key={task.id} className="circle-task">
                         <div className="circle-task__header">
-                          <div className="circle-task__title">🔗 {task.title}</div>
+                          <div className="circle-task__title">{t('tasks.taskTitle', { title: task.title })}</div>
                           <span className={`circle-task__status circle-task__status--${task.status}`}>
-                            {task.status}
+                            {t(`tasks.status.${task.status}`)}
                           </span>
                         </div>
                         <div className="circle-task__description">{task.description}</div>
                         <div className="circle-task__meta">
                           {task.hekaDate && (
                             <span className="circle-task__date">
-                              🌙 Due: {task.hekaDate.day}.{task.hekaDate.month + 1}.{task.hekaDate.year}
+                              {t('tasks.dueDate', { day: task.hekaDate.day, month: task.hekaDate.month + 1, year: task.hekaDate.year })}
                             </span>
                           )}
                           <span style={{ color: isExpired ? '#ef4444' : daysUntilExpiry <= 1 ? '#f59e0b' : 'inherit' }}>
-                            ⏳ {expiryText}
+                            {t('tasks.expiry', { text: expiryText })}
                           </span>
                         </div>
                         <div className="circle-task__meta" style={{ fontSize: 'var(--text-xs)', opacity: 0.7 }}>
-                          <span>Code: {task.shareCode}</span>
-                          {task.acceptedBy && <span>Accepted by recipient</span>}
+                          <span>{t('tasks.shareCode', { code: task.shareCode })}</span>
+                          {task.acceptedBy && <span>{t('tasks.acceptedByRecipient')}</span>}
                         </div>
                         {task.status === 'pending' && !isExpired && (
                           <div className="circle-task__actions">
@@ -682,7 +685,7 @@ export const FriendsModal: React.FC<FriendsModalProps> = ({ isOpen, onClose }) =
                               className="circle-task__btn circle-task__btn--decline"
                               onClick={() => void dispatch(revokeSharedTask(task.shareCode))}
                             >
-                              🚫 Revoke
+                              {t('tasks.revoke')}
                             </button>
                           </div>
                         )}
@@ -695,10 +698,10 @@ export const FriendsModal: React.FC<FriendsModalProps> = ({ isOpen, onClose }) =
                   <div key={task.id} className="circle-task">
                     <div className="circle-task__header">
                       <div className="circle-task__title">
-                        📜 {task.title}
+                        {t('tasks.taskTitleSimple', { title: task.title })}
                       </div>
                       <span className={`circle-task__status circle-task__status--${task.status}`}>
-                        {task.status}
+                        {t(`tasks.status.${task.status}`)}
                       </span>
                     </div>
                     <div className="circle-task__description">{task.description}</div>
@@ -708,7 +711,7 @@ export const FriendsModal: React.FC<FriendsModalProps> = ({ isOpen, onClose }) =
                           🌙 Due: {task.hekaDate.day}.{task.hekaDate.month + 1}.{task.hekaDate.year}
                         </span>
                       )}
-                      <span>From: {task.creatorId === currentUser?.uid ? 'You' : friends.find(f => f.uid === task.creatorId)?.displayName || 'Unknown'}</span>
+                      <span>{t('tasks.from', { name: task.creatorId === currentUser?.uid ? t('tasks.you') : friends.find(f => f.uid === task.creatorId)?.displayName || t('tasks.unknown') })}</span>
                     </div>
                     {taskTab === 'assigned' && task.status === 'pending' && (
                       <div className="circle-task__actions">
@@ -716,13 +719,13 @@ export const FriendsModal: React.FC<FriendsModalProps> = ({ isOpen, onClose }) =
                           className="circle-task__btn circle-task__btn--accept"
                           onClick={() => handleTaskResponse(task.id, 'accepted')}
                         >
-                          ✓ Accept
+                          {t('tasks.accept')}
                         </button>
                         <button
                           className="circle-task__btn circle-task__btn--decline"
                           onClick={() => handleTaskResponse(task.id, 'declined')}
                         >
-                          ✕ Decline
+                          {t('tasks.decline')}
                         </button>
                       </div>
                     )}
@@ -732,7 +735,7 @@ export const FriendsModal: React.FC<FriendsModalProps> = ({ isOpen, onClose }) =
                           className="circle-task__btn circle-task__btn--complete"
                           onClick={() => handleTaskResponse(task.id, 'completed')}
                         >
-                          ✨ Complete
+                          {t('tasks.complete')}
                         </button>
                       </div>
                     )}
@@ -742,7 +745,7 @@ export const FriendsModal: React.FC<FriendsModalProps> = ({ isOpen, onClose }) =
                           className="circle-task__btn circle-task__btn--decline"
                           onClick={() => void dispatch(revokeTask(task.id))}
                         >
-                          🚫 Revoke
+                          {t('tasks.revoke')}
                         </button>
                       </div>
                     )}
@@ -758,9 +761,9 @@ export const FriendsModal: React.FC<FriendsModalProps> = ({ isOpen, onClose }) =
               {friendRequests.length === 0 ? (
                 <div className="circle-friends__empty">
                   <div className="circle-friends__empty-icon">🔔</div>
-                  <p>No pending requests</p>
+                  <p>{t('requests.emptyTitle')}</p>
                   <p style={{ fontSize: 'var(--text-sm)', marginTop: 'var(--space-2)' }}>
-                    When someone invites you, their request will appear here
+                    {t('requests.emptyDescription')}
                   </p>
                 </div>
               ) : (
@@ -776,7 +779,7 @@ export const FriendsModal: React.FC<FriendsModalProps> = ({ isOpen, onClose }) =
                       <div className="circle-friend__info">
                         <div className="circle-friend__name">{request.displayName}</div>
                         <div className="circle-friend__status">
-                          ⚡ Wants to connect
+                          {t('requests.wantsToConnect')}
                         </div>
                       </div>
                       <div className="circle-friend__actions">
@@ -788,7 +791,7 @@ export const FriendsModal: React.FC<FriendsModalProps> = ({ isOpen, onClose }) =
                               dispatch(setSelectedFriend(request));
                             });
                           }}
-                          title="Accept"
+                          title={t('requests.acceptTitle')}
                           style={{ background: 'rgba(34, 197, 94, 0.2)', color: '#4ade80' }}
                         >
                           ✓
@@ -799,7 +802,7 @@ export const FriendsModal: React.FC<FriendsModalProps> = ({ isOpen, onClose }) =
                             const friendshipId = [currentUser?.uid || '', request.uid].sort().join('_');
                             void dispatch(declineFriendRequest(friendshipId));
                           }}
-                          title="Decline"
+                          title={t('requests.declineTitle')}
                           style={{ background: 'rgba(239, 68, 68, 0.2)', color: '#f87171' }}
                         >
                           ✕
@@ -816,16 +819,15 @@ export const FriendsModal: React.FC<FriendsModalProps> = ({ isOpen, onClose }) =
           {activeTab === 'invite' && (
             <div className="cosmic-circle__panel">
               <div className="circle-invite">
-                <h3 className="circle-invite__title">⚡ Invite a Friend</h3>
+                <h3 className="circle-invite__title">{t('invite.title')}</h3>
                 <p className="circle-invite__description">
-                  Share your cosmic circle with others. Generate a unique invite code 
-                  or enter a code from a friend to join their journey.
+                  {t('invite.description')}
                 </p>
 
                 {inviteCode ? (
                   <div className="circle-invite__code-display">
-                    <div className="circle-invite__code-label">Your Invite Code</div>
-                    <div className="circle-invite__code" onClick={handleCopyCode} style={{ cursor: 'pointer' }}>
+                    <div className="circle-invite__code-label">{t('invite.yourCode')}</div>
+                    <div className="circle-invite__code" onClick={handleCopyCode} style={{ cursor: 'pointer' }} role="button" tabIndex={0} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handleCopyCode(); } }}>
                       {inviteCode}
                     </div>
                     <div style={{ 
@@ -839,18 +841,18 @@ export const FriendsModal: React.FC<FriendsModalProps> = ({ isOpen, onClose }) =
                         onClick={handleCopyCode}
                         style={{ minWidth: '100px' }}
                       >
-                        {copied ? '✓ Copied!' : '📋 Copy Link'}
+                        {copied ? t('invite.copied') : t('invite.copyLink')}
                       </button>
                       <button 
                         className="btn btn--sm btn--primary" 
                         onClick={handleShareInvite}
                         style={{ minWidth: '100px' }}
                       >
-                        📤 Share
+                        {t('invite.share')}
                       </button>
                     </div>
                     <div style={{ fontSize: 'var(--text-xs)', marginTop: 'var(--space-2)', opacity: 0.6 }}>
-                      Share this code to invite friends
+                      {t('invite.shareHint')}
                     </div>
                   </div>
                 ) : (
@@ -860,16 +862,16 @@ export const FriendsModal: React.FC<FriendsModalProps> = ({ isOpen, onClose }) =
                     disabled={isLoading}
                     style={{ opacity: isLoading ? 0.6 : 1 }}
                   >
-                    {isLoading ? '⚡ Generating...' : '⚡ Generate Invite Code'}
+                    {isLoading ? t('invite.generating') : t('invite.generateCode')}
                   </button>
                 )}
 
                 <div className="circle-invite__input-section">
-                  <div className="circle-invite__code-label">Have a code?</div>
+                  <div className="circle-invite__code-label">{t('invite.haveCode')}</div>
                   <input
                     type="text"
                     className="circle-invite__input"
-                    placeholder="ENTER-CODE"
+                    placeholder={t('invite.placeholder')}
                     value={inviteInput}
                     onChange={(e) => {
                       setInviteInput(e.target.value.toUpperCase());
@@ -886,7 +888,7 @@ export const FriendsModal: React.FC<FriendsModalProps> = ({ isOpen, onClose }) =
                     onClick={handleAcceptInvite}
                     disabled={isLoading || !inviteInput.trim()}
                   >
-                    {isLoading ? '✨ Connecting...' : '🌟 Join Circle'}
+                    {isLoading ? t('invite.connecting') : t('invite.joinCircle')}
                   </button>
                 </div>
               </div>
@@ -924,36 +926,36 @@ export const FriendsModal: React.FC<FriendsModalProps> = ({ isOpen, onClose }) =
           >
             <div className="circle-create-task">
               <h3 className="circle-create-task__title">
-                📜 Create Task Ritual for {selectedFriend.displayName}
+                {t('taskCreate.title', { name: selectedFriend.displayName })}
               </h3>
               
               <div className="circle-create-task__field">
-                <label className="circle-create-task__label">Title</label>
+                <label className="circle-create-task__label">{t('taskCreate.labelTitle')}</label>
                 <input
                   type="text"
                   className="circle-create-task__input"
-                  placeholder="e.g., Meditate on the Arc 3 moon"
+                  placeholder={t('taskCreate.placeholderTitle')}
                   value={taskForm.title}
                   onChange={(e) => setTaskForm({ ...taskForm, title: e.target.value })}
                 />
               </div>
 
               <div className="circle-create-task__field">
-                <label className="circle-create-task__label">Description</label>
+                <label className="circle-create-task__label">{t('taskCreate.labelDescription')}</label>
                 <textarea
                   className="circle-create-task__textarea"
-                  placeholder="Describe the ritual or task..."
+                  placeholder={t('taskCreate.placeholderDescription')}
                   value={taskForm.description}
                   onChange={(e) => setTaskForm({ ...taskForm, description: e.target.value })}
                 />
               </div>
 
               <div className="circle-create-task__field">
-                <label className="circle-create-task__label">HEKA Due Date (optional)</label>
+                <label className="circle-create-task__label">{t('taskCreate.labelDueDate')}</label>
                 <input
                   type="text"
                   className="circle-create-task__input"
-                  placeholder="DD.MM.YYYY"
+                  placeholder={t('taskCreate.placeholderDueDate')}
                   value={taskForm.hekaDate}
                   onChange={(e) => setTaskForm({ ...taskForm, hekaDate: e.target.value })}
                 />
@@ -965,7 +967,7 @@ export const FriendsModal: React.FC<FriendsModalProps> = ({ isOpen, onClose }) =
                   style={{ flex: 1 }}
                   onClick={() => setShowCreateTask(false)}
                 >
-                  Cancel
+                  {t('taskCreate.cancel')}
                 </button>
                 <button 
                   className="circle-task__btn circle-task__btn--complete"
@@ -973,7 +975,7 @@ export const FriendsModal: React.FC<FriendsModalProps> = ({ isOpen, onClose }) =
                   onClick={handleCreateTask}
                   disabled={!taskForm.title.trim()}
                 >
-                  ✨ Create Task
+                  {t('taskCreate.createTask')}
                 </button>
               </div>
               
@@ -983,7 +985,7 @@ export const FriendsModal: React.FC<FriendsModalProps> = ({ isOpen, onClose }) =
                   onClick={handleCreateShareableTask}
                   disabled={!taskForm.title.trim()}
                 >
-                  🔗 Create Shareable Link Instead
+                  {t('taskCreate.createShareableLink')}
                 </button>
               </div>
             </div>
@@ -1020,7 +1022,7 @@ export const FriendsModal: React.FC<FriendsModalProps> = ({ isOpen, onClose }) =
                 color: 'var(--color-gold)',
                 textAlign: 'center',
               }}>
-                🌟 Create & Share Task
+                {t('taskShareModal.title')}
               </h3>
               
               <p style={{
@@ -1029,36 +1031,36 @@ export const FriendsModal: React.FC<FriendsModalProps> = ({ isOpen, onClose }) =
                 textAlign: 'center',
                 marginBottom: 'var(--space-4)',
               }}>
-                Create a task and share it with anyone. When they accept, you'll become friends!
+                {t('taskShareModal.description')}
               </p>
               
               <div className="circle-create-task__field">
-                <label className="circle-create-task__label">Task Title *</label>
+                <label className="circle-create-task__label">{t('taskShareModal.labelTitle')}</label>
                 <input
                   type="text"
                   className="circle-create-task__input"
-                  placeholder="e.g., Join me for meditation on Arc 3"
+                  placeholder={t('taskShareModal.placeholderTitle')}
                   value={taskForm.title}
                   onChange={(e) => setTaskForm({ ...taskForm, title: e.target.value })}
                 />
               </div>
 
               <div className="circle-create-task__field">
-                <label className="circle-create-task__label">Description</label>
+                <label className="circle-create-task__label">{t('taskShareModal.labelDescription')}</label>
                 <textarea
                   className="circle-create-task__textarea"
-                  placeholder="Describe what you want them to do..."
+                  placeholder={t('taskShareModal.placeholderDescription')}
                   value={taskForm.description}
                   onChange={(e) => setTaskForm({ ...taskForm, description: e.target.value })}
                 />
               </div>
 
               <div className="circle-create-task__field">
-                <label className="circle-create-task__label">HEKA Due Date (optional)</label>
+                <label className="circle-create-task__label">{t('taskShareModal.labelDueDate')}</label>
                 <input
                   type="text"
                   className="circle-create-task__input"
-                  placeholder="DD.MM.YYYY"
+                  placeholder={t('taskShareModal.placeholderDueDate')}
                   value={taskForm.hekaDate}
                   onChange={(e) => setTaskForm({ ...taskForm, hekaDate: e.target.value })}
                 />
@@ -1073,7 +1075,7 @@ export const FriendsModal: React.FC<FriendsModalProps> = ({ isOpen, onClose }) =
                     setTaskForm({ title: '', description: '', hekaDate: '' });
                   }}
                 >
-                  Cancel
+                  {t('taskShareModal.cancel')}
                 </button>
                 <button 
                   className="btn btn--primary"
@@ -1081,7 +1083,7 @@ export const FriendsModal: React.FC<FriendsModalProps> = ({ isOpen, onClose }) =
                   onClick={handleCreateShareableTask}
                   disabled={!taskForm.title.trim()}
                 >
-                  ✨ Create & Get Link
+                  {t('taskShareModal.createAndGetLink')}
                 </button>
               </div>
             </div>
@@ -1118,7 +1120,7 @@ export const FriendsModal: React.FC<FriendsModalProps> = ({ isOpen, onClose }) =
                 color: 'var(--color-gold)',
                 textAlign: 'center',
               }}>
-                📜 Task Ready to Share
+                {t('taskShareModal.taskReady')}
               </h3>
               
               <div style={{
@@ -1159,14 +1161,14 @@ export const FriendsModal: React.FC<FriendsModalProps> = ({ isOpen, onClose }) =
                   style={{ flex: 1 }}
                   onClick={handleCopyTaskLink}
                 >
-                  {taskCopied ? '✓ Copied!' : '📋 Copy Link'}
+                  {taskCopied ? t('invite.copied') : t('invite.copyLink')}
                 </button>
                 <button
                   className="btn btn--primary"
                   style={{ flex: 1 }}
                   onClick={handleShareTaskLink}
                 >
-                  📤 Share
+                  {t('invite.share')}
                 </button>
               </div>
 
@@ -1180,7 +1182,7 @@ export const FriendsModal: React.FC<FriendsModalProps> = ({ isOpen, onClose }) =
                   setShareableTaskCode(null);
                 }}
               >
-                Done
+                {t('taskShareModal.done')}
               </button>
             </div>
           </div>
@@ -1212,6 +1214,7 @@ function CircleAICoachBanner({
   onInvite,
   onViewTasks,
 }: CircleAICoachBannerProps) {
+  const { t: tCircle } = useTranslation('circle');
   const message = useMemo(() => {
     const userContext = aiConfigService.getUserContext();
 
@@ -1224,47 +1227,47 @@ function CircleAICoachBanner({
 
     // Cross-context merge: weave in recent journal themes when appropriate
     const journalBridge = userContext.lastJournalThemes.length
-      ? ` You recently reflected on ${userContext.lastJournalThemes.join(', ')}.`
+      ? tCircle('aiCoach.journalBridge', { themes: userContext.lastJournalThemes.join(', ') })
       : '';
     const moonBridge = userContext.lastCelebratedMoonPhase
-      ? ` The ${userContext.lastCelebratedMoonPhase} moon energy is still with you.`
+      ? tCircle('aiCoach.moonBridge', { phase: userContext.lastCelebratedMoonPhase })
       : '';
 
     if (activeTab === 'tasks' && pendingTasks > 0) {
       return {
-        text: `You have ${pendingTasks} pending task${pendingTasks === 1 ? '' : 's'}.${moonBridge} Every completed ritual strengthens your cosmic bond.`,
+        text: tCircle(pendingTasks === 1 ? 'aiCoach.pendingTasks_one' : 'aiCoach.pendingTasks_other', { count: pendingTasks, moonBridge }),
         icon: '✨',
-        action: { label: 'View Tasks', onClick: onViewTasks },
+        action: { label: tCircle('aiCoach.viewTasks'), onClick: onViewTasks },
       };
     }
     if (activeTab === 'messages' && unreadMessages > 0) {
       return {
-        text: `${unreadMessages} unread message${unreadMessages === 1 ? '' : 's'} waiting.${journalBridge} A simple check-in can brighten someone's day.`,
+        text: tCircle(unreadMessages === 1 ? 'aiCoach.unreadMessages_one' : 'aiCoach.unreadMessages_other', { count: unreadMessages, journalBridge }),
         icon: '💬',
       };
     }
     if (friendsCount === 0) {
       return {
-        text: 'Your circle is waiting to grow. Invite a friend to share celestial moments together.',
+        text: tCircle('aiCoach.emptyCircle'),
         icon: '🌌',
-        action: { label: 'Invite Friend', onClick: onInvite },
+        action: { label: tCircle('aiCoach.inviteFriend'), onClick: onInvite },
       };
     }
     if (friendsCount === 1) {
       return {
-        text: `One cosmic connection made.${journalBridge} Who else might benefit from walking this path with you?`,
+        text: tCircle('aiCoach.oneFriend', { journalBridge }),
         icon: '🔮',
-        action: { label: 'Invite Another', onClick: onInvite },
+        action: { label: tCircle('aiCoach.inviteAnother'), onClick: onInvite },
       };
     }
     if (activeTab === 'invite') {
       return {
-        text: 'Sharing your journey multiplies its meaning. Send an invite to someone who needs cosmic alignment.',
+        text: tCircle('aiCoach.inviteTab'),
         icon: '⚡',
       };
     }
     return {
-      text: `Your circle has ${friendsCount} friend${friendsCount === 1 ? '' : 's'}.${journalBridge} Consider sending a message or sharing a task ritual today.`,
+      text: tCircle(friendsCount === 1 ? 'aiCoach.default_one' : 'aiCoach.default_other', { count: friendsCount, journalBridge }),
       icon: '✦',
     };
   }, [friendsCount, pendingTasks, unreadMessages, activeTab, onInvite, onViewTasks]);
@@ -1321,10 +1324,10 @@ function formatLastActive(timestamp: { toDate: () => Date } | Date): string {
   const hours = Math.floor(diff / 3600000);
   const days = Math.floor(diff / 86400000);
 
-  if (minutes < 1) return 'just now';
-  if (minutes < 60) return `${minutes}m ago`;
-  if (hours < 24) return `${hours}h ago`;
-  if (days < 7) return `${days}d ago`;
+  if (minutes < 1) return i18n.t('timeAgo.justNow', { ns: 'circle' });
+  if (minutes < 60) return i18n.t('timeAgo.minutesAgo', { ns: 'circle', minutes });
+  if (hours < 24) return i18n.t('timeAgo.hoursAgo', { ns: 'circle', hours });
+  if (days < 7) return i18n.t('timeAgo.daysAgo', { ns: 'circle', days });
   return date.toLocaleDateString();
 }
 

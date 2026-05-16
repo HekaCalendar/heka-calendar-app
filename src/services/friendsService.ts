@@ -389,7 +389,7 @@ export function subscribeToFriendRequests(callback: (requests: FriendProfile[]) 
     const notifiedIds = new Set(JSON.parse(localStorage.getItem('heka_notified_friend_requests') || '[]') as string[]);
     const newNotifiedIds = new Set(notifiedIds);
 
-    snapshot.docs.forEach(doc => {
+    for (const doc of snapshot.docs) {
       const data = doc.data() as Friendship;
       const friendId = data.users.find(uid => uid !== currentUser.uid);
       if (friendId) friendIds.push(friendId);
@@ -397,17 +397,21 @@ export function subscribeToFriendRequests(callback: (requests: FriendProfile[]) 
       // Notify for new friend requests
       if (friendId && !notifiedIds.has(doc.id)) {
         newNotifiedIds.add(doc.id);
-        void NotificationEngine.notifyStandard(
-          'friend-request',
-          'circle',
-          'New Cosmic Connection',
-          `Someone has sent you a friend request. Open your Circle to connect.`,
-          new Date(Date.now() + 5000),
-          { friendRequestId: doc.id },
-          parseInt(doc.id.slice(-8), 16) || undefined
-        );
+        try {
+          await NotificationEngine.notifyStandard(
+            'friend-request',
+            'circle',
+            'New Cosmic Connection',
+            `Someone has sent you a friend request. Open your Circle to connect.`,
+            new Date(Date.now() + 5000),
+            { friendRequestId: doc.id },
+            parseInt(doc.id.slice(-8), 16) || undefined
+          );
+        } catch (err) {
+          console.error('[FriendsService] Failed to send friend request notification:', err);
+        }
       }
-    });
+    }
 
     // Save notified IDs
     if (newNotifiedIds.size !== notifiedIds.size) {
@@ -627,14 +631,18 @@ export async function createTaskRitual(
   const hekaDateStr = hekaDate ? ` (Due: ${hekaDate.day}.${hekaDate.month + 1}.${hekaDate.year})` : '';
   
   // Schedule immediate notification via unified engine
-  void NotificationEngine.notifyCore(
-    'task-assigned',
-    'circle',
-    'New Task from Cosmic Circle',
-    `${creatorName} assigned you: ${title}${hekaDateStr}`,
-    { taskId: taskRef.id, assigneeId },
-    parseInt(taskRef.id.slice(-8), 16) || undefined
-  );
+  try {
+    await NotificationEngine.notifyCore(
+      'task-assigned',
+      'circle',
+      'New Task from Cosmic Circle',
+      `${creatorName} assigned you: ${title}${hekaDateStr}`,
+      { taskId: taskRef.id, assigneeId },
+      parseInt(taskRef.id.slice(-8), 16) || undefined
+    );
+  } catch (err) {
+    console.error('[FriendsService] Failed to send task assignment notification:', err);
+  }
 
   return { id: taskRef.id, ...task };
 }

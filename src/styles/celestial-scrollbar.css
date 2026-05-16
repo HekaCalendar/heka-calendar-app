@@ -119,7 +119,9 @@
   z-index: 10;
   background: rgba(0, 0, 0, 0.05);
   pointer-events: auto;
-  touch-action: none !important;
+  /* Allow browser to handle both directions natively. Horizontal swipes
+     scroll the panel. Vertical swipes bubble up to the page scroll. */
+  touch-action: auto !important;
 }
 
 /* Force the content div to match the scrollable width of the panel */

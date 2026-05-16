@@ -23,19 +23,16 @@
   background: var(--heka-bg-primary);
   border: 1px solid var(--heka-border);
   border-radius: 24px;
-  /* CRITICAL: overflow:visible prevents Android WebView from creating a scroll
-     container that traps vertical touch gestures. clip-path handles visual clipping
-     of the border-radius without the scroll-container side-effect. */
-  overflow: visible;
-  clip-path: inset(0 round 24px);
+  overflow: hidden;
   position: relative;
   margin-bottom: 12px;
   box-shadow: 
     0 8px 32px rgba(0, 0, 0, 0.4),
     inset 0 1px 1px rgba(255, 255, 255, 0.05);
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  /* Only allow horizontal panning on the card; vertical gestures bubble up to page */
-  touch-action: pan-x;
+  /* Default touch-action:auto — the browser evaluates gestures naturally.
+     The card has overflow:hidden with no actual overflow, so it never
+     creates a scroll container. Gestures bubble up to the panel. */
 }
 
 /* Fallback for browsers without clip-path support (old WebViews) */
@@ -87,12 +84,8 @@
   gap: 14px;
   background: var(--heka-bg-elevated);
   position: relative;
-  /* CRITICAL: overflow:visible so the header doesn't trap vertical scroll.
-     Border-radius handles the rounded top corners visually. */
-  overflow: visible;
+  overflow: hidden;
   border-radius: 24px;
-  /* manipulation = taps work, scroll passes through to parent */
-  touch-action: manipulation;
 }
 
 .heka-card.expanded .heka-card__header {
@@ -161,7 +154,6 @@
   overflow: hidden;
   text-overflow: ellipsis;
   font-weight: 500;
-  touch-action: manipulation;
 }
 
 /* Chevron with Animation */
@@ -170,6 +162,8 @@
   color: var(--heka-text-tertiary);
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   padding: 8px;
+  min-width: 48px;
+  min-height: 48px;
   background: rgba(255, 255, 255, 0.03);
   border-radius: 50%;
   width: 32px;

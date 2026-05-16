@@ -7,6 +7,7 @@ import { useState, useMemo, useCallback } from 'react';
 import { useSelector } from 'react-redux';
 import type { RootState } from '../store';
 import type { DiaryEntry } from '../oracle/diaryTypes';
+import i18n from '../i18n';
 import '../styles/diary-search.css';
 import '../styles/diary-search.landscape.css';
 
@@ -91,10 +92,14 @@ export const DiarySearch: React.FC<DiarySearchProps> = ({
         const category = result.type === 'calendar'
           ? (result.entry as CalendarNoteEntry).category.toLowerCase()
           : '';
-        return searchTerms.some(term => 
-          content.includes(term) || 
+        const tags = result.type === 'diary'
+          ? (result.entry as DiaryEntry).tags?.join(' ').toLowerCase() || ''
+          : '';
+        return searchTerms.some(term =>
+          content.includes(term) ||
           insightText.includes(term) ||
-          category.includes(term)
+          category.includes(term) ||
+          tags.includes(term)
         );
       });
     }
@@ -256,12 +261,12 @@ export const DiarySearch: React.FC<DiarySearchProps> = ({
                         {result.type === 'diary' ? '✨ Oracle' : '📅 Calendar'}
                       </span>
                       <span className="diary-search-result-date">
-                        {new Date(result.entry.timestamp).toLocaleDateString('en-US', {
+                        {new Intl.DateTimeFormat(i18n.language || 'en', {
                           weekday: 'short',
                           month: 'short',
                           day: 'numeric',
                           year: 'numeric',
-                        })}
+                        }).format(new Date(result.entry.timestamp))}
                       </span>
                       {result.type === 'diary' && (result.entry as DiaryEntry).insight?.userRating === 'resonated' && (
                         <span className="diary-search-result-badge resonated">💫</span>
@@ -299,11 +304,11 @@ export const DiarySearch: React.FC<DiarySearchProps> = ({
                     <div className="diary-search-result-meta">
                       <span>{result.entry.content.split(/\s+/).length} words</span>
                       <span>•</span>
-                      <span>{new Date(result.entry.timestamp).toLocaleTimeString('en-US', {
+                      <span>{new Intl.DateTimeFormat(i18n.language || 'en', {
                         hour: 'numeric',
                         minute: '2-digit',
                         hour12: true,
-                      })}</span>
+                      }).format(new Date(result.entry.timestamp))}</span>
                     </div>
                   </div>
                 ))}

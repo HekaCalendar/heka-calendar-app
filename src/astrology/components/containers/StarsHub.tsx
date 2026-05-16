@@ -6,6 +6,7 @@
 import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 import type { AppDispatch, RootState } from '../../../store';
 import { initializeAstrology, updateProfilePreferences, generateChartForProfile } from '../../store/thunks';
 import { updateAstroPreferences } from '../../../store';
@@ -37,6 +38,7 @@ import { store } from '../../../store';
 import { profileManager } from '../../services/natal/profileManager';
 import { getUnifiedUserBirthData, deleteUnifiedChart, getUnifiedChart } from '../../utils/chartBridge';
 import { CelestialErrorBoundary } from '../error/CelestialErrorBoundary';
+import { StarfieldCanvas } from '../../../components/onboarding/v3/StarfieldCanvas';
 import { TwoSelvesModal } from '../modals/TwoSelvesModal';
 import { StarsNotificationSettings } from '../../../components/notification/StarsNotificationSettings';
 
@@ -71,24 +73,15 @@ const ZODIAC_ORDER_13 = [
 // Helper to get signs array based on zodiac system (used for sign displays)
 export const getZodiacSigns = (use13Signs: boolean) => use13Signs ? ZODIAC_ORDER_13 : ZODIAC_ORDER_12;
 
-function getPlanetDomain(planet: string): string {
-  const domains: Record<string, string> = {
-    mercury: 'communication and plans',
-    venus: 'relationships and values',
-    mars: 'actions and desires',
-    jupiter: 'expansion and beliefs',
-    saturn: 'structures and commitments',
-    uranus: 'change and liberation',
-    neptune: 'dreams and spirituality',
-    pluto: 'transformation and power',
-  };
-  return domains[planet.toLowerCase()] || 'areas of life';
+function getPlanetDomain(planet: string, t: (key: string, options?: any) => string): string {
+  return t(`planetDomains.${planet.toLowerCase()}`, { defaultValue: t('planetDomains.default') });
 }
 
 type TabType = 'overview' | 'guidance' | 'void-moon' | 'positions' | 'chart' | 'settings';
 type CelestialFontId = 'stellar' | 'cosmic' | 'nebula' | 'void' | 'oracle' | 'quantum';
 
 export const StarsHub: React.FC = () => {
+  const { t } = useTranslation('celestial');
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
   const profiles = useSelector(selectAllProfiles);
@@ -107,6 +100,7 @@ export const StarsHub: React.FC = () => {
   const zodiacFrame = astroPreferences?.zodiacFrame || 'tropical';
   const signCount = astroPreferences?.signCount || 12;
   const timeMode = useSelector((state: RootState) => state.calendar.timeMode);
+  const notificationPreferences = useSelector((state: RootState) => state.calendar.notificationPreferences);
   const selectedProfileId = useSelector((state: RootState) => state.astrology.ui.selectedProfileId);
   
   // Refs for managing async operations and cleanup
@@ -155,7 +149,6 @@ export const StarsHub: React.FC = () => {
   useEffect(() => {
     const now = Date.now();
     if (now - globalGeoRequestTs < 30000) {
-      console.log('[StarsHub] Skipping geolocation request (global debounce)');
       // Still restore saved location from localStorage if available
       const saved = localStorage.getItem('ci-location');
       if (saved) {
@@ -178,7 +171,6 @@ export const StarsHub: React.FC = () => {
       if (navigator.permissions) {
         try {
           const result = await navigator.permissions.query({ name: 'geolocation' as PermissionName });
-          console.log('[StarsHub] Geolocation permission:', result.state);
           
           if (result.state === 'denied') {
             console.warn('[StarsHub] Geolocation permission denied');
@@ -191,7 +183,6 @@ export const StarsHub: React.FC = () => {
       
       navigator.geolocation.getCurrentPosition(
         (position) => {
-          console.log('[StarsHub] Got location:', position.coords.latitude, position.coords.longitude);
           const loc = {
             latitude: position.coords.latitude,
             longitude: position.coords.longitude,
@@ -201,7 +192,10 @@ export const StarsHub: React.FC = () => {
           localStorage.setItem('ci-location', JSON.stringify(loc));
           
           // Try to get location name from coordinates
-          fetch(`https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${loc.latitude}&longitude=${loc.longitude}&localityLanguage=en`)
+          import('../../../utils/fetchWithTimeout').then(({ fetchWithTimeout }) => fetchWithTimeout(
+            `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${loc.latitude}&longitude=${loc.longitude}&localityLanguage=en`,
+            { timeout: 10000 }
+          ))
             .then(r => r.json())
             .then(data => {
               const name = data.city || data.locality || 'Local';
@@ -260,7 +254,6 @@ export const StarsHub: React.FC = () => {
         await initializeSwissEphemeris();
         if (isMountedRef.current) {
           setIsReady(true);
-          console.log('[StarsHub] Swiss Ephemeris ready');
         }
       } catch (error) {
         console.error('[StarsHub] Failed to initialize:', error);
@@ -366,7 +359,6 @@ export const StarsHub: React.FC = () => {
     initAstrologyDispatchedRef.current = true;
     const now = Date.now();
     if (now - globalAstrologyInitTs < 5000) {
-      console.log('[StarsHub] Skipping initializeAstrology (global debounce)');
       return;
     }
     globalAstrologyInitTs = now;
@@ -380,7 +372,6 @@ export const StarsHub: React.FC = () => {
     notifInitRef.current = true;
     const now = Date.now();
     if (now - globalNotifInitTs < 5000) {
-      console.log('[StarsHub] Skipping NotificationEngine.init (global debounce)');
       return;
     }
     globalNotifInitTs = now;
@@ -395,7 +386,7 @@ export const StarsHub: React.FC = () => {
       const scheduleTime = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 7, 0, 0);
       if (scheduleTime <= now) scheduleTime.setDate(scheduleTime.getDate() + 1);
       const seed = new Date().toISOString().split('T')[0];
-      void NotificationEngine.scheduleTemplated(
+      NotificationEngine.scheduleTemplated(
         'daily-celestial-tips',
         'standard',
         'stars',
@@ -403,11 +394,13 @@ export const StarsHub: React.FC = () => {
         seed,
         {},
         { type: 'daily-celestial-tips' }
-      );
+      ).catch((err) => {
+        console.error('[StarsHub] Failed to schedule daily tips:', err);
+      });
     } else {
       void NotificationEngine.cancelByType('daily-celestial-tips');
     }
-  }, [astroPreferences.enableDailyTips]);
+  }, [notificationPreferences.stars.dailyCelestialTips]);
   
   // Schedule retrograde alerts when preference changes
   useEffect(() => {
@@ -418,20 +411,22 @@ export const StarsHub: React.FC = () => {
         // (This is a simplified placeholder — real implementation would use exact station dates)
         const alertDate = new Date(Date.now() + 3 * 86400000);
         const seed = retro.planet + alertDate.toISOString().split('T')[0];
-        void NotificationEngine.scheduleTemplated(
+        NotificationEngine.scheduleTemplated(
           'retrograde-alert',
           'ambient',
           'stars',
           alertDate,
           seed,
-          { planet: retro.planet, domain: getPlanetDomain(retro.planet) },
+          { planet: retro.planet, domain: getPlanetDomain(retro.planet, t) },
           { type: 'retrograde-alert', planet: retro.planet }
-        );
+        ).catch((err) => {
+          console.error('[StarsHub] Failed to schedule retrograde alert:', err);
+        });
       }
     } else {
       void NotificationEngine.cancelByType('retrograde-alert');
     }
-  }, [astroPreferences.enableRetrogradeAlerts, retrogrades]);
+  }, [notificationPreferences.stars.retrogradeAlerts, retrogrades]);
   
   // Recalculate chart when zodiac system changes
   // Uses AbortController pattern to prevent race conditions on rapid toggles
@@ -524,12 +519,12 @@ export const StarsHub: React.FC = () => {
   }, [zodiacSystem, zodiacFrame, signCount, dispatch, selectedProfileId]);
 
   const tabs: { id: TabType; label: string; icon: string; badge?: number }[] = [
-    { id: 'overview', label: 'Overview', icon: '◈' },
-    { id: 'guidance', label: 'Guidance', icon: '◐' },
-    { id: 'void-moon', label: 'Void Moon', icon: '🌑' },
-    { id: 'positions', label: 'Positions', icon: '✧' },
-    { id: 'chart', label: 'Chart', icon: '◉' },
-    { id: 'settings', label: 'Settings', icon: '⚙' },
+    { id: 'overview', label: t('starsHub.overview'), icon: '◈' },
+    { id: 'guidance', label: t('starsHub.guidance'), icon: '◐' },
+    { id: 'void-moon', label: t('starsHub.voidMoon'), icon: '🌑' },
+    { id: 'positions', label: t('starsHub.positions'), icon: '✧' },
+    { id: 'chart', label: t('starsHub.chart'), icon: '◉' },
+    { id: 'settings', label: t('starsHub.settings'), icon: '⚙' },
   ];
 
   return (
@@ -561,14 +556,16 @@ export const StarsHub: React.FC = () => {
         return null;
       })()}
 
-      {/* Animated Background Elements */}
-      <div className="ci-shooting-stars" />
+      {/* Full-screen animated starfield — same quality as tutorial */}
+      <div className="stars-hub__canvas">
+        <StarfieldCanvas />
+      </div>
       
       {/* Sticky Header Container */}
       <div className="sh-header-container">
         {/* Main Title - Always visible */}
         <div className="sh-title-bar">
-          <h1 className="sh-main-title">Celestial Intelligence</h1>
+          <h1 className="sh-main-title">{t('starsHub.celestialIntelligence')}</h1>
         </div>
         
         {/* Header with Back and Live */}
@@ -577,7 +574,7 @@ export const StarsHub: React.FC = () => {
             className="sh-back" 
             onClick={() => navigate('/')}
           >
-            ← Back
+            {t('starsHub.back')}
           </button>
           
           <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
@@ -595,7 +592,7 @@ export const StarsHub: React.FC = () => {
             )}
             <span className="sh-live-indicator">
               <span className="sh-live-dot"></span>
-              Live
+              {t('starsHub.live')}
             </span>
           </div>
         </header>
@@ -644,8 +641,8 @@ export const StarsHub: React.FC = () => {
               <div className="sh-welcome">
                 <h2>
                   {natalChart 
-                    ? `Welcome back, ${profiles[0]?.name?.split(' ')[0] || 'Seeker'}` 
-                    : 'Universal Sky'}
+                    ? t('starsHub.welcomeBack', { name: profiles[0]?.name?.split(' ')[0] || 'Seeker' }) 
+                    : t('starsHub.universalSky')}
                 </h2>
                 <p>
                   {natalChart 
@@ -661,25 +658,25 @@ export const StarsHub: React.FC = () => {
                   <div className="sh-stat-value">
                     {moonPhase ? moonPhase.name.split(' ')[0] : '--'}
                   </div>
-                  <div className="sh-stat-label">Moon Phase</div>
+                  <div className="sh-stat-label">{t('starsHub.moonPhase')}</div>
                 </div>
                 <div className="sh-stat-card">
                   <div className="sh-stat-value">
                     {planetaryHour ? planetaryHour.symbol : '--'}
                   </div>
-                  <div className="sh-stat-label">Hour Ruler</div>
+                  <div className="sh-stat-label">{t('starsHub.hourRuler')}</div>
                 </div>
                 <div className="sh-stat-card">
                   <div className="sh-stat-value" style={{ color: retrogrades.length > 0 ? '#ef4444' : 'var(--success)' }}>
                     {retrogrades.length}
                   </div>
-                  <div className="sh-stat-label">Retrogrades</div>
+                  <div className="sh-stat-label">{t('starsHub.retrogrades')}</div>
                 </div>
                 <div className="sh-stat-card">
                   <div className="sh-stat-value">
                     {positions?.sun?.sign ? SIGNS[positions.sun.sign] : '--'}
                   </div>
-                  <div className="sh-stat-label">Sun Sign</div>
+                  <div className="sh-stat-label">{t('starsHub.sunSign')}</div>
                 </div>
               </div>
               
@@ -688,7 +685,7 @@ export const StarsHub: React.FC = () => {
                 <div className="sh-section-header">
                   <div className="sh-section-title">
                     <span>◈</span>
-                    Daily Briefing
+                    {t('starsHub.dailyBriefing')}
                   </div>
                 </div>
                 <div className="sh-section-content">
@@ -763,8 +760,8 @@ export const StarsHub: React.FC = () => {
                     <div className="sh-setting-header">
                       <span className="sh-setting-icon">⛎</span>
                       <div>
-                        <h4>Zodiac System</h4>
-                        <p>Choose your celestial framework</p>
+                        <h4>{t('starsHub.zodiacSystem')}</h4>
+                        <p>{t('starsHub.chooseFramework')}</p>
                       </div>
                     </div>
                     {/* ═══ Zodiac Frame Toggle (Tropical vs Sidereal) ═══ */}
@@ -789,9 +786,9 @@ export const StarsHub: React.FC = () => {
                           fontWeight: zodiacFrame === 'tropical' ? 600 : 400,
                         }}
                       >
-                        {zodiacFrame === 'tropical' && '✓ '}Tropical
+                        {zodiacFrame === 'tropical' && '✓ '}{t('starsHub.tropical')}
                         <span style={{ display: 'block', fontSize: '10px', opacity: 0.6, marginTop: '3px' }}>
-                          12 Signs · Seasons
+                          {t('starsHub.tropicalDesc')}
                         </span>
                       </button>
                       <button
@@ -809,9 +806,9 @@ export const StarsHub: React.FC = () => {
                           fontWeight: zodiacFrame === 'sidereal' ? 600 : 400,
                         }}
                       >
-                        {zodiacFrame === 'sidereal' && '✓ '}Sidereal
+                        {zodiacFrame === 'sidereal' && '✓ '}{t('starsHub.sidereal')}
                         <span style={{ display: 'block', fontSize: '10px', opacity: 0.6, marginTop: '3px' }}>
-                          Fixed Stars · Nakshatras
+                          {t('starsHub.siderealDesc')}
                         </span>
                       </button>
                     </div>
@@ -830,7 +827,7 @@ export const StarsHub: React.FC = () => {
                           letterSpacing: '0.05em',
                           marginBottom: '6px',
                         }}>
-                          Sidereal Sign Count
+                          {t('starsHub.siderealSignCount')}
                         </div>
                         <div style={{
                           display: 'grid',
@@ -852,9 +849,9 @@ export const StarsHub: React.FC = () => {
                               fontWeight: signCount === 12 ? 600 : 400,
                             }}
                           >
-                            {signCount === 12 && '✓ '}12 Signs
+                            {signCount === 12 && '✓ '}{t('starsHub.12signs')}
                             <span style={{ display: 'block', fontSize: '9px', opacity: 0.6, marginTop: '2px' }}>
-                              Traditional sidereal
+                              {t('starsHub.12signsDesc')}
                             </span>
                           </button>
                           <button
@@ -872,9 +869,9 @@ export const StarsHub: React.FC = () => {
                               fontWeight: signCount === 13 ? 600 : 400,
                             }}
                           >
-                            {signCount === 13 && '✓ '}13 Signs ⛎
+                            {signCount === 13 && '✓ '}{t('starsHub.13signs')}
                             <span style={{ display: 'block', fontSize: '9px', opacity: 0.6, marginTop: '2px' }}>
-                              Ophiuchus included
+                              {t('starsHub.13signsDesc')}
                             </span>
                           </button>
                         </div>
@@ -884,15 +881,15 @@ export const StarsHub: React.FC = () => {
                     <p style={{ marginTop: '12px', fontSize: '12px', color: 'rgba(255,255,255,0.5)', lineHeight: 1.5 }}>
                       {zodiacFrame === 'sidereal'
                         ? signCount === 13
-                          ? '⛎ 13-sign sidereal: Ophiuchus included. The most astronomically accurate framework.'
-                          : '☀️ 12-sign sidereal: Traditional constellation boundaries with ayanamsa correction.'
-                        : 'Classical 12-sign tropical zodiac tied to the seasons.'}
+                          ? t('starsHub.13signDesc')
+                          : t('starsHub.12signSiderealDesc')
+                        : t('starsHub.tropicalDesc2')}
                       {' '}
                       <span style={{ color: 'rgba(201, 162, 39, 0.7)' }}>
                         {timeMode === 'TRUE' && zodiacFrame !== 'sidereal'
-                          ? '⚠️ You are in TRUE mode but not using sidereal. Switch to Sidereal for full alignment.'
+                          ? t('starsHub.trueModeWarning')
                           : timeMode === 'SYNC' && zodiacFrame === 'sidereal'
-                            ? '⚠️ You are in SYNC mode but using sidereal. This is an advanced override.'
+                            ? t('starsHub.syncModeWarning')
                             : ''}
                       </span>
                     </p>
@@ -920,7 +917,7 @@ export const StarsHub: React.FC = () => {
                         }}
                       >
                         <span>🌟</span>
-                        Compare Your Two Selves
+                        {t('starsHub.compareTwoSelves')}
                       </button>
                     )}
                   </div>
@@ -930,8 +927,8 @@ export const StarsHub: React.FC = () => {
                     <div className="sh-setting-header">
                       <span className="sh-setting-icon">🔔</span>
                       <div>
-                        <h4>Celestial Notifications</h4>
-                        <p>Receive guidance from the cosmos</p>
+                        <h4>{t('starsHub.celestialNotifications')}</h4>
+                        <p>{t('starsHub.receiveGuidance')}</p>
                       </div>
                     </div>
                     <StarsNotificationSettings />
@@ -942,8 +939,8 @@ export const StarsHub: React.FC = () => {
                     <div className="sh-setting-header">
                       <span className="sh-setting-icon">🎨</span>
                       <div>
-                        <h4>Celestial Theme</h4>
-                        <p>Choose your cosmic atmosphere</p>
+                        <h4>{t('starsHub.celestialTheme')}</h4>
+                        <p>{t('starsHub.chooseAtmosphere')}</p>
                       </div>
                     </div>
                     <ThemeSelector currentTheme={theme} onThemeChange={setTheme} />
@@ -954,8 +951,8 @@ export const StarsHub: React.FC = () => {
                     <div className="sh-setting-header">
                       <span className="sh-setting-icon">✦</span>
                       <div>
-                        <h4>Celestial Font</h4>
-                        <p>Select the typeface for this realm</p>
+                        <h4>{t('starsHub.celestialFont')}</h4>
+                        <p>{t('starsHub.selectTypeface')}</p>
                       </div>
                     </div>
                     <FontSelector currentFont={font} onFontChange={setFont} />
@@ -966,8 +963,8 @@ export const StarsHub: React.FC = () => {
                     <div className="sh-setting-header">
                       <span className="sh-setting-icon">👤</span>
                       <div>
-                        <h4>Profile Management</h4>
-                        <p>Manage your birth chart profiles</p>
+                        <h4>{t('starsHub.profileManagement')}</h4>
+                        <p>{t('starsHub.manageProfiles')}</p>
                       </div>
                     </div>
                     <div style={{ padding: '16px', background: 'rgba(239, 68, 68, 0.05)', borderRadius: '12px' }}>
@@ -978,11 +975,11 @@ export const StarsHub: React.FC = () => {
                           <>
                             <div style={{ marginBottom: '12px' }}>
                               <div style={{ fontSize: '13px', color: 'rgba(255,255,255,0.6)', marginBottom: '4px' }}>
-                                {profiles.length} profile{profiles.length !== 1 ? 's' : ''} saved
+                                {t('starsHub.profilesSaved', { count: profiles.length })}
                               </div>
                               {activeProfileWithChart && (
                                 <div style={{ fontSize: '14px', color: 'rgba(255,255,255,0.9)' }}>
-                                  Active: <strong>{activeProfileWithChart.name}</strong>
+                                  {t('starsHub.active')}: <strong>{activeProfileWithChart.name}</strong>
                                   {activeProfileWithChart.chart?.birthData && (
                                     <span style={{ color: 'rgba(255,255,255,0.5)', marginLeft: '8px' }}>
                                       ({activeProfileWithChart.chart.birthData.date})
@@ -1007,8 +1004,7 @@ export const StarsHub: React.FC = () => {
                                     borderRadius: '8px',
                                     marginBottom: '12px'
                                   }}>
-                                    ⚠️ <strong>Corrupted birth date detected!</strong><br/>
-                                    Birth date appears to be recent. This may cause the 13-sign toggle to not work correctly.
+                                    {t('starsHub.corruptedDate')}
                                   </div>
                                 );
                               }
@@ -1019,7 +1015,7 @@ export const StarsHub: React.FC = () => {
                               <button
                                 onClick={async () => {
                                   const active = profileManager.getActiveProfile();
-                                  if (active && confirm('Delete this profile? This cannot be undone.')) {
+                                  if (active && confirm(t('confirm.deleteProfile'))) {
                                     // Delete from both OLD and NEW storage systems
                                     await profileManager.deleteProfile(active.id);
                                     deleteUnifiedChart(active.id);
@@ -1037,7 +1033,7 @@ export const StarsHub: React.FC = () => {
                                   cursor: 'pointer',
                                 }}
                               >
-                                🗑️ Delete Profile
+                                {t('starsHub.deleteProfile')}
                               </button>
                               <button
                                 onClick={() => setActiveTab('chart')}
@@ -1051,7 +1047,7 @@ export const StarsHub: React.FC = () => {
                                   cursor: 'pointer',
                                 }}
                               >
-                                ➕ Add New Profile
+                                {t('starsHub.addNewProfile')}
                               </button>
                             </div>
                           </>
@@ -1070,8 +1066,8 @@ export const StarsHub: React.FC = () => {
                     <div className="sh-setting-header">
                       <span className="sh-setting-icon">◈</span>
                       <div>
-                        <h4>About Celestial Intelligence</h4>
-                        <p>Version 2.2.0 • HEKA Astrology Engine</p>
+                        <h4>{t('starsHub.aboutCelestial')}</h4>
+                        <p>{t('starsHub.version')}</p>
                       </div>
                     </div>
                     <div className="sh-about-text">
@@ -1101,108 +1097,6 @@ interface PlanetaryPositionsProps {
   localHouses: any;
 }
 
-// Detailed planetary interpretations
-const PLANET_IN_SIGN_MEANING: Record<string, Record<string, string>> = {
-  sun: {
-    aries: 'The Sun in Aries brings bold, pioneering energy. A time for initiation, leadership, and courageous action.',
-    taurus: 'The Sun in Taurus grounds us in stability and sensory pleasure. Focus on building, nurturing, and appreciating beauty.',
-    gemini: 'The Sun in Gemini sparks curiosity and communication. Exchange ideas, learn, and connect with your community.',
-    cancer: 'The Sun in Cancer deepens emotional connections. Nurture relationships, honor feelings, and create sanctuary.',
-    leo: 'The Sun in Leo shines with creative confidence. Express yourself authentically and lead with heart.',
-    virgo: 'The Sun in Virgo calls for refinement and service. Organize, improve systems, and attend to details.',
-    libra: 'The Sun in Libra seeks harmony and partnership. Balance relationships and appreciate aesthetic beauty.',
-    scorpio: 'The Sun in Scorpio dives deep into transformation. Embrace intensity, investigate mysteries, and release what no longer serves.',
-    sagittarius: 'The Sun in Sagittarius expands horizons. Seek wisdom, explore new territories, and embrace optimism.',
-    capricorn: 'The Sun in Capricorn builds for the long term. Take responsibility, set ambitious goals, and master your craft.',
-    aquarius: 'The Sun in Aquarius innovates for the collective. Embrace uniqueness, think progressively, and serve humanity.',
-    pisces: 'The Sun in Pisces dissolves boundaries. Connect with the infinite, practice compassion, and trust intuition.',
-  },
-  moon: {
-    aries: 'The Moon in Aries brings quick emotional responses. Impulsive feelings, passionate reactions, and independent needs.',
-    taurus: 'The Moon in Taurus seeks comfort and stability. Nurturing through sensuality, patience, and material security.',
-    gemini: 'The Moon in Gemini fluctuates with thoughts and conversations. Emotional curiosity, mental stimulation needs.',
-    cancer: 'The Moon is at home in Cancer. Deep nurturing, protective instincts, and profound emotional sensitivity.',
-    leo: 'The Moon in Leo expresses feelings dramatically. Warmth, creativity, and need for recognition in relationships.',
-    virgo: 'The Moon in Virgo seeks order and usefulness. Emotional satisfaction through service, health, and improvement.',
-    libra: 'The Moon in Libra harmonizes emotions. Needs partnership, aesthetic balance, and diplomatic relating.',
-    scorpio: 'The Moon in Scorpio feels intensely. Emotional depth, transformative experiences, and powerful intuition.',
-    sagittarius: 'The Moon in Sagittarius explores emotionally. Freedom needs, philosophical feelings, and adventurous spirit.',
-    capricorn: 'The Moon in Capricorn restrains emotions. Mature handling of feelings, responsibility, and long-term security.',
-    aquarius: 'The Moon in Aquarius detaches to observe. Emotional objectivity, humanitarian concerns, and unique needs.',
-    pisces: 'The Moon in Pisces dissolves emotional boundaries. Empathy, imagination, and spiritual sensitivity.',
-  },
-  mercury: {
-    aries: 'Mercury in Aries thinks quickly and directly. Sharp, impulsive communication and pioneering ideas.',
-    taurus: 'Mercury in Taurus thinks practically. Steady learning, sensual perception, and methodical communication.',
-    gemini: 'Mercury is at home in Gemini. Quick wit, versatile thinking, and skillful communication.',
-    cancer: 'Mercury in Cancer thinks intuitively. Memory-focused, emotional intelligence, and nurturing words.',
-    leo: 'Mercury in Leo expresses creatively. Dramatic speech, confident ideas, and heart-centered thinking.',
-    virgo: 'Mercury is at home in Virgo. Analytical precision, practical intelligence, and detailed analysis.',
-    libra: 'Mercury in Libra seeks balanced thought. Diplomatic communication and considering all perspectives.',
-    scorpio: 'Mercury in Scorpio probes deeply. Investigative thinking, psychological insight, and penetrating words.',
-    sagittarius: 'Mercury in Sagittarius expands understanding. Philosophical thinking and broad communication.',
-    capricorn: 'Mercury in Capricorn structures thought. Strategic planning, authoritative speech, and practical wisdom.',
-    aquarius: 'Mercury in Aquarius innovates thinking. Original ideas, intellectual detachment, and progressive concepts.',
-    pisces: 'Mercury in Pisces imagines intuitively. Poetic expression, receptive listening, and spiritual understanding.',
-  },
-  venus: {
-    aries: 'Venus in Aries loves passionately. Bold attraction, spontaneous romance, and independent partnerships.',
-    taurus: 'Venus is at home in Taurus. Sensual pleasure, stable relationships, and appreciation of beauty.',
-    gemini: 'Venus in Gemini charms verbally. Flirtatious connections, intellectual attraction, and social variety.',
-    cancer: 'Venus in Cancer nurtures lovingly. Emotional bonding, domestic harmony, and protective care.',
-    leo: 'Venus in Leo loves dramatically. Romantic grand gestures, creative expression, and loyal affection.',
-    virgo: 'Venus in Virgo serves practically. Helpful love, modest attraction, and attention to relationship details.',
-    libra: 'Venus is at home in Libra. Harmonious partnerships, aesthetic appreciation, and diplomatic relating.',
-    scorpio: 'Venus in Scorpio loves intensely. Deep transformation through relationships and magnetic attraction.',
-    sagittarius: 'Venus in Sagittarius explores freely. Adventurous love, philosophical connection, and open relationships.',
-    capricorn: 'Venus in Capricorn commits seriously. Mature relationships, status considerations, and lasting bonds.',
-    aquarius: 'Venus in Aquarius connects uniquely. Unconventional relationships, friendship-based love, and freedom.',
-    pisces: 'Venus in Pisces loves unconditionally. Romantic idealism, spiritual connection, and compassionate relating.',
-  },
-  mars: {
-    aries: 'Mars is at home in Aries. Direct action, courageous initiative, and passionate drive.',
-    taurus: 'Mars in Taurus persists steadily. Determined effort, sensual energy, and stubborn resistance.',
-    gemini: 'Mars in Gemini acts mentally. Quick movements, verbal combat, and scattered initiatives.',
-    cancer: 'Mars in Cancer defends protectively. Emotional action, defensive aggression, and nurturing drive.',
-    leo: 'Mars in Leo performs boldly. Dramatic action, creative drive, and confident leadership.',
-    virgo: 'Mars in Virgo works precisely. Methodical effort, service-oriented action, and health focus.',
-    libra: 'Mars in Libra acts diplomatically. Indirect confrontation, partnership drive, and aesthetic action.',
-    scorpio: 'Mars is at home in Scorpio. Intense action, strategic power, and transformative drive.',
-    sagittarius: 'Mars in Sagittarius explores adventurously. Expansive initiative, philosophical action, and risk-taking.',
-    capricorn: 'Mars in Capricorn achieves ambitiously. Disciplined effort, strategic climbing, and authoritative action.',
-    aquarius: 'Mars in Aquarius revolutionizes action. Reforming drive, group initiatives, and unconventional methods.',
-    pisces: 'Mars in Pisces drifts intuitively. Spiritual action, compassionate drive, and elusive initiative.',
-  },
-  jupiter: {
-    aries: 'Jupiter in Aries expands boldly. Growth through initiative, fortunate new beginnings, and confident optimism.',
-    taurus: 'Jupiter in Taurus abundantly manifests. Growth through patience, material blessings, and sensual wisdom.',
-    gemini: 'Jupiter in Gemini learns diversely. Growth through communication, intellectual expansion, and varied interests.',
-    cancer: 'Jupiter in Cancer nourishes generously. Growth through nurturing, emotional abundance, and protective wisdom.',
-    leo: 'Jupiter in Leo creates grandly. Growth through self-expression, creative abundance, and generous leadership.',
-    virgo: 'Jupiter in Virgo improves skillfully. Growth through service, practical wisdom, and health abundance.',
-    libra: 'Jupiter in Libra harmonizes justly. Growth through partnership, aesthetic appreciation, and diplomatic wisdom.',
-    scorpio: 'Jupiter in Scorpio transforms deeply. Growth through intensity, shared resources, and psychological wisdom.',
-    sagittarius: 'Jupiter is at home in Sagittarius. Boundless expansion, philosophical wisdom, and fortunate journeys.',
-    capricorn: 'Jupiter in Capricorn structures wisely. Growth through discipline, strategic success, and authoritative wisdom.',
-    aquarius: 'Jupiter in Aquarius innovates progressively. Growth through community, humanitarian wisdom, and unique vision.',
-    pisces: 'Jupiter in Pisces dissolves into infinity. Growth through compassion, spiritual abundance, and universal love.',
-  },
-  saturn: {
-    aries: 'Saturn in Aries tests initiative. Lessons in patience, restrained action, and mature leadership.',
-    taurus: 'Saturn in Taurus stabilizes resources. Lessons in persistence, material responsibility, and enduring values.',
-    gemini: 'Saturn in Gemini disciplines the mind. Lessons in focus, serious communication, and mental maturity.',
-    cancer: 'Saturn in Cancer protects boundaries. Lessons in emotional responsibility, family duty, and nurturing limits.',
-    leo: 'Saturn in Leo tempers creativity. Lessons in humility, structured self-expression, and responsible leadership.',
-    virgo: 'Saturn in Virgo perfects service. Lessons in precision, health discipline, and practical mastery.',
-    libra: 'Saturn in Libra commits to balance. Lessons in partnership responsibility, fair structures, and mature relating.',
-    scorpio: 'Saturn in Scorpio transforms deeply. Lessons in power, shared resource responsibility, and psychological maturity.',
-    sagittarius: 'Saturn in Sagittarius structures beliefs. Lessons in wisdom, disciplined expansion, and responsible freedom.',
-    capricorn: 'Saturn is at home in Capricorn. Mastery through discipline, authority earned, and lasting achievement.',
-    aquarius: 'Saturn is at home in Aquarius. Social responsibility, innovative structures, and humanitarian duty.',
-    pisces: 'Saturn in Pisces dissolves boundaries carefully. Lessons in compassion, spiritual discipline, and mystical responsibility.',
-  },
-};
-
 // Planet colors for visual theming
 const PLANET_COLORS: Record<string, string> = {
   sun: '#fbbf24',
@@ -1215,6 +1109,7 @@ const PLANET_COLORS: Record<string, string> = {
 };
 
 const PlanetaryPositions: React.FC<PlanetaryPositionsProps> = ({ positions, localHouses }) => {
+  const { t } = useTranslation('celestial');
   const [selectedPlanet, setSelectedPlanet] = useState<string | null>(null);
   
   if (selectedPlanet && positions?.[selectedPlanet]) {
@@ -1222,8 +1117,7 @@ const PlanetaryPositions: React.FC<PlanetaryPositionsProps> = ({ positions, loca
     const isRetro = body.isRetrograde;
     const signDeg = (body.degreeInSign ?? 0).toFixed(1);
     const planetColor = PLANET_COLORS[selectedPlanet] || '#ffffff';
-    const interpretation = PLANET_IN_SIGN_MEANING[selectedPlanet]?.[body.sign] || 
-      `${PLANET_NAMES[selectedPlanet as keyof typeof PLANET_NAMES]} in ${body.sign} brings unique energy.`;
+    const interpretation = t(`dictionaries.planetInSign.${selectedPlanet}.${body.sign}`, { defaultValue: t('starsHub.planetInSignDefault', { planet: PLANET_NAMES[selectedPlanet as keyof typeof PLANET_NAMES], sign: body.sign }) });
     
     return (
       <div className="sh-section">
@@ -1323,7 +1217,7 @@ const PlanetaryPositions: React.FC<PlanetaryPositionsProps> = ({ positions, loca
                 marginBottom: '12px',
               }}
             >
-              Current Expression
+              {t('starsHub.currentExpression')}
             </div>
             <p
               style={{
@@ -1375,12 +1269,12 @@ const PlanetaryPositions: React.FC<PlanetaryPositionsProps> = ({ positions, loca
       <div className="sh-section-header">
         <div className="sh-section-title">
           <span>✧</span>
-          Current Planetary Positions
+          {t('starsHub.currentPlanetaryPositions')}
         </div>
       </div>
       <div className="sh-section-content">
         <p style={{ color: 'rgba(255,255,255,0.5)', fontSize: '14px', marginBottom: '20px' }}>
-          Tap any planet to explore its detailed meaning
+          {t('starsHub.tapPlanet')}
         </p>
         <div className="sh-positions-grid">
           {positions && Object.entries(positions)
@@ -1414,7 +1308,7 @@ const PlanetaryPositions: React.FC<PlanetaryPositionsProps> = ({ positions, loca
                     <span className="sh-pos-degree">{signDeg}°</span>
                   </div>
                   <div className="sh-pos-insight" style={{ fontSize: '12px', color: 'rgba(255,255,255,0.6)' }}>
-                    Tap for details →
+                    {t('starsHub.tapForDetails')}
                   </div>
                 </button>
               );

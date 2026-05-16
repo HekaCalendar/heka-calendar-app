@@ -58,7 +58,7 @@ const SeasonCardComponent: React.FC<Props> = ({ date, location }) => {
 
   return (
     <div className={`heka-card ${expanded ? 'expanded' : ''}`}>
-      <div className="heka-card__header heka-card__header--enterprise" onClick={() => setExpanded(!expanded)}>
+      <div className="heka-card__header heka-card__header--enterprise" onClick={() => setExpanded(!expanded)} role="button" tabIndex={0} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setExpanded(!expanded); } }}>
         <span className="heka-card__icon">{season.emoji}</span>
         <div className="heka-card__title-group">
           <span className="heka-card__title">{season.name}</span>

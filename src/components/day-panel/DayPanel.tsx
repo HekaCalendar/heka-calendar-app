@@ -9,6 +9,7 @@
  */
 
 import { memo } from 'react';
+import { useTranslation } from 'react-i18next';
 import { tutorialService } from '../../services/tutorialService';
 import { isAfterVotingTime, isToday } from '../../services/energyVoteService';
 import { EnergyVoteCard } from '../EnergyVoteCard';
@@ -22,6 +23,7 @@ import { SolarReturnSection } from './SolarReturnSection';
 import { NotesSection } from './NotesSection';
 
 export const DayPanelComponent: React.FC = () => {
+  const { t } = useTranslation('dayPanel');
   const {
     selectedDate,
     display,
@@ -96,7 +98,7 @@ export const DayPanelComponent: React.FC = () => {
       <div className="day-panel">
         <div className="day-panel__empty">
           <div style={{ fontSize: '3rem', marginBottom: '1rem' }}>📅</div>
-          <p>Select a day to view details</p>
+          <p>{t('emptyState')}</p>
         </div>
       </div>
     );

@@ -33,6 +33,8 @@ export interface EventMap {
 
   // ─── Navigation ───
   'navigate-to-stars': { tab?: string };
+  'navigate-to-circle': void;
+  'navigate-to-planner': { taskId?: string };
 
   // ─── Modal Opens ───
   'heka-open-circle': void;
@@ -46,6 +48,10 @@ export interface EventMap {
   // ─── Notifications ───
   'heka:notification:navigate': { target: string };
   'heka-notification-sent': { type: string; title: string };
+  'heka-notification-delivered': { id: string; type: string };
+  'heka-push-token': { token: string; platform: string };
+  'heka-push-received': { type: string; data: Record<string, string>; title: string; body: string };
+  'heka-push-tapped': { type: string; data: Record<string, string> };
 
   // ─── Planner ───
   'heka-task-created': { task: PlannerTask; isFirstTask: boolean };

@@ -220,6 +220,313 @@ optgroup {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  position: relative;
+}
+
+/* ==========================================================================
+   Sacred Field — Living Geometry Background
+   ========================================================================== */
+
+/* Global focus-visible ring for keyboard accessibility */
+*:focus-visible {
+  outline: 2px solid var(--color-primary, var(--sacred-primary, #d4af37));
+  outline-offset: 2px;
+}
+
+/* Theme-responsive sacred color */
+:root,
+[data-theme="egyptian-gold"]   { --sacred-primary: #d4af37; }
+[data-theme="cyberpunk-neon"]  { --sacred-primary: #ff00ff; }
+[data-theme="nordic-frost"]    { --sacred-primary: #58a6ff; }
+[data-theme="solar-flare"]     { --sacred-primary: #ff6b35; }
+[data-theme="void-walker"]     { --sacred-primary: #b8a1e0; }
+[data-theme="nature-spirit"]   { --sacred-primary: #7cb342; }
+
+/* Sacred Field — massive viewport-filling geometry tapestry */
+.sacred-field {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+  /* Gentle breathing pulse */
+  animation: sacredBreathe 7s ease-in-out infinite alternate;
+  /* Layer promotion + layout containment for GPU compositing on low-end devices */
+  transform: translateZ(0);
+  contain: layout paint;
+}
+
+/* All background SVGs — oversized so only centre is visible, no edges */
+.sacred-field > svg,
+.sacred-field__svg {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 180vmax;
+  height: 180vmax;
+  transform: translate(-50%, -50%);
+  /* CRITICAL: Prevent sacred geometry SVG from capturing touch events.
+     Even with pointer-events:none on the parent container, SVG children
+     with fills can be hit-test targets on Android WebView. */
+  pointer-events: none !important;
+}
+
+/* All sacred geometry SVGs — header and background variants */
+.sacred-geometry--header,
+.sacred-geometry--background {
+  pointer-events: none !important;
+}
+
+/* Very slow cosmic drift — full rotation in 400s (nearly imperceptible) */
+.sacred-field__grid {
+  transform-origin: 400px 400px;
+  animation: sacredDrift 400s linear infinite;
+}
+
+@keyframes sacredDrift {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+@keyframes sacredBreathe {
+  0%   { opacity: 0.35; }
+  50%  { opacity: 0.65; }
+  100% { opacity: 0.45; }
+}
+
+/* ─── Unique animations per background pattern ─── */
+
+/* Metatron's Lattice — structured, geometric, steady clockwise */
+.sacred-field[data-pattern="metatrons-lattice"] .sacred-geometry__group {
+  transform-origin: 400px 400px;
+  animation: sacredDriftMetatron 350s linear infinite;
+}
+.sacred-field[data-pattern="metatrons-lattice"] {
+  animation: sacredBreatheMetatron 9s ease-in-out infinite alternate;
+}
+
+/* Sri Yantra Mandala — meditative, very slow counter-clockwise */
+.sacred-field[data-pattern="sri-yantra-mandala"] .sacred-geometry__group {
+  transform-origin: 400px 400px;
+  animation: sacredDriftYantra 500s linear infinite reverse;
+}
+.sacred-field[data-pattern="sri-yantra-mandala"] {
+  animation: sacredBreatheYantra 12s ease-in-out infinite alternate;
+}
+
+/* Torus Field — dynamic energy, faster clockwise */
+.sacred-field[data-pattern="torus-field"] .sacred-geometry__group {
+  transform-origin: 400px 400px;
+  animation: sacredDriftTorus 280s linear infinite;
+}
+.sacred-field[data-pattern="torus-field"] {
+  animation: sacredBreatheTorus 5s ease-in-out infinite alternate;
+}
+
+/* Tree of Life — slow, rooted, steady clockwise */
+.sacred-field[data-pattern="tree-of-life"] .sacred-geometry__group {
+  transform-origin: 400px 400px;
+  animation: sacredDriftTree 450s linear infinite;
+}
+.sacred-field[data-pattern="tree-of-life"] {
+  animation: sacredBreatheTree 10s ease-in-out infinite alternate;
+}
+
+/* Vesica Wave — flowing, counter-clockwise drift */
+.sacred-field[data-pattern="vesica-wave"] .sacred-geometry__group {
+  transform-origin: 400px 400px;
+  animation: sacredDriftWave 320s linear infinite reverse;
+}
+.sacred-field[data-pattern="vesica-wave"] {
+  animation: sacredBreatheWave 6s ease-in-out infinite alternate;
+}
+
+/* Phyllotaxis Field — organic, golden-ratio, very slow clockwise */
+.sacred-field[data-pattern="phyllotaxis-field"] .sacred-geometry__group {
+  transform-origin: 400px 400px;
+  animation: sacredDriftPhyllotaxis 360s linear infinite;
+}
+.sacred-field[data-pattern="phyllotaxis-field"] {
+  animation: sacredBreathePhyllotaxis 8s ease-in-out infinite alternate;
+}
+
+@keyframes sacredDriftMetatron {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+@keyframes sacredDriftYantra {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+@keyframes sacredDriftTorus {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+@keyframes sacredDriftTree {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+@keyframes sacredDriftWave {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+@keyframes sacredBreatheMetatron {
+  0%   { opacity: 0.3; }
+  50%  { opacity: 0.55; }
+  100% { opacity: 0.4; }
+}
+@keyframes sacredBreatheYantra {
+  0%   { opacity: 0.25; }
+  50%  { opacity: 0.45; }
+  100% { opacity: 0.35; }
+}
+@keyframes sacredBreatheTorus {
+  0%   { opacity: 0.35; }
+  50%  { opacity: 0.7; }
+  100% { opacity: 0.5; }
+}
+@keyframes sacredBreatheTree {
+  0%   { opacity: 0.3; }
+  50%  { opacity: 0.5; }
+  100% { opacity: 0.4; }
+}
+@keyframes sacredBreatheWave {
+  0%   { opacity: 0.3; }
+  50%  { opacity: 0.6; }
+  100% { opacity: 0.45; }
+}
+@keyframes sacredDriftPhyllotaxis {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+@keyframes sacredBreathePhyllotaxis {
+  0%   { opacity: 0.25; }
+  50%  { opacity: 0.5; }
+  100% { opacity: 0.4; }
+}
+
+/* Respect reduced motion — static faint geometry */
+@media (prefers-reduced-motion: reduce) {
+  .sacred-field__grid,
+  .sacred-field,
+  .sacred-field > svg,
+  .sacred-geometry__group {
+    animation: none !important;
+  }
+  .sacred-field { opacity: 0.25; }
+  .sacred-field__svg { opacity: 0.25; }
+}
+
+/* Header symbol sizing tokens */
+:root {
+  --header-symbol-size: 540px;
+  --header-symbol-half: 270px;
+}
+
+@media (max-width: 640px) {
+  :root {
+    --header-symbol-size: 320px;
+    --header-symbol-half: 160px;
+  }
+}
+
+/* Flower of Life behind header — positioned just above the title */
+.app-header--custom-geo::before {
+  display: none !important;
+}
+
+.app-header::before {
+  content: '';
+  position: absolute;
+  top: -130px;
+  left: 0;
+  width: var(--header-symbol-size);
+  height: var(--header-symbol-size);
+  margin-left: calc(50% - var(--header-symbol-half));
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Cdefs%3E%3ClinearGradient id='folGrad' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%23d4af37;stop-opacity:0.15'/%3E%3Cstop offset='50%25' style='stop-color:%23d4af37;stop-opacity:0.08'/%3E%3Cstop offset='100%25' style='stop-color:%23d4af37;stop-opacity:0.15'/%3E%3C/linearGradient%3E%3C/defs%3E%3Cg fill='none' stroke='url(%23folGrad)' stroke-width='0.8'%3E%3Ccircle cx='100' cy='100' r='30'/%3E%3Ccircle cx='100' cy='70' r='30'/%3E%3Ccircle cx='100' cy='130' r='30'/%3E%3Ccircle cx='74' cy='85' r='30'/%3E%3Ccircle cx='126' cy='85' r='30'/%3E%3Ccircle cx='74' cy='115' r='30'/%3E%3Ccircle cx='126' cy='115' r='30'/%3E%3Ccircle cx='100' cy='40' r='30'/%3E%3Ccircle cx='100' cy='160' r='30'/%3E%3Ccircle cx='48' cy='70' r='30'/%3E%3Ccircle cx='152' cy='70' r='30'/%3E%3Ccircle cx='48' cy='130' r='30'/%3E%3Ccircle cx='152' cy='130' r='30'/%3E%3Ccircle cx='48' cy='100' r='30'/%3E%3Ccircle cx='152' cy='100' r='30'/%3E%3C/g%3E%3C/svg%3E");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  opacity: 0.5;
+  pointer-events: none;
+  animation:
+    folPulse 8s ease-in-out infinite,
+    headerFigure8SpinBefore 16s linear infinite;
+}
+
+@keyframes folPulse {
+  0%, 100% { opacity: 0.35; scale: 1; }
+  50% { opacity: 0.5; scale: 1.02; }
+}
+
+@keyframes folRotate {
+  from { rotate: 0deg; }
+  to   { rotate: 360deg; }
+}
+
+/* Figure-8 orbital drift + axial spin for header symbols */
+
+/* Horizontal figure-8 in the header area */
+@keyframes headerFigure8 {
+  0%    { margin-left: calc(50% - var(--header-symbol-half)); margin-top: 80px; }
+  12.5% { margin-left: calc(75% - var(--header-symbol-half)); margin-top: -40px; }
+  25%   { margin-left: calc(100% - var(--header-symbol-size)); margin-top: 80px; }
+  37.5% { margin-left: calc(75% - var(--header-symbol-half)); margin-top: 160px; }
+  50%   { margin-left: calc(50% - var(--header-symbol-half)); margin-top: 80px; }
+  62.5% { margin-left: calc(25% - var(--header-symbol-half)); margin-top: -40px; }
+  75%   { margin-left: 0px; margin-top: 80px; }
+  87.5% { margin-left: calc(25% - var(--header-symbol-half)); margin-top: 160px; }
+  100%  { margin-left: calc(50% - var(--header-symbol-half)); margin-top: 80px; }
+}
+
+/* Independent axial spin for the inner symbol */
+@keyframes headerSpin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+/* Combined path + spin for ::before pseudo-element */
+@keyframes headerFigure8SpinBefore {
+  0%    { margin-left: calc(50% - var(--header-symbol-half)); margin-top: 80px; rotate: 0deg; }
+  12.5% { margin-left: calc(75% - var(--header-symbol-half)); margin-top: -40px; rotate: 90deg; }
+  25%   { margin-left: calc(100% - var(--header-symbol-size)); margin-top: 80px; rotate: 180deg; }
+  37.5% { margin-left: calc(75% - var(--header-symbol-half)); margin-top: 160px; rotate: 270deg; }
+  50%   { margin-left: calc(50% - var(--header-symbol-half)); margin-top: 80px; rotate: 360deg; }
+  62.5% { margin-left: calc(25% - var(--header-symbol-half)); margin-top: -40px; rotate: 450deg; }
+  75%   { margin-left: 0px; margin-top: 80px; rotate: 540deg; }
+  87.5% { margin-left: calc(25% - var(--header-symbol-half)); margin-top: 160px; rotate: 630deg; }
+  100%  { margin-left: calc(50% - var(--header-symbol-half)); margin-top: 80px; rotate: 720deg; }
+}
+
+
+
+/* Sacred Header — for non-default geometry patterns */
+.sacred-header {
+  position: absolute;
+  top: -130px;
+  left: 0;
+  width: 100%;
+  height: 750px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.sacred-header__motion {
+  width: var(--header-symbol-size);
+  height: var(--header-symbol-size);
+  margin-left: calc(50% - var(--header-symbol-half));
+  opacity: 0.5;
+  animation:
+    folPulse 8s ease-in-out infinite,
+    headerFigure8 16s linear infinite;
+}
+
+.sacred-header__motion > svg {
+  width: 100%;
+  height: 100%;
+  animation: headerSpin 20s linear infinite;
+  will-change: transform;
 }
 
 /* ==========================================================================
@@ -253,30 +560,6 @@ optgroup {
   text-align: center;
   margin-bottom: var(--space-8);
   position: relative;
-}
-
-/* Flower of Life behind header - positioned just above sign in */
-.app-header::before {
-  content: '';
-  position: absolute;
-  top: -130px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 300px;
-  height: 300px;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Cdefs%3E%3ClinearGradient id='folGrad' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%23d4af37;stop-opacity:0.15'/%3E%3Cstop offset='50%25' style='stop-color:%23d4af37;stop-opacity:0.08'/%3E%3Cstop offset='100%25' style='stop-color:%23d4af37;stop-opacity:0.15'/%3E%3C/linearGradient%3E%3C/defs%3E%3Cg fill='none' stroke='url(%23folGrad)' stroke-width='0.8'%3E%3Ccircle cx='100' cy='100' r='30'/%3E%3Ccircle cx='100' cy='70' r='30'/%3E%3Ccircle cx='100' cy='130' r='30'/%3E%3Ccircle cx='74' cy='85' r='30'/%3E%3Ccircle cx='126' cy='85' r='30'/%3E%3Ccircle cx='74' cy='115' r='30'/%3E%3Ccircle cx='126' cy='115' r='30'/%3E%3Ccircle cx='100' cy='40' r='30'/%3E%3Ccircle cx='100' cy='160' r='30'/%3E%3Ccircle cx='48' cy='70' r='30'/%3E%3Ccircle cx='152' cy='70' r='30'/%3E%3Ccircle cx='48' cy='130' r='30'/%3E%3Ccircle cx='152' cy='130' r='30'/%3E%3Ccircle cx='48' cy='100' r='30'/%3E%3Ccircle cx='152' cy='100' r='30'/%3E%3C/g%3E%3C/svg%3E");
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: center;
-  opacity: 0.5;
-  pointer-events: none;
-  z-index: -1;
-  animation: folPulse 8s ease-in-out infinite;
-}
-
-@keyframes folPulse {
-  0%, 100% { opacity: 0.35; transform: translateX(-50%) scale(1); }
-  50% { opacity: 0.5; transform: translateX(-50%) scale(1.02); }
 }
 
 /* Line above heading - sits at the very top of header */
@@ -570,8 +853,8 @@ optgroup {
 }
 
 .settings-modal__close {
-  width: 32px;
-  height: 32px;
+  width: 48px;
+  height: 48px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -701,6 +984,58 @@ optgroup {
 }
 
 .error-banner button:hover {
+  opacity: 1;
+}
+
+/* ==========================================================================
+   Warning Banner (Exact Alarm / Battery Optimization)
+   ========================================================================== */
+
+.warning-banner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: linear-gradient(90deg, rgba(245, 158, 11, 0.12) 0%, rgba(245, 158, 11, 0.05) 100%);
+  border: 1px solid rgba(245, 158, 11, 0.35);
+  border-radius: var(--radius-md);
+  padding: var(--space-3) var(--space-4);
+  margin-bottom: var(--space-5);
+  color: #f59e0b;
+  font-size: var(--text-sm);
+}
+
+.warning-banner__action {
+  font-size: var(--text-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-weight: 600;
+  color: #f59e0b;
+  background: rgba(245, 158, 11, 0.15);
+  border: 1px solid rgba(245, 158, 11, 0.3);
+  border-radius: var(--radius-sm);
+  padding: 4px 10px;
+  cursor: pointer;
+  transition: background var(--transition-fast), opacity var(--transition-fast);
+}
+
+.warning-banner__action:hover {
+  background: rgba(245, 158, 11, 0.25);
+}
+
+.warning-banner__dismiss {
+  font-size: var(--text-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-weight: 600;
+  color: rgba(245, 158, 11, 0.7);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  opacity: 0.7;
+  transition: opacity var(--transition-fast);
+}
+
+.warning-banner__dismiss:hover {
   opacity: 1;
 }
 
@@ -1966,6 +2301,79 @@ optgroup {
   color: var(--color-gold);
   font-weight: 600;
   margin-left: auto;
+}
+
+/* Geometry Grid — For Header Symbol + Background Pattern */
+.geometry-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-3);
+}
+
+@media (max-width: 768px) {
+  .geometry-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  .geometry-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.geometry-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-3);
+  background: linear-gradient(145deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.02) 100%);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  text-align: center;
+}
+
+.geometry-card:hover {
+  border-color: var(--color-border-hover);
+  background: rgba(255,255,255,0.06);
+}
+
+.geometry-card--active {
+  border-color: var(--color-gold);
+  box-shadow: 0 0 0 2px var(--color-gold-glow);
+}
+
+.geometry-card__preview {
+  width: 64px;
+  height: 64px;
+  border-radius: var(--radius-sm);
+  background: rgba(0,0,0,0.4);
+  overflow: hidden;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.geometry-card__preview > svg {
+  width: 100%;
+  height: 100%;
+}
+
+.geometry-card__name {
+  font-weight: 500;
+  color: var(--color-text);
+  font-size: var(--text-xs);
+  line-height: 1.3;
+}
+
+.geometry-card__check {
+  color: var(--color-gold);
+  font-weight: 600;
+  font-size: var(--text-xs);
 }
 
 /* ==========================================================================

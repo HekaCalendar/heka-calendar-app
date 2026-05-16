@@ -39,8 +39,6 @@ import { evaluateAndProtectStreak } from './streakProtectionService';
 
 function getUserId(): string | null {
   const firebaseUid = getCurrentUser()?.uid || null;
-  const reduxUid = store.getState().calendar.auth.userId || null;
-  console.log('[plannerService/getUserId] firebaseUid:', firebaseUid, 'reduxUid:', reduxUid, 'reduxAuthenticated:', store.getState().calendar.auth.isAuthenticated);
   return firebaseUid;
 }
 
@@ -252,37 +250,27 @@ export async function createPlannerTask(input: CreateTaskInput): Promise<Planner
   };
 
   // Optimistic Redux update FIRST so the UI always shows the task immediately
-  console.log('[createPlannerTask] Dispatching addPlannerTask — task.id:', task.id, 'dayKey:', task.dayKey);
   store.dispatch(addPlannerTask(task));
-  console.log('[createPlannerTask] addPlannerTask dispatched');
 
   // Then attempt Firestore write
-  console.log('[createPlannerTask] Writing to Firestore — task.dayKey:', task.dayKey);
   let firestoreSuccess = false;
   try {
     await setDoc(taskRef, stripUndefined(task));
-    console.log('[createPlannerTask] Firestore write complete');
     firestoreSuccess = true;
   } catch (writeErr: any) {
     const isPermissionError = writeErr?.code === 'permission-denied' || writeErr?.message?.includes('Missing or insufficient permissions');
     console.error('[createPlannerTask] Firestore write failed:', writeErr?.code, writeErr?.message, 'isPermissionError:', isPermissionError);
     if (isPermissionError) {
-      console.log('[createPlannerTask] Attempting auth token refresh...');
       const newToken = await refreshAuthToken(true);
-      console.log('[createPlannerTask] Token refresh result:', newToken ? 'success' : 'failed');
       if (newToken && auth?.currentUser) {
         try {
           await auth.currentUser.reload();
-          console.log('[createPlannerTask] User reloaded, waiting for token propagation...');
           await new Promise((resolve) => setTimeout(resolve, 800));
 
           // Create a completely fresh Firestore instance via temporary app to avoid stale auth connection
-          console.log('[createPlannerTask] Creating fresh Firestore instance for retry...');
           await withTemporaryFirestore(async (tempDb) => {
             const retryRef = doc(tempDb, 'users', uid, 'plannerTasks', taskRef.id);
-            console.log('[createPlannerTask] Retrying Firestore write with fresh instance...');
             await setDoc(retryRef, stripUndefined(task));
-            console.log('[createPlannerTask] Firestore retry write complete');
           });
           firestoreSuccess = true;
         } catch (retryErr: any) {

@@ -4,6 +4,7 @@
  */
 
 import { useState, useRef, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { getSeasonalEventInfo, getChineseZodiac, type CelestialEventInfo, type ZodiacInfo } from '../services/celestialInfoService';
 
 interface CelestialInfoTooltipProps {
@@ -17,6 +18,7 @@ export const CelestialInfoTooltip: React.FC<CelestialInfoTooltipProps> = ({
   children,
   position = 'top'
 }) => {
+  const { t } = useTranslation('celestial');
   const [isVisible, setIsVisible] = useState(false);
   const [info, setInfo] = useState<CelestialEventInfo | null>(null);
   const timeoutRef = useRef<NodeJS.Timeout>();
@@ -70,23 +72,23 @@ export const CelestialInfoTooltip: React.FC<CelestialInfoTooltipProps> = ({
           </div>
           
           <div className="celestial-tooltip__section">
-            <h4>What is it?</h4>
+            <h4>{t('whatIsIt')}</h4>
             <p>{info.description}</p>
           </div>
           
           <div className="celestial-tooltip__section">
-            <h4>Significance</h4>
+            <h4>{t('significance')}</h4>
             <p>{info.significance}</p>
           </div>
           
           <div className="celestial-tooltip__section">
-            <h4>How to Observe</h4>
+            <h4>{t('howToObserve')}</h4>
             <p>{info.observance}</p>
           </div>
           
           {info.traditions.length > 0 && (
             <div className="celestial-tooltip__section">
-              <h4>Traditions</h4>
+              <h4>{t('traditions')}</h4>
               <ul>
                 {info.traditions.slice(0, 3).map((tradition, i) => (
                   <li key={i}>{tradition}</li>
@@ -106,6 +108,7 @@ interface ZodiacCardProps {
 }
 
 export const ZodiacCard: React.FC<ZodiacCardProps> = ({ zodiac }) => {
+  const { t } = useTranslation('celestial');
   const [showDetails, setShowDetails] = useState(false);
 
   return (
@@ -128,7 +131,7 @@ export const ZodiacCard: React.FC<ZodiacCardProps> = ({ zodiac }) => {
         <div className="zodiac-card__details">
           <p className="zodiac-card__description">{zodiac.description}</p>
           <div className="zodiac-card__traits">
-            <span className="zodiac-card__label">Traits:</span>
+            <span className="zodiac-card__label">{t('traits')}:</span>
             {zodiac.traits.map((trait, i) => (
               <span key={i} className="zodiac-card__trait">{trait}</span>
             ))}
@@ -145,6 +148,7 @@ interface ChineseZodiacCardProps {
 }
 
 export const ChineseZodiacCard: React.FC<ChineseZodiacCardProps> = ({ year = new Date().getFullYear() }) => {
+  const { t } = useTranslation('celestial');
   const [showDetails, setShowDetails] = useState(false);
   const zodiac = getChineseZodiac(year);
 
@@ -152,7 +156,7 @@ export const ChineseZodiacCard: React.FC<ChineseZodiacCardProps> = ({ year = new
     <div className="chinese-zodiac-card">
       <div className="chinese-zodiac-card__header" onClick={() => setShowDetails(!showDetails)}>
         <span className="chinese-zodiac-card__animal">{zodiac.animal}</span>
-        <span className="chinese-zodiac-card__year">Year of the {zodiac.animal}</span>
+        <span className="chinese-zodiac-card__year">{t('yearOfThe')} {zodiac.animal}</span>
         <div className="chinese-zodiac-card__meta">
           <span className="chinese-zodiac-card__element">{zodiac.element}</span>
           <span className="chinese-zodiac-card__yinyang">{zodiac.yinYang}</span>
@@ -163,11 +167,11 @@ export const ChineseZodiacCard: React.FC<ChineseZodiacCardProps> = ({ year = new
         <div className="chinese-zodiac-card__details">
           <p className="chinese-zodiac-card__description">{zodiac.description}</p>
           <div className="chinese-zodiac-card__characteristics">
-            <strong>Characteristics:</strong> {zodiac.characteristics.join(', ')}
+            <strong>{t('characteristics')}:</strong> {zodiac.characteristics.join(', ')}
           </div>
           <div className="chinese-zodiac-card__lucky">
-            <span>Lucky numbers: {zodiac.luckyNumbers.join(', ')}</span>
-            <span>Lucky colors: {zodiac.luckyColors.join(', ')}</span>
+            <span>{t('luckyNumbers')}: {zodiac.luckyNumbers.join(', ')}</span>
+            <span>{t('luckyColors')}: {zodiac.luckyColors.join(', ')}</span>
           </div>
         </div>
       )}

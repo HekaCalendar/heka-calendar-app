@@ -5,7 +5,7 @@
 
 import type { PayloadAction } from '@reduxjs/toolkit';
 import type { CalendarState, TimeMode } from '../../../types';
-import type { ThemeId, FontId } from '../../../types/themes';
+import type { ThemeId, FontId, GeometryPattern, BackgroundGeometryPattern } from '../../../types/themes';
 import type { CountryCode } from '../../../types';
 import { getTodayHekaDate, getTodayHekaDateInTimezone } from '../../../services/calendarService';
 import { SUB_REGIONS } from '../../../types';
@@ -16,6 +16,14 @@ export const setTheme = (state: CalendarState, action: PayloadAction<ThemeId>) =
 
 export const setFont = (state: CalendarState, action: PayloadAction<FontId>) => {
   state.font = action.payload;
+};
+
+export const setHeaderGeometry = (state: CalendarState, action: PayloadAction<GeometryPattern>) => {
+  state.headerGeometry = action.payload;
+};
+
+export const setBackgroundGeometry = (state: CalendarState, action: PayloadAction<BackgroundGeometryPattern>) => {
+  state.backgroundGeometry = action.payload;
 };
 
 export const setLocation = (state: CalendarState, action: PayloadAction<CountryCode>) => {

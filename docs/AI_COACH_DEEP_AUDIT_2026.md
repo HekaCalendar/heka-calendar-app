@@ -2,7 +2,7 @@
 **Date:** 2026-04-17  
 **Scope:** `CalendarAICoach.tsx`, Redux store/data flow, AI services layer, `src/oracle/` ecosystem  
 **Method:** Four parallel agents, line-by-line reading, cross-referencing, runtime behavior analysis  
-**Previous Audit:** `AI_COACH_AUDIT_2026.md` (surface-level, missed 30+ critical issues)
+**Previous Audit:** Surface-level audit (archived and superseded by this report)
 
 ---
 

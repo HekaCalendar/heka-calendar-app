@@ -15,6 +15,7 @@ import { useDispatch } from 'react-redux';
 import { SUPPORTED_LANGUAGES, getWizardStrings } from '../../data/languages';
 import type { Language } from '../../data/languages';
 import { setLanguage } from '../../store/setupSlice';
+import { changeLanguage } from '../../i18n';
 
 interface LanguageSelectorProps {
   selectedLanguage: string;
@@ -97,6 +98,7 @@ export const LanguageSelector: React.FC<LanguageSelectorProps> = ({
   const handleSelect = useCallback(
     (lang: Language) => {
       dispatch(setLanguage(lang.code));
+      changeLanguage(lang.code);
       setIsListOpen(false);
       setSearch('');
     },
@@ -163,6 +165,7 @@ export const LanguageSelector: React.FC<LanguageSelectorProps> = ({
 
   return (
     <div className={`setup-step setup-step--language ${!isListOpen ? 'setup-step--language-selected' : ''}`} onKeyDown={handleKeyDown} tabIndex={-1}>
+      <div className="sw-ornament" />
       {/* ═══ Monumental Language Preview ═══ */}
       <div
         className={`language-preview ${!isListOpen ? 'language-preview--expanded' : ''}`}

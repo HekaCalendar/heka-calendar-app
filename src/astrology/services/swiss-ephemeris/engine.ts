@@ -242,7 +242,6 @@ async function loadWASM(): Promise<boolean> {
             if (mod && (mod._swe_julday || (mod.asm && mod.asm._swe_julday))) {
               try {
                 swissModule = wrapModule(mod);
-                console.log('[SwissEphemeris] WASM initialized successfully');
                 resolve(true);
               } catch (err) {
                 console.warn('[SwissEphemeris] wrapModule failed:', err);
@@ -265,7 +264,6 @@ async function loadWASM(): Promise<boolean> {
               resolved = true;
               try {
                 swissModule = wrapModule(mod);
-                console.log('[SwissEphemeris] WASM initialized via Promise');
                 resolve(true);
               } catch (err) {
                 console.warn('[SwissEphemeris] wrapModule failed on Promise:', err);
@@ -441,12 +439,44 @@ function wrapModule(Module: any): any {
       if (fn) return fn(jd);
       return mockSidtime(jd);
     },
-    rise_trans: (jd: number, p: number, st: string, f: number, r: number, lat: number, lon: number, a: number, pr: number, t: number) => {
+    rise_trans: (jd: number, p: number, _st: string, f: number, r: number, lat: number, lon: number, a: number, pr: number, t: number) => {
       const fn = funcs['_swe_rise_trans'];
-      if (fn) {
-        try { return fn(jd, p, st, f, r, lat, lon, a, pr, t); } catch {}
+      const mallocFn = funcs['_malloc'];
+      const freeFn = funcs['_free'];
+      if (!fn || !mallocFn || !freeFn || !Module.HEAPF64) {
+        return mockRiseTrans();
       }
-      return mockRiseTrans();
+      try {
+        // Allocate: geopos[3], tret[6], serr[256], starname
+        const geoposPtr = mallocFn(3 * 8);
+        const tretPtr = mallocFn(6 * 8);
+        const serrPtr = mallocFn(256);
+        const starPtr = mallocFn(1);
+        // Write geopos: longitude, latitude, altitude
+        const geoposArr = new Float64Array(Module.HEAPF64.buffer, geoposPtr, 3);
+        geoposArr[0] = lon;
+        geoposArr[1] = lat;
+        geoposArr[2] = a;
+        // Write empty starname
+        Module.HEAP8[starPtr] = 0;
+        // Call SE rise_trans
+        const ret = fn(jd, p, starPtr, f, r, geoposPtr, pr, t, tretPtr, serrPtr);
+        const tretArr = new Float64Array(Module.HEAPF64.buffer, tretPtr, 6);
+        const result: any = { rise: null, transit: null, set: null, error: ret !== 0 ? ret : null };
+        if (ret === 0) {
+          // tret[0]=rise, tret[1]=transit, tret[2]=set, tret[3]=upper_culm, tret[4]=lower_culm, tret[5]=opposition
+          if (tretArr[0] && tretArr[0] !== 0) result.rise = tretArr[0];
+          if (tretArr[1] && tretArr[1] !== 0) result.transit = tretArr[1];
+          if (tretArr[2] && tretArr[2] !== 0) result.set = tretArr[2];
+        }
+        freeFn(geoposPtr);
+        freeFn(tretPtr);
+        freeFn(serrPtr);
+        freeFn(starPtr);
+        return result;
+      } catch {
+        return mockRiseTrans();
+      }
     },
   };
 }
@@ -623,11 +653,8 @@ export async function calculateSunrise(d: Date, lat: number, lon: number): Promi
     const jd = calculateJulianDay(d.getUTCFullYear(), d.getUTCMonth() + 1, d.getUTCDate(), 0, 0, 0);
     const r = calculateRiseTransitSet(jd, SE_SUN, lat, lon);
     if (r.rise) {
-      const totalHours = (r.rise - Math.floor(r.rise)) * 24;
-      const h = Math.floor(totalHours);
-      const m = Math.floor((totalHours % 1) * 60);
-      // Return true UTC Date so downstream can convert to location timezone
-      return new Date(Date.UTC(d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDate(), h, m, 0));
+      // Convert Julian Day directly to Unix timestamp (JD 2440587.5 = Unix epoch)
+      return new Date((r.rise - 2440587.5) * 86400000);
     }
   } catch {}
   return null;
@@ -638,11 +665,8 @@ export async function calculateSunset(d: Date, lat: number, lon: number): Promis
     const jd = calculateJulianDay(d.getUTCFullYear(), d.getUTCMonth() + 1, d.getUTCDate(), 0, 0, 0);
     const r = calculateRiseTransitSet(jd, SE_SUN, lat, lon);
     if (r.set) {
-      const totalHours = (r.set - Math.floor(r.set)) * 24;
-      const h = Math.floor(totalHours);
-      const m = Math.floor((totalHours % 1) * 60);
-      // Return true UTC Date so downstream can convert to location timezone
-      return new Date(Date.UTC(d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDate(), h, m, 0));
+      // Convert Julian Day directly to Unix timestamp (JD 2440587.5 = Unix epoch)
+      return new Date((r.set - 2440587.5) * 86400000);
     }
   } catch {}
   return null;

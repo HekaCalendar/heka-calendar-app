@@ -5,10 +5,11 @@
 
 import { useSelector, useDispatch } from 'react-redux';
 import { memo, useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
 import type { RootState } from '../store';
 import { navigateToMonth, setPrintMode, navigateToPrevYear, navigateToNextYear, setView } from '../store';
 import { HEKA_MONTHS, getCivilStartOfHekaMonth, getDaysInMonth } from '../services/calendarService';
-import { ARC_NAMES, HekaMonthIndex } from '../types';
+import { HekaMonthIndex } from '../types';
 
 interface YearModalProps {
   isOpen: boolean;
@@ -16,6 +17,7 @@ interface YearModalProps {
 }
 
 export const YearModal: React.FC<YearModalProps> = ({ isOpen, onClose }) => {
+  const { t } = useTranslation('calendar');
   const dispatch = useDispatch();
   const viewDate = useSelector((state: RootState) => state.calendar.viewDate);
   
@@ -44,12 +46,12 @@ export const YearModal: React.FC<YearModalProps> = ({ isOpen, onClose }) => {
       <div className="modal year-modal">
         <div className="modal__header year-modal__header">
           <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-            <button className="btn" onClick={handlePrevYear} aria-label="Previous year">
-              ← Prev
+            <button className="btn" onClick={handlePrevYear} aria-label={t('prev')}>
+              ← {t('prev')}
             </button>
-            <h2 className="modal__title">HEKA Year {viewDate.year}–{viewDate.year + 1}</h2>
-            <button className="btn" onClick={handleNextYear} aria-label="Next year">
-              Next →
+            <h2 className="modal__title">{t('hekaYear', { year: `${viewDate.year}–${viewDate.year + 1}` })}</h2>
+            <button className="btn" onClick={handleNextYear} aria-label={t('next')}>
+              {t('next')} →
             </button>
           </div>
           <div style={{ display: 'flex', gap: '0.5rem' }}>
@@ -57,10 +59,10 @@ export const YearModal: React.FC<YearModalProps> = ({ isOpen, onClose }) => {
               className="btn btn--primary" 
               onClick={handlePrintYear}
             >
-              Print Year
+              {t('printYear')}
             </button>
             <button className="btn" onClick={onClose}>
-              Close
+              {t('close')}
             </button>
           </div>
         </div>
@@ -88,6 +90,7 @@ interface MiniCalendarProps {
 
 // Memoized MiniCalendar for performance
 const MiniCalendar: React.FC<MiniCalendarProps> = memo(({ year, monthIndex, onClick }) => {
+  const { t } = useTranslation('calendar');
   const monthInfo = HEKA_MONTHS[monthIndex];
   
   // Memoize expensive calculations
@@ -106,7 +109,7 @@ const MiniCalendar: React.FC<MiniCalendarProps> = memo(({ year, monthIndex, onCl
     
     return {
       days: daysArray,
-      arcLabel: ARC_NAMES[monthInfo.arc],
+      arcLabel: t(`arcs.${monthInfo.arc.toLowerCase()}`),
     };
   }, [year, monthIndex, monthInfo.arc]);
   
@@ -114,15 +117,15 @@ const MiniCalendar: React.FC<MiniCalendarProps> = memo(({ year, monthIndex, onCl
   const dayHeaders = useMemo(() => ['S','S','M','T','W','T','F'], []);
   
   return (
-    <div className={`mini-calendar mini-calendar--${monthInfo.arc.toLowerCase()}`} onClick={onClick} role="button" tabIndex={0}>
+    <div className={`mini-calendar mini-calendar--${monthInfo.arc.toLowerCase()}`} onClick={onClick} role="button" tabIndex={0} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onClick(); } }}>
       <div className="mini-calendar__header">
-        <span className="mini-calendar__name">{monthInfo.name}</span>
+        <span className="mini-calendar__name">{t(`months.${monthIndex}`)}</span>
         <span className={`mini-calendar__arc mini-calendar__arc--${monthInfo.arc.toLowerCase()}`}>
           {arcLabel}
         </span>
       </div>
       <div className="mini-calendar__hint">
-        {monthInfo.civilHint}
+        {t(`monthShort.${monthIndex}`)}
       </div>
       
       <div className="mini-calendar__grid">

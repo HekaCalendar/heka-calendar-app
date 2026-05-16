@@ -121,12 +121,12 @@ export function initializeDeepLinks(
     });
 
     // Also check if app was opened with a URL initially
-    void App.getLaunchUrl().then((result) => {
+    App.getLaunchUrl().then((result) => {
       if (result?.url) {
         console.log('[DeepLink] Launch URL:', result.url);
         handleAppUrl(result.url);
       }
-    });
+    }).catch(() => {});
 
     return () => {
       void listenerPromise.then((listener: { remove: () => void }) => listener.remove());

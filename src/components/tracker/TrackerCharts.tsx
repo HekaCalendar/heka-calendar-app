@@ -5,6 +5,7 @@
  */
 
 import { useMemo } from 'react';
+import i18n from '../../i18n';
 import {
   AreaChart,
   Area,
@@ -45,7 +46,7 @@ export const CycleLengthChart: React.FC = () => {
         cycleData.push({
           cycle: i,
           length: days,
-          date: curr.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }),
+          date: new Intl.DateTimeFormat(i18n.language || 'en', { month: 'short', day: 'numeric' }).format(curr),
         });
       }
     }
@@ -179,7 +180,7 @@ export const MoodTrendChart: React.FC = () => {
       .slice(-30);
     
     return entries.map(entry => ({
-      date: new Date(entry.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' }),
+      date: new Intl.DateTimeFormat(i18n.language || 'en', { month: 'short', day: 'numeric' }).format(new Date(entry.date)),
       rating: (entry.data as any).rating,
       cycleDay: TrackerManager.getFertilityStatus(entry.date).dayOfCycle,
     }));

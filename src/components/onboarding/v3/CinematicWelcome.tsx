@@ -5,6 +5,7 @@
  */
 
 import React, { useEffect, useState, useMemo, useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 
 interface CinematicWelcomeProps {
   onBegin: () => void;
@@ -41,6 +42,7 @@ interface ShootingStar {
 export const CinematicWelcome: React.FC<CinematicWelcomeProps> = ({ onBegin, onSkip, strings }) => {
   const [phase, setPhase] = useState<'stars' | 'logo' | 'tagline' | 'grid' | 'ready'>('stars');
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const { t } = useTranslation('common');
   const starsRef = useRef<Star[]>([]);
   const shootingStarsRef = useRef<ShootingStar[]>([]);
   const mouseRef = useRef({ x: 0, y: 0 });
@@ -228,19 +230,19 @@ export const CinematicWelcome: React.FC<CinematicWelcomeProps> = ({ onBegin, onS
   }, []);
 
   const months = useMemo(() => [
-    { name: 'Apr', arc: 'opening' as const },
-    { name: 'May', arc: 'core' as const },
-    { name: 'Jun', arc: 'core' as const },
-    { name: 'Jul', arc: 'core' as const },
-    { name: 'Aug', arc: 'core' as const },
-    { name: 'Hex', arc: 'core' as const },
-    { name: 'Sep', arc: 'core' as const },
-    { name: 'Oct', arc: 'core' as const },
-    { name: 'Nov', arc: 'core' as const },
-    { name: 'Dec', arc: 'core' as const },
-    { name: 'Jan', arc: 'closing' as const },
-    { name: 'Feb', arc: 'closing' as const },
-    { name: 'Mar', arc: 'closing' as const },
+    { key: 'apr', arc: 'opening' as const },
+    { key: 'may', arc: 'core' as const },
+    { key: 'jun', arc: 'core' as const },
+    { key: 'jul', arc: 'core' as const },
+    { key: 'aug', arc: 'core' as const },
+    { key: 'hex', arc: 'core' as const },
+    { key: 'sep', arc: 'core' as const },
+    { key: 'oct', arc: 'core' as const },
+    { key: 'nov', arc: 'core' as const },
+    { key: 'dec', arc: 'core' as const },
+    { key: 'jan', arc: 'closing' as const },
+    { key: 'feb', arc: 'closing' as const },
+    { key: 'mar', arc: 'closing' as const },
   ], []);
 
   return (
@@ -303,7 +305,7 @@ export const CinematicWelcome: React.FC<CinematicWelcomeProps> = ({ onBegin, onS
         >
           {months.map((month, i) => (
             <div
-              key={month.name}
+              key={month.key}
               className={`tt-welcome__grid-cell tt-welcome__grid-cell--${month.arc}`}
               style={{
                 opacity: phase === 'grid' || phase === 'ready' ? 1 : 0,
@@ -311,7 +313,7 @@ export const CinematicWelcome: React.FC<CinematicWelcomeProps> = ({ onBegin, onS
                 transition: `opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1) ${i * 80}ms, transform 0.6s cubic-bezier(0.22, 1, 0.36, 1) ${i * 80}ms`,
               }}
             >
-              {month.name}
+              {t(`months.${month.key}`)}
             </div>
           ))}
         </div>

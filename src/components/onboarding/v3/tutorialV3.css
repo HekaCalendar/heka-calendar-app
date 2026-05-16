@@ -4,6 +4,9 @@
  * ═══════════════════════════════════════════════════════════════════════════════
  */
 
+/* ─── Font imports for theme showcase ─── */
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700&family=Rajdhani:wght@400;500;600;700&family=EB+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Nunito:wght@400;500;600;700&family=Cousine:wght@400;700&family=Share+Tech+Mono&display=swap');
+
 /* ─── CSS Variables ─── */
 :root {
   --tt-bg-primary: linear-gradient(145deg, rgba(22, 22, 32, 0.97) 0%, rgba(14, 14, 22, 0.99) 100%);
@@ -586,6 +589,16 @@
   color: #a89bc8;
 }
 
+@keyframes sg-showcase-breathe {
+  0%, 100% { transform: translate(-50%, -50%) scale(1); box-shadow: 0 0 30px rgba(201, 162, 39, 0.08); }
+  50% { transform: translate(-50%, -50%) scale(1.05); box-shadow: 0 0 45px rgba(201, 162, 39, 0.18); }
+}
+
+@keyframes cc-shimmer-sweep {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
 /* ─── Reduced Motion ─── */
 @media (prefers-reduced-motion: reduce) {
   .tt-tooltip--entering,
@@ -611,6 +624,78 @@
   }
   .tt-gallery__grid {
     grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* ─── Circle Showcase Animations ─── */
+@keyframes circle-online-pulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.4); opacity: 0.6; }
+}
+
+/* ─── Assembly Showcase Animations ─── */
+@keyframes assembly-orb-breathe {
+  0%, 100% { transform: scale(1); opacity: 0.6; }
+  50% { transform: scale(1.15); opacity: 1; }
+}
+
+@keyframes assembly-orb-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes assembly-pulse-dot {
+  0%, 100% { box-shadow: 0 0 4px currentColor; opacity: 0.8; }
+  50% { box-shadow: 0 0 10px currentColor; opacity: 1; }
+}
+
+@keyframes assembly-particle-orbit {
+  from { transform: rotate(0deg) translateX(46px) rotate(0deg); }
+  to { transform: rotate(360deg) translateX(46px) rotate(-360deg); }
+}
+
+/* ─── Pure Mode Showcase Animations ─── */
+@keyframes pure-yinyang-rotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes pure-cell-breathe {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 1; }
+}
+
+/* ─── Tutorial Visual Keyframes ─── */
+@keyframes constellation-draw {
+  from { stroke-dashoffset: 1000; }
+  to { stroke-dashoffset: 0; }
+}
+
+@keyframes card-orbit {
+  from { transform: rotate(0deg) translateX(120px) rotate(0deg); }
+  to { transform: rotate(360deg) translateX(120px) rotate(-360deg); }
+}
+
+@keyframes im-glow-pulse {
+  0%, 100% { box-shadow: 0 0 20px rgba(201, 162, 39, 0.3); }
+  50% { box-shadow: 0 0 40px rgba(201, 162, 39, 0.6); }
+}
+
+@keyframes im-shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+@keyframes im-breathe {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.06); }
+}
+
+/* ─── Reduced Motion ─── */
+@media (prefers-reduced-motion: reduce) {
+  @keyframes card-orbit {
+    from { transform: none; }
+    to { transform: none; }
   }
 }
 

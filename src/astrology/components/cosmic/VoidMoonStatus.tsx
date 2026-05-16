@@ -4,6 +4,7 @@
  */
 
 import React, { useState, useEffect, useMemo } from 'react';
+import i18n from '../../../i18n';
 import './VoidMoon.css';
 import { useVoidMoon, useVoidMoonEvents } from '../../hooks/use-swiss';
 import { VoidMoonEvent } from '../../types';
@@ -24,17 +25,17 @@ function formatDuration(minutes: number): string {
 function formatEventDate(date: Date): { day: string; month: string } {
   return {
     day: date.getDate().toString(),
-    month: date.toLocaleDateString('en-US', { month: 'short' }),
+    month: new Intl.DateTimeFormat(i18n.language || 'en', { month: 'short' }).format(date),
   };
 }
 
 // Format time for display
 function formatEventTime(date: Date): string {
-  return date.toLocaleTimeString('en-US', { 
+  return new Intl.DateTimeFormat(i18n.language || 'en', { 
     hour: 'numeric', 
     minute: '2-digit',
     hour12: true 
-  });
+  }).format(date);
 }
 
 // Get zodiac sign from longitude (uses global zodiac system preference)
@@ -74,7 +75,7 @@ export const VoidMoonStatus: React.FC<VoidMoonStatusProps> = ({
   if (compact) {
     return (
       <div className="sh-card sh-void">
-        <div className="sh-card-title">Void of Course Moon</div>
+        <div className="sh-card-title">Void Moon</div>
         {isLoading ? (
           <div className="sh-void-status">
             <span className="sh-void-icon">🌑</span>
@@ -131,7 +132,7 @@ export const VoidMoonStatus: React.FC<VoidMoonStatusProps> = ({
           {isActive ? '🌑' : '🌕'}
         </div>
         <div className="void-moon-title-group">
-          <h4 className="void-moon-title">Void of Course Moon</h4>
+          <h4 className="void-moon-title">Void Moon</h4>
           <p className="void-moon-subtitle">
             {isActive 
               ? 'Rest, reflect, avoid new beginnings'

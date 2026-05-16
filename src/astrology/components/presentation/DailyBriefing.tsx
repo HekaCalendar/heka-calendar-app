@@ -4,6 +4,7 @@
  */
 
 import React, { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { selectSelectedProfileChart } from '../../store/selectors';
 import { calculateCurrentSky } from '../../services/calculations/swissCalculations';
@@ -32,6 +33,7 @@ interface Transit {
 }
 
 export const DailyBriefing: React.FC = () => {
+  const { t } = useTranslation('celestial');
   const natalChart = useSelector(selectSelectedProfileChart);
   const [transits, setTransits] = useState<Transit[]>([]);
   const [currentPositions, setCurrentPositions] = useState<any>(null);
@@ -69,7 +71,7 @@ export const DailyBriefing: React.FC = () => {
     return (
       <div className="db-loading">
         <div className="db-loading-spinner"></div>
-        <p>Calculating precise positions...</p>
+        <p>{t('daily.loading')}</p>
       </div>
     );
   }
@@ -79,8 +81,8 @@ export const DailyBriefing: React.FC = () => {
     return (
       <div className="daily-briefing">
         <div className="db-universal">
-          <h3>Universal Sky Today</h3>
-          <p>Add a birth chart for personalized transit information.</p>
+          <h3>{t('daily.universalSky')}</h3>
+          <p>{t('daily.addBirthChart')}</p>
           <div className="db-current-positions">
             {currentPositions && ['sun', 'moon', 'mercury', 'venus', 'mars'].map(planet => {
               const body = currentPositions[planet];
@@ -152,16 +154,16 @@ export const DailyBriefing: React.FC = () => {
       {/* Guidance */}
       <div className="db-guidance">
         {rating >= 8 && (
-          <p>✨ Excellent day for important activities. Strong cosmic support.</p>
+          <p>{t('daily.excellent')}</p>
         )}
         {rating >= 6 && rating < 8 && (
-          <p>✓ Good energy today. Favorable for most activities.</p>
+          <p>{t('daily.good')}</p>
         )}
         {rating >= 4 && rating < 6 && (
-          <p>◆ Mixed energies. Proceed with awareness.</p>
+          <p>{t('daily.mixed')}</p>
         )}
         {rating < 4 && (
-          <p>⚠ Challenging day. Focus on self-care and avoid major decisions.</p>
+          <p>{t('daily.challengingDay')}</p>
         )}
       </div>
       
@@ -170,21 +172,21 @@ export const DailyBriefing: React.FC = () => {
         <div className="db-section db-positive">
           <h4 className="db-section-title">
             <span className="db-icon">✓</span>
-            Opportunities ({positive.length})
+            {t('daily.opportunities', { count: positive.length })}
           </h4>
           <div className="db-transits">
-            {positive.map((t, i) => (
+            {positive.map((tr, i) => (
               <div key={i} className="db-transit">
                 <div className="db-t-aspect">
-                  <span className="db-t-symbol">{PLANET_SYMBOLS[t.transitingPlanet]}</span>
-                  <span className="db-t-type">{ASPECT_SYMBOLS[t.aspect.type]}</span>
-                  <span className="db-t-symbol">{PLANET_SYMBOLS[t.natalPlanet]}</span>
+                  <span className="db-t-symbol">{PLANET_SYMBOLS[tr.transitingPlanet]}</span>
+                  <span className="db-t-type">{ASPECT_SYMBOLS[tr.aspect.type]}</span>
+                  <span className="db-t-symbol">{PLANET_SYMBOLS[tr.natalPlanet]}</span>
                 </div>
                 <div className="db-t-info">
                   <div className="db-t-desc">
-                    {PLANET_NAMES[t.transitingPlanet as keyof typeof PLANET_NAMES]} {t.aspect.type} your {PLANET_NAMES[t.natalPlanet as keyof typeof PLANET_NAMES]}
+                    {PLANET_NAMES[tr.transitingPlanet as keyof typeof PLANET_NAMES]} {tr.aspect.type} your {PLANET_NAMES[tr.natalPlanet as keyof typeof PLANET_NAMES]}
                   </div>
-                  <div className="db-t-orb">{t.aspect.orb.toFixed(1)}° orb</div>
+                  <div className="db-t-orb">{t('daily.orb', { orb: tr.aspect.orb.toFixed(1) })}</div>
                 </div>
               </div>
             ))}
@@ -197,21 +199,21 @@ export const DailyBriefing: React.FC = () => {
         <div className="db-section db-challenging">
           <h4 className="db-section-title">
             <span className="db-icon">⚠</span>
-            Watch Out ({challenging.length})
+            {t('daily.watchOut', { count: challenging.length })}
           </h4>
           <div className="db-transits">
-            {challenging.map((t, i) => (
+            {challenging.map((tr, i) => (
               <div key={i} className="db-transit">
                 <div className="db-t-aspect">
-                  <span className="db-t-symbol">{PLANET_SYMBOLS[t.transitingPlanet]}</span>
-                  <span className="db-t-type">{ASPECT_SYMBOLS[t.aspect.type]}</span>
-                  <span className="db-t-symbol">{PLANET_SYMBOLS[t.natalPlanet]}</span>
+                  <span className="db-t-symbol">{PLANET_SYMBOLS[tr.transitingPlanet]}</span>
+                  <span className="db-t-type">{ASPECT_SYMBOLS[tr.aspect.type]}</span>
+                  <span className="db-t-symbol">{PLANET_SYMBOLS[tr.natalPlanet]}</span>
                 </div>
                 <div className="db-t-info">
                   <div className="db-t-desc">
-                    {PLANET_NAMES[t.transitingPlanet as keyof typeof PLANET_NAMES]} {t.aspect.type} your {PLANET_NAMES[t.natalPlanet as keyof typeof PLANET_NAMES]}
+                    {PLANET_NAMES[tr.transitingPlanet as keyof typeof PLANET_NAMES]} {tr.aspect.type} your {PLANET_NAMES[tr.natalPlanet as keyof typeof PLANET_NAMES]}
                   </div>
-                  <div className="db-t-orb">{t.aspect.orb.toFixed(1)}° orb</div>
+                  <div className="db-t-orb">{tr.aspect.orb.toFixed(1)}° orb</div>
                 </div>
               </div>
             ))}
@@ -224,21 +226,21 @@ export const DailyBriefing: React.FC = () => {
         <div className="db-section db-neutral">
           <h4 className="db-section-title">
             <span className="db-icon">◆</span>
-            Background ({neutral.length})
+            {t('daily.background', { count: neutral.length })}
           </h4>
           <div className="db-transits">
-            {neutral.slice(0, 3).map((t, i) => (
+            {neutral.slice(0, 3).map((tr, i) => (
               <div key={i} className="db-transit">
                 <div className="db-t-aspect">
-                  <span className="db-t-symbol">{PLANET_SYMBOLS[t.transitingPlanet]}</span>
-                  <span className="db-t-type">{ASPECT_SYMBOLS[t.aspect.type]}</span>
-                  <span className="db-t-symbol">{PLANET_SYMBOLS[t.natalPlanet]}</span>
+                  <span className="db-t-symbol">{PLANET_SYMBOLS[tr.transitingPlanet]}</span>
+                  <span className="db-t-type">{ASPECT_SYMBOLS[tr.aspect.type]}</span>
+                  <span className="db-t-symbol">{PLANET_SYMBOLS[tr.natalPlanet]}</span>
                 </div>
                 <div className="db-t-info">
                   <div className="db-t-desc">
-                    {PLANET_NAMES[t.transitingPlanet as keyof typeof PLANET_NAMES]} {t.aspect.type} your {PLANET_NAMES[t.natalPlanet as keyof typeof PLANET_NAMES]}
+                    {PLANET_NAMES[tr.transitingPlanet as keyof typeof PLANET_NAMES]} {tr.aspect.type} your {PLANET_NAMES[tr.natalPlanet as keyof typeof PLANET_NAMES]}
                   </div>
-                  <div className="db-t-orb">{t.aspect.orb.toFixed(1)}° orb</div>
+                  <div className="db-t-orb">{tr.aspect.orb.toFixed(1)}° orb</div>
                 </div>
               </div>
             ))}
@@ -249,8 +251,8 @@ export const DailyBriefing: React.FC = () => {
       {transits.length === 0 && (
         <div className="db-quiet">
           <div className="db-quiet-icon">🌤️</div>
-          <p>Quiet day. No major transits affecting your chart.</p>
-          <p className="db-quiet-sub">Good for routine tasks and maintenance.</p>
+          <p>{t('daily.quietDay')}</p>
+          <p className="db-quiet-sub">{t('daily.goodForRoutine')}</p>
         </div>
       )}
     </div>

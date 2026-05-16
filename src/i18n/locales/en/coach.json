@@ -45,5 +45,15 @@
   "suggestAction": "A small action today builds momentum.",
   "suggestRest": "The stars suggest rest today.",
   "suggestFocus": "Focus your energy on one thing today.",
-  "suggestConnect": "Reach out to someone today."
+  "suggestConnect": "Reach out to someone today.",
+  "coachEmpty": "Your AI coach is observing the celestial weather...",
+  "aiCoach": "AI Coach",
+  "hekaAI": "HEKA AI",
+  "minimize": "Minimize",
+  "hideForOneHour": "Hide for 1 hour",
+  "hideCoachForOneHour": "Hide coach for one hour",
+  "newPrompt": "New Prompt",
+  "opening": "Opening...",
+  "connectionSuccess": "Connection successful!",
+  "connectionFailed": "Connection failed. Check your settings."
 }
