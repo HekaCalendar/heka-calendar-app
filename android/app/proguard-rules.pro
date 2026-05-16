@@ -1,21 +1,46 @@
-# Add project specific ProGuard rules here.
-# You can control the set of applied configuration files using the
-# proguardFiles setting in build.gradle.
-#
-# For more details, see
-#   http://developer.android.com/guide/developing/tools/proguard.html
+# ============================================================================
+# HEKA Calendar Pro - ProGuard/R8 Rules
+# ============================================================================
 
-# If your project uses WebView with JS, uncomment the following
-# and specify the fully qualified class name to the JavaScript interface
-# class:
-#-keepclassmembers class fqcn.of.javascript.interface.for.webview {
-#   public *;
-#}
+# --- Capacitor Core & Bridge ---
+# Keep all plugin subclasses and their annotated methods (bridge uses reflection)
+-keep public class * extends com.getcapacitor.Plugin {
+    public <init>();
+    @com.getcapacitor.annotation.PluginMethod <methods>;
+    @com.getcapacitor.annotation.ActivityCallback <methods>;
+}
+-keep @com.getcapacitor.annotation.CapacitorPlugin public class * { *; }
+-keep public class com.getcapacitor.** { *; }
+-keep public class com.getcapacitor.plugin.** { *; }
 
-# Uncomment this to preserve the line number information for
-# debugging stack traces.
-#-keepattributes SourceFile,LineNumberTable
+# --- Capacitor Community Plugins ---
+-keep public class com.getcapacitor.community.** { *; }
 
-# If you keep the line number information, uncomment this to
-# hide the original source file name.
-#-renamesourcefileattribute SourceFile
+# --- Custom HEKA Plugins ---
+-keep public class com.heka.calendar.** { *; }
+
+# --- Firebase (keep rules are bundled with AARs; silence warnings only) ---
+-dontwarn com.google.firebase.**
+-dontwarn com.google.android.gms.**
+
+# --- WebView JS Interface ---
+-keepclassmembers class * {
+    @android.webkit.JavascriptInterface <methods>;
+}
+
+# --- Reflection & Serialization Attributes ---
+-keepattributes *Annotation*
+-keepattributes Signature
+-keepattributes Exceptions
+-keepattributes InnerClasses
+-keepattributes EnclosingMethod
+-keepattributes SourceFile,LineNumberTable
+
+# --- Native Methods ---
+-keepclasseswithmembernames class * {
+    native <methods>;
+}
+
+# --- Cordova Compatibility ---
+-keep public class org.apache.cordova.** { *; }
+-dontwarn org.apache.cordova.**

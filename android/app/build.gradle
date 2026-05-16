@@ -52,7 +52,7 @@ android {
     }
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             // Only enforce release keystore when actually building a release APK.
             // During debug builds and Android Studio sync, fall back to debug signing.
