@@ -52,7 +52,7 @@ export async function initI18n(language: string): Promise<void> {
       lng: language,
       fallbackLng: 'en',
       supportedLngs: SUPPORTED_I18N_LANGUAGES,
-      ns: ['common', 'calendar', 'dayPanel', 'celestial', 'settings', 'coach', 'journal', 'circle', 'achievements', 'print', 'wizard', 'auth'],
+      ns: ['common', 'calendar', 'dayPanel', 'celestial', 'settings', 'coach', 'journal', 'circle', 'achievements', 'print', 'wizard', 'auth', 'notifications'],
       defaultNS: 'common',
       fallbackNS: 'common',
       resources: bundledResources,
