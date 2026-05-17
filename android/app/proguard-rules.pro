@@ -41,6 +41,13 @@
     native <methods>;
 }
 
+# --- Facebook (unused by HEKA but referenced by firebase-auth plugin) ---
+-dontwarn com.facebook.CallbackManager$Factory
+-dontwarn com.facebook.CallbackManager
+-dontwarn com.facebook.FacebookCallback
+-dontwarn com.facebook.login.LoginManager
+-dontwarn com.facebook.login.widget.LoginButton
+
 # --- Cordova Compatibility ---
 -keep public class org.apache.cordova.** { *; }
 -dontwarn org.apache.cordova.**

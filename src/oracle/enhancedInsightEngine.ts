@@ -32,19 +32,10 @@ export interface EmotionalAnalysis {
   themes: string[];
 }
 
-export interface CrisisIndicators {
-  isCrisis: boolean;
-  type?: 'suicide' | 'self-harm' | 'severe-depression' | 'violence' | 'grief';
-  severity: number; // 0-100
-  keywords: string[];
-  requiresResources: boolean;
-}
-
 export interface ContentAnalysis {
   themes: string[];
   archetypes: string[];
   emotionalProfile: EmotionalAnalysis;
-  crisisCheck: CrisisIndicators;
   entities: string[]; // People, places mentioned
   sentiment: {
     score: number; // -1 to 1
@@ -57,7 +48,7 @@ export interface ContentAnalysis {
 export interface EnhancedInsight {
   id: string;
   text: string;
-  type: 'general' | 'crisis' | 'celebration' | 'challenge' | 'transition' | 'reflection';
+  type: 'general' | 'celebration' | 'challenge' | 'transition' | 'reflection';
   
   // Metadata
   confidence: number;
@@ -92,16 +83,6 @@ export interface EnhancedInsight {
   journalPrompts: string[];
   actionItems: string[];
   
-  // Crisis support
-  supportResources?: {
-    message: string;
-    resources: Array<{
-      name: string;
-      contact: string;
-      available: string;
-    }>;
-  };
-  
   // UI metadata
   visualTheme: {
     color: string;
@@ -111,273 +92,49 @@ export interface EnhancedInsight {
 }
 
 // ═══════════════════════════════════════════════════════════════════════════════
-// SLANG & MISSPELLING NORMALIZATION
-// Expands internet slang, abbreviations, and common misspellings before safety scanning
+// SHADOW RESPONSES — Oracle wisdom for heavy emotional states
+// These are spiritual guidance, not clinical intervention.
 // ═══════════════════════════════════════════════════════════════════════════════
 
-const SLANG_DICTIONARY: Record<string, string> = {
-  // Suicide-related slang
-  'kms': 'kill myself',
-  'kys': 'kill yourself',
-  'kml': 'kill me later',
-  'unalive': 'kill',
-  'unalive myself': 'kill myself',
-  'unalive me': 'kill me',
-  'rope': 'hang myself',
-  'roping': 'hanging',
-  'final yeet': 'kill myself',
-  'yeet myself': 'kill myself',
-  'sewerslide': 'suicide',
-  'suey slide': 'suicide',
-  'commit toaster bath': 'kill myself',
-  'commit oof': 'kill myself',
-  'i want to not exist': 'i want to die',
-  'dont wanna be here': 'dont want to live',
-  'dont want to be here': 'dont want to live',
-  'not gonna make it': 'going to kill myself',
-  'ngmi': 'not going to make it',
-  'its over': 'i want to die',
-  'over for me': 'i want to die',
-  'better off without me': 'better off dead',
-  'everyone better off': 'better off dead',
-  'end it all': 'end my life',
-  'cant take it': 'cant go on',
-  'cant do this': 'cant go on',
-  'done with life': 'want to die',
-  'no point': 'no reason to live',
-  'whats the point': 'no reason to live',
-  // Self-harm slang
-  'sh': 'self harm',
-  's/h': 'self harm',
-  'selfharm': 'self harm',
-  'slicey dicey': 'cut myself',
-  'barcode': 'cut myself',
-  'styrofoam': 'cut to fat',
-  'beans': 'cut deeply',
-  'cat scratches': 'self harm',
-  'final destination': 'kill myself',
-  'go to sleep forever': 'kill myself',
-  'permanent sleep': 'kill myself',
-  'long sleep': 'kill myself',
-  'eternal rest': 'kill myself',
-  // Depression slang
-  'cant get up': 'cant get out of bed',
-  'bedrotting': 'cant get out of bed',
-  'bed rot': 'cant get out of bed',
-  'doomer': 'severe depression',
-  'doompilled': 'severe depression',
-  'blackpilled': 'severe depression',
-  'nothing feel real': 'nothing matters',
-  'dissociating': 'empty inside',
-  'derealization': 'empty inside',
-  'depersonalization': 'empty inside',
-  'executive dysfunction': 'cant function',
-  'cant shower': 'cant function',
-  'cant eat': 'cant function',
-  'cant brush teeth': 'cant function',
-  // Violence slang
-  'going postal': 'violent thoughts',
-  'hulk out': 'anger out of control',
-  'see red': 'rage',
-  'snap': 'violent thoughts',
+const SHADOW_RESPONSES: Record<string, string[]> = {
+  deepShadow: [
+    "The Oracle draws the Shadow card. What you flee from carries your greatest teaching. Turn and look—not with judgment, but with the curiosity of a stranger meeting themselves for the first time.",
+    "The bones speak of crossing water. Troubled times are thresholds, not destinations. The current is strong, but you have swum before. Trust the motion.",
+    "The mirror shows you what you already know. The question is not why you suffer, but what you will become through it. The forge does not apologize for the heat.",
+    "A door stands open behind you. Not to the past—to a room in yourself you have kept locked. The key was always your own willingness to enter.",
+    "The stars do not ask you to be bright today. They ask only that you be honest. Darkness is not failure. It is the womb that precedes all becoming.",
+  ],
+  griefWeight: [
+    "The Oracle casts the Bowl of Memory. What overflows is not meant to be contained. Let it spill. The earth knows how to receive what the heart cannot hold.",
+    "The thread between you and what is lost is not severed—it has changed texture. Grief is the proof that love was real. Do not rush to mend what is still teaching.",
+    "The old texts say: 'The well is deepest where the water has been longest.' Your sorrow has carved space for something only you can fill.",
+    "A candle burns in the temple of what was. Do not blow it out. Let it become a lantern you carry forward, not a fire that consumes.",
+  ],
+  rageFire: [
+    "The Oracle feels the heat from here. Anger is not the enemy—it is the guardian at the gate of your boundaries. Ask it: what are you protecting? Then listen.",
+    "The blade is sharp, but the hand that wields it is weary. Rage is energy misdirected. Find the river it wants to flow into, and let it run.",
+    "The storm in you has a name. It is not destruction. It is the unsaid, the unacknowledged, the unclaimed. Speak one truth today, and the thunder quiets.",
+  ],
+  emptiness: [
+    "The Oracle reads the Void. It is not absence—it is potential before form. The silence you fear is the same silence from which all creation arises.",
+    "You feel hollow because something old has left. Do not fill the space with noise. Let it breathe. The next shape of your life is forming in that emptiness.",
+    "The well appears dry. But below the surface, water moves in channels you cannot see. Trust what is gathering, even when the bucket comes up empty.",
+  ],
 };
 
-/** Common misspellings of crisis keywords */
-const MISSPELLING_MAP: Record<string, string> = {
-  'suicde': 'suicide',
-  'suicidial': 'suicidal',
-  'suicidle': 'suicidal',
-  'sucide': 'suicide',
-  'sucidal': 'suicidal',
-  'deppresed': 'depressed',
-  'deppression': 'depression',
-  'depresed': 'depressed',
-  'depressionn': 'depression',
-  'depresion': 'depression',
-  'hopelss': 'hopeless',
-  'hoples': 'hopeless',
-  'wortless': 'worthless',
-  'worthles': 'worthless',
-  'worthlesness': 'worthlessness',
-  'anxius': 'anxious',
-  'anxeity': 'anxiety',
-  'panick': 'panic',
-  'overwelmed': 'overwhelmed',
-  'overwelming': 'overwhelming',
-  'exhaustted': 'exhausted',
-  'exausted': 'exhausted',
-  'emptty': 'empty',
-  'numbness': 'numb',
-  'paralized': 'paralyzed',
-  'paralysed': 'paralyzed',
-  'cripeling': 'crippling',
-};
-
-/**
- * Normalize text for safety scanning:
- * 1. Lowercase
- * 2. Expand slang abbreviations
- * 3. Fix common misspellings
- * 4. Return both original and normalized for dual scanning
- */
-function normalizeTextForSafety(text: string): string {
-  let normalized = text.toLowerCase();
-  
-  // Expand multi-word slang first (longest first to avoid partial matches)
-  const multiWordSlang = Object.entries(SLANG_DICTIONARY)
-    .filter(([k]) => k.includes(' '))
-    .sort((a, b) => b[0].length - a[0].length);
-  
-  for (const [slang, expansion] of multiWordSlang) {
-    normalized = normalized.replace(new RegExp(slang.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'gi'), expansion);
+function pickShadowResponse(primaryEmotion: string, valence: string, intensity: number): string | null {
+  if (valence !== 'negative' || intensity < 70) return null;
+  // Select shadow category based on emotional signature
+  if (primaryEmotion === 'sadness' || primaryEmotion === 'grief' || primaryEmotion === 'longing') {
+    return pickRandom(SHADOW_RESPONSES.griefWeight);
   }
-  
-  // Expand single-word slang (as whole words)
-  const singleWordSlang = Object.entries(SLANG_DICTIONARY)
-    .filter(([k]) => !k.includes(' '));
-  
-  for (const [slang, expansion] of singleWordSlang) {
-    normalized = normalized.replace(new RegExp(`\\b${slang.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\b`, 'gi'), expansion);
+  if (primaryEmotion === 'anger' || primaryEmotion === 'fear') {
+    return pickRandom(SHADOW_RESPONSES.rageFire);
   }
-  
-  // Fix misspellings
-  for (const [misspelled, correct] of Object.entries(MISSPELLING_MAP)) {
-    normalized = normalized.replace(new RegExp(`\\b${misspelled}\\b`, 'gi'), correct);
+  if (primaryEmotion === 'confusion' || primaryEmotion === 'shame' || intensity > 85) {
+    return pickRandom(SHADOW_RESPONSES.emptiness);
   }
-  
-  return normalized;
-}
-
-// ═══════════════════════════════════════════════════════════════════════════════
-// CRISIS DETECTION SYSTEM
-// ═══════════════════════════════════════════════════════════════════════════════
-
-const CRISIS_PATTERNS: Record<string, { patterns: RegExp[]; severity: number; type: CrisisIndicators['type'] }> = {
-  suicide: {
-    patterns: [
-      /\b(kill\s+(?:myself|me)|suicide|suicidal|end\s+(?:it|my\s+life)|not\s+worth\s+living|better\s+off\s+dead|want\s+to\s+die|don't\s+want\s+to\s+live)\b/gi,
-      /\b(no\s+reason\s+to\s+live|can't\s+go\s+on|give\s+up|hopeless|worthless)\b/gi,
-      /\b(hurt\s+myself|self.?harm|cut\s+myself|end\s+the\s+pain)\b/gi,
-      /\b(hang\s+(?:myself|me)|jump\s+(?:off|from)|overdose|pills\s+to\s+end)\b/gi,
-      /\b(want\s+to\s+disappear|not\s+be\s+here|cease\s+to\s+exist|not\s+wake\s+up)\b/gi,
-    ],
-    severity: 100,
-    type: 'suicide'
-  },
-  selfHarm: {
-    patterns: [
-      /\b(cut\s+(?:myself|me)|self.?harm|hurt\s+myself|burn\s+myself|punish\s+myself)\b/gi,
-      /\b(want\s+to\s+feel\s+pain|deserve\s+to\s+suffer|hurt\s+my\s+body)\b/gi,
-      /\b(scratch\s+myself|hit\s+myself|pinch\s+myself|pull\s+my\s+hair)\b/gi,
-      /\b(blood\s+make\s+me\s+feel|seeing\s+blood\s+calm|pain\s+is\s+the\s+only)\b/gi,
-    ],
-    severity: 90,
-    type: 'self-harm'
-  },
-  severeDepression: {
-    patterns: [
-      /\b(can't\s+get\s+out\s+of\s+bed|no\s+energy|empty\s+inside|numb|nothing\s+matters)\b/gi,
-      /\b(deep\s+depression|severe\s+depression|clinical\s+depression|major\s+depression)\b/gi,
-      /\b(crippling\s+depression|can't\s+function|paralyzed\s+by\s+sadness)\b/gi,
-      /\b(dont\s+care\s+anymore|lost\s+all\s+hope|given\s+up|why\s+bother)\b/gi,
-      /\b(cant\s+remember\s+last\s+time\s+happy|dont\s+feel\s+anything|emotional\s+void)\b/gi,
-    ],
-    severity: 80,
-    type: 'severe-depression'
-  },
-  violence: {
-    patterns: [
-      /\b(want\s+to\s+kill|hurt\s+someone|violent\s+thoughts|rage|anger\s+out\s+of\s+control)\b/gi,
-      /\b(want\s+to\s+hit|feel\s+like\s+hurting|fantasies\s+about\s+violence)\b/gi,
-    ],
-    severity: 85,
-    type: 'violence'
-  },
-  grief: {
-    patterns: [
-      /\b(lost\s+(?:someone|them|him|her)|died|death\s+of|grief|mourning|can't\s+go\s+on\s+without)\b/gi,
-      /\b(never\s+see\s+again|gone\s+forever|miss\s+them\s+so\s+much|broken\s+without)\b/gi,
-    ],
-    severity: 70,
-    type: 'grief'
-  }
-};
-
-const SUPPORT_RESOURCES = {
-  suicide: {
-    message: "I'm hearing that you're going through an incredibly difficult time. Your life has value, and there are people who want to help right now.",
-    resources: [
-      { name: '988 Suicide & Crisis Lifeline', contact: '988 or 1-800-273-8255', available: '24/7, Free & Confidential' },
-      { name: 'Crisis Text Line', contact: 'Text HOME to 741741', available: '24/7, Free' },
-      { name: 'International Association for Suicide Prevention', contact: 'iasp.info/resources/Crisis_Centres', available: 'Find local resources' },
-    ]
-  },
-  selfHarm: {
-    message: "I notice you might be hurting. Please know that pain can be worked through with support—you don't have to carry this alone.",
-    resources: [
-      { name: 'Self-Harm Crisis Support', contact: '1-800-273-8255', available: '24/7' },
-      { name: 'Crisis Text Line', contact: 'Text HOME to 741741', available: '24/7' },
-      { name: 'National Alliance on Mental Health', contact: '1-800-950-6264', available: 'Mon-Fri 10am-10pm ET' },
-    ]
-  },
-  severeDepression: {
-    message: "Depression can make everything feel heavy and hopeless. These feelings are real, but they can shift with support and time.",
-    resources: [
-      { name: 'SAMHSA National Helpline', contact: '1-800-662-4357', available: '24/7, Free, Confidential' },
-      { name: 'National Hopeline Network', contact: '1-800-784-2433', available: '24/7' },
-      { name: 'Psychology Today Therapist Finder', contact: 'psychologytoday.com', available: 'Find local therapists' },
-    ]
-  },
-  violence: {
-    message: "Intense anger can feel overwhelming. There are ways to channel this energy safely and understand what's beneath it.",
-    resources: [
-      { name: 'National Domestic Violence Hotline', contact: '1-800-799-7233', available: '24/7' },
-      { name: 'Crisis Text Line', contact: 'Text HOME to 741741', available: '24/7' },
-      { name: 'SAMHSA Helpline', contact: '1-800-662-4357', available: '24/7' },
-    ]
-  },
-  grief: {
-    message: "Grief is love with nowhere to go. The pain you feel is a testament to how much you cared. You don't have to walk this path alone.",
-    resources: [
-      { name: 'GriefShare Support Groups', contact: 'griefshare.org', available: 'Find local groups' },
-      { name: 'Crisis Text Line', contact: 'Text HOME to 741741', available: '24/7' },
-      { name: 'The Compassionate Friends', contact: 'compassionatefriends.org', available: 'Grief support for bereaved parents' },
-    ]
-  }
-};
-
-function detectCrisis(text: string): CrisisIndicators {
-  const originalLower = text.toLowerCase();
-  const normalizedText = normalizeTextForSafety(text);
-  let maxSeverity = 0;
-  let detectedType: CrisisIndicators['type'] = undefined;
-  const allKeywords: string[] = [];
-  
-  // Scan BOTH original and normalized text for maximum coverage
-  const textsToScan = [originalLower, normalizedText];
-  
-  for (const scanText of textsToScan) {
-    for (const [_category, data] of Object.entries(CRISIS_PATTERNS)) {
-      for (const pattern of data.patterns) {
-        const matches = scanText.match(pattern);
-        if (matches) {
-          allKeywords.push(...matches);
-          if (data.severity > maxSeverity) {
-            maxSeverity = data.severity;
-            detectedType = data.type;
-          }
-        }
-      }
-    }
-  }
-  
-  return {
-    isCrisis: maxSeverity > 0,
-    type: detectedType,
-    severity: maxSeverity,
-    keywords: [...new Set(allKeywords)],
-    requiresResources: maxSeverity >= 70
-  };
+  return pickRandom(SHADOW_RESPONSES.deepShadow);
 }
 
 // ═══════════════════════════════════════════════════════════════════════════════
@@ -479,9 +236,7 @@ function analyzeEmotions(text: string): EmotionalAnalysis {
   
   // Determine urgency
   let urgency: EmotionalAnalysis['urgency'] = 'low';
-  const crisis = detectCrisis(text);
-  if (crisis.isCrisis) urgency = 'crisis';
-  else if (intensity > 80) urgency = 'high';
+  if (intensity > 80) urgency = 'high';
   else if (intensity > 50) urgency = 'medium';
   
   return {
@@ -533,9 +288,6 @@ function analyzeContent(content: string): ContentAnalysis {
   // Emotional analysis
   const emotionalProfile = analyzeEmotions(content);
   
-  // Crisis detection
-  const crisisCheck = detectCrisis(content);
-  
   // Sentiment
   const sentiment = analyzeSentiment(content);
   
@@ -554,7 +306,6 @@ function analyzeContent(content: string): ContentAnalysis {
     themes,
     archetypes,
     emotionalProfile,
-    crisisCheck,
     entities,
     sentiment,
     wordCount: content.split(/\s+/).length,
@@ -629,53 +380,49 @@ function pickNRandom<T>(arr: T[], n: number): T[] {
   return shuffled.slice(0, n);
 }
 
-async function generateCrisisInsight(
-  _content: string,
+async function generateShadowInsight(
+  content: string,
   analysis: ContentAnalysis,
   celestialState: Awaited<ReturnType<typeof OracleEngine.getCurrentCelestialState>>,
   birthChart?: BirthChart
 ): Promise<EnhancedInsight> {
-  const type = analysis.crisisCheck.type!;
-  const resourceKey = type === 'self-harm' ? 'selfHarm' : type;
-  const resources = SUPPORT_RESOURCES[resourceKey as keyof typeof SUPPORT_RESOURCES];
+  const emotions = analysis.emotionalProfile;
+  const moonPhase = celestialState.moonPhase;
+  const moonSign = moonPhase.sign;
+  const shadowText = pickShadowResponse(emotions.primaryEmotion, emotions.valence, emotions.intensity) || '';
   
-  const moonSign = celestialState.moonPhase.sign;
+  let text = shadowText;
+  
+  // Blend with celestial context
   const chiron = celestialState.planets.chiron || celestialState.planets.neptune;
-  
-  let text = resources.message;
-  
   if (birthChart && chiron) {
-    text += `\n\nThe current celestial weather shows ${chiron.sign} energy prominent—a sign that healing is possible, even when it feels distant. `;
-    text += `The Moon in ${moonSign} reminds us that all states are temporary, even the most painful ones.`;
+    text += `\n\n${chiron.sign} energy moves through the sky now—an invitation to tend what has been wounded, not to fix it, but to witness it. `;
+    text += `The Moon in ${moonSign} holds space for all that arises, as the sea holds every stone without question.`;
   } else {
-    text += `\n\nThe Moon in ${moonSign} reminds us that emotions, like the tides, shift and change. This intensity won't last forever.`;
+    text += `\n\nThe Moon in ${moonSign} reminds you: even the tide that carries sorrow also carries it away. Nothing stays unchanged.`;
   }
   
   return {
-    id: `crisis-${Date.now()}`,
+    id: `shadow-${Date.now()}`,
     text,
-    type: 'crisis',
-    confidence: 95,
-    strength: 100,
-    uniqueness: 100,
+    type: 'challenge',
+    confidence: 90,
+    strength: 85,
+    uniqueness: 80,
     celestialEvent: {
-      type: 'crisis-support',
-      description: 'Compassionate cosmic guidance',
-      strength: 100,
-      timing: { peak: 'Now', duration: 'Immediate support' }
+      type: moonPhase.phase,
+      description: `${moonPhase.phase} Moon in ${moonSign} — shadow work`,
+      strength: 85,
+      timing: { peak: 'Now', duration: 'Active now' }
     },
-    supportResources: {
-      message: "Please reach out to these resources—they're here for you right now:",
-      resources: resources.resources
-    },
-    affirmations: ['I am worthy of support and healing', 'This pain is temporary', 'I choose to stay'],
-    rituals: ['Place hand on heart, breathe deeply for 60 seconds', 'Text or call one person you trust'],
-    journalPrompts: ['What would I say to a dear friend feeling this way?', 'What small step toward help can I take right now?'],
-    actionItems: ['Contact a support resource above', 'Reach out to someone you trust', 'Consider professional support'],
+    affirmations: generateLocalAffirmations(analysis, analysis.themes, content),
+    rituals: generateLocalRituals(moonPhase.phase, analysis.themes, emotions),
+    journalPrompts: generateLocalJournalPrompts(analysis, content, celestialState, undefined),
+    actionItems: generateActionItems(analysis, analysis.themes, content, celestialState, undefined),
     visualTheme: {
-      color: '#ef4444',
-      icon: '🆘',
-      gradient: 'linear-gradient(135deg, #ef4444 0%, #f87171 100%)'
+      color: '#6366f1',
+      icon: '🌑',
+      gradient: 'linear-gradient(135deg, #1e1b4b 0%, #4338ca 100%)'
     }
   };
 }
@@ -1469,12 +1216,6 @@ function generateActionItems(
   const mirror = extractContentMirror(content);
   const emotion = analysis.emotionalProfile.primaryEmotion;
   
-  if (analysis.crisisCheck.isCrisis) {
-    actions.push('Reach out to a support resource');
-    actions.push('Contact someone you trust');
-    return actions.slice(0, 3);
-  }
-  
   // Content-specific SMART actions
   if (mirror.concern) {
     actions.push(`Set a 10-minute timer and write a single sentence about "${emotion}" without editing.`);
@@ -1575,9 +1316,9 @@ export async function generateEnhancedInsight(
     personalTransits = calculatePersonalTransits(birthChart, currentPositions);
   }
   
-  // Step 4: Check for crisis first
-  if (analysis.crisisCheck.isCrisis) {
-    return generateCrisisInsight(content, analysis, celestialState, birthChart);
+  // Step 4: For very heavy shadow states, use the shadow oracle path
+  if (analysis.emotionalProfile.valence === 'negative' && analysis.emotionalProfile.intensity > 75) {
+    return generateShadowInsight(content, analysis, celestialState, birthChart);
   }
   
   // Step 5: Generate standard insight
@@ -1588,7 +1329,6 @@ export async function generateEnhancedInsight(
 export const EnhancedInsightEngine = {
   generateInsight: generateEnhancedInsight,
   analyzeContent,
-  detectCrisis,
   analyzeEmotions,
   analyzeSentiment,
 };

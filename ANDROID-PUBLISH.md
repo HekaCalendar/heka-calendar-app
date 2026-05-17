@@ -1,4 +1,8 @@
-# Android APK Build & Play Store Publishing Guide
+# Android AAB Build & Play Store Publishing Guide
+
+> **Google Play requires AAB (Android App Bundle)** for all new apps and updates. AAB produces smaller downloads (~15% smaller on average) because Google Play generates optimised APKs for each device. This guide uses `bundleRelease` for Play Store submissions.
+
+---
 
 ## Phase 1: Build Debug APK (Test on Your Phone)
 
@@ -36,7 +40,7 @@ Share via:
 
 ---
 
-## Phase 2: Build Release APK (Production Ready)
+## Phase 2: Build Release AAB (Play Store Ready)
 
 ### Step 1: Create Signing Keystore
 
@@ -62,27 +66,34 @@ keytool -genkey -v -keystore heka-calendar.keystore -alias heka -keyalg RSA -key
 
 # Create key.properties file
 @"
-RELEASE_STORE_FILE=heka-calendar.keystore
-RELEASE_STORE_PASSWORD=your_password_here
-RELEASE_KEY_ALIAS=heka
-RELEASE_KEY_PASSWORD=your_password_here
+storeFile=heka-calendar.keystore
+storePassword=your_password_here
+keyAlias=heka
+keyPassword=your_password_here
 "@ | Out-File -FilePath "key.properties" -Encoding UTF8
 ```
 
 **⚠️ CRITICAL:** Save `heka-calendar.keystore` file + password in multiple places (cloud, USB, password manager, etc). **You cannot update the app without this file!**
 
-### Step 2: Build Release APK
+### Step 2: Build Release AAB
 
 ```powershell
 cd heka-calendar-pro/android
-.\gradlew assembleRelease
+.\gradlew bundleRelease
 ```
 
-Find APK at: `android/app/build/outputs/apk/release/app-release.apk`
+Find AAB at: `android/app/build/outputs/bundle/release/app-release.aab`
 
-**APK Size:** ~15-20MB
+**AAB Size:** ~12-18MB (Google Play generates device-specific APKs from this)
 
-**Note:** If keystore is not configured, build will use debug signing (for development only). Production releases require the keystore.
+**Note:** If keystore is not configured, the build will fail with:
+> `Release keystore not configured. Create android/app/key.properties for Play Store builds.`
+
+If you need a **local release APK** for side-loading (not Play Store):
+```powershell
+.\gradlew assembleRelease
+# Output: android/app/build/outputs/apk/release/app-release.apk
+```
 
 ---
 
@@ -137,13 +148,13 @@ Perfect for:
 Download now and reconnect with celestial time.
 ```
 
-### Step 4: Upload APK
+### Step 4: Upload AAB
 
 1. Go to **Release → Production → Create Release**
-2. Upload `app-release.apk`
+2. Upload `app-release.aab`
 3. Add release notes:
    ```
-   Version 2.1.5
+   Version 2.2.1
    - Enhanced celestial guidance
    - Moon phase tracking
    - Seasonal agriculture tips
@@ -189,16 +200,16 @@ Click **"Send for Review"**
 
 ### Update Your App:
 
-1. Update version in `package.json`: `"version": "2.1.6"`
-2. Update `APP_VERSION` in `src/main.tsx`
-3. Build new APK:
+1. Update version in `package.json`: `"version": "2.2.2"`
+2. Update `versionName` in `android/app/build.gradle`
+3. Build new AAB:
    ```bash
    npm run build
    npx cap sync android
    cd android
-   .\gradlew assembleRelease
+   .\gradlew bundleRelease
    ```
-4. Upload new APK to Play Console
+4. Upload new AAB to Play Console
 5. Same keystore = same app identity
 
 ---
@@ -227,26 +238,36 @@ cd android
 - Check keystore path is correct
 - Passwords are case-sensitive
 
+### `bundleRelease` fails with "Release keystore not configured"
+1. Make sure `android/key.properties` exists
+2. Verify the `storeFile` path points to your `.keystore` file
+3. Re-run `.\setup-keystore.ps1` if needed
+
 ---
 
 ## Quick Reference Commands
 
 ```bash
-# Full build pipeline
+# Full AAB build pipeline (for Play Store)
 npm run build
 npx cap sync android
 cd android
+.\gradlew bundleRelease
+# Output: app/build/outputs/bundle/release/app-release.aab
+
+# Local release APK (for side-loading only)
 .\gradlew assembleRelease
+# Output: app/build/outputs/apk/release/app-release.apk
 
 # Just copy web assets (faster)
 npx cap copy android
 
 # Clean build
 .\gradlew clean
-.\gradlew assembleRelease
+.\gradlew bundleRelease
 
-# Install to connected phone
-adb install app-release.apk
+# Install debug APK to connected phone
+adb install app/build/outputs/apk/debug/app-debug.apk
 
 # View logs
 adb logcat | grep "HEKA"

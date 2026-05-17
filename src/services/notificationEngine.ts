@@ -1382,14 +1382,10 @@ class NotificationEngineClass {
       const todayStr = now.toISOString().split('T')[0];
 
       const TRACKER_LABELS: Record<string, string> = {
-        menstrual: 'Menstrual Cycle',
-        mood: 'Mood Tracker',
-        sleep: 'Sleep Log',
-        energy: 'Energy Tracker',
-        medication: 'Medication Log',
-        symptom: 'Symptom Tracker',
-        habit: 'Habit Tracker',
-        gratitude: 'Gratitude Journal',
+        mood: 'Daily Reflection',
+        sleep: 'Rest Log',
+        energy: 'Vitality Check',
+        custom: 'Personal Tracker',
       };
 
       for (const trackerType of enabledTrackers) {

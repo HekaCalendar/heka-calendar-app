@@ -42,25 +42,15 @@ export interface TrackerEntry {
 }
 
 export type TrackerType = 
-  | 'menstrual'
   | 'mood'
   | 'sleep'
   | 'energy'
-  | 'medication'
-  | 'symptom'
-  | 'exercise'
-  | 'nutrition'
   | 'custom';
 
 export type TrackerData = 
-  | MenstrualData
   | MoodData
   | SleepData
   | EnergyData
-  | MedicationData
-  | SymptomData
-  | ExerciseData
-  | NutritionData
   | CustomData;
 
 // ═════════════════════════════════════════════════════════════════════════════

@@ -27,13 +27,12 @@ import { CelestialGuide } from './CelestialGuide';
 import { DayPanel } from './day-panel/DayPanel';
 import { PureCalendarView } from './PureCalendarView';
 import { PureModeDayPanel } from './PureModeDayPanel';
-import { TrackerPanel } from './TrackerPanel';
+import { CommunityHub } from './CommunityHub';
 import { hekaToCivil } from '../services/calendarService';
 import type { CalendarDay } from '../types';
 import { SearchModal } from './SearchModal';
 import { FriendsModal } from './FriendsModal';
 import { StatsModal } from './StatsModal';
-import { CommunityHub } from './CommunityHub';
 import { OracleJournal } from './OracleJournal';
 import { InfoModal } from './InfoModal';
 // import { StoreHub } from './store/StoreHub'; // Hidden for v1.0 launch
@@ -867,15 +866,6 @@ const AppContentComponent: React.FC = () => {
     };
   }, [selectedDate]);
 
-  // Tracker date string
-  const trackerDate = useMemo(() => {
-    if (selectedDate) {
-      const d = hekaToCivil(selectedDate);
-      return d.toISOString().split('T')[0];
-    }
-    return new Date().toISOString().split('T')[0];
-  }, [selectedDate]);
-  
   // Smart scroll: scroll DayPanel into view only if not fully visible (standard view only)
   useEffect(() => {
     // Only in standard view (not expanded modes) and when a date is selected
@@ -1219,10 +1209,9 @@ const AppContentComponent: React.FC = () => {
         }}
       />
 
-      {/* Tracker Panel */}
+      {/* Community Hub */}
       {showTracker && (
-        <TrackerPanel
-          date={trackerDate}
+        <CommunityHub
           isOpen={true}
           onClose={closeTracker}
         />

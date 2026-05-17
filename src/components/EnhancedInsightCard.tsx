@@ -31,8 +31,6 @@ export const EnhancedInsightCard: React.FC<EnhancedInsightCardProps> = ({
 }) => {
   const { t } = useTranslation('journal');
   const [expandedSection, setExpandedSection] = useState<string | null>(null);
-  const [showCrisisResources, setShowCrisisResources] = useState(true);
-  
   if (isLoading) {
     return (
       <div className="enhanced-insight-card loading">
@@ -46,47 +44,14 @@ export const EnhancedInsightCard: React.FC<EnhancedInsightCardProps> = ({
     );
   }
   
-  const isCrisis = insight.type === 'crisis';
-  
   return (
     <div 
-      className={`enhanced-insight-card ${insight.type} ${isCrisis ? 'crisis-mode' : ''}`}
+      className={`enhanced-insight-card ${insight.type}`}
       style={{ 
         '--insight-accent': insight.visualTheme.color,
         '--insight-gradient': insight.visualTheme.gradient 
       } as React.CSSProperties}
     >
-      {/* Crisis Banner */}
-      {isCrisis && insight.supportResources && (
-        <div className="crisis-banner">
-          <div className="crisis-header">
-            <span className="crisis-icon">🆘</span>
-            <span className="crisis-title">{t('insight.supportResources')}</span>
-          </div>
-          
-          {showCrisisResources && (
-            <div className="crisis-resources">
-              <p className="crisis-message">{insight.supportResources.message}</p>
-              <div className="resource-list">
-                {insight.supportResources.resources.map((resource, idx) => (
-                  <div key={idx} className="resource-item">
-                    <span className="resource-name">{resource.name}</span>
-                    <span className="resource-contact">{resource.contact}</span>
-                    <span className="resource-hours">{resource.available}</span>
-                  </div>
-                ))}
-              </div>
-              <button 
-                className="crisis-dismiss-btn"
-                onClick={() => setShowCrisisResources(false)}
-              >
-                {t('insight.haveResources')}
-              </button>
-            </div>
-          )}
-        </div>
-      )}
-      
       {/* Insight Header */}
       <div className="insight-header">
         <div className="insight-icon-wrapper" style={{ background: insight.visualTheme.gradient }}>

@@ -88,7 +88,7 @@
 **Answer:** ✅ **Yes**
 
 **Explanation:**
-> The app uses a template-based fallback system as the default. AI-enhanced content is only generated when the user explicitly opts in and provides their own API key. The app includes on-device crisis detection that scans journal entries for self-harm indicators and displays support resources (988 Lifeline, Crisis Text Line) if concerning language is detected. This is a safety feature, not content moderation.
+> The app uses a template-based fallback system as the default. AI-enhanced content is only generated when the user explicitly opts in and provides their own API key.
 
 ---
 
@@ -130,7 +130,7 @@
 
 **App name:** HEKA Calendar Pro  
 **Email:** hekacalendar@gmail.com  
-**Category:** Lifestyle / Health & Fitness
+**Category:** Lifestyle
 
 ---
 
@@ -169,9 +169,9 @@ Choose your primary market. For each:
 
 **Answer:** ✅ **Yes**
 
-**Select:** "Yes, but only as part of the app's health tracking features"
+**Select:** "No"
 
-**Explanation:** The app allows users to track medication (prescriptions, supplements, OTC, herbal, vitamins) as part of its wellness tracker. This is user-input data, not promotional content.
+**Explanation:** The app does not promote pharmaceutical products.
 
 ---
 
@@ -264,7 +264,7 @@ Choose your primary market. For each:
 
 **Answer:** ✅ **Yes**
 
-**Explanation:** Journal entries are scanned on-device for crisis indicators (self-harm keywords). If detected, the app displays support resources (988 Lifeline, Crisis Text Line). No content is transmitted for moderation.
+**Explanation:** The app provides spiritual oracle guidance based on user journal entries. No content is transmitted for moderation.
 
 ---
 
@@ -306,7 +306,7 @@ Choose your primary market. For each:
 - [x] **Age 16-17**
 - [x] **Age 18+**
 
-**Explanation:** The app contains health tracking features (menstrual cycle, fertility, medication) and wellness tools intended for users who can make informed health decisions. While there is no mature content, the health data features are designed for adult users.
+**Explanation:** The app contains astrology, spiritual guidance, and community connection tools. There is no mature content.
 
 **Q23: Is the app designed for children?**
 
@@ -320,8 +320,8 @@ Based on the above answers, your app should receive:
 
 | Authority | Rating | Reasoning |
 |---|---|---|
-| **ESRB** | **E (Everyone)** or **E10+** | No violence, no sexual content, health tracking is clinical |
-| **PEGI** | **3** or **7** | No inappropriate content; health features may push to 7 in some regions |
+| **ESRB** | **E (Everyone)** or **E10+** | No violence, no sexual content |
+| **PEGI** | **3** or **7** | No inappropriate content |
 | **USK** | **0** (Freigegeben) | No content of concern |
 | **ACMA** | **G (General)** | Suitable for all ages |
 | **ClassInd** | **Livre** | Suitable for all ages |
@@ -334,7 +334,7 @@ Based on the above answers, your app should receive:
 - [ ] AI-generated content declaration completed with this guide
 - [ ] Content rating questionnaire completed with this guide
 - [ ] Privacy policy URL linked: `https://heka-calendar-pro.vercel.app/privacy.html`
-- [ ] App category set: **Lifestyle** or **Health & Fitness**
+- [ ] App category set: **Lifestyle**
 - [ ] Target audience: **Not designed for children**
 - [ ] Content rating: **E / PEGI 3 / G** (depending on authority)
 - [ ] Signed AAB built and uploaded

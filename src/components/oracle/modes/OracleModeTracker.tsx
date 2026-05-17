@@ -1,28 +1,22 @@
 /**
- * Oracle Mode: Body Tracker
- * Wrapper for the TrackerPanel within Oracle Journal
+ * Oracle Mode: Community Hub
+ * Wrapper for the CommunityHub within Oracle Journal
  */
 
-import { TrackerPanel } from '../../TrackerPanel';
+import { CommunityHub } from '../../CommunityHub';
 
 interface OracleModeTrackerProps {
   date: string;
-  onClose: () => void;
+  onClose?: () => void;
 }
 
-export const OracleModeTracker: React.FC<OracleModeTrackerProps> = ({
-  date,
-  onClose,
-}) => {
+export function OracleModeTracker({ onClose }: OracleModeTrackerProps) {
   return (
     <div className="oracle-mode-tracker">
-      <TrackerPanel
-        date={date}
+      <CommunityHub
         isOpen={true}
-        onClose={onClose}
+        onClose={onClose || (() => {})}
       />
     </div>
   );
-};
-
-export default OracleModeTracker;
+}

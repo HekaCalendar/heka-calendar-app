@@ -10,7 +10,7 @@ Last updated: May 7, 2026
 
 **App Name:** HEKA Calendar Pro  
 **Privacy Policy:** https://heka-calendar-pro.vercel.app/privacy.html  
-**App Category:** Lifestyle / Health & Fitness
+**App Category:** Lifestyle
 
 ---
 
@@ -61,27 +61,19 @@ Last updated: May 7, 2026
 
 ---
 
-### Health & Fitness
+### App Activity
 
-| Data Type | Collected? | Optional? | Stored |
-|-----------|------------|-----------|--------|
-| **Menstrual cycle** | ✅ Yes | ✅ Yes | Local (IndexedDB) |
-| **Mood** | ✅ Yes | ✅ Yes | Local (IndexedDB) |
-| **Sleep** | ✅ Yes | ✅ Yes | Local (IndexedDB) |
-| **Energy levels** | ✅ Yes | ✅ Yes | Local (IndexedDB) |
-| **Medication** | ✅ Yes | ✅ Yes | Local (IndexedDB) |
-| **Symptoms** | ✅ Yes | ✅ Yes | Local (IndexedDB) |
-| **Exercise** | ✅ Yes | ✅ Yes | Local (IndexedDB) |
-| **Nutrition** | ✅ Yes | ✅ Yes | Local (IndexedDB) |
-
-**Details:**
-- All health data is stored **locally on device** by default using IndexedDB
-- No health data is transmitted to external servers unless user explicitly enables cloud sync
-- On-device insights (cycle predictions, fertility windows, symptom patterns) are computed locally
-- Encryption keys are device-bound
+| Data Type | Collected? | Purpose |
+|-----------|------------|---------|
+| **App interactions** | ✅ Yes | Feature discovery, tutorials, onboarding |
+| **In-app search history** | ✅ Yes | Full-text journal search index (local) |
+| **Installed apps** | ❌ No | N/A |
+| **Other user-generated content** | ✅ Yes | Calendar notes, journal entries, reflections |
+| **Other actions** | ✅ Yes | Achievement progress, settings, daily oracle cards |
 
 **Play Console Selections:**
-- [x] Health & fitness → App functionality
+- [x] App interactions → App functionality, Personalization
+- [x] Other user-generated content → App functionality
 
 ---
 
@@ -149,22 +141,6 @@ Last updated: May 7, 2026
 
 ---
 
-### App Activity
-
-| Data Type | Collected? | Purpose |
-|-----------|------------|---------|
-| **App interactions** | ✅ Yes | Feature discovery, tutorials, onboarding |
-| **In-app search history** | ✅ Yes | Full-text journal search index (local) |
-| **Installed apps** | ❌ No | N/A |
-| **Other user-generated content** | ✅ Yes | Calendar notes, journal entries, tracker data |
-| **Other actions** | ✅ Yes | Achievement progress, settings, daily oracle cards |
-
-**Play Console Selections:**
-- [x] App interactions → App functionality, Personalization
-- [x] Other user-generated content → App functionality
-
----
-
 ### App Info & Performance
 
 | Data Type | Collected? | Purpose | Shared? |
@@ -211,7 +187,6 @@ Last updated: May 7, 2026
 **Important Notes:**
 - Core app functionality requires NO data sharing
 - AI features are completely optional and user-controlled
-- Health data is NEVER shared with AI providers
 - All data sharing requires explicit user action
 
 **Play Console Selections:**
@@ -279,7 +254,7 @@ Last updated: May 7, 2026
 - [ ] Target audience includes children under 13
 - ✅ Primary audience: Adults (18+) interested in astrology, wellness tracking, and calendar tools
 
-**Note:** The app contains health tracking features (menstrual cycle, fertility) and wellness tools intended for adult users.
+**Note:** The app contains spiritual wellness tools intended for adult users.
 
 ---
 
@@ -302,9 +277,8 @@ Last updated: May 7, 2026
 
 **Target Audience:** Adults 18+  
 **Content Descriptors:**
-- Health & wellness references
 - Astrology and spiritual content
-- Crisis support resources (988 Lifeline, Crisis Text Line — displayed for user safety)
+- Community connection resources
 
 ---
 
@@ -314,7 +288,7 @@ Last updated: May 7, 2026
 - [x] Location → Approximate + Precise
 - [x] Personal info → Name, Email, Other info (birth data)
 - [ ] Financial info
-- [x] Health & fitness
+- [ ] Health & fitness
 - [x] Messages
 - [x] Photos & videos
 - [x] Audio
