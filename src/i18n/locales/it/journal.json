@@ -253,8 +253,9 @@
     "oracle": "Oracolo",
     "scribe": "Scrittura",
     "entries": "Voci",
-    "tracker": "Tracker",
-    "dailyDraw": "Daily Draw"
+    "tracker": "Comunità",
+    "dailyDraw": "Daily Draw",
+    "community": "Comunità"
   },
   "importExport": {
     "title": "Importa / Esporta",
@@ -285,8 +286,8 @@
     "tierCore": "core",
     "tierAmbient": "ambient",
     "tierStandard": "standard",
-    "trackerReminders": "Promemoria del Tracker",
-    "trackerRemindersDesc": "Sottili spintose basate sui tuoi tracker attivi (ciclo, umore, sonno, energia...)",
+    "reflectionReminders": "Promemoria di riflessione",
+    "reflectionRemindersDesc": "Sottili spintose basate sui tuoi tracker attivi",
     "dailyReflectionPrompt": "Prompt di Riflessione Giornaliera",
     "celestialInsightAlerts": "Avvisi di Indizi Celesti",
     "dailyReflectionPromptDesc": "Prompt di sera per riflettere e scrivere nel diario",

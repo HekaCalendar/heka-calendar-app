@@ -253,8 +253,9 @@
     "oracle": "Oracle",
     "scribe": "Skriver",
     "entries": "Indlæg",
-    "tracker": "Tracker",
-    "dailyDraw": "Daily Draw"
+    "tracker": "Fællesskab",
+    "dailyDraw": "Daily Draw",
+    "community": "Fællesskab"
   },
   "importExport": {
     "title": "Importer / Eksporter",
@@ -285,8 +286,8 @@
     "tierCore": "kerne",
     "tierAmbient": "omgivning",
     "tierStandard": "standard",
-    "trackerReminders": "Tracker Påmindelser",
-    "trackerRemindersDesc": "Bløde puffe baseret på dine aktive trackere (cyklus, humør, søvn, energi...)",
+    "reflectionReminders": "Refleksion Påmindelser",
+    "reflectionRemindersDesc": "Bløde puffe baseret på dine aktive trackere",
     "dailyReflectionPrompt": "Daglig Reflektionsprompt",
     "celestialInsightAlerts": "Himmelske Indsigt-advarsler",
     "dailyReflectionPromptDesc": "Aftenprompt til refleksion og journalføring",

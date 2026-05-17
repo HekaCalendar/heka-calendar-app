@@ -27,7 +27,7 @@ export const OracleNavigation: React.FC<OracleNavigationProps> = ({
     { id: 'entries', label: t('navigation.entries'), icon: '📜', count: totalEntries + calendarNotes },
     { id: 'draw', label: t('navigation.dailyDraw'), icon: '✨' },
     { id: 'scribe', label: t('navigation.scribe'), icon: '✍️' },
-    { id: 'tracker', label: t('navigation.tracker'), icon: '🌙' },
+    { id: 'community', label: t('navigation.community'), icon: '🤝' },
   ] as const;
 
   return (

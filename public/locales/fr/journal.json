@@ -253,8 +253,9 @@
     "oracle": "Oracle",
     "scribe": "Scribe",
     "entries": "Entrées",
-    "tracker": "Tracker",
-    "dailyDraw": "Daily Draw"
+    "tracker": "Communauté",
+    "dailyDraw": "Daily Draw",
+    "community": "Communauté"
   },
   "importExport": {
     "title": "Import / Export",
@@ -285,8 +286,8 @@
     "tierCore": "cœur",
     "tierAmbient": "ambiant",
     "tierStandard": "standard",
-    "trackerReminders": "Rappels du Traqueur",
-    "trackerRemindersDesc": "Encouragements doux basés sur vos trackers actifs (cycle, humeur, sommeil, énergie...)",
+    "reflectionReminders": "Rappels de réflexion",
+    "reflectionRemindersDesc": "Encouragements doux basés sur vos trackers actifs",
     "dailyReflectionPrompt": "Sujet de Réflexion Quotidien",
     "celestialInsightAlerts": "Alertes d'Aperçu Céleste",
     "dailyReflectionPromptDesc": "Sujet de réflexion du soir pour vous aider à vous pencher et à rédiger",

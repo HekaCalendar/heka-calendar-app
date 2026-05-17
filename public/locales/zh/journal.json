@@ -253,8 +253,9 @@
     "oracle": "神谕",
     "scribe": "抄写员",
     "entries": "条目",
-    "tracker": "追踪器",
-    "dailyDraw": "Daily Draw"
+    "tracker": "社区",
+    "dailyDraw": "Daily Draw",
+    "community": "社区"
   },
   "importExport": {
     "title": "导入/导出",
@@ -285,8 +286,8 @@
     "tierCore": "核心",
     "tierAmbient": "环境",
     "tierStandard": "标准",
-    "trackerReminders": "追踪器提醒",
-    "trackerRemindersDesc": "基于你的活跃追踪器（周期、情绪、睡眠、能量...）的温和提示",
+    "reflectionReminders": "反思提醒",
+    "reflectionRemindersDesc": "基于你的活跃追踪器（周期、情绪、睡眠、能量...）的温和提示",
     "dailyReflectionPrompt": "每日反思提示",
     "celestialInsightAlerts": "天体洞察提醒",
     "dailyReflectionPromptDesc": "晚上的提示，用于反思和记录",

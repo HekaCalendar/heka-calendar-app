@@ -53,7 +53,7 @@ function getAllKeys(section: NotificationSection): string[] {
     case 'circle':
       return ['friendRequests', 'taskRequests', 'taskDueReminders'];
     case 'journal':
-      return ['trackerReminders', 'dailyReflectionPrompt', 'celestialInsightAlert'];
+      return ['reflectionReminders', 'dailyReflectionPrompt', 'celestialInsightAlert'];
     case 'planner':
       return ['taskReminders', 'dailyBriefing', 'streakSaver', 'completionCelebrations', 'complementaryTasks'];
     default:

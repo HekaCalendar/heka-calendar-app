@@ -84,10 +84,10 @@ export const JournalNotificationSettings: React.FC = () => {
   return (
     <div className="journal-notification-settings">
       <Switch
-        checked={prefs.trackerReminders}
-        onChange={() => toggle('trackerReminders')}
-        label={t('notifications.trackerReminders')}
-        description={t('notifications.trackerRemindersDesc')}
+        checked={prefs.reflectionReminders}
+        onChange={() => toggle('reflectionReminders')}
+        label={t('notifications.reflectionReminders')}
+        description={t('notifications.reflectionRemindersDesc')}
         tier="standard"
       />
       <Switch

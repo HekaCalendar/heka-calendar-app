@@ -29,13 +29,13 @@ const JournalNotificationArea: React.FC = () => {
   const prefs = useSelector((state: RootState) => state.calendar.notificationPreferences.journal);
   const globalEnabled = useSelector((state: RootState) => state.calendar.notificationPreferences.globalEnabled);
 
-  const allOn = prefs.trackerReminders && prefs.dailyReflectionPrompt && prefs.celestialInsightAlert;
+  const allOn = prefs.reflectionReminders && prefs.dailyReflectionPrompt && prefs.celestialInsightAlert;
 
   const toggleAll = () => {
     const next = !allOn;
     dispatch(updateNotificationPreferences({
       section: 'journal',
-      prefs: { trackerReminders: next, dailyReflectionPrompt: next, celestialInsightAlert: next }
+      prefs: { reflectionReminders: next, dailyReflectionPrompt: next, celestialInsightAlert: next }
     }));
   };
 

@@ -253,8 +253,9 @@
     "oracle": "Оракул",
     "scribe": "Писец",
     "entries": "Записи",
-    "tracker": "Трекер",
-    "dailyDraw": "Daily Draw"
+    "tracker": "Сообщество",
+    "dailyDraw": "Daily Draw",
+    "community": "Сообщество"
   },
   "importExport": {
     "title": "Импорт / Экспорт",
@@ -285,8 +286,8 @@
     "tierCore": "ядро",
     "tierAmbient": "амбиент",
     "tierStandard": "стандарт",
-    "trackerReminders": "Напоминания трекера",
-    "trackerRemindersDesc": "Тихие подсказки на основе ваших активных трекеров (цикл, настроение, сон, энергия...)",
+    "reflectionReminders": "Напоминания для размышлений",
+    "reflectionRemindersDesc": "Тихие подсказки на основе ваших активных трекеров",
     "dailyReflectionPrompt": "Ежедневное вдохновение для размышления",
     "celestialInsightAlerts": "Уведомления о небесных истинах",
     "dailyReflectionPromptDesc": "Вечернее вдохновение для размышления и записи в журнал",

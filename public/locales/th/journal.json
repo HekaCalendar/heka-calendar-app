@@ -253,8 +253,9 @@
     "oracle": "โอราเคิล",
     "scribe": "นักบันทึก",
     "entries": "บันทึก",
-    "tracker": "ตัวติดตาม",
-    "dailyDraw": "Daily Draw"
+    "tracker": "ชุมชน",
+    "dailyDraw": "Daily Draw",
+    "community": "ชุมชน"
   },
   "importExport": {
     "title": "นำเข้า / ส่งออก",
@@ -285,8 +286,8 @@
     "tierCore": "หลัก",
     "tierAmbient": "แวดล้อม",
     "tierStandard": "มาตรฐาน",
-    "trackerReminders": "การเตือนความจำตัวติดตาม",
-    "trackerRemindersDesc": "การเตือนชั่วคราวขึ้นอยู่กับตัวติดตามที่ใช้งานอยู่ ( cylcle, mood, sleep, energy...)",
+    "reflectionReminders": "การเตือนความจำการทบทวน",
+    "reflectionRemindersDesc": "การเตือนชั่วคราวขึ้นอยู่กับตัวติดตามที่ใช้งานอยู่ ( cylcle, mood, sleep, energy...)",
     "dailyReflectionPrompt": "คำถามการสะท้อนวันAILY",
     "celestialInsightAlerts": "การแจ้งเตือน洞见天文",
     "dailyReflectionPromptDesc": "คำถามสะท้อนในตอนเย็นเพื่อให้คุณสะท้อนและบันทึกลงสมุด",

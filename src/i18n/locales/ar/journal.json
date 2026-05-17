@@ -253,8 +253,9 @@
     "oracle": "الأوراكل",
     "scribe": "الكاتب",
     "entries": "الإدخالات",
-    "tracker": "المتتبع",
-    "dailyDraw": "Daily Draw"
+    "tracker": "المجتمع",
+    "dailyDraw": "Daily Draw",
+    "community": "المجتمع"
   },
   "importExport": {
     "title": "استيراد / تصدير",
@@ -285,8 +286,8 @@
     "tierCore": "جوهري",
     "tierAmbient": "محيط",
     "tierStandard": "قياسي",
-    "trackerReminders": "تذكيرات المتتبع",
-    "trackerRemindersDesc": "إشارات خفيفة بناءً على المتتبعات النشطة (الدورة، المزاج، النوم، الطاقة...)",
+    "reflectionReminders": "تذكيرات التأمل",
+    "reflectionRemindersDesc": "إشارات خفيفة بناءً على المتتبعات النشطة",
     "dailyReflectionPrompt": "إشارة استعراض يومية",
     "celestialInsightAlerts": "إشعارات ال洞见 السماوية",
     "dailyReflectionPromptDesc": "إشارة مسائية لمراجعة وكتابة في السجل",

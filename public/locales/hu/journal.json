@@ -253,8 +253,9 @@
     "oracle": "Oracle",
     "scribe": "Író",
     "entries": "Bejegyzések",
-    "tracker": "Követő",
-    "dailyDraw": "Daily Draw"
+    "tracker": "Közösség",
+    "dailyDraw": "Daily Draw",
+    "community": "Közösség"
   },
   "importExport": {
     "title": "Import / Export",
@@ -285,8 +286,8 @@
     "tierCore": "mag",
     "tierAmbient": "környezeti",
     "tierStandard": "szabványos",
-    "trackerReminders": "Követő emlékeztetők",
-    "trackerRemindersDesc": "Finom ösztönzés az aktív követők alapján (ciklus, hangulat, alvás, energia...)",
+    "reflectionReminders": "Elmélyülés emlékeztetők",
+    "reflectionRemindersDesc": "Finom ösztönzés az aktív követők alapján (ciklus, hangulat, alvás, energia...)",
     "dailyReflectionPrompt": "Napi反射提示",
     "celestialInsightAlerts": "Célestis észrevételi riasztások",
     "dailyReflectionPromptDesc": "Estei prompt a reflexió és a naplózáshoz",

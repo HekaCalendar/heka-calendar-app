@@ -253,8 +253,9 @@
     "oracle": "Oracle",
     "scribe": "Skribent",
     "entries": "Poster",
-    "tracker": "Spårare",
-    "dailyDraw": "Daily Draw"
+    "tracker": "Gemenskap",
+    "dailyDraw": "Daily Draw",
+    "community": "Gemenskap"
   },
   "importExport": {
     "title": "Importera / Exportera",
@@ -285,8 +286,8 @@
     "tierCore": "kärn",
     "tierAmbient": "omgivande",
     "tierStandard": "standard",
-    "trackerReminders": "Tracker Påminnelser",
-    "trackerRemindersDesc": "Mjuka påminnelser baserat på dina aktiva spårare (cykel, humör, sömn, energi...)",
+    "reflectionReminders": "Reflektion Påminnelser",
+    "reflectionRemindersDesc": "Mjuka påminnelser baserat på dina aktiva spårare",
     "dailyReflectionPrompt": "Daglig Reflektionsprompt",
     "celestialInsightAlerts": "Himlakunskap Aviseringar",
     "dailyReflectionPromptDesc": "Kvällsprompt för att reflektera och skriva i dagboken",

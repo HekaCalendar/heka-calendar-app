@@ -253,8 +253,9 @@
     "oracle": "Oracle",
     "scribe": "Kaydedici",
     "entries": "Girişler",
-    "tracker": "İzleyici",
-    "dailyDraw": "Daily Draw"
+    "tracker": "Topluluk",
+    "dailyDraw": "Daily Draw",
+    "community": "Topluluk"
   },
   "importExport": {
     "title": "İçe Aktar / Dışa Aktar",
@@ -285,8 +286,8 @@
     "tierCore": "çekirdek",
     "tierAmbient": "çevresel",
     "tierStandard": "standart",
-    "trackerReminders": "İzleyici Hatırlatmaları",
-    "trackerRemindersDesc": "Aktif izleyicilerinize (döngü, ruh hali, uyku, enerji...) dayalı nazik itifalar",
+    "reflectionReminders": "Yansıma Hatırlatmaları",
+    "reflectionRemindersDesc": "Aktif izleyicilerinize (döngü, ruh hali, uyku, enerji...) dayalı nazik itifalar",
     "dailyReflectionPrompt": "Günlük Yansıma İstemesi",
     "celestialInsightAlerts": "Göksel İçgi Uyarıları",
     "dailyReflectionPromptDesc": "Günlük yansıma ve günlüğe yazma için akşam istemi",

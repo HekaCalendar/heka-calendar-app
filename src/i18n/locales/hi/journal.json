@@ -253,8 +253,9 @@
     "oracle": "ओरैकल",
     "scribe": "लेखक",
     "entries": "प्रविष्टियाँ",
-    "tracker": "ट्रैकर",
-    "dailyDraw": "Daily Draw"
+    "tracker": "समुदाय",
+    "dailyDraw": "Daily Draw",
+    "community": "समुदाय"
   },
   "importExport": {
     "title": "आयात / निर्यात",
@@ -285,8 +286,8 @@
     "tierCore": "कोर",
     "tierAmbient": "परिस्थितिक",
     "tierStandard": "मानक",
-    "trackerReminders": "ट्रैकर अनुस्मारक",
-    "trackerRemindersDesc": "अपने सक्रिय ट्रैकर (चक्र, मूड, निद्रा, ऊर्जा...) के आधार पर हल्के संकेत",
+    "reflectionReminders": "चिंतन अनुस्मारक",
+    "reflectionRemindersDesc": "अपने सक्रिय ट्रैकर के आधार पर हल्के संकेत",
     "dailyReflectionPrompt": "दैनिक चिंतन प्रॉम्प्ट",
     "celestialInsightAlerts": "स्वर्गीय ज्ञान चेतावनियाँ",
     "dailyReflectionPromptDesc": "शब्द-चिंता करने और जर्नल करने के लिए शाम का प्रॉम्प्ट",

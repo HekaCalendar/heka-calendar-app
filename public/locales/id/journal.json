@@ -253,8 +253,9 @@
     "oracle": "Oracle",
     "scribe": "Pewarisi",
     "entries": "Masukan",
-    "tracker": "Pelacak",
-    "dailyDraw": "Daily Draw"
+    "tracker": "Komunitas",
+    "dailyDraw": "Daily Draw",
+    "community": "Komunitas"
   },
   "importExport": {
     "title": "Impor / Ekspor",
@@ -285,8 +286,8 @@
     "tierCore": "intisari",
     "tierAmbient": "lingkungan",
     "tierStandard": "standar",
-    "trackerReminders": "Pengingat Pelacak",
-    "trackerRemindersDesc": "Dorongan yang halus berdasarkan pelacak aktif Anda (siklus, suasana hati, tidur, energi...)",
+    "reflectionReminders": "Pengingat Renungan",
+    "reflectionRemindersDesc": "Dorongan yang halus berdasarkan pelacak aktif Anda",
     "dailyReflectionPrompt": "Prompt Refleksi Harian",
     "celestialInsightAlerts": "Peringatan Wawasan Langit",
     "dailyReflectionPromptDesc": "Prompt sore untuk merefleksi dan menulis jurnal",

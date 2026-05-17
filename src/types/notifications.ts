@@ -102,7 +102,7 @@ export interface CircleNotificationPrefs {
 }
 
 export interface JournalNotificationPrefs {
-  trackerReminders: boolean;
+  reflectionReminders: boolean;
   dailyReflectionPrompt: boolean;
   celestialInsightAlert: boolean;
 }
@@ -162,7 +162,7 @@ export const DEFAULT_CIRCLE_NOTIFICATION_PREFS: CircleNotificationPrefs = {
 };
 
 export const DEFAULT_JOURNAL_NOTIFICATION_PREFS: JournalNotificationPrefs = {
-  trackerReminders: false,
+  reflectionReminders: false,
   dailyReflectionPrompt: false,
   celestialInsightAlert: false,
 };
@@ -220,7 +220,7 @@ export const NOTIFICATION_TYPES = {
   TASK_DUE_SOON: 'task-due-soon',
 
   // Journal
-  TRACKER_REMINDER: 'tracker-reminder',
+  TRACKER_REMINDER: 'reflection-reminder',
   DAILY_REFLECTION_PROMPT: 'daily-reflection-prompt',
   CELESTIAL_INSIGHT_ALERT: 'celestial-insight-alert',
 

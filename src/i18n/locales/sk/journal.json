@@ -253,8 +253,9 @@
     "oracle": "Výrok",
     "scribe": "Zápisovateľ",
     "entries": "Zápisy",
-    "tracker": "Sledovač",
-    "dailyDraw": "Daily Draw"
+    "tracker": "Komunita",
+    "dailyDraw": "Daily Draw",
+    "community": "Komunita"
   },
   "importExport": {
     "title": "Import / Export",
@@ -285,8 +286,8 @@
     "tierCore": "jadro",
     "tierAmbient": "prostredie",
     "tierStandard": "štandardné",
-    "trackerReminders": "Pripomienky Sledovača",
-    "trackerRemindersDesc": "Jemné podpory založené na vašich aktívnych sledovačoch (cyklus, nálada, spánok, energia...)",
+    "reflectionReminders": "Pripomienky zamyslenia",
+    "reflectionRemindersDesc": "Jemné podpory založené na vašich aktívnych sledovačoch",
     "dailyReflectionPrompt": "Denne Denný Reflektor",
     "celestialInsightAlerts": "Upozornenia Nebeského Prehľadu",
     "dailyReflectionPromptDesc": "Odpoveď večerného času na reflektovanie a zápis do denníka",

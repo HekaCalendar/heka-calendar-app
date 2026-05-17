@@ -253,8 +253,9 @@
     "oracle": "Oráculo",
     "scribe": "Escritor",
     "entries": "Entradas",
-    "tracker": "Rastreador",
-    "dailyDraw": "Daily Draw"
+    "tracker": "Comunidad",
+    "dailyDraw": "Daily Draw",
+    "community": "Comunidad"
   },
   "importExport": {
     "title": "Importar / Exportar",
@@ -285,8 +286,8 @@
     "tierCore": "nucleo",
     "tierAmbient": "ambiental",
     "tierStandard": "estándar",
-    "trackerReminders": "Recordatorios del Rastreador",
-    "trackerRemindersDesc": "Suaves recordatorios basados en tus rastreadores activos (ciclo, humor, sueño, energía...)",
+    "reflectionReminders": "Recordatorios de reflexión",
+    "reflectionRemindersDesc": "Suaves recordatorios basados en tus rastreadores activos",
     "dailyReflectionPrompt": "Recordatorio de Reflexión Diaria",
     "celestialInsightAlerts": "Alertas de Insights Celestiales",
     "dailyReflectionPromptDesc": "Recordatorio nocturno para reflexionar y escribir en el diario",

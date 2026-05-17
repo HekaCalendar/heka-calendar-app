@@ -253,8 +253,9 @@
     "oracle": "오라클",
     "scribe": "기록자",
     "entries": "항목",
-    "tracker": "트래커",
-    "dailyDraw": "Daily Draw"
+    "tracker": "커뮤니티",
+    "dailyDraw": "Daily Draw",
+    "community": "커뮤니ティ"
   },
   "importExport": {
     "title": "가져오기 / 내보내기",
@@ -285,8 +286,8 @@
     "tierCore": "코어",
     "tierAmbient": "암밴트",
     "tierStandard": "표준",
-    "trackerReminders": "트래커 알림",
-    "trackerRemindersDesc": "활성 트래커(순환기, 기분, 수면, 에너지...) 기반의 부드러운 촉진",
+    "reflectionReminders": "성찰 알림",
+    "reflectionRemindersDesc": "활성 트래커(순환기, 기분, 수면, 에너지...) 기반의 부드러운 촉진",
     "dailyReflectionPrompt": "일일 반성 프롬프트",
     "celestialInsightAlerts": "천체 통찰력 알림",
     "dailyReflectionPromptDesc": "저널링을 위한 저녁 프롬프트",

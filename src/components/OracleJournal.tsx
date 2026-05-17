@@ -530,8 +530,8 @@ export const OracleJournal: React.FC<OracleJournalProps> = ({ isOpen, onClose })
         />
       )}
       
-      {mode === 'tracker' && (
-        <div className="oracle-mode-tracker-wrapper">
+      {mode === 'community' && (
+        <div className="oracle-mode-community-wrapper">
           <OracleModeTracker
             date={new Date().toISOString().split('T')[0]}
             onClose={() => setMode('oracle')}

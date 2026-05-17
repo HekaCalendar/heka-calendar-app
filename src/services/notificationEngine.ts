@@ -1055,7 +1055,7 @@ class NotificationEngineClass {
         if (type === 'task-completed' || type === 'task-declined') return prefs.circle.taskRequests;
         return true;
       case 'journal':
-        if (type === 'tracker-reminder') return prefs.journal.trackerReminders;
+        if (type === 'reflection-reminder') return prefs.journal.reflectionReminders;
         if (type === 'daily-reflection-prompt') return prefs.journal.dailyReflectionPrompt;
         if (type === 'celestial-insight-alert') return prefs.journal.celestialInsightAlert;
         return true;
@@ -1371,7 +1371,7 @@ class NotificationEngineClass {
 
   async checkTrackerReminders(): Promise<void> {
     const prefs = store.getState().calendar.notificationPreferences.journal;
-    if (!prefs.trackerReminders) return;
+    if (!prefs.reflectionReminders) return;
 
     try {
       const { TrackerManager } = await import('./trackerManager');
@@ -1399,7 +1399,7 @@ class NotificationEngineClass {
         if (!recent) {
           // Never logged — suggest starting
           const result = await this.scheduleTemplated(
-            'tracker-reminder',
+            'reflection-reminder',
             'standard',
             'journal',
             new Date(Date.now() + 5000),
@@ -1420,7 +1420,7 @@ class NotificationEngineClass {
 
         if (daysSince >= threshold) {
           const result = await this.scheduleTemplated(
-            'tracker-reminder',
+            'reflection-reminder',
             'standard',
             'journal',
             new Date(Date.now() + 5000),

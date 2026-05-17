@@ -253,8 +253,9 @@
     "oracle": "Оракул",
     "scribe": "Съчинятел",
     "entries": "Входи",
-    "tracker": "Пракословец",
-    "dailyDraw": "Daily Draw"
+    "tracker": "Общност",
+    "dailyDraw": "Daily Draw",
+    "community": "Общност"
   },
   "importExport": {
     "title": "Импорт / Експорт",
@@ -285,8 +286,8 @@
     "tierCore": "ядър",
     "tierAmbient": "околна",
     "tierStandard": "стандарт",
-    "trackerReminders": "Напомняния за проследяване",
-    "trackerRemindersDesc": "Дъждови капки въз основа на вашите активни проследителни (цикъл, настроение, сън, енергия...)",
+    "reflectionReminders": "Напомняния за размисъл",
+    "reflectionRemindersDesc": "Дъждови капки въз основа на вашите активни проследителни (цикъл, настроение, сън, енергия...)",
     "dailyReflectionPrompt": "Дневно размисляне",
     "celestialInsightAlerts": "Известия за небесни открития",
     "dailyReflectionPromptDesc": "Събоден промпт за размисляне и писане в дневника",

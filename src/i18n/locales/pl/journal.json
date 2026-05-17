@@ -253,8 +253,9 @@
     "oracle": "Orakulum",
     "scribe": "Pisarz",
     "entries": "Wpisy",
-    "tracker": "Tracker",
-    "dailyDraw": "Daily Draw"
+    "tracker": "Społeczność",
+    "dailyDraw": "Daily Draw",
+    "community": "Społeczność"
   },
   "importExport": {
     "title": "Importuj / Eksportuj",
@@ -285,8 +286,8 @@
     "tierCore": "rdzeń",
     "tierAmbient": "środowiskowy",
     "tierStandard": "standardowy",
-    "trackerReminders": "Przypomnienia Trackera",
-    "trackerRemindersDesc": "Delikatne przypomnienia na podstawie twoich aktywnych trackerów (cykl, nastrój, sen, energia...)",
+    "reflectionReminders": "Przypomnienia refleksji",
+    "reflectionRemindersDesc": "Delikatne przypomnienia na podstawie twoich aktywnych trackerów (cykl, nastrój, sen, energia...)",
     "dailyReflectionPrompt": "Dzienne Wskazówki Refleksyjne",
     "celestialInsightAlerts": "Alerty Nieboskich Wglądów",
     "dailyReflectionPromptDesc": "Wczesnowieczorne wskazówki do refleksji i dziennika",

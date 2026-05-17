@@ -253,8 +253,9 @@
     "oracle": "Ιερό Δημιουργό",
     "scribe": "Γραφέας",
     "entries": "Κείμενα",
-    "tracker": "Ακολουθητής",
-    "dailyDraw": "Daily Draw"
+    "tracker": "Κοινότητα",
+    "dailyDraw": "Daily Draw",
+    "community": "Κοινότητα"
   },
   "importExport": {
     "title": "Εισαγωγή / Εξαγωγή",
@@ -285,8 +286,8 @@
     "tierCore": "κύριο",
     "tierAmbient": "περιβάλλον",
     "tierStandard": "στάνταρντ",
-    "trackerReminders": "Υπενθυμίσεις Καταλόγων",
-    "trackerRemindersDesc": "Ευαίσθητες υπόδειξης βασισμένες στους ενεργούς καταλόγους σας (κύκλος, διάθεση, ύπνος, ενέργεια...)",
+    "reflectionReminders": "Υπενθυμίσεις Αντανάκλασης",
+    "reflectionRemindersDesc": "Ευαίσθητες υπόδειξης βασισμένες στους ενεργούς καταλόγους σας (κύκλος, διάθεση, ύπνος, ενέργεια...)",
     "dailyReflectionPrompt": "Ημερήσια Προώθηση Αναφοράς",
     "celestialInsightAlerts": "Ειδοποιήσεις Ουρανικών Πληροφοριών",
     "dailyReflectionPromptDesc": "Πρωινή υπόδειξη για να αναφερθείτε και να γράψετε στο ημερολόγιο",

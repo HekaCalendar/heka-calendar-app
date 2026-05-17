@@ -253,8 +253,9 @@
     "oracle": "Orakel",
     "scribe": "Schriftgeleerde",
     "entries": "Invoer",
-    "tracker": "Tracker",
-    "dailyDraw": "Daily Draw"
+    "tracker": "Gemeenschap",
+    "dailyDraw": "Daily Draw",
+    "community": "Gemeenschap"
   },
   "importExport": {
     "title": "Importeren / Exporteren",
@@ -285,8 +286,8 @@
     "tierCore": "kern",
     "tierAmbient": "omgevings",
     "tierStandard": "standaard",
-    "trackerReminders": "Tracker Herinneringen",
-    "trackerRemindersDesc": "Zachte aanmoedigingen gebaseerd op je actieve trackers (cyclus, stemming, slaap, energie...)",
+    "reflectionReminders": "Reflectie Herinneringen",
+    "reflectionRemindersDesc": "Zachte aanmoedigingen gebaseerd op je actieve trackers (cyclus, stemming, slaap, energie...)",
     "dailyReflectionPrompt": "Dagelijkse Reflectieprompt",
     "celestialInsightAlerts": "Hemelse Inzichtwaarschuwingen",
     "dailyReflectionPromptDesc": "Avondprompt om na te denken en te dagboeken",

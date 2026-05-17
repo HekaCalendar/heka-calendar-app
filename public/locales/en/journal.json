@@ -234,8 +234,9 @@
     "oracle": "Oracle",
     "scribe": "Scribe",
     "entries": "Entries",
-    "tracker": "Tracker",
-    "dailyDraw": "Daily Draw"
+    "tracker": "Community",
+    "dailyDraw": "Daily Draw",
+    "community": "Community"
   },
   "entriesMode": {
     "noEntries": "No entries",
@@ -285,8 +286,8 @@
     "tierCore": "Tier core",
     "tierAmbient": "Tier ambient",
     "tierStandard": "Tier standard",
-    "trackerReminders": "Tracker reminders",
-    "trackerRemindersDesc": "Tracker reminders desc",
+    "reflectionReminders": "Reflection reminders",
+    "reflectionRemindersDesc": "Gentle nudges based on your wellness reflections (mood, sleep, energy...)",
     "dailyReflectionPrompt": "Daily reflection prompt",
     "celestialInsightAlerts": "Celestial insight alerts",
     "dailyReflectionPromptDesc": "Daily reflection prompt desc",

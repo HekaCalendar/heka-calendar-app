@@ -253,8 +253,9 @@
     "oracle": "Oracle",
     "scribe": "Biên soạn",
     "entries": "Mục nhập",
-    "tracker": "Theo dõi",
-    "dailyDraw": "Daily Draw"
+    "tracker": "Cộng đồng",
+    "dailyDraw": "Daily Draw",
+    "community": "Cộng đồng"
   },
   "importExport": {
     "title": "Nhập / Xuất",
@@ -285,8 +286,8 @@
     "tierCore": "core",
     "tierAmbient": "âm",
     "tierStandard": "tiêu chuẩn",
-    "trackerReminders": "Nhắc nhở Theo dõi",
-    "trackerRemindersDesc": "Các lời nhắc nhẹ nhàng dựa trên trình theo dõi đang hoạt động của bạn (chủ kỳ, tâm trạng, giấc ngủ, năng lượng...)",
+    "reflectionReminders": "Nhắc nhở Suy ngẫm",
+    "reflectionRemindersDesc": "Các lời nhắc nhẹ nhàng dựa trên trình theo dõi đang hoạt động của bạn (chủ kỳ, tâm trạng, giấc ngủ, năng lượng...)",
     "dailyReflectionPrompt": "Lời nhắc Suy nghĩ Hàng ngày",
     "celestialInsightAlerts": "Thông báo Lời khuyên Thiên văn",
     "dailyReflectionPromptDesc": "Lời nhắc vào buổi tối để suy nghĩ và viết nhật ký",

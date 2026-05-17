@@ -241,9 +241,8 @@ const AppContentComponent: React.FC = () => {
     type: 'invite' | 'task';
   }>({ show: false, message: '', type: 'invite' });
 
-  // Pure mode and tracker states
+  // Pure mode state
   const [isPureMode, setIsPureMode] = useState(false);
-  const [showTracker, setShowTracker] = useState(false);
   
   // Deferred mount for non-critical decorative components
   // This prevents jank by letting the calendar grid paint first
@@ -849,11 +848,7 @@ const AppContentComponent: React.FC = () => {
     });
   }, []);
 
-  const closeTracker = useCallback(() => {
-    setShowTracker(false);
-  }, []);
-
-  // Construct minimal CalendarDay for PureModeDayPanel
+// Construct minimal CalendarDay for PureModeDayPanel
   const pureModeDay: CalendarDay | null = useMemo(() => {
     if (!selectedDate) return null;
     return {
@@ -1208,14 +1203,6 @@ const AppContentComponent: React.FC = () => {
           modalState.setShowFriendsModal(true);
         }}
       />
-
-      {/* Community Hub */}
-      {showTracker && (
-        <CommunityHub
-          isOpen={true}
-          onClose={closeTracker}
-        />
-      )}
 
       {/* AI Coach Overlay (deferred to reduce startup jank) */}
       {deferCoach && <CalendarAICoach focusedDate={selectedDate} />}

@@ -253,8 +253,9 @@
     "oracle": "אוראקל",
     "scribe": "סופר",
     "entries": "רשומות",
-    "tracker": "מעקב",
-    "dailyDraw": "Daily Draw"
+    "tracker": "קהילה",
+    "dailyDraw": "Daily Draw",
+    "community": "קהילה"
   },
   "importExport": {
     "title": "יבוא / ייצוא",
@@ -285,8 +286,8 @@
     "tierCore": "ליבת",
     "tierAmbient": "סביב",
     "tierStandard": "סטנדרטי",
-    "trackerReminders": "תזכורות מעקב",
-    "trackerRemindersDesc": "דחיפות נטולות מבוססות על המעקבים הפעילים שלך (מחזור, רגש, שינה, אנרגיה...)",
+    "reflectionReminders": "תזכורות הרהור",
+    "reflectionRemindersDesc": "דחיפות נטולות מבוססות על המעקבים הפעילים שלך (מחזור, רגש, שינה, אנרגיה...)",
     "dailyReflectionPrompt": "בקשה לביקורת יומית",
     "celestialInsightAlerts": "הודעות הבנת שמימית",
     "dailyReflectionPromptDesc": "בקשה לביקורת בערב לביקורת ולכתיבה ביומן",

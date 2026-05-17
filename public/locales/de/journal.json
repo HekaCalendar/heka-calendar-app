@@ -253,8 +253,9 @@
     "oracle": "Orakel",
     "scribe": "Schriftsteller",
     "entries": "Einträge",
-    "tracker": "Tracker",
-    "dailyDraw": "Daily Draw"
+    "tracker": "Gemeinschaft",
+    "dailyDraw": "Daily Draw",
+    "community": "Gemeinschaft"
   },
   "importExport": {
     "title": "Import / Export",
@@ -285,8 +286,8 @@
     "tierCore": "Kern",
     "tierAmbient": "Umfeld",
     "tierStandard": "Standard",
-    "trackerReminders": "TrackerErinnerungen",
-    "trackerRemindersDesc": "Sanfte Anstoßungen basierend auf deinen aktiven Trackern (Zyklus, Stimmung, Schlaf, Energie...)",
+    "reflectionReminders": "Reflexionserinnerungen",
+    "reflectionRemindersDesc": "Sanfte Anstoßungen basierend auf deinen aktiven Trackern",
     "dailyReflectionPrompt": "Tägliche Reflexionsaufforderung",
     "celestialInsightAlerts": "Himmelsweihe-Alarme",
     "dailyReflectionPromptDesc": "Abends Aufforderung zur Reflexion und zum Journalieren",

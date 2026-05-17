@@ -253,8 +253,9 @@
     "oracle": "Orakel",
     "scribe": "Skriver",
     "entries": "Innlegg",
-    "tracker": "Sporingsverktøy",
-    "dailyDraw": "Daily Draw"
+    "tracker": "Samfunn",
+    "dailyDraw": "Daily Draw",
+    "community": "Samfunn"
   },
   "importExport": {
     "title": "Importer / Eksporter",
@@ -285,8 +286,8 @@
     "tierCore": "kjerne",
     "tierAmbient": "omgivelse",
     "tierStandard": "standard",
-    "trackerReminders": "Tracker Påminnelser",
-    "trackerRemindersDesc": "Føle varsler basert på dine aktive trackere (syklus, humør, søvn, energi...)",
+    "reflectionReminders": "Refleksjon Påminnelser",
+    "reflectionRemindersDesc": "Føle varsler basert på dine aktive trackere (syklus, humør, søvn, energi...)",
     "dailyReflectionPrompt": "Daglig Refleksjonsspørsmål",
     "celestialInsightAlerts": "Himmelske Insiktvarsler",
     "dailyReflectionPromptDesc": "Kvældsprompt for å reflektere og skrive i dagboken",

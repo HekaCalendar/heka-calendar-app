@@ -253,8 +253,9 @@
     "oracle": "Oracle",
     "scribe": "Scriitor",
     "entries": "Intrări",
-    "tracker": "Tracker",
-    "dailyDraw": "Daily Draw"
+    "tracker": "Comunitate",
+    "dailyDraw": "Daily Draw",
+    "community": "Comunitate"
   },
   "importExport": {
     "title": "Import / Export",
@@ -285,8 +286,8 @@
     "tierCore": "core",
     "tierAmbient": "ambient",
     "tierStandard": "standard",
-    "trackerReminders": "Memento-uri Tracker",
-    "trackerRemindersDesc": "Memento-uri blânde bazate pe trackerii tăi activi (ciclu, dispoziție, somn, energie...)",
+    "reflectionReminders": "Memento-uri de reflecție",
+    "reflectionRemindersDesc": "Memento-uri blânde bazate pe trackerii tăi activi",
     "dailyReflectionPrompt": "Memento Reflectare Zilnică",
     "celestialInsightAlerts": "Alerte Înțelegeri Cerești",
     "dailyReflectionPromptDesc": "Memento seară pentru a reflecta și a jurnali",

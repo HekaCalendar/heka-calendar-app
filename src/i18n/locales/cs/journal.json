@@ -253,8 +253,9 @@
     "oracle": "Oracle",
     "scribe": "Zápisovatel",
     "entries": "Záznamů",
-    "tracker": "Sledování",
-    "dailyDraw": "Daily Draw"
+    "tracker": "Komunita",
+    "dailyDraw": "Daily Draw",
+    "community": "Komunita"
   },
   "importExport": {
     "title": "Import / Export",
@@ -285,8 +286,8 @@
     "tierCore": "jádro",
     "tierAmbient": "ambiciózní",
     "tierStandard": "standard",
-    "trackerReminders": "Připomínky sledování",
-    "trackerRemindersDesc": "Jemné pobídky na základě vašich aktivních sledování (cyklus, nálada, spánek, energii...)",
+    "reflectionReminders": "Připomínky zamyšlení",
+    "reflectionRemindersDesc": "Jemné pobídky na základě vašich aktivních sledování",
     "dailyReflectionPrompt": "Denní reflektivní výzva",
     "celestialInsightAlerts": "Upozornění nebeských přehledů",
     "dailyReflectionPromptDesc": "Odpolední výzva k reflektování a zápisu do deníku",

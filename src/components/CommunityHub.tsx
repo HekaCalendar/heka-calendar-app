@@ -236,7 +236,7 @@ type HubTab = 'nearby' | 'circles' | 'online' | 'all';
 export const CommunityHub: React.FC<CommunityHubProps> = ({ isOpen, onClose }) => {
   const [activeTab, setActiveTab] = useState<HubTab>('nearby');
   const [selectedRegion, setSelectedRegion] = useState<string>(() => {
-    const lang = i18n.language || 'en';
+    const lang = (i18n.language || 'en').split('-')[0].toLowerCase();
     return LOCALE_TO_REGION[lang] || 'global';
   });
 

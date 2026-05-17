@@ -253,8 +253,9 @@
     "oracle": "Orakko",
     "scribe": "Kirjuri",
     "entries": "Kirjaukset",
-    "tracker": "Seuranta",
-    "dailyDraw": "Daily Draw"
+    "tracker": "Yhteisö",
+    "dailyDraw": "Daily Draw",
+    "community": "Yhteisö"
   },
   "importExport": {
     "title": "Tuonti / Vienti",
@@ -285,8 +286,8 @@
     "tierCore": "ydin",
     "tierAmbient": "ympäristö",
     "tierStandard": "standard",
-    "trackerReminders": "Seurantamuistiinnot",
-    "trackerRemindersDesc": "Pehmeät muistutukset aktiivisista seurantamureista (kyky, tunnelma, uni, energia...)",
+    "reflectionReminders": "Mietiskelymuistutukset",
+    "reflectionRemindersDesc": "Pehmeät muistutukset aktiivisista seurantamureista (kyky, tunnelma, uni, energia...)",
     "dailyReflectionPrompt": "Päivittäinen reflektointi kehote",
     "celestialInsightAlerts": "Taivaallisia insight-ilmoituksia",
     "dailyReflectionPromptDesc": "Iltapäiväinen kehote reflektoida ja kirjoittamaan päiväkirjaan",

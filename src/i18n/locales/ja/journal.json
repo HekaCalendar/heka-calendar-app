@@ -253,8 +253,9 @@
     "oracle": "オラクル",
     "scribe": "書記",
     "entries": "エントリー",
-    "tracker": "トラッカー",
-    "dailyDraw": "Daily Draw"
+    "tracker": "コミュニティ",
+    "dailyDraw": "Daily Draw",
+    "community": "コミュニティ"
   },
   "importExport": {
     "title": "インポート／エクスポート",
@@ -285,8 +286,8 @@
     "tierCore": "コア",
     "tierAmbient": "アンビエント",
     "tierStandard": "スタンダード",
-    "trackerReminders": "トラッカーリマインダー",
-    "trackerRemindersDesc": "アクティブなトラッカー（サイクル、気分、睡眠、エネルギー...）に基づく繊細な促進",
+    "reflectionReminders": "振り返りリマインダー",
+    "reflectionRemindersDesc": "アクティブなトラッカー（サイクル、気分、睡眠、エネルギー...）に基づく繊細な促進",
     "dailyReflectionPrompt": "デイリーリフレクションプロンプト",
     "celestialInsightAlerts": "天体洞察アラート",
     "dailyReflectionPromptDesc": "日記を反映し、夜のプロンプト",
