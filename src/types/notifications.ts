@@ -42,6 +42,10 @@ export interface NotificationRequest {
    *  (e.g. tracker reminders for different trackers, holiday reminders for different holidays).
    *  Defaults to req.type if not provided. */
   dedupKey?: string;
+  /** Android notification channel ID (auto-mapped from tier if not provided) */
+  channelId?: string;
+  /** Action type ID for action buttons (defaults to type) */
+  actionTypeId?: string;
 }
 
 export interface DeliveredNotification {

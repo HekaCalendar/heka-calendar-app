@@ -8,6 +8,8 @@
 
 import { LocalNotifications, type LocalNotificationSchema } from '@capacitor/local-notifications';
 import { NotificationEngine } from './notificationEngine';
+import { NotificationAnalytics } from './notificationAnalytics';
+import { checkStreakMilestone } from './notificationCelebrations';
 import { seededRandom } from './notificationTemplates';
 import type { PlannerTask } from '../types';
 import { calculateCurrentSky, calculatePreciseMoonPhase } from '../astrology/services/calculations/swissCalculations';
@@ -277,6 +279,9 @@ export async function sendCompletionCelebration(task: PlannerTask, streak: numbe
     id,
     extra: { type: 'completion-celebration', taskId: task.id, dayKey: task.dayKey },
   });
+
+  // Check for milestone celebration
+  void checkStreakMilestone(streak);
 }
 
 /**
@@ -318,6 +323,74 @@ export async function sendComplementaryTaskSuggestion(task: PlannerTask): Promis
 // NOTIFICATION TAP HANDLER
 // ═══════════════════════════════════════════════════════════════════════════════
 
+function handleNotificationAction(
+  type: string,
+  actionId: string,
+  notification: LocalNotificationSchema,
+  dayKey?: string
+): void {
+  console.log(`[NotificationAction] ${type} → ${actionId}`);
+
+  // Track analytics
+  const tier = notification.extra?._engineTier || 'standard';
+  const section = notification.extra?._engineSection || 'planner';
+  NotificationAnalytics.recordTapped(type, tier, section, undefined, actionId);
+
+  switch (actionId) {
+    case 'complete':
+      // Mark task as complete
+      if (dayKey) {
+        eventBus.emit('heka-notification-action', { action: 'complete-task', dayKey, taskId: notification.extra?.taskId });
+      }
+      break;
+
+    case 'snooze-15':
+    case 'snooze-30':
+    case 'snooze-1h': {
+      const minutes = actionId === 'snooze-15' ? 15 : actionId === 'snooze-30' ? 30 : 60;
+      eventBus.emit('heka-notification-action', { action: 'snooze', notificationId: String(notification.id), type, minutes });
+      break;
+    }
+
+    case 'open-journal':
+      eventBus.emit('heka:notification:navigate', { target: 'journal' });
+      break;
+
+    case 'open-planner':
+      eventBus.emit('heka:notification:navigate', { target: 'planner' });
+      break;
+
+    case 'open-stars':
+      eventBus.emit('heka:notification:navigate', { target: 'stars' });
+      break;
+
+    case 'open-circle':
+      eventBus.emit('heka:notification:navigate', { target: 'circle' });
+      break;
+
+    case 'accept':
+      eventBus.emit('heka-notification-action', { action: 'accept', type, notificationId: String(notification.id) });
+      break;
+
+    case 'decline':
+      eventBus.emit('heka-notification-action', { action: 'decline', type, notificationId: String(notification.id) });
+      break;
+
+    case 'share':
+      eventBus.emit('heka-notification-action', { action: 'share', type, notificationId: String(notification.id) });
+      break;
+
+    case 'dismiss':
+      // Just track dismissal analytics
+      NotificationAnalytics.recordDismissed(type, tier, section);
+      break;
+
+    default:
+      // Unknown action — just open the app
+      eventBus.emit('heka:notification:navigate', { target: 'main' });
+  }
+}
+
 function recordNotificationDelivery(notification: LocalNotificationSchema): void {
   const extra = notification.extra || {};
   const engineType = extra._engineType || extra.type;
@@ -347,10 +420,11 @@ export function initializePlannerNotificationTapHandler(): () => void {
 
   const cleanups: (() => void)[] = [];
 
-  // Handle notification taps (app was backgrounded / killed)
+  // Handle notification taps and action buttons (app was backgrounded / killed)
   LocalNotifications.addListener('localNotificationActionPerformed', (event) => {
     const extra = event.notification.extra || {};
-    const { type, dayKey, templateIndex } = extra;
+    const { type, dayKey, templateIndex, _engineTier, _engineSection } = extra;
+    const actionId = (event as any).actionId || null;
 
     // Record delivery in history
     recordNotificationDelivery(event.notification);
@@ -359,6 +433,15 @@ export function initializePlannerNotificationTapHandler(): () => void {
     if (type != null && templateIndex != null) {
       NotificationEngine.recordEngagement(type, templateIndex);
     }
+
+    // Handle action buttons
+    if (actionId) {
+      handleNotificationAction(type, actionId, event.notification, dayKey);
+      return;
+    }
+
+    void _engineTier;
+    void _engineSection;
 
     // Helper to dispatch navigation event for App.tsx to handle modals
     const dispatchNav = (target: string, payload?: Record<string, unknown>) => {

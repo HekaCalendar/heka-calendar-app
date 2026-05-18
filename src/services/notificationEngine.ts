@@ -30,6 +30,11 @@ import {
 import { generateNotificationContent } from './notificationTemplates';
 import { store } from '../store';
 import { eventBus } from './eventBus';
+import { initializeNotificationChannels, getChannelForTier, getActionsForType } from './notificationChannels';
+import { NotificationFatigue } from './notificationFatigue';
+import { NotificationAnalytics } from './notificationAnalytics';
+import { cleanupOldSnoozes } from './notificationSnooze';
+import { incrementBadge, decrementBadge } from './notificationBadge';
 import { civilToHeka, getDaysInMonth, HEKA_MONTHS } from './calendarService';
 import { calculateVoidMoonStatus, getNextSignBoundary, calculateCurrentSky } from '../astrology/services/calculations/swissCalculations';
 import { getSignFromLongitude } from '../astrology/types/core';
@@ -167,6 +172,9 @@ class NotificationEngineClass {
   async initialize(): Promise<void> {
     this.state = loadEngineState();
 
+    // Initialize Android notification channels and action types
+    await initializeNotificationChannels();
+
     // Clean old ledgers (keep last 7 days)
     const today = getTodayKey();
     const cutoff = new Date(Date.now() - 7 * 86400000).toISOString().split('T')[0];
@@ -189,6 +197,9 @@ class NotificationEngineClass {
         ledger.tapped = [];
       }
     }
+
+    // Clean up old snooze records
+    cleanupOldSnoozes();
 
     // Restore any persisted genius queue from previous session
     this.restoreGeniusQueue();
@@ -325,6 +336,11 @@ class NotificationEngineClass {
           }
         }
 
+        // Determine channel and action type
+        const channelId = req.channelId || getChannelForTier(req.tier);
+        const actionTypeId = req.actionTypeId || req.type;
+        void getActionsForType(actionTypeId); // Ensure actions are registered
+
         await LocalNotifications.schedule({
           notifications: [{
             id: notificationId,
@@ -333,9 +349,15 @@ class NotificationEngineClass {
             schedule: { at: req.scheduleAt },
             smallIcon: 'ic_notification',
             iconColor: '#c9a227',
+            channelId,
+            actionTypeId,
             extra: { ...req.extra, _engineType: req.type, _engineTier: req.tier, _engineSection: req.section },
           }]
         });
+
+        // Track analytics and badge
+        NotificationAnalytics.recordScheduled(req.type, req.tier, req.section);
+        void incrementBadge();
 
         return idString;
       } catch (error) {
@@ -389,6 +411,7 @@ class NotificationEngineClass {
     if (IS_NATIVE_APP && isNativePluginAvailable()) {
       try {
         await LocalNotifications.cancel({ notifications: [{ id: parseInt(id) }] });
+        void decrementBadge();
         return true;
       } catch (error) {
         console.error('[NotificationEngine] Cancel error:', error);
@@ -464,6 +487,12 @@ class NotificationEngineClass {
     const today = getTodayKey();
     const ledger = this.state.dailyLedgers[today] || { date: today, counts: { core: 0, standard: 0, ambient: 0 }, delivered: [], tapped: [] };
 
+    // Fatigue check: suppress ambient entirely and reduce standard in fatigue mode
+    if (NotificationFatigue.shouldSuppress(req.tier)) {
+      NotificationAnalytics.recordSuppressed(req.type, req.tier, req.section, 'fatigue');
+      return false;
+    }
+
     // Quiet hours check: CORE bypasses, STANDARD/AMBIENT respects
     if (req.tier !== 'core') {
       const prefs = store.getState().calendar.notificationPreferences;
@@ -474,6 +503,7 @@ class NotificationEngineClass {
           ? (hour >= qh.start || hour < qh.end)
           : (hour >= qh.start && hour < qh.end);
         if (inQuietHours) {
+          NotificationAnalytics.recordSuppressed(req.type, req.tier, req.section, 'quiet_hours');
           return false;
         }
       }
@@ -485,6 +515,7 @@ class NotificationEngineClass {
       (d.extra?._dedupKey || d.type) === dedupKey && (Date.now() - d.deliveredAt) < DEDUPLICATION_WINDOW_MS
     );
     if (recentSameType.length > 0) {
+      NotificationAnalytics.recordSuppressed(req.type, req.tier, req.section, 'dedup');
       return false;
     }
 
@@ -496,15 +527,17 @@ class NotificationEngineClass {
           morningTypes.includes(d.type) && (Date.now() - d.deliveredAt) < DEDUPLICATION_WINDOW_MS
         );
         if (hadMorningBriefing) {
+          NotificationAnalytics.recordSuppressed(req.type, req.tier, req.section, 'dedup');
           return false;
         }
       }
     }
 
-    // Tier cap check
-    const cap = TIER_DAILY_CAPS[req.tier];
-    if (cap !== Infinity && ledger.counts[req.tier] >= cap) {
-      // CORE can preempt — but req is not CORE if we're here
+    // Tier cap check (with fatigue-adaptive caps)
+    const baseCap = TIER_DAILY_CAPS[req.tier];
+    const adaptiveCap = NotificationFatigue.getAdaptiveCap(baseCap, req.tier);
+    if (adaptiveCap !== Infinity && ledger.counts[req.tier] >= adaptiveCap) {
+      NotificationAnalytics.recordSuppressed(req.type, req.tier, req.section, 'cap');
       return false;
     }
 
@@ -582,6 +615,12 @@ class NotificationEngineClass {
       record.confirmedDeliveredAt = Date.now();
       saveEngineState(this.state);
       eventBus.emit('heka-notification-delivered', { id, type: record.type });
+
+      // Track analytics and fatigue
+      const hour = new Date().getHours();
+      NotificationAnalytics.recordDelivered(record.type, record.tier, record.section, id);
+      NotificationFatigue.recordDelivered(hour);
+
       console.log(`[NotificationEngine] Confirmed delivery: ${record.type} (${id})`);
     }
   }
@@ -622,6 +661,12 @@ class NotificationEngineClass {
 
     // Update engagement: this type was tapped = positive signal
     this.updateEngagement(req.type, 1);
+
+    // Track analytics, fatigue, and badge
+    const hour = new Date().getHours();
+    NotificationAnalytics.recordTapped(req.type, req.tier, req.section, req.extra?.templateIndex);
+    NotificationFatigue.recordTapped(hour);
+    void decrementBadge();
   }
 
   // ═══════════════════════════════════════════════════════════════════════════

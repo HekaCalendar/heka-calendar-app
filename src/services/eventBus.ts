@@ -49,6 +49,7 @@ export interface EventMap {
   'heka:notification:navigate': { target: string };
   'heka-notification-sent': { type: string; title: string };
   'heka-notification-delivered': { id: string; type: string };
+  'heka-notification-action': { action: string; [key: string]: any };
   'heka-push-token': { token: string; platform: string };
   'heka-push-received': { type: string; data: Record<string, string>; title: string; body: string };
   'heka-push-tapped': { type: string; data: Record<string, string> };
