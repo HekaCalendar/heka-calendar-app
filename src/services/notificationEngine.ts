@@ -297,6 +297,10 @@ class NotificationEngineClass {
       return null;
     }
 
+    // Claim the slot IMMEDIATELY (before any async work) to prevent race
+    // conditions when multiple notifications schedule in parallel.
+    this.recordSent(req, idString);
+
     // Track ID by type for cancelByType
     const typeKey = req.type;
     if (!this.typeToIds.has(typeKey)) this.typeToIds.set(typeKey, new Set());
@@ -307,6 +311,8 @@ class NotificationEngineClass {
       try {
         const { display } = await LocalNotifications.checkPermissions();
         if (display !== 'granted') {
+          // Permission denied — roll back the ledger entry
+          this.rollbackLedgerEntry(req, idString);
           return null;
         }
 
@@ -331,13 +337,10 @@ class NotificationEngineClass {
           }]
         });
 
-        // Record in ledger for caps/dedup tracking. This does NOT mean the OS delivered it —
-        // only that we successfully registered the alarm. Actual delivery is confirmed
-        // via localNotificationReceived listener calling confirmDelivery().
-        this.recordSent(req, idString);
-
         return idString;
       } catch (error) {
+        // Schedule failed — roll back the ledger entry
+        this.rollbackLedgerEntry(req, idString);
         console.error('[NotificationEngine] Native schedule error:', error);
         return null;
       }
@@ -348,14 +351,9 @@ class NotificationEngineClass {
     if (delay <= 0) {
       // Immediate
       this.showWebNotification(req.title, { body: req.body });
-      this.recordSent(req, idString);
+      this.confirmDelivery(idString);
       return idString;
     }
-
-    // Record immediately for dedup/caps (same as native). If the tab closes
-    // before the timeout fires, the notification is lost but caps were correctly
-    // counted — this is acceptable PWA behavior.
-    this.recordSent(req, idString);
 
     // Cancel existing web timeout if replacing
     if (req.replaceExisting) {
@@ -550,6 +548,23 @@ class NotificationEngineClass {
 
     // Notify UI in real time
     eventBus.emit('heka-notification-sent', { type: req.type, title: req.title });
+  }
+
+  /**
+   * Roll back a ledger entry when a notification was claimed but failed to
+   * actually schedule (e.g. permission denied or native error).
+   */
+  private rollbackLedgerEntry(req: NotificationRequest, id: string): void {
+    const dayKey = req.scheduleAt.toISOString().split('T')[0];
+    const ledger = this.state.dailyLedgers[dayKey];
+    if (!ledger) return;
+
+    const idx = ledger.delivered.findIndex(d => d.id === id);
+    if (idx >= 0) {
+      ledger.delivered.splice(idx, 1);
+      ledger.counts[req.tier] = Math.max(0, ledger.counts[req.tier] - 1);
+      saveEngineState(this.state);
+    }
   }
 
   /**
@@ -1449,11 +1464,7 @@ class NotificationEngineClass {
     if (!prefs.holidayReminders) return;
 
     const now = new Date();
-    const hour = now.getHours();
     const today = getTodayKey();
-
-    // Evening reminder at 7 PM (19:00) ± 30 min window
-    if (hour !== 19) return;
 
     const flagKey = 'holiday-reminder';
     if (this.state.sentTodayFlags[flagKey] === today) return;
@@ -1469,6 +1480,12 @@ class NotificationEngineClass {
 
     if (!holidays.length) return;
 
+    // Pre-schedule for 7 PM today (or tomorrow if already past 7 PM)
+    const scheduleTime = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 19, 0, 0, 0);
+    if (scheduleTime.getTime() <= now.getTime()) {
+      scheduleTime.setDate(scheduleTime.getDate() + 1);
+    }
+
     // Send one notification per holiday (capped by ambient tier)
     let anyScheduled = false;
     for (let i = 0; i < holidays.length; i++) {
@@ -1479,7 +1496,7 @@ class NotificationEngineClass {
         'holiday-reminder',
         'ambient',
         'calendar',
-        new Date(now.getTime() + 30000 + i * 5000),
+        new Date(scheduleTime.getTime() + i * 5000),
         seed,
         { holidayName: holiday.name },
         { holidayName: holiday.name },
@@ -1507,11 +1524,7 @@ class NotificationEngineClass {
     if (!circleEnabled && !plannerEnabled) return;
 
     const now = new Date();
-    const hour = now.getHours();
     const today = getTodayKey();
-
-    // Only run at 11 AM (called from startRecurringChecks at hour === 11)
-    if (hour !== 11) return;
 
     // ── Personal planner tasks ───────────────────────────────────────────────
     if (plannerEnabled) {
@@ -1711,21 +1724,23 @@ class NotificationEngineClass {
     if (!prefs.dailyReflectionPrompt) return;
 
     const now = new Date();
-    const hour = now.getHours();
     const today = getTodayKey();
-
-    // Fire during the 8 PM hour (called from startRecurringChecks at hour === 20)
-    if (hour !== 20) return;
 
     const flagKey = 'evening-reflection';
     if (this.state.sentTodayFlags[flagKey] === today) return;
+
+    // Pre-schedule for 8 PM today (or tomorrow if already past 8 PM)
+    const scheduleTime = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 20, 0, 0, 0);
+    if (scheduleTime.getTime() <= now.getTime()) {
+      scheduleTime.setDate(scheduleTime.getDate() + 1);
+    }
 
     const seed = `reflection-${today}`;
     const result = await this.scheduleTemplated(
       'daily-reflection-prompt',
       'standard',
       'journal',
-      new Date(now.getTime() + 60000), // 1 min from now
+      scheduleTime,
       seed,
       {},
       { context: 'evening' }
@@ -1901,10 +1916,7 @@ class NotificationEngineClass {
     if (!prefs.fullMoonReminders) return;
 
     const now = new Date();
-    const hour = now.getHours();
     const today = getTodayKey();
-
-    if (hour !== 20) return;
 
     const flagKey = 'full-moon-reminder';
     if (this.state.sentTodayFlags[flagKey] === today) return;
@@ -1915,12 +1927,18 @@ class NotificationEngineClass {
     const isFull = phaseNum !== null && (phaseNum > 0.47 && phaseNum < 0.53);
     if (!isFull) return;
 
+    // Pre-schedule for 8 PM today (or tomorrow if already past 8 PM)
+    const scheduleTime = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 20, 0, 0, 0);
+    if (scheduleTime.getTime() <= now.getTime()) {
+      scheduleTime.setDate(scheduleTime.getDate() + 1);
+    }
+
     const seed = `full-moon-${today}`;
     const result = await this.scheduleTemplated(
       'full-moon-reminder',
       'standard',
       'stars',
-      new Date(now.getTime() + 30000),
+      scheduleTime,
       seed,
       {},
       { phase: ctx.moonPhase || 'Full Moon' }

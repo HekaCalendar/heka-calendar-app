@@ -162,8 +162,8 @@ export const DEFAULT_CIRCLE_NOTIFICATION_PREFS: CircleNotificationPrefs = {
 };
 
 export const DEFAULT_JOURNAL_NOTIFICATION_PREFS: JournalNotificationPrefs = {
-  reflectionReminders: false,
-  dailyReflectionPrompt: false,
+  reflectionReminders: true,
+  dailyReflectionPrompt: true,
   celestialInsightAlert: false,
 };
 

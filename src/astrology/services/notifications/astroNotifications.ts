@@ -24,7 +24,7 @@ export async function initializeAstroNotifications(): Promise<void> {
 }
 
 /**
- * Schedule daily celestial tips notification (7 AM)
+ * Schedule daily celestial tips notification (8 AM — staggered 1h after daily briefing)
  */
 export async function scheduleDailyTips(enabled: boolean): Promise<void> {
   if (!enabled) {
@@ -33,15 +33,21 @@ export async function scheduleDailyTips(enabled: boolean): Promise<void> {
     return;
   }
 
+  // Deduplication: already scheduled today?
+  if (NotificationEngine.hasSentToday('daily-celestial-tips')) {
+    console.log('[AstroNotifications] Daily tips already scheduled today. Skipping.');
+    return;
+  }
+
   const now = new Date();
-  const scheduleTime = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 7, 0, 0);
+  const scheduleTime = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 8, 0, 0);
   if (scheduleTime <= now) {
     scheduleTime.setDate(scheduleTime.getDate() + 1);
   }
 
   const seed = new Date().toISOString().split('T')[0];
 
-  await NotificationEngine.scheduleTemplated(
+  const result = await NotificationEngine.scheduleTemplated(
     'daily-celestial-tips',
     'standard',
     'stars',
@@ -51,7 +57,12 @@ export async function scheduleDailyTips(enabled: boolean): Promise<void> {
     { type: 'daily-celestial-tips', id: NOTIFICATION_IDS.daily_tips }
   );
 
-  console.log('[AstroNotifications] Daily tips scheduled for', scheduleTime);
+  if (result) {
+    NotificationEngine.markSentToday('daily-celestial-tips');
+    console.log('[AstroNotifications] Daily tips scheduled for', scheduleTime);
+  } else {
+    console.warn('[AstroNotifications] Daily tips schedule failed — will retry on next interval');
+  }
 }
 
 /**
