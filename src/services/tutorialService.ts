@@ -571,7 +571,8 @@ class TutorialService {
     if (!config.validation) return;
 
     
-    // More frequent polling for better responsiveness
+    // Poll at 1s intervals — responsive enough for user actions
+    // without blocking the main thread with excessive checks.
     this.validationInterval = window.setInterval(() => {
       if (!this.state.isWaitingForAction) {
         // Stop polling if we're no longer waiting
@@ -585,7 +586,7 @@ class TutorialService {
       const isValid = this.validateInteractiveStep();
       if (isValid) {
       }
-    }, 250); // Check every 250ms
+    }, 1000);
   }
 
   /**

@@ -88,12 +88,22 @@ export function initializeDeepLinks(
     const inviteParam = urlParams.get('invite');
     const taskParam = urlParams.get('task');
     
+    const VALID_PARAM_REGEX = /^[A-Za-z0-9_-]{4,64}$/;
+
     if (inviteParam) {
-      handleAppUrl(`heka-calendar://invite/${inviteParam}`);
+      if (VALID_PARAM_REGEX.test(inviteParam)) {
+        handleAppUrl(`heka-calendar://invite/${inviteParam}`);
+      } else {
+        console.warn('[DeepLink] Rejected malformed invite param:', inviteParam);
+      }
     }
     
     if (taskParam) {
-      handleAppUrl(`heka-calendar://task/${taskParam}`);
+      if (VALID_PARAM_REGEX.test(taskParam)) {
+        handleAppUrl(`heka-calendar://task/${taskParam}`);
+      } else {
+        console.warn('[DeepLink] Rejected malformed task param:', taskParam);
+      }
     }
 
     // Also check hash-based params (for hash router compatibility)
@@ -105,11 +115,19 @@ export function initializeDeepLinks(
       const hashTaskParam = hashParams.get('task');
       
       if (hashInviteParam) {
-        handleAppUrl(`heka-calendar://invite/${hashInviteParam}`);
+        if (VALID_PARAM_REGEX.test(hashInviteParam)) {
+          handleAppUrl(`heka-calendar://invite/${hashInviteParam}`);
+        } else {
+          console.warn('[DeepLink] Rejected malformed hash invite param:', hashInviteParam);
+        }
       }
       
       if (hashTaskParam) {
-        handleAppUrl(`heka-calendar://task/${hashTaskParam}`);
+        if (VALID_PARAM_REGEX.test(hashTaskParam)) {
+          handleAppUrl(`heka-calendar://task/${hashTaskParam}`);
+        } else {
+          console.warn('[DeepLink] Rejected malformed hash task param:', hashTaskParam);
+        }
       }
     }
   }

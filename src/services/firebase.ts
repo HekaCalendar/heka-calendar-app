@@ -70,17 +70,18 @@ if (isFirebaseConfigured()) {
     
     // Force browser local persistence for Auth (more reliable in Capacitor WebView)
     if (typeof window !== 'undefined' && auth) {
-      setPersistence(auth, browserLocalPersistence).catch((err: any) => {
+      setPersistence(auth, browserLocalPersistence).catch((err: unknown) => {
         console.warn('Firebase auth persistence failed:', err);
       });
     }
     
     // Enable offline persistence for Firestore (works on web, skip on Capacitor to avoid auth desync)
     if (typeof window !== 'undefined' && db && !Capacitor.isNativePlatform()) {
-      enableIndexedDbPersistence(db).catch((err: any) => {
-        if (err.code === 'failed-precondition') {
+      enableIndexedDbPersistence(db).catch((err: unknown) => {
+        const code = (err as { code?: string })?.code;
+        if (code === 'failed-precondition') {
           console.warn('Firebase persistence failed: Multiple tabs open');
-        } else if (err.code === 'unimplemented') {
+        } else if (code === 'unimplemented') {
           console.warn('Firebase persistence not available in this browser');
         }
       });
@@ -160,7 +161,7 @@ export async function signUp(email: string, password: string, displayName: strin
       await updateProfile(userCredential.user, { displayName });
     }
     return userCredential;
-  } catch (error: any) {
+  } catch (error: unknown) {
     throw formatAuthError(error);
   }
 }
@@ -171,7 +172,7 @@ export async function logIn(email: string, password: string): Promise<UserCreden
   }
   try {
     return await signInWithEmailAndPassword(auth, email, password);
-  } catch (error: any) {
+  } catch (error: unknown) {
     throw formatAuthError(error);
   }
 }
@@ -182,7 +183,7 @@ export async function logOut(): Promise<void> {
   }
   try {
     await signOut(auth);
-  } catch (error: any) {
+  } catch (error: unknown) {
     throw formatAuthError(error);
   }
 }
@@ -193,7 +194,7 @@ export async function resetPassword(email: string): Promise<void> {
   }
   try {
     await sendPasswordResetEmail(auth, email);
-  } catch (error: any) {
+  } catch (error: unknown) {
     throw formatAuthError(error);
   }
 }
@@ -378,7 +379,7 @@ export async function loadAllAstroData(userId: string): Promise<{
 // Helper Functions
 // ============================================================================
 
-function formatAuthError(error: any): AuthError {
+function formatAuthError(error: unknown): AuthError {
   const errorMessages: Record<string, string> = {
     'auth/invalid-email': 'Invalid email address format',
     'auth/user-disabled': 'This account has been disabled',
@@ -391,8 +392,17 @@ function formatAuthError(error: any): AuthError {
     'auth/network-request-failed': 'Network error. Please check your connection',
   };
 
+  if (error && typeof error === 'object') {
+    const code = (error as { code?: string }).code || 'auth/unknown';
+    const message = (error as { message?: string }).message || 'An unexpected error occurred';
+    return {
+      code,
+      message: errorMessages[code] || message,
+    };
+  }
+
   return {
-    code: error.code || 'auth/unknown',
-    message: errorMessages[error.code] || error.message || 'An unexpected error occurred'
+    code: 'auth/unknown',
+    message: 'An unexpected error occurred',
   };
 }

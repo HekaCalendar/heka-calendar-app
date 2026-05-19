@@ -22,6 +22,8 @@ import {
 } from 'firebase/firestore';
 import { db, getCurrentUser } from './firebase';
 import { NotificationEngine } from './notificationEngine';
+import { safeAsync, withRetry } from '../utils/errorHandling';
+import { eventBus } from './eventBus';
 
 // ============================================================================
 // Types
@@ -134,6 +136,20 @@ function generateInviteCode(): string {
 }
 
 // ============================================================================
+// In-flight operation deduplication
+// ============================================================================
+
+const inFlightOps = new Set<string>();
+
+function withDeduplication<T>(key: string, fn: () => Promise<T>): Promise<T> {
+  if (inFlightOps.has(key)) {
+    return Promise.reject(new Error(`Operation '${key}' already in progress`));
+  }
+  inFlightOps.add(key);
+  return fn().finally(() => inFlightOps.delete(key));
+}
+
+// ============================================================================
 // Friendship Operations
 // ============================================================================
 
@@ -162,9 +178,12 @@ export async function createInviteCode(type: 'friend' | 'task' = 'friend', linke
     inviteData.linkedTaskCode = linkedTaskCode;
   }
 
-  await setDoc(inviteRef, inviteData);
+  const result = await safeAsync(
+    withRetry(() => setDoc(inviteRef, inviteData), { context: 'createInviteCode' }),
+    'createInviteCode'
+  );
 
-  return code;
+  return result.success ? code : null;
 }
 
 export async function ensureUserProfile(): Promise<void> {
@@ -172,28 +191,31 @@ export async function ensureUserProfile(): Promise<void> {
   if (!currentUser || !db) return;
 
   const userRef = doc(db, 'users', currentUser.uid);
-  const userSnap = await getDoc(userRef);
+  const userSnapResult = await safeAsync(getDoc(userRef), 'ensureUserProfile:getDoc');
+  if (!userSnapResult.success) return;
+  const userSnap = userSnapResult.data;
 
-  if (!userSnap.exists()) {
-    // Create new user profile
-    await setDoc(userRef, {
-      uid: currentUser.uid,
-      displayName: currentUser.displayName || 'Anonymous',
-      photoURL: currentUser.photoURL || null,
-      email: currentUser.email,
-      lastActive: serverTimestamp(),
-      isOnline: true,
-      createdAt: serverTimestamp(),
-    });
-  } else {
-    // Update online status and last active
-    await updateDoc(userRef, {
-      lastActive: serverTimestamp(),
-      isOnline: true,
-      // Update display name and photo if they've changed
-      ...(currentUser.displayName && { displayName: currentUser.displayName }),
-      ...(currentUser.photoURL && { photoURL: currentUser.photoURL }),
-    });
+  try {
+    if (!userSnap.exists()) {
+      await withRetry(() => setDoc(userRef, {
+        uid: currentUser.uid,
+        displayName: currentUser.displayName || 'Anonymous',
+        photoURL: currentUser.photoURL || null,
+        email: currentUser.email,
+        lastActive: serverTimestamp(),
+        isOnline: true,
+        createdAt: serverTimestamp(),
+      }), { context: 'ensureUserProfile:setDoc' });
+    } else {
+      await withRetry(() => updateDoc(userRef, {
+        lastActive: serverTimestamp(),
+        isOnline: true,
+        ...(currentUser.displayName && { displayName: currentUser.displayName }),
+        ...(currentUser.photoURL && { photoURL: currentUser.photoURL }),
+      }), { context: 'ensureUserProfile:updateDoc' });
+    }
+  } catch (err) {
+    console.error('[FriendsService] ensureUserProfile failed:', err);
   }
 }
 
@@ -201,6 +223,7 @@ export async function acceptInvite(code: string): Promise<{ success: boolean; er
   const currentUser = getCurrentUser();
   if (!currentUser || !db) return { success: false, error: 'Not authenticated' };
 
+  return withDeduplication(`acceptInvite:${code}`, async () => {
   // Ensure current user has a profile
   await ensureUserProfile();
 
@@ -271,8 +294,9 @@ export async function acceptInvite(code: string): Promise<{ success: boolean; er
     usedBy: arrayUnion(currentUser.uid),
   });
 
-  await batch.commit();
+  await withRetry(() => batch.commit(), { context: 'acceptInvite:batchCommit' });
   return { success: true };
+  });
 }
 
 export async function getFriends(): Promise<FriendProfile[]> {
@@ -285,7 +309,10 @@ export async function getFriends(): Promise<FriendProfile[]> {
     where('status', '==', 'accepted')
   );
 
-  const snapshot = await getDocs(friendshipsQuery);
+  const snapshotResult = await safeAsync(getDocs(friendshipsQuery), 'getFriends');
+  if (!snapshotResult.success) return [];
+  const snapshot = snapshotResult.data;
+
   const friendIds: string[] = [];
   
   snapshot.docs.forEach(doc => {
@@ -298,9 +325,9 @@ export async function getFriends(): Promise<FriendProfile[]> {
   const friendProfiles: FriendProfile[] = [];
   for (const friendId of friendIds) {
     const profileRef = doc(db, 'users', friendId);
-    const profileSnap = await getDoc(profileRef);
-    if (profileSnap.exists()) {
-      friendProfiles.push(profileSnap.data() as FriendProfile);
+    const profileSnapResult = await safeAsync(getDoc(profileRef), 'getFriends:profile');
+    if (profileSnapResult.success && profileSnapResult.data.exists()) {
+      friendProfiles.push(profileSnapResult.data.data() as FriendProfile);
     }
   }
 
@@ -317,26 +344,37 @@ export function subscribeToFriends(callback: (friends: FriendProfile[]) => void)
     where('status', '==', 'accepted')
   );
 
-  return onSnapshot(friendshipsQuery, async (snapshot) => {
-    const friendIds: string[] = [];
-    snapshot.docs.forEach(doc => {
-      const data = doc.data() as Friendship;
-      const friendId = data.users.find(uid => uid !== currentUser.uid);
-      if (friendId) friendIds.push(friendId);
-    });
+  return onSnapshot(
+    friendshipsQuery,
+    async (snapshot) => {
+      const friendIds: string[] = [];
+      snapshot.docs.forEach(doc => {
+        const data = doc.data() as Friendship;
+        const friendId = data.users.find(uid => uid !== currentUser.uid);
+        if (friendId) friendIds.push(friendId);
+      });
 
-    // Fetch friend profiles
-    const friendProfiles: FriendProfile[] = [];
-    for (const friendId of friendIds) {
-      const profileRef = doc(db, 'users', friendId);
-      const profileSnap = await getDoc(profileRef);
-      if (profileSnap.exists()) {
-        friendProfiles.push(profileSnap.data() as FriendProfile);
+      // Fetch friend profiles
+      const friendProfiles: FriendProfile[] = [];
+      for (const friendId of friendIds) {
+        const profileRef = doc(db, 'users', friendId);
+        const profileSnap = await getDoc(profileRef);
+        if (profileSnap.exists()) {
+          friendProfiles.push(profileSnap.data() as FriendProfile);
+        }
       }
-    }
 
-    callback(friendProfiles);
-  });
+      callback(friendProfiles);
+    },
+    (err) => {
+      console.error('[FriendsService] subscribeToFriends error:', err);
+      eventBus.emit('heka:error:logged', {
+        context: 'subscribeToFriends',
+        message: err instanceof Error ? err.message : 'Firestore listener error',
+        code: (err as any)?.code,
+      });
+    }
+  );
 }
 
 // ============================================================================
@@ -384,127 +422,160 @@ export function subscribeToFriendRequests(callback: (requests: FriendProfile[]) 
     where('status', '==', 'pending')
   );
 
-  return onSnapshot(friendshipsQuery, async (snapshot) => {
-    const friendIds: string[] = [];
-    const notifiedIds = new Set(JSON.parse(localStorage.getItem('heka_notified_friend_requests') || '[]') as string[]);
-    const newNotifiedIds = new Set(notifiedIds);
+  return onSnapshot(
+    friendshipsQuery,
+    async (snapshot) => {
+      const friendIds: string[] = [];
+      let notifiedIds: Set<string>;
+      try {
+        notifiedIds = new Set(JSON.parse(localStorage.getItem('heka_notified_friend_requests') || '[]') as string[]);
+      } catch {
+        notifiedIds = new Set();
+      }
+      const newNotifiedIds = new Set(notifiedIds);
 
-    for (const doc of snapshot.docs) {
-      const data = doc.data() as Friendship;
-      const friendId = data.users.find(uid => uid !== currentUser.uid);
-      if (friendId) friendIds.push(friendId);
+      for (const doc of snapshot.docs) {
+        const data = doc.data() as Friendship;
+        const friendId = data.users.find(uid => uid !== currentUser.uid);
+        if (friendId) friendIds.push(friendId);
 
-      // Notify for new friend requests
-      if (friendId && !notifiedIds.has(doc.id)) {
-        newNotifiedIds.add(doc.id);
-        try {
-          await NotificationEngine.notifyStandard(
-            'friend-request',
-            'circle',
-            'New Cosmic Connection',
-            `Someone has sent you a friend request. Open your Circle to connect.`,
-            new Date(Date.now() + 5000),
-            { friendRequestId: doc.id },
-            parseInt(doc.id.slice(-8), 16) || undefined
-          );
-        } catch (err) {
-          console.error('[FriendsService] Failed to send friend request notification:', err);
+        // Notify for new friend requests
+        if (friendId && !notifiedIds.has(doc.id)) {
+          newNotifiedIds.add(doc.id);
+          try {
+            await NotificationEngine.notifyStandard(
+              'friend-request',
+              'circle',
+              'New Cosmic Connection',
+              `Someone has sent you a friend request. Open your Circle to connect.`,
+              new Date(Date.now() + 5000),
+              { friendRequestId: doc.id },
+              parseInt(doc.id.slice(-8), 16) || undefined
+            );
+          } catch (err) {
+            console.error('[FriendsService] Failed to send friend request notification:', err);
+          }
         }
       }
-    }
 
-    // Save notified IDs
-    if (newNotifiedIds.size !== notifiedIds.size) {
-      localStorage.setItem('heka_notified_friend_requests', JSON.stringify([...newNotifiedIds]));
-    }
-
-    const friendProfiles: FriendProfile[] = [];
-    for (const friendId of friendIds) {
-      const profileRef = doc(db, 'users', friendId);
-      const profileSnap = await getDoc(profileRef);
-      if (profileSnap.exists()) {
-        friendProfiles.push(profileSnap.data() as FriendProfile);
+      // Save notified IDs
+      if (newNotifiedIds.size !== notifiedIds.size) {
+        localStorage.setItem('heka_notified_friend_requests', JSON.stringify([...newNotifiedIds]));
       }
-    }
 
-    callback(friendProfiles);
-  });
+      const friendProfiles: FriendProfile[] = [];
+      for (const friendId of friendIds) {
+        const profileRef = doc(db, 'users', friendId);
+        const profileSnap = await getDoc(profileRef);
+        if (profileSnap.exists()) {
+          friendProfiles.push(profileSnap.data() as FriendProfile);
+        }
+      }
+
+      callback(friendProfiles);
+    },
+    (err) => {
+      console.error('[FriendsService] subscribeToFriendRequests error:', err);
+      eventBus.emit('heka:error:logged', {
+        context: 'subscribeToFriendRequests',
+        message: err instanceof Error ? err.message : 'Firestore listener error',
+        code: (err as any)?.code,
+      });
+    }
+  );
 }
 
 export async function acceptFriendRequest(friendshipId: string): Promise<{ success: boolean; error?: string }> {
   const currentUser = getCurrentUser();
   if (!currentUser || !db) return { success: false, error: 'Not authenticated' };
 
-  const friendshipRef = doc(db, 'friendships', friendshipId);
-  const friendshipSnap = await getDoc(friendshipRef);
+  return withDeduplication(`acceptFriendRequest:${friendshipId}`, async () => {
+    const friendshipRef = doc(db, 'friendships', friendshipId);
+    const friendshipSnapResult = await safeAsync(getDoc(friendshipRef), 'acceptFriendRequest');
+    if (!friendshipSnapResult.success) {
+      return { success: false, error: 'Failed to fetch friend request' };
+    }
+    const friendshipSnap = friendshipSnapResult.data;
 
-  if (!friendshipSnap.exists()) {
-    return { success: false, error: 'Friend request not found' };
-  }
+    if (!friendshipSnap.exists()) {
+      return { success: false, error: 'Friend request not found' };
+    }
 
-  const friendship = friendshipSnap.data() as Friendship;
-  if (!friendship.users.includes(currentUser.uid)) {
-    return { success: false, error: 'Not authorized' };
-  }
+    const friendship = friendshipSnap.data() as Friendship;
+    if (!friendship.users.includes(currentUser.uid)) {
+      return { success: false, error: 'Not authorized' };
+    }
 
-  if (friendship.status !== 'pending') {
-    return { success: false, error: 'Request already processed' };
-  }
+    if (friendship.status !== 'pending') {
+      return { success: false, error: 'Request already processed' };
+    }
 
-  const batch = writeBatch(db);
+    const batch = writeBatch(db);
 
-  // Update friendship to accepted
-  batch.update(friendshipRef, {
-    status: 'accepted',
-    acceptedAt: serverTimestamp(),
+    // Update friendship to accepted
+    batch.update(friendshipRef, {
+      status: 'accepted',
+      acceptedAt: serverTimestamp(),
+    });
+
+    // Create conversation
+    const otherUserId = friendship.users.find(uid => uid !== currentUser.uid)!;
+    const conversationId = getConversationId(currentUser.uid, otherUserId);
+    batch.set(doc(db, 'conversations', conversationId), {
+      id: conversationId,
+      participants: [currentUser.uid, otherUserId],
+      lastMessage: {
+        text: 'Friendship created! Start your cosmic conversation.',
+        senderId: 'system',
+        timestamp: serverTimestamp(),
+        type: 'system',
+      },
+      unreadCount: { [currentUser.uid]: 0, [otherUserId]: 0 },
+      updatedAt: serverTimestamp(),
+    });
+
+    const commitResult = await safeAsync(
+      withRetry(() => batch.commit(), { context: 'acceptFriendRequest:commit' }),
+      'acceptFriendRequest:commit'
+    );
+    return commitResult.success ? { success: true } : { success: false, error: 'Failed to process request' };
   });
-
-  // Create conversation
-  const otherUserId = friendship.users.find(uid => uid !== currentUser.uid)!;
-  const conversationId = getConversationId(currentUser.uid, otherUserId);
-  batch.set(doc(db, 'conversations', conversationId), {
-    id: conversationId,
-    participants: [currentUser.uid, otherUserId],
-    lastMessage: {
-      text: 'Friendship created! Start your cosmic conversation.',
-      senderId: 'system',
-      timestamp: serverTimestamp(),
-      type: 'system',
-    },
-    unreadCount: { [currentUser.uid]: 0, [otherUserId]: 0 },
-    updatedAt: serverTimestamp(),
-  });
-
-  await batch.commit();
-  return { success: true };
 }
 
 export async function declineFriendRequest(friendshipId: string): Promise<{ success: boolean; error?: string }> {
   const currentUser = getCurrentUser();
   if (!currentUser || !db) return { success: false, error: 'Not authenticated' };
 
-  const friendshipRef = doc(db, 'friendships', friendshipId);
-  const friendshipSnap = await getDoc(friendshipRef);
+  return withDeduplication(`declineFriendRequest:${friendshipId}`, async () => {
+    const friendshipRef = doc(db, 'friendships', friendshipId);
+    const friendshipSnapResult = await safeAsync(getDoc(friendshipRef), 'declineFriendRequest');
+    if (!friendshipSnapResult.success) {
+      return { success: false, error: 'Failed to fetch friend request' };
+    }
+    const friendshipSnap = friendshipSnapResult.data;
 
-  if (!friendshipSnap.exists()) {
-    return { success: false, error: 'Friend request not found' };
-  }
+    if (!friendshipSnap.exists()) {
+      return { success: false, error: 'Friend request not found' };
+    }
 
-  const friendship = friendshipSnap.data() as Friendship;
-  if (!friendship.users.includes(currentUser.uid)) {
-    return { success: false, error: 'Not authorized' };
-  }
+    const friendship = friendshipSnap.data() as Friendship;
+    if (!friendship.users.includes(currentUser.uid)) {
+      return { success: false, error: 'Not authorized' };
+    }
 
-  if (friendship.status !== 'pending') {
-    return { success: false, error: 'Request already processed' };
-  }
+    if (friendship.status !== 'pending') {
+      return { success: false, error: 'Request already processed' };
+    }
 
-  await updateDoc(friendshipRef, {
-    status: 'declined',
-    declinedAt: serverTimestamp(),
+    const result = await safeAsync(
+      withRetry(() => updateDoc(friendshipRef, {
+        status: 'declined',
+        declinedAt: serverTimestamp(),
+      }), { context: 'declineFriendRequest' }),
+      'declineFriendRequest'
+    );
+    return result.success ? { success: true } : { success: false, error: 'Failed to decline request' };
   });
-
-  return { success: true };
 }
 
 // ============================================================================
@@ -539,9 +610,9 @@ export async function sendMessage(
   });
 
   // Update conversation
-  const conversationSnap = await getDoc(conversationRef);
-  if (conversationSnap.exists()) {
-    const conversation = conversationSnap.data() as Conversation;
+  const conversationSnapResult = await safeAsync(getDoc(conversationRef), 'sendMessage');
+  if (conversationSnapResult.success && conversationSnapResult.data.exists()) {
+    const conversation = conversationSnapResult.data.data() as Conversation;
     const otherUserId = conversation.participants.find(uid => uid !== currentUser.uid);
     
     batch.update(conversationRef, {
@@ -556,7 +627,10 @@ export async function sendMessage(
     });
   }
 
-  await batch.commit();
+  await safeAsync(
+    withRetry(() => batch.commit(), { context: 'sendMessage' }),
+    'sendMessage'
+  );
 }
 
 export function subscribeToMessages(
@@ -571,12 +645,23 @@ export function subscribeToMessages(
     limit(50)
   );
 
-  return onSnapshot(messagesQuery, (snapshot) => {
-    const messages = snapshot.docs
-      .map(doc => doc.data() as Message)
-      .reverse();
-    callback(messages);
-  });
+  return onSnapshot(
+    messagesQuery,
+    (snapshot) => {
+      const messages = snapshot.docs
+        .map(doc => doc.data() as Message)
+        .reverse();
+      callback(messages);
+    },
+    (err) => {
+      console.error('[FriendsService] subscribeToMessages error:', err);
+      eventBus.emit('heka:error:logged', {
+        context: 'subscribeToMessages',
+        message: err instanceof Error ? err.message : 'Firestore listener error',
+        code: (err as any)?.code,
+      });
+    }
+  );
 }
 
 export async function markConversationRead(conversationId: string): Promise<void> {
@@ -584,9 +669,12 @@ export async function markConversationRead(conversationId: string): Promise<void
   if (!currentUser || !db) return;
 
   const conversationRef = doc(db, 'conversations', conversationId);
-  await updateDoc(conversationRef, {
-    [`unreadCount.${currentUser.uid}`]: 0,
-  });
+  await safeAsync(
+    withRetry(() => updateDoc(conversationRef, {
+      [`unreadCount.${currentUser.uid}`]: 0,
+    }), { context: 'markConversationRead' }),
+    'markConversationRead'
+  );
 }
 
 // ============================================================================
@@ -602,49 +690,55 @@ export async function createTaskRitual(
   const currentUser = getCurrentUser();
   if (!currentUser || !db) return null;
 
-  const conversationId = getConversationId(currentUser.uid, assigneeId);
-  const taskRef = doc(collection(db, 'tasks'));
+  return withDeduplication(`createTaskRitual:${title}:${assigneeId}`, async () => {
+    const conversationId = getConversationId(currentUser.uid, assigneeId);
+    const taskRef = doc(collection(db, 'tasks'));
 
-  const task: Omit<TaskRitual, 'id'> = {
-    creatorId: currentUser.uid,
-    assigneeId,
-    title,
-    description,
-    hekaDate,
-    status: 'pending',
-    createdAt: Timestamp.now(),
-    conversationId,
-  };
+    const task: Omit<TaskRitual, 'id'> = {
+      creatorId: currentUser.uid,
+      assigneeId,
+      title,
+      description,
+      hekaDate,
+      status: 'pending',
+      createdAt: Timestamp.now(),
+      conversationId,
+    };
 
-  await setDoc(taskRef, task);
-
-  // Send message about the task
-  await sendMessage(
-    conversationId,
-    `📜 Task Ritual: ${title}`,
-    'task',
-    { taskId: taskRef.id }
-  );
-
-  // Send notification to assignee
-  const creatorName = currentUser.displayName || 'Someone';
-  const hekaDateStr = hekaDate ? ` (Due: ${hekaDate.day}.${hekaDate.month + 1}.${hekaDate.year})` : '';
-  
-  // Schedule immediate notification via unified engine
-  try {
-    await NotificationEngine.notifyCore(
-      'task-assigned',
-      'circle',
-      'New Task from Cosmic Circle',
-      `${creatorName} assigned you: ${title}${hekaDateStr}`,
-      { taskId: taskRef.id, assigneeId },
-      parseInt(taskRef.id.slice(-8), 16) || undefined
+    const setResult = await safeAsync(
+      withRetry(() => setDoc(taskRef, task), { context: 'createTaskRitual' }),
+      'createTaskRitual'
     );
-  } catch (err) {
-    console.error('[FriendsService] Failed to send task assignment notification:', err);
-  }
+    if (!setResult.success) return null;
 
-  return { id: taskRef.id, ...task };
+    // Send message about the task
+    await sendMessage(
+      conversationId,
+      `📜 Task Ritual: ${title}`,
+      'task',
+      { taskId: taskRef.id }
+    );
+
+    // Send notification to assignee
+    const creatorName = currentUser.displayName || 'Someone';
+    const hekaDateStr = hekaDate ? ` (Due: ${hekaDate.day}.${hekaDate.month + 1}.${hekaDate.year})` : '';
+    
+    // Schedule immediate notification via unified engine
+    try {
+      await NotificationEngine.notifyCore(
+        'task-assigned',
+        'circle',
+        'New Task from Cosmic Circle',
+        `${creatorName} assigned you: ${title}${hekaDateStr}`,
+        { taskId: taskRef.id, assigneeId },
+        parseInt(taskRef.id.slice(-8), 16) || undefined
+      );
+    } catch (err) {
+      console.error('[FriendsService] Failed to send task assignment notification:', err);
+    }
+
+    return { id: taskRef.id, ...task };
+  });
 }
 
 export async function respondToTask(
@@ -666,7 +760,10 @@ export async function respondToTask(
     update.declinedReason = declinedReason;
   }
 
-  await updateDoc(taskRef, update);
+  await safeAsync(
+    withRetry(() => updateDoc(taskRef, update), { context: 'respondToTask' }),
+    'respondToTask'
+  );
 }
 
 export async function revokeTask(taskId: string): Promise<{ success: boolean; error?: string }> {
@@ -675,29 +772,37 @@ export async function revokeTask(taskId: string): Promise<{ success: boolean; er
     return { success: false, error: 'Not authenticated' };
   }
 
-  const taskRef = doc(db, 'tasks', taskId);
-  const taskSnap = await getDoc(taskRef);
+  return withDeduplication(`revokeTask:${taskId}`, async () => {
+    const taskRef = doc(db, 'tasks', taskId);
+    const taskSnapResult = await safeAsync(getDoc(taskRef), 'revokeTask');
+    if (!taskSnapResult.success) {
+      return { success: false, error: 'Failed to fetch task' };
+    }
+    const taskSnap = taskSnapResult.data;
 
-  if (!taskSnap.exists()) {
-    return { success: false, error: 'Task not found' };
-  }
+    if (!taskSnap.exists()) {
+      return { success: false, error: 'Task not found' };
+    }
 
-  const task = taskSnap.data() as TaskRitual;
+    const task = taskSnap.data() as TaskRitual;
 
-  if (task.creatorId !== currentUser.uid) {
-    return { success: false, error: 'Only the creator can revoke this task' };
-  }
+    if (task.creatorId !== currentUser.uid) {
+      return { success: false, error: 'Only the creator can revoke this task' };
+    }
 
-  if (task.status !== 'pending') {
-    return { success: false, error: 'Task already processed' };
-  }
+    if (task.status !== 'pending') {
+      return { success: false, error: 'Task already processed' };
+    }
 
-  await updateDoc(taskRef, {
-    status: 'revoked',
-    revokedAt: Timestamp.now(),
+    const result = await safeAsync(
+      withRetry(() => updateDoc(taskRef, {
+        status: 'revoked',
+        revokedAt: Timestamp.now(),
+      }), { context: 'revokeTask' }),
+      'revokeTask'
+    );
+    return result.success ? { success: true } : { success: false, error: 'Failed to revoke task' };
   });
-
-  return { success: true };
 }
 
 export function subscribeToTasks(callback: (tasks: TaskRitual[]) => void): () => void {
@@ -717,25 +822,47 @@ export function subscribeToTasks(callback: (tasks: TaskRitual[]) => void): () =>
 
   let allTasks: TaskRitual[] = [];
 
-  const unsubscribe1 = onSnapshot(tasksQuery, (snapshot) => {
-    const createdTasks = snapshot.docs.map(doc => ({
-      id: doc.id,
-      ...doc.data()
-    })) as TaskRitual[];
-    
-    allTasks = [...createdTasks, ...allTasks.filter(t => t.creatorId !== currentUser.uid)];
-    callback(allTasks);
-  });
+  const unsubscribe1 = onSnapshot(
+    tasksQuery,
+    (snapshot) => {
+      const createdTasks = snapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data()
+      })) as TaskRitual[];
+      
+      allTasks = [...createdTasks, ...allTasks.filter(t => t.creatorId !== currentUser.uid)];
+      callback(allTasks);
+    },
+    (err) => {
+      console.error('[FriendsService] subscribeToTasks (created) error:', err);
+      eventBus.emit('heka:error:logged', {
+        context: 'subscribeToTasks:created',
+        message: err instanceof Error ? err.message : 'Firestore listener error',
+        code: (err as any)?.code,
+      });
+    }
+  );
 
-  const unsubscribe2 = onSnapshot(assignedQuery, (snapshot) => {
-    const assignedTasks = snapshot.docs.map(doc => ({
-      id: doc.id,
-      ...doc.data()
-    })) as TaskRitual[];
-    
-    allTasks = [...allTasks.filter(t => t.assigneeId !== currentUser.uid), ...assignedTasks];
-    callback(allTasks);
-  });
+  const unsubscribe2 = onSnapshot(
+    assignedQuery,
+    (snapshot) => {
+      const assignedTasks = snapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data()
+      })) as TaskRitual[];
+      
+      allTasks = [...allTasks.filter(t => t.assigneeId !== currentUser.uid), ...assignedTasks];
+      callback(allTasks);
+    },
+    (err) => {
+      console.error('[FriendsService] subscribeToTasks (assigned) error:', err);
+      eventBus.emit('heka:error:logged', {
+        context: 'subscribeToTasks:assigned',
+        message: err instanceof Error ? err.message : 'Firestore listener error',
+        code: (err as any)?.code,
+      });
+    }
+  );
 
   return () => {
     unsubscribe1();
@@ -752,14 +879,17 @@ export async function updatePresence(currentView?: string): Promise<void> {
   if (!currentUser || !db) return;
 
   const userRef = doc(db, 'users', currentUser.uid);
-  await setDoc(userRef, {
-    uid: currentUser.uid,
-    displayName: currentUser.displayName || 'Anonymous',
-    photoURL: currentUser.photoURL,
-    lastActive: serverTimestamp(),
-    isOnline: true,
-    currentView,
-  }, { merge: true });
+  await safeAsync(
+    withRetry(() => setDoc(userRef, {
+      uid: currentUser.uid,
+      displayName: currentUser.displayName || 'Anonymous',
+      photoURL: currentUser.photoURL,
+      lastActive: serverTimestamp(),
+      isOnline: true,
+      currentView,
+    }, { merge: true }), { context: 'updatePresence' }),
+    'updatePresence'
+  );
 }
 
 export function subscribeToFriendPresence(
@@ -769,13 +899,24 @@ export function subscribeToFriendPresence(
   if (!db) return () => {};
 
   const userRef = doc(db, 'users', friendId);
-  return onSnapshot(userRef, (snapshot) => {
-    if (snapshot.exists()) {
-      callback(snapshot.data() as FriendProfile);
-    } else {
-      callback(null);
+  return onSnapshot(
+    userRef,
+    (snapshot) => {
+      if (snapshot.exists()) {
+        callback(snapshot.data() as FriendProfile);
+      } else {
+        callback(null);
+      }
+    },
+    (err) => {
+      console.error('[FriendsService] subscribeToFriendPresence error:', err);
+      eventBus.emit('heka:error:logged', {
+        context: 'subscribeToFriendPresence',
+        message: err instanceof Error ? err.message : 'Firestore listener error',
+        code: (err as any)?.code,
+      });
     }
-  });
+  );
 }
 
 // ============================================================================

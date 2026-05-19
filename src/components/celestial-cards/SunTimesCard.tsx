@@ -17,7 +17,7 @@ interface Props {
 
 /** Convert a Date to minutes-since-midnight in the given timezone */
 function toLocalMinutes(d: Date, timezone: string): number {
-  const timeStr = d.toLocaleTimeString('en-US', {
+  const timeStr = d.toLocaleTimeString(undefined, {
     timeZone: timezone,
     hour12: false,
     hour: '2-digit',

@@ -36,6 +36,7 @@ import android.webkit.WebViewClient;
 import androidx.core.content.FileProvider;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
+import androidx.core.content.ContextCompat;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -456,7 +457,7 @@ public class HekaPrintPlugin extends Plugin {
         
         WebSettings settings = webView.getSettings();
         settings.setJavaScriptEnabled(true);
-        settings.setAllowFileAccess(true);
+        settings.setAllowFileAccess(false);
         settings.setDomStorageEnabled(true);
         // Disable viewport scaling to get exact pixel dimensions
         settings.setUseWideViewPort(false);
@@ -578,11 +579,22 @@ public class HekaPrintPlugin extends Plugin {
         Uri collection = MediaStore.Downloads.getContentUri(MediaStore.VOLUME_EXTERNAL_PRIMARY);
         Uri itemUri = getContext().getContentResolver().insert(collection, values);
         if (itemUri != null) {
-            try (OutputStream out = getContext().getContentResolver().openOutputStream(itemUri);
+            OutputStream out = null;
+            try {
+                out = getContext().getContentResolver().openOutputStream(itemUri);
+            } catch (java.io.FileNotFoundException e) {
+                if (isDebug()) android.util.Log.e(TAG, "MediaStore openOutputStream failed", e);
+                return;
+            }
+            if (out == null) {
+                if (isDebug()) android.util.Log.e(TAG, "MediaStore openOutputStream returned null");
+                return;
+            }
+            try (OutputStream outStream = out;
                  FileInputStream in = new FileInputStream(pdfFile)) {
                 byte[] buf = new byte[4096];
                 int len;
-                while ((len = in.read(buf)) > 0) out.write(buf, 0, len);
+                while ((len = in.read(buf)) > 0) outStream.write(buf, 0, len);
             } catch (IOException e) {
                 if (isDebug()) android.util.Log.e(TAG, "MediaStore copy failed", e);
                 return;
@@ -630,7 +642,13 @@ public class HekaPrintPlugin extends Plugin {
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT);
             
             NotificationManagerCompat notificationManager = NotificationManagerCompat.from(getContext());
-            notificationManager.notify((int) System.currentTimeMillis(), builder.build());
+            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU ||
+                ContextCompat.checkSelfPermission(getContext(), android.Manifest.permission.POST_NOTIFICATIONS)
+                    == android.content.pm.PackageManager.PERMISSION_GRANTED) {
+                notificationManager.notify((int) System.currentTimeMillis(), builder.build());
+            } else {
+                if (isDebug()) android.util.Log.w(TAG, "POST_NOTIFICATIONS permission not granted — skipping download notification");
+            }
             
         } catch (Exception e) {
             if (isDebug()) android.util.Log.e(TAG, "Failed to show notification", e);

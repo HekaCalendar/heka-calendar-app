@@ -205,7 +205,7 @@ export function subscribeToCommunityEnergy(
       totalVotes,
       userVote,
       votingOpen: isVotingOpen(date),
-      votingClosesAt: deadline.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' }),
+      votingClosesAt: deadline.toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit' }),
       resultsAvailableAt: new Date(deadline.getTime() + 86400000).toLocaleDateString(),
     });
   }, () => {
@@ -253,7 +253,7 @@ export async function fetchCommunityEnergy(date: Date = new Date()): Promise<Dai
       totalVotes,
       userVote,
       votingOpen: isVotingOpen(date),
-      votingClosesAt: deadline.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' }),
+      votingClosesAt: deadline.toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit' }),
       resultsAvailableAt: new Date(deadline.getTime() + 86400000).toLocaleDateString(),
     };
   } catch {
@@ -340,7 +340,7 @@ export function getDailyEnergyResult(date: Date = new Date()): DailyEnergyResult
     totalVotes,
     userVote,
     votingOpen: isVotingOpen(date),
-    votingClosesAt: deadline.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' }),
+    votingClosesAt: deadline.toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit' }),
     resultsAvailableAt: new Date(deadline.getTime() + 86400000).toLocaleDateString(),
   };
 }

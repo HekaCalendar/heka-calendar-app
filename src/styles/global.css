@@ -31,6 +31,15 @@ noscript {
   background: #0c0c0f;
 }
 
+/* ==========================================================================
+   Accessibility: Restore focus indicators globally
+   Overrides any component-level outline:none removals
+   ========================================================================== */
+:focus-visible {
+  outline: 2px solid var(--color-gold, #c9a227) !important;
+  outline-offset: 2px !important;
+}
+
 :root {
   /* Core Color System - Sophisticated Dark Theme */
   --color-bg: #070708;

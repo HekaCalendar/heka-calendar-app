@@ -21,6 +21,7 @@ import { addAstroProfile } from '../../store';
 import type { AstroProfile } from '../../types/astrology';
 import { generateNatalReport, type NatalReport, type ReportSection } from './reportGenerator';
 import { REPORT_CSS } from './reportCss';
+import { escapeHtml } from '../../utils/htmlEscape';
 
 type ViewState = 'setup' | 'loading' | 'ready' | 'error';
 
@@ -654,7 +655,9 @@ const ReportSectionCard: React.FC<{
 };
 
 function formatInline(text: string): string {
-  let html = text.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+  // Escape HTML first, then apply safe markdown-like formatting
+  let html = escapeHtml(text);
+  html = html.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
   html = html.replace(/\*(.+?)\*/g, '<em>$1</em>');
   return html;
 }

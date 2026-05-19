@@ -64,6 +64,10 @@ export interface EventMap {
 
   // ─── Tutorial ───
   'heka-tutorial-complete': { aiEnabled: boolean };
+
+  // ─── Security ───
+  'heka:secure-storage:unavailable': void;
+  'heka:error:logged': { context: string; message: string; code?: string };
 }
 
 export type EventName = keyof EventMap;

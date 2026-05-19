@@ -90,8 +90,9 @@ public class PdfFilePrintAdapter extends PrintDocumentAdapter {
                 Log.w(TAG, "Close error", e);
             }
             
-            // Delete temp file
-            pdfFile.delete();
+            // NOTE: Do NOT delete the source PDF file here.
+            // The file may be the user's original document, not a temp copy.
+            // If temp cleanup is needed, the caller is responsible.
         }
     }
 }

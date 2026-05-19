@@ -54,6 +54,17 @@ if (self.__firebaseConfig) {
 
 // Also accept config from the main app via postMessage
 self.addEventListener('message', (event) => {
+  const ALLOWED_ORIGINS = [
+    'https://heka-calendar-pro.vercel.app',
+    'https://localhost:5173',
+    'http://localhost:5173',
+    'capacitor://localhost',
+    'http://localhost'
+  ];
+  if (event.origin && !ALLOWED_ORIGINS.includes(event.origin)) {
+    console.warn('[FCM-SW] Rejected postMessage from untrusted origin:', event.origin);
+    return;
+  }
   if (event.data && event.data.type === 'HEKA_FIREBASE_CONFIG') {
     initFirebase(event.data.config);
   }

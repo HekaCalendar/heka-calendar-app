@@ -3,7 +3,7 @@
  * Centralized, immutable state with persistence
  */
 
-import { configureStore, createSlice, createSelector } from '@reduxjs/toolkit';
+import { configureStore, createSlice, createSelector, type PayloadAction } from '@reduxjs/toolkit';
 import { setupReducer } from './setupSlice';
 import { changeLanguage } from '../i18n';
 
@@ -24,6 +24,7 @@ import type {
 } from '../types';
 import { DEFAULT_NOTIFICATION_PREFERENCES } from '../types/notifications';
 import { getTodayHekaDate } from '../services/calendarService';
+import { encryptState, decryptState, isEncryptedState } from '../utils/stateCrypto';
 
 // ============================================================================
 // Admin / Pro Access
@@ -277,6 +278,9 @@ const calendarSlice = createSlice({
     ...authReducers,
     ...contentReducers,
     ...progressReducers,
+    rehydrateState(state, action: PayloadAction<Partial<CalendarState>>) {
+      return { ...state, ...action.payload };
+    },
   },
 });
 
@@ -360,6 +364,7 @@ export const {
   trackLocationChange,
   setProSubscription,
   addPurchasedProduct,
+  rehydrateState,
 } = calendarSlice.actions;
 
 // ============================================================================
@@ -393,12 +398,69 @@ interface PersistedState {
   plannerPreferences?: { enableTaskNotifications?: boolean; };
 }
 
+/**
+ * Lightweight schema validation for persisted Redux state.
+ * Rejects corrupted or malformed data before it poisons the store.
+ */
+function validatePersistedState(state: unknown): state is PersistedState {
+  if (!state || typeof state !== 'object') return false;
+  const s = state as Record<string, unknown>;
+
+  // Validate notes shape
+  if (s.notes !== undefined) {
+    if (typeof s.notes !== 'object' || s.notes === null) {
+      console.warn('[Persistence] Invalid notes shape — rejecting persisted state');
+      return false;
+    }
+  }
+
+  // Validate notificationPreferences shape
+  if (s.notificationPreferences !== undefined) {
+    const np = s.notificationPreferences as Record<string, unknown>;
+    if (typeof np !== 'object' || np === null) {
+      console.warn('[Persistence] Invalid notificationPreferences shape');
+      return false;
+    }
+    // Must have at least globalEnabled boolean
+    if (typeof np.globalEnabled !== 'boolean') {
+      console.warn('[Persistence] notificationPreferences missing globalEnabled');
+      return false;
+    }
+  }
+
+  // Validate statistics
+  if (s.statistics !== undefined && (typeof s.statistics !== 'object' || s.statistics === null)) {
+    console.warn('[Persistence] Invalid statistics shape');
+    return false;
+  }
+
+  // Validate progress
+  if (s.progress !== undefined && (typeof s.progress !== 'object' || s.progress === null)) {
+    console.warn('[Persistence] Invalid progress shape');
+    return false;
+  }
+
+  return true;
+}
+
 function loadPersistedStateRaw(): PersistedState | undefined {
   try {
     const serialized = localStorage.getItem('heka-calendar-state');
-    if (serialized) {
-      return JSON.parse(serialized);
+    if (!serialized) return undefined;
+
+    // If encrypted, we can't decrypt synchronously — return undefined
+    // and let the async rehydration handle it after store creation.
+    if (isEncryptedState(serialized)) {
+      return undefined;
     }
+
+    // Legacy plaintext — parse and validate before using
+    const parsed = JSON.parse(serialized);
+    if (!validatePersistedState(parsed)) {
+      console.warn('[Persistence] Persisted state failed validation — starting fresh');
+      return undefined;
+    }
+    return parsed;
   } catch (err) {
     console.error('Failed to load persisted state:', err);
   }
@@ -554,16 +616,22 @@ let syncTimeout: ReturnType<typeof setTimeout> | null = null;
 
 store.subscribe(() => {
   const state = store.getState();
-  // Hash includes note count, IDs, moods, categories, and content lengths
-  // so edits, deletes, and mood changes all trigger sync
+  // Fast O(n) hash: no sorting, just count + sum of content lengths + edge IDs
   const notes = state.calendar.notes;
   const allNotes = Object.values(notes).flat();
-  const notesHash = allNotes
-    .map((n) => `${n.id}:${n.mood ?? ''}:${n.category}:${n.content.length}:${n.updatedAt ?? n.createdAt}`)
-    .sort()
-    .join('|');
-  if (notesHash !== lastNotesHash) {
-    lastNotesHash = notesHash;
+  let hash = allNotes.length.toString();
+  let totalContentLen = 0;
+  for (let i = 0; i < allNotes.length; i++) {
+    const n = allNotes[i];
+    totalContentLen += n.content?.length ?? 0;
+    if (i === 0 || i === allNotes.length - 1) {
+      hash += `|${n.id}:${n.mood ?? ''}:${n.category}:${n.updatedAt ?? n.createdAt}`;
+    }
+  }
+  hash += `|len:${totalContentLen}`;
+
+  if (hash !== lastNotesHash) {
+    lastNotesHash = hash;
     pendingSyncState = state;
     if (syncTimeout) clearTimeout(syncTimeout);
     syncTimeout = setTimeout(() => {
@@ -598,7 +666,7 @@ export function loadPersistedState(): any {
   return loadPersistedStateRaw();
 }
 
-export function persistState(state: RootState): void {
+export async function persistState(state: RootState): Promise<void> {
   try {
     const serialized = JSON.stringify({
       display: state.calendar.display,
@@ -625,11 +693,52 @@ export function persistState(state: RootState): void {
       featureDiscovery: state.calendar.progress.featureDiscovery,
       subscription: state.calendar.subscription,
     });
-    localStorage.setItem('heka-calendar-state', serialized);
+    const encrypted = await encryptState(serialized);
+    localStorage.setItem('heka-calendar-state', encrypted);
   } catch (err) {
     console.error('Failed to persist state:', err);
   }
 }
+
+// Async rehydration: decrypt encrypted state after store creation
+(async function rehydrateFromEncryptedState() {
+  try {
+    const serialized = localStorage.getItem('heka-calendar-state');
+    if (serialized && isEncryptedState(serialized)) {
+      const decrypted = await decryptState(serialized);
+      if (decrypted) {
+        const parsed: PersistedState = JSON.parse(decrypted);
+        if (!validatePersistedState(parsed)) {
+          console.warn('[Persistence] Decrypted state failed validation — starting fresh');
+          return;
+        }
+        const rehydrated: Partial<CalendarState> = {
+          ...parsed,
+          display: { ...initialState.display, ...(parsed.display || {}) },
+          ui: { ...initialState.ui },
+          statistics: parsed.statistics || initialState.statistics,
+          progress: parsed.progress || initialState.progress,
+          auth: initialState.auth,
+          notes: parsed.notes || {},
+          astroProfiles: parsed.astroProfiles || [],
+          selectedAstroProfileId: parsed.selectedAstroProfileId || null,
+          astroPreferences: parsed.astroPreferences || initialState.astroPreferences,
+          subscription: parsed.subscription || initialState.subscription,
+          notificationPreferences: {
+            ...DEFAULT_NOTIFICATION_PREFERENCES,
+            ...(parsed.notificationPreferences || {}),
+          },
+        };
+        store.dispatch(rehydrateState(rehydrated));
+        console.log('[Persistence] State rehydrated from encrypted storage');
+      } else {
+        console.warn('[Persistence] Failed to decrypt state — starting fresh');
+      }
+    }
+  } catch (err) {
+    console.error('[Persistence] Rehydration failed:', err);
+  }
+})();
 
 // Subscribe to store changes for persistence
 let previousState = store.getState();
@@ -653,7 +762,9 @@ store.subscribe(() => {
       clearTimeout(persistTimeout);
     }
     persistTimeout = setTimeout(() => {
-      persistState(currentState);
+      persistState(currentState).catch((err) => {
+        console.error('[Persistence] Encrypted save failed:', err);
+      });
       // Only log occasionally to reduce console spam
       if (Math.random() < 0.1) {
         console.log('[Persistence] Calendar state saved');

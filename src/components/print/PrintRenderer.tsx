@@ -9,11 +9,45 @@ import type { PrintTheme, YearData, MonthData, DayData } from './types';
 import type { PrintOptions } from '../../types';
 
 // ============================================================================
+// UTILITY: Validate CSS color values to prevent injection
+// ============================================================================
+
+const VALID_COLOR_RE = /^(#[0-9a-fA-F]{3,8}|rgb\(\s*\d+\s*,\s*\d+\s*,\s*\d+\s*\)|rgba\(\s*\d+\s*,\s*\d+\s*,\s*\d+\s*,\s*[\d.]+\s*\)|hsl\(\s*\d+\s*,\s*\d+%\s*,\s*\d+%\s*\)|hsla\(\s*\d+\s*,\s*\d+%\s*,\s*\d+%\s*,\s*[\d.]+\s*\)|[a-zA-Z]+)$/;
+
+function validateColor(value: string): string {
+  if (VALID_COLOR_RE.test(value)) return value;
+  console.warn('[PrintRenderer] Rejected invalid color value:', value);
+  return 'transparent';
+}
+
+function validateThemeColors(colors: PrintTheme['colors']): PrintTheme['colors'] {
+  return {
+    primary: validateColor(colors.primary),
+    primaryLight: validateColor(colors.primaryLight),
+    primaryDark: validateColor(colors.primaryDark),
+    secondary: validateColor(colors.secondary),
+    accent: validateColor(colors.accent),
+    background: validateColor(colors.background),
+    surface: validateColor(colors.surface),
+    surfaceElevated: validateColor(colors.surfaceElevated),
+    text: validateColor(colors.text),
+    textSecondary: validateColor(colors.textSecondary),
+    textMuted: validateColor(colors.textMuted),
+    border: validateColor(colors.border),
+    borderLight: validateColor(colors.borderLight),
+    arcOpening: validateColor(colors.arcOpening),
+    arcCore: validateColor(colors.arcCore),
+    arcClosing: validateColor(colors.arcClosing),
+  };
+}
+
+// ============================================================================
 // UTILITY: Generate CSS from design tokens
 // ============================================================================
 
 function generateThemeCSS(theme: PrintTheme): string {
   const { colors, typography, spacing, effects } = theme;
+  const safeColors = validateThemeColors(colors);
   
   return `
     @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Cinzel+Decorative:wght@400;700&family=Inter:wght@300;400;500;600&family=Crimson+Pro:wght@400;600&display=swap');
@@ -26,26 +60,26 @@ function generateThemeCSS(theme: PrintTheme): string {
     
     :root {
       /* Colors */
-      --color-primary: ${colors.primary};
-      --color-primary-light: ${colors.primaryLight};
-      --color-primary-dark: ${colors.primaryDark};
-      --color-secondary: ${colors.secondary};
-      --color-accent: ${colors.accent};
+      --color-primary: ${safeColors.primary};
+      --color-primary-light: ${safeColors.primaryLight};
+      --color-primary-dark: ${safeColors.primaryDark};
+      --color-secondary: ${safeColors.secondary};
+      --color-accent: ${safeColors.accent};
       
-      --color-bg: ${colors.background};
-      --color-surface: ${colors.surface};
-      --color-surface-elevated: ${colors.surfaceElevated};
+      --color-bg: ${safeColors.background};
+      --color-surface: ${safeColors.surface};
+      --color-surface-elevated: ${safeColors.surfaceElevated};
       
-      --color-text: ${colors.text};
-      --color-text-secondary: ${colors.textSecondary};
-      --color-text-muted: ${colors.textMuted};
+      --color-text: ${safeColors.text};
+      --color-text-secondary: ${safeColors.textSecondary};
+      --color-text-muted: ${safeColors.textMuted};
       
-      --color-border: ${colors.border};
-      --color-border-light: ${colors.borderLight};
+      --color-border: ${safeColors.border};
+      --color-border-light: ${safeColors.borderLight};
       
-      --color-arc-opening: ${colors.arcOpening};
-      --color-arc-core: ${colors.arcCore};
-      --color-arc-closing: ${colors.arcClosing};
+      --color-arc-opening: ${safeColors.arcOpening};
+      --color-arc-core: ${safeColors.arcCore};
+      --color-arc-closing: ${safeColors.arcClosing};
       
       /* Typography */
       --font-display: ${typography.display.fontFamily};

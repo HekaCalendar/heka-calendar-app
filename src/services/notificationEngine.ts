@@ -87,12 +87,24 @@ function loadEngineState(): NotificationEngineState {
   return { ...DEFAULT_ENGINE_STATE };
 }
 
+let pendingEngineState: NotificationEngineState | null = null;
+let engineSaveTimeout: ReturnType<typeof setTimeout> | null = null;
+
 function saveEngineState(state: NotificationEngineState): void {
-  try {
-    localStorage.setItem(ENGINE_STORAGE_KEY, JSON.stringify(state));
-  } catch (e) {
-    console.error('[NotificationEngine] Failed to save state:', e);
+  pendingEngineState = state;
+  if (engineSaveTimeout) {
+    clearTimeout(engineSaveTimeout);
   }
+  engineSaveTimeout = setTimeout(() => {
+    engineSaveTimeout = null;
+    if (!pendingEngineState) return;
+    try {
+      localStorage.setItem(ENGINE_STORAGE_KEY, JSON.stringify(pendingEngineState));
+    } catch (e) {
+      console.error('[NotificationEngine] Failed to save state:', e);
+    }
+    pendingEngineState = null;
+  }, 500);
 }
 
 // ── Astronomical Helpers (lightweight approximations for notifications) ──────

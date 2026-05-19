@@ -50,6 +50,15 @@ public class HekaBootReceiver extends BroadcastReceiver {
             return;
         }
 
+        // Guard against direct-boot crash: don't access user data until device is unlocked
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            android.os.UserManager userManager = (android.os.UserManager) context.getSystemService(Context.USER_SERVICE);
+            if (userManager != null && !userManager.isUserUnlocked()) {
+                Log.i(TAG, "Device not yet unlocked — deferring notification reschedule");
+                return;
+            }
+        }
+
         Log.i(TAG, "Boot completed — ensuring critical notifications are scheduled");
 
         try {

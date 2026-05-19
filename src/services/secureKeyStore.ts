@@ -8,8 +8,34 @@
  */
 
 import { SecureStoragePlugin } from 'capacitor-secure-storage-plugin';
+import { eventBus } from './eventBus';
 
 const FALLBACK_PREFIX = '__heka_secure__';
+
+/**
+ * One-time cleanup: scan localStorage for leftover plaintext secure keys
+ * from older app versions and remove them.
+ */
+function cleanupPlaintextKeys(): void {
+  try {
+    const keysToDelete: string[] = [];
+    for (let i = 0; i < localStorage.length; i++) {
+      const key = localStorage.key(i);
+      if (key && key.startsWith(FALLBACK_PREFIX)) {
+        keysToDelete.push(key);
+      }
+    }
+    for (const key of keysToDelete) {
+      console.warn('[SecureKeyStore] Removing plaintext key from localStorage:', key);
+      localStorage.removeItem(key);
+    }
+  } catch {
+    // Ignore localStorage access errors
+  }
+}
+
+// Run cleanup once on module load
+cleanupPlaintextKeys();
 
 // In-memory cache to avoid repeated native bridge calls (main thread blocking)
 const memoryCache: Map<string, string | null> = new Map();
@@ -28,15 +54,17 @@ export const secureKeyStore = {
    * Store a value securely. Falls back to prefixed localStorage on web/errors.
    * Invalidates in-memory cache for the key.
    */
-  async set(key: string, value: string): Promise<void> {
+  async set(key: string, value: string): Promise<{ success: boolean }> {
     memoryCache.delete(key);
     knownKeys = null; // Force refresh on next get
     inFlightKeysPromise = null;
     try {
       await SecureStoragePlugin.set({ key, value });
+      return { success: true };
     } catch (err) {
-      console.warn(`[SecureKeyStore] Native set failed for "${key}", falling back to localStorage:`, err);
-      localStorage.setItem(`${FALLBACK_PREFIX}${key}`, value);
+      console.warn(`[SecureKeyStore] Native set failed for "${key}":`, err);
+      eventBus.emit('heka:secure-storage:unavailable', undefined);
+      return { success: false };
     }
   },
 
@@ -74,16 +102,20 @@ export const secureKeyStore = {
       // Deduplicate the keys() call so concurrent get()s share one round-trip.
       if (!knownKeys) {
         if (!inFlightKeysPromise) {
-          inFlightKeysPromise = SecureStoragePlugin.keys().then(r => new Set(r.value));
+          inFlightKeysPromise = SecureStoragePlugin.keys()
+            .then(r => new Set(r.value))
+            .catch(err => {
+              inFlightKeysPromise = null;
+              console.warn('[SecureKeyStore] Failed to list keys:', err);
+              return new Set<string>();
+            });
         }
         knownKeys = await inFlightKeysPromise;
       }
 
       if (!knownKeys.has(key)) {
-        // Key not in secure storage — check localStorage fallback
-        const fallback = localStorage.getItem(`${FALLBACK_PREFIX}${key}`);
-        memoryCache.set(key, fallback);
-        return fallback;
+        memoryCache.set(key, null);
+        return null;
       }
 
       const result = await SecureStoragePlugin.get({ key });
@@ -91,9 +123,9 @@ export const secureKeyStore = {
       memoryCache.set(key, value);
       return value;
     } catch (err) {
-      const fallback = localStorage.getItem(`${FALLBACK_PREFIX}${key}`);
-      memoryCache.set(key, fallback);
-      return fallback;
+      console.warn(`[SecureKeyStore] Get failed for "${key}":`, err);
+      memoryCache.set(key, null);
+      return null;
     }
   },
 
