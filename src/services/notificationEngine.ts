@@ -35,6 +35,9 @@ import { NotificationFatigue } from './notificationFatigue';
 import { NotificationAnalytics } from './notificationAnalytics';
 import { cleanupOldSnoozes } from './notificationSnooze';
 import { incrementBadge, decrementBadge } from './notificationBadge';
+import { getNextScheduleTime, isVacationMode, isInFocusSchedule } from './notificationScheduling';
+import { bundleNotifications, separateBundleable } from './notificationBundling';
+import { enrichWithRichContent } from './notificationRichContent';
 import { civilToHeka, getDaysInMonth, HEKA_MONTHS } from './calendarService';
 import { calculateVoidMoonStatus, getNextSignBoundary, calculateCurrentSky } from '../astrology/services/calculations/swissCalculations';
 import { getSignFromLongitude } from '../astrology/types/core';
@@ -308,12 +311,15 @@ class NotificationEngineClass {
       return null;
     }
 
+    // Enrich with rich notification content (largeBody, attachments, etc.)
+    const enrichedReq = enrichWithRichContent(req);
+
     // Claim the slot IMMEDIATELY (before any async work) to prevent race
     // conditions when multiple notifications schedule in parallel.
-    this.recordSent(req, idString);
+    this.recordSent(enrichedReq, idString);
 
     // Track ID by type for cancelByType
-    const typeKey = req.type;
+    const typeKey = enrichedReq.type;
     if (!this.typeToIds.has(typeKey)) this.typeToIds.set(typeKey, new Set());
     this.typeToIds.get(typeKey)!.add(idString);
 
@@ -323,12 +329,12 @@ class NotificationEngineClass {
         const { display } = await LocalNotifications.checkPermissions();
         if (display !== 'granted') {
           // Permission denied — roll back the ledger entry
-          this.rollbackLedgerEntry(req, idString);
+          this.rollbackLedgerEntry(enrichedReq, idString);
           return null;
         }
 
         // Cancel existing if replaceable
-        if (req.replaceExisting) {
+        if (enrichedReq.replaceExisting) {
           try {
             await LocalNotifications.cancel({ notifications: [{ id: notificationId }] });
           } catch {
@@ -337,48 +343,66 @@ class NotificationEngineClass {
         }
 
         // Determine channel and action type
-        const channelId = req.channelId || getChannelForTier(req.tier);
-        const actionTypeId = req.actionTypeId || req.type;
+        const channelId = enrichedReq.channelId || getChannelForTier(enrichedReq.tier);
+        const actionTypeId = enrichedReq.actionTypeId || enrichedReq.type;
         void getActionsForType(actionTypeId); // Ensure actions are registered
 
+        const nativeNotification: any = {
+          id: notificationId,
+          title: enrichedReq.title,
+          body: enrichedReq.body,
+          schedule: { at: enrichedReq.scheduleAt },
+          smallIcon: 'ic_notification',
+          iconColor: '#c9a227',
+          channelId,
+          actionTypeId,
+          extra: { ...enrichedReq.extra, _engineType: enrichedReq.type, _engineTier: enrichedReq.tier, _engineSection: enrichedReq.section },
+        };
+
+        // Rich notification fields (Android)
+        if (enrichedReq.largeBody) nativeNotification.largeBody = enrichedReq.largeBody;
+        if (enrichedReq.summaryText) nativeNotification.summaryText = enrichedReq.summaryText;
+        if (enrichedReq.inboxList) nativeNotification.inboxList = enrichedReq.inboxList.slice(0, 5);
+        if (enrichedReq.largeIcon) nativeNotification.largeIcon = enrichedReq.largeIcon;
+        if (enrichedReq.attachments) {
+          nativeNotification.attachments = enrichedReq.attachments.map(a => ({
+            id: a.id,
+            url: a.url,
+          }));
+        }
+        if (enrichedReq.group) {
+          nativeNotification.group = enrichedReq.group;
+          nativeNotification.groupSummary = enrichedReq.groupSummary || false;
+        }
+
         await LocalNotifications.schedule({
-          notifications: [{
-            id: notificationId,
-            title: req.title,
-            body: req.body,
-            schedule: { at: req.scheduleAt },
-            smallIcon: 'ic_notification',
-            iconColor: '#c9a227',
-            channelId,
-            actionTypeId,
-            extra: { ...req.extra, _engineType: req.type, _engineTier: req.tier, _engineSection: req.section },
-          }]
+          notifications: [nativeNotification]
         });
 
         // Track analytics and badge
-        NotificationAnalytics.recordScheduled(req.type, req.tier, req.section);
+        NotificationAnalytics.recordScheduled(enrichedReq.type, enrichedReq.tier, enrichedReq.section);
         void incrementBadge();
 
         return idString;
       } catch (error) {
         // Schedule failed — roll back the ledger entry
-        this.rollbackLedgerEntry(req, idString);
+        this.rollbackLedgerEntry(enrichedReq, idString);
         console.error('[NotificationEngine] Native schedule error:', error);
         return null;
       }
     }
 
     // Browser fallback: setTimeout (only works while page is open)
-    const delay = req.scheduleAt.getTime() - Date.now();
+    const delay = enrichedReq.scheduleAt.getTime() - Date.now();
     if (delay <= 0) {
       // Immediate
-      this.showWebNotification(req.title, { body: req.body });
+      this.showWebNotification(enrichedReq.title, { body: enrichedReq.body });
       this.confirmDelivery(idString);
       return idString;
     }
 
     // Cancel existing web timeout if replacing
-    if (req.replaceExisting) {
+    if (enrichedReq.replaceExisting) {
       const existing = this.webTimeouts.get(idString);
       if (existing !== undefined) {
         clearTimeout(existing);
@@ -387,14 +411,14 @@ class NotificationEngineClass {
     }
 
     const timeoutId = window.setTimeout(() => {
-      this.showWebNotification(req.title, { body: req.body });
+      this.showWebNotification(enrichedReq.title, { body: enrichedReq.body });
       this.confirmDelivery(idString);
       this.webTimeouts.delete(idString);
       this.webMeta.delete(idString);
     }, delay);
 
     this.webTimeouts.set(idString, timeoutId);
-    this.webMeta.set(idString, { type: req.type, taskId: req.extra?.taskId, extra: req.extra });
+    this.webMeta.set(idString, { type: enrichedReq.type, taskId: enrichedReq.extra?.taskId, extra: enrichedReq.extra });
     return idString;
   }
 
@@ -503,6 +527,39 @@ class NotificationEngineClass {
           ? (hour >= qh.start || hour < qh.end)
           : (hour >= qh.start && hour < qh.end);
         if (inQuietHours) {
+          NotificationAnalytics.recordSuppressed(req.type, req.tier, req.section, 'quiet_hours');
+          return false;
+        }
+      }
+    }
+
+    // Vacation mode check: suppress non-essential notifications
+    if (isVacationMode()) {
+      const allowedTypes = store.getState().calendar.notificationPreferences.vacationMode.allowedTypes;
+      if (!allowedTypes.includes(req.type)) {
+        NotificationAnalytics.recordSuppressed(req.type, req.tier, req.section, 'quiet_hours');
+        return false;
+      }
+    }
+
+    // Focus schedule check: only allow specified tiers during focus time
+    if (isInFocusSchedule()) {
+      const prefs = store.getState().calendar.notificationPreferences;
+      const now = new Date();
+      const dayOfWeek = now.getDay();
+      const currentMinutes = now.getHours() * 60 + now.getMinutes();
+
+      for (const schedule of prefs.focusSchedules) {
+        if (!schedule.enabled) continue;
+        if (!schedule.daysOfWeek.includes(dayOfWeek)) continue;
+
+        const startMinutes = schedule.startHour * 60 + schedule.startMinute;
+        const endMinutes = schedule.endHour * 60 + schedule.endMinute;
+        const inSchedule = startMinutes > endMinutes
+          ? (currentMinutes >= startMinutes || currentMinutes < endMinutes)
+          : (currentMinutes >= startMinutes && currentMinutes < endMinutes);
+
+        if (inSchedule && !schedule.allowedTiers.includes(req.tier)) {
           NotificationAnalytics.recordSuppressed(req.type, req.tier, req.section, 'quiet_hours');
           return false;
         }
@@ -942,7 +999,8 @@ class NotificationEngineClass {
    * 2. Detect combinable pairs (same day, complementary types)
    * 3. Respect spacing rules (min time between same-tier deliveries)
    * 4. Respect tier caps
-   * 5. Deliver the winners, drop the rest
+   * 5. Bundle simultaneous notifications (>3 in 5min window)
+   * 6. Deliver the winners, drop the rest
    */
   private async flushGeniusQueue(): Promise<void> {
     if (this.geniusQueue.length === 0) return;
@@ -958,6 +1016,7 @@ class NotificationEngineClass {
     const ledger = this.state.dailyLedgers[today] || { date: today, counts: { core: 0, standard: 0, ambient: 0 }, delivered: [] };
     const deliveredTypes: string[] = [];
     const deliveredTimes: number[] = [];
+    const winningRequests: NotificationRequest[] = [];
 
     for (const p of proposals) {
       const pDedupKey = p.dedupKey || p.type;
@@ -1001,11 +1060,8 @@ class NotificationEngineClass {
       const combinable = this.findCombinable(p, proposals.filter(op => deliveredTypes.includes(op.dedupKey || op.type)));
       if (combinable) {
         // Merge the lower-scored proposal's vars into the higher-scored one
-        // by updating the already-scheduled notification's extra data.
-        // This preserves both pieces of information instead of silently dropping one.
         const mergedVars = { ...combinable.vars, ...p.vars, _combinedWith: p.type };
         const mergedExtra = { ...combinable.extra, ...p.extra, _combinedWith: p.type };
-        // Re-schedule the merged version (replaceExisting will update the native alarm)
         const { title, body, templateIndex } = generateNotificationContent(combinable.type, combinable.seed, mergedVars);
         const mergedReq: NotificationRequest = {
           type: combinable.type,
@@ -1020,14 +1076,13 @@ class NotificationEngineClass {
         };
         const mergedResult = await this.schedule(mergedReq);
         if (mergedResult) {
-          // Mark the merged type as handled so we don't also schedule it standalone
           this.state.sentTodayFlags[pDedupKey] = today;
           this.state.lastDeliveryTime[pDedupKey] = Date.now();
         }
         continue;
       }
 
-      // Build and deliver
+      // Build request (defer delivery for bundling)
       const { title, body, templateIndex } = generateNotificationContent(p.type, p.seed, p.vars);
       const req: NotificationRequest = {
         type: p.type,
@@ -1042,14 +1097,39 @@ class NotificationEngineClass {
         dedupKey: p.dedupKey,
       };
 
-      const result = await this.schedule(req);
-      if (result) {
-        deliveredTypes.push(pDedupKey);
-        deliveredTimes.push(p.scheduleAt.getTime());
-        // counts are already incremented inside schedule -> recordSent
-        this.state.sentTodayFlags[pDedupKey] = today;
-        this.state.lastDeliveryTime[pDedupKey] = Date.now();
-      }
+      winningRequests.push(req);
+      deliveredTypes.push(pDedupKey);
+      deliveredTimes.push(p.scheduleAt.getTime());
+      this.state.sentTodayFlags[pDedupKey] = today;
+      this.state.lastDeliveryTime[pDedupKey] = Date.now();
+    }
+
+    // ── Smart Bundling ───────────────────────────────────────────────────────
+    // Separate non-bundleable (core alerts, streak savers, etc.)
+    const [bundleable, nonBundleable] = separateBundleable(winningRequests);
+
+    // Apply bundling to bundleable requests
+    const { individual, bundles, consumed } = bundleNotifications(bundleable);
+
+    // Mark consumed requests as handled (they're bundled)
+    for (const req of consumed) {
+      // Already flagged above; ledger counts already incremented
+      NotificationAnalytics.recordSuppressed(req.type, req.tier, req.section, 'cap');
+    }
+
+    // Deliver non-bundleable first (highest priority)
+    for (const req of nonBundleable) {
+      await this.schedule(req);
+    }
+
+    // Deliver bundled summaries
+    for (const req of bundles) {
+      await this.schedule(req);
+    }
+
+    // Deliver individual bundleable notifications
+    for (const req of individual) {
+      await this.schedule(req);
     }
 
     saveEngineState(this.state);
@@ -1525,11 +1605,8 @@ class NotificationEngineClass {
 
     if (!holidays.length) return;
 
-    // Pre-schedule for 7 PM today (or tomorrow if already past 7 PM)
-    const scheduleTime = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 19, 0, 0, 0);
-    if (scheduleTime.getTime() <= now.getTime()) {
-      scheduleTime.setDate(scheduleTime.getDate() + 1);
-    }
+    // Pre-schedule at user's preferred holiday reminder time
+    const scheduleTime = getNextScheduleTime('holidayReminders');
 
     // Send one notification per holiday (capped by ambient tier)
     let anyScheduled = false;
@@ -1768,17 +1845,12 @@ class NotificationEngineClass {
     const prefs = store.getState().calendar.notificationPreferences.journal;
     if (!prefs.dailyReflectionPrompt) return;
 
-    const now = new Date();
     const today = getTodayKey();
-
     const flagKey = 'evening-reflection';
     if (this.state.sentTodayFlags[flagKey] === today) return;
 
-    // Pre-schedule for 8 PM today (or tomorrow if already past 8 PM)
-    const scheduleTime = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 20, 0, 0, 0);
-    if (scheduleTime.getTime() <= now.getTime()) {
-      scheduleTime.setDate(scheduleTime.getDate() + 1);
-    }
+    // Pre-schedule at user's preferred evening reflection time
+    const scheduleTime = getNextScheduleTime('eveningReflection');
 
     const seed = `reflection-${today}`;
     const result = await this.scheduleTemplated(
@@ -1960,9 +2032,7 @@ class NotificationEngineClass {
     const prefs = store.getState().calendar.notificationPreferences.stars;
     if (!prefs.fullMoonReminders) return;
 
-    const now = new Date();
     const today = getTodayKey();
-
     const flagKey = 'full-moon-reminder';
     if (this.state.sentTodayFlags[flagKey] === today) return;
 
@@ -1972,11 +2042,8 @@ class NotificationEngineClass {
     const isFull = phaseNum !== null && (phaseNum > 0.47 && phaseNum < 0.53);
     if (!isFull) return;
 
-    // Pre-schedule for 8 PM today (or tomorrow if already past 8 PM)
-    const scheduleTime = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 20, 0, 0, 0);
-    if (scheduleTime.getTime() <= now.getTime()) {
-      scheduleTime.setDate(scheduleTime.getDate() + 1);
-    }
+    // Pre-schedule at user's preferred full moon reminder time
+    const scheduleTime = getNextScheduleTime('fullMoonReminders');
 
     const seed = `full-moon-${today}`;
     const result = await this.scheduleTemplated(

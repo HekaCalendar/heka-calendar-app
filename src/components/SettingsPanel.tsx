@@ -7,8 +7,8 @@
 
 import { useState, useRef, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import type { RootState } from '../store';
-import { setLocation, setSubRegion, toggleDisplay, toggleTimeMode, toggleAstroPreference, updateAstroPreferences, setGlobalNotificationsEnabled, setNotificationMode } from '../store';
+import type { RootState, AppDispatch } from '../store';
+import { setLocation, setSubRegion, toggleDisplay, toggleTimeMode, toggleAstroPreference, updateAstroPreferences, setGlobalNotificationsEnabled, setNotificationMode, updateNotificationPreferences } from '../store';
 import { setNotificationsEnabled } from '../store/setupSlice';
 import { LOCATIONS, SUB_REGIONS } from '../types';
 import { CalendarNotificationSettings } from './notification/CalendarNotificationSettings';
@@ -16,6 +16,9 @@ import { StarsNotificationSettings } from './notification/StarsNotificationSetti
 import { JournalNotificationSettings } from './notification/JournalNotificationSettings';
 import { UnifiedNotificationSettings } from './notification/UnifiedNotificationSettings';
 import { NotificationHistory } from './notification/NotificationHistory';
+import { TimePreferenceEditor } from './notification/TimePreferenceEditor';
+import { VacationModeEditor } from './notification/VacationModeEditor';
+import { FocusSchedulesEditor } from './notification/FocusSchedulesEditor';
 import { ThemeSettings } from './ThemeSettings';
 import { AISettingsPanel } from './AISettingsPanel';
 import { useFeatureDiscovery, useSettingsTracking } from '../hooks/useGamification';
@@ -125,6 +128,9 @@ const NotificationSettingsBody: React.FC = () => {
     return <UnifiedNotificationSettings />;
   }
 
+  const adaptiveCaps = useSelector((state: RootState) => state.calendar.notificationPreferences.adaptiveCaps);
+  const dispatch = useDispatch<AppDispatch>();
+
   return (
     <div>
       <div style={{ fontSize: '13px', fontWeight: 600, color: '#c9a227', marginBottom: '8px', textTransform: 'uppercase', letterSpacing: '0.5px' }}>{t('notificationSettings.calendarSection')}</div>
@@ -137,6 +143,60 @@ const NotificationSettingsBody: React.FC = () => {
       <p style={{ fontSize: '13px', color: 'rgba(224,224,224,0.5)', margin: '0 0 8px' }}>
         {t('notificationSettings.circleHint')}
       </p>
+
+      {/* Custom Scheduling */}
+      <div style={{ fontSize: '13px', fontWeight: 600, color: '#c9a227', marginTop: '24px', marginBottom: '8px', textTransform: 'uppercase', letterSpacing: '0.5px' }}>⏰ Custom Times</div>
+      <TimePreferenceEditor />
+
+      {/* Adaptive Caps */}
+      <div style={{ fontSize: '13px', fontWeight: 600, color: '#c9a227', marginTop: '24px', marginBottom: '8px', textTransform: 'uppercase', letterSpacing: '0.5px' }}>🧠 Smart Limits</div>
+      <label style={{
+        display: 'flex',
+        alignItems: 'center',
+        gap: '12px',
+        padding: '12px 0',
+        cursor: 'pointer',
+      }}>
+        <div style={{
+          width: '40px',
+          height: '22px',
+          borderRadius: '11px',
+          background: adaptiveCaps ? '#c9a227' : 'rgba(255,255,255,0.15)',
+          position: 'relative',
+          transition: 'all 0.2s',
+        }}>
+          <div style={{
+            width: '18px',
+            height: '18px',
+            borderRadius: '50%',
+            background: '#fff',
+            position: 'absolute',
+            top: '2px',
+            left: adaptiveCaps ? '20px' : '2px',
+            transition: 'all 0.2s',
+          }} />
+        </div>
+        <input
+          type="checkbox"
+          checked={adaptiveCaps}
+          onChange={() => dispatch(updateNotificationPreferences({ section: 'adaptiveCaps', prefs: !adaptiveCaps }))}
+          style={{ position: 'absolute', opacity: 0, width: 0, height: 0 }}
+        />
+        <div>
+          <div style={{ fontSize: '14px', fontWeight: 500, color: '#e0e0e0' }}>Adaptive Caps</div>
+          <div style={{ fontSize: '12px', color: 'rgba(224,224,224,0.5)', marginTop: '2px' }}>
+            Automatically reduce notifications when you dismiss many in a row
+          </div>
+        </div>
+      </label>
+
+      {/* Focus Schedules */}
+      <div style={{ fontSize: '13px', fontWeight: 600, color: '#c9a227', marginTop: '24px', marginBottom: '8px', textTransform: 'uppercase', letterSpacing: '0.5px' }}>🎯 Focus Schedules</div>
+      <FocusSchedulesEditor />
+
+      {/* Vacation Mode */}
+      <div style={{ fontSize: '13px', fontWeight: 600, color: '#c9a227', marginTop: '24px', marginBottom: '8px', textTransform: 'uppercase', letterSpacing: '0.5px' }}>🏖️ Vacation Mode</div>
+      <VacationModeEditor />
     </div>
   );
 };

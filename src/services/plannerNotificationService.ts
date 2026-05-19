@@ -10,6 +10,7 @@ import { LocalNotifications, type LocalNotificationSchema } from '@capacitor/loc
 import { NotificationEngine } from './notificationEngine';
 import { NotificationAnalytics } from './notificationAnalytics';
 import { checkStreakMilestone } from './notificationCelebrations';
+import { getNextScheduleTime } from './notificationScheduling';
 import { seededRandom } from './notificationTemplates';
 import type { PlannerTask } from '../types';
 import { calculateCurrentSky, calculatePreciseMoonPhase } from '../astrology/services/calculations/swissCalculations';
@@ -109,9 +110,9 @@ const STREAK_SAVER_ID = 888888;
 
 /**
  * Schedule the daily celestial briefing notification.
- * Respects engine dedup: only schedules once per day.
+ * Respects engine dedup and user custom time preferences.
  */
-export async function scheduleDailyBriefing(timeStr: string = '07:00'): Promise<void> {
+export async function scheduleDailyBriefing(): Promise<void> {
   const prefs = store.getState().calendar.notificationPreferences.planner;
   if (!prefs.dailyBriefing) return;
 
@@ -121,13 +122,7 @@ export async function scheduleDailyBriefing(timeStr: string = '07:00'): Promise<
     return;
   }
 
-  const [hours, minutes] = timeStr.split(':').map(Number);
-  const now = new Date();
-  const briefingTime = new Date(now.getFullYear(), now.getMonth(), now.getDate(), hours, minutes, 0, 0);
-
-  if (briefingTime.getTime() <= now.getTime()) {
-    briefingTime.setDate(briefingTime.getDate() + 1);
-  }
+  const briefingTime = getNextScheduleTime('dailyBriefing');
 
   const vars = await generateDailyBriefingVars();
   const seed = new Date().toISOString().split('T')[0];
@@ -151,7 +146,8 @@ export async function scheduleDailyBriefing(timeStr: string = '07:00'): Promise<
 }
 
 /**
- * Schedule the streak saver notification for 8 PM if needed.
+ * Schedule the streak saver notification if needed.
+ * Respects user custom time preferences.
  */
 export async function scheduleStreakSaverIfNeeded(): Promise<void> {
   const prefs = store.getState().calendar.notificationPreferences.planner;
@@ -180,7 +176,7 @@ export async function scheduleStreakSaverIfNeeded(): Promise<void> {
     return;
   }
 
-  const saverTime = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 20, 0, 0, 0);
+  const saverTime = getNextScheduleTime('streakSaver');
   if (saverTime.getTime() <= now.getTime()) {
     return;
   }

@@ -72,6 +72,19 @@
                 android:resource="@xml/file_paths" />
         </provider>
 
+        <!-- HEKA Boot Receiver — reschedules critical daily notifications after reboot -->
+        <receiver
+            android:name=".HekaBootReceiver"
+            android:enabled="true"
+            android:exported="false"
+            android:directBootAware="true">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.LOCKED_BOOT_COMPLETED" />
+                <action android:name="android.intent.action.QUICKBOOT_POWERON" />
+            </intent-filter>
+        </receiver>
+
     </application>
 
     <!-- Core functionality: Internet for weather, APIs, and cloud sync -->

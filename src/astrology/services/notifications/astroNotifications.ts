@@ -7,6 +7,7 @@
  */
 
 import { NotificationEngine } from '../../../services/notificationEngine';
+import { getNextScheduleTime } from '../../../services/notificationScheduling';
 
 export type NotificationType = 'daily_tip' | 'retrograde_alert' | 'void_moon';
 
@@ -24,7 +25,8 @@ export async function initializeAstroNotifications(): Promise<void> {
 }
 
 /**
- * Schedule daily celestial tips notification (8 AM — staggered 1h after daily briefing)
+ * Schedule daily celestial tips notification.
+ * Respects user custom time preferences (defaults to 8 AM).
  */
 export async function scheduleDailyTips(enabled: boolean): Promise<void> {
   if (!enabled) {
@@ -39,12 +41,7 @@ export async function scheduleDailyTips(enabled: boolean): Promise<void> {
     return;
   }
 
-  const now = new Date();
-  const scheduleTime = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 8, 0, 0);
-  if (scheduleTime <= now) {
-    scheduleTime.setDate(scheduleTime.getDate() + 1);
-  }
-
+  const scheduleTime = getNextScheduleTime('dailyCelestialTips');
   const seed = new Date().toISOString().split('T')[0];
 
   const result = await NotificationEngine.scheduleTemplated(

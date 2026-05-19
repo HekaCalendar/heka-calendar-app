@@ -293,12 +293,20 @@ export const toggleAstroPreference = (state: CalendarState, action: PayloadActio
 
 // ─── Notification Reducers ───
 
-export const updateNotificationPreferences = (state: CalendarState, action: PayloadAction<{ section: NotificationSection | 'quietHours'; prefs: Partial<NotificationPreferences[NotificationSection]> | Partial<NotificationPreferences['quietHours']> }>) => {
+export const updateNotificationPreferences = (state: CalendarState, action: PayloadAction<{ section: NotificationSection | 'quietHours' | 'customTimes' | 'vacationMode' | 'focusSchedules' | 'adaptiveCaps'; prefs: any }>) => {
   const { section, prefs } = action.payload;
   if (section === 'quietHours') {
-    state.notificationPreferences.quietHours = { ...state.notificationPreferences.quietHours, ...prefs } as any;
+    state.notificationPreferences.quietHours = { ...state.notificationPreferences.quietHours, ...prefs };
+  } else if (section === 'customTimes') {
+    state.notificationPreferences.customTimes = { ...state.notificationPreferences.customTimes, ...prefs };
+  } else if (section === 'vacationMode') {
+    state.notificationPreferences.vacationMode = { ...state.notificationPreferences.vacationMode, ...prefs };
+  } else if (section === 'focusSchedules') {
+    state.notificationPreferences.focusSchedules = prefs;
+  } else if (section === 'adaptiveCaps') {
+    state.notificationPreferences.adaptiveCaps = prefs as boolean;
   } else {
-    state.notificationPreferences[section] = { ...state.notificationPreferences[section], ...prefs } as any;
+    state.notificationPreferences[section] = { ...state.notificationPreferences[section], ...prefs };
   }
 };
 
@@ -322,6 +330,10 @@ export const resetNotificationPreferences = (state: CalendarState) => {
     circle: DEFAULT_NOTIFICATION_PREFERENCES.circle,
     journal: DEFAULT_NOTIFICATION_PREFERENCES.journal,
     planner: DEFAULT_NOTIFICATION_PREFERENCES.planner,
+    customTimes: DEFAULT_NOTIFICATION_PREFERENCES.customTimes,
+    vacationMode: DEFAULT_NOTIFICATION_PREFERENCES.vacationMode,
+    focusSchedules: DEFAULT_NOTIFICATION_PREFERENCES.focusSchedules,
+    adaptiveCaps: DEFAULT_NOTIFICATION_PREFERENCES.adaptiveCaps,
   };
 };
 

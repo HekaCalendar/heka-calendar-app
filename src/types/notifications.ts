@@ -46,6 +46,21 @@ export interface NotificationRequest {
   channelId?: string;
   /** Action type ID for action buttons (defaults to type) */
   actionTypeId?: string;
+  // ── Rich Notification Fields ─────────────────────────────────────────────
+  /** Multiline text block for big-text notification style (Android) */
+  largeBody?: string;
+  /** Summary text for inbox/big-text styles (Android) */
+  summaryText?: string;
+  /** Inbox-style list items (Android, max 5) */
+  inboxList?: string[];
+  /** Large icon drawable name (Android) */
+  largeIcon?: string;
+  /** Image attachments (uses res:// or file:// scheme) */
+  attachments?: Array<{ id: string; url: string }>;
+  /** Notification group key (Android) */
+  group?: string;
+  /** Whether this is a group summary (Android) */
+  groupSummary?: boolean;
 }
 
 export interface DeliveredNotification {
@@ -125,6 +140,46 @@ export interface QuietHoursConfig {
   end: number;   // 0-23, e.g. 7 for 7 AM
 }
 
+export interface VacationMode {
+  enabled: boolean;
+  untilDate: string | null; // ISO date YYYY-MM-DD
+  /** Types that are allowed even in vacation mode (e.g. 'streak-saver') */
+  allowedTypes: string[];
+}
+
+export interface FocusSchedule {
+  id: string;
+  name: string;
+  enabled: boolean;
+  /** Only these tiers are allowed during focus time */
+  allowedTiers: NotificationTier[];
+  /** 0 = Sunday, 6 = Saturday */
+  daysOfWeek: number[];
+  startHour: number; // 0-23
+  startMinute: number; // 0-59
+  endHour: number; // 0-23
+  endMinute: number; // 0-59
+}
+
+export interface CustomTimeConfig {
+  hour: number;
+  minute: number;
+  /** Offset in minutes for weekend (null = same as weekday) */
+  weekendOffsetMinutes?: number | null;
+  /** Align to astronomical event instead of fixed time */
+  alignToEvent?: 'sunrise' | 'sunset' | 'moonrise' | null;
+}
+
+export type NotificationTimeKey =
+  | 'dailyBriefing'
+  | 'dailyCelestialTips'
+  | 'eveningReflection'
+  | 'streakSaver'
+  | 'holidayReminders'
+  | 'fullMoonReminders'
+  | 'newMoonReminders'
+  | 'sunriseWakeUp';
+
 export type NotificationMode = 'unified' | 'custom';
 
 export interface NotificationPreferences {
@@ -136,6 +191,14 @@ export interface NotificationPreferences {
   circle: CircleNotificationPrefs;
   journal: JournalNotificationPrefs;
   planner: PlannerNotificationPrefs;
+  /** Per-type custom scheduling times (falls back to defaults if not set) */
+  customTimes: Partial<Record<NotificationTimeKey, CustomTimeConfig>>;
+  /** Vacation mode — suppress non-essential notifications */
+  vacationMode: VacationMode;
+  /** Focus schedules — filter notifications by tier during work/focus time */
+  focusSchedules: FocusSchedule[];
+  /** Whether adaptive caps (fatigue-based) are enabled */
+  adaptiveCaps: boolean;
 }
 
 // ── Default Preferences ──────────────────────────────────────────────────────
@@ -185,6 +248,48 @@ export const DEFAULT_QUIET_HOURS: QuietHoursConfig = {
   end: 7,
 };
 
+export const DEFAULT_VACATION_MODE: VacationMode = {
+  enabled: false,
+  untilDate: null,
+  allowedTypes: ['streak-saver', 'streak-protection', 'friend-request'],
+};
+
+export const DEFAULT_FOCUS_SCHEDULES: FocusSchedule[] = [
+  {
+    id: 'deep-work',
+    name: 'Deep Work',
+    enabled: false,
+    allowedTiers: ['core'],
+    daysOfWeek: [1, 2, 3, 4, 5], // Mon-Fri
+    startHour: 9,
+    startMinute: 0,
+    endHour: 12,
+    endMinute: 0,
+  },
+  {
+    id: 'evening-wind-down',
+    name: 'Evening Wind-Down',
+    enabled: false,
+    allowedTiers: ['core', 'standard'],
+    daysOfWeek: [0, 1, 2, 3, 4, 5, 6],
+    startHour: 21,
+    startMinute: 0,
+    endHour: 7,
+    endMinute: 0,
+  },
+];
+
+export const DEFAULT_NOTIFICATION_TIME_PREFS: Partial<Record<NotificationTimeKey, CustomTimeConfig>> = {
+  dailyBriefing: { hour: 7, minute: 0 },
+  dailyCelestialTips: { hour: 8, minute: 0 },
+  eveningReflection: { hour: 20, minute: 0 },
+  streakSaver: { hour: 20, minute: 0 },
+  holidayReminders: { hour: 19, minute: 0 },
+  fullMoonReminders: { hour: 20, minute: 0 },
+  newMoonReminders: { hour: 7, minute: 0 },
+  sunriseWakeUp: { hour: 6, minute: 0, alignToEvent: 'sunrise' },
+};
+
 export const DEFAULT_NOTIFICATION_PREFERENCES: NotificationPreferences = {
   globalEnabled: true,
   notificationMode: 'unified',
@@ -194,6 +299,10 @@ export const DEFAULT_NOTIFICATION_PREFERENCES: NotificationPreferences = {
   circle: DEFAULT_CIRCLE_NOTIFICATION_PREFS,
   journal: DEFAULT_JOURNAL_NOTIFICATION_PREFS,
   planner: DEFAULT_PLANNER_NOTIFICATION_PREFS,
+  customTimes: { ...DEFAULT_NOTIFICATION_TIME_PREFS },
+  vacationMode: DEFAULT_VACATION_MODE,
+  focusSchedules: [...DEFAULT_FOCUS_SCHEDULES],
+  adaptiveCaps: true,
 };
 
 // ── Notification Type Constants ──────────────────────────────────────────────
