@@ -49,6 +49,7 @@ vi.mock('../src/services/tutorialService', () => ({
     getPreferences: () => ({}),
     trackNoteEditorOpened: vi.fn(),
     trackNoteTyping: vi.fn(),
+    trackNoteCreated: vi.fn(),
   },
 }));
 
