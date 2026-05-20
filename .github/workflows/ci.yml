@@ -52,4 +52,4 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: web-dist
-          path: dist2/
+          path: dist/

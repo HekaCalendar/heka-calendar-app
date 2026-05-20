@@ -31,6 +31,7 @@ android/app/*.jks
 # Build outputs
 dist/
 dist2/
+dist3/
 android/app/build/
 ios/App/build/
 src-tauri/target/
