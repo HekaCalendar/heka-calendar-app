@@ -24,7 +24,7 @@ export default ts.config(
       'react-hooks/rules-of-hooks': 'error',
       'react-hooks/exhaustive-deps': 'warn',
       '@typescript-eslint/no-explicit-any': 'warn',
-      '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_', varsIgnorePattern: '^_' }],
+      '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_', varsIgnorePattern: '^_', caughtErrorsIgnorePattern: '^_' }],
       '@typescript-eslint/no-empty-object-type': 'off',
       // Experimental React Compiler rules — too strict for real-world patterns
       'react-hooks/purity': 'off',

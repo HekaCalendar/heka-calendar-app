@@ -1,4 +1,19 @@
 import React from 'react';
+
+// Global type extensions for native bridge and dev utilities
+declare global {
+  interface Window {
+    Capacitor?: { isNative?: boolean };
+    heka?: {
+      version: string;
+      reset: () => void;
+      resetTutorial: () => void;
+      checkTutorial: () => unknown;
+      status: () => { version: string; stored: string | null; last: string | null };
+    };
+  }
+}
+
 import ReactDOM from 'react-dom/client';
 import { App } from './components/App';
 import { onAuthChange, isFirebaseConfigured } from './services/firebase';
@@ -11,7 +26,7 @@ import { initI18n } from './i18n';
 // Defensive console sanitizer: redact API keys from all log output in native builds
 (function () {
   if (typeof window === 'undefined') return;
-  const isNative = (window as any).Capacitor?.isNative;
+  const isNative = window.Capacitor?.isNative;
   if (!isNative) return;
 
   const SENSITIVE_PATTERNS = [
@@ -28,7 +43,7 @@ import { initI18n } from './i18n';
     return SENSITIVE_PATTERNS.reduce((s, pattern) => s.replace(pattern, '[REDACTED]'), str);
   }
 
-  function sanitize(args: any[]): any[] {
+  function sanitize(args: unknown[]): unknown[] {
     return args.map((arg) => {
       if (typeof arg === 'string') {
         return redact(arg);
@@ -47,10 +62,10 @@ import { initI18n } from './i18n';
 
   const methods: (keyof Console)[] = ['log', 'info', 'warn', 'error', 'debug'];
   methods.forEach((method) => {
-    const original = (console as any)[method];
+    const original = console[method];
     if (typeof original === 'function') {
-      (console as any)[method] = function (...args: any[]) {
-        return original.apply(console, sanitize(args));
+      (console[method] as unknown as (...a: unknown[]) => void) = function (...args: unknown[]) {
+        return (original as (...a: unknown[]) => void).apply(console, sanitize(args));
       };
     }
   });
@@ -74,7 +89,7 @@ function safeLocalStorageSet(key: string, value: string): boolean {
 function safeLocalStorageGet(key: string): string | null {
   try {
     return localStorage.getItem(key);
-  } catch (e) {
+  } catch (_e) {
     return null;
   }
 }
@@ -82,7 +97,7 @@ function safeLocalStorageGet(key: string): string | null {
 function safeLocalStorageRemove(key: string): void {
   try {
     localStorage.removeItem(key);
-  } catch (e) {
+  } catch (_e) {
     // Silent fail
   }
 }
@@ -202,7 +217,7 @@ if (root) {
 
 // Expose utilities (development only)
 if (import.meta.env.DEV) {
-  (window as any).heka = {
+  window.heka = {
   version: APP_VERSION,
   reset: () => {
     safeLocalStorageRemove('heka-version');
@@ -243,7 +258,7 @@ if (import.meta.env.DEV) {
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
     // Skip SW registration in Capacitor to avoid conflicts
-    const isCapacitor = (window as any).Capacitor !== undefined;
+    const isCapacitor = window.Capacitor !== undefined;
     if (isCapacitor) {
       return;
     }
