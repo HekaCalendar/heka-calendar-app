@@ -26,7 +26,7 @@ import {
   emitOpenYear,
 } from './emitters';
 
-function makeCandidate(id: string, overrides: Partial<CandidateMessage>): CandidateMessage {
+export function makeCandidate(id: string, overrides: Partial<CandidateMessage>): CandidateMessage {
   return {
     id,
     type: 'insight',
@@ -39,7 +39,7 @@ function makeCandidate(id: string, overrides: Partial<CandidateMessage>): Candid
   } as CandidateMessage;
 }
 
-function withArchetypeDialect(
+export function withArchetypeDialect(
   ctx: OracleContext,
   type: Parameters<typeof getArchetypeDialect>[1],
   fallback: string
