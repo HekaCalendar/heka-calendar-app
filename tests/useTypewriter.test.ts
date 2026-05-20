@@ -1,4 +1,4 @@
-import { describe, it, expect, vi, beforeEach } from 'vitest';
+import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import { renderHook, act } from '@testing-library/react';
 import { useTypewriter } from '../src/hooks/useTypewriter';
 
@@ -20,7 +20,7 @@ describe('useTypewriter', () => {
 
   it('reveals text word by word', () => {
     const { result } = renderHook(() => useTypewriter());
-    const msg = { text: 'Hello world test', sender: 'coach' as const, timestamp: 0 };
+    const msg = { id: '1', type: 'insight' as const, text: 'Hello world test', icon: '✨', color: '#caa24a' };
 
     act(() => {
       result.current.start(msg, 50);
@@ -37,7 +37,7 @@ describe('useTypewriter', () => {
   it('calls onComplete when done', () => {
     const { result } = renderHook(() => useTypewriter());
     const onComplete = vi.fn();
-    const msg = { text: 'Hi', sender: 'coach' as const, timestamp: 0 };
+    const msg = { id: '2', type: 'insight' as const, text: 'Hi', icon: '✨', color: '#caa24a' };
 
     act(() => {
       result.current.start(msg, 10, onComplete);
@@ -52,7 +52,7 @@ describe('useTypewriter', () => {
 
   it('stops revealing when stop is called', () => {
     const { result } = renderHook(() => useTypewriter());
-    const msg = { text: 'This is a longer message with many words', sender: 'coach' as const, timestamp: 0 };
+    const msg = { id: '3', type: 'insight' as const, text: 'This is a longer message with many words', icon: '✨', color: '#caa24a' };
 
     act(() => {
       result.current.start(msg, 50);
@@ -74,7 +74,7 @@ describe('useTypewriter', () => {
 
   it('handles empty message', () => {
     const { result } = renderHook(() => useTypewriter());
-    const msg = { text: '', sender: 'coach' as const, timestamp: 0 };
+    const msg = { id: '4', type: 'insight' as const, text: '', icon: '✨', color: '#caa24a' };
 
     act(() => {
       result.current.start(msg, 10);
@@ -85,8 +85,8 @@ describe('useTypewriter', () => {
 
   it('restarts with new message', () => {
     const { result } = renderHook(() => useTypewriter());
-    const msg1 = { text: 'First', sender: 'coach' as const, timestamp: 0 };
-    const msg2 = { text: 'Second message', sender: 'coach' as const, timestamp: 1 };
+    const msg1 = { id: '5', type: 'insight' as const, text: 'First', icon: '✨', color: '#caa24a' };
+    const msg2 = { id: '6', type: 'insight' as const, text: 'Second message', icon: '✨', color: '#caa24a' };
 
     act(() => {
       result.current.start(msg1, 10);
@@ -101,7 +101,7 @@ describe('useTypewriter', () => {
 
   it('preserves whitespace between words', () => {
     const { result } = renderHook(() => useTypewriter());
-    const msg = { text: 'Hello   world', sender: 'coach' as const, timestamp: 0 };
+    const msg = { id: '7', type: 'insight' as const, text: 'Hello   world', icon: '✨', color: '#caa24a' };
 
     act(() => {
       result.current.start(msg, 10);

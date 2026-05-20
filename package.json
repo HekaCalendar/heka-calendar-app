@@ -12,6 +12,8 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "test:coverage": "vitest run --coverage",
+    "e2e": "playwright test",
+    "e2e:headed": "playwright test --headed",
     "postinstall": "npx patch-package",
     "server": "node server/print-server.js",
     "mobile:sync": "npx cap sync",
@@ -68,6 +70,7 @@
     "swisseph-wasm": "^0.0.4"
   },
   "devDependencies": {
+    "@playwright/test": "^1.60.0",
     "@tauri-apps/cli": "^2.10.1",
     "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/react": "^14.0.0",

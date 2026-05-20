@@ -50,3 +50,8 @@ node_modules/
 .DS_Store
 Thumbs.db
 .aider*
+
+# Playwright
+playwright-report/
+test-results/
+blob-report/

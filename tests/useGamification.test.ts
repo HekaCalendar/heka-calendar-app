@@ -1,4 +1,5 @@
 import { describe, it, expect } from 'vitest';
+import type { RootState } from '../src/store';
 import { renderHookWithProviders } from './test-utils';
 import {
   useGamification,
@@ -8,7 +9,7 @@ import {
   useUserLevel,
 } from '../src/hooks/useGamification';
 
-const makeState = (overrides: any = {}) => ({
+const makeState = (overrides: any = {}): Partial<RootState> => ({
   calendar: {
     progress: {
       level: 1,
