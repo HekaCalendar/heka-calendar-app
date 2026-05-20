@@ -232,6 +232,7 @@ vi.mock('firebase/firestore', () => ({
   arrayRemove: vi.fn((...items: unknown[]) => items),
   increment: vi.fn((n: number) => n),
   serverTimestamp: vi.fn(() => new Date().toISOString()),
+  onSnapshot: vi.fn(() => vi.fn()),
   Timestamp: {
     fromDate: vi.fn((d: Date) => ({ seconds: Math.floor(d.getTime() / 1000), nanoseconds: 0 })),
     now: vi.fn(() => ({ seconds: Math.floor(Date.now() / 1000), nanoseconds: 0 })),
