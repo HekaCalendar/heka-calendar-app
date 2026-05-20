@@ -105,7 +105,9 @@ export const CalendarAICoach: React.FC<CalendarAICoachProps> = ({ focusedDate })
           return parsed;
         }
       }
-    } catch {}
+    } catch {
+      // Ignore parse errors — localStorage may be disabled or corrupted
+    }
     return { x: 0, y: 0 };
   });
   const [isDragging, setIsDragging] = useState(false);
@@ -153,7 +155,9 @@ export const CalendarAICoach: React.FC<CalendarAICoachProps> = ({ focusedDate })
       dragStartRef.current = null;
       try {
         localStorage.setItem('heka-coach-position', JSON.stringify(latestDragOffsetRef.current));
-      } catch {}
+      } catch {
+        // Ignore localStorage errors — may be disabled in private mode
+      }
     };
     window.addEventListener('mousemove', handleMove);
     window.addEventListener('mouseup', handleUp);
@@ -410,7 +414,7 @@ export const CalendarAICoach: React.FC<CalendarAICoachProps> = ({ focusedDate })
       generationLockRef.current = false;
       setIsTyping(false);
     }
-  }, [generateMessage]);
+  }, [generateMessage, canAutoExpand, setMinimized, startTypewriter]);
 
   // Refresh message when user navigates to a new zone (with a small debounce)
   useEffect(() => {
@@ -443,7 +447,7 @@ export const CalendarAICoach: React.FC<CalendarAICoachProps> = ({ focusedDate })
     } finally {
       setIsTyping(false);
     }
-  }, [enabled]);
+  }, [enabled, canAutoExpand, setMinimized]);
 
   // Initial message on mount / when enabled
   useEffect(() => {
@@ -626,7 +630,7 @@ export const CalendarAICoach: React.FC<CalendarAICoachProps> = ({ focusedDate })
     };
     window.addEventListener('keydown', handleEscape);
     return () => window.removeEventListener('keydown', handleEscape);
-  }, [minimized]);
+  }, [minimized, setMinimized]);
 
   // Arrow keys nudge coach position when expanded
   useEffect(() => {
