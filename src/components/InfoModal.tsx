@@ -269,14 +269,31 @@ const InfoModalComponent: React.FC<InfoModalProps> = ({ isOpen, onClose }) => {
   );
 };
 
-const HomeView: React.FC<{ onChapterClick: (id: ChapterId) => void; t: any; chapters: Chapter[] }> = ({ onChapterClick, t, chapters }) => (
+const HomeView: React.FC<{ onChapterClick: (id: ChapterId) => void; t: (key: string, options?: Record<string, unknown>) => string; chapters: Chapter[] }> = ({ onChapterClick, t, chapters }) => (
   <div className="info-home">
     <div className="info-home__hero">
-      <div className="info-home__logo">✦</div>
       <h1 className="info-home__title">{t('infoModal.hero.title')}</h1>
-      <p className="info-home__subtitle">{t('infoModal.hero.subtitleLine1')}<br />{t('infoModal.hero.subtitleLine2')}</p>
+      <p className="info-home__subtitle">{t('infoModal.hero.subtitleLine1')} {t('infoModal.hero.subtitleLine2')}</p>
     </div>
 
+    {/* Chapters — primary navigation, placed first */}
+    <div className="info-home__chapters">
+      <div className="info-home__chapter-list">
+        {chapters.slice(1).map(ch => (
+          <button
+            key={ch.id}
+            className="info-home__chapter-btn"
+            onClick={() => onChapterClick(ch.id)}
+          >
+            <span className="info-home__chapter-num">{ch.num}</span>
+            <span className="info-home__chapter-title">{t(`infoModal.chapters.${ch.id}.title`)}</span>
+            <span className="info-home__chapter-arrow">→</span>
+          </button>
+        ))}
+      </div>
+    </div>
+
+    {/* Summary cards — secondary, visually subdued */}
     <div className="info-home__grid">
       <div className="info-home__card info-home__card--changes">
         <h3>{t('infoModal.cards.whatChanges.title')}</h3>
@@ -312,67 +329,15 @@ const HomeView: React.FC<{ onChapterClick: (id: ChapterId) => void; t: any; chap
       </div>
     </div>
 
-    <div className="info-home__chapters">
-      <h3>{t('infoModal.chaptersLabel')}</h3>
-      <div className="info-home__chapter-list">
-        {chapters.slice(1).map(ch => (
-          <button
-            key={ch.id}
-            className="info-home__chapter-btn"
-            onClick={() => onChapterClick(ch.id)}
-          >
-            <span className="info-home__chapter-num">{ch.num}</span>
-            <span className="info-home__chapter-title">{t(`infoModal.chapters.${ch.id}.title`)}</span>
-            <span className="info-home__chapter-arrow">→</span>
-          </button>
-        ))}
-      </div>
-    </div>
-
     {/* Legal Links */}
-    <div style={{ 
-      marginTop: '32px', 
-      paddingTop: '24px', 
-      borderTop: '1px solid rgba(201, 162, 39, 0.2)',
-      textAlign: 'center',
-      display: 'flex',
-      justifyContent: 'center',
-      gap: '24px',
-      flexWrap: 'wrap'
-    }}>
-      <a 
-        href="privacy-policy.html" 
-        target="_blank" 
-        rel="noopener noreferrer"
-        style={{
-          color: '#a1a1aa',
-          fontSize: '13px',
-          textDecoration: 'none',
-          transition: 'color 0.2s',
-        }}
-        onMouseEnter={(e) => e.currentTarget.style.color = '#c9a227'}
-        onMouseLeave={(e) => e.currentTarget.style.color = '#a1a1aa'}
-      >
+    <div className="info-home__legal">
+      <a href="privacy-policy.html" target="_blank" rel="noopener noreferrer">
         {t('privacy')}
       </a>
-      <a 
-        href="terms-of-service.html" 
-        target="_blank" 
-        rel="noopener noreferrer"
-        style={{
-          color: '#a1a1aa',
-          fontSize: '13px',
-          textDecoration: 'none',
-          transition: 'color 0.2s',
-        }}
-        onMouseEnter={(e) => e.currentTarget.style.color = '#c9a227'}
-        onMouseLeave={(e) => e.currentTarget.style.color = '#a1a1aa'}
-      >
+      <a href="terms-of-service.html" target="_blank" rel="noopener noreferrer">
         {t('terms')}
       </a>
-      <span style={{ color: '#71717a', fontSize: '13px' }}>
-        {t('version')} 2.2.0
-      </span>
+      <span>{t('version')} 2.2.0</span>
     </div>
   </div>
 );
@@ -382,7 +347,7 @@ const ChapterView: React.FC<{
   onBack: () => void;
   openGates: Set<string>;
   toggleGate: (key: string) => void;
-  t: any;
+  t: (key: string, options?: Record<string, unknown>) => string;
 }> = ({ chapterId, onBack, openGates, toggleGate, t }) => {
   const cards = cardsByChapter[chapterId] || [];
   const gates = gatesByChapter[chapterId] || [];
