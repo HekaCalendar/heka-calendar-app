@@ -47,7 +47,7 @@ function ensureAppEngagement(state: CalendarState, timestamp?: number): AppEngag
   if (!state.progress.appEngagement) {
     const today = new Date(timestamp || Date.now()).toISOString().split('T')[0];
     state.progress.appEngagement = {
-      totalAppOpens: 1,
+      totalAppOpens: 0,
       currentOpenStreak: 1,
       longestOpenStreak: 1,
       lastOpenDate: today,
@@ -85,8 +85,8 @@ export const trackAppOpen = (state: CalendarState, action: ActionWithMeta<void>)
   engagement.totalAppOpens += 1;
 
   if (engagement.lastOpenDate) {
-    const lastDate = new Date(engagement.lastOpenDate);
-    const todayDate = new Date(today);
+    const lastDate = new Date(engagement.lastOpenDate + 'T00:00:00Z');
+    const todayDate = new Date(today + 'T00:00:00Z');
     const diffDays = Math.floor((todayDate.getTime() - lastDate.getTime()) / (1000 * 60 * 60 * 24));
 
     if (diffDays === 1) {
@@ -153,9 +153,7 @@ export const discoverFeature = (state: CalendarState, action: ActionWithMeta<{ f
   const engagement = ensureAppEngagement(state, timestamp);
   const discovery = ensureFeatureDiscovery(state);
 
-  if (feature in discovery) {
-    discovery[feature] = true;
-  }
+  discovery[feature] = true;
 
   engagement.featuresDiscovered[feature] = timestamp;
 };

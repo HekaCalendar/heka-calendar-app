@@ -109,7 +109,7 @@ describe('progressReducers', () => {
     it('trackAppOpen initializes engagement on first open', () => {
       const state = createProgressState();
       trackAppOpen(state, { payload: undefined, meta: { timestamp: 1718400000000 } });
-      expect(state.progress.appEngagement.totalAppOpens).toBe(2);
+      expect(state.progress.appEngagement.totalAppOpens).toBe(1);
       expect(state.progress.appEngagement.currentOpenStreak).toBe(1);
       expect(state.progress.appEngagement.lastOpenDate).toBe('2024-06-14');
     });
@@ -195,9 +195,10 @@ describe('progressReducers', () => {
       expect(state.progress.appEngagement.uniqueMonthsVisited).toHaveLength(1);
     });
 
-    it('discoverFeature records timestamp in featuresDiscovered', () => {
+    it('discoverFeature marks feature discovered and records timestamp', () => {
       const state = createProgressState();
       discoverFeature(state, { payload: { feature: 'openedDateModal' }, meta: { timestamp: 1718400000000 } });
+      expect(state.progress.featureDiscovery.openedDateModal).toBe(true);
       expect(state.progress.appEngagement.featuresDiscovered.openedDateModal).toBe(1718400000000);
     });
 
