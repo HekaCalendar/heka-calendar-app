@@ -17,6 +17,7 @@ import { calculateCurrentSky, calculatePreciseMoonPhase } from '../astrology/ser
 import { store } from '../store';
 import { selectDate, setView } from '../store';
 import { eventBus } from './eventBus';
+import { civilToHeka } from './calendarService';
 
 const IS_NATIVE_APP = typeof (window as unknown as { Capacitor?: unknown }).Capacitor !== 'undefined';
 
@@ -459,12 +460,10 @@ export function initializePlannerNotificationTapHandler(): () => void {
 
     if (type === 'daily-briefing') {
       const now = new Date();
-      import('./calendarService').then(({ civilToHeka }) => {
-        const hekaDate = civilToHeka(now);
-        if (hekaDate) {
-          store.dispatch(selectDate(hekaDate));
-        }
-      });
+      const hekaDate = civilToHeka(now);
+      if (hekaDate) {
+        store.dispatch(selectDate(hekaDate));
+      }
       return;
     }
 
