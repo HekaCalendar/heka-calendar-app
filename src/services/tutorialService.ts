@@ -119,7 +119,8 @@ class TutorialService {
 
   // Notify listeners of state change
   private notify(): void {
-    this.listeners.forEach(listener => listener(this.state));
+    const stateClone = { ...this.state };
+    this.listeners.forEach(listener => listener(stateClone));
     this.saveState();
     
     // Sync to Redux if connected
@@ -135,7 +136,7 @@ class TutorialService {
   // Subscribe to state changes
   subscribe(listener: (state: TutorialState) => void): () => void {
     this.listeners.add(listener);
-    listener(this.state);
+    listener({ ...this.state });
     return () => this.listeners.delete(listener);
   }
 
