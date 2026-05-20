@@ -1,5 +1,5 @@
 import React from 'react';
-import { renderHook } from '@testing-library/react';
+import { render, renderHook, type RenderOptions } from '@testing-library/react';
 import { Provider } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
 import type { RootState } from '../src/store';
@@ -259,4 +259,15 @@ export function renderHookWithProviders<T>(
   const wrapper = ({ children }: { children: React.ReactNode }) =>
     React.createElement(Provider, { store }, children);
   return { ...renderHook(hook, { wrapper }), store };
+}
+
+export function renderWithProviders(
+  ui: React.ReactElement,
+  preloadedState: Partial<RootState> = {},
+  options?: Omit<RenderOptions, 'wrapper'> & { store?: ReturnType<typeof createMockStore> }
+) {
+  const store = options?.store || createMockStore(preloadedState);
+  const wrapper = ({ children }: { children: React.ReactNode }) =>
+    React.createElement(Provider, { store }, children);
+  return { ...render(ui, { wrapper, ...options }), store };
 }
