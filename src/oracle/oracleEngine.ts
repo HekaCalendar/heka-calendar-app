@@ -189,6 +189,8 @@ export type AspectType = 'conjunction' | 'opposition' | 'trine' | 'square' | 'se
 export interface CelestialEvent {
   type: 'moon-phase' | 'transit' | 'void-moon' | 'aspect' | 'house-transit';
   planet?: string;
+  transitingPlanet?: string;
+  transitingSign?: string;
   secondaryPlanet?: string;
   sign?: string;
   house?: number;

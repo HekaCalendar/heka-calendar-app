@@ -13,7 +13,7 @@ import type {
   DiaryState,
   JournalPreferences
 } from '../oracle/diaryTypes';
-import { OracleEngine } from '../oracle/oracleEngine';
+import { OracleEngine, type BirthChart, type Transit, type CelestialEvent } from '../oracle/oracleEngine';
 import { DEFAULT_JOURNAL_PREFERENCES } from '../oracle/diaryTypes';
 import { syncToCloud, loadFromCloud } from '../services/firebase';
 import { buildMoodHistory } from '../services/sentimentService';
@@ -33,6 +33,12 @@ import {
   dbSearchEntries,
   type JournalEntry,
 } from '../services/journalDatabase';
+
+/** Format a celestial event description from a Transit or CelestialEvent union */
+function formatCelestialEventDescription(event: CelestialEvent | Transit): string {
+  const e = event as { transitingPlanet?: string; planet?: string; aspect?: string };
+  return `${e.transitingPlanet || e.planet || 'Planet'} ${e.aspect || 'aspect'}`;
+}
 
 // ============================================================================
 // INITIAL STATE
@@ -104,7 +110,7 @@ const createDiaryEntry = createAsyncThunk(
       ? state.calendar.astroProfiles.find((p: {id: string}) => p.id === state.calendar.selectedAstroProfileId)?.natalChart
       : undefined;
 
-    const insights = OracleEngine.generateInsights(themes, celestialState, birthChart as any);
+    const insights = OracleEngine.generateInsights(themes, celestialState, birthChart as BirthChart | undefined);
     const bestInsight = OracleEngine.selectBestInsight(insights);
 
     let insight: DiaryEntry['insight'] = undefined;
@@ -119,7 +125,7 @@ const createDiaryEntry = createAsyncThunk(
           type: ('type' in bestInsight.celestialEvent) ? bestInsight.celestialEvent.type : 'transit',
           description: ('description' in bestInsight.celestialEvent)
             ? bestInsight.celestialEvent.description
-            : `${(bestInsight.celestialEvent as any).transitingPlanet || 'Planet'} ${(bestInsight.celestialEvent as any).aspect || 'aspect'}`,
+            : formatCelestialEventDescription(bestInsight.celestialEvent),
           strength: bestInsight.celestialEvent.strength
         },
         usedBirthChart: bestInsight.requiresBirthChart,
@@ -216,7 +222,7 @@ const updateDiaryEntry = createAsyncThunk(
 
     if (Math.abs(payload.content.length - existingEntry.content.length) > 50) {
       const celestialContext = await OracleEngine.getCurrentCelestialState();
-      const insights = OracleEngine.generateInsights(themes, celestialContext, birthChart as any);
+      const insights = OracleEngine.generateInsights(themes, celestialContext, birthChart as BirthChart | undefined);
       const bestInsight = OracleEngine.selectBestInsight(insights);
 
       if (bestInsight) {
@@ -230,7 +236,7 @@ const updateDiaryEntry = createAsyncThunk(
             type: ('type' in bestInsight.celestialEvent) ? bestInsight.celestialEvent.type : 'transit',
             description: ('description' in bestInsight.celestialEvent)
               ? bestInsight.celestialEvent.description
-              : `${(bestInsight.celestialEvent as any).transitingPlanet || 'Planet'} ${(bestInsight.celestialEvent as any).aspect || 'aspect'}`,
+              : formatCelestialEventDescription(bestInsight.celestialEvent),
             strength: bestInsight.celestialEvent.strength
           },
           usedBirthChart: bestInsight.requiresBirthChart,

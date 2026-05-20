@@ -1,0 +1,544 @@
+
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Code coverage report for astrology/services/guidance/templates/bodies/chironTemplates.ts</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../../../../prettify.css" />
+    <link rel="stylesheet" href="../../../../../base.css" />
+    <link rel="shortcut icon" type="image/x-icon" href="../../../../../favicon.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../../../../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+    
+<body>
+<div class='wrapper'>
+    <div class='pad1'>
+        <h1><a href="../../../../../index.html">All files</a> / <a href="index.html">astrology/services/guidance/templates/bodies</a> chironTemplates.ts</h1>
+        <div class='clearfix'>
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">0% </span>
+                <span class="quiet">Statements</span>
+                <span class='fraction'>0/153</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">0% </span>
+                <span class="quiet">Branches</span>
+                <span class='fraction'>0/1</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">0% </span>
+                <span class="quiet">Functions</span>
+                <span class='fraction'>0/1</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">0% </span>
+                <span class="quiet">Lines</span>
+                <span class='fraction'>0/153</span>
+            </div>
+        
+            
+        </div>
+        <p class="quiet">
+            Press <em>n</em> or <em>j</em> to go to the next uncovered block, <em>b</em>, <em>p</em> or <em>k</em> for the previous block.
+        </p>
+        <template id="filterTemplate">
+            <div class="quiet">
+                Filter:
+                <input type="search" id="fileSearch">
+            </div>
+        </template>
+    </div>
+    <div class='status-line low'></div>
+    <pre><table class="coverage">
+<tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
+<a name='L2'></a><a href='#L2'>2</a>
+<a name='L3'></a><a href='#L3'>3</a>
+<a name='L4'></a><a href='#L4'>4</a>
+<a name='L5'></a><a href='#L5'>5</a>
+<a name='L6'></a><a href='#L6'>6</a>
+<a name='L7'></a><a href='#L7'>7</a>
+<a name='L8'></a><a href='#L8'>8</a>
+<a name='L9'></a><a href='#L9'>9</a>
+<a name='L10'></a><a href='#L10'>10</a>
+<a name='L11'></a><a href='#L11'>11</a>
+<a name='L12'></a><a href='#L12'>12</a>
+<a name='L13'></a><a href='#L13'>13</a>
+<a name='L14'></a><a href='#L14'>14</a>
+<a name='L15'></a><a href='#L15'>15</a>
+<a name='L16'></a><a href='#L16'>16</a>
+<a name='L17'></a><a href='#L17'>17</a>
+<a name='L18'></a><a href='#L18'>18</a>
+<a name='L19'></a><a href='#L19'>19</a>
+<a name='L20'></a><a href='#L20'>20</a>
+<a name='L21'></a><a href='#L21'>21</a>
+<a name='L22'></a><a href='#L22'>22</a>
+<a name='L23'></a><a href='#L23'>23</a>
+<a name='L24'></a><a href='#L24'>24</a>
+<a name='L25'></a><a href='#L25'>25</a>
+<a name='L26'></a><a href='#L26'>26</a>
+<a name='L27'></a><a href='#L27'>27</a>
+<a name='L28'></a><a href='#L28'>28</a>
+<a name='L29'></a><a href='#L29'>29</a>
+<a name='L30'></a><a href='#L30'>30</a>
+<a name='L31'></a><a href='#L31'>31</a>
+<a name='L32'></a><a href='#L32'>32</a>
+<a name='L33'></a><a href='#L33'>33</a>
+<a name='L34'></a><a href='#L34'>34</a>
+<a name='L35'></a><a href='#L35'>35</a>
+<a name='L36'></a><a href='#L36'>36</a>
+<a name='L37'></a><a href='#L37'>37</a>
+<a name='L38'></a><a href='#L38'>38</a>
+<a name='L39'></a><a href='#L39'>39</a>
+<a name='L40'></a><a href='#L40'>40</a>
+<a name='L41'></a><a href='#L41'>41</a>
+<a name='L42'></a><a href='#L42'>42</a>
+<a name='L43'></a><a href='#L43'>43</a>
+<a name='L44'></a><a href='#L44'>44</a>
+<a name='L45'></a><a href='#L45'>45</a>
+<a name='L46'></a><a href='#L46'>46</a>
+<a name='L47'></a><a href='#L47'>47</a>
+<a name='L48'></a><a href='#L48'>48</a>
+<a name='L49'></a><a href='#L49'>49</a>
+<a name='L50'></a><a href='#L50'>50</a>
+<a name='L51'></a><a href='#L51'>51</a>
+<a name='L52'></a><a href='#L52'>52</a>
+<a name='L53'></a><a href='#L53'>53</a>
+<a name='L54'></a><a href='#L54'>54</a>
+<a name='L55'></a><a href='#L55'>55</a>
+<a name='L56'></a><a href='#L56'>56</a>
+<a name='L57'></a><a href='#L57'>57</a>
+<a name='L58'></a><a href='#L58'>58</a>
+<a name='L59'></a><a href='#L59'>59</a>
+<a name='L60'></a><a href='#L60'>60</a>
+<a name='L61'></a><a href='#L61'>61</a>
+<a name='L62'></a><a href='#L62'>62</a>
+<a name='L63'></a><a href='#L63'>63</a>
+<a name='L64'></a><a href='#L64'>64</a>
+<a name='L65'></a><a href='#L65'>65</a>
+<a name='L66'></a><a href='#L66'>66</a>
+<a name='L67'></a><a href='#L67'>67</a>
+<a name='L68'></a><a href='#L68'>68</a>
+<a name='L69'></a><a href='#L69'>69</a>
+<a name='L70'></a><a href='#L70'>70</a>
+<a name='L71'></a><a href='#L71'>71</a>
+<a name='L72'></a><a href='#L72'>72</a>
+<a name='L73'></a><a href='#L73'>73</a>
+<a name='L74'></a><a href='#L74'>74</a>
+<a name='L75'></a><a href='#L75'>75</a>
+<a name='L76'></a><a href='#L76'>76</a>
+<a name='L77'></a><a href='#L77'>77</a>
+<a name='L78'></a><a href='#L78'>78</a>
+<a name='L79'></a><a href='#L79'>79</a>
+<a name='L80'></a><a href='#L80'>80</a>
+<a name='L81'></a><a href='#L81'>81</a>
+<a name='L82'></a><a href='#L82'>82</a>
+<a name='L83'></a><a href='#L83'>83</a>
+<a name='L84'></a><a href='#L84'>84</a>
+<a name='L85'></a><a href='#L85'>85</a>
+<a name='L86'></a><a href='#L86'>86</a>
+<a name='L87'></a><a href='#L87'>87</a>
+<a name='L88'></a><a href='#L88'>88</a>
+<a name='L89'></a><a href='#L89'>89</a>
+<a name='L90'></a><a href='#L90'>90</a>
+<a name='L91'></a><a href='#L91'>91</a>
+<a name='L92'></a><a href='#L92'>92</a>
+<a name='L93'></a><a href='#L93'>93</a>
+<a name='L94'></a><a href='#L94'>94</a>
+<a name='L95'></a><a href='#L95'>95</a>
+<a name='L96'></a><a href='#L96'>96</a>
+<a name='L97'></a><a href='#L97'>97</a>
+<a name='L98'></a><a href='#L98'>98</a>
+<a name='L99'></a><a href='#L99'>99</a>
+<a name='L100'></a><a href='#L100'>100</a>
+<a name='L101'></a><a href='#L101'>101</a>
+<a name='L102'></a><a href='#L102'>102</a>
+<a name='L103'></a><a href='#L103'>103</a>
+<a name='L104'></a><a href='#L104'>104</a>
+<a name='L105'></a><a href='#L105'>105</a>
+<a name='L106'></a><a href='#L106'>106</a>
+<a name='L107'></a><a href='#L107'>107</a>
+<a name='L108'></a><a href='#L108'>108</a>
+<a name='L109'></a><a href='#L109'>109</a>
+<a name='L110'></a><a href='#L110'>110</a>
+<a name='L111'></a><a href='#L111'>111</a>
+<a name='L112'></a><a href='#L112'>112</a>
+<a name='L113'></a><a href='#L113'>113</a>
+<a name='L114'></a><a href='#L114'>114</a>
+<a name='L115'></a><a href='#L115'>115</a>
+<a name='L116'></a><a href='#L116'>116</a>
+<a name='L117'></a><a href='#L117'>117</a>
+<a name='L118'></a><a href='#L118'>118</a>
+<a name='L119'></a><a href='#L119'>119</a>
+<a name='L120'></a><a href='#L120'>120</a>
+<a name='L121'></a><a href='#L121'>121</a>
+<a name='L122'></a><a href='#L122'>122</a>
+<a name='L123'></a><a href='#L123'>123</a>
+<a name='L124'></a><a href='#L124'>124</a>
+<a name='L125'></a><a href='#L125'>125</a>
+<a name='L126'></a><a href='#L126'>126</a>
+<a name='L127'></a><a href='#L127'>127</a>
+<a name='L128'></a><a href='#L128'>128</a>
+<a name='L129'></a><a href='#L129'>129</a>
+<a name='L130'></a><a href='#L130'>130</a>
+<a name='L131'></a><a href='#L131'>131</a>
+<a name='L132'></a><a href='#L132'>132</a>
+<a name='L133'></a><a href='#L133'>133</a>
+<a name='L134'></a><a href='#L134'>134</a>
+<a name='L135'></a><a href='#L135'>135</a>
+<a name='L136'></a><a href='#L136'>136</a>
+<a name='L137'></a><a href='#L137'>137</a>
+<a name='L138'></a><a href='#L138'>138</a>
+<a name='L139'></a><a href='#L139'>139</a>
+<a name='L140'></a><a href='#L140'>140</a>
+<a name='L141'></a><a href='#L141'>141</a>
+<a name='L142'></a><a href='#L142'>142</a>
+<a name='L143'></a><a href='#L143'>143</a>
+<a name='L144'></a><a href='#L144'>144</a>
+<a name='L145'></a><a href='#L145'>145</a>
+<a name='L146'></a><a href='#L146'>146</a>
+<a name='L147'></a><a href='#L147'>147</a>
+<a name='L148'></a><a href='#L148'>148</a>
+<a name='L149'></a><a href='#L149'>149</a>
+<a name='L150'></a><a href='#L150'>150</a>
+<a name='L151'></a><a href='#L151'>151</a>
+<a name='L152'></a><a href='#L152'>152</a>
+<a name='L153'></a><a href='#L153'>153</a>
+<a name='L154'></a><a href='#L154'>154</a></td><td class="line-coverage quiet"><span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js"><span class="cstat-no" title="statement not covered" >import type { BodyTemplates } from './types';<span class="fstat-no" title="function not covered" ><span class="branch-0 cbranch-no" title="branch not covered" ></span></span></span>
+<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" >/**</span>
+<span class="cstat-no" title="statement not covered" > * ═══════════════════════════════════════════════════════════════════════════════</span>
+<span class="cstat-no" title="statement not covered" > * CHIRON TEMPLATES — The Wounded Healer, integration, mentorship, soul medicine</span>
+<span class="cstat-no" title="statement not covered" > * ═══════════════════════════════════════════════════════════════════════════════</span>
+<span class="cstat-no" title="statement not covered" > */</span>
+<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" >export const chironTemplates: BodyTemplates = {</span>
+<span class="cstat-no" title="statement not covered" >  aries: {</span>
+<span class="cstat-no" title="statement not covered" >    essence: 'Your wound is the first cry — the primal vulnerability of existence, the raw edge where identity meets the void. Chiron in Aries teaches that healing begins with the courage to be, that the wound to your sense of self is also the source of your greatest power, and that the healer you become is forged in the fire of your own struggle to exist. You are here to teach others how to claim themselves.',</span>
+<span class="cstat-no" title="statement not covered" >    element: 'fire', modality: 'cardinal', keywords: ['wounded identity', 'healing courage', 'mentor warrior', 'soul initiation'],</span>
+<span class="cstat-no" title="statement not covered" >    careerAdvice: 'Your professional healing is pioneering and courageous. Entrepreneurship, emergency medicine, martial arts instruction, and leadership mentoring suit your nature. You excel when guiding others through identity crises. Beware the compulsion to prove your worth through constant action — your healing is not your productivity.',</span>
+<span class="cstat-no" title="statement not covered" >    relationshipAdvice: 'Your relationships are arenas of self-discovery — you attract partners who mirror your own struggles with identity. Beware the wounded warrior who cannot receive care — asking for help is not weakness. True healing in love includes the courage to be vulnerable while leading, to be wounded while whole.',</span>
+<span class="cstat-no" title="statement not covered" >    healthAdvice: 'Your head and adrenal system carry the stress of perpetual readiness to fight. Active release, competitive sports, and assertiveness training restore you. Beware the addiction to adrenaline as avoidance — your body needs stillness as much as it needs motion. Healing begins when you stop running from the wound.',</span>
+<span class="cstat-no" title="statement not covered" >    financesAdvice: 'Your financial journey involves healing your relationship with self-worth and abundance. You may experience sudden losses that teach you what you truly value. Build wealth that reflects your authentic identity, not your compensatory image. Your worth is not your net worth.',</span>
+<span class="cstat-no" title="statement not covered" >    growthAdvice: 'Your core wound is the fear that you do not exist — that without constant action, you disappear. The gift of Chiron in Aries is the ability to guide others through the same fire that forged you. Growth asks you to sit with the void without filling it, to discover that your being needs no proof.',</span>
+<span class="cstat-no" title="statement not covered" >    bodyFocus: 'head, face, adrenal glands, inflammatory responses',</span>
+<span class="cstat-no" title="statement not covered" >    elementalResonance: 'Your healing is sacred fire — the flame that cauterises as it wounds, that forges identity in the very act of threatening to dissolve it.',</span>
+<span class="cstat-no" title="statement not covered" >  },</span>
+<span class="cstat-no" title="statement not covered" >  taurus: {</span>
+<span class="cstat-no" title="statement not covered" >    essence: 'Your wound is the unmet need — the hunger for security that no amount of possession can satisfy, the body that carries what the heart could not hold. Chiron in Taurus teaches that healing is embodied, that the wound to your sense of worth is also the source of your deepest generosity, and that the healer you become is rooted in the earth that once felt unstable beneath your feet. You are here to teach others how to feel safe in their own skin.',</span>
+<span class="cstat-no" title="statement not covered" >    element: 'earth', modality: 'fixed', keywords: ['wounded worth', 'healing sensuality', 'mentor provider', 'soul grounding'],</span>
+<span class="cstat-no" title="statement not covered" >    careerAdvice: 'Your professional healing is grounded and nurturing. Bodywork, nutrition, financial counselling, and earth-based therapies suit your nature. You excel when helping others build security from within. Beware the compulsion to provide as proof of worth — your healing is not your bank balance.',</span>
+<span class="cstat-no" title="statement not covered" >    relationshipAdvice: 'Your relationships are gardens of trust — you attract partners who challenge your understanding of security. Beware the wounded provider who cannot receive — being cared for is not dependency. True healing in love includes the courage to need, to want, to depend without shame.',</span>
+<span class="cstat-no" title="statement not covered" >    healthAdvice: 'Your throat, neck, and thyroid hold the tension of unexpressed needs. Sensory grounding, vocal practices, and nature immersion restore you. Beware the body\'s accumulation of what the heart could not ask for. Healing begins when you allow yourself to want, to take, to have.',</span>
+<span class="cstat-no" title="statement not covered" >    financesAdvice: 'Your financial journey involves healing your relationship with abundance and self-worth. You may struggle with hoarding or reckless spending as compensations for feeling unworthy. Build wealth that feels safe without becoming a prison. Your value is not measured by what you own.',</span>
+<span class="cstat-no" title="statement not covered" >    growthAdvice: 'Your core wound is the fear of insufficiency — the belief that you must produce to deserve existence. The gift of Chiron in Taurus is the ability to guide others to ground themselves in worth that needs no proof. Growth asks you to receive without earning, to have without hoarding, to be enough without doing enough.',</span>
+<span class="cstat-no" title="statement not covered" >    bodyFocus: 'throat, neck, thyroid, vocal cords',</span>
+<span class="cstat-no" title="statement not covered" >    elementalResonance: 'Your healing is garden soil — the dark, rich ground that holds what has died and what will grow, that nourishes without demanding gratitude.',</span>
+<span class="cstat-no" title="statement not covered" >  },</span>
+<span class="cstat-no" title="statement not covered" >  gemini: {</span>
+<span class="cstat-no" title="statement not covered" >    essence: 'Your wound is the unspeakable truth — the thoughts that spin endlessly without landing, the words that fail to convey what you most need to express. Chiron in Gemini teaches that healing is communicative, that the wound to your voice is also the source of your deepest wisdom, and that the healer you become speaks for those who have not yet found their words. You are here to teach others how to name their experience.',</span>
+<span class="cstat-no" title="statement not covered" >    element: 'air', modality: 'mutable', keywords: ['wounded voice', 'healing communication', 'mentor teacher', 'soul language'],</span>
+<span class="cstat-no" title="statement not covered" >    careerAdvice: 'Your professional healing is communicative and educational. Writing, teaching, speech therapy, translation, and media work suit your nature. You excel when helping others find their voice. Beware the compulsion to fill silence with words — your healing is not your vocabulary.',</span>
+<span class="cstat-no" title="statement not covered" >    relationshipAdvice: 'Your relationships are dialogues of discovery — you attract partners who challenge your understanding of connection. Beware the wounded talker who cannot listen — communication is not performance. True healing in love includes the courage to be silent, to be misunderstood, to let words fail.',</span>
+<span class="cstat-no" title="statement not covered" >    healthAdvice: 'Your lungs, hands, and nervous system process your communicative stress. Breathwork, writing therapy, and hand-focused practices restore you. Beware nervous exhaustion from constant mental activity. Healing begins when you stop trying to think your way out of feeling.',</span>
+<span class="cstat-no" title="statement not covered" >    financesAdvice: 'Your financial journey involves healing your relationship with information and value. You may struggle with analysis paralysis or impulsive decisions based on incomplete data. Build wealth through clear communication and informed choice. Your worth is not your intellectual output.',</span>
+<span class="cstat-no" title="statement not covered" >    growthAdvice: 'Your core wound is the fear of being misunderstood — the belief that if you cannot explain yourself, you do not exist. The gift of Chiron in Gemini is the ability to guide others to find words for what they have never been able to name. Growth asks you to trust what cannot be spoken, to let silence be its own language.',</span>
+<span class="cstat-no" title="statement not covered" >    bodyFocus: 'lungs, hands, nervous system, shoulders',</span>
+<span class="cstat-no" title="statement not covered" >    elementalResonance: 'Your healing is breath — the invisible exchange that sustains life, that speaks without words, that connects the inner and outer worlds through the simple act of taking in and letting go.',</span>
+<span class="cstat-no" title="statement not covered" >  },</span>
+<span class="cstat-no" title="statement not covered" >  cancer: {</span>
+<span class="cstat-no" title="statement not covered" >    essence: 'Your wound is the unheld child — the belonging that was conditional, the nurture that came with strings, the home that was not safe. Chiron in Cancer teaches that healing is emotional, that the wound to your sense of belonging is also the source of your deepest compassion, and that the healer you become creates the home you never had. You are here to teach others how to mother themselves.',</span>
+<span class="cstat-no" title="statement not covered" >    element: 'water', modality: 'cardinal', keywords: ['wounded belonging', 'healing nurture', 'mentor parent', 'soul home'],</span>
+<span class="cstat-no" title="statement not covered" >    careerAdvice: 'Your professional healing is nurturing and protective. Counselling, childcare, hospice work, real estate, and community building suit your nature. You excel when creating sanctuary for others. Beware the compulsion to mother everyone — your healing is not your usefulness.',</span>
+<span class="cstat-no" title="statement not covered" >    relationshipAdvice: 'Your relationships are homes you build together — you attract partners who challenge your understanding of family. Beware the wounded parent who cannot be parented — receiving care is not weakness. True healing in love includes the courage to be held, to be dependent, to be the child you once were.',</span>
+<span class="cstat-no" title="statement not covered" >    healthAdvice: 'Your stomach and lymphatic system hold the weight of unprocessed belonging. Water therapies, emotional release, and family constellation work restore you. Beware the body\'s storage of what the heart could not grieve. Healing begins when you allow yourself to feel the abandonment you survived.',</span>
+<span class="cstat-no" title="statement not covered" >    financesAdvice: 'Your financial journey involves healing your relationship with security and belonging. You may use money to create the safety you lacked or fear having enough. Build wealth that creates peace without becoming a substitute for connection. Your worth is not your financial security.',</span>
+<span class="cstat-no" title="statement not covered" >    growthAdvice: 'Your core wound is the fear of abandonment — the belief that love is always conditional, that belonging must be earned. The gift of Chiron in Cancer is the ability to guide others to find home within themselves. Growth asks you to be the parent you needed, to hold yourself with the tenderness you deserved.',</span>
+<span class="cstat-no" title="statement not covered" >    bodyFocus: 'stomach, breasts, lymphatic system, womb',</span>
+<span class="cstat-no" title="statement not covered" >    elementalResonance: 'Your healing is tidal — the ancient rhythm that returns to hold every shore, that knows abandonment is temporary because the tide always comes back.',</span>
+<span class="cstat-no" title="statement not covered" >  },</span>
+<span class="cstat-no" title="statement not covered" >  leo: {</span>
+<span class="cstat-no" title="statement not covered" >    essence: 'Your wound is the unrecognised heart — the creative spark that was dimmed, the performance that was not witnessed, the child who learned that love required entertainment. Chiron in Leo teaches that healing is creative, that the wound to your sense of specialness is also the source of your most authentic expression, and that the healer you become shines for those who still believe they are invisible. You are here to teach others how to be seen for who they are.',</span>
+<span class="cstat-no" title="statement not covered" >    element: 'fire', modality: 'fixed', keywords: ['wounded creativity', 'healing recognition', 'mentor performer', 'soul spotlight'],</span>
+<span class="cstat-no" title="statement not covered" >    careerAdvice: 'Your professional healing is creative and performative. Teaching, coaching, entertainment, and child development suit your nature. You excel when helping others find their authentic voice. Beware the compulsion to perform your worth — your healing is not your audience.',</span>
+<span class="cstat-no" title="statement not covered" >    relationshipAdvice: 'Your relationships are stages of authenticity — you attract partners who challenge your understanding of recognition. Beware the wounded performer who cannot be offstage — intimacy requires an audience of one. True healing in love includes the courage to be ordinary, to be unwitnessed, to be merely human.',</span>
+<span class="cstat-no" title="statement not covered" >    healthAdvice: 'Your heart and spine carry the weight of unrecognised creativity. Dance, performance, and heart-opening practices restore you. Beware burnout from the spotlight — even healers need to be healed. Your body is not a stage but a sanctuary. Healing begins when you stop performing wellness.',</span>
+<span class="cstat-no" title="statement not covered" >    financesAdvice: 'Your financial journey involves healing your relationship with recognition and worth. You may use money to buy attention or hide from the spotlight. Build wealth that funds your creative expression without requiring it to be a performance. Your worth is not your applause.',</span>
+<span class="cstat-no" title="statement not covered" >    growthAdvice: 'Your core wound is the fear of invisibility — the belief that without an audience, you do not exist. The gift of Chiron in Leo is the ability to guide others to shine from within, regardless of witnesses. Growth asks you to discover that your light does not need observers to be real.',</span>
+<span class="cstat-no" title="statement not covered" >    bodyFocus: 'heart, spine, circulatory system, upper back',</span>
+<span class="cstat-no" title="statement not covered" >    elementalResonance: 'Your healing is candle flame — the small, steady light that needs no stage, that illuminates the dark corner where someone else believes they are invisible.',</span>
+<span class="cstat-no" title="statement not covered" >  },</span>
+<span class="cstat-no" title="statement not covered" >  virgo: {</span>
+<span class="cstat-no" title="statement not covered" >    essence: 'Your wound is the imperfect body — the illness that defied diagnosis, the flaw that could not be fixed, the service that was never enough. Chiron in Virgo teaches that healing is practical, that the wound to your sense of competence is also the source of your deepest humility, and that the healer you become serves without the need to be needed. You are here to teach others how to be whole without being perfect.',</span>
+<span class="cstat-no" title="statement not covered" >    element: 'earth', modality: 'mutable', keywords: ['wounded competence', 'healing service', 'mentor craftsperson', 'soul wholeness'],</span>
+<span class="cstat-no" title="statement not covered" >    careerAdvice: 'Your professional healing is precise and service-oriented. Healthcare, editing, research, holistic medicine, and quality assurance suit your nature. You excel when helping others find order in chaos. Beware the compulsion to fix — your healing is not your usefulness.',</span>
+<span class="cstat-no" title="statement not covered" >    relationshipAdvice: 'Your relationships are laboratories of acceptance — you attract partners who challenge your understanding of perfection. Beware the wounded fixer who cannot be helped — receiving care is not failure. True healing in love includes the courage to be flawed, to be incomplete, to let others see your mess.',</span>
+<span class="cstat-no" title="statement not covered" >    healthAdvice: 'Your gut and nervous system process your perfectionist stress. Clean food, regular schedules, and mind-body practices are essential. Beware hypochondria — the body that is scrutinised finds flaws. Healing begins when you stop diagnosing yourself and start accepting yourself.',</span>
+<span class="cstat-no" title="statement not covered" >    financesAdvice: 'Your financial journey involves healing your relationship with order and sufficiency. You may micromanage money or avoid dealing with it entirely. Build wealth through systematic planning without obsessive control. Your worth is not your organisational skill.',</span>
+<span class="cstat-no" title="statement not covered" >    growthAdvice: 'Your core wound is the fear of inadequacy — the belief that you must be perfect to be acceptable. The gift of Chiron in Virgo is the ability to guide others to wholeness without perfection. Growth asks you to let the flaw be visible, to let the error teach, to let yourself be human.',</span>
+<span class="cstat-no" title="statement not covered" >    bodyFocus: 'digestive system, intestines, spleen, nervous system',</span>
+<span class="cstat-no" title="statement not covered" >    elementalResonance: 'Your healing is garden tending — the patient, imperfect care that accepts weeds and weather, that knows the garden is beautiful not despite its flaws but because of them.',</span>
+<span class="cstat-no" title="statement not covered" >  },</span>
+<span class="cstat-no" title="statement not covered" >  libra: {</span>
+<span class="cstat-no" title="statement not covered" >    essence: 'Your wound is the unchosen choice — the decision made to keep peace, the self abandoned for harmony, the relationship that cost you yourself. Chiron in Libra teaches that healing is relational, that the wound to your sense of balance is also the source of your deepest fairness, and that the healer you become creates relationships where both parties are whole. You are here to teach others how to love without losing themselves.',</span>
+<span class="cstat-no" title="statement not covered" >    element: 'air', modality: 'cardinal', keywords: ['wounded harmony', 'healing partnership', 'mentor diplomat', 'soul balance'],</span>
+<span class="cstat-no" title="statement not covered" >    careerAdvice: 'Your professional healing is diplomatic and aesthetic. Counselling, design, mediation, law, and partnership coaching suit your nature. You excel when helping others find balance in relationship. Beware the compulsion to mediate everyone\'s conflicts — your healing is not your peacemaking.',</span>
+<span class="cstat-no" title="statement not covered" >    relationshipAdvice: 'Your relationships are lessons in boundaries — you attract partners who challenge your understanding of fairness. Beware the wounded diplomat who cannot state their own needs — peace maintained through self-erasure is not peace. True healing in love includes the courage to disturb harmony for truth.',</span>
+<span class="cstat-no" title="statement not covered" >    healthAdvice: 'Your kidneys, skin, and lower back reflect your relational stress. Balance practices, dance, and beauty rituals restore you. Beware the stress of perpetual fairness — your body absorbs the conflicts you refuse to name. Healing begins when you choose yourself, even at the cost of equilibrium.',</span>
+<span class="cstat-no" title="statement not covered" >    financesAdvice: 'Your financial journey involves healing your relationship with give-and-take. You may overgive financially or avoid money conflicts at your own expense. Build wealth that honours both self and other. Your worth is not your generosity.',</span>
+<span class="cstat-no" title="statement not covered" >    growthAdvice: 'Your core wound is the fear of conflict — the belief that love requires the abandonment of self. The gift of Chiron in Libra is the ability to guide others to relationships that honour both parties. Growth asks you to fight for what you need, to let the discord teach, to trust that true harmony includes honest disagreement.',</span>
+<span class="cstat-no" title="statement not covered" >    bodyFocus: 'kidneys, skin, lower back, endocrine balance',</span>
+<span class="cstat-no" title="statement not covered" >    elementalResonance: 'Your healing is scales — the ancient instrument that measures not just what is given and received but what is owed to the self, the balance that includes you.',</span>
+<span class="cstat-no" title="statement not covered" >  },</span>
+<span class="cstat-no" title="statement not covered" >  scorpio: {</span>
+<span class="cstat-no" title="statement not covered" >    essence: 'Your wound is the forbidden truth — the secret that was buried, the power that was suppressed, the sexuality that was shamed. Chiron in Scorpio teaches that healing is transformative, that the wound to your sense of power is also the source of your deepest resilience, and that the healer you become walks into the underworld without fear because they have already been there. You are here to teach others how to be powerful without being destructive.',</span>
+<span class="cstat-no" title="statement not covered" >    element: 'water', modality: 'fixed', keywords: ['wounded power', 'healing transformation', 'mentor alchemist', 'soul resilience'],</span>
+<span class="cstat-no" title="statement not covered" >    careerAdvice: 'Your professional healing is intense and investigative. Depth psychology, crisis intervention, research, and transformative therapy suit your nature. You excel when facing what others hide from. Beware the compulsion to probe — your healing is not your insight into others\' shadows.',</span>
+<span class="cstat-no" title="statement not covered" >    relationshipAdvice: 'Your relationships are crucibles of honesty — you attract partners who challenge your understanding of intimacy. Beware the wounded detective who cannot be known — investigation is not connection. True healing in love includes the courage to be seen in your own darkness, not just to illuminate others\'.',</span>
+<span class="cstat-no" title="statement not covered" >    healthAdvice: 'Your reproductive and eliminative systems process your transformative stress. Deep therapeutic practices, energy work, and shadow integration restore you. Beware addictive patterns — your intensity seeks relief in extremes. Healing begins when you stop using intensity to avoid feeling.',</span>
+<span class="cstat-no" title="statement not covered" >    financesAdvice: 'Your financial journey involves healing your relationship with power and shared resources. You may experience sudden losses that teach you what you truly control. Build wealth through deep understanding, not manipulation. Your worth is not your power over others.',</span>
+<span class="cstat-no" title="statement not covered" >    growthAdvice: 'Your core wound is the fear of powerlessness — the belief that vulnerability equals weakness. The gift of Chiron in Scorpio is the ability to guide others through transformation without being consumed by it. Growth asks you to let yourself be powerless, to let the control slip, to discover that surrender is not defeat.',</span>
+<span class="cstat-no" title="statement not covered" >    bodyFocus: 'reproductive system, eliminative organs, pelvis, colon',</span>
+<span class="cstat-no" title="statement not covered" >    elementalResonance: 'Your healing is underworld river — the current that carries what has died back toward life, that knows the darkness because it has travelled it, that emerges with wisdom no surface dweller can claim.',</span>
+<span class="cstat-no" title="statement not covered" >  },</span>
+<span class="cstat-no" title="statement not covered" >  sagittarius: {</span>
+<span class="cstat-no" title="statement not covered" >    essence: 'Your wound is the unanswered question — the meaning that was withheld, the belief that collapsed, the horizon that receded as you approached. Chiron in Sagittarius teaches that healing is philosophical, that the wound to your sense of meaning is also the source of your deepest wisdom, and that the healer you become guides others to find their own truth rather than imposing your own. You are here to teach others how to believe without certainty.',</span>
+<span class="cstat-no" title="statement not covered" >    element: 'fire', modality: 'mutable', keywords: ['wounded meaning', 'healing wisdom', 'mentor pilgrim', 'soul truth'],</span>
+<span class="cstat-no" title="statement not covered" >    careerAdvice: 'Your professional healing is expansive and philosophical. Teaching, publishing, travel guidance, spiritual counselling, and cross-cultural work suit your nature. You excel when helping others find meaning in their journeys. Beware the compulsion to have all the answers — your healing is not your certainty.',</span>
+<span class="cstat-no" title="statement not covered" >    relationshipAdvice: 'Your relationships are adventures of meaning — you attract partners who challenge your understanding of truth. Beware the wounded guru who cannot be questioned — authority that fears doubt is not wisdom. True healing in love includes the courage to be wrong, to not know, to let your partner be their own teacher.',</span>
+<span class="cstat-no" title="statement not covered" >    healthAdvice: 'Your hips, thighs, and liver carry your philosophical restlessness. Outdoor movement, travel, and philosophical practice restore you. Beware excess — your search for meaning can become escape from feeling. Healing begins when you stop seeking the horizon and start inhabiting where you are.',</span>
+<span class="cstat-no" title="statement not covered" >    financesAdvice: 'Your financial journey involves healing your relationship with meaning and abundance. You may use money to fund endless searching or avoid dealing with practical reality. Build wealth that supports your philosophy without requiring it to be universally true. Your worth is not your wisdom.',</span>
+<span class="cstat-no" title="statement not covered" >    growthAdvice: 'Your core wound is the fear of meaninglessness — the belief that without a grand narrative, you do not matter. The gift of Chiron in Sagittarius is the ability to guide others to meaning without imposing your own. Growth asks you to let the question be enough, to let the search be the destination, to trust that not knowing is its own kind of wisdom.',</span>
+<span class="cstat-no" title="statement not covered" >    bodyFocus: 'hips, thighs, liver, sciatic nerve',</span>
+<span class="cstat-no" title="statement not covered" >    elementalResonance: 'Your healing is horizon light — the glow that promises meaning without delivering certainty, that invites the journey without guaranteeing arrival.',</span>
+<span class="cstat-no" title="statement not covered" >  },</span>
+<span class="cstat-no" title="statement not covered" >  capricorn: {</span>
+<span class="cstat-no" title="statement not covered" >    essence: 'Your wound is the unclimbed mountain — the ambition that was thwarted, the authority that was denied, the structure that collapsed beneath you. Chiron in Capricorn teaches that healing is structural, that the wound to your sense of achievement is also the source of your deepest integrity, and that the healer you become builds what endures rather than what impresses. You are here to teach others how to succeed without selling their souls.',</span>
+<span class="cstat-no" title="statement not covered" >    element: 'earth', modality: 'cardinal', keywords: ['wounded ambition', 'healing authority', 'mentor elder', 'soul integrity'],</span>
+<span class="cstat-no" title="statement not covered" >    careerAdvice: 'Your professional healing is structured and authoritative. Executive coaching, institutional reform, legacy building, and mentorship suit your nature. You excel when guiding others through professional crises. Beware the compulsion to achieve as proof of worth — your healing is not your accomplishments.',</span>
+<span class="cstat-no" title="statement not covered" >    relationshipAdvice: 'Your relationships challenge traditional structures of commitment and authority. You attract partners who respect your competence and share your values. Beware the wounded executive who cannot be vulnerable — authority that fears exposure is not strength. True healing in love includes the courage to fail, to fall, to be less than perfect.',</span>
+<span class="cstat-no" title="statement not covered" >    healthAdvice: 'Your bones, joints, and teeth reflect the weight of unmet ambition. Regular movement, structural alignment, and disciplined self-care are essential. Beware workaholism — the empire built by exhaustion serves no one. Healing begins when you stop climbing and start resting on the ledge you have reached.',</span>
+<span class="cstat-no" title="statement not covered" >    financesAdvice: 'Your financial journey involves healing your relationship with success and security. You may use money as a scorecard for worth or avoid financial responsibility out of fear of failure. Build wealth that reflects your true values, not your compensatory image. Your worth is not your net worth.',</span>
+<span class="cstat-no" title="statement not covered" >    growthAdvice: 'Your core wound is the fear of failure — the belief that one mistake undermines everything you have built. The gift of Chiron in Capricorn is the ability to guide others to build with integrity rather than image. Growth asks you to let the structure crack, to let the ambition rest, to discover that your value is not your achievement.',</span>
+<span class="cstat-no" title="statement not covered" >    bodyFocus: 'bones, joints, teeth, knees, skeletal system',</span>
+<span class="cstat-no" title="statement not covered" >    elementalResonance: 'Your healing is mountain ledge — the resting place halfway up, where the climber discovers that the view from here is enough, that the summit was never the point.',</span>
+<span class="cstat-no" title="statement not covered" >  },</span>
+<span class="cstat-no" title="statement not covered" >  aquarius: {</span>
+<span class="cstat-no" title="statement not covered" >    essence: 'Your wound is the unchosen exile — the uniqueness that was rejected, the vision that was dismissed, the belonging that was conditional on conformity. Chiron in Aquarius teaches that healing is collective, that the wound to your sense of difference is also the source of your deepest humanity, and that the healer you become creates communities where outliers are honoured. You are here to teach others how to belong without conforming.',</span>
+<span class="cstat-no" title="statement not covered" >    element: 'air', modality: 'fixed', keywords: ['wounded difference', 'healing community', 'mentor visionary', 'soul belonging'],</span>
+<span class="cstat-no" title="statement not covered" >    careerAdvice: 'Your professional healing is innovative and collective. Social enterprise, technology for good, community organising, and futuristic vision suit your nature. You excel when creating structures that include the excluded. Beware the compulsion to rebel as identity — your healing is not your difference.',</span>
+<span class="cstat-no" title="statement not covered" >    relationshipAdvice: 'Your relationships challenge conventional structures of connection. You attract partners who respect your uniqueness and share your ideals. Beware the wounded outsider who cannot be inside — rejection can become a comfortable prison. True healing in love includes the courage to be ordinary, to be similar, to let connection be simple.',</span>
+<span class="cstat-no" title="statement not covered" >    healthAdvice: 'Your circulatory and nervous systems carry your electric energy. Group movement, community wellness, and network-based practices restore you. Beware nervous exhaustion from collective anxiety — you feel what the group feels. Healing begins when you stop saving the world and start saving yourself.',</span>
+<span class="cstat-no" title="statement not covered" >    financesAdvice: 'Your financial journey involves healing your relationship with community and resources. You may struggle with collective financial models or rebel against conventional wealth. Build financial structures that serve your ideals without requiring you to be a martyr. Your worth is not your utility to the collective.',</span>
+<span class="cstat-no" title="statement not covered" >    growthAdvice: 'Your core wound is the fear of exile — the belief that difference means isolation. The gift of Chiron in Aquarius is the ability to guide others to find community without losing themselves. Growth asks you to let yourself be included, to let the group hold you, to trust that your uniqueness is not your only value.',</span>
+<span class="cstat-no" title="statement not covered" >    bodyFocus: 'calves, ankles, circulatory system, nervous system',</span>
+<span class="cstat-no" title="statement not covered" >    elementalResonance: 'Your healing is constellation — the pattern that connects distant stars into meaning, that shows the exile they are not alone but part of something larger than their isolation.',</span>
+<span class="cstat-no" title="statement not covered" >  },</span>
+<span class="cstat-no" title="statement not covered" >  pisces: {</span>
+<span class="cstat-no" title="statement not covered" >    essence: 'Your wound is the unsaved world — the suffering you could not prevent, the boundary you could not maintain, the divinity you could not prove. Chiron in Pisces teaches that healing is mystical, that the wound to your sense of connection is also the source of your deepest compassion, and that the healer you become serves without the need to be saviour. You are here to teach others how to feel without drowning.',</span>
+<span class="cstat-no" title="statement not covered" >    element: 'water', modality: 'mutable', keywords: ['wounded transcendence', 'healing compassion', 'mentor mystic', 'soul surrender'],</span>
+<span class="cstat-no" title="statement not covered" >    careerAdvice: 'Your professional healing is spiritual and compassionate. Spiritual guidance, artistic expression, hospice work, and compassionate service suit your nature. You excel when dissolving boundaries between self and other in service. Beware the compulsion to save — your healing is not your martyrdom.',</span>
+<span class="cstat-no" title="statement not covered" >    relationshipAdvice: 'Your relationships are spiritual unions — you merge completely with your beloved, feeling their pain as your own. You attract partners who understand your depth. Beware the wounded saviour who cannot be saved — compassion without boundaries is self-destruction. True healing in love includes the courage to let others suffer their own lessons.',</span>
+<span class="cstat-no" title="statement not covered" >    healthAdvice: 'Your feet and immune system are your mystical anchors. Water therapies, dream work, and spiritual practices restore you. Beware escapism through substances or denial — your sensitivity is a gift that requires protection. Healing begins when you stop trying to transcend your body and start listening to it.',</span>
+<span class="cstat-no" title="statement not covered" >    financesAdvice: 'Your financial journey involves healing your relationship with material reality. You may avoid money entirely or use it to escape practical concerns. Build financial structures that ground your spirituality without requiring you to renounce the world. Your worth is not your detachment.',</span>
+<span class="cstat-no" title="statement not covered" >    growthAdvice: 'Your core wound is the fear of separation — the belief that boundaries mean isolation from the divine. The gift of Chiron in Pisces is the ability to guide others to compassion without martyrdom. Growth asks you to let the world save itself, to let the boundary stand, to discover that your presence is enough without your sacrifice.',</span>
+<span class="cstat-no" title="statement not covered" >    bodyFocus: 'feet, immune system, pineal gland, lymphatic system',</span>
+<span class="cstat-no" title="statement not covered" >    elementalResonance: 'Your healing is ocean wave — the rhythm that touches every shore without staying, that carries what it cannot save back to the depths where transformation happens without witness.',</span>
+<span class="cstat-no" title="statement not covered" >  },</span>
+<span class="cstat-no" title="statement not covered" >  ophiuchus: {</span>
+<span class="cstat-no" title="statement not covered" >    essence: 'Your wound is the healer\'s paradox — the knowledge that can cure others but not yourself, the medicine that is poison in your own veins, the mastery that was forged in the very suffering you now treat. Chiron in Ophiuchus is at home, the wounded healer in the sign of the healer, the initiate who understands that the wound and the gift are inseparable, that the poison and the medicine are one substance seen from different angles. You are here to embody the healing journey itself.',</span>
+<span class="cstat-no" title="statement not covered" >    element: 'ether', modality: 'fixed', keywords: ['wounded mastery', 'healing paradox', 'mentor initiate', 'soul medicine'],</span>
+<span class="cstat-no" title="statement not covered" >    careerAdvice: 'Your professional healing is transformative and alchemical. Medicine, psychology, energy work, and research into suppressed knowledge suit you. You excel when challenging what society calls incurable. Beware the wounded healer trap — you cannot embody healing while denying your own wounds. Your work is your wound made visible.',</span>
+<span class="cstat-no" title="statement not covered" >    relationshipAdvice: 'Your relationships are healing mysteries — every connection has the potential to transform both participants. You attract partners who are ready for initiatory depth. Beware the compulsion to heal instead of relate; your insight is a gift, but in love it can become a wall. True healing in love is presence without prescription, connection without cure.',</span>
+<span class="cstat-no" title="statement not covered" >    healthAdvice: 'Your spinal column and nervous system regeneration are your healing frontier. Energy medicine, spinal alignment, and practices that work with subtle energies restore you. You are sensitive to environmental and collective energies — your body is a barometer for the wounds of the world. Learn to filter what is not yours to carry.',</span>
+<span class="cstat-no" title="statement not covered" >    financesAdvice: 'Your financial journey mirrors your healing journey — non-linear, transformative, and often involving sudden shifts. Build financial models that accommodate your initiatory path. Beware rescuing others financially — true healing empowers independence, not dependence. Your wealth serves your mission; protect both.',</span>
+<span class="cstat-no" title="statement not covered" >    growthAdvice: 'Your core wound is the healer\'s burden — the belief that your suffering is the price of your gift, that you must remain wounded to be useful. The gift of Chiron in Ophiuchus is the understanding that your wound is not your limitation but your credential, not your weakness but your deepest teaching. Growth asks you to heal yourself with the same compassion you offer others, to become the patient of your own medicine.',</span>
+<span class="cstat-no" title="statement not covered" >    bodyFocus: 'spinal column, nervous system regeneration, subtle energy channels, cellular renewal',</span>
+<span class="cstat-no" title="statement not covered" >    elementalResonance: 'Your healing is the ouroboros — the serpent that devours its own tail, that turns its own poison into the medicine that cures itself, the eternal cycle of wound and gift that knows no beginning and no end.',</span>
+<span class="cstat-no" title="statement not covered" >  },</span>
+<span class="cstat-no" title="statement not covered" >};</span>
+&nbsp;</pre></td></tr></table></pre>
+
+                <div class='push'></div><!-- for sticky footer -->
+            </div><!-- /wrapper -->
+            <div class='footer quiet pad2 space-top1 center small'>
+                Code coverage generated by
+                <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
+                at 2026-05-20T03:38:53.739Z
+            </div>
+        <script src="../../../../../prettify.js"></script>
+        <script>
+            window.onload = function () {
+                prettyPrint();
+            };
+        </script>
+        <script src="../../../../../sorter.js"></script>
+        <script src="../../../../../block-navigation.js"></script>
+    </body>
+</html>
+    

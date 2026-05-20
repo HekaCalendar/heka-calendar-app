@@ -4,6 +4,7 @@
  */
 
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import type { ExistingTask } from '../routineData';
 import type { NoteCategory } from '../../../types';
 import { generateId } from '../routineData';
@@ -39,6 +40,7 @@ const EMPTY_TASK: ExistingTask = {
 };
 
 export const TasksStep: React.FC<Props> = ({ tasks, onChange }) => {
+  const { t } = useTranslation();
   const [isAdding, setIsAdding] = useState(false);
   const [newTask, setNewTask] = useState<ExistingTask>({ ...EMPTY_TASK, id: generateId() });
   const [editingId, setEditingId] = useState<string | null>(null);
@@ -110,8 +112,8 @@ export const TasksStep: React.FC<Props> = ({ tasks, onChange }) => {
                     </div>
                   </div>
                   <div style={{ display: 'flex', gap: 4, flexShrink: 0 }}>
-                    <button className="routine-item-edit" onClick={() => setEditingId(task.id)} title="Edit">✎</button>
-                    <button className="routine-item-delete" onClick={() => removeTask(task.id)} title="Remove">✕</button>
+                    <button className="routine-item-edit" onClick={() => setEditingId(task.id)} title="Edit" aria-label={t('common.edit')}>✎</button>
+                    <button className="routine-item-delete" onClick={() => removeTask(task.id)} title="Remove" aria-label={t('common.delete')}>✕</button>
                   </div>
                 </div>
               )}
@@ -148,17 +150,18 @@ interface TaskEditFormProps {
 }
 
 const TaskEditForm: React.FC<TaskEditFormProps> = ({ task, isNew, onSave, onCancel, onChange }) => {
+  const { t } = useTranslation();
   const isControlled = !!onChange;
-  const t = task;
+  const currentTask = task;
   const set = (updates: Partial<ExistingTask>) => {
     if (isControlled && onChange) {
-      onChange({ ...t, ...updates });
+      onChange({ ...currentTask, ...updates });
     }
   };
 
   const handleSave = () => {
-    if (!t.name.trim()) return;
-    onSave(t);
+    if (!currentTask.name.trim()) return;
+    onSave(currentTask);
   };
 
   return (
@@ -167,18 +170,18 @@ const TaskEditForm: React.FC<TaskEditFormProps> = ({ task, isNew, onSave, onCanc
         <label>Task Name *</label>
         <input
           type="text"
-          value={t.name}
+          value={currentTask.name}
           onChange={e => set({ name: e.target.value })}
-          placeholder="e.g. Work, Gym, School run"
+          placeholder={t('wizard.taskNamePlaceholder')}
           autoFocus={isNew}
         />
       </div>
       <div className="routine-field">
         <label>Description</label>
         <textarea
-          value={t.description}
+          value={currentTask.description}
           onChange={e => set({ description: e.target.value })}
-          placeholder="Details, location, notes..."
+          placeholder={t('wizard.taskDetailsPlaceholder')}
           rows={2}
           style={{ resize: 'vertical', minHeight: 48 }}
         />
@@ -190,14 +193,14 @@ const TaskEditForm: React.FC<TaskEditFormProps> = ({ task, isNew, onSave, onCanc
             type="number"
             min={5}
             step={5}
-            value={t.durationMinutes}
+            value={currentTask.durationMinutes}
             onChange={e => set({ durationMinutes: parseInt(e.target.value) || 60 })}
           />
         </div>
         <div className="routine-field">
           <label>Frequency</label>
           <select
-            value={t.frequency}
+            value={currentTask.frequency}
             onChange={e => set({ frequency: e.target.value as ExistingTask['frequency'] })}
           >
             <option value="daily">Daily</option>
@@ -207,23 +210,23 @@ const TaskEditForm: React.FC<TaskEditFormProps> = ({ task, isNew, onSave, onCanc
           </select>
         </div>
       </div>
-      {t.frequency === 'custom' && (
+      {currentTask.frequency === 'custom' && (
         <div className="routine-field">
           <label>Days</label>
           <DaySelector
-            selected={t.days || []}
+            selected={currentTask.days || []}
             onChange={days => set({ days })}
           />
         </div>
       )}
-      {t.frequency === 'everyNDays' && (
+      {currentTask.frequency === 'everyNDays' && (
         <div className="routine-field">
           <label>Every N days</label>
           <input
             type="number"
             min={1}
             max={30}
-            value={t.everyNDays || 2}
+            value={currentTask.everyNDays || 2}
             onChange={e => set({ everyNDays: parseInt(e.target.value) || 2 })}
           />
         </div>
@@ -232,7 +235,7 @@ const TaskEditForm: React.FC<TaskEditFormProps> = ({ task, isNew, onSave, onCanc
         <div className="routine-field">
           <label>Time Preference</label>
           <select
-            value={t.timePreference}
+            value={currentTask.timePreference}
             onChange={e => set({ timePreference: e.target.value as ExistingTask['timePreference'] })}
           >
             <option value="morning">Morning</option>
@@ -241,12 +244,12 @@ const TaskEditForm: React.FC<TaskEditFormProps> = ({ task, isNew, onSave, onCanc
             <option value="fixed">Fixed time</option>
           </select>
         </div>
-        {t.timePreference === 'fixed' && (
+        {currentTask.timePreference === 'fixed' && (
           <div className="routine-field">
             <label>Fixed Time</label>
             <input
               type="time"
-              value={t.fixedTime || ''}
+              value={currentTask.fixedTime || ''}
               onChange={e => set({ fixedTime: e.target.value })}
             />
           </div>
@@ -254,7 +257,7 @@ const TaskEditForm: React.FC<TaskEditFormProps> = ({ task, isNew, onSave, onCanc
         <div className="routine-field">
           <label>Category</label>
           <select
-            value={t.category}
+            value={currentTask.category}
             onChange={e => set({ category: e.target.value as NoteCategory })}
           >
             {CATEGORIES.map(c => <option key={c.id} value={c.id}>{c.name}</option>)}
@@ -265,7 +268,7 @@ const TaskEditForm: React.FC<TaskEditFormProps> = ({ task, isNew, onSave, onCanc
         <div className="routine-field">
           <label>Priority</label>
           <select
-            value={t.priority}
+            value={currentTask.priority}
             onChange={e => set({ priority: e.target.value as ExistingTask['priority'] })}
           >
             <option value="required">Required</option>
@@ -276,9 +279,9 @@ const TaskEditForm: React.FC<TaskEditFormProps> = ({ task, isNew, onSave, onCanc
           <label>Tags (comma separated)</label>
           <input
             type="text"
-            value={t.tags.join(', ')}
+            value={currentTask.tags.join(', ')}
             onChange={e => set({ tags: e.target.value.split(',').map(s => s.trim()).filter(Boolean) })}
-            placeholder="gym, morning, project-a"
+            placeholder={t('wizard.tagsPlaceholder')}
           />
         </div>
       </div>
@@ -286,7 +289,7 @@ const TaskEditForm: React.FC<TaskEditFormProps> = ({ task, isNew, onSave, onCanc
         <button className="routine-nav-btn routine-nav-btn--back" onClick={onCancel}>
           Cancel
         </button>
-        <button className="routine-nav-btn routine-nav-btn--next" onClick={handleSave} disabled={!t.name.trim()}>
+        <button className="routine-nav-btn routine-nav-btn--next" onClick={handleSave} disabled={!currentTask.name.trim()}>
           {isNew ? 'Add Task' : 'Save Changes'}
         </button>
       </div>

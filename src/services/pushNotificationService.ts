@@ -62,9 +62,7 @@ async function initializeNativePush(): Promise<void> {
 
     // Listen for token
     PushNotifications.addListener('registration', (token) => {
-      console.log('[Push] Native token received:', token.value);
-      // TODO: Send token to your backend so it can target this device
-      // Example: await savePushTokenToFirestore(token.value);
+      // Token intentionally not logged (PII)
       eventBus.emit('heka-push-token', { token: token.value, platform: Capacitor.getPlatform() });
     });
 
@@ -75,13 +73,11 @@ async function initializeNativePush(): Promise<void> {
 
     // Foreground push received
     PushNotifications.addListener('pushNotificationReceived', (notification) => {
-      console.log('[Push] Received in foreground:', notification);
       handlePushPayload(notification);
     });
 
     // Push tapped
     PushNotifications.addListener('pushNotificationActionPerformed', (action) => {
-      console.log('[Push] Tapped:', action.notification);
       handlePushTap(action.notification);
     });
   } catch (e) {
@@ -148,13 +144,11 @@ async function initializeWebPush(): Promise<void> {
     const token = await getToken(messaging, tokenOptions);
 
     if (token) {
-      console.log('[Push] Web FCM token received:', token);
       eventBus.emit('heka-push-token', { token, platform: 'web' });
     }
 
     // Handle foreground messages
     onMessage(messaging, (payload) => {
-      console.log('[Push] Web message received:', payload);
       handlePushPayload({
         title: payload.notification?.title || 'HEKA Calendar',
         body: payload.notification?.body || '',

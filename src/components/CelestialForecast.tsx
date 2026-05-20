@@ -87,7 +87,7 @@ export const CelestialForecast: React.FC<CelestialForecastProps> = ({
             <button
               key={view.id}
               className={`forecast-nav-btn ${activeView === view.id ? 'active' : ''}`}
-              onClick={() => setActiveView(view.id as any)}
+              onClick={() => setActiveView(view.id as typeof activeView)}
             >
               <span>{view.icon}</span>
               <span>{view.label}</span>
@@ -174,7 +174,7 @@ const RightNowView: React.FC<{
               <span className="moon-emoji">
                 {getMoonEmoji(moonPhase.phase, moonPhase.illumination)}
               </span>
-              <div className="illumination-ring" style={{ '--illumination': `${moonPhase.illumination}%` } as any}>
+              <div className="illumination-ring" style={{ '--illumination': `${moonPhase.illumination}%` } as React.CSSProperties}>
                 <svg viewBox="0 0 100 100">
                   <circle cx="50" cy="50" r="45" className="moon-bg" />
                   <path className="moon-shadow" d={getMoonPath(moonPhase.phase, moonPhase.illumination)} />
@@ -241,7 +241,7 @@ const RightNowView: React.FC<{
               <div 
                 key={planetName}
                 className={`planet-forecast-card ${isSelected ? 'expanded' : ''}`}
-                style={{ '--element-color': getElementColor(signData?.element) } as any}
+                style={{ '--element-color': getElementColor(signData?.element) } as React.CSSProperties}
               >
                 <button 
                   className="planet-forecast-header"

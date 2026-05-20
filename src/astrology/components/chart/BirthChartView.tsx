@@ -393,7 +393,6 @@ export const BirthChartView: React.FC<BirthChartViewProps> = ({ initialProfileId
 
   // Load profile
   const loadProfile = useCallback(async (profileId?: string) => {
-    console.log('[BirthChartView] loadProfile called:', profileId);
     setIsLoading(true);
     try {
       let targetProfile: ProfileWithChart | null = null;
@@ -433,7 +432,6 @@ export const BirthChartView: React.FC<BirthChartViewProps> = ({ initialProfileId
 
     // Subscribe to profile changes
     const unsubscribe = profileManager.subscribe((event) => {
-      console.log('[BirthChartView] Profile event received:', event.type, event.profileId);
       if (event.type === 'profile:switched' || 
           event.type === 'profile:updated' ||
           event.type === 'profile:created') {

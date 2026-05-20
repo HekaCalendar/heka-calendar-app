@@ -127,7 +127,7 @@ export const JournalImportExport: React.FC<JournalImportExportProps> = ({ isOpen
       <div className="journal-import-export-modal" onClick={(e) => e.stopPropagation()}>
         <div className="jie-header">
           <h2>{t('importExport.title')}</h2>
-          <button className="jie-close" onClick={onClose}>×</button>
+          <button className="jie-close" onClick={onClose} aria-label={t('editor.close')}>×</button>
         </div>
 
         <div className="jie-tabs">

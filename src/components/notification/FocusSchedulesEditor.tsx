@@ -5,17 +5,19 @@
  */
 
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useSelector, useDispatch } from 'react-redux';
 import type { RootState, AppDispatch } from '../../store';
 import { updateNotificationPreferences } from '../../store';
 import type { FocusSchedule, NotificationTier } from '../../types/notifications';
 
-const DAYS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-const TIERS: { key: NotificationTier; label: string; color: string }[] = [
-  { key: 'core', label: 'Core', color: '#ef4444' },
-  { key: 'standard', label: 'Standard', color: '#c9a227' },
-  { key: 'ambient', label: 'Ambient', color: '#3b82f6' },
-];
+const DAY_KEYS = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'] as const;
+const TIER_KEYS: NotificationTier[] = ['core', 'standard', 'ambient'];
+const TIER_COLORS: Record<NotificationTier, string> = {
+  core: '#ef4444',
+  standard: '#c9a227',
+  ambient: '#3b82f6',
+};
 
 function generateId(): string {
   return `fs-${Date.now()}-${Math.random().toString(36).slice(2, 6)}`;
@@ -29,6 +31,7 @@ function formatTime(hour: number, minute: number): string {
 }
 
 export const FocusSchedulesEditor: React.FC = () => {
+  const { t } = useTranslation('notifications');
   const dispatch = useDispatch<AppDispatch>();
   const schedules = useSelector((state: RootState) => state.calendar.notificationPreferences.focusSchedules);
   const globalEnabled = useSelector((state: RootState) => state.calendar.notificationPreferences.globalEnabled);
@@ -118,7 +121,7 @@ export const FocusSchedulesEditor: React.FC = () => {
   return (
     <div className="focus-schedules-editor" style={{ opacity: globalEnabled ? 1 : 0.4 }}>
       <p style={{ margin: '0 0 12px', fontSize: '13px', color: 'rgba(224,224,224,0.5)' }}>
-        Create time blocks where only certain notification tiers are allowed. Perfect for deep work or wind-down time.
+        {t('focusSchedules.description')}
       </p>
 
       {/* Existing schedules */}
@@ -134,16 +137,28 @@ export const FocusSchedulesEditor: React.FC = () => {
           }}
         >
           <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '10px' }}>
-            <div style={{
-              width: '36px',
-              height: '20px',
-              borderRadius: '10px',
-              background: schedule.enabled && globalEnabled ? '#c9a227' : 'rgba(255,255,255,0.15)',
-              position: 'relative',
-              transition: 'all 0.2s',
-              cursor: globalEnabled ? 'pointer' : 'default',
-            }}
+            <div
+              role="switch"
+              aria-checked={schedule.enabled && globalEnabled}
+              aria-label={t('focusSchedules.toggleSchedule')}
+              tabIndex={globalEnabled ? 0 : -1}
               onClick={() => globalEnabled && toggleScheduleEnabled(schedule.id)}
+              onKeyDown={(e) => {
+                if (globalEnabled && (e.key === 'Enter' || e.key === ' ')) {
+                  e.preventDefault();
+                  toggleScheduleEnabled(schedule.id);
+                }
+              }}
+              style={{
+                width: '36px',
+                height: '20px',
+                borderRadius: '10px',
+                background: schedule.enabled && globalEnabled ? '#c9a227' : 'rgba(255,255,255,0.15)',
+                position: 'relative',
+                transition: 'all 0.2s',
+                cursor: globalEnabled ? 'pointer' : 'default',
+                flexShrink: 0,
+              }}
             >
               <div style={{
                 width: '16px',
@@ -162,6 +177,7 @@ export const FocusSchedulesEditor: React.FC = () => {
             <button
               disabled={!globalEnabled}
               onClick={() => deleteSchedule(schedule.id)}
+              aria-label={t('focusSchedules.deleteSchedule')}
               style={{
                 background: 'transparent',
                 border: 'none',
@@ -176,11 +192,12 @@ export const FocusSchedulesEditor: React.FC = () => {
 
           {/* Days */}
           <div style={{ display: 'flex', gap: '4px', marginBottom: '10px' }}>
-            {DAYS.map((day, idx) => (
+            {DAY_KEYS.map((dayKey, idx) => (
               <button
-                key={day}
+                key={dayKey}
                 disabled={!globalEnabled}
                 onClick={() => toggleDay(schedule.id, idx)}
+                aria-pressed={schedule.daysOfWeek.includes(idx)}
                 style={{
                   width: '32px',
                   height: '28px',
@@ -196,18 +213,19 @@ export const FocusSchedulesEditor: React.FC = () => {
                   fontFamily: "'Cormorant Garamond', Georgia, serif",
                 }}
               >
-                {day}
+                {t(`focusSchedules.days.${dayKey}`)}
               </button>
             ))}
           </div>
 
           {/* Time range */}
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '10px', flexWrap: 'wrap' }}>
-            <span style={{ fontSize: '12px', color: 'rgba(224,224,224,0.5)' }}>From</span>
+            <span style={{ fontSize: '12px', color: 'rgba(224,224,224,0.5)' }}>{t('focusSchedules.from')}</span>
             <select
               disabled={!globalEnabled}
               value={schedule.startHour}
               onChange={(e) => updateScheduleTime(schedule.id, 'startHour', parseInt(e.target.value))}
+              aria-label={t('focusSchedules.from')}
               style={{
                 background: 'rgba(255,255,255,0.08)',
                 color: '#e0e0e0',
@@ -222,11 +240,12 @@ export const FocusSchedulesEditor: React.FC = () => {
                 <option key={i} value={i}>{formatTime(i, 0)}</option>
               ))}
             </select>
-            <span style={{ fontSize: '12px', color: 'rgba(224,224,224,0.5)' }}>to</span>
+            <span style={{ fontSize: '12px', color: 'rgba(224,224,224,0.5)' }}>{t('focusSchedules.to')}</span>
             <select
               disabled={!globalEnabled}
               value={schedule.endHour}
               onChange={(e) => updateScheduleTime(schedule.id, 'endHour', parseInt(e.target.value))}
+              aria-label={t('focusSchedules.to')}
               style={{
                 background: 'rgba(255,255,255,0.08)',
                 color: '#e0e0e0',
@@ -245,11 +264,12 @@ export const FocusSchedulesEditor: React.FC = () => {
 
           {/* Allowed tiers */}
           <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap' }}>
-            {TIERS.map((tier) => (
+            {TIER_KEYS.map((tier) => (
               <button
-                key={tier.key}
+                key={tier}
                 disabled={!globalEnabled}
-                onClick={() => toggleTier(schedule.id, tier.key)}
+                onClick={() => toggleTier(schedule.id, tier)}
+                aria-pressed={schedule.allowedTiers.includes(tier)}
                 style={{
                   padding: '3px 10px',
                   borderRadius: '6px',
@@ -258,14 +278,14 @@ export const FocusSchedulesEditor: React.FC = () => {
                   textTransform: 'uppercase',
                   letterSpacing: '0.05em',
                   cursor: globalEnabled ? 'pointer' : 'default',
-                  background: schedule.allowedTiers.includes(tier.key)
-                    ? `${tier.color}33`
+                  background: schedule.allowedTiers.includes(tier)
+                    ? `${TIER_COLORS[tier]}33`
                     : 'rgba(255,255,255,0.06)',
-                  color: schedule.allowedTiers.includes(tier.key) ? tier.color : 'rgba(224,224,224,0.4)',
+                  color: schedule.allowedTiers.includes(tier) ? TIER_COLORS[tier] : 'rgba(224,224,224,0.4)',
                   fontFamily: "'Cormorant Garamond', Georgia, serif",
                 }}
               >
-                {tier.label}
+                {t(`focusSchedules.tiers.${tier}`)}
               </button>
             ))}
           </div>
@@ -290,7 +310,7 @@ export const FocusSchedulesEditor: React.FC = () => {
             transition: 'all 0.2s',
           }}
         >
-          + Add Focus Schedule
+          {t('focusSchedules.addButton')}
         </button>
       ) : (
         <div style={{
@@ -301,9 +321,10 @@ export const FocusSchedulesEditor: React.FC = () => {
         }}>
           <input
             type="text"
-            placeholder="Schedule name (e.g. Deep Work)"
+            placeholder={t('focusSchedules.namePlaceholder')}
             value={newSchedule.name}
             onChange={(e) => setNewSchedule({ ...newSchedule, name: e.target.value })}
+            aria-label={t('focusSchedules.namePlaceholder')}
             style={{
               width: '100%',
               background: 'rgba(255,255,255,0.08)',
@@ -331,7 +352,7 @@ export const FocusSchedulesEditor: React.FC = () => {
                 fontFamily: "'Cormorant Garamond', Georgia, serif",
               }}
             >
-              Save
+              {t('focusSchedules.save')}
             </button>
             <button
               onClick={() => setIsAdding(false)}
@@ -347,7 +368,7 @@ export const FocusSchedulesEditor: React.FC = () => {
                 fontFamily: "'Cormorant Garamond', Georgia, serif",
               }}
             >
-              Cancel
+              {t('focusSchedules.cancel')}
             </button>
           </div>
         </div>

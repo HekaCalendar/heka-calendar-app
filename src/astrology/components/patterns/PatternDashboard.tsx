@@ -304,7 +304,7 @@ export const PatternDashboard: React.FC<PatternDashboardProps> = ({ onClose }) =
     <div style={styles.container}>
       <header style={styles.header}>
         <h1 style={styles.title}>Your Celestial Patterns</h1>
-        <button 
+        <button
           style={styles.closeButton}
           onClick={onClose}
           onMouseEnter={(e) => {
@@ -313,6 +313,7 @@ export const PatternDashboard: React.FC<PatternDashboardProps> = ({ onClose }) =
           onMouseLeave={(e) => {
             e.currentTarget.style.background = 'transparent';
           }}
+          aria-label={i18n.t('common.close')}
         >
           ×
         </button>

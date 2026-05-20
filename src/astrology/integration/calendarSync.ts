@@ -15,8 +15,6 @@ export interface DailyAstrologicalGuidance {
   readonly date: string;
   readonly hekaDate: HekaDate;
   readonly moonPhase: DailyMoonPhase;
-  // @ts-ignore - may be used in future
-  hekaDateRef?: any;
   readonly moonSign: string;
   readonly sunSign: string;
   readonly dailyTheme: string;

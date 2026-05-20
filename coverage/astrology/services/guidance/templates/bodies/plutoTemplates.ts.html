@@ -1,0 +1,544 @@
+
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Code coverage report for astrology/services/guidance/templates/bodies/plutoTemplates.ts</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../../../../prettify.css" />
+    <link rel="stylesheet" href="../../../../../base.css" />
+    <link rel="shortcut icon" type="image/x-icon" href="../../../../../favicon.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../../../../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+    
+<body>
+<div class='wrapper'>
+    <div class='pad1'>
+        <h1><a href="../../../../../index.html">All files</a> / <a href="index.html">astrology/services/guidance/templates/bodies</a> plutoTemplates.ts</h1>
+        <div class='clearfix'>
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">0% </span>
+                <span class="quiet">Statements</span>
+                <span class='fraction'>0/153</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">0% </span>
+                <span class="quiet">Branches</span>
+                <span class='fraction'>0/1</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">0% </span>
+                <span class="quiet">Functions</span>
+                <span class='fraction'>0/1</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">0% </span>
+                <span class="quiet">Lines</span>
+                <span class='fraction'>0/153</span>
+            </div>
+        
+            
+        </div>
+        <p class="quiet">
+            Press <em>n</em> or <em>j</em> to go to the next uncovered block, <em>b</em>, <em>p</em> or <em>k</em> for the previous block.
+        </p>
+        <template id="filterTemplate">
+            <div class="quiet">
+                Filter:
+                <input type="search" id="fileSearch">
+            </div>
+        </template>
+    </div>
+    <div class='status-line low'></div>
+    <pre><table class="coverage">
+<tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
+<a name='L2'></a><a href='#L2'>2</a>
+<a name='L3'></a><a href='#L3'>3</a>
+<a name='L4'></a><a href='#L4'>4</a>
+<a name='L5'></a><a href='#L5'>5</a>
+<a name='L6'></a><a href='#L6'>6</a>
+<a name='L7'></a><a href='#L7'>7</a>
+<a name='L8'></a><a href='#L8'>8</a>
+<a name='L9'></a><a href='#L9'>9</a>
+<a name='L10'></a><a href='#L10'>10</a>
+<a name='L11'></a><a href='#L11'>11</a>
+<a name='L12'></a><a href='#L12'>12</a>
+<a name='L13'></a><a href='#L13'>13</a>
+<a name='L14'></a><a href='#L14'>14</a>
+<a name='L15'></a><a href='#L15'>15</a>
+<a name='L16'></a><a href='#L16'>16</a>
+<a name='L17'></a><a href='#L17'>17</a>
+<a name='L18'></a><a href='#L18'>18</a>
+<a name='L19'></a><a href='#L19'>19</a>
+<a name='L20'></a><a href='#L20'>20</a>
+<a name='L21'></a><a href='#L21'>21</a>
+<a name='L22'></a><a href='#L22'>22</a>
+<a name='L23'></a><a href='#L23'>23</a>
+<a name='L24'></a><a href='#L24'>24</a>
+<a name='L25'></a><a href='#L25'>25</a>
+<a name='L26'></a><a href='#L26'>26</a>
+<a name='L27'></a><a href='#L27'>27</a>
+<a name='L28'></a><a href='#L28'>28</a>
+<a name='L29'></a><a href='#L29'>29</a>
+<a name='L30'></a><a href='#L30'>30</a>
+<a name='L31'></a><a href='#L31'>31</a>
+<a name='L32'></a><a href='#L32'>32</a>
+<a name='L33'></a><a href='#L33'>33</a>
+<a name='L34'></a><a href='#L34'>34</a>
+<a name='L35'></a><a href='#L35'>35</a>
+<a name='L36'></a><a href='#L36'>36</a>
+<a name='L37'></a><a href='#L37'>37</a>
+<a name='L38'></a><a href='#L38'>38</a>
+<a name='L39'></a><a href='#L39'>39</a>
+<a name='L40'></a><a href='#L40'>40</a>
+<a name='L41'></a><a href='#L41'>41</a>
+<a name='L42'></a><a href='#L42'>42</a>
+<a name='L43'></a><a href='#L43'>43</a>
+<a name='L44'></a><a href='#L44'>44</a>
+<a name='L45'></a><a href='#L45'>45</a>
+<a name='L46'></a><a href='#L46'>46</a>
+<a name='L47'></a><a href='#L47'>47</a>
+<a name='L48'></a><a href='#L48'>48</a>
+<a name='L49'></a><a href='#L49'>49</a>
+<a name='L50'></a><a href='#L50'>50</a>
+<a name='L51'></a><a href='#L51'>51</a>
+<a name='L52'></a><a href='#L52'>52</a>
+<a name='L53'></a><a href='#L53'>53</a>
+<a name='L54'></a><a href='#L54'>54</a>
+<a name='L55'></a><a href='#L55'>55</a>
+<a name='L56'></a><a href='#L56'>56</a>
+<a name='L57'></a><a href='#L57'>57</a>
+<a name='L58'></a><a href='#L58'>58</a>
+<a name='L59'></a><a href='#L59'>59</a>
+<a name='L60'></a><a href='#L60'>60</a>
+<a name='L61'></a><a href='#L61'>61</a>
+<a name='L62'></a><a href='#L62'>62</a>
+<a name='L63'></a><a href='#L63'>63</a>
+<a name='L64'></a><a href='#L64'>64</a>
+<a name='L65'></a><a href='#L65'>65</a>
+<a name='L66'></a><a href='#L66'>66</a>
+<a name='L67'></a><a href='#L67'>67</a>
+<a name='L68'></a><a href='#L68'>68</a>
+<a name='L69'></a><a href='#L69'>69</a>
+<a name='L70'></a><a href='#L70'>70</a>
+<a name='L71'></a><a href='#L71'>71</a>
+<a name='L72'></a><a href='#L72'>72</a>
+<a name='L73'></a><a href='#L73'>73</a>
+<a name='L74'></a><a href='#L74'>74</a>
+<a name='L75'></a><a href='#L75'>75</a>
+<a name='L76'></a><a href='#L76'>76</a>
+<a name='L77'></a><a href='#L77'>77</a>
+<a name='L78'></a><a href='#L78'>78</a>
+<a name='L79'></a><a href='#L79'>79</a>
+<a name='L80'></a><a href='#L80'>80</a>
+<a name='L81'></a><a href='#L81'>81</a>
+<a name='L82'></a><a href='#L82'>82</a>
+<a name='L83'></a><a href='#L83'>83</a>
+<a name='L84'></a><a href='#L84'>84</a>
+<a name='L85'></a><a href='#L85'>85</a>
+<a name='L86'></a><a href='#L86'>86</a>
+<a name='L87'></a><a href='#L87'>87</a>
+<a name='L88'></a><a href='#L88'>88</a>
+<a name='L89'></a><a href='#L89'>89</a>
+<a name='L90'></a><a href='#L90'>90</a>
+<a name='L91'></a><a href='#L91'>91</a>
+<a name='L92'></a><a href='#L92'>92</a>
+<a name='L93'></a><a href='#L93'>93</a>
+<a name='L94'></a><a href='#L94'>94</a>
+<a name='L95'></a><a href='#L95'>95</a>
+<a name='L96'></a><a href='#L96'>96</a>
+<a name='L97'></a><a href='#L97'>97</a>
+<a name='L98'></a><a href='#L98'>98</a>
+<a name='L99'></a><a href='#L99'>99</a>
+<a name='L100'></a><a href='#L100'>100</a>
+<a name='L101'></a><a href='#L101'>101</a>
+<a name='L102'></a><a href='#L102'>102</a>
+<a name='L103'></a><a href='#L103'>103</a>
+<a name='L104'></a><a href='#L104'>104</a>
+<a name='L105'></a><a href='#L105'>105</a>
+<a name='L106'></a><a href='#L106'>106</a>
+<a name='L107'></a><a href='#L107'>107</a>
+<a name='L108'></a><a href='#L108'>108</a>
+<a name='L109'></a><a href='#L109'>109</a>
+<a name='L110'></a><a href='#L110'>110</a>
+<a name='L111'></a><a href='#L111'>111</a>
+<a name='L112'></a><a href='#L112'>112</a>
+<a name='L113'></a><a href='#L113'>113</a>
+<a name='L114'></a><a href='#L114'>114</a>
+<a name='L115'></a><a href='#L115'>115</a>
+<a name='L116'></a><a href='#L116'>116</a>
+<a name='L117'></a><a href='#L117'>117</a>
+<a name='L118'></a><a href='#L118'>118</a>
+<a name='L119'></a><a href='#L119'>119</a>
+<a name='L120'></a><a href='#L120'>120</a>
+<a name='L121'></a><a href='#L121'>121</a>
+<a name='L122'></a><a href='#L122'>122</a>
+<a name='L123'></a><a href='#L123'>123</a>
+<a name='L124'></a><a href='#L124'>124</a>
+<a name='L125'></a><a href='#L125'>125</a>
+<a name='L126'></a><a href='#L126'>126</a>
+<a name='L127'></a><a href='#L127'>127</a>
+<a name='L128'></a><a href='#L128'>128</a>
+<a name='L129'></a><a href='#L129'>129</a>
+<a name='L130'></a><a href='#L130'>130</a>
+<a name='L131'></a><a href='#L131'>131</a>
+<a name='L132'></a><a href='#L132'>132</a>
+<a name='L133'></a><a href='#L133'>133</a>
+<a name='L134'></a><a href='#L134'>134</a>
+<a name='L135'></a><a href='#L135'>135</a>
+<a name='L136'></a><a href='#L136'>136</a>
+<a name='L137'></a><a href='#L137'>137</a>
+<a name='L138'></a><a href='#L138'>138</a>
+<a name='L139'></a><a href='#L139'>139</a>
+<a name='L140'></a><a href='#L140'>140</a>
+<a name='L141'></a><a href='#L141'>141</a>
+<a name='L142'></a><a href='#L142'>142</a>
+<a name='L143'></a><a href='#L143'>143</a>
+<a name='L144'></a><a href='#L144'>144</a>
+<a name='L145'></a><a href='#L145'>145</a>
+<a name='L146'></a><a href='#L146'>146</a>
+<a name='L147'></a><a href='#L147'>147</a>
+<a name='L148'></a><a href='#L148'>148</a>
+<a name='L149'></a><a href='#L149'>149</a>
+<a name='L150'></a><a href='#L150'>150</a>
+<a name='L151'></a><a href='#L151'>151</a>
+<a name='L152'></a><a href='#L152'>152</a>
+<a name='L153'></a><a href='#L153'>153</a>
+<a name='L154'></a><a href='#L154'>154</a></td><td class="line-coverage quiet"><span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js"><span class="cstat-no" title="statement not covered" >import type { BodyTemplates } from './types';<span class="fstat-no" title="function not covered" ><span class="branch-0 cbranch-no" title="branch not covered" ></span></span></span>
+<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" >/**</span>
+<span class="cstat-no" title="statement not covered" > * ═══════════════════════════════════════════════════════════════════════════════</span>
+<span class="cstat-no" title="statement not covered" > * PLUTO TEMPLATES — Transformation, power, death/rebirth, depth, shadow</span>
+<span class="cstat-no" title="statement not covered" > * ═══════════════════════════════════════════════════════════════════════════════</span>
+<span class="cstat-no" title="statement not covered" > */</span>
+<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" >export const plutoTemplates: BodyTemplates = {</span>
+<span class="cstat-no" title="statement not covered" >  aries: {</span>
+<span class="cstat-no" title="statement not covered" >    essence: 'Your transformation is a volcanic eruption — sudden, violent, and reshaping the landscape of identity with irreversible force. Pluto in Aries teaches that power must be claimed, that rebirth requires the courage to destroy what no longer serves, and that the phoenix does not ask permission before immolating. You are here to transform through decisive action, to wield power with the urgency of one who knows that hesitation is a form of death.',</span>
+<span class="cstat-no" title="statement not covered" >    element: 'fire', modality: 'cardinal', keywords: ['transformative action', 'volcanic power', 'rebirth through force', 'shadow courage'],</span>
+<span class="cstat-no" title="statement not covered" >    careerAdvice: 'Your professional transformation is immediate and intense. Entrepreneurship, emergency response, military strategy, and pioneering fields suit your volcanic nature. You excel when decisive action is required. Beware destructive impulsivity — not every obstacle deserves annihilation. Build power that creates as much as it destroys.',</span>
+<span class="cstat-no" title="statement not covered" >    relationshipAdvice: 'Your relationships are battlegrounds for transformation — intense, consuming, and never superficial. You attract partners who can handle your heat. Beware the compulsion to dominate — power in love is not control but mutual evolution. True transformation includes the courage to be vulnerable within intensity.',</span>
+<span class="cstat-no" title="statement not covered" >    healthAdvice: 'Your head and adrenal system process your volcanic energy. Explosive movement, competitive sports, and crisis-based release restore balance. Beware burnout from constant combat readiness. Your body needs recovery as rigorously as it needs challenge. The warrior who never rests becomes the casualty of their own war.',</span>
+<span class="cstat-no" title="statement not covered" >    financesAdvice: 'High-stakes investments and power-aligned wealth-building suit your nature. You understand money as energy to be commanded. Beware using financial power as proxy for emotional control. Build wealth that serves your transformation without becoming another arena for domination.',</span>
+<span class="cstat-no" title="statement not covered" >    growthAdvice: 'Your shadow is the tyrant — the belief that power means forcing change on others. The lesson of Pluto in Aries is that true transformation begins within. Growth asks you to distinguish between worthy destruction and compulsive demolition, and to wield your volcanic force with the precision of a surgeon, not the chaos of an earthquake.',</span>
+<span class="cstat-no" title="statement not covered" >    bodyFocus: 'head, eyes, nervous system, adrenal glands',</span>
+<span class="cstat-no" title="statement not covered" >    elementalResonance: 'Your transformation is volcanic eruption — the sudden release of pressure that has been building for epochs, reshaping the landscape in a single irreversible act.',</span>
+<span class="cstat-no" title="statement not covered" >  },</span>
+<span class="cstat-no" title="statement not covered" >  taurus: {</span>
+<span class="cstat-no" title="statement not covered" >    essence: 'Your transformation is tectonic pressure — slow, irresistible, and reshaping the foundations of value and security with geological patience. Pluto in Taurus teaches that power is material, that true transformation includes the body and its resources, and that the structures we call stable are merely waiting to shift. You are here to transform value itself.',</span>
+<span class="cstat-no" title="statement not covered" >    element: 'earth', modality: 'fixed', keywords: ['material transformation', 'tectonic power', 'value rebirth', 'possessive depth'],</span>
+<span class="cstat-no" title="statement not covered" >    careerAdvice: 'Your professional transformation targets systems of value and stability. Finance, agriculture, environmental transformation, and resource management suit your geological nature. You excel when restructuring what others take for granted. Beware the addiction to accumulation — power hoarded is power that eventually corrupts its hoarder.',</span>
+<span class="cstat-no" title="statement not covered" >    relationshipAdvice: 'Your relationships transform around values and security. You attract partners who challenge your understanding of possession. Beware the compulsion to own — love held too tightly becomes confinement. True transformation in love is the courage to release what you most fear losing, discovering that your power is not your possessions.',</span>
+<span class="cstat-no" title="statement not covered" >    healthAdvice: 'Your throat, neck, and thyroid carry the tension of unexpressed possessiveness. Vocal release, sensual grounding, and nature immersion restore balance. Beware the body\'s accumulation — weight, tension, withheld expression. Your physical form is not a vault but a vessel. Transform it through release, not just discipline.',</span>
+<span class="cstat-no" title="statement not covered" >    financesAdvice: 'Your financial life is a crucible of transformation — wealth built, lost, and reborn through cycles of power. Real estate, tangible assets, and resource control align with your nature. Build wealth that survives transformation. Beware the attachment to security models that no longer serve your evolution.',</span>
+<span class="cstat-no" title="statement not covered" >    growthAdvice: 'Your shadow is the hoarder — the belief that power equals possession. The lesson of Pluto in Taurus is that true transformation requires releasing what you have accumulated. Growth asks you to distinguish between worthy stability and compulsive clinging, and to trust that your value is not measured by what you own.',</span>
+<span class="cstat-no" title="statement not covered" >    bodyFocus: 'throat, neck, thyroid, vocal cords',</span>
+<span class="cstat-no" title="statement not covered" >    elementalResonance: 'Your transformation is tectonic — the slow, irresistible pressure that reshapes mountains, that turns coal to diamond, that knows no urgency because it knows no defeat.',</span>
+<span class="cstat-no" title="statement not covered" >  },</span>
+<span class="cstat-no" title="statement not covered" >  gemini: {</span>
+<span class="cstat-no" title="statement not covered" >    essence: 'Your transformation is a viral mutation — spreading through networks of thought, reshaping communication and perception with invisible, irreversible force. Pluto in Gemini teaches that power is informational, that true transformation begins in the mind, and that the structures of language and knowledge are as subject to death and rebirth as any physical form. You are here to transform the exchange of ideas itself.',</span>
+<span class="cstat-no" title="statement not covered" >    element: 'air', modality: 'mutable', keywords: ['intellectual transformation', 'viral power', 'communicative rebirth', 'mental depth'],</span>
+<span class="cstat-no" title="statement not covered" >    careerAdvice: 'Your professional transformation is investigative and communicative. Journalism, research, intelligence, psychological profiling, and information warfare suit your penetrating nature. You excel when uncovering what is hidden in plain sight. Beware the addiction to secrets — knowledge is power, but power without integrity is corruption.',</span>
+<span class="cstat-no" title="statement not covered" >    relationshipAdvice: 'Your relationships transform through communication — the unspoken truth, the hidden meaning, the psychological undercurrent. You attract partners who understand that words are weapons and healing tools. Beware manipulative dialogue — insight into others\' minds is not licence to control them.',</span>
+<span class="cstat-no" title="statement not covered" >    healthAdvice: 'Your lungs, hands, and nervous system process your investigative intensity. Writing therapy, breathwork, and hand-focused practices restore balance. Beware nervous exhaustion from constant analysis. Your mind is a powerful tool — learn to turn it off. The investigator who never rests becomes the subject of their own obsession.',</span>
+<span class="cstat-no" title="statement not covered" >    financesAdvice: 'Information arbitrage and intelligence-based investments align with your nature. You spot patterns others miss. Beware the addiction to mental power — not every insight is investable. Build wealth through knowledge, but ground it in practical application.',</span>
+<span class="cstat-no" title="statement not covered" >    growthAdvice: 'Your shadow is the mental tyrant — the belief that understanding equals control. The lesson of Pluto in Gemini is that true transformation includes the courage to not know. Growth asks you to distinguish between authentic insight and compulsive analysis, and to trust that some mysteries are not meant to be solved.',</span>
+<span class="cstat-no" title="statement not covered" >    bodyFocus: 'lungs, hands, nervous system, shoulders',</span>
+<span class="cstat-no" title="statement not covered" >    elementalResonance: 'Your transformation is viral mutation — the invisible spread of new form through established networks, reshaping the system from within before anyone knows change has begun.',</span>
+<span class="cstat-no" title="statement not covered" >  },</span>
+<span class="cstat-no" title="statement not covered" >  cancer: {</span>
+<span class="cstat-no" title="statement not covered" >    essence: 'Your transformation is an ancestral reckoning — deep emotional currents that reshape family, home, and belonging with the force of generational change. Pluto in Cancer teaches that power is emotional, that true transformation includes the dissolution and rebirth of belonging itself, and that the family we inherit is both wound and source of our greatest strength. You are here to transform the foundations of nurture.',</span>
+<span class="cstat-no" title="statement not covered" >    element: 'water', modality: 'cardinal', keywords: ['familial transformation', 'emotional power', 'ancestral rebirth', 'nurturing depth'],</span>
+<span class="cstat-no" title="statement not covered" >    careerAdvice: 'Your professional transformation is nurturing and heritage-oriented. Real estate, family business transformation, historical work, and emotional healing suit your depth. You excel when reshaping structures of belonging. Beware the compulsion to mother everyone — your power needs boundaries to be sustainable.',</span>
+<span class="cstat-no" title="statement not covered" >    relationshipAdvice: 'Your relationships are crucibles of belonging — intense, transformative, and bound to home and family. You attract partners who challenge your understanding of security. Beware the compulsion to create family as fortress — love that requires walls is not love but survival. True transformation includes the courage to redefine belonging.',</span>
+<span class="cstat-no" title="statement not covered" >    healthAdvice: 'Your stomach and lymphatic system hold your ancestral weight. Water therapies, emotional release, and family constellation work restore balance. Beware the body\'s storage of unprocessed grief — your gut holds what your heart cannot release. Transform your health through emotional archaeology, not just diet and exercise.',</span>
+<span class="cstat-no" title="statement not covered" >    financesAdvice: 'Family resources, home investments, and heritage-aligned wealth are your crucible. You understand money as continuity and power. Build financial structures that honour the past while creating new foundations. Beware using wealth to control family dynamics — power hoarded within bloodlines eventually corrupts.',</span>
+<span class="cstat-no" title="statement not covered" >    growthAdvice: 'Your shadow is the matriarchal tyrant — the belief that love means managing others\' emotions and lives. The lesson of Pluto in Cancer is that true transformation includes letting go of control over belonging. Growth asks you to distinguish between nurturing and possession, and to trust that your family\'s evolution is not yours to direct.',</span>
+<span class="cstat-no" title="statement not covered" >    bodyFocus: 'stomach, breasts, lymphatic system, womb',</span>
+<span class="cstat-no" title="statement not covered" >    elementalResonance: 'Your transformation is ancestral tide — the deep current that reshapes the shoreline of belonging, eroding what was built on unstable ground and depositing new land where the old once stood.',</span>
+<span class="cstat-no" title="statement not covered" >  },</span>
+<span class="cstat-no" title="statement not covered" >  leo: {</span>
+<span class="cstat-no" title="statement not covered" >    essence: 'Your transformation is a star\'s collapse — the dramatic, radiant death that creates new elements, new light, new possibilities from the dissolution of what was. Pluto in Leo teaches that power is creative, that true transformation includes the destruction and rebirth of identity itself, and that the self we perform must eventually die for the self we are to emerge. You are here to transform the nature of creative authority.',</span>
+<span class="cstat-no" title="statement not covered" >    element: 'fire', modality: 'fixed', keywords: ['creative transformation', 'radiant power', 'identity rebirth', 'theatrical depth'],</span>
+<span class="cstat-no" title="statement not covered" >    careerAdvice: 'Your professional transformation is creative and performative. Entertainment, design, leadership, and artistic fields suit your dramatic nature. You excel when reshaping conventions of self-expression. Beware the addiction to audience power — the performer who needs witnesses to exist is performing their own annihilation.',</span>
+<span class="cstat-no" title="statement not covered" >    relationshipAdvice: 'Your relationships are theatres of transformation — dramatic, intense, and centred on identity. You attract partners who reflect your creative power. Beware the compulsion to be the star — love is not a performance. True transformation includes the courage to be offstage, to be unwitnessed, to be merely human.',</span>
+<span class="cstat-no" title="statement not covered" >    healthAdvice: 'Your heart and spine are the centre of your creative crucible. Dance, performance, and heart-opening practices restore you. Beware burnout from the spotlight — even stars exhaust their fuel. Your body needs the same dramatic care you give your art. Rest is not obscurity; it is regeneration.',</span>
+<span class="cstat-no" title="statement not covered" >    financesAdvice: 'Creative power and leadership investments align with your nature. You understand wealth as creative energy. Build financial structures that serve your vision without requiring constant performance. Beware using money as a scorecard for creative worth — your value is not your box office.',</span>
+<span class="cstat-no" title="statement not covered" >    growthAdvice: 'Your shadow is the narcissistic tyrant — the belief that your creative power entitles you to others\' devotion. The lesson of Pluto in Leo is that true transformation includes the courage to be ordinary. Growth asks you to distinguish between authentic creativity and ego-driven performance, and to trust that your light does not need witnesses to exist.',</span>
+<span class="cstat-no" title="statement not covered" >    bodyFocus: 'heart, spine, circulatory system, upper back',</span>
+<span class="cstat-no" title="statement not covered" >    elementalResonance: 'Your transformation is stellar collapse — the radiant death that creates new elements, new light, new possibilities from the dissolution of what was brilliantly but temporarily whole.',</span>
+<span class="cstat-no" title="statement not covered" >  },</span>
+<span class="cstat-no" title="statement not covered" >  virgo: {</span>
+<span class="cstat-no" title="statement not covered" >    essence: 'Your transformation is a surgical strike — precise, analytical, and reshaping the systems of health, work, and service with penetrating depth. Pluto in Virgo teaches that power is practical, that true transformation begins in the body and its routines, and that the perfection we seek is often a mask for the power we fear. You are here to transform the nature of service itself.',</span>
+<span class="cstat-no" title="statement not covered" >    element: 'earth', modality: 'mutable', keywords: ['systemic transformation', 'analytical power', 'health rebirth', 'service depth'],</span>
+<span class="cstat-no" title="statement not covered" >    careerAdvice: 'Your professional transformation is analytical and health-oriented. Healthcare, research, data analysis, and systemic reform suit your penetrating nature. You excel when uncovering what is broken in systems others accept. Beware the addiction to criticism — the surgeon who sees only disease eventually cuts healthy tissue.',</span>
+<span class="cstat-no" title="statement not covered" >    relationshipAdvice: 'Your relationships transform through practical devotion — the problem solved, the detail remembered, the flaw identified. You attract partners who appreciate your competence. Beware the compulsion to fix — love is not a project to optimise. True transformation includes the courage to accept imperfection in others and yourself.',</span>
+<span class="cstat-no" title="statement not covered" >    healthAdvice: 'Your gut and nervous system are your transformation\'s laboratory. Precision nutrition, diagnostic awareness, and mind-body practices are essential. Beware hypochondria — the investigator who searches for disease often finds it, whether it exists or not. Your body is not a machine to be fixed but a living system to be honoured.',</span>
+<span class="cstat-no" title="statement not covered" >    financesAdvice: 'Detailed analysis and systemic investment strategies align with your precision. You spot inefficiencies that cost others thousands. Beware analysis paralysis — the perfect plan never transforms anything. Build wealth through systematic understanding, but act on imperfect information.',</span>
+<span class="cstat-no" title="statement not covered" >    growthAdvice: 'Your shadow is the critic-tyrant — the belief that your analytical power entitles you to judge and reshape others. The lesson of Pluto in Virgo is that true transformation includes the courage to be imperfect. Growth asks you to distinguish between helpful discernment and compulsive criticism, and to trust that your worth is not measured by your usefulness.',</span>
+<span class="cstat-no" title="statement not covered" >    bodyFocus: 'digestive system, intestines, spleen, nervous system',</span>
+<span class="cstat-no" title="statement not covered" >    elementalResonance: 'Your transformation is surgical strike — the precise incision that removes what is diseased while preserving what is whole, reshaping the system with minimal collateral damage.',</span>
+<span class="cstat-no" title="statement not covered" >  },</span>
+<span class="cstat-no" title="statement not covered" >  libra: {</span>
+<span class="cstat-no" title="statement not covered" >    essence: 'Your transformation is a courtroom coup — reshaping justice, partnership, and aesthetic power with penetrating intensity. Pluto in Libra teaches that power is relational, that true transformation includes the death and rebirth of how we relate, and that the structures of partnership and law are arenas of shadow as much as light. You are here to transform the nature of balance itself.',</span>
+<span class="cstat-no" title="statement not covered" >    element: 'air', modality: 'cardinal', keywords: ['relational transformation', 'justice power', 'partnership rebirth', 'aesthetic depth'],</span>
+<span class="cstat-no" title="statement not covered" >    careerAdvice: 'Your professional transformation is diplomatic and justice-oriented. Law, design, mediation, and partnership restructuring suit your penetrating nature. You excel when uncovering power imbalances others ignore. Beware the addiction to fairness — the pursuit of perfect balance can become a tyranny of indecision.',</span>
+<span class="cstat-no" title="statement not covered" >    relationshipAdvice: 'Your relationships are power laboratories — intense, transformative, and never superficially harmonious. You attract partners who challenge your understanding of equality. Beware the compulsion to control through charm — power disguised as fairness is the most dangerous kind. True transformation includes the courage to be honest about power.',</span>
+<span class="cstat-no" title="statement not covered" >    healthAdvice: 'Your kidneys, skin, and lower back reflect your relational stress. Balance practices, dance, and beauty rituals restore you. Beware the stress of perpetual fairness — your body absorbs the power struggles you refuse to acknowledge. Learn to make decisions without perfect information. Your health requires honest power, not just balanced aesthetics.',</span>
+<span class="cstat-no" title="statement not covered" >    financesAdvice: 'Partnership resources, justice-aligned investments, and power-aware financial models suit your nature. You understand wealth as relationship energy. Build financial structures that acknowledge power dynamics honestly. Beware using money to create harmony that must come from truth.',</span>
+<span class="cstat-no" title="statement not covered" >    growthAdvice: 'Your shadow is the charming manipulator — the belief that power must always be hidden behind fairness. The lesson of Pluto in Libra is that true transformation includes the courage to own your power openly. Growth asks you to distinguish between authentic justice and control disguised as balance, and to trust that honest power is healthier than hidden dominance.',</span>
+<span class="cstat-no" title="statement not covered" >    bodyFocus: 'kidneys, skin, lower back, endocrine balance',</span>
+<span class="cstat-no" title="statement not covered" >    elementalResonance: 'Your transformation is courtroom coup — the sudden shift in power that redefines justice, partnership, and what is considered beautiful or balanced.',</span>
+<span class="cstat-no" title="statement not covered" >  },</span>
+<span class="cstat-no" title="statement not covered" >  scorpio: {</span>
+<span class="cstat-no" title="statement not covered" >    essence: 'Your transformation is a phoenix immolation — total, absolute, and emerging from ash with power that has been tested by fire. Pluto in Scorpio is at home, the transformer who understands that death and rebirth are not metaphors but lived realities, that power is not given but earned through facing what others flee from. You are here to embody transformation itself.',</span>
+<span class="cstat-no" title="statement not covered" >    element: 'water', modality: 'fixed', keywords: ['total transformation', 'phoenix power', 'death-rebirth', 'shadow mastery'],</span>
+<span class="cstat-no" title="statement not covered" >    careerAdvice: 'Your professional transformation is intense and investigative. Crisis management, depth psychology, research, and power restructuring suit your nature. You excel when facing what others hide from. Beware the addiction to crisis — not every transformation requires destruction. Build as much as you burn.',</span>
+<span class="cstat-no" title="statement not covered" >    relationshipAdvice: 'Your relationships are alchemical crucibles — total, consuming, and transformative. You attract partners ready for absolute honesty. Beware the compulsion to destroy — some relationships deserve evolution, not immolation. True transformation includes the courage to rebuild together rather than starting from ash alone.',</span>
+<span class="cstat-no" title="statement not covered" >    healthAdvice: 'Your reproductive and eliminative systems process your transformative intensity. Deep therapeutic practices, energy work, and shadow integration restore you. Beware addictive patterns — your intensity seeks extremes. The phoenix who burns too often becomes ash permanently. Your body needs gentleness as much as it needs fire.',</span>
+<span class="cstat-no" title="statement not covered" >    financesAdvice: 'Shared resources, power investments, and transformative financial models align with your depth. You understand wealth as energy transformation. Beware using financial power as proxy for emotional control. Build wealth through strategic depth, not destructive manipulation.',</span>
+<span class="cstat-no" title="statement not covered" >    growthAdvice: 'Your shadow is the destroyer — the compulsion to burn everything to prove you can rise from ash. The lesson of Pluto in Scorpio is that true transformation includes the wisdom to preserve what deserves preservation. Growth asks you to distinguish between necessary death and destructive addiction, and to trust that the phoenix who never burns is not avoiding transformation but having already learned its lesson.',</span>
+<span class="cstat-no" title="statement not covered" >    bodyFocus: 'reproductive system, eliminative organs, pelvis, colon',</span>
+<span class="cstat-no" title="statement not covered" >    elementalResonance: 'Your transformation is phoenix fire — total immolation that leaves nothing unchanged, emerging from ash with power that has been tested by the very flames that consumed it.',</span>
+<span class="cstat-no" title="statement not covered" >  },</span>
+<span class="cstat-no" title="statement not covered" >  sagittarius: {</span>
+<span class="cstat-no" title="statement not covered" >    essence: 'Your transformation is a philosophical earthquake — reshaping belief, meaning, and the horizons of understanding with tectonic force. Pluto in Sagittarius teaches that power is meaning, that true transformation includes the death and rebirth of what we believe, and that the structures of faith and philosophy are as subject to corruption as any institution. You are here to transform the nature of truth itself.',</span>
+<span class="cstat-no" title="statement not covered" >    element: 'fire', modality: 'mutable', keywords: ['philosophical transformation', 'belief power', 'meaning rebirth', 'visionary depth'],</span>
+<span class="cstat-no" title="statement not covered" >    careerAdvice: 'Your professional transformation is expansive and belief-challenging. Education reform, publishing, international power, and visionary restructuring suit your nature. You excel when challenging what is considered true. Beware the addiction to expansion — the philosopher who never commits believes nothing. Build structures that ground your visions.',</span>
+<span class="cstat-no" title="statement not covered" >    relationshipAdvice: 'Your relationships transform through shared meaning and adventure. You attract partners who challenge your worldview. Beware restlessness disguised as spiritual growth — not every horizon is worth chasing. True transformation includes the courage to find depth in commitment, to discover that some truths are found in staying.',</span>
+<span class="cstat-no" title="statement not covered" >    healthAdvice: 'Your hips, thighs, and liver carry your expansive transformative energy. Outdoor movement, travel, and philosophical practice restore you. Beware excess — your transformative nature applies to indulgence as well as ideas. Your body needs grounding as much as it needs adventure.',</span>
+<span class="cstat-no" title="statement not covered" >    financesAdvice: 'International investments, educational power, and belief-aligned enterprises suit your visionary nature. You understand wealth as meaning-energy. Beware overconfidence — not every vision is investable. Build wealth that funds your philosophy without requiring it to be universally true.',</span>
+<span class="cstat-no" title="statement not covered" >    growthAdvice: 'Your shadow is the dogmatist — the belief that your truth entitles you to reshape others\' beliefs. The lesson of Pluto in Sagittarius is that true transformation includes the courage to be wrong. Growth asks you to distinguish between authentic meaning and compulsive conviction, and to trust that the deepest truths are found in questioning, not answering.',</span>
+<span class="cstat-no" title="statement not covered" >    bodyFocus: 'hips, thighs, liver, sciatic nerve',</span>
+<span class="cstat-no" title="statement not covered" >    elementalResonance: 'Your transformation is philosophical earthquake — the sudden shift in meaning that reshapes the landscape of belief, leaving monuments to old truths in ruins and new horizons visible.',</span>
+<span class="cstat-no" title="statement not covered" >  },</span>
+<span class="cstat-no" title="statement not covered" >  capricorn: {</span>
+<span class="cstat-no" title="statement not covered" >    essence: 'Your transformation is an empire\'s fall and rebirth — the collapse of established structures and the emergence of new authority from the ruins of the old. Pluto in Capricorn teaches that power is structural, that true transformation includes the death and rebirth of institutions themselves, and that the authority we inherit must be earned anew or it corrupts absolutely. You are here to transform the nature of power itself.',</span>
+<span class="cstat-no" title="statement not covered" >    element: 'earth', modality: 'cardinal', keywords: ['structural transformation', 'institutional power', 'authority rebirth', 'legacy depth'],</span>
+<span class="cstat-no" title="statement not covered" >    careerAdvice: 'Your professional transformation is institutional and strategic. Executive power, government reform, corporate restructuring, and legacy transformation suit your nature. You excel when reshaping structures from positions of authority. Beware the addiction to power — the empire that expands without end eventually collapses under its own weight.',</span>
+<span class="cstat-no" title="statement not covered" >    relationshipAdvice: 'Your relationships challenge traditional structures of commitment and authority. You attract partners who respect your ambition and share your vision for change. Beware using power dynamics as proxy for intimacy — control is not love. True transformation includes the courage to be vulnerable within authority.',</span>
+<span class="cstat-no" title="statement not covered" >    healthAdvice: 'Your bones, joints, and teeth reflect the weight of structural transformation. Regular movement, structural alignment, and disciplined self-care are essential. Beware workaholism — the empire builder who never rests builds monuments to their own exhaustion. Your body is the foundation of every achievement.',</span>
+<span class="cstat-no" title="statement not covered" >    financesAdvice: 'Traditional power structures and legacy wealth are your crucible. You understand finance as institutional energy. Build financial structures that honour the past while embracing necessary change. Beware the addiction to stability — some empires deserve to fall so better ones can rise.',</span>
+<span class="cstat-no" title="statement not covered" >    growthAdvice: 'Your shadow is the tyrant — the belief that authority justifies any means. The lesson of Pluto in Capricorn is that true transformation includes the courage to relinquish power. Growth asks you to distinguish between authentic leadership and compulsive control, and to trust that the greatest authority is the wisdom to step aside when the time comes.',</span>
+<span class="cstat-no" title="statement not covered" >    bodyFocus: 'bones, joints, teeth, knees, skeletal system',</span>
+<span class="cstat-no" title="statement not covered" >    elementalResonance: 'Your transformation is empire\'s fall — the collapse that reveals the fault lines in every monument, the rot in every foundation, making way for structures built on bedrock instead of ambition.',</span>
+<span class="cstat-no" title="statement not covered" >  },</span>
+<span class="cstat-no" title="statement not covered" >  aquarius: {</span>
+<span class="cstat-no" title="statement not covered" >    essence: 'Your transformation is a network collapse — the sudden dissolution of collective structures and the emergence of new forms of connection from the ruins of the old. Pluto in Aquarius teaches that power is collective, that true transformation includes the death and rebirth of how we connect, and that the structures of society are as subject to corruption as any individual. You are here to transform the nature of community itself.',</span>
+<span class="cstat-no" title="statement not covered" >    element: 'air', modality: 'fixed', keywords: ['collective transformation', 'network power', 'social rebirth', 'revolutionary depth'],</span>
+<span class="cstat-no" title="statement not covered" >    careerAdvice: 'Your professional transformation is collective and technological. Social reform, network architecture, technology power, and community restructuring suit your nature. You excel when reshaping how humanity connects. Beware the tyranny of ideals — the collective good that sacrifices individuals is not transformation but another form of oppression.',</span>
+<span class="cstat-no" title="statement not covered" >    relationshipAdvice: 'Your relationships challenge conventional structures of connection. You attract partners who share your vision for collective change. Beware using group dynamics as proxy for intimacy — the revolution will not keep you warm at night. True transformation includes the courage to be present with one person while working for the many.',</span>
+<span class="cstat-no" title="statement not covered" >    healthAdvice: 'Your circulatory and nervous systems carry your collective transformative energy. Group practices, community wellness, and network-based healing restore you. Beware nervous exhaustion from collective anxiety — you feel what the group feels. Build boundaries that protect your energy without isolating you from the transformation you serve.',</span>
+<span class="cstat-no" title="statement not covered" >    financesAdvice: 'Collective resources, social power, and technology investments align with your vision. You understand wealth as collective energy. Build financial models that serve the many. Beware the addiction to abstraction — even revolutionary economics must feed real people.',</span>
+<span class="cstat-no" title="statement not covered" >    growthAdvice: 'Your shadow is the revolutionary tyrant — the belief that the collective good justifies any individual sacrifice. The lesson of Pluto in Aquarius is that true transformation honours the individual within the collective. Growth asks you to build new forms of connection that liberate without homogenising, that unite without erasing difference.',</span>
+<span class="cstat-no" title="statement not covered" >    bodyFocus: 'calves, ankles, circulatory system, nervous system',</span>
+<span class="cstat-no" title="statement not covered" >    elementalResonance: 'Your transformation is network collapse — the sudden dissolution of connections that reveals which links were real and which were mere habit, making way for networks built on authentic resonance.',</span>
+<span class="cstat-no" title="statement not covered" >  },</span>
+<span class="cstat-no" title="statement not covered" >  pisces: {</span>
+<span class="cstat-no" title="statement not covered" >    essence: 'Your transformation is an oceanic dissolution — the total surrender of boundaries, the death of separation, and the rebirth of unity with the source. Pluto in Pisces teaches that power is mystical, that true transformation includes the death of the ego itself, and that the structures of reality are illusions to be transcended. You are here to transform consciousness itself.',</span>
+<span class="cstat-no" title="statement not covered" >    element: 'water', modality: 'mutable', keywords: ['mystical transformation', 'ego dissolution', 'consciousness rebirth', 'compassionate power'],</span>
+<span class="cstat-no" title="statement not covered" >    careerAdvice: 'Your professional transformation is healing and transcendent. Spiritual guidance, artistic expression, compassionate service, and mystical practice suit your nature. You excel when dissolving boundaries between disciplines. Beware escapism — the mystic who abandons the world changes nothing in it. Build structures that ground your spirituality in service.',</span>
+<span class="cstat-no" title="statement not covered" >    relationshipAdvice: 'Your relationships are transformative sacraments — you merge completely with your beloved, dissolving the boundary between self and other. You attract partners who understand your depth. Beware the addiction to merger — total dissolution is not intimacy but disappearance. True transformation includes the courage to be separate while together.',</span>
+<span class="cstat-no" title="statement not covered" >    healthAdvice: 'Your feet and immune system are your mystical anchors. Water therapies, dream work, and spiritual practices restore you. Beware escapism through substances or denial — your sensitivity is a gift that requires protection. Ground your spiritual experiences in physical practice. Your body is the vessel for your transformations.',</span>
+<span class="cstat-no" title="statement not covered" >    financesAdvice: 'Spiritual investments, artistic ventures, and compassion-aligned enterprises suit your nature. You understand wealth as energy flow. Build financial structures that accommodate your non-linear path. Beware using mystical justification for financial avoidance — even mystics must eat.',</span>
+<span class="cstat-no" title="statement not covered" >    growthAdvice: 'Your shadow is the compulsion to dissolve — the belief that transformation requires the disappearance of all boundaries, including healthy ones. The lesson of Pluto in Pisces is that true mystical power includes the courage to be embodied, to be bounded, to be human. Growth asks you to build structures that hold your spirituality without limiting it.',</span>
+<span class="cstat-no" title="statement not covered" >    bodyFocus: 'feet, immune system, pineal gland, lymphatic system',</span>
+<span class="cstat-no" title="statement not covered" >    elementalResonance: 'Your transformation is oceanic dissolution — the tide that erases every shore, every boundary, every distinction between the drop and the sea, between the self and the source from which it came and to which it returns.',</span>
+<span class="cstat-no" title="statement not covered" >  },</span>
+<span class="cstat-no" title="statement not covered" >  ophiuchus: {</span>
+<span class="cstat-no" title="statement not covered" >    essence: 'Your transformation is alchemical fire — the purification that turns poison into medicine, shadow into power, wound into gift. Pluto in Ophiuchus teaches that power is healing, that true transformation includes the death and rebirth of what society calls broken, and that the healer and the wounded are one. You are here to transform the nature of healing itself.',</span>
+<span class="cstat-no" title="statement not covered" >    element: 'ether', modality: 'fixed', keywords: ['alchemical transformation', 'healing power', 'shadow rebirth', 'medicinal depth'],</span>
+<span class="cstat-no" title="statement not covered" >    careerAdvice: 'Your professional transformation is healing and investigative. Medicine, psychology, energy work, and research into suppressed knowledge suit you. You excel when challenging what society calls incurable. Beware the wounded healer trap — you cannot transform healing while ignoring your own wounds. Build structures that sustain your work.',</span>
+<span class="cstat-no" title="statement not covered" >    relationshipAdvice: 'Your relationships are alchemical crucibles — every connection has the potential to transform both participants through the fire of honesty. You attract partners ready for depth. Beware the compulsion to heal instead of relate; your insight is a gift, but in love it can become a wall. True transformation is presence without analysis.',</span>
+<span class="cstat-no" title="statement not covered" >    healthAdvice: 'Your spinal column and nervous system regeneration are your transformation\'s frontier. Energy medicine, spinal alignment, and subtle body practices restore you. You are sensitive to environmental energies — your body is a barometer for collective transformation. Build structures that sustain your healing work.',</span>
+<span class="cstat-no" title="statement not covered" >    financesAdvice: 'Investments in healing, transformation, and regenerative enterprises align with your values. Build financial models that accommodate non-linear paths. Beware rescuing others financially — true transformation empowers independence, not dependence. Your wealth serves your mission.',</span>
+<span class="cstat-no" title="statement not covered" >    growthAdvice: 'Your shadow is the compulsion to fix — the belief that everything must be transformed, including what is already whole. The lesson of Pluto in Ophiuchus is that true alchemical power includes the wisdom to accept what cannot be changed. Growth asks you to distinguish between necessary healing and compulsive fixing, and to trust that some wounds are not failures but features of the soul.',</span>
+<span class="cstat-no" title="statement not covered" >    bodyFocus: 'spinal column, nervous system regeneration, subtle energy channels, cellular renewal',</span>
+<span class="cstat-no" title="statement not covered" >    elementalResonance: 'Your transformation is alchemical fire — the purification that does not destroy but reveals, turning what was poison into what is medicine, what was shadow into what is power, what was wound into what is gift.',</span>
+<span class="cstat-no" title="statement not covered" >  },</span>
+<span class="cstat-no" title="statement not covered" >};</span>
+&nbsp;</pre></td></tr></table></pre>
+
+                <div class='push'></div><!-- for sticky footer -->
+            </div><!-- /wrapper -->
+            <div class='footer quiet pad2 space-top1 center small'>
+                Code coverage generated by
+                <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
+                at 2026-05-20T03:38:53.739Z
+            </div>
+        <script src="../../../../../prettify.js"></script>
+        <script>
+            window.onload = function () {
+                prettyPrint();
+            };
+        </script>
+        <script src="../../../../../sorter.js"></script>
+        <script src="../../../../../block-navigation.js"></script>
+    </body>
+</html>
+    

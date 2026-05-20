@@ -14,6 +14,11 @@ import type {
 import type { NotificationPreferences, NotificationSection } from '../../../types/notifications';
 import { DEFAULT_NOTIFICATION_PREFERENCES } from '../../../types/notifications';
 
+// Helper for reducers that access action.meta.timestamp from thunk-dispatched actions
+interface ActionWithMeta<T = unknown> extends PayloadAction<T> {
+  meta?: { timestamp?: number };
+}
+
 // ─── Gamification Reducers ───
 
 export const unlockAchievement = (state: CalendarState, action: PayloadAction<UnlockedAchievement>) => {
@@ -67,13 +72,13 @@ function ensureAppEngagement(state: CalendarState, timestamp?: number): AppEngag
 
 function ensureFeatureDiscovery(state: CalendarState): FeatureDiscoveryProgress {
   if (!state.progress.featureDiscovery) {
-    state.progress.featureDiscovery = {} as any;
+    state.progress.featureDiscovery = {} as FeatureDiscoveryProgress;
   }
   return state.progress.featureDiscovery;
 }
 
-export const trackAppOpen = (state: CalendarState, action: PayloadAction<void>) => {
-  const timestamp = (action as any).meta?.timestamp || Date.now();
+export const trackAppOpen = (state: CalendarState, action: ActionWithMeta<void>) => {
+  const timestamp = action.meta?.timestamp || Date.now();
   const today = new Date(timestamp).toISOString().split('T')[0];
   const engagement = ensureAppEngagement(state, timestamp);
 
@@ -101,9 +106,9 @@ export const trackAppOpen = (state: CalendarState, action: PayloadAction<void>) 
   engagement.lastOpenDate = today;
 };
 
-export const trackTimeSpent = (state: CalendarState, action: PayloadAction<{ minutes: number }>) => {
+export const trackTimeSpent = (state: CalendarState, action: ActionWithMeta<{ minutes: number }>) => {
   const { minutes } = action.payload;
-  const timestamp = (action as any).meta?.timestamp || Date.now();
+  const timestamp = action.meta?.timestamp || Date.now();
   const today = new Date(timestamp).toISOString().split('T')[0];
   const engagement = ensureAppEngagement(state, timestamp);
 
@@ -120,10 +125,10 @@ export const trackTimeSpent = (state: CalendarState, action: PayloadAction<{ min
     : 0;
 };
 
-export const trackMonthVisit = (state: CalendarState, action: PayloadAction<{ year: number; month: number }>) => {
+export const trackMonthVisit = (state: CalendarState, action: ActionWithMeta<{ year: number; month: number }>) => {
   const { year, month } = action.payload;
   const monthKey = `${year}-${String(month).padStart(2, '0')}`;
-  const timestamp = (action as any).meta?.timestamp || Date.now();
+  const timestamp = action.meta?.timestamp || Date.now();
   const engagement = ensureAppEngagement(state, timestamp);
   const discovery = ensureFeatureDiscovery(state);
 
@@ -142,22 +147,22 @@ export const trackMonthVisit = (state: CalendarState, action: PayloadAction<{ ye
   }
 };
 
-export const discoverFeature = (state: CalendarState, action: PayloadAction<{ feature: FeatureDiscoveryKey; timestamp?: number }>) => {
+export const discoverFeature = (state: CalendarState, action: ActionWithMeta<{ feature: FeatureDiscoveryKey; timestamp?: number }>) => {
   const { feature, timestamp: payloadTimestamp } = action.payload;
-  const timestamp = payloadTimestamp ?? (action as any).meta?.timestamp ?? Date.now();
+  const timestamp = payloadTimestamp ?? action.meta?.timestamp ?? Date.now();
   const engagement = ensureAppEngagement(state, timestamp);
   const discovery = ensureFeatureDiscovery(state);
 
   if (feature in discovery) {
-    (discovery as any)[feature] = true;
+    discovery[feature] = true;
   }
 
   engagement.featuresDiscovered[feature] = timestamp;
 };
 
-export const trackSettingsExplored = (state: CalendarState, action: PayloadAction<{ setting: string; value?: any }>) => {
+export const trackSettingsExplored = (state: CalendarState, action: ActionWithMeta<{ setting: string; value?: unknown }>) => {
   const { setting } = action.payload;
-  const timestamp = (action as any).meta?.timestamp || Date.now();
+  const timestamp = action.meta?.timestamp || Date.now();
   const engagement = ensureAppEngagement(state, timestamp);
 
   engagement.settingsExplored[setting] = timestamp;
@@ -174,9 +179,9 @@ export const trackSettingsExplored = (state: CalendarState, action: PayloadActio
   }
 };
 
-export const trackThemeChange = (state: CalendarState, action: PayloadAction<{ themeId: string }>) => {
+export const trackThemeChange = (state: CalendarState, action: ActionWithMeta<{ themeId: string }>) => {
   const { themeId } = action.payload;
-  const timestamp = (action as any).meta?.timestamp || Date.now();
+  const timestamp = action.meta?.timestamp || Date.now();
   const engagement = ensureAppEngagement(state, timestamp);
   const discovery = ensureFeatureDiscovery(state);
 
@@ -189,9 +194,9 @@ export const trackThemeChange = (state: CalendarState, action: PayloadAction<{ t
   engagement.customizationsMade += 1;
 };
 
-export const trackFontChange = (state: CalendarState, action: PayloadAction<{ fontId: string }>) => {
+export const trackFontChange = (state: CalendarState, action: ActionWithMeta<{ fontId: string }>) => {
   const { fontId } = action.payload;
-  const timestamp = (action as any).meta?.timestamp || Date.now();
+  const timestamp = action.meta?.timestamp || Date.now();
   const engagement = ensureAppEngagement(state, timestamp);
   const discovery = ensureFeatureDiscovery(state);
 
@@ -204,9 +209,9 @@ export const trackFontChange = (state: CalendarState, action: PayloadAction<{ fo
   engagement.customizationsMade += 1;
 };
 
-export const trackDisplayChange = (state: CalendarState, action: PayloadAction<{ setting: string; enabled: boolean }>) => {
+export const trackDisplayChange = (state: CalendarState, action: ActionWithMeta<{ setting: string; enabled: boolean }>) => {
   const { setting, enabled } = action.payload;
-  const timestamp = (action as any).meta?.timestamp || Date.now();
+  const timestamp = action.meta?.timestamp || Date.now();
   const engagement = ensureAppEngagement(state, timestamp);
   const discovery = ensureFeatureDiscovery(state);
 
@@ -225,9 +230,9 @@ export const trackDisplayChange = (state: CalendarState, action: PayloadAction<{
   engagement.customizationsMade += 1;
 };
 
-export const trackLocationChange = (state: CalendarState, action: PayloadAction<{ location: import('../../../types').CountryCode; subRegion?: string | null }>) => {
+export const trackLocationChange = (state: CalendarState, action: ActionWithMeta<{ location: import('../../../types').CountryCode; subRegion?: string | null }>) => {
   const { location, subRegion } = action.payload;
-  const timestamp = (action as any).meta?.timestamp || Date.now();
+  const timestamp = action.meta?.timestamp || Date.now();
   const engagement = ensureAppEngagement(state, timestamp);
   const discovery = ensureFeatureDiscovery(state);
 
@@ -293,20 +298,20 @@ export const toggleAstroPreference = (state: CalendarState, action: PayloadActio
 
 // ─── Notification Reducers ───
 
-export const updateNotificationPreferences = (state: CalendarState, action: PayloadAction<{ section: NotificationSection | 'quietHours' | 'customTimes' | 'vacationMode' | 'focusSchedules' | 'adaptiveCaps'; prefs: any }>) => {
+export const updateNotificationPreferences = (state: CalendarState, action: PayloadAction<{ section: NotificationSection | 'quietHours' | 'customTimes' | 'vacationMode' | 'focusSchedules' | 'adaptiveCaps'; prefs: Record<string, unknown> | unknown[] | boolean }>) => {
   const { section, prefs } = action.payload;
   if (section === 'quietHours') {
-    state.notificationPreferences.quietHours = { ...state.notificationPreferences.quietHours, ...prefs };
+    state.notificationPreferences.quietHours = { ...state.notificationPreferences.quietHours, ...(prefs as Record<string, unknown>) };
   } else if (section === 'customTimes') {
-    state.notificationPreferences.customTimes = { ...state.notificationPreferences.customTimes, ...prefs };
+    state.notificationPreferences.customTimes = { ...state.notificationPreferences.customTimes, ...(prefs as Record<string, unknown>) };
   } else if (section === 'vacationMode') {
-    state.notificationPreferences.vacationMode = { ...state.notificationPreferences.vacationMode, ...prefs };
+    state.notificationPreferences.vacationMode = { ...state.notificationPreferences.vacationMode, ...(prefs as Record<string, unknown>) };
   } else if (section === 'focusSchedules') {
-    state.notificationPreferences.focusSchedules = prefs;
+    state.notificationPreferences.focusSchedules = prefs as unknown[] as CalendarState['notificationPreferences']['focusSchedules'];
   } else if (section === 'adaptiveCaps') {
     state.notificationPreferences.adaptiveCaps = prefs as boolean;
   } else {
-    state.notificationPreferences[section] = { ...state.notificationPreferences[section], ...prefs };
+    (state.notificationPreferences as unknown as Record<string, unknown>)[section] = { ...(state.notificationPreferences[section] as unknown as Record<string, unknown>), ...(prefs as Record<string, unknown>) };
   }
 };
 

@@ -18,7 +18,7 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { aiConfigService } from '../services/aiConfigService';
-import { OracleEngine } from '../oracle/oracleEngine';
+import { OracleEngine, type CelestialState } from '../oracle/oracleEngine';
 import { civilToHeka, hekaToCivil } from '../services/calendarService';
 import type { HekaDate } from '../types';
 import type { CoachMessage, CandidateMessage, OracleContext } from '../types/oracle';
@@ -32,7 +32,9 @@ import {
   pickRandom,
   capitalize,
 } from '../utils/oracleUtils';
-import { getSignFromLongitude } from '../astrology/types/core';
+import { getSignFromLongitude, toDegree } from '../astrology/types/core';
+import type { CelestialBody } from '../astrology/types/core';
+import type { PlannerTask } from '../types';
 import { getSignCount } from '../astrology/services/swiss-ephemeris/engine';
 import { profileManager } from '../astrology/services/natal/profileManager';
 import { eventBus } from '../services/eventBus';
@@ -95,7 +97,7 @@ async function calculateSiderealSolarReturnDate(
         date.getHours(), date.getMinutes(), 0
       );
       const positions = calculateAllPlanets(jd, ['sun'], { zodiacFrame: 'sidereal', signCount: 12 });
-      const sunLon = (positions as any)?.sun?.longitude ?? 0;
+      const sunLon = positions['sun']?.longitude ?? 0;
       const diff = ((natalSunLongitude - sunLon + 540) % 360) - 180;
       const daysToShift = diff / 0.9856;
       if (Math.abs(daysToShift) < 0.001) break;
@@ -210,7 +212,7 @@ async function buildOracleContext(
   const dateKey = hekaDate ? `${hekaDate.year}-${hekaDate.month}-${hekaDate.day}` : todayIso;
   const time = getLocalTimeContext();
 
-  let celestialState: any = null;
+  let celestialState: CelestialState | null = null;
   try {
     celestialState = await OracleEngine.getCurrentCelestialState();
   } catch {
@@ -227,8 +229,8 @@ async function buildOracleContext(
   const moonSign = celestialState?.moonPhase?.sign || '';
   const sunSign = celestialState?.planets?.sun?.sign || '';
   const retrogrades = Object.values(celestialState?.planets || {})
-    .filter((p: any) => p.isRetrograde)
-    .map((p: any) => p.id);
+    .filter((p: CelestialBody) => p.isRetrograde)
+    .map((p: CelestialBody) => p.id);
 
   const moodTrend = getMoodTrend(userContext.moodHistory || []);
   const toneAdjustment = getToneAdjustmentForMood(moodTrend);
@@ -328,11 +330,12 @@ async function buildOracleContext(
   const allPlanets: OracleContext['celestial']['allPlanets'] = {};
   for (const [name, body] of Object.entries(positions)) {
     if (body && typeof body === 'object') {
+      const celestialBody = body as CelestialBody;
       allPlanets[name] = {
-        sign: (body as any).sign || '',
-        degree: Math.round(((body as any).degreeInSign || 0) * 100) / 100,
-        isRetrograde: !!(body as any).isRetrograde,
-        speed: Math.round(((body as any).speed || 0) * 100) / 100,
+        sign: celestialBody.sign || '',
+        degree: Math.round((celestialBody.degreeInSign || 0) * 100) / 100,
+        isRetrograde: !!celestialBody.isRetrograde,
+        speed: Math.round((celestialBody.speed || 0) * 100) / 100,
       };
     }
   }
@@ -359,7 +362,7 @@ async function buildOracleContext(
   
   // South node is always 180° opposite the north node
   const southNodeSign = positions.northnode
-    ? getSignFromLongitude(((positions.northnode.longitude + 180) % 360) as any, getSignCount() === 13)
+    ? getSignFromLongitude(toDegree((positions.northnode.longitude + 180) % 360), getSignCount() === 13)
     : '';
   
   const chiron = positions.chiron
@@ -2330,7 +2333,7 @@ export const CalendarAICoach: React.FC<CalendarAICoachProps> = ({ focusedDate })
 
   // Listen for planner events
   useEffect(() => {
-    const onTaskCreated = ({ task, isFirstTask }: { task: any; isFirstTask: boolean }) => {
+    const onTaskCreated = ({ task, isFirstTask }: { task: PlannerTask; isFirstTask: boolean }) => {
       const today = new Date();
       const todayIso = today.toISOString().split('T')[0];
       const heka = civilToHeka(today);
@@ -2362,7 +2365,7 @@ export const CalendarAICoach: React.FC<CalendarAICoachProps> = ({ focusedDate })
       }, 5000);
     };
 
-    const onTaskCompleted = ({ task, streak }: { task: any; streak: number }) => {
+    const onTaskCompleted = ({ task, streak }: { task: PlannerTask; streak: number }) => {
       void showImmediateMessage(Promise.resolve({
         id: `complete-${task?.id || Date.now()}`,
         type: 'celebration',
@@ -2379,14 +2382,15 @@ export const CalendarAICoach: React.FC<CalendarAICoachProps> = ({ focusedDate })
       }, 5000);
     };
 
-    const onAchievementUnlocked = ({ achievement: ach }: { achievement: any }) => {
+    const onAchievementUnlocked = ({ achievement: ach }: { achievement: import('../types').UnlockedAchievement }) => {
       if (ach) {
+        const a = ach as unknown as import('../services/gamificationService').UnlockedAchievement;
         void showImmediateMessage(
           Promise.resolve({
-            id: `achievement-${ach.id}`,
+            id: `achievement-${a.id}`,
             type: 'celebration',
-            text: `✨ ${ach.title} unlocked! ${ach.description}`,
-            icon: ach.icon || '🏆',
+            text: `✨ ${a.name} unlocked! ${a.description}`,
+            icon: a.icon || '🏆',
             color: '#d4af37',
           })
         );

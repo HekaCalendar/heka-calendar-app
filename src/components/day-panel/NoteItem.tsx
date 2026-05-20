@@ -213,6 +213,7 @@ export const NoteItem = memo(({
                 e.preventDefault();
                 onDelete();
               }}
+              aria-label={t('common.delete')}
               onTouchStart={(e) => {
                 e.stopPropagation();
                 if (longPressTimer.current) {

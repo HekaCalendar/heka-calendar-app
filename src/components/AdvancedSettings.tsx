@@ -197,7 +197,7 @@ export const AdvancedSettings: React.FC<AdvancedSettingsProps> = ({ isOpen, onCl
                           if (e.key === 'Escape') handleMonthCancel();
                         }}
                       />
-                      <button className="btn btn--sm btn--primary" onClick={handleMonthSave}>✓</button>
+                      <button className="btn btn--sm btn--primary" onClick={handleMonthSave} aria-label={t('common.save')}>✓</button>
                       <button className="btn btn--sm" onClick={handleMonthCancel} aria-label={t('close')}>×</button>
                     </div>
                   ) : (

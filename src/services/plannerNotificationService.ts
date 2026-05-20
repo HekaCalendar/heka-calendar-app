@@ -6,7 +6,7 @@
  * ═══════════════════════════════════════════════════════════════════════════════
  */
 
-import { LocalNotifications, type LocalNotificationSchema } from '@capacitor/local-notifications';
+import { LocalNotifications, type LocalNotificationSchema, type ActionPerformed } from '@capacitor/local-notifications';
 import { NotificationEngine } from './notificationEngine';
 import { NotificationAnalytics } from './notificationAnalytics';
 import { checkStreakMilestone } from './notificationCelebrations';
@@ -18,7 +18,7 @@ import { store } from '../store';
 import { selectDate, setView } from '../store';
 import { eventBus } from './eventBus';
 
-const IS_NATIVE_APP = typeof (window as any).Capacitor !== 'undefined';
+const IS_NATIVE_APP = typeof (window as unknown as { Capacitor?: unknown }).Capacitor !== 'undefined';
 
 function isNativePluginAvailable(): boolean {
   if (!IS_NATIVE_APP) return false;
@@ -417,10 +417,10 @@ export function initializePlannerNotificationTapHandler(): () => void {
   const cleanups: (() => void)[] = [];
 
   // Handle notification taps and action buttons (app was backgrounded / killed)
-  LocalNotifications.addListener('localNotificationActionPerformed', (event) => {
+  LocalNotifications.addListener('localNotificationActionPerformed', (event: ActionPerformed) => {
     const extra = event.notification.extra || {};
     const { type, dayKey, templateIndex, _engineTier, _engineSection } = extra;
-    const actionId = (event as any).actionId || null;
+    const actionId = event.actionId || null;
 
     // Record delivery in history
     recordNotificationDelivery(event.notification);

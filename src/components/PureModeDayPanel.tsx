@@ -20,7 +20,7 @@ import { addNote, deleteNote, deleteDuplicates } from '../store';
 import { selectUnifiedDayItems, addPlannerTask } from '../store/plannerSlice';
 import { createPlannerTask, deletePlannerTask, completePlannerTask, reopenPlannerTask } from '../services/plannerService';
 import { HEKA_MONTHS, hekaToCivil, civilToHeka, getNoteKey, getDaysInMonth } from '../services/calendarService';
-import { getHolidaysForDateWithSubRegion, getYearLabel, LOCATIONS, getHemisphere, type SubRegionCode, type NoteCategory, type NoteData, type PlannerTask, type DayItem } from '../types';
+import { getHolidaysForDateWithSubRegion, getYearLabel, LOCATIONS, getHemisphere, type SubRegionCode, type NoteCategory, type NoteData, type PlannerTask, type DayItem, type HekaMonthIndex } from '../types';
 import { useMoonPhase } from '../astrology/hooks/useMoonPhase';
 import { DayPanelHeader } from './day-panel/DayPanelHeader';
 import { MoonPhaseSection } from './day-panel/MoonPhaseSection';
@@ -360,7 +360,7 @@ export const PureModeDayPanel: React.FC<PureModeDayPanelProps> = ({
     const currentDayOfWeek = civilDate.getDay();
     
     for (let month = hekaDate.month; month < 13; month++) {
-      const daysInMonth = getDaysInMonth(hekaDate.year, month as any);
+      const daysInMonth = getDaysInMonth(hekaDate.year, month as HekaMonthIndex);
       for (let day = (month === hekaDate.month) ? hekaDate.day + 1 : 1; day <= daysInMonth; day++) {
         const testCivil = hekaToCivil({ year: hekaDate.year, month, day });
         if (testCivil.getDay() === currentDayOfWeek) {

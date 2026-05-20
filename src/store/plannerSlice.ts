@@ -135,7 +135,7 @@ export const selectPlannerTasksForDay = (dayKey: string) =>
 // Unified selector: merges calendar notes with planner tasks for a given day
 export const selectUnifiedDayItems = (dayKey: string) =>
   createSelector(
-    [(state: RootState) => (state.calendar as any).notes[dayKey] || [], selectPlannerTasks],
+    [(state: RootState) => state.calendar.notes[dayKey] || [], selectPlannerTasks],
     (notes, tasks) => {
       const dayTasks = tasks[dayKey] || [];
       const result = [...notes, ...dayTasks].sort(

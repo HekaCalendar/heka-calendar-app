@@ -8,7 +8,13 @@
 import { LocalNotifications } from '@capacitor/local-notifications';
 import type { NotificationTier } from '../types/notifications';
 
-const IS_NATIVE_APP = typeof (window as any).Capacitor !== 'undefined';
+interface CapacitorWindow {
+  Capacitor?: {
+    getPlatform?: () => string;
+  };
+}
+
+const IS_NATIVE_APP = typeof (window as unknown as CapacitorWindow).Capacitor !== 'undefined';
 
 // ── Channel Definitions ──────────────────────────────────────────────────────
 
@@ -171,7 +177,7 @@ export async function initializeNotificationChannels(): Promise<void> {
   if (!IS_NATIVE_APP || channelsInitialized) return;
 
   try {
-    const platform = (window as any).Capacitor?.getPlatform?.() || '';
+    const platform = (window as unknown as CapacitorWindow).Capacitor?.getPlatform?.() || '';
     if (platform !== 'android') {
       channelsInitialized = true;
       return;
@@ -191,17 +197,20 @@ export async function initializeNotificationChannels(): Promise<void> {
     }
 
     // Register action types
-    const actionGroups: Record<string, any[]> = {};
+    const actionTypes = [];
     for (const [type, actions] of Object.entries(NOTIFICATION_ACTIONS)) {
-      actionGroups[type] = actions.map(a => ({
-        id: a.id,
-        title: a.title,
-        destructive: a.destructive || false,
-        foreground: true, // Launch app when tapped
-      }));
+      actionTypes.push({
+        id: type,
+        actions: actions.map(a => ({
+          id: a.id,
+          title: a.title,
+          destructive: a.destructive || false,
+          foreground: true, // Launch app when tapped
+        })),
+      });
     }
 
-    await (LocalNotifications as any).registerActionTypes({ types: actionGroups });
+    await LocalNotifications.registerActionTypes({ types: actionTypes });
 
     channelsInitialized = true;
     console.log('[NotificationChannels] Android channels and actions registered');

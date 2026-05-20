@@ -18,6 +18,7 @@ import {
   updatePlannerTaskDoc,
 } from '../../services/plannerService';
 import { getCurrentUser } from '../../services/firebase';
+import { getErrorMessage } from '../../utils/errorUtils';
 import { HEKA_MONTHS, hekaToCivil, civilToHeka, getNoteKey, getDaysInMonth } from '../../services/calendarService';
 import { getHolidaysForDateWithSubRegion, getYearLabel, LOCATIONS, getHemisphere, type SubRegionCode, type NoteCategory, type PlannerTask } from '../../types';
 import { getDailyAstrology, type DailyAstrologicalGuidance } from '../../astrology/integration/calendarSync';
@@ -409,9 +410,9 @@ export function useDayPanel() {
       setReminderMinutesBefore(10);
       setEditingTaskId(null);
       tutorialService.trackNoteCreated();
-    } catch (err: any) {
-      console.error('[handleSaveNote] FAILED:', err?.message || err);
-      window.alert(t('alerts.unableToSaveTask', { error: err?.message || 'Unknown' }));
+    } catch (err) {
+      console.error('[handleSaveNote] FAILED:', getErrorMessage(err));
+      window.alert(t('alerts.unableToSaveTask', { error: getErrorMessage(err, 'Unknown') }));
     }
   }, [dispatch, noteKey, noteText, selectedCategory, selectedMood, isTaskMode, dueTime, reminderMinutesBefore, editingTaskId, selectedDate, dailyAstrology, t]);
 

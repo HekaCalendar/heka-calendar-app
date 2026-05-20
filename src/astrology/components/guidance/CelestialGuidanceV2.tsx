@@ -349,9 +349,10 @@ export const CelestialGuidanceV2: React.FC<CelestialGuidanceV2Props> = ({
               <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
                 <span>{toast.type === 'warning' ? '⚠️' : toast.type === 'success' ? '✓' : 'ℹ️'}</span>
                 <span>{toast.message}</span>
-                <button 
+                <button
                   onClick={() => setToast(null)}
                   style={{ marginLeft: 8, background: 'transparent', border: 'none', color: '#fff', cursor: 'pointer', fontSize: 14 }}
+                  aria-label={t('common.close')}
                 >
                   ×
                 </button>

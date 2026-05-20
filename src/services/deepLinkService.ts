@@ -57,11 +57,9 @@ export function initializeDeepLinks(
 
   // Handle app opened via URL
   const handleAppUrl = (url: string) => {
-    console.log('[DeepLink] App opened with URL:', url);
     const data = parseDeepLink(url);
     
     if (data?.type === 'invite' && data.code) {
-      console.log('[DeepLink] Invite code detected:', data.code);
       pendingInviteCode = data.code;
       if (typeof window !== 'undefined') {
         try { sessionStorage.setItem('pendingInviteCode', data.code); } catch {}
@@ -70,7 +68,6 @@ export function initializeDeepLinks(
     }
     
     if (data?.type === 'task' && data.taskId) {
-      console.log('[DeepLink] Task share code detected:', data.taskId);
       pendingTaskCode = data.taskId;
       if (typeof window !== 'undefined') {
         try { sessionStorage.setItem('pendingTaskCode', data.taskId); } catch {}
@@ -93,16 +90,12 @@ export function initializeDeepLinks(
     if (inviteParam) {
       if (VALID_PARAM_REGEX.test(inviteParam)) {
         handleAppUrl(`heka-calendar://invite/${inviteParam}`);
-      } else {
-        console.warn('[DeepLink] Rejected malformed invite param:', inviteParam);
       }
     }
     
     if (taskParam) {
       if (VALID_PARAM_REGEX.test(taskParam)) {
         handleAppUrl(`heka-calendar://task/${taskParam}`);
-      } else {
-        console.warn('[DeepLink] Rejected malformed task param:', taskParam);
       }
     }
 
@@ -117,16 +110,12 @@ export function initializeDeepLinks(
       if (hashInviteParam) {
         if (VALID_PARAM_REGEX.test(hashInviteParam)) {
           handleAppUrl(`heka-calendar://invite/${hashInviteParam}`);
-        } else {
-          console.warn('[DeepLink] Rejected malformed hash invite param:', hashInviteParam);
         }
       }
       
       if (hashTaskParam) {
         if (VALID_PARAM_REGEX.test(hashTaskParam)) {
           handleAppUrl(`heka-calendar://task/${hashTaskParam}`);
-        } else {
-          console.warn('[DeepLink] Rejected malformed hash task param:', hashTaskParam);
         }
       }
     }
@@ -141,7 +130,6 @@ export function initializeDeepLinks(
     // Also check if app was opened with a URL initially
     App.getLaunchUrl().then((result) => {
       if (result?.url) {
-        console.log('[DeepLink] Launch URL:', result.url);
         handleAppUrl(result.url);
       }
     }).catch(() => {});

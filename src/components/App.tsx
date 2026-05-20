@@ -29,13 +29,12 @@ import { PureCalendarView } from './PureCalendarView';
 import { PureModeDayPanel } from './PureModeDayPanel';
 import { CommunityHub } from './CommunityHub';
 import { hekaToCivil } from '../services/calendarService';
-import type { CalendarDay } from '../types';
+import type { CalendarDay, HekaMonthIndex } from '../types';
 import { SearchModal } from './SearchModal';
 import { FriendsModal } from './FriendsModal';
 import { StatsModal } from './StatsModal';
 import { OracleJournal } from './OracleJournal';
 import { InfoModal } from './InfoModal';
-// import { StoreHub } from './store/StoreHub'; // Hidden for v1.0 launch
 import { CertificateBuilder } from './certificate';
 import { RoutineBuilder } from './routine';
 import { NatalReportBuilder } from './report';
@@ -661,7 +660,7 @@ const AppContentComponent: React.FC = () => {
       const month = parseInt(monthParam) - 1;
       if (!isNaN(year) && !isNaN(month) && month >= 0 && month <= 12) {
         dispatch(navigateToMonth({ year, month }));
-        dispatch(selectDate({ year, month: month as any, day: 1 }));
+        dispatch(selectDate({ year, month: month as HekaMonthIndex, day: 1 }));
         // Also navigate to hash route for clean URLs
         navigate(`/month/${yearParam}/${monthParam}`, { replace: true });
       }
@@ -713,7 +712,7 @@ const AppContentComponent: React.FC = () => {
     };
     const view = pathToView[path];
     if (view && view !== currentView) {
-      dispatch(setView(view as any));
+      dispatch(setView(view as RootState['calendar']['currentView']));
     }
     // Handle /month/:year/:month path
     const monthMatch = path.match(/\/month\/(\d+)\/(\d+)/);

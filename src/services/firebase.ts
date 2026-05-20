@@ -3,7 +3,7 @@
  * Centralized Firebase setup for Auth and Firestore
  */
 
-import { initializeApp, getApps, getApp, deleteApp } from 'firebase/app';
+import { initializeApp, getApps, getApp, deleteApp, type FirebaseApp } from 'firebase/app';
 import { Capacitor } from '@capacitor/core';
 import { 
   getAuth, 
@@ -26,7 +26,8 @@ import {
   deleteDoc,
   collection,
   getDocs,
-  enableIndexedDbPersistence
+  enableIndexedDbPersistence,
+  type Firestore
 } from 'firebase/firestore';
 
 // Firebase configuration - Replace with your Firebase project config
@@ -58,7 +59,7 @@ export function isFirebaseConfigured(): boolean {
 }
 
 // Initialize Firebase only if configured (singleton pattern)
-let app: any = null;
+let app: FirebaseApp | null = null;
 let auth: any = null;
 let db: any = null;
 
@@ -109,7 +110,7 @@ export async function refreshAuthToken(force = true): Promise<string | null> {
 
 // Create a completely fresh Firestore instance via a temporary Firebase app.
 // Use this when the singleton Firestore connection seems poisoned (e.g. permission-denied with valid auth).
-export async function withTemporaryFirestore<T>(fn: (tempDb: any) => Promise<T>): Promise<T> {
+export async function withTemporaryFirestore<T>(fn: (tempDb: Firestore) => Promise<T>): Promise<T> {
   if (!isFirebaseConfigured()) throw new Error('Firebase not configured');
   const tempApp = initializeApp(firebaseConfig, 'temp_' + Date.now());
   const { getFirestore } = await import('firebase/firestore');
@@ -219,19 +220,19 @@ export function getCurrentUser(): User | null {
 // ============================================================================
 
 export interface UserData {
-  notes: Record<string, any>;
-  statistics: any;
+  notes: Record<string, unknown>;
+  statistics: unknown;
   settings: {
     theme: string;
     font: string;
     location: string;
     subRegion: string | null;
     timeMode: string;
-    display: any;
+    display: unknown;
   };
   lastSync: string;
   // Diary system
-  diaryEntries?: Record<string, any>;
+  diaryEntries?: unknown;
   deletedDiaryEntries?: string[];
 }
 
@@ -263,18 +264,19 @@ export async function loadFromCloud(userId: string): Promise<UserData | null> {
 // ============================================================================
 
 export interface AstroCloudData {
-  profiles: Record<string, any>;
-  charts: Record<string, any>;
-  preferences: any;
+  profiles: Record<string, unknown>;
+  charts: Record<string, unknown>;
+  preferences: Record<string, unknown>;
   selectedProfileId: string | null;
   lastSync: string;
 }
 
 /** Sync a single astrology profile to the cloud */
-export async function syncAstroProfile(userId: string, profile: any): Promise<void> {
+export async function syncAstroProfile(userId: string, profile: unknown): Promise<void> {
   if (!isFirebaseConfigured() || !db) return;
-  const ref = doc(db, 'users', userId, 'astroProfiles', profile.id);
-  await setDoc(ref, { ...profile, _syncedAt: new Date().toISOString() });
+  const p = profile as Record<string, unknown>;
+  const ref = doc(db, 'users', userId, 'astroProfiles', p.id as string);
+  await setDoc(ref, { ...p, _syncedAt: new Date().toISOString() });
 }
 
 /** Delete an astrology profile from the cloud */
@@ -295,7 +297,7 @@ export async function deleteAstroProfile(userId: string, profileId: string): Pro
 }
 
 /** Load all astrology profiles from the cloud */
-export async function loadAstroProfiles(userId: string): Promise<any[]> {
+export async function loadAstroProfiles(userId: string): Promise<unknown[]> {
   if (!isFirebaseConfigured() || !db) return [];
   const col = collection(db, 'users', userId, 'astroProfiles');
   const snap = await getDocs(col);
@@ -303,14 +305,15 @@ export async function loadAstroProfiles(userId: string): Promise<any[]> {
 }
 
 /** Sync a single astrology chart to the cloud */
-export async function syncAstroChart(userId: string, chart: any): Promise<void> {
+export async function syncAstroChart(userId: string, chart: unknown): Promise<void> {
   if (!isFirebaseConfigured() || !db) return;
-  const ref = doc(db, 'users', userId, 'astroCharts', chart.id);
-  await setDoc(ref, { ...chart, _syncedAt: new Date().toISOString() });
+  const c = chart as Record<string, unknown>;
+  const ref = doc(db, 'users', userId, 'astroCharts', c.id as string);
+  await setDoc(ref, { ...c, _syncedAt: new Date().toISOString() });
 }
 
 /** Load all astrology charts from the cloud */
-export async function loadAstroCharts(userId: string): Promise<any[]> {
+export async function loadAstroCharts(userId: string): Promise<unknown[]> {
   if (!isFirebaseConfigured() || !db) return [];
   const col = collection(db, 'users', userId, 'astroCharts');
   const snap = await getDocs(col);
@@ -318,14 +321,14 @@ export async function loadAstroCharts(userId: string): Promise<any[]> {
 }
 
 /** Sync astrology preferences to the cloud */
-export async function syncAstroPreferences(userId: string, preferences: any): Promise<void> {
+export async function syncAstroPreferences(userId: string, preferences: unknown): Promise<void> {
   if (!isFirebaseConfigured() || !db) return;
   const ref = doc(db, 'users', userId, 'astroPreferences', 'default');
-  await setDoc(ref, { ...preferences, _syncedAt: new Date().toISOString() });
+  await setDoc(ref, { ...(preferences as Record<string, unknown>), _syncedAt: new Date().toISOString() });
 }
 
 /** Load astrology preferences from the cloud */
-export async function loadAstroPreferences(userId: string): Promise<any | null> {
+export async function loadAstroPreferences(userId: string): Promise<unknown | null> {
   if (!isFirebaseConfigured() || !db) return null;
   const ref = doc(db, 'users', userId, 'astroPreferences', 'default');
   const snap = await getDoc(ref);
@@ -335,7 +338,7 @@ export async function loadAstroPreferences(userId: string): Promise<any | null> 
 /** Full astrology sync — push everything to cloud */
 export async function syncAllAstroData(
   userId: string,
-  data: { profiles: any[]; charts: any[]; preferences: any; selectedProfileId: string | null }
+  data: { profiles: unknown[]; charts: unknown[]; preferences: unknown; selectedProfileId: string | null }
 ): Promise<void> {
   if (!isFirebaseConfigured() || !db) return;
   await Promise.all([
@@ -352,9 +355,9 @@ export async function syncAllAstroData(
 
 /** Full astrology load — pull everything from cloud */
 export async function loadAllAstroData(userId: string): Promise<{
-  profiles: any[];
-  charts: any[];
-  preferences: any | null;
+  profiles: unknown[];
+  charts: unknown[];
+  preferences: unknown | null;
   selectedProfileId: string | null;
 }> {
   if (!isFirebaseConfigured() || !db) {

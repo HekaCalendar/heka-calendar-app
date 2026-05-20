@@ -8,6 +8,13 @@
 
 import type { NotificationTier, NotificationSection } from '../types/notifications';
 
+interface CapacitorWindow {
+  Capacitor?: {
+    getPlatform?: () => string;
+    getAppVersion?: () => string;
+  };
+}
+
 const ANALYTICS_STORAGE_KEY = 'heka-notification-analytics-queue';
 const FLUSH_INTERVAL_MS = 60000; // 1 minute
 const MAX_QUEUE_SIZE = 500;
@@ -78,7 +85,7 @@ function saveQueue(queue: NotificationEvent[]): void {
 // ── Device Detection ─────────────────────────────────────────────────────────
 
 function getDeviceType(): 'ios' | 'android' | 'web' {
-  const platform = (window as any).Capacitor?.getPlatform?.();
+  const platform = (window as unknown as CapacitorWindow).Capacitor?.getPlatform?.();
   if (platform === 'ios') return 'ios';
   if (platform === 'android') return 'android';
   return 'web';
@@ -86,7 +93,7 @@ function getDeviceType(): 'ios' | 'android' | 'web' {
 
 function getAppVersion(): string {
   try {
-    return (window as any).Capacitor?.getAppVersion?.() || '2.2.1';
+    return (window as unknown as CapacitorWindow).Capacitor?.getAppVersion?.() || '2.2.1';
   } catch {
     return '2.2.1';
   }
@@ -94,10 +101,10 @@ function getAppVersion(): string {
 
 // ── Firebase Analytics Stub ──────────────────────────────────────────────────
 
-async function logToFirebase(eventName: string, params: Record<string, any>): Promise<void> {
+async function logToFirebase(eventName: string, params: Record<string, unknown>): Promise<void> {
   try {
     const fb = await import('./firebase');
-    const analytics = (fb as any).analytics;
+    const analytics = (fb as unknown as { analytics?: { logEvent: (name: string, params: Record<string, unknown>) => Promise<void> } }).analytics;
     if (analytics && typeof analytics.logEvent === 'function') {
       await analytics.logEvent(eventName, params);
     }

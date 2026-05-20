@@ -4,7 +4,7 @@
  * ═══════════════════════════════════════════════════════════════════════════════
  */
 
-import type { NatalPlanet } from './natalChart';
+import type { CelestialBody } from '../../types';
 
 /**
  * Get current zodiac system preference from store (legacy)
@@ -55,7 +55,7 @@ export function getSignCountPreference(): 12 | 13 {
  * Calculate elemental balance with custom element map
  */
 export function calculateElementalBalanceWithSystem(
-  planets: Record<string, NatalPlanet>,
+  planets: Record<string, CelestialBody>,
   elementMap: Record<string, string>
 ): { fire: number; earth: number; air: number; water: number; ether: number } {
   const elements = { fire: 0, earth: 0, air: 0, water: 0, ether: 0 };
@@ -74,7 +74,7 @@ export function calculateElementalBalanceWithSystem(
  * Calculate modality balance with 13-sign support
  */
 export function calculateModalityBalanceWithSystem(
-  planets: Record<string, NatalPlanet>,
+  planets: Record<string, CelestialBody>,
   use13Signs: boolean
 ): { cardinal: number; fixed: number; mutable: number } {
   const modalities = { cardinal: 0, fixed: 0, mutable: 0 };

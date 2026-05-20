@@ -16,7 +16,7 @@ import { useTranslation } from 'react-i18next';
 import type { RootState } from '../store';
 import { selectDate, addNote } from '../store';
 import { generateMonthGrid, getNoteKey, getArcType } from '../services/calendarService';
-import { getHolidaysForDateWithSubRegion, type SubRegionCode } from '../types';
+import { getHolidaysForDateWithSubRegion, type SubRegionCode, type CountryCode } from '../types';
 import type { CalendarDay, ArcType, DayItem } from '../types';
 import { calculateMoonPhaseBatch } from '../astrology/services/calculations/swissCalculations';
 import { calculateTrueSolarReturn } from '../astrology/services/calculations/nakshatras';
@@ -102,7 +102,7 @@ const DayCellContent = memo(({ day, isSelected, onClick, onLongPress, showCivil,
   // Memoize holiday check - expensive operation
   const hasHoliday = useMemo(() => {
     if (!showHolidays || location === 'NONE') return false;
-    return getHolidaysForDateWithSubRegion(day.civilDate, location as any, subRegion || undefined).length > 0;
+    return getHolidaysForDateWithSubRegion(day.civilDate, location as CountryCode, subRegion || undefined).length > 0;
   }, [showHolidays, location, subRegion, day.civilDate]);
   
   const hasNotes = dayNotes.length > 0;

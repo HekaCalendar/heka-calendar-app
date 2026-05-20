@@ -10,7 +10,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import type { RootState, AppDispatch } from '../store';
 import { setLocation, setSubRegion, toggleDisplay, toggleTimeMode, toggleAstroPreference, updateAstroPreferences, setGlobalNotificationsEnabled, setNotificationMode, updateNotificationPreferences } from '../store';
 import { setNotificationsEnabled } from '../store/setupSlice';
-import { LOCATIONS, SUB_REGIONS } from '../types';
+import { LOCATIONS, SUB_REGIONS, type CountryCode } from '../types';
 import { CalendarNotificationSettings } from './notification/CalendarNotificationSettings';
 import { StarsNotificationSettings } from './notification/StarsNotificationSettings';
 import { JournalNotificationSettings } from './notification/JournalNotificationSettings';
@@ -372,7 +372,7 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({ onAuthClick, onPur
                         value={location} 
                         onChange={(e) => {
                           const newLoc = e.target.value;
-                          dispatch(setLocation(newLoc as any));
+                          dispatch(setLocation(newLoc as CountryCode));
                           discover('changedLocation');
                           trackLocation(newLoc);
                           setIsChangingLocation(false);

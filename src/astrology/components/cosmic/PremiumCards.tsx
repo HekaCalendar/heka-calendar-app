@@ -141,7 +141,7 @@ const ChronosCard: React.FC<ChronosCardProps> = ({ currentTime, julianDay, posit
         <div className="card-expanded" onClick={(e) => e.stopPropagation()}>
           <div className="expanded-header">
             <div className="expanded-title">{t('premiumCards.aeonGate')}</div>
-            <button className="close-btn" onClick={onToggle}>×</button>
+            <button className="close-btn" onClick={onToggle} aria-label={t('common.close')}>×</button>
           </div>
           
           {/* HEKA Section */}
@@ -341,7 +341,7 @@ const LunaCard: React.FC<LunaCardProps> = ({ moonPhase, moonPosition, isExpanded
         <div className="card-expanded" onClick={(e) => e.stopPropagation()}>
           <div className="expanded-header">
             <div className="expanded-title">{t('premiumCards.lunarTemple')}</div>
-            <button className="close-btn" onClick={onToggle}>×</button>
+            <button className="close-btn" onClick={onToggle} aria-label={t('common.close')}>×</button>
           </div>
 
           {/* Phase Cycle Visual */}
@@ -513,7 +513,7 @@ const KronosCard: React.FC<KronosCardProps> = ({ planetaryHour, isExpanded, onTo
         <div className="card-expanded" onClick={(e) => e.stopPropagation()}>
           <div className="expanded-header">
             <div className="expanded-title">{t('premiumCards.chaldeanHourglass')}</div>
-            <button className="close-btn" onClick={onToggle}>×</button>
+            <button className="close-btn" onClick={onToggle} aria-label={t('common.close')}>×</button>
           </div>
 
           {/* Current Hour Display */}
@@ -697,7 +697,7 @@ const StationCard: React.FC<StationCardProps> = ({ retrogrades, positions, isExp
         <div className="card-expanded" onClick={(e) => e.stopPropagation()}>
           <div className="expanded-header">
             <div className="expanded-title">{t('premiumCards.celestialWeather')}</div>
-            <button className="close-btn" onClick={onToggle}>×</button>
+            <button className="close-btn" onClick={onToggle} aria-label={t('common.close')}>×</button>
           </div>
 
           {/* Weather Summary */}
@@ -847,7 +847,7 @@ const StelliumCard: React.FC<StelliumCardProps> = ({ positions, isExpanded, onTo
         <div className="card-expanded" onClick={(e) => e.stopPropagation()}>
           <div className="expanded-header">
             <div className="expanded-title">{t('premiumCards.planetarySpheres')}</div>
-            <button className="close-btn" onClick={onToggle}>×</button>
+            <button className="close-btn" onClick={onToggle} aria-label={t('common.close')}>×</button>
           </div>
 
           {/* Elemental Balance */}

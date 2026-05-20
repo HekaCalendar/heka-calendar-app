@@ -254,12 +254,12 @@ async function mergeCloudAstroData(
   const localProfiles = await persistence.getAllProfiles();
   const localProfileMap = new Map(localProfiles.map(p => [p.id, p]));
   for (const cloudProfile of cloud.profiles) {
-    const local = localProfileMap.get(cloudProfile.id);
-    const cloudTime = new Date(cloudProfile._syncedAt || cloudProfile.updatedAt || 0).getTime();
+    const local = localProfileMap.get((cloudProfile as any).id);
+    const cloudTime = new Date((cloudProfile as any)._syncedAt || (cloudProfile as any).updatedAt || 0).getTime();
     const localTime = local ? new Date((local as any).updatedAt || 0).getTime() : 0;
     if (!local || cloudTime > localTime) {
       await persistence.saveProfile(cloudProfile as AstroProfile);
-      localProfileMap.set(cloudProfile.id, cloudProfile as AstroProfile);
+      localProfileMap.set((cloudProfile as any).id, cloudProfile as AstroProfile);
     }
   }
 
@@ -270,22 +270,22 @@ async function mergeCloudAstroData(
   ).then(arr => arr.flat());
   const localChartMap = new Map(localCharts.map(c => [c.id, c]));
   for (const cloudChart of cloud.charts) {
-    const local = localChartMap.get(cloudChart.id);
-    const cloudTime = new Date(cloudChart._syncedAt || cloudChart.calculatedAt || 0).getTime();
+    const local = localChartMap.get((cloudChart as any).id);
+    const cloudTime = new Date((cloudChart as any)._syncedAt || (cloudChart as any).calculatedAt || 0).getTime();
     const localTime = local ? new Date((local as any).calculatedAt || 0).getTime() : 0;
     if (!local || cloudTime > localTime) {
       await persistence.saveChart(cloudChart as NatalChart);
-      localChartMap.set(cloudChart.id, cloudChart as NatalChart);
+      localChartMap.set((cloudChart as any).id, cloudChart as NatalChart);
     }
   }
 
   // Merge preferences
   if (cloud.preferences) {
     const localPrefs = await persistence.getPreferences();
-    const cloudTime = new Date(cloud.preferences._syncedAt || 0).getTime();
+    const cloudTime = new Date((cloud.preferences as any)._syncedAt || 0).getTime();
     const localTime = localPrefs ? new Date((localPrefs as any)._syncedAt || 0).getTime() : 0;
     if (!localPrefs || cloudTime > localTime) {
-      await persistence.savePreferences(cloud.preferences);
+      await persistence.savePreferences(cloud.preferences as any);
     }
   }
 

@@ -1,0 +1,544 @@
+
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Code coverage report for astrology/services/guidance/templates/bodies/northNodeTemplates.ts</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../../../../prettify.css" />
+    <link rel="stylesheet" href="../../../../../base.css" />
+    <link rel="shortcut icon" type="image/x-icon" href="../../../../../favicon.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../../../../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+    
+<body>
+<div class='wrapper'>
+    <div class='pad1'>
+        <h1><a href="../../../../../index.html">All files</a> / <a href="index.html">astrology/services/guidance/templates/bodies</a> northNodeTemplates.ts</h1>
+        <div class='clearfix'>
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">0% </span>
+                <span class="quiet">Statements</span>
+                <span class='fraction'>0/153</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">0% </span>
+                <span class="quiet">Branches</span>
+                <span class='fraction'>0/1</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">0% </span>
+                <span class="quiet">Functions</span>
+                <span class='fraction'>0/1</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">0% </span>
+                <span class="quiet">Lines</span>
+                <span class='fraction'>0/153</span>
+            </div>
+        
+            
+        </div>
+        <p class="quiet">
+            Press <em>n</em> or <em>j</em> to go to the next uncovered block, <em>b</em>, <em>p</em> or <em>k</em> for the previous block.
+        </p>
+        <template id="filterTemplate">
+            <div class="quiet">
+                Filter:
+                <input type="search" id="fileSearch">
+            </div>
+        </template>
+    </div>
+    <div class='status-line low'></div>
+    <pre><table class="coverage">
+<tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
+<a name='L2'></a><a href='#L2'>2</a>
+<a name='L3'></a><a href='#L3'>3</a>
+<a name='L4'></a><a href='#L4'>4</a>
+<a name='L5'></a><a href='#L5'>5</a>
+<a name='L6'></a><a href='#L6'>6</a>
+<a name='L7'></a><a href='#L7'>7</a>
+<a name='L8'></a><a href='#L8'>8</a>
+<a name='L9'></a><a href='#L9'>9</a>
+<a name='L10'></a><a href='#L10'>10</a>
+<a name='L11'></a><a href='#L11'>11</a>
+<a name='L12'></a><a href='#L12'>12</a>
+<a name='L13'></a><a href='#L13'>13</a>
+<a name='L14'></a><a href='#L14'>14</a>
+<a name='L15'></a><a href='#L15'>15</a>
+<a name='L16'></a><a href='#L16'>16</a>
+<a name='L17'></a><a href='#L17'>17</a>
+<a name='L18'></a><a href='#L18'>18</a>
+<a name='L19'></a><a href='#L19'>19</a>
+<a name='L20'></a><a href='#L20'>20</a>
+<a name='L21'></a><a href='#L21'>21</a>
+<a name='L22'></a><a href='#L22'>22</a>
+<a name='L23'></a><a href='#L23'>23</a>
+<a name='L24'></a><a href='#L24'>24</a>
+<a name='L25'></a><a href='#L25'>25</a>
+<a name='L26'></a><a href='#L26'>26</a>
+<a name='L27'></a><a href='#L27'>27</a>
+<a name='L28'></a><a href='#L28'>28</a>
+<a name='L29'></a><a href='#L29'>29</a>
+<a name='L30'></a><a href='#L30'>30</a>
+<a name='L31'></a><a href='#L31'>31</a>
+<a name='L32'></a><a href='#L32'>32</a>
+<a name='L33'></a><a href='#L33'>33</a>
+<a name='L34'></a><a href='#L34'>34</a>
+<a name='L35'></a><a href='#L35'>35</a>
+<a name='L36'></a><a href='#L36'>36</a>
+<a name='L37'></a><a href='#L37'>37</a>
+<a name='L38'></a><a href='#L38'>38</a>
+<a name='L39'></a><a href='#L39'>39</a>
+<a name='L40'></a><a href='#L40'>40</a>
+<a name='L41'></a><a href='#L41'>41</a>
+<a name='L42'></a><a href='#L42'>42</a>
+<a name='L43'></a><a href='#L43'>43</a>
+<a name='L44'></a><a href='#L44'>44</a>
+<a name='L45'></a><a href='#L45'>45</a>
+<a name='L46'></a><a href='#L46'>46</a>
+<a name='L47'></a><a href='#L47'>47</a>
+<a name='L48'></a><a href='#L48'>48</a>
+<a name='L49'></a><a href='#L49'>49</a>
+<a name='L50'></a><a href='#L50'>50</a>
+<a name='L51'></a><a href='#L51'>51</a>
+<a name='L52'></a><a href='#L52'>52</a>
+<a name='L53'></a><a href='#L53'>53</a>
+<a name='L54'></a><a href='#L54'>54</a>
+<a name='L55'></a><a href='#L55'>55</a>
+<a name='L56'></a><a href='#L56'>56</a>
+<a name='L57'></a><a href='#L57'>57</a>
+<a name='L58'></a><a href='#L58'>58</a>
+<a name='L59'></a><a href='#L59'>59</a>
+<a name='L60'></a><a href='#L60'>60</a>
+<a name='L61'></a><a href='#L61'>61</a>
+<a name='L62'></a><a href='#L62'>62</a>
+<a name='L63'></a><a href='#L63'>63</a>
+<a name='L64'></a><a href='#L64'>64</a>
+<a name='L65'></a><a href='#L65'>65</a>
+<a name='L66'></a><a href='#L66'>66</a>
+<a name='L67'></a><a href='#L67'>67</a>
+<a name='L68'></a><a href='#L68'>68</a>
+<a name='L69'></a><a href='#L69'>69</a>
+<a name='L70'></a><a href='#L70'>70</a>
+<a name='L71'></a><a href='#L71'>71</a>
+<a name='L72'></a><a href='#L72'>72</a>
+<a name='L73'></a><a href='#L73'>73</a>
+<a name='L74'></a><a href='#L74'>74</a>
+<a name='L75'></a><a href='#L75'>75</a>
+<a name='L76'></a><a href='#L76'>76</a>
+<a name='L77'></a><a href='#L77'>77</a>
+<a name='L78'></a><a href='#L78'>78</a>
+<a name='L79'></a><a href='#L79'>79</a>
+<a name='L80'></a><a href='#L80'>80</a>
+<a name='L81'></a><a href='#L81'>81</a>
+<a name='L82'></a><a href='#L82'>82</a>
+<a name='L83'></a><a href='#L83'>83</a>
+<a name='L84'></a><a href='#L84'>84</a>
+<a name='L85'></a><a href='#L85'>85</a>
+<a name='L86'></a><a href='#L86'>86</a>
+<a name='L87'></a><a href='#L87'>87</a>
+<a name='L88'></a><a href='#L88'>88</a>
+<a name='L89'></a><a href='#L89'>89</a>
+<a name='L90'></a><a href='#L90'>90</a>
+<a name='L91'></a><a href='#L91'>91</a>
+<a name='L92'></a><a href='#L92'>92</a>
+<a name='L93'></a><a href='#L93'>93</a>
+<a name='L94'></a><a href='#L94'>94</a>
+<a name='L95'></a><a href='#L95'>95</a>
+<a name='L96'></a><a href='#L96'>96</a>
+<a name='L97'></a><a href='#L97'>97</a>
+<a name='L98'></a><a href='#L98'>98</a>
+<a name='L99'></a><a href='#L99'>99</a>
+<a name='L100'></a><a href='#L100'>100</a>
+<a name='L101'></a><a href='#L101'>101</a>
+<a name='L102'></a><a href='#L102'>102</a>
+<a name='L103'></a><a href='#L103'>103</a>
+<a name='L104'></a><a href='#L104'>104</a>
+<a name='L105'></a><a href='#L105'>105</a>
+<a name='L106'></a><a href='#L106'>106</a>
+<a name='L107'></a><a href='#L107'>107</a>
+<a name='L108'></a><a href='#L108'>108</a>
+<a name='L109'></a><a href='#L109'>109</a>
+<a name='L110'></a><a href='#L110'>110</a>
+<a name='L111'></a><a href='#L111'>111</a>
+<a name='L112'></a><a href='#L112'>112</a>
+<a name='L113'></a><a href='#L113'>113</a>
+<a name='L114'></a><a href='#L114'>114</a>
+<a name='L115'></a><a href='#L115'>115</a>
+<a name='L116'></a><a href='#L116'>116</a>
+<a name='L117'></a><a href='#L117'>117</a>
+<a name='L118'></a><a href='#L118'>118</a>
+<a name='L119'></a><a href='#L119'>119</a>
+<a name='L120'></a><a href='#L120'>120</a>
+<a name='L121'></a><a href='#L121'>121</a>
+<a name='L122'></a><a href='#L122'>122</a>
+<a name='L123'></a><a href='#L123'>123</a>
+<a name='L124'></a><a href='#L124'>124</a>
+<a name='L125'></a><a href='#L125'>125</a>
+<a name='L126'></a><a href='#L126'>126</a>
+<a name='L127'></a><a href='#L127'>127</a>
+<a name='L128'></a><a href='#L128'>128</a>
+<a name='L129'></a><a href='#L129'>129</a>
+<a name='L130'></a><a href='#L130'>130</a>
+<a name='L131'></a><a href='#L131'>131</a>
+<a name='L132'></a><a href='#L132'>132</a>
+<a name='L133'></a><a href='#L133'>133</a>
+<a name='L134'></a><a href='#L134'>134</a>
+<a name='L135'></a><a href='#L135'>135</a>
+<a name='L136'></a><a href='#L136'>136</a>
+<a name='L137'></a><a href='#L137'>137</a>
+<a name='L138'></a><a href='#L138'>138</a>
+<a name='L139'></a><a href='#L139'>139</a>
+<a name='L140'></a><a href='#L140'>140</a>
+<a name='L141'></a><a href='#L141'>141</a>
+<a name='L142'></a><a href='#L142'>142</a>
+<a name='L143'></a><a href='#L143'>143</a>
+<a name='L144'></a><a href='#L144'>144</a>
+<a name='L145'></a><a href='#L145'>145</a>
+<a name='L146'></a><a href='#L146'>146</a>
+<a name='L147'></a><a href='#L147'>147</a>
+<a name='L148'></a><a href='#L148'>148</a>
+<a name='L149'></a><a href='#L149'>149</a>
+<a name='L150'></a><a href='#L150'>150</a>
+<a name='L151'></a><a href='#L151'>151</a>
+<a name='L152'></a><a href='#L152'>152</a>
+<a name='L153'></a><a href='#L153'>153</a>
+<a name='L154'></a><a href='#L154'>154</a></td><td class="line-coverage quiet"><span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js"><span class="cstat-no" title="statement not covered" >import type { BodyTemplates } from './types';<span class="fstat-no" title="function not covered" ><span class="branch-0 cbranch-no" title="branch not covered" ></span></span></span>
+<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" >/**</span>
+<span class="cstat-no" title="statement not covered" > * ═══════════════════════════════════════════════════════════════════════════════</span>
+<span class="cstat-no" title="statement not covered" > * NORTH NODE TEMPLATES — Soul purpose, karmic direction, evolutionary growth</span>
+<span class="cstat-no" title="statement not covered" > * ═══════════════════════════════════════════════════════════════════════════════</span>
+<span class="cstat-no" title="statement not covered" > */</span>
+<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" >export const northNodeTemplates: BodyTemplates = {</span>
+<span class="cstat-no" title="statement not covered" >  aries: {</span>
+<span class="cstat-no" title="statement not covered" >    essence: 'Your soul\'s path is the warrior\'s way — to learn courage not as absence of fear but as presence of will, to claim your identity without apology, to initiate rather than wait for permission. The North Node in Aries calls you away from the familiar territory of partnership and compromise, toward the unfamiliar landscape of self-assertion and individual action. You are here to discover that your soul\'s purpose is not to be chosen but to choose, not to follow but to lead, not to merge but to emerge.',</span>
+<span class="cstat-no" title="statement not covered" >    element: 'fire', modality: 'cardinal', keywords: ['soul courage', 'karmic initiative', 'evolutionary identity', 'purposeful action'],</span>
+<span class="cstat-no" title="statement not covered" >    careerAdvice: 'Your soul\'s work requires you to lead, to initiate, to be first. Entrepreneurship, emergency response, pioneering fields, and competitive industries call you. Your comfort zone is collaboration; your growth zone is solo decision-making. Beware the habit of deferring to others — your soul\'s purpose requires you to trust your own instincts over consensus.',</span>
+<span class="cstat-no" title="statement not covered" >    relationshipAdvice: 'Your karmic lesson in love is independence within connection. You are drawn to partners who challenge you to be yourself fully. Beware the compulsion to lose yourself in relationship — your soul\'s growth requires maintaining identity while loving. The partner who supports your autonomy is your true mate.',</span>
+<span class="cstat-no" title="statement not covered" >    healthAdvice: 'Your body is the vehicle for your soul\'s courage. Martial arts, competitive sports, and assertive movement align with your path. Beware the tendency to suppress anger or initiative — your body stores what your soul refuses to express. Physical courage mirrors spiritual courage; train both.',</span>
+<span class="cstat-no" title="statement not covered" >    financesAdvice: 'Your financial soul-lesson involves claiming your own resources. You may be drawn to shared finances or dependent arrangements; growth requires building independent wealth. Take financial risks that assert your autonomy. Your prosperity grows when you trust your own judgment over others\'.',</span>
+<span class="cstat-no" title="statement not covered" >    growthAdvice: 'Your karmic challenge is self-abandonment — the habit of prioritising others\' needs, desires, and identities over your own. The evolutionary gift of the North Node in Aries is the discovery that your soul\'s purpose is not to be good but to be real, not to be chosen but to choose yourself. Growth is the courage to act before you are ready, to lead before you are followed, to be yourself before anyone approves.',</span>
+<span class="cstat-no" title="statement not covered" >    bodyFocus: 'head, face, adrenal glands, motor cortex',</span>
+<span class="cstat-no" title="statement not covered" >    elementalResonance: 'Your soul\'s path is sacred fire — the flame that needs no fuel but its own existence, that burns not to illuminate others but because burning is its nature.',</span>
+<span class="cstat-no" title="statement not covered" >  },</span>
+<span class="cstat-no" title="statement not covered" >  taurus: {</span>
+<span class="cstat-no" title="statement not covered" >    essence: 'Your soul\'s path is the gardener\'s devotion — to learn that worth is not earned but inherent, to build security not as compensation for insecurity but as expression of self-trust, to possess without being possessed by your possessions. The North Node in Taurus calls you away from the crisis-driven intensity of Scorpio\'s south node, toward the patient cultivation of sustainable abundance. You are here to discover that your soul\'s purpose is not to transform but to endure, not to investigate but to cultivate, not to merge but to belong.',</span>
+<span class="cstat-no" title="statement not covered" >    element: 'earth', modality: 'fixed', keywords: ['soul worth', 'karmic stability', 'evolutionary abundance', 'purposeful grounding'],</span>
+<span class="cstat-no" title="statement not covered" >    careerAdvice: 'Your soul\'s work requires patience, persistence, and tangible results. Agriculture, finance, the arts, and fields that reward long-term commitment call you. Your comfort zone is intensity; your growth zone is steadiness. Beware the habit of creating crises to feel alive — your soul\'s purpose is found in the quiet triumph of sustained effort.',</span>
+<span class="cstat-no" title="statement not covered" >    relationshipAdvice: 'Your karmic lesson in love is security within devotion. You are drawn to partners who offer stability and sensory richness. Beware the compulsion to seek drama — your soul\'s growth requires peaceful constancy. The partner who offers quiet loyalty is your true mate, not the one who keeps you in constant crisis.',</span>
+<span class="cstat-no" title="statement not covered" >    healthAdvice: 'Your body is the temple of your soul\'s worth. Sensory practices, nature immersion, and steady routines align with your path. Beware the tendency to use your body as a crisis site — your health flourishes in peace, not drama. Physical grounding mirrors spiritual grounding; cultivate both.',</span>
+<span class="cstat-no" title="statement not covered" >    financesAdvice: 'Your financial soul-lesson involves building sustainable wealth. You may be drawn to high-stakes or shared resource arrangements; growth requires patient accumulation. Invest in tangible assets that appreciate over time. Your prosperity grows when you trust the slow build over the quick win.',</span>
+<span class="cstat-no" title="statement not covered" >    growthAdvice: 'Your karmic challenge is crisis addiction — the habit of seeking intensity, transformation, and emotional upheaval as proof of being alive. The evolutionary gift of the North Node in Taurus is the discovery that your soul\'s purpose is not to be tested by fire but to be nourished by earth, not to die and be reborn but to grow and bear fruit. Growth is the patience to tend what you have planted, to trust the season, to find meaning in the ordinary miracle of persistence.',</span>
+<span class="cstat-no" title="statement not covered" >    bodyFocus: 'throat, neck, thyroid, vocal cords',</span>
+<span class="cstat-no" title="statement not covered" >    elementalResonance: 'Your soul\'s path is garden soil — the dark, patient ground that asks nothing but presence, that yields abundance to the one who tends it without demanding drama.',</span>
+<span class="cstat-no" title="statement not covered" >  },</span>
+<span class="cstat-no" title="statement not covered" >  gemini: {</span>
+<span class="cstat-no" title="statement not covered" >    essence: 'Your soul\'s path is the student\'s curiosity — to learn that knowledge is not wisdom, that communication is not connection, and that the mind that knows everything has missed the point. The North Node in Gemini calls you away from the dogmatic certainty of Sagittarius\' south node, toward the humble inquiry of the eternal beginner. You are here to discover that your soul\'s purpose is not to teach but to learn, not to believe but to question, not to arrive but to journey.',</span>
+<span class="cstat-no" title="statement not covered" >    element: 'air', modality: 'mutable', keywords: ['soul curiosity', 'karmic inquiry', 'evolutionary communication', 'purposeful learning'],</span>
+<span class="cstat-no" title="statement not covered" >    careerAdvice: 'Your soul\'s work requires intellectual flexibility, communicative skill, and the courage to be a beginner. Teaching, writing, journalism, technology, and fields that reward curiosity call you. Your comfort zone is certainty; your growth zone is questioning. Beware the habit of preaching — your soul\'s purpose is found in dialogue, not monologue.',</span>
+<span class="cstat-no" title="statement not covered" >    relationshipAdvice: 'Your karmic lesson in love is communication without dogma. You are drawn to partners who stimulate your mind and challenge your assumptions. Beware the compulsion to convert — your soul\'s growth requires listening as much as speaking. The partner who asks better questions is your true mate, not the one who shares your answers.',</span>
+<span class="cstat-no" title="statement not covered" >    healthAdvice: 'Your body is the instrument of your soul\'s curiosity. Breathwork, hand practices, and mental rest align with your path. Beware the tendency to live in your head — your body holds wisdom your mind cannot access. Physical movement mirrors mental flexibility; train both.',</span>
+<span class="cstat-no" title="statement not covered" >    financesAdvice: 'Your financial soul-lesson involves intellectual engagement with money. You may be drawn to philosophical or belief-based financial models; growth requires practical curiosity. Invest in your education and communication skills. Your prosperity grows when you treat finance as a language to learn, not a dogma to follow.',</span>
+<span class="cstat-no" title="statement not covered" >    growthAdvice: 'Your karmic challenge is dogmatic certainty — the habit of believing you have arrived, that your truth is the truth, that the journey is over. The evolutionary gift of the North Node in Gemini is the discovery that your soul\'s purpose is not to know but to seek, not to answer but to ask, not to teach but to wonder. Growth is the humility of the beginner, the courage to say "I don\'t know," the wisdom to let every conversation change you.',</span>
+<span class="cstat-no" title="statement not covered" >    bodyFocus: 'lungs, hands, nervous system, shoulders',</span>
+<span class="cstat-no" title="statement not covered" >    elementalResonance: 'Your soul\'s path is open window — the breeze that carries voices from every direction, that refuses to settle, that knows the answer is always in the next conversation.',</span>
+<span class="cstat-no" title="statement not covered" >  },</span>
+<span class="cstat-no" title="statement not covered" >  cancer: {</span>
+<span class="cstat-no" title="statement not covered" >    essence: 'Your soul\'s path is the mother\'s embrace — to learn that vulnerability is strength, that nurturing is not weakness, and that the home you create is your greatest achievement. The North Node in Cancer calls you away from the achievement-driven ambition of Capricorn\'s south node, toward the emotional courage of open-hearted belonging. You are here to discover that your soul\'s purpose is not to achieve but to nurture, not to lead but to love, not to build empires but to build families.',</span>
+<span class="cstat-no" title="statement not covered" >    element: 'water', modality: 'cardinal', keywords: ['soul nurture', 'karmic belonging', 'evolutionary emotion', 'purposeful home'],</span>
+<span class="cstat-no" title="statement not covered" >    careerAdvice: 'Your soul\'s work requires emotional intelligence, nurturing skill, and the courage to care. Healthcare, education, hospitality, real estate, and community work call you. Your comfort zone is achievement; your growth zone is feeling. Beware the habit of using work to avoid intimacy — your soul\'s purpose is found in connection, not accomplishment.',</span>
+<span class="cstat-no" title="statement not covered" >    relationshipAdvice: 'Your karmic lesson in love is emotional openness within security. You are drawn to partners who offer safety and depth. Beware the compulsion to control — your soul\'s growth requires surrender, not management. The partner who feels like home is your true mate, not the one who looks best on paper.',</span>
+<span class="cstat-no" title="statement not covered" >    healthAdvice: 'Your body is the vessel of your soul\'s emotion. Water therapies, intuitive eating, and emotional release align with your path. Beware the tendency to somatise stress — your body speaks what your heart cannot say. Physical nourishment mirrors emotional nourishment; honour both.',</span>
+<span class="cstat-no" title="statement not covered" >    financesAdvice: 'Your financial soul-lesson involves emotional security. You may be drawn to status or achievement-based wealth; growth requires building resources that create peace of mind. Invest in home, family, and long-term security. Your prosperity grows when money serves connection, not image.',</span>
+<span class="cstat-no" title="statement not covered" >    growthAdvice: 'Your karmic challenge is emotional avoidance — the habit of using achievement, control, and external success to bypass feeling. The evolutionary gift of the North Node in Cancer is the discovery that your soul\'s purpose is not to conquer but to comfort, not to master but to mother, not to achieve but to belong. Growth is the courage to feel, to need, to depend, to cry, to be held.',</span>
+<span class="cstat-no" title="statement not covered" >    bodyFocus: 'stomach, breasts, lymphatic system, womb',</span>
+<span class="cstat-no" title="statement not covered" >    elementalResonance: 'Your soul\'s path is tidal embrace — the current that returns to hold every shore, that knows the courage of coming back, of staying, of belonging without condition.',</span>
+<span class="cstat-no" title="statement not covered" >  },</span>
+<span class="cstat-no" title="statement not covered" >  leo: {</span>
+<span class="cstat-no" title="statement not covered" >    essence: 'Your soul\'s path is the creator\'s joy — to learn that self-expression is not vanity but sacrament, that the heart that shines does not diminish others, and that the child within you deserves to play. The North Node in Leo calls you away from the collective anonymity of Aquarius\' south node, toward the courageous individuality of authentic self-expression. You are here to discover that your soul\'s purpose is not to belong to the group but to belong to yourself, not to serve humanity abstractly but to delight in your own existence.',</span>
+<span class="cstat-no" title="statement not covered" >    element: 'fire', modality: 'fixed', keywords: ['soul creativity', 'karmic expression', 'evolutionary joy', 'purposeful shine'],</span>
+<span class="cstat-no" title="statement not covered" >    careerAdvice: 'Your soul\'s work requires creative courage, performative authenticity, and the willingness to be seen. Entertainment, design, teaching, leadership, and child development call you. Your comfort zone is the collective; your growth zone is the spotlight. Beware the habit of hiding in groups — your soul\'s purpose is found in individual expression, not collective anonymity.',</span>
+<span class="cstat-no" title="statement not covered" >    relationshipAdvice: 'Your karmic lesson in love is authentic self-expression within partnership. You are drawn to partners who celebrate your individuality. Beware the compulsion to disappear into the relationship — your soul\'s growth requires maintaining your creative spark. The partner who applauds your shine is your true mate.',</span>
+<span class="cstat-no" title="statement not covered" >    healthAdvice: 'Your body is the stage for your soul\'s expression. Dance, performance, and heart-opening practices align with your path. Beware the tendency to suppress your vitality — your body needs to be seen, to move, to create. Physical expression mirrors spiritual expression; let both shine.',</span>
+<span class="cstat-no" title="statement not covered" >    financesAdvice: 'Your financial soul-lesson involves creative risk-taking. You may be drawn to collective or socially-oriented financial models; growth requires investing in your own creative vision. Build wealth that funds your self-expression. Your prosperity grows when you bet on yourself.',</span>
+<span class="cstat-no" title="statement not covered" >    growthAdvice: 'Your karmic challenge is collective anonymity — the habit of hiding in groups, of subsuming your identity in causes, of believing that individual expression is selfish. The evolutionary gift of the North Node in Leo is the discovery that your soul\'s purpose is not to serve humanity by disappearing into it but by shining so brightly that you inspire others to shine too. Growth is the courage to be the star of your own life.',</span>
+<span class="cstat-no" title="statement not covered" >    bodyFocus: 'heart, spine, circulatory system, upper back',</span>
+<span class="cstat-no" title="statement not covered" >    elementalResonance: 'Your soul\'s path is stage light — the beam that illuminates one face at a time, that knows the courage of being seen, that shines not for the crowd but because shining is its nature.',</span>
+<span class="cstat-no" title="statement not covered" >  },</span>
+<span class="cstat-no" title="statement not covered" >  virgo: {</span>
+<span class="cstat-no" title="statement not covered" >    essence: 'Your soul\'s path is the craftsperson\'s devotion — to learn that service is sacred, that the details matter, and that perfection is not the absence of flaws but the presence of care. The North Node in Virgo calls you away from the mystical dissolution of Pisces\' south node, toward the practical mastery of embodied skill. You are here to discover that your soul\'s purpose is not to escape into transcendence but to bring heaven down to earth, one careful gesture at a time.',</span>
+<span class="cstat-no" title="statement not covered" >    element: 'earth', modality: 'mutable', keywords: ['soul service', 'karmic mastery', 'evolutionary precision', 'purposeful craft'],</span>
+<span class="cstat-no" title="statement not covered" >    careerAdvice: 'Your soul\'s work requires precision, humility, and the willingness to serve. Healthcare, editing, research, quality assurance, and any field that rewards attention to detail call you. Your comfort zone is mysticism; your growth zone is methodology. Beware the habit of escaping into spirituality — your soul\'s purpose is found in practical application, not abstract transcendence.',</span>
+<span class="cstat-no" title="statement not covered" >    relationshipAdvice: 'Your karmic lesson in love is service without martyrdom. You are drawn to partners who appreciate your competence and share your values. Beware the compulsion to save — your soul\'s growth requires boundaries. The partner who values your helpfulness without exploiting it is your true mate.',</span>
+<span class="cstat-no" title="statement not covered" >    healthAdvice: 'Your body is the laboratory of your soul\'s precision. Clean food, regular schedules, and mind-body practices align with your path. Beware the tendency to spiritualise illness — your body speaks in biology, not just metaphor. Physical care mirrors spiritual care; both require discipline.',</span>
+<span class="cstat-no" title="statement not covered" >    financesAdvice: 'Your financial soul-lesson involves practical discipline. You may be drawn to mystical or escapist financial approaches; growth requires systematic planning. Invest in tools, education, and systems that increase your effectiveness. Your prosperity grows when you honour the details.',</span>
+<span class="cstat-no" title="statement not covered" >    growthAdvice: 'Your karmic challenge is escapist mysticism — the habit of disappearing into spiritual abstraction, of using transcendence to avoid earthly responsibility, of believing that the mundane is beneath you. The evolutionary gift of the North Node in Virgo is the discovery that your soul\'s purpose is not to escape the world but to perfect your corner of it. Growth is the humility of the craftsperson, the patience of the gardener, the devotion of the one who serves without needing to be seen.',</span>
+<span class="cstat-no" title="statement not covered" >    bodyFocus: 'digestive system, intestines, spleen, nervous system',</span>
+<span class="cstat-no" title="statement not covered" >    elementalResonance: 'Your soul\'s path is craftsperson\'s hand — the careful gesture that brings order from chaos, that knows the sacred in the detail, that serves without needing witness.',</span>
+<span class="cstat-no" title="statement not covered" >  },</span>
+<span class="cstat-no" title="statement not covered" >  libra: {</span>
+<span class="cstat-no" title="statement not covered" >    essence: 'Your soul\'s path is the diplomat\'s art — to learn that relationship is not loss of self but expansion of it, that harmony is not weakness but strength, and that the mirror of another\'s eyes reveals what you could not see alone. The North Node in Libra calls you away from the self-focused independence of Aries\' south node, toward the courageous vulnerability of partnership. You are here to discover that your soul\'s purpose is not to conquer alone but to create together.',</span>
+<span class="cstat-no" title="statement not covered" >    element: 'air', modality: 'cardinal', keywords: ['soul partnership', 'karmic harmony', 'evolutionary diplomacy', 'purposeful relation'],</span>
+<span class="cstat-no" title="statement not covered" >    careerAdvice: 'Your soul\'s work requires collaboration, aesthetic sense, and the courage to compromise. Design, law, counselling, mediation, and partnership-oriented fields call you. Your comfort zone is independence; your growth zone is cooperation. Beware the habit of going it alone — your soul\'s purpose is found in relationship, not isolation.',</span>
+<span class="cstat-no" title="statement not covered" >    relationshipAdvice: 'Your karmic lesson in love is partnership without self-erasure. You are drawn to partners who challenge you to grow through relationship. Beware the compulsion to dominate — your soul\'s growth requires equality. The partner who meets you halfway is your true mate, not the one you conquer or the one who conquers you.',</span>
+<span class="cstat-no" title="statement not covered" >    healthAdvice: 'Your body is the instrument of your soul\'s balance. Dance, yoga, beauty rituals, and partnership practices align with your path. Beware the tendency to store relational stress — your body absorbs what your heart cannot express. Physical balance mirrors relational balance; cultivate both.',</span>
+<span class="cstat-no" title="statement not covered" >    financesAdvice: 'Your financial soul-lesson involves partnership and shared resources. You may be drawn to solo financial control; growth requires collaboration. Invest in partnerships and joint ventures. Your prosperity grows when you share both risk and reward.',</span>
+<span class="cstat-no" title="statement not covered" >    growthAdvice: 'Your karmic challenge is self-isolation — the habit of believing that strength means independence, that vulnerability is weakness, that partnership compromises authenticity. The evolutionary gift of the North Node in Libra is the discovery that your soul\'s purpose is not to be a self-made hero but to be a co-created masterpiece. Growth is the courage to need, to ask, to meet in the middle, to let another complete what you cannot finish alone.',</span>
+<span class="cstat-no" title="statement not covered" >    bodyFocus: 'kidneys, skin, lower back, endocrine balance',</span>
+<span class="cstat-no" title="statement not covered" >    elementalResonance: 'Your soul\'s path is mirror — the surface that reflects not just what is but what could be, that knows the self only through the eyes of the other, that finds wholeness in reflection.',</span>
+<span class="cstat-no" title="statement not covered" >  },</span>
+<span class="cstat-no" title="statement not covered" >  scorpio: {</span>
+<span class="cstat-no" title="statement not covered" >    essence: 'Your soul\'s path is the alchemist\'s fire — to learn that transformation is not destruction but revelation, that power is not control but surrender, and that the depths contain treasures the surface cannot imagine. The North Node in Scorpio calls you away from the material security of Taurus\' south node, toward the courageous vulnerability of radical honesty. You are here to discover that your soul\'s purpose is not to possess but to transform, not to accumulate but to release.',</span>
+<span class="cstat-no" title="statement not covered" >    element: 'water', modality: 'fixed', keywords: ['soul transformation', 'karmic depth', 'evolutionary power', 'purposeful surrender'],</span>
+<span class="cstat-no" title="statement not covered" >    careerAdvice: 'Your soul\'s work requires depth, courage, and the willingness to face what others hide. Crisis management, depth psychology, research, and transformative fields call you. Your comfort zone is stability; your growth zone is intensity. Beware the habit of clinging to security — your soul\'s purpose is found in transformation, not accumulation.',</span>
+<span class="cstat-no" title="statement not covered" >    relationshipAdvice: 'Your karmic lesson in love is intimacy without possession. You are drawn to partners who challenge you to be radically honest. Beware the compulsion to control — your soul\'s growth requires surrender. The partner who meets you in the depths is your true mate, not the one who offers surface comfort.',</span>
+<span class="cstat-no" title="statement not covered" >    healthAdvice: 'Your body is the crucible of your soul\'s transformation. Deep therapeutic practices, energy work, and shadow integration align with your path. Beware the tendency to suppress intensity — your body stores what your heart refuses to feel. Physical release mirrors emotional release; both require courage.',</span>
+<span class="cstat-no" title="statement not covered" >    financesAdvice: 'Your financial soul-lesson involves shared resources and transformative investment. You may be drawn to conservative accumulation; growth requires risk and depth. Invest in transformation, not just preservation. Your prosperity grows when you release what no longer serves and trust the cycle of death and rebirth.',</span>
+<span class="cstat-no" title="statement not covered" >    growthAdvice: 'Your karmic challenge is material attachment — the habit of clinging to security, of fearing loss more than desiring growth, of believing that possession equals safety. The evolutionary gift of the North Node in Scorpio is the discovery that your soul\'s purpose is not to hold but to let go, not to own but to experience, not to survive but to be reborn. Growth is the courage to face your own darkness and discover that it is not empty but full of stars.',</span>
+<span class="cstat-no" title="statement not covered" >    bodyFocus: 'reproductive system, eliminative organs, pelvis, colon',</span>
+<span class="cstat-no" title="statement not covered" >    elementalResonance: 'Your soul\'s path is alchemical fire — the flame that does not destroy but reveals, that turns what was poison into what is medicine, that knows the treasure waits in the deepest darkness.',</span>
+<span class="cstat-no" title="statement not covered" >  },</span>
+<span class="cstat-no" title="statement not covered" >  sagittarius: {</span>
+<span class="cstat-no" title="statement not covered" >    essence: 'Your soul\'s path is the pilgrim\'s journey — to learn that meaning is not found but created, that the horizon is not a destination but a direction, and that the search itself is the sacred act. The North Node in Sagittarius calls you away from the mental trivia of Gemini\'s south node, toward the expansive wisdom of philosophical commitment. You are here to discover that your soul\'s purpose is not to know everything but to believe in something, not to gather information but to synthesise meaning.',</span>
+<span class="cstat-no" title="statement not covered" >    element: 'fire', modality: 'mutable', keywords: ['soul wisdom', 'karmic meaning', 'evolutionary expansion', 'purposeful belief'],</span>
+<span class="cstat-no" title="statement not covered" >    careerAdvice: 'Your soul\'s work requires vision, expansion, and the courage to teach. Education, publishing, travel, international work, and spiritual guidance call you. Your comfort zone is information; your growth zone is wisdom. Beware the habit of skimming surfaces — your soul\'s purpose is found in depth, not breadth.',</span>
+<span class="cstat-no" title="statement not covered" >    relationshipAdvice: 'Your karmic lesson in love is meaning within adventure. You are drawn to partners who expand your horizons and share your quest for truth. Beware the compulsion to keep moving — your soul\'s growth requires commitment. The partner who journeys with you is your true mate, not the one who sends you postcards from places you have not been.',</span>
+<span class="cstat-no" title="statement not covered" >    healthAdvice: 'Your body is the vehicle of your soul\'s journey. Outdoor movement, travel, and philosophical practice align with your path. Beware the tendency to live in your mind — your body needs the earth beneath your feet. Physical adventure mirrors spiritual adventure; both require presence.',</span>
+<span class="cstat-no" title="statement not covered" >    financesAdvice: 'Your financial soul-lesson involves expansive vision. You may be drawn to scattered or information-based financial approaches; growth requires commitment to a philosophy. Invest in education, travel, and meaning-aligned enterprises. Your prosperity grows when you believe in your vision enough to stick with it.',</span>
+<span class="cstat-no" title="statement not covered" >    growthAdvice: 'Your karmic challenge is mental scatteredness — the habit of collecting information without synthesising wisdom, of speaking without believing, of travelling without arriving. The evolutionary gift of the North Node in Sagittarius is the discovery that your soul\'s purpose is not to gather but to give, not to search but to find, not to question but to commit. Growth is the courage to believe, to teach, to stand for something, to let the journey become the destination.',</span>
+<span class="cstat-no" title="statement not covered" >    bodyFocus: 'hips, thighs, liver, sciatic nerve',</span>
+<span class="cstat-no" title="statement not covered" >    elementalResonance: 'Your soul\'s path is horizon light — the glow that promises meaning without delivering certainty, that invites the pilgrimage without guaranteeing arrival, that knows the journey is the teaching.',</span>
+<span class="cstat-no" title="statement not covered" >  },</span>
+<span class="cstat-no" title="statement not covered" >  capricorn: {</span>
+<span class="cstat-no" title="statement not covered" >    essence: 'Your soul\'s path is the elder\'s authority — to learn that mastery is not given but earned, that leadership is not domination but service, and that the structures you build outlast your lifetime. The North Node in Capricorn calls you away from the emotional dependency of Cancer\'s south node, toward the disciplined achievement of earned authority. You are here to discover that your soul\'s purpose is not to be mothered but to master, not to belong but to build.',</span>
+<span class="cstat-no" title="statement not covered" >    element: 'earth', modality: 'cardinal', keywords: ['soul mastery', 'karmic authority', 'evolutionary structure', 'purposeful achievement'],</span>
+<span class="cstat-no" title="statement not covered" >    careerAdvice: 'Your soul\'s work requires discipline, ambition, and the willingness to climb. Executive leadership, management, institutional building, and legacy work call you. Your comfort zone is nurture; your growth zone is achievement. Beware the habit of seeking comfort — your soul\'s purpose is found in challenge, not coziness.',</span>
+<span class="cstat-no" title="statement not covered" >    relationshipAdvice: 'Your karmic lesson in love is maturity within partnership. You are drawn to partners who respect your ambition and share your goals. Beware the compulsion to be parented — your soul\'s growth requires adult relating. The partner who meets you as an equal is your true mate, not the one who needs saving or the one who saves you.',</span>
+<span class="cstat-no" title="statement not covered" >    healthAdvice: 'Your body is the foundation of your soul\'s achievement. Regular movement, structural alignment, and disciplined self-care align with your path. Beware the tendency to sacrifice health for work — your body is not a machine but the vessel of your legacy. Physical discipline mirrors spiritual discipline; both require balance.',</span>
+<span class="cstat-no" title="statement not covered" >    financesAdvice: 'Your financial soul-lesson involves long-term building. You may be drawn to emotionally-driven or security-based financial approaches; growth requires strategic ambition. Invest in legacy, retirement, and structures that endure. Your prosperity grows when you plan for generations, not just moments.',</span>
+<span class="cstat-no" title="statement not covered" >    growthAdvice: 'Your karmic challenge is emotional dependency — the habit of seeking security in others, of using relationship as escape from responsibility, of believing that love means being taken care of. The evolutionary gift of the North Node in Capricorn is the discovery that your soul\'s purpose is not to be held but to hold, not to be led but to lead, not to be protected but to protect. Growth is the courage to build, to achieve, to become the authority you once sought.',</span>
+<span class="cstat-no" title="statement not covered" >    bodyFocus: 'bones, joints, teeth, knees, skeletal system',</span>
+<span class="cstat-no" title="statement not covered" >    elementalResonance: 'Your soul\'s path is mountain stone — the patient accumulation of pressure that becomes peak, the endurance that outlasts every season, the authority that needs no proclamation because the mountain speaks for itself.',</span>
+<span class="cstat-no" title="statement not covered" >  },</span>
+<span class="cstat-no" title="statement not covered" >  aquarius: {</span>
+<span class="cstat-no" title="statement not covered" >    essence: 'Your soul\'s path is the visionary\'s rebellion — to learn that difference is not defect but design, that the future is built by those who refuse the present, and that your strangeness is your gift to humanity. The North Node in Aquarius calls you away from the performative individualism of Leo\'s south node, toward the collective liberation of authentic difference. You are here to discover that your soul\'s purpose is not to be the star but to be the signal, not to shine alone but to light the way for the tribe.',</span>
+<span class="cstat-no" title="statement not covered" >    element: 'air', modality: 'fixed', keywords: ['soul vision', 'karmic liberation', 'evolutionary innovation', 'purposeful difference'],</span>
+<span class="cstat-no" title="statement not covered" >    careerAdvice: 'Your soul\'s work requires innovation, independence, and the courage to challenge convention. Technology, social reform, scientific research, and community building call you. Your comfort zone is the spotlight; your growth zone is the collective. Beware the habit of performing uniqueness — your soul\'s purpose is found in authentic difference, not theatrical rebellion.',</span>
+<span class="cstat-no" title="statement not covered" >    relationshipAdvice: 'Your karmic lesson in love is freedom within connection. You are drawn to partners who respect your uniqueness and share your ideals. Beware the compulsion to be the star — your soul\'s growth requires collaboration. The partner who champions your vision while maintaining their own is your true mate.',</span>
+<span class="cstat-no" title="statement not covered" >    healthAdvice: 'Your body is the antenna of your soul\'s vision. Group practices, community wellness, and unconventional health approaches align with your path. Beware the tendency to treat your body as an obstacle to your ideas — it is the vessel of your revolution. Physical freedom mirrors spiritual freedom; both require respect.',</span>
+<span class="cstat-no" title="statement not covered" >    financesAdvice: 'Your financial soul-lesson involves innovative and collective approaches. You may be drawn to traditional or performance-based wealth; growth requires thinking ahead. Invest in technology, social enterprise, and the future. Your prosperity grows when you bet on what does not yet exist.',</span>
+<span class="cstat-no" title="statement not covered" >    growthAdvice: 'Your karmic challenge is performative individualism — the habit of needing an audience, of confusing attention with impact, of believing that your value is measured by witnesses. The evolutionary gift of the North Node in Aquarius is the discovery that your soul\'s purpose is not to be seen but to see, not to be celebrated but to be useful, not to shine but to signal. Growth is the courage to be weird without an audience, to build without applause, to serve the future that will not thank you.',</span>
+<span class="cstat-no" title="statement not covered" >    bodyFocus: 'calves, ankles, circulatory system, nervous system',</span>
+<span class="cstat-no" title="statement not covered" >    elementalResonance: 'Your soul\'s path is lightning rod — the conductor that channels electric vision into collective change, that stands alone not for glory but because someone must hold the charge.',</span>
+<span class="cstat-no" title="statement not covered" >  },</span>
+<span class="cstat-no" title="statement not covered" >  pisces: {</span>
+<span class="cstat-no" title="statement not covered" >    essence: 'Your soul\'s path is the mystic\'s surrender — to learn that dissolution is not death but return, that the boundaries you defend are the prisons you inhabit, and that the divine speaks in the language of dreams, intuition, and compassion. The North Node in Pisces calls you away from the analytical rigour of Virgo\'s south node, toward the oceanic trust of spiritual surrender. You are here to discover that your soul\'s purpose is not to fix but to feel, not to analyse but to accept, not to serve practically but to love unconditionally.',</span>
+<span class="cstat-no" title="statement not covered" >    element: 'water', modality: 'mutable', keywords: ['soul surrender', 'karmic compassion', 'evolutionary transcendence', 'purposeful dissolution'],</span>
+<span class="cstat-no" title="statement not covered" >    careerAdvice: 'Your soul\'s work requires intuition, compassion, and the willingness to serve without recognition. Healing arts, spiritual guidance, artistic expression, and compassionate service call you. Your comfort zone is competence; your growth zone is faith. Beware the habit of fixing — your soul\'s purpose is found in presence, not solutions.',</span>
+<span class="cstat-no" title="statement not covered" >    relationshipAdvice: 'Your karmic lesson in love is surrender without loss. You are drawn to partners who understand your depth and share your spiritual sensitivity. Beware the compulsion to analyse — your soul\'s growth requires trust. The partner who meets you in the mystery is your true mate, not the one who explains it.',</span>
+<span class="cstat-no" title="statement not covered" >    healthAdvice: 'Your body is the vessel of your soul\'s transcendence. Water therapies, dream work, and spiritual practices align with your path. Beware the tendency to medicalise everything — your body speaks in symbols, not just symptoms. Physical surrender mirrors spiritual surrender; both require trust.',</span>
+<span class="cstat-no" title="statement not covered" >    financesAdvice: 'Your financial soul-lesson involves flow and trust. You may be drawn to rigid or analytical financial approaches; growth requires intuitive flexibility. Invest in spiritual enterprises, artistic ventures, and flow-based models. Your prosperity grows when you trust the current rather than controlling it.',</span>
+<span class="cstat-no" title="statement not covered" >    growthAdvice: 'Your karmic challenge is analytical control — the habit of dissecting everything, of believing that understanding equals mastery, of using competence as armour against feeling. The evolutionary gift of the North Node in Pisces is the discovery that your soul\'s purpose is not to figure out the ocean but to dissolve into it, not to map the mystery but to become it. Growth is the courage to let go, to trust, to feel, to be held by something larger than your understanding.',</span>
+<span class="cstat-no" title="statement not covered" >    bodyFocus: 'feet, immune system, pineal gland, lymphatic system',</span>
+<span class="cstat-no" title="statement not covered" >    elementalResonance: 'Your soul\'s path is oceanic dissolution — the surrender of every boundary, every definition, every self that believed it was separate from the whole, returning to the source with nothing held back.',</span>
+<span class="cstat-no" title="statement not covered" >  },</span>
+<span class="cstat-no" title="statement not covered" >  ophiuchus: {</span>
+<span class="cstat-no" title="statement not covered" >    essence: 'Your soul\'s path is the initiate\'s threshold — to learn that healing is not fixing but holding, that the wound and the gift are inseparable, and that the bridge between worlds is built from the very material that separates them. The North Node in Ophiuchus calls you away from the either/or thinking of ordinary consciousness, toward the both/and wisdom of the liminal. You are here to discover that your soul\'s purpose is not to choose between opposites but to embody them, not to heal by cutting but by holding, not to transcend the body but to transmute it.',</span>
+<span class="cstat-no" title="statement not covered" >    element: 'ether', modality: 'fixed', keywords: ['soul initiation', 'karmic healing', 'evolutionary bridging', 'purposeful liminality'],</span>
+<span class="cstat-no" title="statement not covered" >    careerAdvice: 'Your soul\'s work requires the courage to inhabit the in-between. Medicine, psychology, energy work, and any field that bridges conventional and alternative approaches call you. Your comfort zone is either clarity or mystery; your growth zone is both. Beware the habit of choosing sides — your soul\'s purpose is found in the bridge, not the bank.',</span>
+<span class="cstat-no" title="statement not covered" >    relationshipAdvice: 'Your karmic lesson in love is liminality without abandonment. You are drawn to partners who understand that relationship is initiatory, that every bond transforms both participants. Beware the compulsion to heal or be healed — your soul\'s growth requires mutual evolution. The partner who meets you in the mystery without demanding resolution is your true mate.',</span>
+<span class="cstat-no" title="statement not covered" >    healthAdvice: 'Your body is the bridge of your soul\'s healing. Practices that work with subtle energies, spinal alignment, and integrative medicine align with your path. Beware the tendency to split body from spirit — your health requires both. Physical integration mirrors spiritual integration; both require patience.',</span>
+<span class="cstat-no" title="statement not covered" >    financesAdvice: 'Your financial soul-lesson involves bridging conventional and innovative approaches. You may be drawn to either extreme; growth requires the middle path. Invest in healing, transformation, and regenerative enterprises. Your prosperity grows when you hold both security and risk in balance.',</span>
+<span class="cstat-no" title="statement not covered" >    growthAdvice: 'Your karmic challenge is binary thinking — the habit of dividing everything into categories, of believing that a thing must be either poison or medicine, either shadow or light, either body or spirit. The evolutionary gift of the North Node in Ophiuchus is the discovery that your soul\'s purpose is to hold the tension of opposites without collapsing it, to be the bridge that does not resolve the river but allows crossing. Growth is the courage to be unresolved, to be both, to be the question that contains its own answer.',</span>
+<span class="cstat-no" title="statement not covered" >    bodyFocus: 'spinal column, nervous system regeneration, subtle energy channels, cellular renewal',</span>
+<span class="cstat-no" title="statement not covered" >    elementalResonance: 'Your soul\'s path is rainbow bridge — the spectrum that connects heaven and earth, that knows each colour is both distinct and part of the whole, that dissolves the boundary between what was and what will be.',</span>
+<span class="cstat-no" title="statement not covered" >  },</span>
+<span class="cstat-no" title="statement not covered" >};</span>
+&nbsp;</pre></td></tr></table></pre>
+
+                <div class='push'></div><!-- for sticky footer -->
+            </div><!-- /wrapper -->
+            <div class='footer quiet pad2 space-top1 center small'>
+                Code coverage generated by
+                <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
+                at 2026-05-20T03:38:53.739Z
+            </div>
+        <script src="../../../../../prettify.js"></script>
+        <script>
+            window.onload = function () {
+                prettyPrint();
+            };
+        </script>
+        <script src="../../../../../sorter.js"></script>
+        <script src="../../../../../block-navigation.js"></script>
+    </body>
+</html>
+    

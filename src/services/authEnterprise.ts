@@ -18,6 +18,7 @@ import {
   type User,
   type UserCredential
 } from 'firebase/auth';
+import { getErrorMessage, getErrorCode } from '../utils/errorUtils';
 import { getApp } from 'firebase/app';
 
 // Security configuration
@@ -234,12 +235,12 @@ class EnterpriseAuthService {
 
       this.startSession();
       return userCredential;
-    } catch (error: any) {
+    } catch (error) {
       this.logAudit({
         action: 'SIGNUP',
         email,
         success: false,
-        details: error.message
+        details: getErrorMessage(error)
       });
       throw this.formatError(error);
     }
@@ -266,16 +267,16 @@ class EnterpriseAuthService {
 
       this.startSession();
       return userCredential;
-    } catch (error: any) {
+    } catch (error) {
       this.recordFailedAttempt(email);
-      
+
       this.logAudit({
         action: 'LOGIN',
         email,
         success: false,
-        details: error.message
+        details: getErrorMessage(error)
       });
-      
+
       throw this.formatError(error);
     }
   }
@@ -298,12 +299,12 @@ class EnterpriseAuthService {
       });
       
       return true;
-    } catch (error: any) {
+    } catch (error) {
       this.logAudit({
         action: 'REAUTHENTICATE',
         userId: user.uid,
         success: false,
-        details: error.message
+        details: getErrorMessage(error)
       });
       throw new Error('Incorrect password');
     }
@@ -336,12 +337,12 @@ class EnterpriseAuthService {
         userId: user.uid,
         success: true
       });
-    } catch (error: any) {
+    } catch (error) {
       this.logAudit({
         action: 'PASSWORD_CHANGE',
         userId: user.uid,
         success: false,
-        details: error.message
+        details: getErrorMessage(error)
       });
       throw this.formatError(error);
     }
@@ -373,12 +374,12 @@ class EnterpriseAuthService {
       if (this.sessionTimeoutId) {
         clearTimeout(this.sessionTimeoutId);
       }
-    } catch (error: any) {
+    } catch (error) {
       this.logAudit({
         action: 'ACCOUNT_DELETE',
         userId: user.uid,
         success: false,
-        details: error.message
+        details: getErrorMessage(error)
       });
       throw this.formatError(error);
     }
@@ -404,12 +405,12 @@ class EnterpriseAuthService {
       if (this.sessionTimeoutId) {
         clearTimeout(this.sessionTimeoutId);
       }
-    } catch (error: any) {
+    } catch (error) {
       this.logAudit({
         action: 'LOGOUT',
         userId: user?.uid,
         success: false,
-        details: error.message
+        details: getErrorMessage(error)
       });
       throw this.formatError(error);
     }
@@ -428,12 +429,12 @@ class EnterpriseAuthService {
         email,
         success: true
       });
-    } catch (error: any) {
+    } catch (error) {
       this.logAudit({
         action: 'PASSWORD_RESET_REQUEST',
         email,
         success: false,
-        details: error.message
+        details: getErrorMessage(error)
       });
       throw this.formatError(error);
     }
@@ -469,7 +470,7 @@ class EnterpriseAuthService {
   }
 
   // Error formatting
-  private formatError(error: any): Error {
+  private formatError(error: unknown): Error {
     const errorMessages: Record<string, string> = {
       'auth/invalid-email': 'Invalid email address format',
       'auth/user-disabled': 'This account has been disabled',
@@ -483,7 +484,8 @@ class EnterpriseAuthService {
       'auth/requires-recent-login': 'Please sign in again to continue',
     };
 
-    const message = errorMessages[error.code] || error.message || 'An unexpected error occurred';
+    const code = getErrorCode(error);
+    const message = (code && errorMessages[code]) || getErrorMessage(error) || 'An unexpected error occurred';
     return new Error(message);
   }
 }

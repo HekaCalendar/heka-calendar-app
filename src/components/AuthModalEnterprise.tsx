@@ -19,7 +19,9 @@ import { isFirebaseConfigured } from '../services/firebase';
 import { syncToCloud, loadFromCloud, loadAllAstroData, syncAllAstroData } from '../services/firebase';
 import { signInWithGoogleNative } from '../services/nativeAuth';
 import { persistence, DEFAULT_PROFILE_PREFERENCES } from '../astrology/services/persistence';
+import type { AstroProfile, NatalChart, ProfilePreferences } from '../astrology/types';
 import { tutorialService } from '../services/tutorialService';
+import { getErrorMessage, getErrorCode } from '../utils/errorUtils';
 
 
 interface AuthModalProps {
@@ -185,32 +187,34 @@ export const AuthModalEnterprise: React.FC<AuthModalProps> = ({ isOpen, onClose 
         ).then(arr => arr.flat());
 
         if (cloudAstro.profiles.length > 0 || cloudAstro.charts.length > 0) {
+          const cloudProfiles = cloudAstro.profiles as unknown as AstroProfile[];
+          const cloudCharts = cloudAstro.charts as unknown as NatalChart[];
           const localProfileMap = new Map(localProfiles.map(p => [p.id, p]));
-          for (const cp of cloudAstro.profiles) {
+          for (const cp of cloudProfiles) {
             const local = localProfileMap.get(cp.id);
-            const cloudTime = new Date(cp._syncedAt || cp.updatedAt || 0).getTime();
-            const localTime = local ? new Date((local as any).updatedAt || 0).getTime() : 0;
+            const cloudTime = new Date((cp as unknown as { _syncedAt?: string })._syncedAt || cp.updatedAt || 0).getTime();
+            const localTime = local ? new Date((local as unknown as { updatedAt?: string }).updatedAt || 0).getTime() : 0;
             if (!local || cloudTime > localTime) {
-              await persistence.saveProfile(cp);
-              localProfileMap.set(cp.id, cp);
+              await persistence.saveProfile(cp as unknown as AstroProfile);
+              localProfileMap.set(cp.id, cp as unknown as AstroProfile);
             }
           }
           const localChartMap = new Map(localCharts.map(c => [c.id, c]));
-          for (const cc of cloudAstro.charts) {
+          for (const cc of cloudCharts) {
             const local = localChartMap.get(cc.id);
-            const cloudTime = new Date(cc._syncedAt || cc.calculatedAt || 0).getTime();
-            const localTime = local ? new Date((local as any).calculatedAt || 0).getTime() : 0;
+            const cloudTime = new Date((cc as unknown as { _syncedAt?: string })._syncedAt || cc.calculatedAt || 0).getTime();
+            const localTime = local ? new Date((local as unknown as { calculatedAt?: string }).calculatedAt || 0).getTime() : 0;
             if (!local || cloudTime > localTime) {
-              await persistence.saveChart(cc);
-              localChartMap.set(cc.id, cc);
+              await persistence.saveChart(cc as unknown as NatalChart);
+              localChartMap.set(cc.id, cc as unknown as NatalChart);
             }
           }
           if (cloudAstro.preferences) {
             const localP = await persistence.getPreferences();
-            const cloudTime = new Date(cloudAstro.preferences._syncedAt || 0).getTime();
-            const localTime = localP ? new Date((localP as any)._syncedAt || 0).getTime() : 0;
+            const cloudTime = new Date((cloudAstro.preferences as unknown as { _syncedAt?: string })._syncedAt || 0).getTime();
+            const localTime = localP ? new Date((localP as unknown as { _syncedAt?: string })._syncedAt || 0).getTime() : 0;
             if (!localP || cloudTime > localTime) {
-              await persistence.savePreferences(cloudAstro.preferences);
+              await persistence.savePreferences(cloudAstro.preferences as unknown as ProfilePreferences);
             }
           }
           if (cloudAstro.selectedProfileId) {
@@ -238,8 +242,8 @@ export const AuthModalEnterprise: React.FC<AuthModalProps> = ({ isOpen, onClose 
       }
       
       dispatch(setLastSync(new Date().toISOString()));
-    } catch (err: any) {
-      dispatch(setSyncError(err.message || 'Sync failed'));
+    } catch (err) {
+      dispatch(setSyncError(getErrorMessage(err, 'Sync failed')));
     } finally {
       dispatch(setSyncing(false));
     }
@@ -266,8 +270,8 @@ export const AuthModalEnterprise: React.FC<AuthModalProps> = ({ isOpen, onClose 
         setSuccess(null);
         setPassword('');
       }, 1000);
-    } catch (err: any) {
-      setError(err.message);
+    } catch (err) {
+      setError(getErrorMessage(err));
     } finally {
       setIsLoading(false);
     }
@@ -291,11 +295,11 @@ export const AuthModalEnterprise: React.FC<AuthModalProps> = ({ isOpen, onClose 
         setView('profile');
         setSuccess(null);
       }, 1000);
-    } catch (err: any) {
-      if (err.code === 'auth/cancelled') {
+    } catch (err) {
+      if (getErrorCode(err) === 'auth/cancelled') {
         // User cancelled — no error message needed
       } else {
-        setError(err.message || 'Google Sign-In failed');
+        setError(getErrorMessage(err, 'Google Sign-In failed'));
       }
     } finally {
       setIsLoading(false);
@@ -331,8 +335,8 @@ export const AuthModalEnterprise: React.FC<AuthModalProps> = ({ isOpen, onClose 
         setPassword('');
         setConfirmPassword('');
       }, 1000);
-    } catch (err: any) {
-      setError(err.message);
+    } catch (err) {
+      setError(getErrorMessage(err));
     } finally {
       setIsLoading(false);
     }
@@ -359,8 +363,8 @@ export const AuthModalEnterprise: React.FC<AuthModalProps> = ({ isOpen, onClose 
         setView('profile');
         setSuccess(null);
       }, 2000);
-    } catch (err: any) {
-      setError(err.message);
+    } catch (err) {
+      setError(getErrorMessage(err));
     } finally {
       setIsLoading(false);
     }
@@ -386,8 +390,8 @@ export const AuthModalEnterprise: React.FC<AuthModalProps> = ({ isOpen, onClose 
       setTimeout(() => {
         onClose();
       }, 1500);
-    } catch (err: any) {
-      setError(err.message);
+    } catch (err) {
+      setError(getErrorMessage(err));
     } finally {
       setIsLoading(false);
     }
@@ -401,8 +405,8 @@ export const AuthModalEnterprise: React.FC<AuthModalProps> = ({ isOpen, onClose 
     try {
       await enterpriseAuth.resetPassword(email);
       setSuccess('Password reset email sent! Check your inbox.');
-    } catch (err: any) {
-      setError(err.message);
+    } catch (err) {
+      setError(getErrorMessage(err));
     } finally {
       setIsLoading(false);
     }
@@ -424,8 +428,8 @@ export const AuthModalEnterprise: React.FC<AuthModalProps> = ({ isOpen, onClose 
       const accounts = getKnownAccounts();
       setKnownAccounts(accounts);
       setView(accounts.length > 0 ? 'account-picker' : 'login');
-    } catch (err: any) {
-      setError(err.message);
+    } catch (err) {
+      setError(getErrorMessage(err));
     } finally {
       setIsLoading(false);
     }
@@ -541,6 +545,7 @@ export const AuthModalEnterprise: React.FC<AuthModalProps> = ({ isOpen, onClose 
                             switchView('login');
                           }
                         }}
+                        aria-label={t('common.delete')}
                         title="Forget this account"
                       >
                         ✕
@@ -686,7 +691,7 @@ export const AuthModalEnterprise: React.FC<AuthModalProps> = ({ isOpen, onClose 
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
                   className="auth-form__input"
-                  placeholder="••••••••"
+                  placeholder={t('auth.passwordPlaceholder')}
                   autoComplete="new-password"
                   required
                 />
@@ -867,7 +872,7 @@ export const AuthModalEnterprise: React.FC<AuthModalProps> = ({ isOpen, onClose 
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
                       className="auth-form__input"
-                      placeholder="••••••••"
+                      placeholder={t('auth.passwordPlaceholder')}
                       required
                     />
                     <button
@@ -891,7 +896,7 @@ export const AuthModalEnterprise: React.FC<AuthModalProps> = ({ isOpen, onClose 
                         setPasswordStrength(enterpriseAuth.validatePasswordStrength(e.target.value));
                       }}
                       className="auth-form__input"
-                      placeholder="••••••••"
+                      placeholder={t('auth.passwordPlaceholder')}
                       required
                     />
                     <button
@@ -912,7 +917,7 @@ export const AuthModalEnterprise: React.FC<AuthModalProps> = ({ isOpen, onClose 
                     value={confirmPassword}
                     onChange={(e) => setConfirmPassword(e.target.value)}
                     className="auth-form__input"
-                    placeholder="••••••••"
+                    placeholder={t('auth.passwordPlaceholder')}
                     required
                   />
                   {confirmPassword && newPassword !== confirmPassword && (
@@ -955,7 +960,7 @@ export const AuthModalEnterprise: React.FC<AuthModalProps> = ({ isOpen, onClose 
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     className="auth-form__input"
-                    placeholder="••••••••"
+                    placeholder={t('auth.passwordPlaceholder')}
                     required
                   />
                 </div>

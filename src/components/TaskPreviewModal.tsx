@@ -15,6 +15,7 @@ import {
 } from '../services/taskShareService';
 import { getCurrentUser, signUp, logIn } from '../services/firebase';
 import { ProfileSetupModal } from './ProfileSetupModal';
+import { getErrorMessage } from '../utils/errorUtils';
 
 interface TaskPreviewModalProps {
   shareCode: string;
@@ -119,10 +120,10 @@ export const TaskPreviewModal: React.FC<TaskPreviewModalProps> = ({
         });
         setViewState('result');
       }
-    } catch (err: any) {
+    } catch (err) {
       setResult({
         success: false,
-        message: err.message || t('taskPreview.genericError'),
+        message: getErrorMessage(err, t('taskPreview.genericError')),
       });
       setViewState('result');
     } finally {
@@ -142,10 +143,10 @@ export const TaskPreviewModal: React.FC<TaskPreviewModalProps> = ({
         message: t('taskPreview.declined'),
       });
       setViewState('result');
-    } catch (err: any) {
+    } catch (err) {
       setResult({
         success: false,
-        message: err.message || t('taskPreview.failedToDecline'),
+        message: getErrorMessage(err, t('taskPreview.failedToDecline')),
       });
       setViewState('result');
     } finally {
@@ -174,8 +175,8 @@ export const TaskPreviewModal: React.FC<TaskPreviewModalProps> = ({
       
       // After signup, go to profile setup, then accept
       setViewState('setup');
-    } catch (err: any) {
-      setAuthError(err.message || t('taskPreview.failedToCreateAccount'));
+    } catch (err) {
+      setAuthError(getErrorMessage(err, t('taskPreview.failedToCreateAccount')));
     } finally {
       setIsLoading(false);
     }
@@ -221,8 +222,8 @@ export const TaskPreviewModal: React.FC<TaskPreviewModalProps> = ({
         });
         setViewState('result');
       }
-    } catch (err: any) {
-      setAuthError(err.message || t('taskPreview.failedToSignIn'));
+    } catch (err) {
+      setAuthError(getErrorMessage(err, t('taskPreview.failedToSignIn')));
     } finally {
       setIsLoading(false);
     }
@@ -253,10 +254,10 @@ export const TaskPreviewModal: React.FC<TaskPreviewModalProps> = ({
         });
         setViewState('result');
       }
-    } catch (err: any) {
+    } catch (err) {
       setResult({
         success: false,
-        message: err.message || 'An error occurred',
+        message: getErrorMessage(err, 'An error occurred'),
       });
       setViewState('result');
     } finally {
@@ -472,7 +473,7 @@ export const TaskPreviewModal: React.FC<TaskPreviewModalProps> = ({
       <div className="modal task-preview-modal" style={{ maxWidth: '480px' }} onClick={(e) => e.stopPropagation()}>
         <div className="modal__header">
           <h2 className="modal__title">{t('taskPreview.taskInvitation')}</h2>
-          <button className="modal__close" onClick={onClose}>×</button>
+          <button className="modal__close" onClick={onClose} aria-label={t('common.close')}>×</button>
         </div>
         
         <div style={{ padding: 'var(--space-5)' }}>

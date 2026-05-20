@@ -22,7 +22,7 @@ for (const [path, module] of Object.entries(allModules)) {
   if (!match) continue;
   const [, lang, ns] = match;
   if (!bundledResources[lang]) bundledResources[lang] = {};
-  bundledResources[lang][ns] = (module as any).default ?? module;
+  bundledResources[lang][ns] = (module as { default?: unknown }).default ?? module;
 }
 
 export const SUPPORTED_I18N_LANGUAGES = [

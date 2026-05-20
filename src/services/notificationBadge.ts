@@ -7,7 +7,13 @@
 
 import { App } from '@capacitor/app';
 
-const IS_NATIVE_APP = typeof (window as any).Capacitor !== 'undefined';
+interface CapacitorWindow {
+  Capacitor?: {
+    getPlatform?: () => string;
+  };
+}
+
+const IS_NATIVE_APP = typeof (window as unknown as CapacitorWindow).Capacitor !== 'undefined';
 
 let currentBadge = 0;
 
@@ -23,8 +29,9 @@ export async function setBadgeCount(count: number): Promise<void> {
 
   try {
     // Try Capacitor App plugin badge (if supported)
-    if ((App as any).setBadgeCount) {
-      await (App as any).setBadgeCount({ count: currentBadge });
+    const appWithBadge = App as unknown as { setBadgeCount?: (opts: { count: number }) => Promise<void> };
+    if (appWithBadge.setBadgeCount) {
+      await appWithBadge.setBadgeCount({ count: currentBadge });
     }
   } catch (e) {
     console.warn('[Badge] Failed to set badge:', e);

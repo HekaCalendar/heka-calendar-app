@@ -3,13 +3,19 @@
  * Handles browser and native app notifications for calendar events and notes
  */
 
-import type { NoteData } from '../types';
+import type { NoteData, HekaMonthIndex } from '../types';
 import { NotificationEngine } from './notificationEngine';
 import { NOTIFICATION_ID_RANGES } from '../types/notifications';
 import { hekaToCivil } from './calendarService';
 
+interface CapacitorWindow {
+  Capacitor?: {
+    getPlatform?: () => string;
+  };
+}
+
 // Check if running in Capacitor native app
-const IS_NATIVE_APP = typeof (window as any).Capacitor !== 'undefined';
+const IS_NATIVE_APP = typeof (window as unknown as CapacitorWindow).Capacitor !== 'undefined';
 
 // Import the plugin directly
 import { LocalNotifications } from '@capacitor/local-notifications';
@@ -295,7 +301,7 @@ export async function syncNoteNotifications(notes: Record<string, NoteData[]>): 
     const day = parseInt(parts[3]);
 
     // Convert HEKA date to civil calendar for accurate scheduling
-    const civilDate = hekaToCivil({ year, month: month as any, day });
+    const civilDate = hekaToCivil({ year, month: month as HekaMonthIndex, day });
     civilDate.setHours(9, 0, 0, 0); // 9 AM reminder
     
     // Only schedule if date is in the future

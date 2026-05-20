@@ -3,7 +3,8 @@
  * Enterprise-grade: every theme returns string[] of self-contained HTML pages.
  */
 
-import type { PrintOptions } from '../types';
+import type { PrintOptions, CountryCode } from '../types';
+import type { HekaMonthIndex } from '../types';
 import {
   HEKA_MONTHS,
   getArcType,
@@ -61,21 +62,21 @@ export function prepareYearData(
   const months: MonthData[] = [];
   for (let i = 0; i < 13; i++) {
     const month = HEKA_MONTHS[i];
-    const arc = getArcType(i as any);
-    const daysInMonth = getDaysInMonth(year, i as any);
-    const firstDayCivil = getCivilStartOfHekaMonth(year, i as any);
+    const arc = getArcType(i as HekaMonthIndex);
+    const daysInMonth = getDaysInMonth(year, i as HekaMonthIndex);
+    const firstDayCivil = getCivilStartOfHekaMonth(year, i as HekaMonthIndex);
     const startDayOffset = (firstDayCivil.getDay() + 1) % 7;
 
     const days: DayData[] = [];
     for (let day = 1; day <= daysInMonth; day++) {
-      const civilDate = hekaToCivil({ year, month: i as any, day });
+      const civilDate = hekaToCivil({ year, month: i as HekaMonthIndex, day });
       const noteKey = getNoteKey(year, i, day);
       days.push({
         day,
         civilDate,
         moonPhase: options.includeMoonPhases ? getMoonPhase(civilDate, 'N') : null,
         holidays: options.includeHolidays && location !== 'NONE'
-          ? getHolidaysForDate(civilDate, location as any)
+          ? getHolidaysForDate(civilDate, location as CountryCode)
           : [],
         notes: options.includeNotes ? (notes[noteKey] || []) : [],
       });

@@ -16,6 +16,7 @@ import { SUPPORTED_LANGUAGES, getWizardStrings } from '../../data/languages';
 import type { Language } from '../../data/languages';
 import { setLanguage } from '../../store/setupSlice';
 import { changeLanguage } from '../../i18n';
+import { useTranslation } from 'react-i18next';
 
 interface LanguageSelectorProps {
   selectedLanguage: string;
@@ -34,6 +35,7 @@ export const LanguageSelector: React.FC<LanguageSelectorProps> = ({
   selectedLanguage,
 }) => {
   const dispatch = useDispatch();
+  const { t } = useTranslation();
   const [isListOpen, setIsListOpen] = useState(true);
   const [search, setSearch] = useState('');
   const [typewriterText, setTypewriterText] = useState('');
@@ -205,6 +207,7 @@ export const LanguageSelector: React.FC<LanguageSelectorProps> = ({
               className="language-preview__change"
               onClick={handleReopenList}
               type="button"
+              aria-label={t('common.changeLanguage')}
             >
               <span className="language-preview__change-icon">
                 <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
@@ -242,7 +245,7 @@ export const LanguageSelector: React.FC<LanguageSelectorProps> = ({
             <button
               className="language-search__clear"
               onClick={() => { setSearch(''); searchInputRef.current?.focus(); }}
-              aria-label="Clear search"
+              aria-label={t('common.clear')}
               type="button"
             >
               <svg width="12" height="12" viewBox="0 0 12 12" fill="none">

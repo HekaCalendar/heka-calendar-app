@@ -43,6 +43,8 @@ export interface HekaPrintPlugin {
   ): PluginListenerHandle;
 }
 
+import { getErrorMessage, getErrorCode } from '../utils/errorUtils';
+
 const HekaPrint = registerPlugin<HekaPrintPlugin>('HekaPrint');
 
 export class PrintManager {
@@ -106,12 +108,12 @@ export class PrintManager {
     
     try {
       await HekaPrint.printPDF({ filePath, orientation, paperSize });
-    } catch (error: any) {
+    } catch (error) {
       console.error('[PrintManager] Print failed:', error);
-      
+
       // Handle specific error codes
-      if (error?.message?.includes('PRINT_NETWORK_REQUIRED') || 
-          error?.code === 'PRINT_NETWORK_REQUIRED') {
+      if (getErrorMessage(error).includes('PRINT_NETWORK_REQUIRED') ||
+          getErrorCode(error) === 'PRINT_NETWORK_REQUIRED') {
         throw new Error('Network connection required for printing');
       }
       

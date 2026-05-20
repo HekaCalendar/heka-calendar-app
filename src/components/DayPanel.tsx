@@ -28,7 +28,8 @@ import { getDailyAstrology, type DailyAstrologicalGuidance } from '../astrology/
 import { useMoonPhase } from '../astrology/hooks/useMoonPhase';
 import { profileManager } from '../astrology/services/natal/profileManager';
 import { calculatePersonalTransits, getCurrentPlanetaryPositions } from '../oracle/birthChartIntegration';
-import type { PersonalTransit } from '../oracle/birthChartIntegration';
+import type { PersonalTransit, BirthChart } from '../oracle/birthChartIntegration';
+import type { HekaMonthIndex } from '../types';
 import { calculateSunTimes, calculatePlanetaryHours } from '../astrology/services/calculations/swissCalculations';
 import { tutorialService } from '../services/tutorialService';
 
@@ -186,7 +187,7 @@ const DayPanelComponent: React.FC = () => {
             houses: activeProfile.chart.houses || {}
           };
           
-          const transits = calculatePersonalTransits(birthChartData as any, currentPositions, civilDate);
+          const transits = calculatePersonalTransits(birthChartData as unknown as BirthChart, currentPositions, civilDate);
           
           // Filter to major transits only (strength >= 60)
           const majorTransits = transits.filter(t => t.strength >= 60).slice(0, 3);
@@ -406,7 +407,7 @@ const DayPanelComponent: React.FC = () => {
     let duplicateCount = 0;
     
     for (let month = selectedDate.month; month < 13; month++) {
-      const daysInMonth = getDaysInMonth(selectedDate.year, month as any);
+      const daysInMonth = getDaysInMonth(selectedDate.year, month as HekaMonthIndex);
       
       for (let day = (month === selectedDate.month) ? selectedDate.day + 1 : 1; day <= daysInMonth; day++) {
         const testCivil = hekaToCivil({ year: selectedDate.year, month, day });
@@ -543,7 +544,7 @@ const DayPanelComponent: React.FC = () => {
       const [sourceYear, sourceMonth, sourceDay] = parts;
       
       // Get civil date and add ~28 days
-      const sourceCivil = hekaToCivil({ year: sourceYear, month: sourceMonth as any, day: sourceDay });
+      const sourceCivil = hekaToCivil({ year: sourceYear, month: sourceMonth as HekaMonthIndex, day: sourceDay });
       const nextMonthCivil = new Date(sourceCivil);
       nextMonthCivil.setDate(sourceCivil.getDate() + 28);
       
@@ -1048,14 +1049,14 @@ const DayPicker = memo(({ currentViewDate, onSelectDay, onCancel }: {
   const [pickerMonth, setPickerMonth] = useState(currentViewDate.month);
 
   const daysInMonth = useMemo(() =>
-    getDaysInMonth(pickerYear, pickerMonth as any),
+    getDaysInMonth(pickerYear, pickerMonth as HekaMonthIndex),
     [pickerYear, pickerMonth]
   );
 
   const monthName = HEKA_MONTHS[pickerMonth].name;
 
   const firstDayOffset = useMemo(() => {
-    const firstDayCivil = getCivilStartOfHekaMonth(pickerYear, pickerMonth as any);
+    const firstDayCivil = getCivilStartOfHekaMonth(pickerYear, pickerMonth as HekaMonthIndex);
     return (firstDayCivil.getDay() + 1) % 7; // Saturday-start
   }, [pickerYear, pickerMonth]);
 
@@ -1080,7 +1081,7 @@ const DayPicker = memo(({ currentViewDate, onSelectDay, onCancel }: {
           } else {
             setPickerMonth(m => m - 1);
           }
-        }}>←</button>
+        }} aria-label={t('common.previous')}>←</button>
         <span className="day-picker__month">{monthName} {pickerYear}</span>
         <button className="btn btn--icon" onClick={() => {
           if (pickerMonth === 12) {
@@ -1089,7 +1090,7 @@ const DayPicker = memo(({ currentViewDate, onSelectDay, onCancel }: {
           } else {
             setPickerMonth(m => m + 1);
           }
-        }}>→</button>
+        }} aria-label={t('common.nextItem')}>→</button>
       </div>
       <div className="day-picker__grid" style={{ marginBottom: '4px' }}>
         {DOW_HEADERS.map(dow => (
@@ -1132,7 +1133,7 @@ const MultiDayPicker = memo(({ currentViewDate, onSelectDays, onCancel }: {
   const [selectedDays, setSelectedDays] = useState<Set<number>>(new Set());
 
   const daysInMonth = useMemo(() =>
-    getDaysInMonth(pickerYear, pickerMonth as any),
+    getDaysInMonth(pickerYear, pickerMonth as HekaMonthIndex),
     [pickerYear, pickerMonth]
   );
 
@@ -1157,7 +1158,7 @@ const MultiDayPicker = memo(({ currentViewDate, onSelectDays, onCancel }: {
   }, [selectedDays, pickerYear, pickerMonth, onSelectDays]);
 
   const firstDayOffset = useMemo(() => {
-    const firstDayCivil = getCivilStartOfHekaMonth(pickerYear, pickerMonth as any);
+    const firstDayCivil = getCivilStartOfHekaMonth(pickerYear, pickerMonth as HekaMonthIndex);
     return (firstDayCivil.getDay() + 1) % 7;
   }, [pickerYear, pickerMonth]);
 
@@ -1183,7 +1184,7 @@ const MultiDayPicker = memo(({ currentViewDate, onSelectDays, onCancel }: {
             setPickerMonth(m => m - 1);
           }
           setSelectedDays(new Set());
-        }}>←</button>
+        }} aria-label={t('common.previous')}>←</button>
         <span className="day-picker__month">{monthName} {pickerYear}</span>
         <button className="btn btn--icon" onClick={() => {
           if (pickerMonth === 12) {
@@ -1193,7 +1194,7 @@ const MultiDayPicker = memo(({ currentViewDate, onSelectDays, onCancel }: {
             setPickerMonth(m => m + 1);
           }
           setSelectedDays(new Set());
-        }}>→</button>
+        }} aria-label={t('common.nextItem')}>→</button>
       </div>
       <div className="day-picker__grid" style={{ marginBottom: '4px' }}>
         {DOW_HEADERS.map(dow => (

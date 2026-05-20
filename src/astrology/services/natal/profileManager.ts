@@ -607,11 +607,6 @@ export class ProfileManager {
     const elements = calculateElementalBalanceWithSystem(planets, elementMap as Record<string, string>);
     const modalities = calculateModalityBalanceWithSystem(planets, use13Signs);
     
-    // Safety check: ensure birth data date is not today's date (indicates corruption)
-    const today = new Date().toISOString().split('T')[0];
-    if (birthData.date === today) {
-      console.error('[ProfileManager] WARNING: Birth data appears to be corrupted (using today\'s date). Birth date:', birthData.date);
-    }
     
     const chart: NatalChart = {
       id: `natal-${profileId}`,

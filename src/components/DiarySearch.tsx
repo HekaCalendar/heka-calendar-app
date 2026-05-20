@@ -50,7 +50,8 @@ export const DiarySearch: React.FC<DiarySearchProps> = ({
     if (typeof theme === 'string') return theme;
     if (typeof theme === 'object' && theme !== null) {
       // Extract theme from object if passed incorrectly
-      return (theme as any).id || (theme as any).theme || 'night';
+      const themeObj = theme as { id?: string; theme?: string };
+      return themeObj.id || themeObj.theme || 'night';
     }
     return 'night';
   }, [theme]);
@@ -191,13 +192,13 @@ export const DiarySearch: React.FC<DiarySearchProps> = ({
             <input
               type="text"
               className="diary-search-input"
-              placeholder="Search Oracle entries & calendar notes..."
+              placeholder={i18n.t('journal.searchPlaceholder')}
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               autoFocus
             />
             {query && (
-              <button className="diary-search-clear" onClick={() => setQuery('')}>
+              <button className="diary-search-clear" onClick={() => setQuery('')} aria-label={i18n.t('common.clear')}>
                 ×
               </button>
             )}
@@ -211,7 +212,7 @@ export const DiarySearch: React.FC<DiarySearchProps> = ({
         <div className="diary-search-filters">
           <div className="diary-search-filter-group">
             <label>Source:</label>
-            <select value={filter} onChange={(e) => setFilter(e.target.value as any)}>
+            <select value={filter} onChange={(e) => setFilter(e.target.value as typeof filter)}>
               <option value="all">All sources</option>
               <option value="diary">✨ Oracle Diary</option>
               <option value="calendar">📅 Calendar Notes</option>
@@ -220,7 +221,7 @@ export const DiarySearch: React.FC<DiarySearchProps> = ({
           
           <div className="diary-search-filter-group">
             <label>Time:</label>
-            <select value={dateRange} onChange={(e) => setDateRange(e.target.value as any)}>
+            <select value={dateRange} onChange={(e) => setDateRange(e.target.value as typeof dateRange)}>
               <option value="all">All time</option>
               <option value="week">Last week</option>
               <option value="month">Last month</option>

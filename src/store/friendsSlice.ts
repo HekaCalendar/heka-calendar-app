@@ -14,6 +14,7 @@ import {
   TaskShareService,
   type SharedTask,
 } from '../services/taskShareService';
+import { getErrorMessage } from '../utils/errorUtils';
 
 // ============================================================================
 // Types
@@ -79,8 +80,8 @@ export const generateInviteCode = createAsyncThunk(
         return rejectWithValue('Unable to generate code. Make sure you are signed in and Firebase is configured.');
       }
       return code;
-    } catch (err: any) {
-      return rejectWithValue(err?.message || 'Failed to generate invite code. Check your connection and Firestore rules.');
+    } catch (err) {
+      return rejectWithValue(getErrorMessage(err, 'Failed to generate invite code. Check your connection and Firestore rules.'));
     }
   }
 );
@@ -94,8 +95,8 @@ export const acceptInvite = createAsyncThunk(
         return rejectWithValue(result.error);
       }
       return true;
-    } catch (err: any) {
-      return rejectWithValue(err?.message || 'Failed to accept invite. Check your connection and Firestore rules.');
+    } catch (err) {
+      return rejectWithValue(getErrorMessage(err, 'Failed to accept invite. Check your connection and Firestore rules.'));
     }
   }
 );
@@ -185,8 +186,8 @@ export const acceptFriendRequest = createAsyncThunk(
         return rejectWithValue(result.error);
       }
       return friendshipId;
-    } catch (err: any) {
-      return rejectWithValue(err?.message || 'Failed to accept friend request.');
+    } catch (err) {
+      return rejectWithValue(getErrorMessage(err, 'Failed to accept friend request.'));
     }
   }
 );
@@ -200,8 +201,8 @@ export const declineFriendRequest = createAsyncThunk(
         return rejectWithValue(result.error);
       }
       return friendshipId;
-    } catch (err: any) {
-      return rejectWithValue(err?.message || 'Failed to decline friend request.');
+    } catch (err) {
+      return rejectWithValue(getErrorMessage(err, 'Failed to decline friend request.'));
     }
   }
 );

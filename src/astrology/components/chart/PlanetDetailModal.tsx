@@ -74,7 +74,7 @@ export const PlanetDetailModal: React.FC<PlanetDetailModalProps> = ({
     <div style={styles.overlay} onClick={onClose}>
       <div style={styles.modal} onClick={(e) => e.stopPropagation()}>
         {/* Close Button */}
-        <button style={styles.closeButton} onClick={onClose}>
+        <button style={styles.closeButton} onClick={onClose} aria-label={t('common.close')}>
           ✕
         </button>
         

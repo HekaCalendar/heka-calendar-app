@@ -135,7 +135,7 @@ export const CircleSettings: React.FC<CircleSettingsProps> = ({ isOpen, onClose 
           <h2 style={{ margin: 0, fontSize: '18px', fontWeight: 600, color: '#e0e0e0' }}>
             {t('settings.title')}
           </h2>
-          <button onClick={onClose} style={{
+          <button onClick={onClose} aria-label={t('close')} style={{
             background: 'none',
             border: 'none',
             color: 'rgba(224,224,224,0.6)',

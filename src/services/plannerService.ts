@@ -18,6 +18,7 @@ import {
 import { db, auth, getCurrentUser, refreshAuthToken, withTemporaryFirestore } from './firebase';
 import { cancelTaskReminder, scheduleTaskReminder, reconcileTaskNotifications } from './notificationService';
 import { store } from '../store';
+import { getErrorMessage, getErrorCode } from '../utils/errorUtils';
 import { eventBus } from './eventBus';
 import {
   syncPlannerTasks,
@@ -257,9 +258,9 @@ export async function createPlannerTask(input: CreateTaskInput): Promise<Planner
   try {
     await setDoc(taskRef, stripUndefined(task));
     firestoreSuccess = true;
-  } catch (writeErr: any) {
-    const isPermissionError = writeErr?.code === 'permission-denied' || writeErr?.message?.includes('Missing or insufficient permissions');
-    console.error('[createPlannerTask] Firestore write failed:', writeErr?.code, writeErr?.message, 'isPermissionError:', isPermissionError);
+  } catch (writeErr) {
+    const isPermissionError = getErrorCode(writeErr) === 'permission-denied' || getErrorMessage(writeErr).includes('Missing or insufficient permissions');
+    console.error('[createPlannerTask] Firestore write failed:', getErrorCode(writeErr), getErrorMessage(writeErr), 'isPermissionError:', isPermissionError);
     if (isPermissionError) {
       const newToken = await refreshAuthToken(true);
       if (newToken && auth?.currentUser) {
@@ -273,8 +274,8 @@ export async function createPlannerTask(input: CreateTaskInput): Promise<Planner
             await setDoc(retryRef, stripUndefined(task));
           });
           firestoreSuccess = true;
-        } catch (retryErr: any) {
-          console.error('[createPlannerTask] Retry failed:', retryErr?.code, retryErr?.message);
+        } catch (retryErr) {
+          console.error('[createPlannerTask] Retry failed:', getErrorCode(retryErr), getErrorMessage(retryErr));
         }
       }
     }
@@ -340,7 +341,7 @@ export async function updatePlannerTaskDoc(
     if (updates.isCompleted) {
       patch.completedAt = new Date().toISOString();
     } else {
-      (patch as any).completedAt = deleteField();
+      (patch as unknown as Record<string, unknown>).completedAt = deleteField();
     }
   }
   if (updates.energyScore !== undefined) patch.energyScore = updates.energyScore;
@@ -356,7 +357,7 @@ export async function updatePlannerTaskDoc(
       civilDate.setHours(hours, minutes, 0, 0);
       patch.dueDateTime = civilDate.toISOString();
     } else {
-      (patch as any).dueDateTime = deleteField();
+      (patch as unknown as Record<string, unknown>).dueDateTime = deleteField();
     }
   }
 

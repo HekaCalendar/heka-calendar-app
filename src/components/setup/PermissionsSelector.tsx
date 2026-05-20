@@ -8,6 +8,7 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
+import { getErrorMessage } from '../../utils/errorUtils';
 import type { AppDispatch } from '../../store';
 import { setLocationEnabled, setNotificationsEnabled } from '../../store/setupSlice';
 import { requestNotificationPermission } from '../../services/notificationService';
@@ -97,19 +98,18 @@ export const PermissionsSelector: React.FC<PermissionsSelectorProps> = ({
         setLocationState(false);
         return;
       }
-      const position = await new Promise<GeolocationPosition>((resolve, reject) => {
+      await new Promise<GeolocationPosition>((resolve, reject) => {
         navigator.geolocation.getCurrentPosition(resolve, reject, {
           enableHighAccuracy: true,
           timeout: 10000,
           maximumAge: 0,
         });
       });
-      console.log('[Setup] Location granted:', position.coords.latitude, position.coords.longitude);
       setLocationState(true);
-    } catch (err: any) {
+    } catch (err) {
       console.error('[Setup] Location denied:', err);
       setLocationError(
-        err?.message?.includes('denied') ? t('permissionDenied') : t('unableToGetLocation')
+        getErrorMessage(err).includes('denied') ? t('permissionDenied') : t('unableToGetLocation')
       );
       setLocationState(false);
     } finally {

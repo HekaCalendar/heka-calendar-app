@@ -22,6 +22,8 @@ import {
 } from '../services/firebase';
 import { signInWithGoogleNative } from '../services/nativeAuth';
 import { persistence, DEFAULT_PROFILE_PREFERENCES } from '../astrology/services/persistence';
+import type { AstroProfile, NatalChart, ProfilePreferences } from '../astrology/types';
+import { getErrorMessage, getErrorCode } from '../utils/errorUtils';
 
 interface AuthModalProps {
   isOpen: boolean;
@@ -129,32 +131,34 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
 
         if (cloudAstro.profiles.length > 0 || cloudAstro.charts.length > 0) {
           // Merge: cloud wins if newer
+          const cloudProfiles = cloudAstro.profiles as unknown as AstroProfile[];
+          const cloudCharts = cloudAstro.charts as unknown as NatalChart[];
           const localProfileMap = new Map(localProfiles.map(p => [p.id, p]));
-          for (const cp of cloudAstro.profiles) {
+          for (const cp of cloudProfiles) {
             const local = localProfileMap.get(cp.id);
-            const cloudTime = new Date(cp._syncedAt || cp.updatedAt || 0).getTime();
-            const localTime = local ? new Date((local as any).updatedAt || 0).getTime() : 0;
+            const cloudTime = new Date((cp as unknown as { _syncedAt?: string })._syncedAt || cp.updatedAt || 0).getTime();
+            const localTime = local ? new Date((local as unknown as { updatedAt?: string }).updatedAt || 0).getTime() : 0;
             if (!local || cloudTime > localTime) {
-              await persistence.saveProfile(cp);
-              localProfileMap.set(cp.id, cp);
+              await persistence.saveProfile(cp as unknown as AstroProfile);
+              localProfileMap.set(cp.id, cp as unknown as AstroProfile);
             }
           }
           const localChartMap = new Map(localCharts.map(c => [c.id, c]));
-          for (const cc of cloudAstro.charts) {
+          for (const cc of cloudCharts) {
             const local = localChartMap.get(cc.id);
-            const cloudTime = new Date(cc._syncedAt || cc.calculatedAt || 0).getTime();
-            const localTime = local ? new Date((local as any).calculatedAt || 0).getTime() : 0;
+            const cloudTime = new Date((cc as unknown as { _syncedAt?: string })._syncedAt || cc.calculatedAt || 0).getTime();
+            const localTime = local ? new Date((local as unknown as { calculatedAt?: string }).calculatedAt || 0).getTime() : 0;
             if (!local || cloudTime > localTime) {
-              await persistence.saveChart(cc);
-              localChartMap.set(cc.id, cc);
+              await persistence.saveChart(cc as unknown as NatalChart);
+              localChartMap.set(cc.id, cc as unknown as NatalChart);
             }
           }
           if (cloudAstro.preferences) {
             const localP = await persistence.getPreferences();
-            const cloudTime = new Date(cloudAstro.preferences._syncedAt || 0).getTime();
-            const localTime = localP ? new Date((localP as any)._syncedAt || 0).getTime() : 0;
+            const cloudTime = new Date((cloudAstro.preferences as unknown as { _syncedAt?: string })._syncedAt || 0).getTime();
+            const localTime = localP ? new Date((localP as unknown as { _syncedAt?: string })._syncedAt || 0).getTime() : 0;
             if (!localP || cloudTime > localTime) {
-              await persistence.savePreferences(cloudAstro.preferences);
+              await persistence.savePreferences(cloudAstro.preferences as unknown as ProfilePreferences);
             }
           }
           if (cloudAstro.selectedProfileId) {
@@ -183,8 +187,8 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
       }
       
       dispatch(setLastSync(new Date().toISOString()));
-    } catch (err: any) {
-      dispatch(setSyncError(err.message || 'Sync failed'));
+    } catch (err) {
+      dispatch(setSyncError(getErrorMessage(err, 'Sync failed')));
     } finally {
       dispatch(setSyncing(false));
     }
@@ -202,8 +206,8 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
         setView('profile');
         setSuccess(null);
       }, 1000);
-    } catch (err: any) {
-      setError(err.message);
+    } catch (err) {
+      setError(getErrorMessage(err));
     } finally {
       setIsLoading(false);
     }
@@ -219,11 +223,11 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
         setView('profile');
         setSuccess(null);
       }, 1000);
-    } catch (err: any) {
-      if (err.code === 'auth/cancelled') {
+    } catch (err) {
+      if (getErrorCode(err) === 'auth/cancelled') {
         // User cancelled — no error message needed
       } else {
-        setError(err.message || 'Google Sign-In failed');
+        setError(getErrorMessage(err, 'Google Sign-In failed'));
       }
     } finally {
       setIsLoading(false);
@@ -242,8 +246,8 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
         setView('profile');
         setSuccess(null);
       }, 1000);
-    } catch (err: any) {
-      setError(err.message);
+    } catch (err) {
+      setError(getErrorMessage(err));
     } finally {
       setIsLoading(false);
     }
@@ -257,8 +261,8 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
     try {
       await resetPassword(email);
       setSuccess('Password reset email sent!');
-    } catch (err: any) {
-      setError(err.message);
+    } catch (err) {
+      setError(getErrorMessage(err));
     } finally {
       setIsLoading(false);
     }
@@ -269,8 +273,8 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
     try {
       await logOut();
       setView('login');
-    } catch (err: any) {
-      setError(err.message);
+    } catch (err) {
+      setError(getErrorMessage(err));
     } finally {
       setIsLoading(false);
     }
@@ -332,7 +336,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   className="auth-form__input"
-                  placeholder="your@email.com"
+                  placeholder={t('auth.emailPlaceholder')}
                   required
                 />
               </div>
@@ -343,7 +347,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   className="auth-form__input"
-                  placeholder="••••••••"
+                  placeholder={t('auth.passwordPlaceholder')}
                   required
                 />
               </div>
@@ -396,7 +400,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
                   value={displayName}
                   onChange={(e) => setDisplayName(e.target.value)}
                   className="auth-form__input"
-                  placeholder="Your name"
+                  placeholder={t('auth.displayNamePlaceholder')}
                   required
                 />
               </div>
@@ -407,7 +411,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   className="auth-form__input"
-                  placeholder="your@email.com"
+                  placeholder={t('auth.emailPlaceholder')}
                   required
                 />
               </div>
@@ -418,7 +422,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   className="auth-form__input"
-                  placeholder="••••••••"
+                  placeholder={t('auth.passwordPlaceholder')}
                   required
                   minLength={6}
                 />
@@ -469,7 +473,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   className="auth-form__input"
-                  placeholder="your@email.com"
+                  placeholder={t('auth.emailPlaceholder')}
                   required
                 />
               </div>

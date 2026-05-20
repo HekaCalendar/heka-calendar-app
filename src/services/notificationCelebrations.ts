@@ -8,6 +8,7 @@
 
 import { NotificationEngine } from './notificationEngine';
 import { store } from '../store';
+import type { RootState } from '../store';
 
 const CELEBRATION_ID_BASE = 700000;
 
@@ -222,7 +223,7 @@ export async function checkCelestialMilestone(eventType: string, eventCount: num
  */
 export async function checkPersonalRecords(): Promise<void> {
   const state = loadState();
-  const currentStreak = (store.getState() as any).planner?.streak || 0;
+  const currentStreak = (store.getState() as RootState).planner?.stats?.currentStreak || 0;
 
   // If current streak is at a new personal best (and > 7 days)
   if (currentStreak > state.personalRecords.longestStreak && currentStreak > 7) {

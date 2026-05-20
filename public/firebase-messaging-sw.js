@@ -76,7 +76,11 @@ self.addEventListener('notificationclick', (event) => {
   event.notification.close();
 
   const data = event.notification.data || {};
-  const url = data.url || data.deepLink || '/';
+  let url = data.url || data.deepLink || '/';
+  // Validate URL to prevent open redirect attacks
+  if (!url.startsWith('/') && !url.startsWith(self.location.origin)) {
+    url = '/';
+  }
 
   event.waitUntil(
     self.clients.matchAll({ type: 'window', includeUncontrolled: true }).then((clientList) => {

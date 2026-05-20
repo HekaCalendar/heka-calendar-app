@@ -130,7 +130,7 @@ export const JournalSettings: React.FC<JournalSettingsProps> = ({ isOpen, onClos
         {/* Header */}
         <div className="journal-settings-header">
           <h2 className="journal-settings-title">{t('settings.title')}</h2>
-          <button className="journal-settings-close" onClick={onClose}>×</button>
+          <button className="journal-settings-close" onClick={onClose} aria-label={t('editor.close')}>×</button>
         </div>
 
         <div className="journal-settings-content" style={{ fontSize: `${preferences.fontSize}px` }}>

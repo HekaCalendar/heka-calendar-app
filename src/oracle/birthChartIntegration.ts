@@ -138,7 +138,7 @@ const PLANET_SIGNIFICANCE: Record<string, number> = {
 // UTILITY FUNCTIONS
 // ============================================================================
 
-import { getSignFromLongitude, toDegree, ZODIAC_SIGNS_13 } from '../astrology/types/core';
+import { getSignFromLongitude, toDegree, ZODIAC_SIGNS_13, type ZodiacSign13 } from '../astrology/types/core';
 
 function getWholeSignHouse(longitude: number, ascendantDegree: number, use13Signs?: boolean): number {
   const normLong = ((longitude % 360) + 360) % 360;
@@ -151,8 +151,8 @@ function getWholeSignHouse(longitude: number, ascendantDegree: number, use13Sign
     // 13-sign mode: use actual sign names and their positions in the 13-sign order
     const ascSign = getSignFromLongitude(toDegree(normAsc), true);
     const planetSign = getSignFromLongitude(toDegree(normLong), true);
-    const ascIndex = ZODIAC_SIGNS_13.indexOf(ascSign as any);
-    const planetIndex = ZODIAC_SIGNS_13.indexOf(planetSign as any);
+    const ascIndex = ZODIAC_SIGNS_13.indexOf(ascSign as ZodiacSign13);
+    const planetIndex = ZODIAC_SIGNS_13.indexOf(planetSign as ZodiacSign13);
     if (ascIndex === -1 || planetIndex === -1) return 1;
     let house = planetIndex - ascIndex + 1;
     if (house <= 0) house += 13;
@@ -501,7 +501,16 @@ export async function getCurrentPlanetaryPositions(
     
     for (const [planet, pos] of Object.entries(positions)) {
       // Handle different property names that might exist on CelestialBody
-      const celestialBody = pos as any;
+      interface ExtendedCelestialBody {
+        longitude: number;
+        sign?: string;
+        degreeInSign?: number;
+        minute?: number;
+        isRetrograde?: boolean;
+        retrograde?: boolean;
+        speed?: number;
+      }
+      const celestialBody = pos as unknown as ExtendedCelestialBody;
       result[planet] = {
         longitude: celestialBody.longitude,
         sign: (celestialBody.sign || 'aries').toLowerCase() as ZodiacSign,

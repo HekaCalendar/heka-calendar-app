@@ -9,7 +9,7 @@
  */
 
 import type { AppDispatch, RootState } from '../store';
-import type { FeatureDiscoveryKey, AppEngagement } from '../types';
+import type { FeatureDiscoveryKey, AppEngagement, CountryCode } from '../types';
 import {
   trackAppOpen,
   trackTimeSpent,
@@ -242,7 +242,7 @@ export function trackLocationExploration(
   location: string,
   subRegion?: string | null
 ): void {
-  dispatch(trackLocationChange({ location: location as any, subRegion }));
+  dispatch(trackLocationChange({ location: location as CountryCode, subRegion }));
 }
 
 /**

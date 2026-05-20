@@ -5,6 +5,7 @@ import type { AppDispatch } from '../store';
 import { acceptInvite } from '../store/friendsSlice';
 import { clearPendingInvite } from '../services/deepLinkService';
 import { tutorialService } from '../services/tutorialService';
+import { getErrorMessage } from '../utils/errorUtils';
 
 interface WelcomeModalProps {
   isOpen: boolean;
@@ -38,8 +39,8 @@ export const WelcomeModal: React.FC<WelcomeModalProps> = ({
       // Creates a pending friendship — the inviter will need to accept
       clearPendingInvite();
       setSuccess(true);
-    } catch (err: any) {
-      setError(err?.message || t('failedToSendFriendRequest'));
+    } catch (err) {
+      setError(getErrorMessage(err, t('failedToSendFriendRequest')));
     } finally {
       setIsLoading(false);
     }

@@ -20,6 +20,7 @@ import { calculateAspects } from '../../astrology/services/calculations/aspects'
 import { getSunInSignInterpretation } from '../../astrology/data/interpretations/planetInSign';
 import { getHouseMeaning } from '../../astrology/data/houseMeanings';
 import { calculateBirthMansion, describeMansion, type BirthMansion } from '../../astrology/services/calculations/nakshatras';
+import type { PlanetId, CelestialBody } from '../../astrology/types';
 
 // ── Types ────────────────────────────────────────────────────────────────────
 
@@ -354,7 +355,7 @@ export async function generateNatalReport(profile: AstroProfile): Promise<NatalR
   const birthMansion = calculateBirthMansion(birthDateObj, profile.timezone, profile.location.latitude, profile.location.longitude);
 
   // Derived data
-  const tropicalAspects = calculateAspects(tropicalChart.bodies, { includeMinorAspects: false }) as any[];
+  const tropicalAspects = calculateAspects(tropicalChart.bodies as Record<PlanetId, CelestialBody>, { includeMinorAspects: false });
   const tropicalPatterns = detectPatterns(tropicalChart.bodies);
   const tropicalElements = calculateElementalBalance(tropicalChart.bodies);
   const tropicalModalities = calculateModalityBalance(tropicalChart.bodies);

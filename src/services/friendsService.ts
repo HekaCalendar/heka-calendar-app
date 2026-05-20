@@ -23,6 +23,7 @@ import {
 import { db, getCurrentUser } from './firebase';
 import { NotificationEngine } from './notificationEngine';
 import { safeAsync, withRetry } from '../utils/errorHandling';
+import { getErrorCode } from '../utils/errorUtils';
 import { eventBus } from './eventBus';
 
 // ============================================================================
@@ -371,7 +372,7 @@ export function subscribeToFriends(callback: (friends: FriendProfile[]) => void)
       eventBus.emit('heka:error:logged', {
         context: 'subscribeToFriends',
         message: err instanceof Error ? err.message : 'Firestore listener error',
-        code: (err as any)?.code,
+        code: getErrorCode(err),
       });
     }
   );
@@ -479,7 +480,7 @@ export function subscribeToFriendRequests(callback: (requests: FriendProfile[]) 
       eventBus.emit('heka:error:logged', {
         context: 'subscribeToFriendRequests',
         message: err instanceof Error ? err.message : 'Firestore listener error',
-        code: (err as any)?.code,
+        code: getErrorCode(err),
       });
     }
   );
@@ -658,7 +659,7 @@ export function subscribeToMessages(
       eventBus.emit('heka:error:logged', {
         context: 'subscribeToMessages',
         message: err instanceof Error ? err.message : 'Firestore listener error',
-        code: (err as any)?.code,
+        code: getErrorCode(err),
       });
     }
   );
@@ -838,7 +839,7 @@ export function subscribeToTasks(callback: (tasks: TaskRitual[]) => void): () =>
       eventBus.emit('heka:error:logged', {
         context: 'subscribeToTasks:created',
         message: err instanceof Error ? err.message : 'Firestore listener error',
-        code: (err as any)?.code,
+        code: getErrorCode(err),
       });
     }
   );
@@ -859,7 +860,7 @@ export function subscribeToTasks(callback: (tasks: TaskRitual[]) => void): () =>
       eventBus.emit('heka:error:logged', {
         context: 'subscribeToTasks:assigned',
         message: err instanceof Error ? err.message : 'Firestore listener error',
-        code: (err as any)?.code,
+        code: getErrorCode(err),
       });
     }
   );
@@ -913,7 +914,7 @@ export function subscribeToFriendPresence(
       eventBus.emit('heka:error:logged', {
         context: 'subscribeToFriendPresence',
         message: err instanceof Error ? err.message : 'Firestore listener error',
-        code: (err as any)?.code,
+        code: getErrorCode(err),
       });
     }
   );

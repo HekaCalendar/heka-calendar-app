@@ -18,6 +18,7 @@ import {
   signOut,
   type UserCredential,
 } from 'firebase/auth';
+import { getErrorMessage, getErrorCode } from '../utils/errorUtils';
 import { isFirebaseConfigured } from './firebase';
 
 export class NativeAuthError extends Error {
@@ -59,20 +60,20 @@ export async function signInWithGoogleNative(): Promise<UserCredential> {
     const userCredential = await signInWithCredential(auth, googleCredential);
 
     return userCredential;
-  } catch (error: any) {
+  } catch (error) {
     // Map common plugin errors to friendly messages
-    if (error.code === '10' || error.message?.includes('DEVELOPER_ERROR')) {
+    if (getErrorCode(error) === '10' || getErrorMessage(error).includes('DEVELOPER_ERROR')) {
       throw new NativeAuthError(
         'Google Sign-In configuration error. Please ensure the SHA-1 fingerprint is added to Firebase Console.',
         'auth/configuration-error'
       );
     }
-    if (error.code === '16' || error.message?.includes('CANCELED')) {
+    if (getErrorCode(error) === '16' || getErrorMessage(error).includes('CANCELED')) {
       throw new NativeAuthError('Sign in was cancelled', 'auth/cancelled');
     }
     throw new NativeAuthError(
-      error.message || 'Google Sign-In failed',
-      error.code
+      getErrorMessage(error, 'Google Sign-In failed'),
+      getErrorCode(error) || 'auth/unknown'
     );
   }
 }

@@ -354,7 +354,7 @@ export const FriendsModal: React.FC<FriendsModalProps> = ({ isOpen, onClose }) =
               ⚙️
             </button>
             
-            <button className="cosmic-circle__close" onClick={onClose}>×</button>
+            <button className="cosmic-circle__close" onClick={onClose} aria-label={t('close')}>×</button>
           </div>
         </header>
 
@@ -500,9 +500,10 @@ export const FriendsModal: React.FC<FriendsModalProps> = ({ isOpen, onClose }) =
               ) : (
                 <div className="circle-messages">
                   <div className="circle-messages__header">
-                    <button 
+                    <button
                       className="circle-messages__back"
                       onClick={() => dispatch(setSelectedFriend(null))}
+                      aria-label={t('common.back')}
                     >
                       ←
                     </button>
@@ -792,6 +793,7 @@ export const FriendsModal: React.FC<FriendsModalProps> = ({ isOpen, onClose }) =
                             });
                           }}
                           title={t('requests.acceptTitle')}
+                          aria-label={t('common.confirm')}
                           style={{ background: 'rgba(34, 197, 94, 0.2)', color: '#4ade80' }}
                         >
                           ✓
@@ -803,6 +805,7 @@ export const FriendsModal: React.FC<FriendsModalProps> = ({ isOpen, onClose }) =
                             void dispatch(declineFriendRequest(friendshipId));
                           }}
                           title={t('requests.declineTitle')}
+                          aria-label={t('common.delete')}
                           style={{ background: 'rgba(239, 68, 68, 0.2)', color: '#f87171' }}
                         >
                           ✕

@@ -216,9 +216,9 @@ export const VoidMoonCalendar: React.FC = () => {
         </div>
         
         <div className="vm-nav">
-          <button onClick={prevMonth} className="vm-nav-btn">←</button>
+          <button onClick={prevMonth} className="vm-nav-btn" aria-label={i18n.t('common.previous')}>←</button>
           <button onClick={goToToday} className="vm-nav-btn today">Today</button>
-          <button onClick={nextMonth} className="vm-nav-btn">→</button>
+          <button onClick={nextMonth} className="vm-nav-btn" aria-label={i18n.t('common.nextItem')}>→</button>
         </div>
       </div>
 

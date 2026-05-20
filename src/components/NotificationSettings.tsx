@@ -19,7 +19,7 @@ export const NotificationSettings: React.FC = () => {
 
   // Check if in native app context
   useEffect(() => {
-    const checkNative = typeof window !== 'undefined' && !!(window as any).Capacitor;
+    const checkNative = typeof window !== 'undefined' && !!(window as unknown as { Capacitor?: unknown }).Capacitor;
     setIsNativeApp(checkNative);
   }, []);
 

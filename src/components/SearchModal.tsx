@@ -470,6 +470,7 @@ export const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose }) => 
                   display: 'flex', alignItems: 'center', justifyContent: 'center',
                   fontSize: '1rem',
                 }}
+                aria-label={t('common.clear')}
               >
                 ×
               </button>
@@ -485,6 +486,7 @@ export const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose }) => 
                 fontSize: '1.25rem',
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
               }}
+              aria-label={t('common.close')}
             >
               ×
             </button>

@@ -78,20 +78,33 @@ export async function withRetry<T>(
 /**
  * Narrow an `unknown` error to a safe shape.
  */
+function getCodeFromError(err: unknown): string | undefined {
+  if (err instanceof Error) {
+    const e = err as unknown as Record<string, unknown>;
+    const code = e.code ?? e.status;
+    return typeof code === 'string' ? code : undefined;
+  }
+  if (err && typeof err === 'object') {
+    const e = err as Record<string, unknown>;
+    const code = e.code ?? e.status;
+    return typeof code === 'string' ? code : undefined;
+  }
+  return undefined;
+}
+
 export function handleUnknownError(err: unknown): { message: string; code?: string } {
   if (err instanceof Error) {
-    // Firebase/Firestore errors often carry a `code` property
-    const code = (err as any).code ?? (err as any).status;
-    return { message: err.message, code: typeof code === 'string' ? code : undefined };
+    return { message: err.message, code: getCodeFromError(err) };
   }
   if (typeof err === 'string') {
     return { message: err };
   }
   if (err && typeof err === 'object') {
-    // Handle plain objects with code/message (e.g., Firestore error objects)
-    const code = (err as any).code ?? (err as any).status;
-    const message = (err as any).message || 'An unknown error occurred';
-    return { message, code: typeof code === 'string' ? code : undefined };
+    const message = (err as Record<string, unknown>).message;
+    return {
+      message: typeof message === 'string' ? message : 'An unknown error occurred',
+      code: getCodeFromError(err)
+    };
   }
   return { message: 'An unknown error occurred' };
 }

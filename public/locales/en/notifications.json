@@ -1,0 +1,71 @@
+{
+  "timePreferences": {
+    "title": "Time Preferences",
+    "description": "Customize when each notification type is delivered. Times use your device timezone.",
+    "types": {
+      "dailyBriefing": { "label": "Daily Briefing", "description": "Your morning celestial overview" },
+      "dailyCelestialTips": { "label": "Daily Celestial Tips", "description": "Personalized cosmic guidance" },
+      "eveningReflection": { "label": "Evening Reflection", "description": "Prompt to reflect on your day" },
+      "streakSaver": { "label": "Streak Saver", "description": "Gentle nudge to keep your streak alive" },
+      "holidayReminders": { "label": "Holiday Reminders", "description": "Upcoming holidays and observances" },
+      "fullMoonReminders": { "label": "Full Moon", "description": "Full moon illumination alert" },
+      "newMoonReminders": { "label": "New Moon", "description": "New moon intention-setting" },
+      "sunriseWakeUp": { "label": "Sunrise Wake-Up", "description": "Gentle alarm at local sunrise" }
+    },
+    "events": {
+      "fixedTime": "Fixed time",
+      "sunrise": "At sunrise 🌅",
+      "sunset": "At sunset 🌇",
+      "moonrise": "At moonrise 🌙"
+    },
+    "customBadge": "Custom",
+    "laterOnWeekends": "Later on weekends",
+    "offsetMinutes": "+{{minutes}} min",
+    "reset": "Reset",
+    "timePickerHourLabel": "Hour",
+    "timePickerMinuteLabel": "Minute"
+  },
+  "vacationMode": {
+    "title": "🏖️ Vacation Mode",
+    "description": "Silence non-essential notifications while keeping what matters most.",
+    "active": "Active — only allowed types will notify",
+    "paused": "Paused — all enabled notifications fire normally",
+    "autoDisableAfter": "Auto-disable after:",
+    "clearDate": "Clear",
+    "leaveBlankHint": "Leave blank to stay in vacation mode until manually turned off.",
+    "allowedTypesTitle": "Still allow these notifications:",
+    "allowedTypes": {
+      "streakSaver": "Streak Saver",
+      "streakProtection": "Streak Protection",
+      "friendRequest": "Friend Requests",
+      "taskDueSoon": "Task Due Soon",
+      "voidMoonEntered": "Void Moon Alert"
+    }
+  },
+  "focusSchedules": {
+    "title": "Focus Schedules",
+    "description": "Create time blocks where only certain notification tiers are allowed. Perfect for deep work or wind-down time.",
+    "addButton": "+ Add Focus Schedule",
+    "namePlaceholder": "Schedule name (e.g. Deep Work)",
+    "save": "Save",
+    "cancel": "Cancel",
+    "from": "From",
+    "to": "to",
+    "days": {
+      "sun": "Sun",
+      "mon": "Mon",
+      "tue": "Tue",
+      "wed": "Wed",
+      "thu": "Thu",
+      "fri": "Fri",
+      "sat": "Sat"
+    },
+    "tiers": {
+      "core": "Core",
+      "standard": "Standard",
+      "ambient": "Ambient"
+    },
+    "deleteSchedule": "Delete focus schedule",
+    "toggleSchedule": "Toggle focus schedule"
+  }
+}

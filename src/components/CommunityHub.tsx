@@ -309,6 +309,7 @@ export const CommunityHub: React.FC<CommunityHubProps> = ({ isOpen, onClose }) =
             const idx = keys.indexOf(selectedRegion);
             setSelectedRegion(keys[(idx - 1 + keys.length) % keys.length]);
           }}
+          aria-label={i18n.t('common.previous')}
         >
           ‹
         </button>
@@ -323,6 +324,7 @@ export const CommunityHub: React.FC<CommunityHubProps> = ({ isOpen, onClose }) =
             const idx = keys.indexOf(selectedRegion);
             setSelectedRegion(keys[(idx + 1) % keys.length]);
           }}
+          aria-label={i18n.t('common.nextItem')}
         >
           ›
         </button>

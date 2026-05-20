@@ -85,7 +85,7 @@ export const DayPicker = memo(({ currentViewDate, onSelectDay, onCancel }: DayPi
           } else {
             setPickerMonth(m => m - 1);
           }
-        }}>←</button>
+        }} aria-label={t('common.previous')}>←</button>
         <span className="day-picker__month">{monthName} {pickerYear}</span>
         <button className="btn btn--icon" onClick={() => {
           if (pickerMonth === 12) {
@@ -94,7 +94,7 @@ export const DayPicker = memo(({ currentViewDate, onSelectDay, onCancel }: DayPi
           } else {
             setPickerMonth(m => m + 1);
           }
-        }}>→</button>
+        }} aria-label={t('common.nextItem')}>→</button>
       </div>
 
       {/* Day of week headers - rendered as first row inside the grid */}

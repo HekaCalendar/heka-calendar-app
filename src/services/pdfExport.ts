@@ -319,7 +319,7 @@ export function generateDiaryPDF(
                   <div class="entry-insight-context">
                     <div class="celestial-context">
                       ${entry.celestialContext.moonPhase ? `
-                        <span class="celestial-item">🌙 ${escapeHtml(String((entry.celestialContext.moonPhase as any).phase || entry.celestialContext.moonPhase))}</span>
+                        <span class="celestial-item">🌙 ${escapeHtml(String(entry.celestialContext.moonPhase.phase || entry.celestialContext.moonPhase))}</span>
                       ` : ''}
                     </div>
                   </div>

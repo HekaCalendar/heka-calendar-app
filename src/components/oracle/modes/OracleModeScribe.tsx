@@ -220,7 +220,7 @@ export const OracleModeScribe: React.FC<OracleModeScribeProps> = ({
           {tags.map(tag => (
             <span key={tag} className="tag-chip">
               #{tag}
-              <button className="tag-remove" onClick={() => removeTag(tag)}>×</button>
+              <button className="tag-remove" onClick={() => removeTag(tag)} aria-label={t('common.removeTag')}>×</button>
             </span>
           ))}
           <input

@@ -26,6 +26,7 @@ import {
   updateCommunityFeature,
 } from '../store';
 import type { CommunityHoliday, CommunityFeature } from '../types';
+import { getErrorMessage, getErrorCode } from '../utils/errorUtils';
 
 // ═══════════════════════════════════════════════════════════════════════════════
 // DEFAULT FEATURES
@@ -132,6 +133,7 @@ let holidayUnsub: Unsubscribe | null = null;
 
 export function attachCommunityHolidaysListener(): Unsubscribe {
   if (holidayUnsub) holidayUnsub();
+  if (!db) return () => {};
 
   const q = query(collection(db, 'communityHolidays'), orderBy('createdAt', 'desc'));
   holidayUnsub = onSnapshot(
@@ -156,6 +158,7 @@ export async function submitCommunityHoliday(
 ): Promise<string> {
   const user = getCurrentUser();
   if (!user) throw new Error(i18n.t('errors.notAuthenticated', { ns: 'circle' }));
+  if (!db) throw new Error('Firebase not configured');
 
   const ref = doc(collection(db, 'communityHolidays'));
   const payload: Omit<CommunityHoliday, 'id'> = {
@@ -275,6 +278,7 @@ export async function seedCommunityFeaturesIfNeeded(): Promise<void> {
 
 export function attachCommunityFeaturesListener(): Unsubscribe {
   if (featureUnsub) featureUnsub();
+  if (!db) return () => {};
 
   const q = query(collection(db, 'communityFeatures'), orderBy('votes', 'desc'));
   featureUnsub = onSnapshot(
@@ -345,8 +349,8 @@ export async function voteFeature(featureId: string): Promise<void> {
       store.dispatch(updateCommunityFeature(result.data));
     }
     // noop: don't dispatch anything
-  } catch (err: any) {
-    console.error('[CommunityService] voteFeature failed:', err?.code, err?.message, err);
+  } catch (err) {
+    console.error('[CommunityService] voteFeature failed:', getErrorCode(err), getErrorMessage(err), err);
     throw err;
   }
 }

@@ -5,28 +5,40 @@
  * ═══════════════════════════════════════════════════════════════════════════════
  */
 
+import { useTranslation } from 'react-i18next';
 import { useSelector, useDispatch } from 'react-redux';
 import type { RootState, AppDispatch } from '../../store';
 import { updateNotificationPreferences } from '../../store';
 import type { NotificationTimeKey, CustomTimeConfig } from '../../types/notifications';
 import { DEFAULT_NOTIFICATION_TIME_PREFS } from '../../types/notifications';
 
-const TIME_KEY_LABELS: Record<NotificationTimeKey, { label: string; emoji: string; description: string }> = {
-  dailyBriefing: { label: 'Daily Briefing', emoji: '🌅', description: 'Your morning celestial overview' },
-  dailyCelestialTips: { label: 'Daily Celestial Tips', emoji: '✨', description: 'Personalized cosmic guidance' },
-  eveningReflection: { label: 'Evening Reflection', emoji: '🌙', description: 'Prompt to reflect on your day' },
-  streakSaver: { label: 'Streak Saver', emoji: '🔥', description: 'Gentle nudge to keep your streak alive' },
-  holidayReminders: { label: 'Holiday Reminders', emoji: '🎉', description: 'Upcoming holidays and observances' },
-  fullMoonReminders: { label: 'Full Moon', emoji: '🌕', description: 'Full moon illumination alert' },
-  newMoonReminders: { label: 'New Moon', emoji: '🌑', description: 'New moon intention-setting' },
-  sunriseWakeUp: { label: 'Sunrise Wake-Up', emoji: '🌄', description: 'Gentle alarm at local sunrise' },
+const TIME_KEYS: NotificationTimeKey[] = [
+  'dailyBriefing',
+  'dailyCelestialTips',
+  'eveningReflection',
+  'streakSaver',
+  'holidayReminders',
+  'fullMoonReminders',
+  'newMoonReminders',
+  'sunriseWakeUp',
+];
+
+const EMOJIS: Record<NotificationTimeKey, string> = {
+  dailyBriefing: '🌅',
+  dailyCelestialTips: '✨',
+  eveningReflection: '🌙',
+  streakSaver: '🔥',
+  holidayReminders: '🎉',
+  fullMoonReminders: '🌕',
+  newMoonReminders: '🌑',
+  sunriseWakeUp: '🌄',
 };
 
-const ASTRONOMICAL_EVENTS = [
-  { value: null as null, label: 'Fixed time' },
-  { value: 'sunrise' as const, label: 'At sunrise 🌅' },
-  { value: 'sunset' as const, label: 'At sunset 🌇' },
-  { value: 'moonrise' as const, label: 'At moonrise 🌙' },
+const ASTRONOMICAL_EVENT_KEYS: Array<{ value: null; labelKey: string } | { value: 'sunrise' | 'sunset' | 'moonrise'; labelKey: string }> = [
+  { value: null, labelKey: 'timePreferences.events.fixedTime' },
+  { value: 'sunrise', labelKey: 'timePreferences.events.sunrise' },
+  { value: 'sunset', labelKey: 'timePreferences.events.sunset' },
+  { value: 'moonrise', labelKey: 'timePreferences.events.moonrise' },
 ];
 
 function formatTime(hour: number, minute: number): string {
@@ -37,6 +49,7 @@ function formatTime(hour: number, minute: number): string {
 }
 
 export const TimePreferenceEditor: React.FC = () => {
+  const { t } = useTranslation('notifications');
   const dispatch = useDispatch<AppDispatch>();
   const customTimes = useSelector((state: RootState) => state.calendar.notificationPreferences.customTimes);
   const globalEnabled = useSelector((state: RootState) => state.calendar.notificationPreferences.globalEnabled);
@@ -59,11 +72,10 @@ export const TimePreferenceEditor: React.FC = () => {
   return (
     <div className="time-preference-editor" style={{ opacity: globalEnabled ? 1 : 0.4 }}>
       <p style={{ margin: '0 0 12px', fontSize: '13px', color: 'rgba(224,224,224,0.5)' }}>
-        Customize when each notification type is delivered. Times use your device timezone.
+        {t('timePreferences.description')}
       </p>
-      {(Object.keys(TIME_KEY_LABELS) as NotificationTimeKey[]).map((key) => {
+      {TIME_KEYS.map((key) => {
         const config = customTimes[key] || DEFAULT_NOTIFICATION_TIME_PREFS[key] || { hour: 8, minute: 0 };
-        const meta = TIME_KEY_LABELS[key];
         const isCustom = JSON.stringify(customTimes[key]) !== JSON.stringify(DEFAULT_NOTIFICATION_TIME_PREFS[key]);
 
         return (
@@ -75,8 +87,10 @@ export const TimePreferenceEditor: React.FC = () => {
             }}
           >
             <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
-              <span style={{ fontSize: '16px' }}>{meta.emoji}</span>
-              <span style={{ fontSize: '14px', fontWeight: 600, color: '#e0e0e0' }}>{meta.label}</span>
+              <span style={{ fontSize: '16px' }}>{EMOJIS[key]}</span>
+              <span style={{ fontSize: '14px', fontWeight: 600, color: '#e0e0e0' }}>
+                {t(`timePreferences.types.${key}.label`)}
+              </span>
               {isCustom && (
                 <span style={{
                   fontSize: '10px',
@@ -87,21 +101,22 @@ export const TimePreferenceEditor: React.FC = () => {
                   background: 'rgba(201,162,39,0.2)',
                   color: '#fde68a',
                 }}>
-                  Custom
+                  {t('timePreferences.customBadge')}
                 </span>
               )}
             </div>
             <div style={{ fontSize: '12px', color: 'rgba(224,224,224,0.5)', marginBottom: '8px' }}>
-              {meta.description}
+              {t(`timePreferences.types.${key}.description`)}
             </div>
 
             {/* Astronomical alignment */}
             <div style={{ display: 'flex', gap: '6px', marginBottom: '8px', flexWrap: 'wrap' }}>
-              {ASTRONOMICAL_EVENTS.map((event) => (
+              {ASTRONOMICAL_EVENT_KEYS.map((event) => (
                 <button
-                  key={event.label}
+                  key={event.labelKey}
                   disabled={!globalEnabled}
                   onClick={() => updateTime(key, { alignToEvent: event.value })}
+                  aria-pressed={config.alignToEvent === event.value}
                   style={{
                     padding: '4px 10px',
                     borderRadius: '6px',
@@ -116,7 +131,7 @@ export const TimePreferenceEditor: React.FC = () => {
                     transition: 'all 0.2s',
                   }}
                 >
-                  {event.label}
+                  {t(event.labelKey)}
                 </button>
               ))}
             </div>
@@ -129,6 +144,7 @@ export const TimePreferenceEditor: React.FC = () => {
                     disabled={!globalEnabled}
                     value={config.hour}
                     onChange={(e) => updateTime(key, { hour: parseInt(e.target.value) })}
+                    aria-label={t('timePreferences.timePickerHourLabel')}
                     style={{
                       background: 'rgba(255,255,255,0.08)',
                       color: '#e0e0e0',
@@ -148,6 +164,7 @@ export const TimePreferenceEditor: React.FC = () => {
                     disabled={!globalEnabled}
                     value={config.minute}
                     onChange={(e) => updateTime(key, { minute: parseInt(e.target.value) })}
+                    aria-label={t('timePreferences.timePickerMinuteLabel')}
                     style={{
                       background: 'rgba(255,255,255,0.08)',
                       color: '#e0e0e0',
@@ -186,7 +203,7 @@ export const TimePreferenceEditor: React.FC = () => {
                     }}
                     style={{ accentColor: '#c9a227' }}
                   />
-                  Later on weekends
+                  {t('timePreferences.laterOnWeekends')}
                 </label>
 
                 {config.weekendOffsetMinutes != null && (
@@ -194,6 +211,7 @@ export const TimePreferenceEditor: React.FC = () => {
                     disabled={!globalEnabled}
                     value={config.weekendOffsetMinutes}
                     onChange={(e) => updateTime(key, { weekendOffsetMinutes: parseInt(e.target.value) })}
+                    aria-label={t('timePreferences.timePickerMinuteLabel')}
                     style={{
                       background: 'rgba(255,255,255,0.08)',
                       color: '#e0e0e0',
@@ -205,7 +223,7 @@ export const TimePreferenceEditor: React.FC = () => {
                     }}
                   >
                     {[30, 60, 90, 120, 180].map((m) => (
-                      <option key={m} value={m}>+{m} min</option>
+                      <option key={m} value={m}>{t('timePreferences.offsetMinutes', { minutes: m })}</option>
                     ))}
                   </select>
                 )}
@@ -224,7 +242,7 @@ export const TimePreferenceEditor: React.FC = () => {
                       fontFamily: "'Cormorant Garamond', Georgia, serif",
                     }}
                   >
-                    Reset
+                    {t('timePreferences.reset')}
                   </button>
                 )}
               </div>

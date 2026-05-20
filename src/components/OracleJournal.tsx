@@ -14,10 +14,13 @@ import { createDiaryEntry, updateDiaryEntry, selectAllEntries, setJournalTheme }
 
 import i18n from '../i18n';
 import { JOURNAL_FONTS } from '../oracle/diaryTypes';
+import type { JournalTheme } from '../oracle/diaryTypes';
+import type { BirthChart } from '../oracle/birthChartIntegration';
 import { EnhancedInsightEngine } from '../oracle/enhancedInsightEngine';
 import type { EnhancedInsight } from '../oracle/enhancedInsightEngine';
 import { DiarySearch } from './DiarySearch';
 import { JournalSettings } from './JournalSettings';
+import { getErrorMessage } from '../utils/errorUtils';
 import { OracleModeTracker } from './oracle/modes/OracleModeTracker';
 import { civilToHeka, HEKA_MONTHS } from '../services/calendarService';
 import { aiConfigService } from '../services/aiConfigService';
@@ -235,8 +238,8 @@ export const OracleJournal: React.FC<OracleJournalProps> = ({ isOpen, onClose })
       // Clear draft after successful save
       sessionStorage.removeItem('heka-journal-draft');
       setAutoSaveStatus('idle');
-    } catch (error: any) {
-      console.error('[OracleJournal] Save failed:', error?.message || error);
+    } catch (error) {
+      console.error('[OracleJournal] Save failed:', getErrorMessage(error));
       // User can retry — draft is preserved in sessionStorage
     }
 
@@ -265,7 +268,7 @@ export const OracleJournal: React.FC<OracleJournalProps> = ({ isOpen, onClose })
   }, [dispatch, editingEntryId, scribeContent, tags, isMarkdown]);
   
   const handlePaperThemeChange = useCallback((themeId: string) => {
-    dispatch(setJournalTheme(themeId as any));
+    dispatch(setJournalTheme(themeId as JournalTheme));
     setShowPaperThemeSelector(false);
   }, [dispatch]);
   
@@ -460,7 +463,7 @@ export const OracleJournal: React.FC<OracleJournalProps> = ({ isOpen, onClose })
                   try {
                     const insight = await EnhancedInsightEngine.generateInsight({
                       content: scribeContent,
-                      birthChart: (birthChartData as any) || undefined,
+                      birthChart: (birthChartData as unknown as BirthChart) || undefined,
                     });
                     
                     setGeneratedInsight(insight);

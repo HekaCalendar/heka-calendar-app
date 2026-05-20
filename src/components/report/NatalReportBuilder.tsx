@@ -14,6 +14,7 @@
  */
 
 import React, { useState, useEffect, useCallback, useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import type { RootState } from '../../store';
@@ -48,6 +49,7 @@ const DEFAULT_SETUP: SetupForm = {
 };
 
 export const NatalReportBuilder: React.FC = () => {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const astroProfiles = useSelector((state: RootState) => state.calendar.astroProfiles);
@@ -276,7 +278,7 @@ export const NatalReportBuilder: React.FC = () => {
               <input
                 className="report-setup-input"
                 type="text"
-                placeholder="e.g. Sarah Chen"
+                placeholder={t('report.namePlaceholder')}
                 value={form.name}
                 onChange={e => setForm(f => ({ ...f, name: e.target.value }))}
               />
@@ -322,7 +324,7 @@ export const NatalReportBuilder: React.FC = () => {
               <input
                 className="report-setup-input"
                 type="text"
-                placeholder="e.g. New York, NY, USA"
+                placeholder={t('report.locationPlaceholder')}
                 value={form.locationName}
                 onChange={e => setForm(f => ({ ...f, locationName: e.target.value }))}
               />
@@ -339,7 +341,7 @@ export const NatalReportBuilder: React.FC = () => {
                   step="0.0001"
                   min="-90"
                   max="90"
-                  placeholder="40.7128"
+                  placeholder={t('report.latitudePlaceholder')}
                   value={form.latitude}
                   onChange={e => setForm(f => ({ ...f, latitude: e.target.value }))}
                 />
@@ -353,7 +355,7 @@ export const NatalReportBuilder: React.FC = () => {
                   step="0.0001"
                   min="-180"
                   max="180"
-                  placeholder="-74.0060"
+                  placeholder={t('report.longitudePlaceholder')}
                   value={form.longitude}
                   onChange={e => setForm(f => ({ ...f, longitude: e.target.value }))}
                 />
@@ -366,7 +368,7 @@ export const NatalReportBuilder: React.FC = () => {
               <input
                 className="report-setup-input"
                 type="text"
-                placeholder="America/New_York"
+                placeholder={t('report.timezonePlaceholder')}
                 value={form.timezone}
                 onChange={e => setForm(f => ({ ...f, timezone: e.target.value }))}
               />
@@ -443,7 +445,7 @@ export const NatalReportBuilder: React.FC = () => {
       {/* Sticky header */}
       {hasEntered && (
         <header className="report-header">
-          <button className="report-back" onClick={() => navigate('/')}>
+          <button className="report-back" onClick={() => navigate('/')} aria-label={t('common.back')}>
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
               <path d="M19 12H5M12 19l-7-7 7-7" />
             </svg>
@@ -461,7 +463,7 @@ export const NatalReportBuilder: React.FC = () => {
       {/* Floating TOC */}
       {hasEntered && (
         <>
-          <button className="report-toc-toggle" onClick={() => setShowToc(!showToc)} title="Contents">
+          <button className="report-toc-toggle" onClick={() => setShowToc(!showToc)} title="Contents" aria-label={t('common.toggleContents')}>
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
               <line x1="3" y1="6" x2="21" y2="6" />
               <line x1="3" y1="12" x2="21" y2="12" />

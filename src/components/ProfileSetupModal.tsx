@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import type { RootState, AppDispatch } from '../store';
 import { updateUserProfile } from '../store';
 import { getCurrentUser, updateProfile } from '../services/firebase';
+import { getErrorMessage } from '../utils/errorUtils';
 
 interface ProfileSetupModalProps {
   isOpen: boolean;
@@ -107,8 +108,8 @@ export const ProfileSetupModal: React.FC<ProfileSetupModalProps> = ({
       }));
 
       onComplete();
-    } catch (err: any) {
-      setError(err.message || t('profileSetup.errorUpdateFailed'));
+    } catch (err) {
+      setError(getErrorMessage(err, t('profileSetup.errorUpdateFailed')));
     } finally {
       setIsLoading(false);
     }

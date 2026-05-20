@@ -675,6 +675,7 @@
     "born": "Born",
     "edit": "Edit",
     "loading": "Loading",
+    "namePlaceholder": "Enter name",
     "promise": "Promise",
     "sunSign": "Sun sign",
     "elements": "Elements",

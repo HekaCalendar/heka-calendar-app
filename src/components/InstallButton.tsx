@@ -23,7 +23,7 @@ export const InstallButton: React.FC = () => {
     }
 
     // Check if iOS (different install method)
-    const isIOSDevice = /iPad|iPhone|iPod/.test(navigator.userAgent) && !(window as any).MSStream;
+    const isIOSDevice = /iPad|iPhone|iPod/.test(navigator.userAgent) && !(window as unknown as { MSStream?: unknown }).MSStream;
     setIsIOS(isIOSDevice);
 
     // Listen for install prompt

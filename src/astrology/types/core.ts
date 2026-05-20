@@ -20,12 +20,13 @@ export function toDegree(n: number): Degree {
 export function normalizeDegree(deg: number): Degree {
   let normalized = deg % 360;
   if (normalized < 0) normalized += 360;
-  return normalized as Degree;
+  return (normalized === 0 ? 0 : normalized) as Degree;
 }
 
 export function toZodiacDegree(longitude: Degree): ZodiacDegree {
   const deg = longitude % 30;
-  return (deg < 0 ? deg + 30 : deg) as ZodiacDegree;
+  const result = deg < 0 ? deg + 30 : deg;
+  return (result === 0 ? 0 : result) as ZodiacDegree;
 }
 
 /** Calculate degree within sign, respecting irregular 13-sign boundaries */

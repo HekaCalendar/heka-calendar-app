@@ -1,0 +1,544 @@
+
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Code coverage report for astrology/services/guidance/templates/bodies/saturnTemplates.ts</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../../../../prettify.css" />
+    <link rel="stylesheet" href="../../../../../base.css" />
+    <link rel="shortcut icon" type="image/x-icon" href="../../../../../favicon.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../../../../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+    
+<body>
+<div class='wrapper'>
+    <div class='pad1'>
+        <h1><a href="../../../../../index.html">All files</a> / <a href="index.html">astrology/services/guidance/templates/bodies</a> saturnTemplates.ts</h1>
+        <div class='clearfix'>
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">0% </span>
+                <span class="quiet">Statements</span>
+                <span class='fraction'>0/153</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">0% </span>
+                <span class="quiet">Branches</span>
+                <span class='fraction'>0/1</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">0% </span>
+                <span class="quiet">Functions</span>
+                <span class='fraction'>0/1</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">0% </span>
+                <span class="quiet">Lines</span>
+                <span class='fraction'>0/153</span>
+            </div>
+        
+            
+        </div>
+        <p class="quiet">
+            Press <em>n</em> or <em>j</em> to go to the next uncovered block, <em>b</em>, <em>p</em> or <em>k</em> for the previous block.
+        </p>
+        <template id="filterTemplate">
+            <div class="quiet">
+                Filter:
+                <input type="search" id="fileSearch">
+            </div>
+        </template>
+    </div>
+    <div class='status-line low'></div>
+    <pre><table class="coverage">
+<tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
+<a name='L2'></a><a href='#L2'>2</a>
+<a name='L3'></a><a href='#L3'>3</a>
+<a name='L4'></a><a href='#L4'>4</a>
+<a name='L5'></a><a href='#L5'>5</a>
+<a name='L6'></a><a href='#L6'>6</a>
+<a name='L7'></a><a href='#L7'>7</a>
+<a name='L8'></a><a href='#L8'>8</a>
+<a name='L9'></a><a href='#L9'>9</a>
+<a name='L10'></a><a href='#L10'>10</a>
+<a name='L11'></a><a href='#L11'>11</a>
+<a name='L12'></a><a href='#L12'>12</a>
+<a name='L13'></a><a href='#L13'>13</a>
+<a name='L14'></a><a href='#L14'>14</a>
+<a name='L15'></a><a href='#L15'>15</a>
+<a name='L16'></a><a href='#L16'>16</a>
+<a name='L17'></a><a href='#L17'>17</a>
+<a name='L18'></a><a href='#L18'>18</a>
+<a name='L19'></a><a href='#L19'>19</a>
+<a name='L20'></a><a href='#L20'>20</a>
+<a name='L21'></a><a href='#L21'>21</a>
+<a name='L22'></a><a href='#L22'>22</a>
+<a name='L23'></a><a href='#L23'>23</a>
+<a name='L24'></a><a href='#L24'>24</a>
+<a name='L25'></a><a href='#L25'>25</a>
+<a name='L26'></a><a href='#L26'>26</a>
+<a name='L27'></a><a href='#L27'>27</a>
+<a name='L28'></a><a href='#L28'>28</a>
+<a name='L29'></a><a href='#L29'>29</a>
+<a name='L30'></a><a href='#L30'>30</a>
+<a name='L31'></a><a href='#L31'>31</a>
+<a name='L32'></a><a href='#L32'>32</a>
+<a name='L33'></a><a href='#L33'>33</a>
+<a name='L34'></a><a href='#L34'>34</a>
+<a name='L35'></a><a href='#L35'>35</a>
+<a name='L36'></a><a href='#L36'>36</a>
+<a name='L37'></a><a href='#L37'>37</a>
+<a name='L38'></a><a href='#L38'>38</a>
+<a name='L39'></a><a href='#L39'>39</a>
+<a name='L40'></a><a href='#L40'>40</a>
+<a name='L41'></a><a href='#L41'>41</a>
+<a name='L42'></a><a href='#L42'>42</a>
+<a name='L43'></a><a href='#L43'>43</a>
+<a name='L44'></a><a href='#L44'>44</a>
+<a name='L45'></a><a href='#L45'>45</a>
+<a name='L46'></a><a href='#L46'>46</a>
+<a name='L47'></a><a href='#L47'>47</a>
+<a name='L48'></a><a href='#L48'>48</a>
+<a name='L49'></a><a href='#L49'>49</a>
+<a name='L50'></a><a href='#L50'>50</a>
+<a name='L51'></a><a href='#L51'>51</a>
+<a name='L52'></a><a href='#L52'>52</a>
+<a name='L53'></a><a href='#L53'>53</a>
+<a name='L54'></a><a href='#L54'>54</a>
+<a name='L55'></a><a href='#L55'>55</a>
+<a name='L56'></a><a href='#L56'>56</a>
+<a name='L57'></a><a href='#L57'>57</a>
+<a name='L58'></a><a href='#L58'>58</a>
+<a name='L59'></a><a href='#L59'>59</a>
+<a name='L60'></a><a href='#L60'>60</a>
+<a name='L61'></a><a href='#L61'>61</a>
+<a name='L62'></a><a href='#L62'>62</a>
+<a name='L63'></a><a href='#L63'>63</a>
+<a name='L64'></a><a href='#L64'>64</a>
+<a name='L65'></a><a href='#L65'>65</a>
+<a name='L66'></a><a href='#L66'>66</a>
+<a name='L67'></a><a href='#L67'>67</a>
+<a name='L68'></a><a href='#L68'>68</a>
+<a name='L69'></a><a href='#L69'>69</a>
+<a name='L70'></a><a href='#L70'>70</a>
+<a name='L71'></a><a href='#L71'>71</a>
+<a name='L72'></a><a href='#L72'>72</a>
+<a name='L73'></a><a href='#L73'>73</a>
+<a name='L74'></a><a href='#L74'>74</a>
+<a name='L75'></a><a href='#L75'>75</a>
+<a name='L76'></a><a href='#L76'>76</a>
+<a name='L77'></a><a href='#L77'>77</a>
+<a name='L78'></a><a href='#L78'>78</a>
+<a name='L79'></a><a href='#L79'>79</a>
+<a name='L80'></a><a href='#L80'>80</a>
+<a name='L81'></a><a href='#L81'>81</a>
+<a name='L82'></a><a href='#L82'>82</a>
+<a name='L83'></a><a href='#L83'>83</a>
+<a name='L84'></a><a href='#L84'>84</a>
+<a name='L85'></a><a href='#L85'>85</a>
+<a name='L86'></a><a href='#L86'>86</a>
+<a name='L87'></a><a href='#L87'>87</a>
+<a name='L88'></a><a href='#L88'>88</a>
+<a name='L89'></a><a href='#L89'>89</a>
+<a name='L90'></a><a href='#L90'>90</a>
+<a name='L91'></a><a href='#L91'>91</a>
+<a name='L92'></a><a href='#L92'>92</a>
+<a name='L93'></a><a href='#L93'>93</a>
+<a name='L94'></a><a href='#L94'>94</a>
+<a name='L95'></a><a href='#L95'>95</a>
+<a name='L96'></a><a href='#L96'>96</a>
+<a name='L97'></a><a href='#L97'>97</a>
+<a name='L98'></a><a href='#L98'>98</a>
+<a name='L99'></a><a href='#L99'>99</a>
+<a name='L100'></a><a href='#L100'>100</a>
+<a name='L101'></a><a href='#L101'>101</a>
+<a name='L102'></a><a href='#L102'>102</a>
+<a name='L103'></a><a href='#L103'>103</a>
+<a name='L104'></a><a href='#L104'>104</a>
+<a name='L105'></a><a href='#L105'>105</a>
+<a name='L106'></a><a href='#L106'>106</a>
+<a name='L107'></a><a href='#L107'>107</a>
+<a name='L108'></a><a href='#L108'>108</a>
+<a name='L109'></a><a href='#L109'>109</a>
+<a name='L110'></a><a href='#L110'>110</a>
+<a name='L111'></a><a href='#L111'>111</a>
+<a name='L112'></a><a href='#L112'>112</a>
+<a name='L113'></a><a href='#L113'>113</a>
+<a name='L114'></a><a href='#L114'>114</a>
+<a name='L115'></a><a href='#L115'>115</a>
+<a name='L116'></a><a href='#L116'>116</a>
+<a name='L117'></a><a href='#L117'>117</a>
+<a name='L118'></a><a href='#L118'>118</a>
+<a name='L119'></a><a href='#L119'>119</a>
+<a name='L120'></a><a href='#L120'>120</a>
+<a name='L121'></a><a href='#L121'>121</a>
+<a name='L122'></a><a href='#L122'>122</a>
+<a name='L123'></a><a href='#L123'>123</a>
+<a name='L124'></a><a href='#L124'>124</a>
+<a name='L125'></a><a href='#L125'>125</a>
+<a name='L126'></a><a href='#L126'>126</a>
+<a name='L127'></a><a href='#L127'>127</a>
+<a name='L128'></a><a href='#L128'>128</a>
+<a name='L129'></a><a href='#L129'>129</a>
+<a name='L130'></a><a href='#L130'>130</a>
+<a name='L131'></a><a href='#L131'>131</a>
+<a name='L132'></a><a href='#L132'>132</a>
+<a name='L133'></a><a href='#L133'>133</a>
+<a name='L134'></a><a href='#L134'>134</a>
+<a name='L135'></a><a href='#L135'>135</a>
+<a name='L136'></a><a href='#L136'>136</a>
+<a name='L137'></a><a href='#L137'>137</a>
+<a name='L138'></a><a href='#L138'>138</a>
+<a name='L139'></a><a href='#L139'>139</a>
+<a name='L140'></a><a href='#L140'>140</a>
+<a name='L141'></a><a href='#L141'>141</a>
+<a name='L142'></a><a href='#L142'>142</a>
+<a name='L143'></a><a href='#L143'>143</a>
+<a name='L144'></a><a href='#L144'>144</a>
+<a name='L145'></a><a href='#L145'>145</a>
+<a name='L146'></a><a href='#L146'>146</a>
+<a name='L147'></a><a href='#L147'>147</a>
+<a name='L148'></a><a href='#L148'>148</a>
+<a name='L149'></a><a href='#L149'>149</a>
+<a name='L150'></a><a href='#L150'>150</a>
+<a name='L151'></a><a href='#L151'>151</a>
+<a name='L152'></a><a href='#L152'>152</a>
+<a name='L153'></a><a href='#L153'>153</a>
+<a name='L154'></a><a href='#L154'>154</a></td><td class="line-coverage quiet"><span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js"><span class="cstat-no" title="statement not covered" >import type { BodyTemplates } from './types';<span class="fstat-no" title="function not covered" ><span class="branch-0 cbranch-no" title="branch not covered" ></span></span></span>
+<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" >/**</span>
+<span class="cstat-no" title="statement not covered" > * ═══════════════════════════════════════════════════════════════════════════════</span>
+<span class="cstat-no" title="statement not covered" > * SATURN TEMPLATES — Discipline, structure, maturation, limitation</span>
+<span class="cstat-no" title="statement not covered" > * ═══════════════════════════════════════════════════════════════════════════════</span>
+<span class="cstat-no" title="statement not covered" > */</span>
+<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" >export const saturnTemplates: BodyTemplates = {</span>
+<span class="cstat-no" title="statement not covered" >  aries: {</span>
+<span class="cstat-no" title="statement not covered" >    essence: 'Your discipline is a drill sergeant with a warrior\'s heart — demanding, immediate, and unwilling to tolerate hesitation. Saturn in Aries teaches that courage must be earned, that initiative requires patience, and that the bold action untempered by strategy is merely recklessness. You are here to master the art of controlled force, to learn that true leadership includes the wisdom to wait for the right moment to strike.',</span>
+<span class="cstat-no" title="statement not covered" >    element: 'fire', modality: 'cardinal', keywords: ['disciplined courage', 'controlled initiative', 'strategic action', 'earned authority'],</span>
+<span class="cstat-no" title="statement not covered" >    careerAdvice: 'Your professional discipline is forged in competitive fires. Leadership, entrepreneurship, military, and emergency services suit your structured aggression. You excel where persistence meets decisive action. Beware impatience with process — your drive to act can override necessary preparation. Build systems that channel your urgency into sustainable momentum.',</span>
+<span class="cstat-no" title="statement not covered" >    relationshipAdvice: 'You take commitment seriously — once given, it is absolute. You attract partners who respect your independence and share your work ethic. Beware emotional austerity — your competence is impressive, but your warmth is what sustains connection. Practice vulnerability alongside strength; the fortress that never opens its gates eventually starves.',</span>
+<span class="cstat-no" title="statement not covered" >    healthAdvice: 'Your head and adrenal system carry the stress of perpetual readiness. Martial arts, disciplined exercise routines, and structured rest restore your equilibrium. Beware burnout from constant combat readiness; even warriors need armour off. Your body needs recovery as rigorously as it needs challenge.',</span>
+<span class="cstat-no" title="statement not covered" >    financesAdvice: 'Conservative investments built through disciplined saving suit your methodical approach. Your caution prevents reckless losses. Beware using financial control as emotional substitute — wealth is a tool, not a fortress. Build reserves that create security without becoming a prison.',</span>
+<span class="cstat-no" title="statement not covered" >    growthAdvice: 'Your shadow is the fear that restraint equals weakness — that patience is merely delayed action. The lesson of Saturn in Aries is that true courage includes the wisdom to choose your battles. Growth asks you to distinguish between worthy risks and reckless impulses, and to build lasting structures rather than winning single skirmishes.',</span>
+<span class="cstat-no" title="statement not covered" >    bodyFocus: 'head, eyes, adrenal system, cranium',</span>
+<span class="cstat-no" title="statement not covered" >    elementalResonance: 'Your discipline is forge-heat — shaping raw courage through sustained pressure into strategy that outlasts the battle.',</span>
+<span class="cstat-no" title="statement not covered" >  },</span>
+<span class="cstat-no" title="statement not covered" >  taurus: {</span>
+<span class="cstat-no" title="statement not covered" >    essence: 'Your discipline is an ancient vault — unyielding, methodical, and built to protect what has been earned through persistent effort. Saturn in Taurus teaches that security is not given but constructed, that every brick of stability requires patience, and that the fear of loss can become the very thing that destroys what you seek to preserve. You are here to master the art of sustainable abundance.',</span>
+<span class="cstat-no" title="statement not covered" >    element: 'earth', modality: 'fixed', keywords: ['material discipline', 'financial maturity', 'steadfastness', 'conservative'],</span>
+<span class="cstat-no" title="statement not covered" >    careerAdvice: 'Your professional discipline is built on demonstrated reliability. Finance, agriculture, construction, and fields requiring long-term commitment suit your methodical nature. You excel where persistence outlasts talent. Beware stubbornness — the refusal to adapt when the market shifts becomes a liability, not loyalty. Build flexibility into your foundations.',</span>
+<span class="cstat-no" title="statement not covered" >    relationshipAdvice: 'Your commitment is geological — once given, it spans eras. You attract partners who value security and tangible demonstrations of loyalty. Beware possessiveness — love held too tightly becomes confinement. Trust that what is truly yours needs no guarding. Your strength in love is constancy; your growth edge is generosity without clutching.',</span>
+<span class="cstat-no" title="statement not covered" >    healthAdvice: 'Your throat, neck, and thyroid carry the tension of unexpressed needs. Gentle stretching, vocal practices, and sensual self-care restore equilibrium. Beware comfort-seeking as avoidance; your body craves useful work, not just soothing repetition. Discipline in health means routine, not rigidity.',</span>
+<span class="cstat-no" title="statement not covered" >    financesAdvice: 'Slow, steady, conservative wealth-building is your financial religion. Real estate, tangible assets, and long-term holdings align with your values. You understand that wealth is built one brick at a time. Beware hoarding; abundance flows when it circulates. Your financial peace comes from knowing the foundation is solid.',</span>
+<span class="cstat-no" title="statement not covered" >    growthAdvice: 'Your shadow is the fear of loss — the clinging to what is comfortable at the expense of what is possible. The lesson of Saturn in Taurus is that security is internal, not external. Growth asks you to risk the known for the nourishing, trusting that your roots are deep enough to withstand transplant.',</span>
+<span class="cstat-no" title="statement not covered" >    bodyFocus: 'throat, neck, thyroid, vocal cords',</span>
+<span class="cstat-no" title="statement not covered" >    elementalResonance: 'Your discipline is mountain-stone — enduring, shaping the landscape through persistence rather than force, outlasting every flashier competitor.',</span>
+<span class="cstat-no" title="statement not covered" >  },</span>
+<span class="cstat-no" title="statement not covered" >  gemini: {</span>
+<span class="cstat-no" title="statement not covered" >    essence: 'Your discipline is a scholar\'s regimen — rigorous, intellectual, and demanding mastery of many subjects before rest is permitted. Saturn in Gemini teaches that knowledge must be earned, that communication requires structure, and that the scattered mind achieves nothing. You are here to master the art of focused learning, to build mental architectures that outlast the novelty of each new fascination.',</span>
+<span class="cstat-no" title="statement not covered" >    element: 'air', modality: 'mutable', keywords: ['mental discipline', 'structured learning', 'communicative rigour', 'focused curiosity'],</span>
+<span class="cstat-no" title="statement not covered" >    careerAdvice: 'Your professional discipline is intellectual and systematic. Writing, editing, research, teaching, and technical fields suit your structured mind. You excel when depth is required alongside breadth. Beware scattered focus — your challenge is completion, not initiation. Build systems that capture your ideas and carry them to finished form.',</span>
+<span class="cstat-no" title="statement not covered" >    relationshipAdvice: 'You communicate with precision and expect the same. You attract partners who value intellectual honesty and structured dialogue. Beware emotional detachment — your mind races ahead of your heart. Practice staying present without analysing. Some feelings exist to be felt, not explained or solved.',</span>
+<span class="cstat-no" title="statement not covered" >    healthAdvice: 'Your nervous system is your primary concern — mental rest is as vital as physical sleep. Breathwork, journaling, and hand exercises restore equilibrium. Beware information overload; your mind needs filtered input, not a firehose of data. Discipline means curating your intellectual diet as carefully as your food.',</span>
+<span class="cstat-no" title="statement not covered" >    financesAdvice: 'Detailed analysis and conservative planning build your wealth. You spot inefficiencies that cost others thousands. Invest in education, tools, and systems that increase your effectiveness. Beware analysis paralysis — overthinking prevents action. Set decision deadlines and honour them.',</span>
+<span class="cstat-no" title="statement not covered" >    growthAdvice: 'Your shadow is the belief that knowledge equals worth — that you must know everything to be enough. The lesson of Saturn in Gemini is that mastery includes the wisdom of knowing what you do not know. Growth asks you to choose depth in a few areas rather than grazing many, trusting that expertise in one field illuminates all others.',</span>
+<span class="cstat-no" title="statement not covered" >    bodyFocus: 'lungs, hands, nervous system, shoulders',</span>
+<span class="cstat-no" title="statement not covered" >    elementalResonance: 'Your discipline is lantern-light — focused, practical, illuminating one careful step at a time, never wasting energy on empty space.',</span>
+<span class="cstat-no" title="statement not covered" >  },</span>
+<span class="cstat-no" title="statement not covered" >  cancer: {</span>
+<span class="cstat-no" title="statement not covered" >    essence: 'Your discipline is a fortress of feeling — protective, nostalgic, and built around the sanctuaries you have created. Saturn in Cancer teaches that emotional security must be earned, that nurturing requires boundaries, and that the past must be honoured without becoming a prison. You are here to master the art of mature care — loving deeply without losing yourself in the loving.',</span>
+<span class="cstat-no" title="statement not covered" >    element: 'water', modality: 'cardinal', keywords: ['emotional discipline', 'protective structure', 'mature nurturing', 'familial responsibility'],</span>
+<span class="cstat-no" title="statement not covered" >    careerAdvice: 'Your professional discipline is caring and structured. Real estate, hospitality, counselling, history, and community work suit your protective nature. You build client relationships that feel like family. Beware taking professional rejection personally; not everyone wants the depth of care you offer. Build boundaries that protect your emotional energy.',</span>
+<span class="cstat-no" title="statement not covered" >    relationshipAdvice: 'Your commitment is deep but guarded. You attract partners who value emotional security and domestic warmth. Beware the shell — your sensitivity is your gift, but it requires protection. Let love in slowly; let it out generously. True discipline in love is the courage to be vulnerable after being hurt.',</span>
+<span class="cstat-no" title="statement not covered" >    healthAdvice: 'Your stomach is your emotional fortress — digestive health reflects your relationship with security. Nourishing food, regular routines, and water-based movement restore you. Beware emotional eating — the temporary comfort creates lasting imbalance. Discipline means feeling your feelings without feeding them.',</span>
+<span class="cstat-no" title="statement not covered" >    financesAdvice: 'Invest in home, family, and long-term security. Your financial decisions are emotional — build reserves that create peace of mind. Real estate and family businesses align with your values. Beware using money to create emotional security that must come from within.',</span>
+<span class="cstat-no" title="statement not covered" >    growthAdvice: 'Your shadow is the fear of abandonment — the belief that love must be earned through sacrifice. The lesson of Saturn in Cancer is that self-nurturing is not selfish; it is sustainable. Growth asks you to receive care as gracefully as you give it, and to trust that your worth is not measured by how much you provide.',</span>
+<span class="cstat-no" title="statement not covered" >    bodyFocus: 'stomach, breasts, lymphatic system, womb',</span>
+<span class="cstat-no" title="statement not covered" >    elementalResonance: 'Your discipline is tidal — ancient, rhythmic, returning to defend every shore it has ever called home, regardless of welcome.',</span>
+<span class="cstat-no" title="statement not covered" >  },</span>
+<span class="cstat-no" title="statement not covered" >  leo: {</span>
+<span class="cstat-no" title="statement not covered" >    essence: 'Your discipline is a king\'s regimen — demanding recognition through competence, requiring that authority be earned before it is displayed. Saturn in Leo teaches that true leadership is not given but forged, that creative expression requires structure, and that the need for applause can become a prison. You are here to master the art of authentic command — leading from substance, not spectacle.',</span>
+<span class="cstat-no" title="statement not covered" >    element: 'fire', modality: 'fixed', keywords: ['earned authority', 'structured creativity', 'disciplined leadership', 'mature confidence'],</span>
+<span class="cstat-no" title="statement not covered" >    careerAdvice: 'Your professional discipline is charismatic and structured. Entertainment, design, education, and leadership roles suit your need for recognised competence. You excel when your work is celebrated for its substance, not just its style. Beware the need for constant validation; your best work happens when you create for the idea itself.',</span>
+<span class="cstat-no" title="statement not covered" >    relationshipAdvice: 'You take love seriously — once committed, you lead with loyalty and generosity. You attract partners who appreciate your warmth and respect your need for recognition. Beware pride in vulnerability — asking for support is not weakness. True discipline in love is the constancy of devotion, not the theatricality of its expression.',</span>
+<span class="cstat-no" title="statement not covered" >    healthAdvice: 'Your heart and spine are your physical centres. Dance, theatrical movement, and heart-pumping exercise restore your vitality. Creative expression is not optional — it is medicine. Watch for burnout from overgiving; your light cannot illuminate if the wick is exhausted. Rest is part of the performance.',</span>
+<span class="cstat-no" title="statement not covered" >    financesAdvice: 'Invest in what makes you feel creatively alive — and in yourself. Your confidence attracts abundance, but pride can lead to overspending on status. True wealth is the freedom to create without constraint. Build reserves that fund your vision, not your image. Discipline means separating ego from investment.',</span>
+<span class="cstat-no" title="statement not covered" >    growthAdvice: 'Your shadow is the fear of irrelevance — the belief that your worth equals your recognition. The lesson of Saturn in Leo is that true authority does not require witnesses. Growth asks you to lead even when no one is watching, and to trust that your substance outlasts every spotlight.',</span>
+<span class="cstat-no" title="statement not covered" >    bodyFocus: 'heart, spine, circulatory system, upper back',</span>
+<span class="cstat-no" title="statement not covered" >    elementalResonance: 'Your discipline is forge-heat — shaping raw courage through sustained pressure into leadership that endures beyond the applause.',</span>
+<span class="cstat-no" title="statement not covered" >  },</span>
+<span class="cstat-no" title="statement not covered" >  virgo: {</span>
+<span class="cstat-no" title="statement not covered" >    essence: 'Your discipline is a master craftsperson\'s standard — exacting, humble, and devoted to the perfection of useful service. Saturn in Virgo is at home, the analyst who understands that true mastery is not a destination but a practice. You are here to learn that excellence is not the absence of flaws but the courage to release your work into the world despite them. Your standards are high; your growth is in forgiving yourself when they are not met.',</span>
+<span class="cstat-no" title="statement not covered" >    element: 'earth', modality: 'mutable', keywords: ['exacting standards', 'humble service', 'analytical rigour', 'practical mastery'],</span>
+<span class="cstat-no" title="statement not covered" >    careerAdvice: 'Your professional discipline is meticulous and service-oriented. Healthcare, editing, research, data analysis, and quality assurance suit your precision. You excel when trusted with complex systems. Beware perfectionism paralysis; done is better than perfect. Your best work serves real people, not abstract standards.',</span>
+<span class="cstat-no" title="statement not covered" >    relationshipAdvice: 'You show devotion through helpfulness — the problem solved, the detail remembered. You attract partners who appreciate your competence. Beware the critic — your discernment is a gift, but in love it becomes a wound. Practice receiving care without earning it. Love is not a project to optimise.',</span>
+<span class="cstat-no" title="statement not covered" >    healthAdvice: 'Your gut is your primary concern — worry manifests as digestive distress. Clean food, regular schedules, and mind-body practices restore equilibrium. Beware hypochondria; not every sensation is significant. Discipline means trusting your body\'s wisdom without obsessing over its noise.',</span>
+<span class="cstat-no" title="statement not covered" >    financesAdvice: 'Meticulous budgeting and conservative planning build your wealth. You spot inefficiencies that cost others thousands. Invest in health, education, and tools that increase effectiveness. Beware miserliness; money is meant to circulate. Your financial peace comes from knowing every detail is accounted for.',</span>
+<span class="cstat-no" title="statement not covered" >    growthAdvice: 'Your shadow is the belief that your worth equals your usefulness — that you must produce to deserve presence. The lesson of Saturn in Virgo is that perfection is not the absence of flaws but the acceptance of wholeness. Growth asks you to release the need to fix everything, starting with the understanding that you were never broken.',</span>
+<span class="cstat-no" title="statement not covered" >    bodyFocus: 'digestive system, intestines, spleen, nervous system',</span>
+<span class="cstat-no" title="statement not covered" >    elementalResonance: 'Your discipline is kiln-heat — sustained, transformative, shaping raw material through patience and pressure into form that serves.',</span>
+<span class="cstat-no" title="statement not covered" >  },</span>
+<span class="cstat-no" title="statement not covered" >  libra: {</span>
+<span class="cstat-no" title="statement not covered" >    essence: 'Your discipline is a judge\'s robe — balanced, impartial, and demanding that fairness be more than aspiration. Saturn in Libra teaches that justice requires structure, that partnership demands commitment, and that the pursuit of harmony without boundaries becomes self-erasure. You are here to master the art of balanced authority — leading with fairness that includes yourself.',</span>
+<span class="cstat-no" title="statement not covered" >    element: 'air', modality: 'cardinal', keywords: ['balanced discipline', 'structured fairness', 'committed partnership', 'diplomatic authority'],</span>
+<span class="cstat-no" title="statement not covered" >    careerAdvice: 'Your professional discipline is diplomatic and strategic. Law, design, mediation, public relations, and partnership-oriented fields suit your gift for balanced authority. You excel when bringing opposing sides to agreement. Beware indecision — sometimes any choice is better than perpetual deliberation. Trust your judgment.',</span>
+<span class="cstat-no" title="statement not covered" >    relationshipAdvice: 'You take commitment with the gravity it deserves. You attract partners who value fairness and intellectual connection. Beware people-pleasing — discipline in love includes the courage to state your needs, even when it disturbs the peace. A relationship built on self-erasure was never balanced to begin with.',</span>
+<span class="cstat-no" title="statement not covered" >    healthAdvice: 'Your kidneys, skin, and lower back reflect your stress levels. Balance is not just philosophical — it is physiological. Practices that restore equilibrium — tai chi, balanced nutrition, beauty rituals — are medicine. Avoid extremes; your body prefers moderation. Learn to make decisions without perfect information.',</span>
+<span class="cstat-no" title="statement not covered" >    financesAdvice: 'Partnership investments and shared resources flourish under your structured guidance. Your sense of fairness makes you a trusted advisor. Beware aesthetic impulse spending — beauty is worth investment, but not debt. Build wealth that supports a balanced life without compromising your peace.',</span>
+<span class="cstat-no" title="statement not covered" >    growthAdvice: 'Your shadow is the avoidance of conflict — the belief that discipline means keeping the peace at any price. The lesson of Saturn in Libra is that true harmony includes necessary discord. Growth asks you to fight for what is right even when it disturbs the equilibrium you cherish, knowing that false peace is worse than honest tension.',</span>
+<span class="cstat-no" title="statement not covered" >    bodyFocus: 'kidneys, skin, lower back, endocrine balance',</span>
+<span class="cstat-no" title="statement not covered" >    elementalResonance: 'Your discipline reflects — it is the sunlight on still water, measured and precise because it sees all angles before it acts.',</span>
+<span class="cstat-no" title="statement not covered" >  },</span>
+<span class="cstat-no" title="statement not covered" >  scorpio: {</span>
+<span class="cstat-no" title="statement not covered" >    essence: 'Your discipline is a spy\'s code — secretive, strategic, and capable of extraordinary patience before decisive action. Saturn in Scorpio teaches that power must be earned, that control is illusion, and that the deepest transformations come through surrender rather than force. You are here to master the art of strategic depth — wielding influence with integrity and releasing what cannot be controlled.',</span>
+<span class="cstat-no" title="statement not covered" >    element: 'water', modality: 'fixed', keywords: ['strategic depth', 'earned power', 'controlled intensity', 'transformative discipline'],</span>
+<span class="cstat-no" title="statement not covered" >    careerAdvice: 'Your professional discipline is intense and strategic. Research, psychology, crisis management, and fields involving power dynamics suit you. Your ability to see what others hide is your edge. Beware using your insight to manipulate; knowledge is power, but power without integrity is corruption. Build trust through transparency.',</span>
+<span class="cstat-no" title="statement not covered" >    relationshipAdvice: 'Your commitment is all-or-nothing — once given, it is absolute and irrevocable. You attract partners who can handle depth without drowning. Beware jealousy and control — they poison the very intimacy you seek. True discipline in love is the courage to trust without surveillance.',</span>
+<span class="cstat-no" title="statement not covered" >    healthAdvice: 'Your reproductive and eliminative systems process what your discipline cannot release. Deep therapeutic practices restore you. Beware addictive patterns — your intensity seeks extremes. Moderation is the true discipline of power. Your body speaks in symbols; learn its language without fear.',</span>
+<span class="cstat-no" title="statement not covered" >    financesAdvice: 'Your research skills prevent costly mistakes. Joint resources, investments, and other people\'s money are your domain. Beware financial secrecy — transparency builds the trust that creates wealth. Invest in transformation, not control. Your financial power grows through strategic patience.',</span>
+<span class="cstat-no" title="statement not covered" >    growthAdvice: 'Your shadow is the compulsion to control — the belief that power equals safety. The lesson of Saturn in Scorpio is that true strength includes the courage to release. Growth asks you to distinguish between strategic pursuit and obsessive fixation, and to trust that some transformations cannot be directed, only surrendered to.',</span>
+<span class="cstat-no" title="statement not covered" >    bodyFocus: 'reproductive system, eliminative organs, pelvis, colon',</span>
+<span class="cstat-no" title="statement not covered" >    elementalResonance: 'Your discipline is subterranean — dark, pressurised, capable of dissolving stone or carrying gold depending on what it touches.',</span>
+<span class="cstat-no" title="statement not covered" >  },</span>
+<span class="cstat-no" title="statement not covered" >  sagittarius: {</span>
+<span class="cstat-no" title="statement not covered" >    essence: 'Your discipline is a monk\'s pilgrimage — structured adventure, ritualised exploration, and the understanding that freedom requires framework. Saturn in Sagittarius teaches that wisdom must be earned, that belief requires testing, and that the restless seeker who never commits learns nothing. You are here to master the art of focused exploration — depth alongside breadth, commitment within freedom.',</span>
+<span class="cstat-no" title="statement not covered" >    element: 'fire', modality: 'mutable', keywords: ['structured adventure', 'earned wisdom', 'disciplined freedom', 'philosophical rigour'],</span>
+<span class="cstat-no" title="statement not covered" >    careerAdvice: 'Your professional discipline is expansive and systematic. Teaching, publishing, travel, international business, and visionary projects suit your nature. You excel when sharing knowledge with audiences. Beware overcommitment — your optimism can lead to promising more than you can deliver. Build systems that ground your vision.',</span>
+<span class="cstat-no" title="statement not covered" >    relationshipAdvice: 'You take commitment seriously but require freedom within it. You attract partners who share your hunger for meaning and respect your need for exploration. Beware restlessness — the grass is not always greener. Discipline in love is the courage to stay when the horizon beckons, knowing that depth contains its own adventures.',</span>
+<span class="cstat-no" title="statement not covered" >    healthAdvice: 'Your hips, thighs, and liver carry your wanderlust. Outdoor movement restores your vitality. Beware excess — your expansive nature applies to indulgence as well as exploration. Your body needs movement, but it also needs rest between journeys. Moderation is the adventure you have not yet taken.',</span>
+<span class="cstat-no" title="statement not covered" >    financesAdvice: 'Long-term growth investments and educational opportunities align with your vision. Your optimism attracts abundance, but overconfidence leads to risky speculation. Build wealth that funds your adventures without chaining you to them. Discipline means distinguishing between worthy risks and reckless gambles.',</span>
+<span class="cstat-no" title="statement not covered" >    growthAdvice: 'Your shadow is the fear that commitment means the end of adventure. The lesson of Saturn in Sagittarius is that the greatest journey is inward. Growth asks you to find depth in commitment, to discover that focusing on one path can reveal more worlds than skimming many surfaces.',</span>
+<span class="cstat-no" title="statement not covered" >    bodyFocus: 'hips, thighs, liver, sciatic nerve',</span>
+<span class="cstat-no" title="statement not covered" >    elementalResonance: 'Your discipline is forge-heat — shaping raw enthusiasm through sustained pressure into wisdom that outlasts the initial spark.',</span>
+<span class="cstat-no" title="statement not covered" >  },</span>
+<span class="cstat-no" title="statement not covered" >  capricorn: {</span>
+<span class="cstat-no" title="statement not covered" >    essence: 'Your discipline is mountain stone — enduring, patient, and built to outlast every flashier competitor. Saturn in Capricorn is at home, the master architect who understands that true authority is earned through demonstrated competence, not claimed through entitlement. You are here to build structures that endure, to climb steadily toward summits that others believe impossible, and to demonstrate that discipline is not punishment but the path to genuine freedom.',</span>
+<span class="cstat-no" title="statement not covered" >    element: 'earth', modality: 'cardinal', keywords: ['earned authority', 'structural mastery', 'patient ambition', 'disciplined leadership'],</span>
+<span class="cstat-no" title="statement not covered" >    careerAdvice: 'Your professional discipline is unmatched. Executive leadership, management, and fields requiring long-term strategic vision suit you. You excel where persistence outlasts talent. Beware workaholism — achievement without joy is a hollow crown. Build a legacy, but remember to live in the structure you create. Your authority is real because you earned it.',</span>
+<span class="cstat-no" title="statement not covered" >    relationshipAdvice: 'Your commitment is geological — once given, it spans eras. You attract partners who value loyalty and shared goals. Beware emotional austerity — your competence is impressive, but your warmth is what sustains connection. Let your partner see the human beneath the executive. Discipline in love includes softness.',</span>
+<span class="cstat-no" title="statement not covered" >    healthAdvice: 'Your bones, joints, and teeth reflect the weight you carry. Structural health is your foundation. Regular weight-bearing exercise and calcium-rich nutrition are essential. Beware somatising work stress — your body absorbs what your mind refuses to delegate. Rest is not laziness; it is structural maintenance.',</span>
+<span class="cstat-no" title="statement not covered" >    financesAdvice: 'Conservative, structured, long-term wealth-building is your financial language. Real estate, retirement planning, and legacy investments align with your values. You understand that wealth is built one brick at a time. Beware using money as a scorecard for worth — your value is not your net worth.',</span>
+<span class="cstat-no" title="statement not covered" >    growthAdvice: 'Your shadow is the fear of failure — the belief that one mistake undermines the entire structure you have built. The lesson of Saturn in Capricorn is that true mastery includes the courage to be wrong. Growth asks you to risk the appearance of competence for the reality of learning, knowing that even mountains are shaped by erosion.',</span>
+<span class="cstat-no" title="statement not covered" >    bodyFocus: 'bones, joints, teeth, knees, skeletal system',</span>
+<span class="cstat-no" title="statement not covered" >    elementalResonance: 'Your discipline is mountain-stone — enduring, shaping the landscape through persistence rather than force, outlasting every season.',</span>
+<span class="cstat-no" title="statement not covered" >  },</span>
+<span class="cstat-no" title="statement not covered" >  aquarius: {</span>
+<span class="cstat-no" title="statement not covered" >    essence: 'Your discipline is a revolutionary\'s code — structured rebellion, systematic innovation, and the understanding that true change requires organisation as much as vision. Saturn in Aquarius teaches that freedom must be earned, that innovation requires discipline, and that the rebel without structure merely makes noise. You are here to master the art of organised transformation — building systems that liberate rather than constrain.',</span>
+<span class="cstat-no" title="statement not covered" >    element: 'air', modality: 'fixed', keywords: ['structured innovation', 'earned freedom', 'systematic reform', 'disciplined revolution'],</span>
+<span class="cstat-no" title="statement not covered" >    careerAdvice: 'Your professional discipline is innovative and collective. Technology, social reform, scientific research, and group-oriented fields suit your vision. You excel when given freedom to challenge conventions within structured frameworks. Beware detachment — your ideas change the world only when you stay engaged long enough to implement them.',</span>
+<span class="cstat-no" title="statement not covered" >    relationshipAdvice: 'You take commitment seriously but require independence within it. You attract partners who respect your ideals and share your vision for the future. Beware emotional distance — intellect is your comfort zone, but intimacy requires feeling. Discipline in love includes the courage to be vulnerable without losing your uniqueness.',</span>
+<span class="cstat-no" title="statement not covered" >    healthAdvice: 'Your circulatory and nervous systems carry your electric energy. Unconventional health practices may appeal. Beware nervous exhaustion from overstimulation. Your body needs grounding as much as your mind needs stimulation. Regular digital detox is not optional — it is survival. Structure your rest as carefully as your work.',</span>
+<span class="cstat-no" title="statement not covered" >    financesAdvice: 'Innovative investments — technology, social enterprise, cryptocurrency — align with your vision. Beware detachment from financial reality; even revolutionaries must pay rent. Build wealth that funds your ideals without compromising them. Discipline means separating vision from impracticality.',</span>
+<span class="cstat-no" title="statement not covered" >    growthAdvice: 'Your shadow is the belief that emotions compromise freedom — that discipline requires emotional austerity. The lesson of Saturn in Aquarius is that true liberation includes the freedom to feel. Growth asks you to build systems that honour human need as much as they honour human potential, knowing that the best innovations serve the whole person.',</span>
+<span class="cstat-no" title="statement not covered" >    bodyFocus: 'calves, ankles, circulatory system, nervous system',</span>
+<span class="cstat-no" title="statement not covered" >    elementalResonance: 'Your discipline is lightning captured — electric energy channelled through structure, illuminating what was hidden without burning what it touches.',</span>
+<span class="cstat-no" title="statement not covered" >  },</span>
+<span class="cstat-no" title="statement not covered" >  pisces: {</span>
+<span class="cstat-no" title="statement not covered" >    essence: 'Your discipline is a monk\'s vow — compassionate, selfless, and demanding mastery over the impulse to escape. Saturn in Pisces teaches that spirituality requires structure, that compassion requires boundaries, and that the mystic who refuses discipline merely drifts. You are here to master the art of grounded transcendence — building form for the formless, creating containers for the divine without limiting it.',</span>
+<span class="cstat-no" title="statement not covered" >    element: 'water', modality: 'mutable', keywords: ['spiritual discipline', 'compassionate boundaries', 'structured transcendence', 'earned faith'],</span>
+<span class="cstat-no" title="statement not covered" >    careerAdvice: 'Your professional discipline is compassionate and creative. Healing arts, film, music, spiritual guidance, and compassionate service suit your gifts. You excel when work feels like devotion. Beware martyrdom — sacrifice without boundaries breeds resentment, not grace. Build structures that protect your sensitivity while allowing your gifts to flow.',</span>
+<span class="cstat-no" title="statement not covered" >    relationshipAdvice: 'Your commitment is deep but requires boundaries to sustain. You attract partners who value spiritual connection and emotional depth. Beware saviour dynamics — you cannot heal someone who refuses to heal. Discipline in love means distinguishing between empathy and enmeshment, between love and sacrifice.',</span>
+<span class="cstat-no" title="statement not covered" >    healthAdvice: 'Your feet and immune system are your anchors. Water-based therapies, dream work, and creative expression are essential medicine. Beware escapism — your sensitivity seeks relief in substances, screens, or denial. Sleep is your sanctuary; guard it as sacred. Discipline means grounding your spirituality in daily practice.',</span>
+<span class="cstat-no" title="statement not covered" >    financesAdvice: 'Intuitive guidance can lead to surprising financial insights. Creative investments may flourish. Beware escapist spending — retail therapy does not fill the void. Build financial boundaries as carefully as emotional ones. Trust your intuition, but verify with practical checks. Discipline means charging for your gifts.',</span>
+<span class="cstat-no" title="statement not covered" >    growthAdvice: 'Your shadow is the martyr — the belief that suffering is noble, that boundaries are unkind. The lesson of Saturn in Pisces is that compassion without discernment is self-destruction. Growth asks you to build structures that contain your gifts without limiting them, and to trust that discipline is the form that allows spirit to manifest.',</span>
+<span class="cstat-no" title="statement not covered" >    bodyFocus: 'feet, immune system, pineal gland, lymphatic system',</span>
+<span class="cstat-no" title="statement not covered" >    elementalResonance: 'Your discipline has frozen to permafrost — preserving ancient wisdom, supporting structures that others could not build on shifting ground.',</span>
+<span class="cstat-no" title="statement not covered" >  },</span>
+<span class="cstat-no" title="statement not covered" >  ophiuchus: {</span>
+<span class="cstat-no" title="statement not covered" >    essence: 'Your discipline is an initiate\'s trial — rigorous, transformative, and demanding that you face what others turn away from. Saturn in Ophiuchus teaches that healing requires structure, that transformation demands patience, and that the wounded healer must also be healed. You are here to master the art of disciplined metamorphosis — building systems that hold space for death and rebirth, for poison and medicine, for shadow and light.',</span>
+<span class="cstat-no" title="statement not covered" >    element: 'ether', modality: 'fixed', keywords: ['initiatory discipline', 'structured transformation', 'earned healing', 'alchemical patience'],</span>
+<span class="cstat-no" title="statement not covered" >    careerAdvice: 'Your professional discipline is healing and transformative. Medicine, psychology, energy work, research into the taboo, and crisis intervention suit you. You excel where transformation is required and others turn away. Beware the wounded healer trap — you cannot heal what you refuse to feel in yourself. Build structures that sustain your work without consuming you.',</span>
+<span class="cstat-no" title="statement not covered" >    relationshipAdvice: 'Your commitment is initiatory — every bond has the potential to transform. You attract partners who are ready to evolve. Beware the tendency to heal instead of relate; your insight is a gift, but in love it can become a wall. Discipline means presence without analysis, connection without rescue.',</span>
+<span class="cstat-no" title="statement not covered" >    healthAdvice: 'Your spinal column and nervous system regeneration are your focuses. Energy medicine, spinal alignment, and subtle body practices restore you. You are sensitive to environmental energies — your body is a barometer for collective health. Discipline means energetic hygiene: rest, boundaries, and the courage to say no.',</span>
+<span class="cstat-no" title="statement not covered" >    financesAdvice: 'Your financial path is non-linear — structured flexibility is required. Investments in healing, transformation, and regenerative enterprises align with your values. Build systems that accommodate sudden change. Beware rescuing others financially; true help empowers independence, not dependence.',</span>
+<span class="cstat-no" title="statement not covered" >    growthAdvice: 'Your shadow is the compulsion to sacrifice — the belief that your discipline is only valuable if it serves others. The lesson of Saturn in Ophiuchus is that the healer must also be healed. Growth asks you to build structures for your own transformation with the same rigour you bring to others\', and to trust that your wholeness is the foundation of your service.',</span>
+<span class="cstat-no" title="statement not covered" >    bodyFocus: 'spinal column, nervous system regeneration, subtle energy channels, cellular renewal',</span>
+<span class="cstat-no" title="statement not covered" >    elementalResonance: 'Your discipline is alchemical flame — sustained, transformative, turning base substance into gold through patience and pressure that others cannot endure.',</span>
+<span class="cstat-no" title="statement not covered" >  },</span>
+<span class="cstat-no" title="statement not covered" >};</span>
+&nbsp;</pre></td></tr></table></pre>
+
+                <div class='push'></div><!-- for sticky footer -->
+            </div><!-- /wrapper -->
+            <div class='footer quiet pad2 space-top1 center small'>
+                Code coverage generated by
+                <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
+                at 2026-05-20T03:38:53.739Z
+            </div>
+        <script src="../../../../../prettify.js"></script>
+        <script>
+            window.onload = function () {
+                prettyPrint();
+            };
+        </script>
+        <script src="../../../../../sorter.js"></script>
+        <script src="../../../../../block-navigation.js"></script>
+    </body>
+</html>
+    

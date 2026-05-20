@@ -3,6 +3,7 @@
  */
 
 import React, { useState, useCallback } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import type { RootState } from '../../../store';
 import type { CreateProfileInput } from '../../types';
@@ -134,6 +135,7 @@ export const BirthChartForm: React.FC<BirthChartFormProps> = ({
   onCancel,
   initialData,
 }) => {
+  const { t } = useTranslation();
   const [name, setName] = useState(initialData?.name || '');
   const [birthDate, setBirthDate] = useState(initialData?.birthData?.birthDate || '');
   const [birthTime, setBirthTime] = useState(initialData?.birthData?.birthTime || '12:00');
@@ -220,7 +222,7 @@ export const BirthChartForm: React.FC<BirthChartFormProps> = ({
           type="text"
           value={name}
           onChange={(e) => setName(e.target.value)}
-          placeholder="Enter name"
+          placeholder={t('celestial.birthChart.namePlaceholder')}
           style={{...styles.input, ...(errors.name ? styles.inputError : {})}}
         />
         {errors.name && <span style={styles.error}>{errors.name}</span>}

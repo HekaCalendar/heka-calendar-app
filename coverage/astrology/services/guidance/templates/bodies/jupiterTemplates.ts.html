@@ -1,0 +1,544 @@
+
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Code coverage report for astrology/services/guidance/templates/bodies/jupiterTemplates.ts</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../../../../prettify.css" />
+    <link rel="stylesheet" href="../../../../../base.css" />
+    <link rel="shortcut icon" type="image/x-icon" href="../../../../../favicon.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../../../../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+    
+<body>
+<div class='wrapper'>
+    <div class='pad1'>
+        <h1><a href="../../../../../index.html">All files</a> / <a href="index.html">astrology/services/guidance/templates/bodies</a> jupiterTemplates.ts</h1>
+        <div class='clearfix'>
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">0% </span>
+                <span class="quiet">Statements</span>
+                <span class='fraction'>0/153</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">0% </span>
+                <span class="quiet">Branches</span>
+                <span class='fraction'>0/1</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">0% </span>
+                <span class="quiet">Functions</span>
+                <span class='fraction'>0/1</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">0% </span>
+                <span class="quiet">Lines</span>
+                <span class='fraction'>0/153</span>
+            </div>
+        
+            
+        </div>
+        <p class="quiet">
+            Press <em>n</em> or <em>j</em> to go to the next uncovered block, <em>b</em>, <em>p</em> or <em>k</em> for the previous block.
+        </p>
+        <template id="filterTemplate">
+            <div class="quiet">
+                Filter:
+                <input type="search" id="fileSearch">
+            </div>
+        </template>
+    </div>
+    <div class='status-line low'></div>
+    <pre><table class="coverage">
+<tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
+<a name='L2'></a><a href='#L2'>2</a>
+<a name='L3'></a><a href='#L3'>3</a>
+<a name='L4'></a><a href='#L4'>4</a>
+<a name='L5'></a><a href='#L5'>5</a>
+<a name='L6'></a><a href='#L6'>6</a>
+<a name='L7'></a><a href='#L7'>7</a>
+<a name='L8'></a><a href='#L8'>8</a>
+<a name='L9'></a><a href='#L9'>9</a>
+<a name='L10'></a><a href='#L10'>10</a>
+<a name='L11'></a><a href='#L11'>11</a>
+<a name='L12'></a><a href='#L12'>12</a>
+<a name='L13'></a><a href='#L13'>13</a>
+<a name='L14'></a><a href='#L14'>14</a>
+<a name='L15'></a><a href='#L15'>15</a>
+<a name='L16'></a><a href='#L16'>16</a>
+<a name='L17'></a><a href='#L17'>17</a>
+<a name='L18'></a><a href='#L18'>18</a>
+<a name='L19'></a><a href='#L19'>19</a>
+<a name='L20'></a><a href='#L20'>20</a>
+<a name='L21'></a><a href='#L21'>21</a>
+<a name='L22'></a><a href='#L22'>22</a>
+<a name='L23'></a><a href='#L23'>23</a>
+<a name='L24'></a><a href='#L24'>24</a>
+<a name='L25'></a><a href='#L25'>25</a>
+<a name='L26'></a><a href='#L26'>26</a>
+<a name='L27'></a><a href='#L27'>27</a>
+<a name='L28'></a><a href='#L28'>28</a>
+<a name='L29'></a><a href='#L29'>29</a>
+<a name='L30'></a><a href='#L30'>30</a>
+<a name='L31'></a><a href='#L31'>31</a>
+<a name='L32'></a><a href='#L32'>32</a>
+<a name='L33'></a><a href='#L33'>33</a>
+<a name='L34'></a><a href='#L34'>34</a>
+<a name='L35'></a><a href='#L35'>35</a>
+<a name='L36'></a><a href='#L36'>36</a>
+<a name='L37'></a><a href='#L37'>37</a>
+<a name='L38'></a><a href='#L38'>38</a>
+<a name='L39'></a><a href='#L39'>39</a>
+<a name='L40'></a><a href='#L40'>40</a>
+<a name='L41'></a><a href='#L41'>41</a>
+<a name='L42'></a><a href='#L42'>42</a>
+<a name='L43'></a><a href='#L43'>43</a>
+<a name='L44'></a><a href='#L44'>44</a>
+<a name='L45'></a><a href='#L45'>45</a>
+<a name='L46'></a><a href='#L46'>46</a>
+<a name='L47'></a><a href='#L47'>47</a>
+<a name='L48'></a><a href='#L48'>48</a>
+<a name='L49'></a><a href='#L49'>49</a>
+<a name='L50'></a><a href='#L50'>50</a>
+<a name='L51'></a><a href='#L51'>51</a>
+<a name='L52'></a><a href='#L52'>52</a>
+<a name='L53'></a><a href='#L53'>53</a>
+<a name='L54'></a><a href='#L54'>54</a>
+<a name='L55'></a><a href='#L55'>55</a>
+<a name='L56'></a><a href='#L56'>56</a>
+<a name='L57'></a><a href='#L57'>57</a>
+<a name='L58'></a><a href='#L58'>58</a>
+<a name='L59'></a><a href='#L59'>59</a>
+<a name='L60'></a><a href='#L60'>60</a>
+<a name='L61'></a><a href='#L61'>61</a>
+<a name='L62'></a><a href='#L62'>62</a>
+<a name='L63'></a><a href='#L63'>63</a>
+<a name='L64'></a><a href='#L64'>64</a>
+<a name='L65'></a><a href='#L65'>65</a>
+<a name='L66'></a><a href='#L66'>66</a>
+<a name='L67'></a><a href='#L67'>67</a>
+<a name='L68'></a><a href='#L68'>68</a>
+<a name='L69'></a><a href='#L69'>69</a>
+<a name='L70'></a><a href='#L70'>70</a>
+<a name='L71'></a><a href='#L71'>71</a>
+<a name='L72'></a><a href='#L72'>72</a>
+<a name='L73'></a><a href='#L73'>73</a>
+<a name='L74'></a><a href='#L74'>74</a>
+<a name='L75'></a><a href='#L75'>75</a>
+<a name='L76'></a><a href='#L76'>76</a>
+<a name='L77'></a><a href='#L77'>77</a>
+<a name='L78'></a><a href='#L78'>78</a>
+<a name='L79'></a><a href='#L79'>79</a>
+<a name='L80'></a><a href='#L80'>80</a>
+<a name='L81'></a><a href='#L81'>81</a>
+<a name='L82'></a><a href='#L82'>82</a>
+<a name='L83'></a><a href='#L83'>83</a>
+<a name='L84'></a><a href='#L84'>84</a>
+<a name='L85'></a><a href='#L85'>85</a>
+<a name='L86'></a><a href='#L86'>86</a>
+<a name='L87'></a><a href='#L87'>87</a>
+<a name='L88'></a><a href='#L88'>88</a>
+<a name='L89'></a><a href='#L89'>89</a>
+<a name='L90'></a><a href='#L90'>90</a>
+<a name='L91'></a><a href='#L91'>91</a>
+<a name='L92'></a><a href='#L92'>92</a>
+<a name='L93'></a><a href='#L93'>93</a>
+<a name='L94'></a><a href='#L94'>94</a>
+<a name='L95'></a><a href='#L95'>95</a>
+<a name='L96'></a><a href='#L96'>96</a>
+<a name='L97'></a><a href='#L97'>97</a>
+<a name='L98'></a><a href='#L98'>98</a>
+<a name='L99'></a><a href='#L99'>99</a>
+<a name='L100'></a><a href='#L100'>100</a>
+<a name='L101'></a><a href='#L101'>101</a>
+<a name='L102'></a><a href='#L102'>102</a>
+<a name='L103'></a><a href='#L103'>103</a>
+<a name='L104'></a><a href='#L104'>104</a>
+<a name='L105'></a><a href='#L105'>105</a>
+<a name='L106'></a><a href='#L106'>106</a>
+<a name='L107'></a><a href='#L107'>107</a>
+<a name='L108'></a><a href='#L108'>108</a>
+<a name='L109'></a><a href='#L109'>109</a>
+<a name='L110'></a><a href='#L110'>110</a>
+<a name='L111'></a><a href='#L111'>111</a>
+<a name='L112'></a><a href='#L112'>112</a>
+<a name='L113'></a><a href='#L113'>113</a>
+<a name='L114'></a><a href='#L114'>114</a>
+<a name='L115'></a><a href='#L115'>115</a>
+<a name='L116'></a><a href='#L116'>116</a>
+<a name='L117'></a><a href='#L117'>117</a>
+<a name='L118'></a><a href='#L118'>118</a>
+<a name='L119'></a><a href='#L119'>119</a>
+<a name='L120'></a><a href='#L120'>120</a>
+<a name='L121'></a><a href='#L121'>121</a>
+<a name='L122'></a><a href='#L122'>122</a>
+<a name='L123'></a><a href='#L123'>123</a>
+<a name='L124'></a><a href='#L124'>124</a>
+<a name='L125'></a><a href='#L125'>125</a>
+<a name='L126'></a><a href='#L126'>126</a>
+<a name='L127'></a><a href='#L127'>127</a>
+<a name='L128'></a><a href='#L128'>128</a>
+<a name='L129'></a><a href='#L129'>129</a>
+<a name='L130'></a><a href='#L130'>130</a>
+<a name='L131'></a><a href='#L131'>131</a>
+<a name='L132'></a><a href='#L132'>132</a>
+<a name='L133'></a><a href='#L133'>133</a>
+<a name='L134'></a><a href='#L134'>134</a>
+<a name='L135'></a><a href='#L135'>135</a>
+<a name='L136'></a><a href='#L136'>136</a>
+<a name='L137'></a><a href='#L137'>137</a>
+<a name='L138'></a><a href='#L138'>138</a>
+<a name='L139'></a><a href='#L139'>139</a>
+<a name='L140'></a><a href='#L140'>140</a>
+<a name='L141'></a><a href='#L141'>141</a>
+<a name='L142'></a><a href='#L142'>142</a>
+<a name='L143'></a><a href='#L143'>143</a>
+<a name='L144'></a><a href='#L144'>144</a>
+<a name='L145'></a><a href='#L145'>145</a>
+<a name='L146'></a><a href='#L146'>146</a>
+<a name='L147'></a><a href='#L147'>147</a>
+<a name='L148'></a><a href='#L148'>148</a>
+<a name='L149'></a><a href='#L149'>149</a>
+<a name='L150'></a><a href='#L150'>150</a>
+<a name='L151'></a><a href='#L151'>151</a>
+<a name='L152'></a><a href='#L152'>152</a>
+<a name='L153'></a><a href='#L153'>153</a>
+<a name='L154'></a><a href='#L154'>154</a></td><td class="line-coverage quiet"><span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js"><span class="cstat-no" title="statement not covered" >import type { BodyTemplates } from './types';<span class="fstat-no" title="function not covered" ><span class="branch-0 cbranch-no" title="branch not covered" ></span></span></span>
+<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" >/**</span>
+<span class="cstat-no" title="statement not covered" > * ═══════════════════════════════════════════════════════════════════════════════</span>
+<span class="cstat-no" title="statement not covered" > * JUPITER TEMPLATES — Expansion, wisdom, abundance, growth</span>
+<span class="cstat-no" title="statement not covered" > * ═══════════════════════════════════════════════════════════════════════════════</span>
+<span class="cstat-no" title="statement not covered" > */</span>
+<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" >export const jupiterTemplates: BodyTemplates = {</span>
+<span class="cstat-no" title="statement not covered" >  aries: {</span>
+<span class="cstat-no" title="statement not covered" >    essence: 'Your growth is a wildfire of initiative — expansive, courageous, and impossible to contain. Jupiter in Aries believes that fortune favours the bold, and you are never short of boldness. You expand through action, through risk, through the willingness to be first. Your wisdom is earned in the arena, not the library — you learn by doing, failing, and doing again with greater enthusiasm.',</span>
+<span class="cstat-no" title="statement not covered" >    element: 'fire', modality: 'cardinal', keywords: ['bold expansion', 'pioneering wisdom', 'entrepreneurial', 'courageous growth'],</span>
+<span class="cstat-no" title="statement not covered" >    careerAdvice: 'Your professional growth comes through initiative and risk. Entrepreneurship, leadership, competitive fields, and any arena where you can be first suit you. Your optimism opens doors that caution keeps closed. Beware overextension — your enthusiasm can lead to taking on more than you can sustain. Grow strategically, not just aggressively.',</span>
+<span class="cstat-no" title="statement not covered" >    relationshipAdvice: 'You expand through partnership — your relationships are adventures, not anchors. You attract partners who share your hunger for growth and respect your independence. Beware impatience — not everyone grows at your speed. Practice celebrating your partner\'s pace as much as your own. True abundance in love is mutual expansion.',</span>
+<span class="cstat-no" title="statement not covered" >    healthAdvice: 'Your vitality expands through challenge. High-energy sports, competitive activities, and physical adventures restore your equilibrium. Your liver and hips carry the stress of overextension. Beware burnout from too many simultaneous growth projects; even wildfire needs fuel management. Rest is part of expansion.',</span>
+<span class="cstat-no" title="statement not covered" >    financesAdvice: 'Bold investments and entrepreneurial ventures align with your expansive nature. Your optimism attracts opportunity, but overconfidence leads to risky speculation. Build wealth through calculated risks, not gambles. Diversify your growth — financial, intellectual, and experiential abundance are all forms of wealth.',</span>
+<span class="cstat-no" title="statement not covered" >    growthAdvice: 'Your shadow is the belief that bigger is always better — that growth without direction is virtue. The lesson of Jupiter in Aries is that true expansion includes the wisdom to know when to consolidate. Growth asks you to distinguish between worthy risks and reckless impulses, and to build as boldly as you begin.',</span>
+<span class="cstat-no" title="statement not covered" >    bodyFocus: 'liver, hips, thighs, sciatic nerve',</span>
+<span class="cstat-no" title="statement not covered" >    elementalResonance: 'Your expansion burns with the urgency of dawn — immediate, warming, demanding to be met with equal courage and initiative.',</span>
+<span class="cstat-no" title="statement not covered" >  },</span>
+<span class="cstat-no" title="statement not covered" >  taurus: {</span>
+<span class="cstat-no" title="statement not covered" >    essence: 'Your growth is an oak tree — slow, steady, and capable of shading generations. Jupiter in Taurus expands through patience, through tangible accumulation, through the wisdom that true abundance is built one brick at a time. You do not chase fortune; you cultivate it. Your blessings are physical, sensual, and enduring — the wealth that lasts is the wealth that is rooted.',</span>
+<span class="cstat-no" title="statement not covered" >    element: 'earth', modality: 'fixed', keywords: ['steady abundance', 'tangible growth', 'sensual wisdom', 'patience'],</span>
+<span class="cstat-no" title="statement not covered" >    careerAdvice: 'Your professional growth comes through persistence and tangible value creation. Finance, agriculture, real estate, luxury goods, and design suit your methodical expansion. You build expertise and reputation that compound over decades. Beware stubbornness in the face of necessary change — growth requires adaptation, not just endurance.',</span>
+<span class="cstat-no" title="statement not covered" >    relationshipAdvice: 'You expand through sensual abundance — shared meals, beautiful spaces, physical comfort. You attract partners who value reliability and tangible demonstrations of devotion. Beware possessiveness — abundance hoarded is abundance wasted. True growth in love is the willingness to share what you have built, knowing that generosity creates more than it costs.',</span>
+<span class="cstat-no" title="statement not covered" >    healthAdvice: 'Your vitality expands through nourishment and routine. Gardening, cooking, massage, and nature connection restore your equilibrium. Your throat and thyroid reflect your relationship with abundance — tension here signals fear of loss. Practice gratitude as physical medicine; the body relaxes when the mind trusts that enough is present.',</span>
+<span class="cstat-no" title="statement not covered" >    financesAdvice: 'Wealth builds through patient accumulation and conservative investment. Real estate, tangible assets, and long-term holdings align with your values. Your eye for value is your financial superpower. Beware hoarding; abundance flows when it circulates. Your financial peace comes from knowing the foundation is solid.',</span>
+<span class="cstat-no" title="statement not covered" >    growthAdvice: 'Your shadow is the fear of scarcity — the clinging to what you have at the expense of what you could become. The lesson of Jupiter in Taurus is that true abundance includes the courage to invest in growth. Growth asks you to risk the comfort of the known for the possibility of the truly nourishing, trusting that your roots are deep enough to withstand transplant.',</span>
+<span class="cstat-no" title="statement not covered" >    bodyFocus: 'throat, neck, thyroid, vocal cords',</span>
+<span class="cstat-no" title="statement not covered" >    elementalResonance: 'Your expansion is hearth-warmth — steady, nourishing, the kind of growth that matures through patience and deepens with every season it endures.',</span>
+<span class="cstat-no" title="statement not covered" >  },</span>
+<span class="cstat-no" title="statement not covered" >  gemini: {</span>
+<span class="cstat-no" title="statement not covered" >    essence: 'Your growth is a network — expansive, curious, and connecting ideas that others believe are unrelated. Jupiter in Gemini expands through knowledge, through communication, through the sheer joy of learning. You are the eternal student who discovers that teaching is the highest form of learning. Your wisdom is not held in a single vault but distributed across a web of connections, each node illuminating the others.',</span>
+<span class="cstat-no" title="statement not covered" >    element: 'air', modality: 'mutable', keywords: ['intellectual expansion', 'communicative wisdom', 'versatile', 'curious'],</span>
+<span class="cstat-no" title="statement not covered" >    careerAdvice: 'Your professional growth comes through knowledge sharing. Teaching, writing, media, technology, and communications fields thrive under your expansive curiosity. You excel when connecting disparate fields into new syntheses. Beware scattered focus — your greatest challenge is depth, not breadth. Cultivate expertise in 2-3 areas rather than grazing ten.',</span>
+<span class="cstat-no" title="statement not covered" >    relationshipAdvice: 'You expand through mental connection — shared learning, stimulating conversation, mutual discovery. You attract partners who can match your intellectual agility and shifting interests. Beware superficiality — breadth without depth creates a wide but shallow foundation. Practice staying curious about one person\'s depths as eagerly as you explore many subjects.',</span>
+<span class="cstat-no" title="statement not covered" >    healthAdvice: 'Your vitality expands through mental stimulation and variety. Your nervous system thrives on new information but suffers from overload. Breathwork, hand exercises, and varied movement restore equilibrium. Beware information addiction; your mind needs silence as much as stimulation. Curate your intellectual diet as carefully as your food.',</span>
+<span class="cstat-no" title="statement not covered" >    financesAdvice: 'Multiple income streams and knowledge-based investments suit your versatile approach. Your research skills prevent reckless speculation. Beware analysis paralysis — overthinking prevents action. Set decision deadlines and honour them. Your financial power comes from connecting ideas to execution.',</span>
+<span class="cstat-no" title="statement not covered" >    growthAdvice: 'Your shadow is the fear of missing out — the belief that depth requires abandoning breadth. The lesson of Jupiter in Gemini is that a network without nodes is just noise. Growth asks you to choose a few paths and walk them far enough to understand what they teach, without requiring them to become your only road.',</span>
+<span class="cstat-no" title="statement not covered" >    bodyFocus: 'lungs, hands, nervous system, shoulders',</span>
+<span class="cstat-no" title="statement not covered" >    elementalResonance: 'Your expansion dances as flame-tongue — quick, bright, illuminating many corners without lingering too long in any single shadow.',</span>
+<span class="cstat-no" title="statement not covered" >  },</span>
+<span class="cstat-no" title="statement not covered" >  cancer: {</span>
+<span class="cstat-no" title="statement not covered" >    essence: 'Your growth is a family tree — expansive through connection, through nurturing, through the wisdom that abundance is shared, not hoarded. Jupiter in Cancer expands through emotional security, through the creation of sanctuaries, through the realisation that the greatest wealth is the love that surrounds you. Your blessings flow through care; your wisdom is the understanding that we are held before we are born.',</span>
+<span class="cstat-no" title="statement not covered" >    element: 'water', modality: 'cardinal', keywords: ['emotional abundance', 'nurturing wisdom', 'protective growth', 'familial'],</span>
+<span class="cstat-no" title="statement not covered" >    careerAdvice: 'Your professional growth comes through caring for others. Hospitality, real estate, food, counselling, and community work align with your gifts. You build client relationships that feel like family. Your intuition about people and timing is a competitive advantage. Beware taking professional rejection personally — not everyone wants the depth of care you offer.',</span>
+<span class="cstat-no" title="statement not covered" >    relationshipAdvice: 'You expand through emotional generosity — creating homes, nurturing connections, building families of choice. You attract partners who value depth and domestic warmth. Beware smothering — your abundance can become overwhelming when it does not allow space. True growth in love includes the courage to let loved ones breathe.',</span>
+<span class="cstat-no" title="statement not covered" >    healthAdvice: 'Your vitality expands through emotional nourishment and water-based practices. Swimming, nurturing food, and regular sleep restore your equilibrium. Your stomach is your barometer — digestive health reflects emotional wellbeing. Practice receiving care as gracefully as you give it; your body needs to be nourished too.',</span>
+<span class="cstat-no" title="statement not covered" >    financesAdvice: 'Invest in home, family, and long-term security. Your financial decisions are emotional — build reserves that create peace of mind. Real estate and family businesses align with your values. Beware using money to create emotional security that must come from within. True abundance is internal, not just in the bank.',</span>
+<span class="cstat-no" title="statement not covered" >    growthAdvice: 'Your shadow is the fear of abandonment — the belief that growth requires leaving behind those you love. The lesson of Jupiter in Cancer is that true expansion includes those who matter. Growth asks you to distinguish between growth that nourishes your roots and growth that severs them, and to build a life where abundance is shared.',</span>
+<span class="cstat-no" title="statement not covered" >    bodyFocus: 'stomach, breasts, lymphatic system, womb',</span>
+<span class="cstat-no" title="statement not covered" >    elementalResonance: 'Your expansion is tidal — pulled by invisible forces, ancient, returning to nurture every shore it has ever touched.',</span>
+<span class="cstat-no" title="statement not covered" >  },</span>
+<span class="cstat-no" title="statement not covered" >  leo: {</span>
+<span class="cstat-no" title="statement not covered" >    essence: 'Your growth is a coronation — expansive, generous, and impossible to ignore. Jupiter in Leo believes that life is meant to be celebrated, that abundance is meant to be shared, and that the greatest wisdom is the courage to shine. You expand through creativity, through performance, through the realisation that your joy is contagious. Your blessings are theatrical because you believe that grandeur is not vanity but generosity.',</span>
+<span class="cstat-no" title="statement not covered" >    element: 'fire', modality: 'fixed', keywords: ['generous expansion', 'creative wisdom', 'magnanimous', 'celebratory'],</span>
+<span class="cstat-no" title="statement not covered" >    careerAdvice: 'Your professional growth comes through creative expression and leadership. Entertainment, design, education, and any field where your vision shapes the experience suit you. You excel when your work is celebrated. Beware the need for constant applause; your best growth happens when you create for the joy of it, not just the recognition.',</span>
+<span class="cstat-no" title="statement not covered" >    relationshipAdvice: 'You expand through generosity — grand gestures, abundant affection, the willingness to make your partner feel like royalty. You attract partners who bask in your warmth and reflect it back. Beware pride in vulnerability — asking for support is not weakness. True abundance in love is mutual celebration, not one-sided performance.',</span>
+<span class="cstat-no" title="statement not covered" >    healthAdvice: 'Your vitality expands through creative expression and heart-centred movement. Dance, theatrical performance, and activities that make you feel alive restore your equilibrium. Your heart and spine carry the stress of overgiving. Watch for burnout from excessive generosity; even the sun needs to set. Rest is part of the celebration.',</span>
+<span class="cstat-no" title="statement not covered" >    financesAdvice: 'Invest in what makes you feel alive — and in yourself. Your confidence attracts abundance, but pride can lead to overspending on status. True wealth is the freedom to create without constraint. Build reserves that fund your vision, not your image. Generosity returns, but only when boundaries exist.',</span>
+<span class="cstat-no" title="statement not covered" >    growthAdvice: 'Your shadow is the belief that growth requires an audience — that wisdom unheard is wisdom wasted. The lesson of Jupiter in Leo is that the brightest insight does not need a spotlight to be true. Growth asks you to expand inward as well as outward, finding that the greatest abundance is the wealth of character no one sees but everyone feels.',</span>
+<span class="cstat-no" title="statement not covered" >    bodyFocus: 'heart, spine, circulatory system, upper back',</span>
+<span class="cstat-no" title="statement not covered" >    elementalResonance: 'Your expansion is bonfire-bright — central, warming all who gather, demanding to be seen and felt, refusing to be ignored.',</span>
+<span class="cstat-no" title="statement not covered" >  },</span>
+<span class="cstat-no" title="statement not covered" >  virgo: {</span>
+<span class="cstat-no" title="statement not covered" >    essence: 'Your growth is a carefully tended harvest — expansive through service, through refinement, through the wisdom that small improvements compound into transformation. Jupiter in Virgo expands through helpfulness, through the satisfaction of a job done well, through the realisation that the divine lives in the details others overlook. Your blessings are practical; your wisdom is demonstrated, not declared.',</span>
+<span class="cstat-no" title="statement not covered" >    element: 'earth', modality: 'mutable', keywords: ['practical wisdom', 'service-oriented growth', 'analytical abundance', 'refinement'],</span>
+<span class="cstat-no" title="statement not covered" >    careerAdvice: 'Your professional growth comes through helpful competence. Healthcare, editing, research, data analysis, and quality-focused fields suit your meticulous expansion. You build reputation through reliability. Beware perfectionism — growth requires completion, not just excellence. Your best work serves real people, not abstract standards.',</span>
+<span class="cstat-no" title="statement not covered" >    relationshipAdvice: 'You expand through acts of service — the problem solved, the detail remembered, the practical support that says "I see you." You attract partners who appreciate your thoughtfulness. Beware the critic — your discernment is a gift, but in love it becomes a wound. Practice receiving help as gracefully as you give it.',</span>
+<span class="cstat-no" title="statement not covered" >    healthAdvice: 'Your vitality expands through routine and mindful care. Clean food, regular schedules, and practices that calm the mind-body connection restore you. Your gut is your compass — digestive health reflects your relationship with service. Beware workaholism disguised as helpfulness; your body needs rest as much as it needs purpose.',</span>
+<span class="cstat-no" title="statement not covered" >    financesAdvice: 'Meticulous budgeting and detailed analysis build your wealth. You spot inefficiencies that cost others thousands. Invest in health, education, and tools that increase effectiveness. Beware miserliness — money is meant to circulate. Your financial peace comes from knowing every detail is accounted for.',</span>
+<span class="cstat-no" title="statement not covered" >    growthAdvice: 'Your shadow is the belief that growth must be earned through usefulness — that your worth equals your helpfulness. The lesson of Jupiter in Virgo is that abundance is not a reward for service but a natural state of being. Growth asks you to receive blessings without performing for them, and to trust that your presence is enough.',</span>
+<span class="cstat-no" title="statement not covered" >    bodyFocus: 'digestive system, intestines, spleen, nervous system',</span>
+<span class="cstat-no" title="statement not covered" >    elementalResonance: 'Your expansion is lantern-light — focused, practical, illuminating the path one careful step at a time, never wasting warmth on empty space.',</span>
+<span class="cstat-no" title="statement not covered" >  },</span>
+<span class="cstat-no" title="statement not covered" >  libra: {</span>
+<span class="cstat-no" title="statement not covered" >    essence: 'Your growth is a work of art — expansive through beauty, through harmony, through the wisdom that balance is not static but dynamic. Jupiter in Libra expands through partnership, through the creation of elegance, through the realisation that the greatest abundance is shared. You are the patron of fairness, the benefactor of beauty, the believer that life should be as refined as it is meaningful.',</span>
+<span class="cstat-no" title="statement not covered" >    element: 'air', modality: 'cardinal', keywords: ['harmonious expansion', 'aesthetic wisdom', 'partnership growth', 'diplomatic'],</span>
+<span class="cstat-no" title="statement not covered" >    careerAdvice: 'Your professional growth comes through collaboration and aesthetic vision. Law, design, counselling, public relations, and the arts suit your gift for creating agreement. Your sense of fairness builds trust. Beware indecision — sometimes any choice is better than perpetual deliberation. Trust your aesthetic intuition; it is a sharper tool than pure logic.',</span>
+<span class="cstat-no" title="statement not covered" >    relationshipAdvice: 'You expand through partnership — shared growth, mutual support, the creation of beauty together. You attract partners who value harmony and intellectual connection. Beware people-pleasing — growth that requires you to abandon your needs is not expansion, it is erosion. Your needs deserve a seat at every table.',</span>
+<span class="cstat-no" title="statement not covered" >    healthAdvice: 'Your vitality expands through balance and beauty. Practices that restore equilibrium — tai chi, balanced nutrition, beauty rituals — are medicine. Your kidneys, skin, and lower back reflect your stress levels. Avoid extremes; your body prefers moderation. Emotional discord manifests as physical tension faster than you acknowledge.',</span>
+<span class="cstat-no" title="statement not covered" >    financesAdvice: 'Partnership investments and shared resources flourish under your guidance. Your sense of fairness makes you a trusted advisor. Beware aesthetic impulse spending — beauty is worth investment, but not debt. Build wealth that supports a beautiful, balanced life without compromising your peace.',</span>
+<span class="cstat-no" title="statement not covered" >    growthAdvice: 'Your shadow is the avoidance of conflict — the belief that growth must always feel harmonious. The lesson of Jupiter in Libra is that true balance includes tension. Growth asks you to fight for what is right even when it disturbs the peace, knowing that a false harmony is worse than an honest discord.',</span>
+<span class="cstat-no" title="statement not covered" >    bodyFocus: 'kidneys, skin, lower back, endocrine balance',</span>
+<span class="cstat-no" title="statement not covered" >    elementalResonance: 'Your expansion reflects — it is the sunlight on still water, beautiful because it holds and shares rather than consumes.',</span>
+<span class="cstat-no" title="statement not covered" >  },</span>
+<span class="cstat-no" title="statement not covered" >  scorpio: {</span>
+<span class="cstat-no" title="statement not covered" >    essence: 'Your growth is a phoenix cycle — expansive through transformation, through the willingness to die and be reborn, through the wisdom that the deepest abundance is found in the shadows others fear. Jupiter in Scorpio expands through intensity, through research, through the realisation that truth is wealth and secrets are currency. Your blessings are profound because you are willing to go where others turn back.',</span>
+<span class="cstat-no" title="statement not covered" >    element: 'water', modality: 'fixed', keywords: ['transformative growth', 'deep wisdom', 'intense abundance', 'research-oriented'],</span>
+<span class="cstat-no" title="statement not covered" >    careerAdvice: 'Your professional growth comes through depth and investigation. Research, psychology, crisis management, and fields involving power dynamics suit you. Your intuition about hidden truths is your edge. Beware using your insight to manipulate; knowledge is power, but power without integrity is corruption. Build trust through transparency.',</span>
+<span class="cstat-no" title="statement not covered" >    relationshipAdvice: 'You expand through depth — the kind of intimacy that transforms both participants. You attract partners who can meet you in the shadows without drowning. Beware jealousy and control — they poison the very growth you seek. True abundance in love is the courage to be vulnerable without guarantee of safety.',</span>
+<span class="cstat-no" title="statement not covered" >    healthAdvice: 'Your vitality expands through deep therapeutic practices. Your reproductive and eliminative systems process what your psyche cannot release. Beware addictive patterns — your intensity seeks extremes. Moderation is the true discipline of power. Your body speaks in symbols; learn its language without fear.',</span>
+<span class="cstat-no" title="statement not covered" >    financesAdvice: 'Your research skills prevent costly mistakes. Joint resources, investments, and other people\'s money are your domain. Beware financial secrecy — transparency builds the trust that creates wealth. Invest in transformation, not control. Your financial power grows through strategic patience and thorough investigation.',</span>
+<span class="cstat-no" title="statement not covered" >    growthAdvice: 'Your shadow is the compulsion to control growth — the belief that transformation must be managed, directed, owned. The lesson of Jupiter in Scorpio is that the deepest expansion comes through surrender. Growth asks you to release the need to direct every transformation, and to trust that destruction is sometimes the prerequisite for rebirth.',</span>
+<span class="cstat-no" title="statement not covered" >    bodyFocus: 'reproductive system, eliminative organs, pelvis, colon',</span>
+<span class="cstat-no" title="statement not covered" >    elementalResonance: 'Your expansion is crucible-heat — not warm but transformative, shaping raw material through sustained pressure and patience into something that endures.',</span>
+<span class="cstat-no" title="statement not covered" >  },</span>
+<span class="cstat-no" title="statement not covered" >  sagittarius: {</span>
+<span class="cstat-no" title="statement not covered" >    essence: 'Your growth is an endless horizon — expansive, optimistic, and forever seeking the next truth. Jupiter in Sagittarius is at home, the philosopher-king who believes that the universe is fundamentally benevolent and that wisdom is the highest form of wealth. You expand through adventure, through teaching, through the realisation that the journey itself is the destination. Your blessings are as vast as your vision.',</span>
+<span class="cstat-no" title="statement not covered" >    element: 'fire', modality: 'mutable', keywords: ['philosophical growth', 'adventurous wisdom', 'optimistic', 'expansive'],</span>
+<span class="cstat-no" title="statement not covered" >    careerAdvice: 'Your professional growth comes through sharing knowledge and adventure. Teaching, publishing, travel, international business, and visionary projects suit your nature. You excel when sharing wisdom with audiences. Beware overcommitment — your optimism can lead to promising more than you can deliver. Build systems that ground your vision.',</span>
+<span class="cstat-no" title="statement not covered" >    relationshipAdvice: 'You expand through shared adventure — philosophical compatibility, travel, mutual discovery. You attract partners who share your hunger for meaning. Beware restlessness — the grass is not always greener. Commitment does not cage the adventurer; it gives them a home to return to. The greatest journey is the one taken together.',</span>
+<span class="cstat-no" title="statement not covered" >    healthAdvice: 'Your vitality expands through outdoor movement and philosophical nourishment. Your hips, thighs, and liver carry your wanderlust. Beware excess — your expansive nature applies to indulgence as well as exploration. Your body needs movement, but it also needs rest between journeys. Moderation is the adventure you have not yet taken.',</span>
+<span class="cstat-no" title="statement not covered" >    financesAdvice: 'Long-term growth investments and educational opportunities align with your vision. Your optimism attracts abundance, but overconfidence leads to risky speculation. Build wealth that funds your adventures without chaining you to them. Beware the get-rich-quick scheme — your fortune grows through wisdom, not luck.',</span>
+<span class="cstat-no" title="statement not covered" >    growthAdvice: 'Your shadow is the belief that truth without kindness is virtue — that bluntness equals honesty. The lesson of Jupiter in Sagittarius is that wisdom without compassion is arrogance. Growth asks you to temper your honesty with care, knowing that the highest truth includes the wellbeing of those who hear it.',</span>
+<span class="cstat-no" title="statement not covered" >    bodyFocus: 'hips, thighs, liver, sciatic nerve',</span>
+<span class="cstat-no" title="statement not covered" >    elementalResonance: 'Your expansion is wildfire-spread — not contained but catalytic, igniting new terrain and refusing to be bounded by old maps.',</span>
+<span class="cstat-no" title="statement not covered" >  },</span>
+<span class="cstat-no" title="statement not covered" >  capricorn: {</span>
+<span class="cstat-no" title="statement not covered" >    essence: 'Your growth is a legacy — expansive through discipline, through the willingness to do what others avoid, through the wisdom that authority is earned, not given. Jupiter in Capricorn expands through structure, through ambition, through the realisation that the greatest achievement is the one that outlasts the achiever. Your blessings are built, not found; your wisdom is demonstrated, not declared.',</span>
+<span class="cstat-no" title="statement not covered" >    element: 'earth', modality: 'cardinal', keywords: ['disciplined growth', 'ambitious wisdom', 'structured abundance', 'authoritative'],</span>
+<span class="cstat-no" title="statement not covered" >    careerAdvice: 'Your professional growth comes through discipline and strategic ambition. Executive leadership, management, and fields requiring long-term commitment suit you. You excel where persistence outlasts talent. Beware workaholism — achievement without joy is a hollow crown. Build a legacy, but remember to live in the structure you create.',</span>
+<span class="cstat-no" title="statement not covered" >    relationshipAdvice: 'You expand through commitment and shared goals. You attract partners who value loyalty and long-term vision. Your growth in love is demonstrated across years, not declared in moments. Beware emotional austerity — your competence is impressive, but your warmth is what makes you unforgettable. Let your partner see the human beneath the executive.',</span>
+<span class="cstat-no" title="statement not covered" >    healthAdvice: 'Your vitality expands through disciplined routine and structural care. Your bones, joints, and teeth reflect the weight of responsibility. Regular weight-bearing exercise and calcium-rich nutrition are essential. Beware somatising work stress — your body absorbs what your mind refuses to delegate. Rest is not laziness; it is structural maintenance.',</span>
+<span class="cstat-no" title="statement not covered" >    financesAdvice: 'Conservative, structured, long-term wealth-building is your financial language. Real estate, retirement planning, and legacy investments align with your values. You understand that wealth is built one brick at a time. Beware using money as a scorecard for worth — your value is not your net worth.',</span>
+<span class="cstat-no" title="statement not covered" >    growthAdvice: 'Your shadow is the fear of failure — the belief that one mistake undermines the entire structure you have built. The lesson of Jupiter in Capricorn is that true authority includes the courage to be wrong. Growth asks you to risk the appearance of competence for the reality of learning, knowing that true mastery includes the wisdom of mistakes.',</span>
+<span class="cstat-no" title="statement not covered" >    bodyFocus: 'bones, joints, teeth, knees, skeletal system',</span>
+<span class="cstat-no" title="statement not covered" >    elementalResonance: 'Your expansion is forge-heat — not warm but transformative, shaping raw material through sustained pressure and patience into something that endures.',</span>
+<span class="cstat-no" title="statement not covered" >  },</span>
+<span class="cstat-no" title="statement not covered" >  aquarius: {</span>
+<span class="cstat-no" title="statement not covered" >    essence: 'Your growth is a revolution — expansive through innovation, through the liberation of minds still trapped in old paradigms, through the wisdom that the future belongs to those who dare to imagine it differently. Jupiter in Aquarius expands through networks, through technology, through the realisation that the greatest abundance is shared. You are the benefactor of humanity, the investor in possibility.',</span>
+<span class="cstat-no" title="statement not covered" >    element: 'air', modality: 'fixed', keywords: ['innovative growth', 'humanitarian wisdom', 'networked abundance', 'visionary'],</span>
+<span class="cstat-no" title="statement not covered" >    careerAdvice: 'Your professional growth comes through innovation and collective effort. Technology, social reform, scientific research, and group-oriented fields suit your vision. You excel when given freedom to challenge conventions. Beware detachment — your ideas change the world only when you stay engaged long enough to implement them. Build networks, not just concepts.',</span>
+<span class="cstat-no" title="statement not covered" >    relationshipAdvice: 'You expand through friendship and shared ideals. You attract partners who respect your independence and share your vision for the future. Your growth in love is unconventional but deeply loyal. Beware emotional distance — intellect is your comfort zone, but intimacy requires feeling. The right partner will evolve beside you.',</span>
+<span class="cstat-no" title="statement not covered" >    healthAdvice: 'Your vitality expands through community and unconventional practices. Your circulatory and nervous systems carry your electric energy. Beware nervous exhaustion from overstimulation. Your body needs grounding as much as your mind needs stimulation. Regular digital detox is not optional — it is survival. Community wellness restores you.',</span>
+<span class="cstat-no" title="statement not covered" >    financesAdvice: 'Innovative investments — technology, social enterprise, cryptocurrency — align with your vision. Beware detachment from financial reality; even revolutionaries must pay rent. Build wealth that funds your ideals without compromising them. Your financial power comes from networks, not solo genius.',</span>
+<span class="cstat-no" title="statement not covered" >    growthAdvice: 'Your shadow is the tyranny of ideals — the belief that the collective good justifies any individual sacrifice. The lesson of Jupiter in Aquarius is that true abundance honours the individual within the collective. Growth asks you to build systems that liberate without homogenising, that unite without erasing difference.',</span>
+<span class="cstat-no" title="statement not covered" >    bodyFocus: 'calves, ankles, circulatory system, nervous system',</span>
+<span class="cstat-no" title="statement not covered" >    elementalResonance: 'Your expansion is lightning — not warm but illuminating, striking suddenly and changing the landscape permanently.',</span>
+<span class="cstat-no" title="statement not covered" >  },</span>
+<span class="cstat-no" title="statement not covered" >  pisces: {</span>
+<span class="cstat-no" title="statement not covered" >    essence: 'Your growth is an ocean — boundless, compassionate, and dissolving the boundaries between self and other. Jupiter in Pisces expands through spirituality, through creativity, through the realisation that we are all waves of the same sea. Your blessings flow through you rather than to you — you are a conduit for abundance, a channel through which grace passes into the world. Your wisdom is the understanding that separation is illusion.',</span>
+<span class="cstat-no" title="statement not covered" >    element: 'water', modality: 'mutable', keywords: ['spiritual growth', 'compassionate wisdom', 'transcendent abundance', 'creative'],</span>
+<span class="cstat-no" title="statement not covered" >    careerAdvice: 'Your professional growth comes through compassion and creativity. Healing arts, film, music, spiritual guidance, and compassionate service suit your gifts. You excel when work feels like devotion. Beware martyrdom — sacrifice without boundaries breeds resentment, not grace. Build structures that protect your sensitivity while allowing your gifts to flow.',</span>
+<span class="cstat-no" title="statement not covered" >    relationshipAdvice: 'You expand through soul connection — unconditional love, spiritual union, the dissolving of boundaries between self and beloved. You attract partners who value depth and transcendence. Beware saviour dynamics — you cannot heal someone who refuses to heal. True abundance in love is two whole beings choosing to swim together.',</span>
+<span class="cstat-no" title="statement not covered" >    healthAdvice: 'Your vitality expands through spiritual practice and creative expression. Your feet and immune system are your anchors. Water-based therapies, dream work, and artistic creation are essential medicine. Beware escapism — your sensitivity seeks relief in substances, screens, or denial. Sleep is your sanctuary; guard it as sacred.',</span>
+<span class="cstat-no" title="statement not covered" >    financesAdvice: 'Intuitive guidance can lead to surprising financial insights. Creative investments may flourish. Beware escapist spending — retail therapy does not fill the void. Build financial boundaries as carefully as emotional ones. Trust your intuition, but verify with practical checks. Charge for your gifts; they are more valuable than you believe.',</span>
+<span class="cstat-no" title="statement not covered" >    growthAdvice: 'Your shadow is the martyr — the belief that suffering is noble, that boundaries are unkind. The lesson of Jupiter in Pisces is that compassion without discernment is self-destruction. Growth asks you to distinguish between empathy and enmeshment, between love and sacrifice. You cannot pour from an empty cup.',</span>
+<span class="cstat-no" title="statement not covered" >    bodyFocus: 'feet, immune system, pineal gland, lymphatic system',</span>
+<span class="cstat-no" title="statement not covered" >    elementalResonance: 'Your expansion is the ocean — containing all rivers, holding all tears, remembering every shore it has touched and every shore it has not yet reached.',</span>
+<span class="cstat-no" title="statement not covered" >  },</span>
+<span class="cstat-no" title="statement not covered" >  ophiuchus: {</span>
+<span class="cstat-no" title="statement not covered" >    essence: 'Your growth is the serpent rising — expansive through healing, through the alchemy that transforms poison into medicine, through the wisdom that the deepest wounds contain the greatest blessings. Jupiter in Ophiuchus expands through transmutation, through the willingness to touch what others fear, through the realisation that the healer and the wounded are the same person at different moments. Your blessings are initiatory — they change everyone who receives them.',</span>
+<span class="cstat-no" title="statement not covered" >    element: 'ether', modality: 'fixed', keywords: ['healing growth', 'transmutative wisdom', 'initiatory abundance', 'alchemical'],</span>
+<span class="cstat-no" title="statement not covered" >    careerAdvice: 'Your professional growth weaves between healing and mystery. Medicine, psychology, energy work, research into the taboo, and crisis intervention suit you. You excel where transformation is required and others turn away. Beware the wounded healer trap — you cannot heal what you refuse to feel in yourself. Build a career on empowerment, not rescue.',</span>
+<span class="cstat-no" title="statement not covered" >    relationshipAdvice: 'You expand through initiatory connection — relationships that transform both participants. You attract partners who are ready to evolve, not those seeking comfort in stagnation. Beware the tendency to heal instead of relate; your insight is a gift, but in love it can become a wall. True abundance is two wholes choosing to overlap.',</span>
+<span class="cstat-no" title="statement not covered" >    healthAdvice: 'Your vitality expands through regenerative practices. Your spinal column and nervous system regeneration are your focuses. Energy medicine, spinal alignment, and subtle body practices restore you. You are sensitive to environmental energies — your body is a barometer for collective health. Rest is regeneration, not weakness.',</span>
+<span class="cstat-no" title="statement not covered" >    financesAdvice: 'Your financial path is non-linear — sudden insights lead to unexpected gains. Investments in healing, transformation, and regenerative enterprises align with your values. Build flexibility into your financial structures. Beware rescuing others financially; true help empowers independence, not dependence.',</span>
+<span class="cstat-no" title="statement not covered" >    growthAdvice: 'Your shadow is the compulsion to sacrifice — the belief that your growth is acceptable only if it serves others. The lesson of Jupiter in Ophiuchus is that the healer must also be healed. Growth asks you to receive the abundance you so freely offer, and to trust that your wholeness serves the world more than your depletion.',</span>
+<span class="cstat-no" title="statement not covered" >    bodyFocus: 'spinal column, nervous system regeneration, subtle energy channels, cellular renewal',</span>
+<span class="cstat-no" title="statement not covered" >    elementalResonance: 'Your expansion is alchemical flame — it does not warm or illuminate in the ordinary sense, but transforms base substance into something that transcends its origins.',</span>
+<span class="cstat-no" title="statement not covered" >  },</span>
+<span class="cstat-no" title="statement not covered" >};</span>
+&nbsp;</pre></td></tr></table></pre>
+
+                <div class='push'></div><!-- for sticky footer -->
+            </div><!-- /wrapper -->
+            <div class='footer quiet pad2 space-top1 center small'>
+                Code coverage generated by
+                <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
+                at 2026-05-20T03:38:53.739Z
+            </div>
+        <script src="../../../../../prettify.js"></script>
+        <script>
+            window.onload = function () {
+                prettyPrint();
+            };
+        </script>
+        <script src="../../../../../sorter.js"></script>
+        <script src="../../../../../block-navigation.js"></script>
+    </body>
+</html>
+    

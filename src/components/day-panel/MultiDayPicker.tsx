@@ -93,7 +93,7 @@ export const MultiDayPicker = memo(({ currentViewDate, onSelectDays, onCancel }:
             setPickerMonth(m => m - 1);
           }
           setSelectedDays(new Set());
-        }}>←</button>
+        }} aria-label={t('common.previous')}>←</button>
         <span className="day-picker__month">{monthName} {pickerYear}</span>
         <button className="btn btn--icon" onClick={() => {
           if (pickerMonth === 12) {
@@ -103,7 +103,7 @@ export const MultiDayPicker = memo(({ currentViewDate, onSelectDays, onCancel }:
             setPickerMonth(m => m + 1);
           }
           setSelectedDays(new Set());
-        }}>→</button>
+        }} aria-label={t('common.nextItem')}>→</button>
       </div>
 
       {/* Day of week headers - rendered as first row inside the grid */}

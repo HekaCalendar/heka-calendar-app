@@ -18,6 +18,17 @@ const __dirname = dirname(__filename);
 const app = express();
 const PORT = process.env.PORT || 3001;
 
+// ── HTML escape helper (prevents XSS from user-generated notes) ─────────────
+function escapeHtml(str) {
+  if (typeof str !== 'string') return '';
+  return str
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
 // ============================================================================
 // Security Middleware
 // ============================================================================
@@ -280,7 +291,7 @@ function generateMonthHTML(year, monthIndex, options, timeMode, notes = {}) {
         if (dayNotes && dayNotes.length > 0) {
           const noteText = dayNotes[0].text || dayNotes[0].content || '';
           const truncatedNote = noteText.length > 25 ? noteText.substring(0, 25) + '...' : noteText;
-          noteHTML = `<div class="day-note" title="${noteText.replace(/"/g, '&quot;')}">${truncatedNote}</div>`;
+          noteHTML = `<div class="day-note" title="${escapeHtml(noteText)}">${escapeHtml(truncatedNote)}</div>`;
         }
       }
       

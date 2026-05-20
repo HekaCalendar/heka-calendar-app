@@ -8,6 +8,7 @@ import { generateThemeHTML, prepareYearData } from './PrintThemes';
 import { PrintManager } from '../services/PrintManager';
 import { getPrintDimensions } from '../services/printEngine';
 import './PrintPreview.css';
+import { getErrorMessage } from '../utils/errorUtils';
 
 const DEFAULT_OPTIONS: PrintOptions = {
   includeNotes: true,
@@ -172,7 +173,7 @@ export function PrintPreview() {
       alert(`✓ PDF saved to Downloads\n\nFile: ${filename}\n\nSelect an app below to open your PDF.`);
       try {
         await PrintManager.openPDF(result.filePath, `HEKA_Calendar_${new Date().getFullYear()}.pdf`);
-      } catch (e: any) {
+      } catch (e) {
         await PrintManager.sharePDF(result.filePath, `HEKA_Calendar_${new Date().getFullYear()}.pdf`);
       }
     } catch (error) {
@@ -222,9 +223,9 @@ export function PrintPreview() {
     setPrintStatus('Sending to printer...');
     try {
       await PrintManager.printPDF(filePath, options.orientation, options.paperSize || 'A4');
-    } catch (e: any) {
+    } catch (e) {
       console.error('[PrintPreview] Print error:', e);
-      alert('Print failed: ' + (e?.message || 'Unknown error'));
+      alert('Print failed: ' + getErrorMessage(e, 'Unknown error'));
     } finally {
       setIsPrinting(false);
       setPrintTotalPages(0);

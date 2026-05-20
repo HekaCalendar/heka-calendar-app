@@ -1,0 +1,544 @@
+
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Code coverage report for astrology/services/guidance/templates/bodies/sunTemplates.ts</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../../../../prettify.css" />
+    <link rel="stylesheet" href="../../../../../base.css" />
+    <link rel="shortcut icon" type="image/x-icon" href="../../../../../favicon.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../../../../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+    
+<body>
+<div class='wrapper'>
+    <div class='pad1'>
+        <h1><a href="../../../../../index.html">All files</a> / <a href="index.html">astrology/services/guidance/templates/bodies</a> sunTemplates.ts</h1>
+        <div class='clearfix'>
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">0% </span>
+                <span class="quiet">Statements</span>
+                <span class='fraction'>0/153</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">0% </span>
+                <span class="quiet">Branches</span>
+                <span class='fraction'>0/1</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">0% </span>
+                <span class="quiet">Functions</span>
+                <span class='fraction'>0/1</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">0% </span>
+                <span class="quiet">Lines</span>
+                <span class='fraction'>0/153</span>
+            </div>
+        
+            
+        </div>
+        <p class="quiet">
+            Press <em>n</em> or <em>j</em> to go to the next uncovered block, <em>b</em>, <em>p</em> or <em>k</em> for the previous block.
+        </p>
+        <template id="filterTemplate">
+            <div class="quiet">
+                Filter:
+                <input type="search" id="fileSearch">
+            </div>
+        </template>
+    </div>
+    <div class='status-line low'></div>
+    <pre><table class="coverage">
+<tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
+<a name='L2'></a><a href='#L2'>2</a>
+<a name='L3'></a><a href='#L3'>3</a>
+<a name='L4'></a><a href='#L4'>4</a>
+<a name='L5'></a><a href='#L5'>5</a>
+<a name='L6'></a><a href='#L6'>6</a>
+<a name='L7'></a><a href='#L7'>7</a>
+<a name='L8'></a><a href='#L8'>8</a>
+<a name='L9'></a><a href='#L9'>9</a>
+<a name='L10'></a><a href='#L10'>10</a>
+<a name='L11'></a><a href='#L11'>11</a>
+<a name='L12'></a><a href='#L12'>12</a>
+<a name='L13'></a><a href='#L13'>13</a>
+<a name='L14'></a><a href='#L14'>14</a>
+<a name='L15'></a><a href='#L15'>15</a>
+<a name='L16'></a><a href='#L16'>16</a>
+<a name='L17'></a><a href='#L17'>17</a>
+<a name='L18'></a><a href='#L18'>18</a>
+<a name='L19'></a><a href='#L19'>19</a>
+<a name='L20'></a><a href='#L20'>20</a>
+<a name='L21'></a><a href='#L21'>21</a>
+<a name='L22'></a><a href='#L22'>22</a>
+<a name='L23'></a><a href='#L23'>23</a>
+<a name='L24'></a><a href='#L24'>24</a>
+<a name='L25'></a><a href='#L25'>25</a>
+<a name='L26'></a><a href='#L26'>26</a>
+<a name='L27'></a><a href='#L27'>27</a>
+<a name='L28'></a><a href='#L28'>28</a>
+<a name='L29'></a><a href='#L29'>29</a>
+<a name='L30'></a><a href='#L30'>30</a>
+<a name='L31'></a><a href='#L31'>31</a>
+<a name='L32'></a><a href='#L32'>32</a>
+<a name='L33'></a><a href='#L33'>33</a>
+<a name='L34'></a><a href='#L34'>34</a>
+<a name='L35'></a><a href='#L35'>35</a>
+<a name='L36'></a><a href='#L36'>36</a>
+<a name='L37'></a><a href='#L37'>37</a>
+<a name='L38'></a><a href='#L38'>38</a>
+<a name='L39'></a><a href='#L39'>39</a>
+<a name='L40'></a><a href='#L40'>40</a>
+<a name='L41'></a><a href='#L41'>41</a>
+<a name='L42'></a><a href='#L42'>42</a>
+<a name='L43'></a><a href='#L43'>43</a>
+<a name='L44'></a><a href='#L44'>44</a>
+<a name='L45'></a><a href='#L45'>45</a>
+<a name='L46'></a><a href='#L46'>46</a>
+<a name='L47'></a><a href='#L47'>47</a>
+<a name='L48'></a><a href='#L48'>48</a>
+<a name='L49'></a><a href='#L49'>49</a>
+<a name='L50'></a><a href='#L50'>50</a>
+<a name='L51'></a><a href='#L51'>51</a>
+<a name='L52'></a><a href='#L52'>52</a>
+<a name='L53'></a><a href='#L53'>53</a>
+<a name='L54'></a><a href='#L54'>54</a>
+<a name='L55'></a><a href='#L55'>55</a>
+<a name='L56'></a><a href='#L56'>56</a>
+<a name='L57'></a><a href='#L57'>57</a>
+<a name='L58'></a><a href='#L58'>58</a>
+<a name='L59'></a><a href='#L59'>59</a>
+<a name='L60'></a><a href='#L60'>60</a>
+<a name='L61'></a><a href='#L61'>61</a>
+<a name='L62'></a><a href='#L62'>62</a>
+<a name='L63'></a><a href='#L63'>63</a>
+<a name='L64'></a><a href='#L64'>64</a>
+<a name='L65'></a><a href='#L65'>65</a>
+<a name='L66'></a><a href='#L66'>66</a>
+<a name='L67'></a><a href='#L67'>67</a>
+<a name='L68'></a><a href='#L68'>68</a>
+<a name='L69'></a><a href='#L69'>69</a>
+<a name='L70'></a><a href='#L70'>70</a>
+<a name='L71'></a><a href='#L71'>71</a>
+<a name='L72'></a><a href='#L72'>72</a>
+<a name='L73'></a><a href='#L73'>73</a>
+<a name='L74'></a><a href='#L74'>74</a>
+<a name='L75'></a><a href='#L75'>75</a>
+<a name='L76'></a><a href='#L76'>76</a>
+<a name='L77'></a><a href='#L77'>77</a>
+<a name='L78'></a><a href='#L78'>78</a>
+<a name='L79'></a><a href='#L79'>79</a>
+<a name='L80'></a><a href='#L80'>80</a>
+<a name='L81'></a><a href='#L81'>81</a>
+<a name='L82'></a><a href='#L82'>82</a>
+<a name='L83'></a><a href='#L83'>83</a>
+<a name='L84'></a><a href='#L84'>84</a>
+<a name='L85'></a><a href='#L85'>85</a>
+<a name='L86'></a><a href='#L86'>86</a>
+<a name='L87'></a><a href='#L87'>87</a>
+<a name='L88'></a><a href='#L88'>88</a>
+<a name='L89'></a><a href='#L89'>89</a>
+<a name='L90'></a><a href='#L90'>90</a>
+<a name='L91'></a><a href='#L91'>91</a>
+<a name='L92'></a><a href='#L92'>92</a>
+<a name='L93'></a><a href='#L93'>93</a>
+<a name='L94'></a><a href='#L94'>94</a>
+<a name='L95'></a><a href='#L95'>95</a>
+<a name='L96'></a><a href='#L96'>96</a>
+<a name='L97'></a><a href='#L97'>97</a>
+<a name='L98'></a><a href='#L98'>98</a>
+<a name='L99'></a><a href='#L99'>99</a>
+<a name='L100'></a><a href='#L100'>100</a>
+<a name='L101'></a><a href='#L101'>101</a>
+<a name='L102'></a><a href='#L102'>102</a>
+<a name='L103'></a><a href='#L103'>103</a>
+<a name='L104'></a><a href='#L104'>104</a>
+<a name='L105'></a><a href='#L105'>105</a>
+<a name='L106'></a><a href='#L106'>106</a>
+<a name='L107'></a><a href='#L107'>107</a>
+<a name='L108'></a><a href='#L108'>108</a>
+<a name='L109'></a><a href='#L109'>109</a>
+<a name='L110'></a><a href='#L110'>110</a>
+<a name='L111'></a><a href='#L111'>111</a>
+<a name='L112'></a><a href='#L112'>112</a>
+<a name='L113'></a><a href='#L113'>113</a>
+<a name='L114'></a><a href='#L114'>114</a>
+<a name='L115'></a><a href='#L115'>115</a>
+<a name='L116'></a><a href='#L116'>116</a>
+<a name='L117'></a><a href='#L117'>117</a>
+<a name='L118'></a><a href='#L118'>118</a>
+<a name='L119'></a><a href='#L119'>119</a>
+<a name='L120'></a><a href='#L120'>120</a>
+<a name='L121'></a><a href='#L121'>121</a>
+<a name='L122'></a><a href='#L122'>122</a>
+<a name='L123'></a><a href='#L123'>123</a>
+<a name='L124'></a><a href='#L124'>124</a>
+<a name='L125'></a><a href='#L125'>125</a>
+<a name='L126'></a><a href='#L126'>126</a>
+<a name='L127'></a><a href='#L127'>127</a>
+<a name='L128'></a><a href='#L128'>128</a>
+<a name='L129'></a><a href='#L129'>129</a>
+<a name='L130'></a><a href='#L130'>130</a>
+<a name='L131'></a><a href='#L131'>131</a>
+<a name='L132'></a><a href='#L132'>132</a>
+<a name='L133'></a><a href='#L133'>133</a>
+<a name='L134'></a><a href='#L134'>134</a>
+<a name='L135'></a><a href='#L135'>135</a>
+<a name='L136'></a><a href='#L136'>136</a>
+<a name='L137'></a><a href='#L137'>137</a>
+<a name='L138'></a><a href='#L138'>138</a>
+<a name='L139'></a><a href='#L139'>139</a>
+<a name='L140'></a><a href='#L140'>140</a>
+<a name='L141'></a><a href='#L141'>141</a>
+<a name='L142'></a><a href='#L142'>142</a>
+<a name='L143'></a><a href='#L143'>143</a>
+<a name='L144'></a><a href='#L144'>144</a>
+<a name='L145'></a><a href='#L145'>145</a>
+<a name='L146'></a><a href='#L146'>146</a>
+<a name='L147'></a><a href='#L147'>147</a>
+<a name='L148'></a><a href='#L148'>148</a>
+<a name='L149'></a><a href='#L149'>149</a>
+<a name='L150'></a><a href='#L150'>150</a>
+<a name='L151'></a><a href='#L151'>151</a>
+<a name='L152'></a><a href='#L152'>152</a>
+<a name='L153'></a><a href='#L153'>153</a>
+<a name='L154'></a><a href='#L154'>154</a></td><td class="line-coverage quiet"><span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js"><span class="cstat-no" title="statement not covered" >import type { BodyTemplates } from './types';<span class="fstat-no" title="function not covered" ><span class="branch-0 cbranch-no" title="branch not covered" ></span></span></span>
+<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" >/**</span>
+<span class="cstat-no" title="statement not covered" > * ═══════════════════════════════════════════════════════════════════════════════</span>
+<span class="cstat-no" title="statement not covered" > * SUN TEMPLATES — Core identity, vitality, purpose</span>
+<span class="cstat-no" title="statement not covered" > * ═══════════════════════════════════════════════════════════════════════════════</span>
+<span class="cstat-no" title="statement not covered" > */</span>
+<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" >export const sunTemplates: BodyTemplates = {</span>
+<span class="cstat-no" title="statement not covered" >  aries: {</span>
+<span class="cstat-no" title="statement not covered" >    essence: 'Your solar fire burns with the urgency of first light. You are here to initiate, to strike the match that begins the story. In Aries, the Sun does not wait for permission — it acts, it claims, it leads. Your purpose is forged in the heat of courage, and your very presence ignites momentum in others.',</span>
+<span class="cstat-no" title="statement not covered" >    element: 'fire', modality: 'cardinal', keywords: ['courage', 'initiation', 'leadership', 'authenticity'],</span>
+<span class="cstat-no" title="statement not covered" >    careerAdvice: 'Step forward before you feel ready. Your natural authority emerges when you take the first risk that others hesitate to take. Leadership roles, entrepreneurship, and competitive fields favour your pioneering energy. Do not wait to be chosen — choose yourself.',</span>
+<span class="cstat-no" title="statement not covered" >    relationshipAdvice: 'Your love is direct, passionate, and fiercely loyal. You attract partners who respect your independence and match your intensity. Practice patience; not everyone moves at your speed. The right person will not dim your fire — they will kindle their own beside it.',</span>
+<span class="cstat-no" title="statement not covered" >    healthAdvice: 'Your vitality thrives on movement and challenge. Channel excess energy through martial arts, running, or high-intensity training. Watch for tension headaches and adrenal fatigue — your drive to push through can override your body\'s need for rest.',</span>
+<span class="cstat-no" title="statement not covered" >    financesAdvice: 'Bold moves can pay off handsomely, but impulsive spending drains your reserves. Invest in ventures that align with your pioneering spirit. Your confidence attracts opportunity; your discipline preserves it.',</span>
+<span class="cstat-no" title="statement not covered" >    growthAdvice: 'True courage includes the willingness to begin again. Your shadow is impatience — the belief that speed equals strength. The lesson of Aries is not to conquer every hill, but to choose the mountains that are truly yours.',</span>
+<span class="cstat-no" title="statement not covered" >    bodyFocus: 'head, eyes, adrenal system, cranium',</span>
+<span class="cstat-no" title="statement not covered" >    elementalResonance: 'Your fire burns with the urgency of dawn — it warms, it awakens, it demands action before doubt can settle.',</span>
+<span class="cstat-no" title="statement not covered" >  },</span>
+<span class="cstat-no" title="statement not covered" >  taurus: {</span>
+<span class="cstat-no" title="statement not covered" >    essence: 'Your solar light settles like golden honey into the earth. In Taurus, the Sun teaches that true power is patient, that enduring presence outlasts dramatic spectacle. You are here to build, to cultivate, to demonstrate that slow growth creates the deepest roots. Your purpose is found in the beauty you create and the stability you provide.',</span>
+<span class="cstat-no" title="statement not covered" >    element: 'earth', modality: 'fixed', keywords: ['stability', 'sensuality', 'determination', 'loyalty'],</span>
+<span class="cstat-no" title="statement not covered" >    careerAdvice: 'Build something that outlasts quarterly reports. Your persistence outshines flashier competitors in the long game. Fields involving finance, agriculture, design, and luxury goods favour your methodical excellence. Refuse to be rushed — your best work emerges when you are given time and space.',</span>
+<span class="cstat-no" title="statement not covered" >    relationshipAdvice: 'Your love is demonstrated, not declared. You show devotion through consistency, physical presence, and tangible care. You attract partners who value security and sensual intimacy. Beware possessiveness — love given freely returns multiplied; love held tightly suffocates.',</span>
+<span class="cstat-no" title="statement not covered" >    healthAdvice: 'Your body speaks through the throat, neck, and thyroid. Gentle stretching, massage, and vocal practices restore equilibrium. You thrive on routines that engage the senses — cooking, gardening, working with clay. Avoid stagnation; even the earth must be turned.',</span>
+<span class="cstat-no" title="statement not covered" >    financesAdvice: 'Wealth builds through patient accumulation, not speculative gambles. Your discernment spots value that others overlook. Invest in land, art, or tangible assets. Your relationship with money is emotional — heal scarcity thinking to unlock true abundance.',</span>
+<span class="cstat-no" title="statement not covered" >    growthAdvice: 'Your shadow is stubbornness — the refusal to change because change feels like loss. True stability is not rigidity; it is the strength to adapt while maintaining your core. Growth asks you to release what you have outgrown, even if it once felt like home.',</span>
+<span class="cstat-no" title="statement not covered" >    bodyFocus: 'throat, neck, thyroid, vocal cords',</span>
+<span class="cstat-no" title="statement not covered" >    elementalResonance: 'Your fire has become hearth-warmth — steady, nourishing, the kind of heat that matures rather than consumes.',</span>
+<span class="cstat-no" title="statement not covered" >  },</span>
+<span class="cstat-no" title="statement not covered" >  gemini: {</span>
+<span class="cstat-no" title="statement not covered" >    essence: 'Your solar light refracts through a prism of infinite curiosity. In Gemini, the Sun is the eternal student, the messenger, the bridge between worlds. You are here to question, to connect, to demonstrate that intelligence is not knowing everything — it is the hunger to know more. Your purpose shapeshifts because you are meant to explore many paths, not walk one.',</span>
+<span class="cstat-no" title="statement not covered" >    element: 'air', modality: 'mutable', keywords: ['curiosity', 'communication', 'adaptability', 'wit'],</span>
+<span class="cstat-no" title="statement not covered" >    careerAdvice: 'Your mind is your primary asset. Writing, teaching, media, technology, and consulting fields thrive under your versatile intelligence. You excel when juggling multiple projects — monotony is your kryptonite. Document your ideas; they are currency. Build systems that capture your brilliance before it moves to the next fascination.',</span>
+<span class="cstat-no" title="statement not covered" >    relationshipAdvice: 'You fall in love with minds before bodies. Intellectual stimulation is foreplay for you. You attract partners who can keep pace with your rapid associations and shifting interests. Practice depth alongside breadth — the person who knows all of you is more precious than the person who knows the most interesting version.',</span>
+<span class="cstat-no" title="statement not covered" >    healthAdvice: 'Your nervous system is your barometer. Mental rest is as vital as physical sleep. Practices that calm the mind — breathwork, journaling, meditation — are non-negotiable. Your lungs and hands carry stress; give them care through expressive movement and creative craft.',</span>
+<span class="cstat-no" title="statement not covered" >    financesAdvice: 'Multiple income streams suit your nature better than a single source. Diversify intelligently — your research skills prevent reckless speculation. Beware the shiny-object syndrome; not every opportunity deserves your energy. Focus on 2-3 streams and cultivate them deeply.',</span>
+<span class="cstat-no" title="statement not covered" >    growthAdvice: 'Your shadow is scatteredness — the fear that committing to one path means abandoning all others. Depth does not erase breadth; it anchors it. The lesson of Gemini is not to know everything, but to know some things profoundly while remaining curious about the rest.',</span>
+<span class="cstat-no" title="statement not covered" >    bodyFocus: 'lungs, hands, nervous system, shoulders',</span>
+<span class="cstat-no" title="statement not covered" >    elementalResonance: 'Your fire dances as flame-tongue — quick, bright, illuminating many corners without lingering too long in any single shadow.',</span>
+<span class="cstat-no" title="statement not covered" >  },</span>
+<span class="cstat-no" title="statement not covered" >  cancer: {</span>
+<span class="cstat-no" title="statement not covered" >    essence: 'Your solar light is the warmth of a hearth that never goes cold. In Cancer, the Sun carries the memory of belonging, the ancient knowing that we are held before we are born. You are here to nurture, to protect, to create sanctuaries where others can soften. Your purpose is emotional leadership — not through authority, but through the courage to care.',</span>
+<span class="cstat-no" title="statement not covered" >    element: 'water', modality: 'cardinal', keywords: ['nurturing', 'intuition', 'protection', 'emotional intelligence'],</span>
+<span class="cstat-no" title="statement not covered" >    careerAdvice: 'Your professional strength is empathy made practical. Fields involving care, food, real estate, history, and community organising align with your gifts. You lead by creating safety. Your intuition about people and timing is a competitive advantage — trust it even when logic disagrees.',</span>
+<span class="cstat-no" title="statement not covered" >    relationshipAdvice: 'You love with the depth of tides. Your devotion is unconditional, but your trust must be earned. You attract partners who value emotional intimacy and domestic warmth. Beware the shell — your sensitivity is not weakness, but your greatest gift requires the right recipient. Let love in slowly; let it out generously.',</span>
+<span class="cstat-no" title="statement not covered" >    healthAdvice: 'Your stomach is your emotional compass. What you cannot digest emotionally, your body attempts to digest physically. Nourish yourself with foods that comfort without numbing. Water-based movement — swimming, gentle yoga — restores your lunar rhythm. Sleep is sacred; guard it fiercely.',</span>
+<span class="cstat-no" title="statement not covered" >    financesAdvice: 'Security is your financial north star. Build reserves that help you sleep peacefully. Real estate, family businesses, and conservative investments suit your protective instinct. Beware emotional spending — shopping to fill a void creates a different kind of emptiness.',</span>
+<span class="cstat-no" title="statement not covered" >    growthAdvice: 'Your shadow is clinging — the fear that letting go means being abandoned. True nurturing includes knowing when to release. The lesson of Cancer is that the shell protects, but it also confines. Growth asks you to risk vulnerability, knowing that your worth is not dependent on who stays.',</span>
+<span class="cstat-no" title="statement not covered" >    bodyFocus: 'stomach, breasts, lymphatic system, womb',</span>
+<span class="cstat-no" title="statement not covered" >    elementalResonance: 'Your fire has become heart-heat — the warmth that sustains life, that remembers, that holds without burning.',</span>
+<span class="cstat-no" title="statement not covered" >  },</span>
+<span class="cstat-no" title="statement not covered" >  leo: {</span>
+<span class="cstat-no" title="statement not covered" >    essence: 'Your solar light is the stage itself — bright, commanding, impossible to ignore. In Leo, the Sun returns home, radiant and unapologetic. You are here to create, to perform, to demonstrate that self-expression is not vanity but vitality. Your purpose is to remind others that they too contain a spark worth showing. You do not seek the spotlight; you are the spotlight.',</span>
+<span class="cstat-no" title="statement not covered" >    element: 'fire', modality: 'fixed', keywords: ['creativity', 'generosity', 'confidence', 'heart'],</span>
+<span class="cstat-no" title="statement not covered" >    careerAdvice: 'Your professional path requires an audience — even if that audience is a single person who truly sees you. Entertainment, design, leadership, education, and any field where your creative vision shapes the experience suit you. Your warmth attracts opportunity; your consistency keeps it. Do not dim yourself to make others comfortable.',</span>
+<span class="cstat-no" title="statement not covered" >    relationshipAdvice: 'You love with the generosity of summer itself — abundant, warm, celebratory. You attract partners who appreciate grand gestures and genuine affection. Your heart is your compass; follow it even when it leads to risk. Beware the need for constant admiration — true love sees you in shadow as well as light.',</span>
+<span class="cstat-no" title="statement not covered" >    healthAdvice: 'Your heart and spine are your physical centres. Dance, theatrical movement, and heart-pumping exercise restore your solar vitality. Creative expression is not optional — it is medicine. Watch for burnout from overgiving; your light cannot illuminate if the wick is exhausted.',</span>
+<span class="cstat-no" title="statement not covered" >    financesAdvice: 'Invest in what makes you feel alive — and in yourself. Your confidence attracts abundance, but pride can lead to overspending on status symbols. True wealth for Leo is the freedom to create without constraint. Build reserves that fund your vision, not your image.',</span>
+<span class="cstat-no" title="statement not covered" >    growthAdvice: 'Your shadow is the fear of irrelevance — the belief that your worth equals your applause. True confidence needs no validation. The lesson of Leo is that the brightest star does not compete with darkness; it simply shines. Growth asks you to lead from love, not from the need to be loved.',</span>
+<span class="cstat-no" title="statement not covered" >    bodyFocus: 'heart, spine, circulatory system, upper back',</span>
+<span class="cstat-no" title="statement not covered" >    elementalResonance: 'Your fire is bonfire-bright — central, warming all who gather, demanding to be seen and felt.',</span>
+<span class="cstat-no" title="statement not covered" >  },</span>
+<span class="cstat-no" title="statement not covered" >  virgo: {</span>
+<span class="cstat-no" title="statement not covered" >    essence: 'Your solar light is the precision of dawn breaking through mist — clear, discerning, quietly transformative. In Virgo, the Sun serves through excellence, demonstrating that mastery lives in the details others overlook. You are here to refine, to heal, to create order from chaos. Your purpose is found in the helpful competence that makes the world function better.',</span>
+<span class="cstat-no" title="statement not covered" >    element: 'earth', modality: 'mutable', keywords: ['precision', 'service', 'health', 'discernment'],</span>
+<span class="cstat-no" title="statement not covered" >    careerAdvice: 'Your analytical mind and perfectionist drive make you invaluable in healthcare, editing, research, data analysis, and quality assurance. You excel when trusted with complex systems that others find overwhelming. Beware paralysis by analysis — done is better than perfect when perfect is impossible. Your best work serves real people, not abstract standards.',</span>
+<span class="cstat-no" title="statement not covered" >    relationshipAdvice: 'You show love through acts of service — the meal prepared, the problem solved, the small detail remembered. You attract partners who appreciate your thoughtfulness and respect your need for order. Practice receiving help as gracefully as you give it. Love is not a project to optimise; it is a mystery to inhabit.',</span>
+<span class="cstat-no" title="statement not covered" >    healthAdvice: 'Your gut is your second brain — literally. Digestive health, daily routines, and nervous system regulation are your pillars. You thrive on clean food, regular schedules, and practices that calm the mind-body connection. Beware hypochondria; not every sensation signals catastrophe. Trust your body\'s wisdom without obsessing over its noise.',</span>
+<span class="cstat-no" title="statement not covered" >    financesAdvice: 'Your financial strength is meticulousness. Budgeting, detailed analysis, and conservative long-term planning suit you. You spot inefficiencies that cost others thousands. Invest in health, education, and tools that increase your effectiveness. Beware miserliness — money is meant to circulate, not just accumulate.',</span>
+<span class="cstat-no" title="statement not covered" >    growthAdvice: 'Your shadow is perfectionism — the belief that your worth equals your usefulness. You are not a machine to be optimised; you are a being to be experienced. The lesson of Virgo is that wholeness includes imperfection. Growth asks you to release the need to fix everything, starting with yourself.',</span>
+<span class="cstat-no" title="statement not covered" >    bodyFocus: 'digestive system, intestines, spleen, nervous system',</span>
+<span class="cstat-no" title="statement not covered" >    elementalResonance: 'Your fire has become lantern-light — focused, practical, illuminating the path one careful step at a time.',</span>
+<span class="cstat-no" title="statement not covered" >  },</span>
+<span class="cstat-no" title="statement not covered" >  libra: {</span>
+<span class="cstat-no" title="statement not covered" >    essence: 'Your solar light is the equinox itself — balanced, beautiful, forever negotiating between day and night. In Libra, the Sun seeks harmony through relationship, demonstrating that truth often lives in the space between perspectives. You are here to create beauty, to mediate, to show that fairness is not weakness but wisdom. Your purpose is partnership — with people, with art, with justice itself.',</span>
+<span class="cstat-no" title="statement not covered" >    element: 'air', modality: 'cardinal', keywords: ['harmony', 'beauty', 'diplomacy', 'justice'],</span>
+<span class="cstat-no" title="statement not covered" >    careerAdvice: 'Your diplomatic skills and aesthetic sensibility open doors in law, design, counselling, public relations, and the arts. You excel when bringing opposing sides to agreement. Your professional reputation is built on fairness — protect it fiercely. Beware indecision; sometimes any choice is better than perpetual deliberation.',</span>
+<span class="cstat-no" title="statement not covered" >    relationshipAdvice: 'You are the archetype of the beloved. You attract partners through grace, charm, and the genuine desire for equality. Your love is refined, thoughtful, and deeply aesthetic. Beware people-pleasing — a relationship that requires you to abandon your needs is not balance, it is self-erasure.',</span>
+<span class="cstat-no" title="statement not covered" >    healthAdvice: 'Your kidneys, skin, and lower back reflect your stress levels. Balance is not just philosophical — it is physiological. Practices that restore equilibrium — tai chi, balanced nutrition, beauty rituals — are medicine. Avoid extremes; your body prefers moderation in all things.',</span>
+<span class="cstat-no" title="statement not covered" >    financesAdvice: 'Partnership investments and shared resources flourish under your guidance. Your sense of fairness makes you a trusted financial advisor. Beware impulse purchases driven by aesthetic desire — beauty is worth investment, but not debt. Build wealth that supports a beautiful, balanced life.',</span>
+<span class="cstat-no" title="statement not covered" >    growthAdvice: 'Your shadow is indecision — the fear that choosing one path means losing all others. True harmony is not the absence of conflict but the courage to hold tension without collapsing. The lesson of Libra is that your needs matter as much as anyone else\'s. Growth asks you to choose yourself, even when it disturbs the peace.',</span>
+<span class="cstat-no" title="statement not covered" >    bodyFocus: 'kidneys, skin, lower back, endocrine balance',</span>
+<span class="cstat-no" title="statement not covered" >    elementalResonance: 'Your fire reflects — it is the sunlight on still water, beautiful because it holds and shares rather than consumes.',</span>
+<span class="cstat-no" title="statement not covered" >  },</span>
+<span class="cstat-no" title="statement not covered" >  scorpio: {</span>
+<span class="cstat-no" title="statement not covered" >    essence: 'Your solar light is the phoenix fire — transformative, relentless, burning away what no longer serves. In Scorpio, the Sun does not shine; it penetrates. You are here to dive deep, to heal what others fear to touch, to demonstrate that true power is born from vulnerability. Your purpose is alchemical — turning shadow into gold, pain into wisdom, endings into rebirth.',</span>
+<span class="cstat-no" title="statement not covered" >    element: 'water', modality: 'fixed', keywords: ['transformation', 'intensity', 'power', 'depth'],</span>
+<span class="cstat-no" title="statement not covered" >    careerAdvice: 'You excel where others falter — crisis management, research, psychology, investigative work, and anything involving power dynamics. Your intuition about hidden truths is your professional superpower. Beware manipulation; your ability to read people is a gift, not a weapon. Build a career on trust, not control.',</span>
+<span class="cstat-no" title="statement not covered" >    relationshipAdvice: 'You do not date; you merge. Your love is all-or-nothing, transformative, and irreversible. You attract partners who can meet you in the depths. Beware jealousy and possessiveness — they poison the very intimacy you crave. True power in love is the courage to be vulnerable without guarantee.',</span>
+<span class="cstat-no" title="statement not covered" >    healthAdvice: 'Your reproductive and eliminative systems process what your psyche cannot release. Deep tissue work, sexual healing, and therapeutic practices that honour the body\'s wisdom restore you. Beware addictive patterns — your intensity seeks extremes, but moderation is the true discipline of power.',</span>
+<span class="cstat-no" title="statement not covered" >    financesAdvice: 'Joint resources, investments, and other people\'s money are your financial domain. Your research skills prevent costly mistakes. Beware financial manipulation or secrecy — transparency builds the trust that creates true wealth. Invest in transformation, not control.',</span>
+<span class="cstat-no" title="statement not covered" >    growthAdvice: 'Your shadow is the saviour complex — the belief that love must rescue or be rescued. True transformation is not dramatic; it is the quiet decision to no longer betray yourself. The lesson of Scorpio is that letting go is not failure; it is the prerequisite for authentic power.',</span>
+<span class="cstat-no" title="statement not covered" >    bodyFocus: 'reproductive system, eliminative organs, pelvis, colon',</span>
+<span class="cstat-no" title="statement not covered" >    elementalResonance: 'Your fire is crucible-heat — not warmth but transformation, the kind that melts alloy into something stronger than its parts.',</span>
+<span class="cstat-no" title="statement not covered" >  },</span>
+<span class="cstat-no" title="statement not covered" >  sagittarius: {</span>
+<span class="cstat-no" title="statement not covered" >    essence: 'Your solar light is the arrow aimed at the horizon — restless, hopeful, forever seeking the next truth. In Sagittarius, the Sun is the philosopher-adventurer, the eternal student of life. You are here to expand, to question, to demonstrate that meaning is not found but created through exploration. Your purpose is the pilgrimage — physical, intellectual, spiritual — toward ever-larger understanding.',</span>
+<span class="cstat-no" title="statement not covered" >    element: 'fire', modality: 'mutable', keywords: ['expansion', 'truth', 'adventure', 'wisdom'],</span>
+<span class="cstat-no" title="statement not covered" >    careerAdvice: 'Your vision is too large for small containers. Teaching, publishing, international business, philosophy, and outdoor/adventure industries suit your expansive nature. You excel when sharing knowledge with audiences. Beware overcommitment — your optimism can lead to promising more than you can deliver. Build systems that ground your vision in executable steps.',</span>
+<span class="cstat-no" title="statement not covered" >    relationshipAdvice: 'You fall in love with philosophies, not just people. You attract partners who share your hunger for meaning and adventure. Your love is generous, honest, and freedom-loving. Beware restlessness — the grass is not always greener; sometimes it is just different grass. Commitment does not cage the adventurer; it gives them a home to return to.',</span>
+<span class="cstat-no" title="statement not covered" >    healthAdvice: 'Your hips, thighs, and liver carry your wanderlust. Outdoor movement — hiking, cycling, equestrian pursuits — restores your vitality. Beware excess in all forms; your expansive nature applies to indulgence as well as exploration. Your body needs movement, but it also needs rest between journeys.',</span>
+<span class="cstat-no" title="statement not covered" >    financesAdvice: 'Long-term growth investments, education, and international opportunities align with your vision. Your optimism attracts abundance, but overconfidence leads to risky speculation. Build wealth that funds your adventures without chaining you to them. Beware the get-rich-quick scheme — your fortune grows through wisdom, not luck.',</span>
+<span class="cstat-no" title="statement not covered" >    growthAdvice: 'Your shadow is bluntness — the belief that truth justifies cruelty. Wisdom without compassion is arrogance. The lesson of Sagittarius is that the highest truth includes kindness. Growth asks you to expand inward as well as outward, finding that the greatest frontier is the self.',</span>
+<span class="cstat-no" title="statement not covered" >    bodyFocus: 'hips, thighs, liver, sciatic nerve',</span>
+<span class="cstat-no" title="statement not covered" >    elementalResonance: 'Your fire is wildfire-spread — not contained but catalytic, igniting new terrain and refusing to be bounded by old maps.',</span>
+<span class="cstat-no" title="statement not covered" >  },</span>
+<span class="cstat-no" title="statement not covered" >  capricorn: {</span>
+<span class="cstat-no" title="statement not covered" >    essence: 'Your solar light is the summit at dawn — hard-won, enduring, visible from every valley below. In Capricorn, the Sun demonstrates that authority is earned, not given. You are here to build, to master, to create structures that outlast your lifetime. Your purpose is the long climb — not for the view, but for the person you become through the ascent.',</span>
+<span class="cstat-no" title="statement not covered" >    element: 'earth', modality: 'cardinal', keywords: ['ambition', 'responsibility', 'mastery', 'discipline'],</span>
+<span class="cstat-no" title="statement not covered" >    careerAdvice: 'Your career is a mountain, and you were born to climb. Executive leadership, architecture, finance, government, and any field requiring long-term strategic vision suit you. You excel where persistence outlasts talent. Beware workaholism — achievement without joy is a hollow crown. Build a legacy, but remember to live in the structure you create.',</span>
+<span class="cstat-no" title="statement not covered" >    relationshipAdvice: 'You show love through commitment, reliability, and acts of service that span decades. You attract partners who value loyalty and shared goals. Beware emotional austerity — your love is deep, but your expression can be reserved. Let your partner see the warmth beneath the competence. The greatest gift you offer is presence across time.',</span>
+<span class="cstat-no" title="statement not covered" >    healthAdvice: 'Your bones, joints, and teeth reflect the weight you carry. Structural health is your foundation — calcium-rich nutrition, weight-bearing exercise, and posture awareness are essential. Beware somatising responsibility; your body absorbs what your mind refuses to delegate. Rest is not laziness; it is structural maintenance.',</span>
+<span class="cstat-no" title="statement not covered" >    financesAdvice: 'Conservative, structured, long-term wealth-building is your financial language. Real estate, retirement planning, and legacy investments align with your values. You understand that wealth is built one brick at a time. Beware miserliness — money is a tool for building, not a scorecard for worth.',</span>
+<span class="cstat-no" title="statement not covered" >    growthAdvice: 'Your shadow is the fear of inadequacy — the belief that you must achieve to be worthy. You are not what you produce; you are the consciousness that produces. The lesson of Capricorn is that the summit means nothing without the soul that climbed. Growth asks you to celebrate the journey, not just the destination.',</span>
+<span class="cstat-no" title="statement not covered" >    bodyFocus: 'bones, joints, teeth, knees, skeletal system',</span>
+<span class="cstat-no" title="statement not covered" >    elementalResonance: 'Your fire is forge-heat — not warm but transformative, shaping raw material through sustained pressure and patience.',</span>
+<span class="cstat-no" title="statement not covered" >  },</span>
+<span class="cstat-no" title="statement not covered" >  aquarius: {</span>
+<span class="cstat-no" title="statement not covered" >    essence: 'Your solar light is the electricity of innovation — sudden, illuminating, connecting what was separate. In Aquarius, the Sun is the visionary, the rebel with a cause, the voice of the future speaking into the present. You are here to awaken, to liberate, to demonstrate that humanity progresses only when individuals dare to differ. Your purpose is collective — not to belong, but to belong forward.',</span>
+<span class="cstat-no" title="statement not covered" >    element: 'air', modality: 'fixed', keywords: ['innovation', 'humanity', 'independence', 'vision'],</span>
+<span class="cstat-no" title="statement not covered" >    careerAdvice: 'Your mind sees patterns others miss. Technology, social reform, scientific research, community organising, and futuristic industries thrive under your vision. You excel when given freedom to innovate. Beware detachment — your ideas change the world only when you stay engaged long enough to implement them. Build networks, not just concepts.',</span>
+<span class="cstat-no" title="statement not covered" >    relationshipAdvice: 'Friendship is the foundation of your love. You attract partners who respect your independence and share your ideals. Your love is loyal but unconventional — you need space to breathe and think. Beware emotional distance — intellect is your comfort zone, but intimacy requires feeling. The right partner will not ask you to conform; they will evolve beside you.',</span>
+<span class="cstat-no" title="statement not covered" >    healthAdvice: 'Your circulatory and nervous systems carry your electric energy. Unconventional health practices — biohacking, community wellness, technology-assisted mindfulness — may appeal. Beware nervous exhaustion from overstimulation. Your body needs grounding as much as your mind needs stimulation. Regular digital detox is not optional.',</span>
+<span class="cstat-no" title="statement not covered" >    financesAdvice: 'Innovative and unconventional investments may succeed where traditional approaches fail. Cryptocurrency, social enterprise, and technology stocks align with your vision. Beware detachment from financial reality — even revolutionaries must pay rent. Build wealth that funds your ideals without compromising them.',</span>
+<span class="cstat-no" title="statement not covered" >    growthAdvice: 'Your shadow is rebellion for its own sake — the refusal to feel because feeling seems like conformity. Emotions are not weakness; they are data. The lesson of Aquarius is that true liberation includes the freedom to be vulnerable. Growth asks you to lead with heart as well as mind.',</span>
+<span class="cstat-no" title="statement not covered" >    bodyFocus: 'calves, ankles, circulatory system, nervous system',</span>
+<span class="cstat-no" title="statement not covered" >    elementalResonance: 'Your fire is lightning — not warm but illuminating, striking suddenly and changing the landscape permanently.',</span>
+<span class="cstat-no" title="statement not covered" >  },</span>
+<span class="cstat-no" title="statement not covered" >  pisces: {</span>
+<span class="cstat-no" title="statement not covered" >    essence: 'Your solar light is the dissolving boundary between self and ocean — compassionate, imaginative, translucent. In Pisces, the Sun remembers that separation is illusion, that all rivers return to the same sea. You are here to dissolve, to heal, to demonstrate that the greatest strength is the willingness to be permeable. Your purpose is transcendence — not escape, but the realisation that you were never separate from the whole.',</span>
+<span class="cstat-no" title="statement not covered" >    element: 'water', modality: 'mutable', keywords: ['compassion', 'imagination', 'unity', 'spirituality'],</span>
+<span class="cstat-no" title="statement not covered" >    careerAdvice: 'Your gifts flourish where boundaries dissolve — healing arts, creative fields, spiritual guidance, film, music, and compassionate service. You excel when work feels like devotion. Beware martyrdom — sacrifice without boundaries breeds resentment, not grace. Build structures that protect your sensitivity while allowing your gifts to flow.',</span>
+<span class="cstat-no" title="statement not covered" >    relationshipAdvice: 'You love with the depth of the ocean itself — boundless, forgiving, transcendent. You attract partners who need your compassion, but ensure they also respect your boundaries. Beware saviour dynamics — you cannot heal someone who refuses to heal. True love is not rescue; it is two whole beings choosing to swim together.',</span>
+<span class="cstat-no" title="statement not covered" >    healthAdvice: 'Your feet and immune system are your physical anchors. Water-based therapies, dream work, and creative expression are essential medicine. Beware escapism through substances, screens, or denial — your sensitivity is a gift that requires vigilant protection. Sleep is your sanctuary; guard it as sacred.',</span>
+<span class="cstat-no" title="statement not covered" >    financesAdvice: 'Intuitive guidance can lead to surprising financial insights. Creative and spiritual investments may flourish. Beware escapist spending — retail therapy does not fill the void, it merely rearranges it. Build financial boundaries as carefully as emotional ones. Trust your intuition, but verify with practical checks.',</span>
+<span class="cstat-no" title="statement not covered" >    growthAdvice: 'Your shadow is the martyr — the belief that suffering is noble, that boundaries are unkind. Compassion without discernment is self-destruction. The lesson of Pisces is that you cannot pour from an empty cup. Growth asks you to distinguish between empathy and enmeshment, between love and sacrifice.',</span>
+<span class="cstat-no" title="statement not covered" >    bodyFocus: 'feet, immune system, pineal gland, lymphatic system',</span>
+<span class="cstat-no" title="statement not covered" >    elementalResonance: 'Your fire has become starlight — distant, mysterious, the kind of light that travels across eons to remind us we are made of the same stuff.',</span>
+<span class="cstat-no" title="statement not covered" >  },</span>
+<span class="cstat-no" title="statement not covered" >  ophiuchus: {</span>
+<span class="cstat-no" title="statement not covered" >    essence: 'Your solar light is the serpent rising — healing, transmuting, bridging realms that others believe are separate. In Ophiuchus, the Sun carries the ancient knowledge of death and rebirth, the wisdom that poison and medicine share the same root. You are here to heal what has been buried, to demonstrate that transformation is not destruction but metamorphosis. Your purpose is the wounded healer — not because you are broken, but because you have learned to weave gold from the places you were torn.',</span>
+<span class="cstat-no" title="statement not covered" >    element: 'ether', modality: 'fixed', keywords: ['healing', 'transmutation', 'wisdom', 'bridge-building'],</span>
+<span class="cstat-no" title="statement not covered" >    careerAdvice: 'Your professional path weaves between worlds — medicine, psychology, shamanic practice, research, crisis intervention, and any field where others turn away. You excel where transformation is required. Your intuition about hidden systems is unparalleled. Beware the saviour complex — you can guide the healing, but you cannot do it for them. Build a career on empowerment, not rescue.',</span>
+<span class="cstat-no" title="statement not covered" >    relationshipAdvice: 'You love with the depth of one who has died and returned. Your relationships are alchemical — they transform both participants. You attract partners who are ready to heal, not those seeking to be fixed. Beware merging too completely; your gift is connection, but your growth requires maintaining a self that is distinct. True intimacy is two wholes choosing to overlap, not two halves seeking completion.',</span>
+<span class="cstat-no" title="statement not covered" >    healthAdvice: 'Your spinal column and nervous system regeneration are your physical focuses. Energy medicine, spinal alignment, and practices that work with subtle body channels restore you. You are sensitive to toxins and environmental energies — your body is a barometer for collective health. Beware absorbing others\' illnesses; your healing gift requires energetic hygiene. Rest is not weakness; it is the space where regeneration occurs.',</span>
+<span class="cstat-no" title="statement not covered" >    financesAdvice: 'Your financial path is non-linear. Investments in healing, transformation, and regenerative enterprises align with your values. You may experience sudden losses and equally sudden restorations — build flexibility into your financial structures. Beware rescuing others financially; true help empowers independence, not dependence.',</span>
+<span class="cstat-no" title="statement not covered" >    growthAdvice: 'Your shadow is the refusal to let others suffer — the belief that your pain is acceptable if it spares someone else\'s. You are not meant to be the container for all wounds. The lesson of Ophiuchus is that the healer must also be healed. Growth asks you to receive the medicine you so freely offer, and to trust that your wholeness serves the world more than your sacrifice.',</span>
+<span class="cstat-no" title="statement not covered" >    bodyFocus: 'spinal column, nervous system regeneration, subtle energy channels, cellular renewal',</span>
+<span class="cstat-no" title="statement not covered" >    elementalResonance: 'Your fire is alchemical flame — it does not warm or illuminate in the ordinary sense, but transforms base substance into something that transcends its origins.',</span>
+<span class="cstat-no" title="statement not covered" >  },</span>
+<span class="cstat-no" title="statement not covered" >};</span>
+&nbsp;</pre></td></tr></table></pre>
+
+                <div class='push'></div><!-- for sticky footer -->
+            </div><!-- /wrapper -->
+            <div class='footer quiet pad2 space-top1 center small'>
+                Code coverage generated by
+                <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
+                at 2026-05-20T03:38:53.739Z
+            </div>
+        <script src="../../../../../prettify.js"></script>
+        <script>
+            window.onload = function () {
+                prettyPrint();
+            };
+        </script>
+        <script src="../../../../../sorter.js"></script>
+        <script src="../../../../../block-navigation.js"></script>
+    </body>
+</html>
+    
