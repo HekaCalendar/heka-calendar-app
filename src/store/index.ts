@@ -587,6 +587,8 @@ const timestampMiddleware = (_storeAPI: any) => (next: any) => (action: any) => 
   return next(action);
 };
 
+export { calendarSlice };
+
 export const store = configureStore({
   reducer: {
     calendar: calendarSlice.reducer,
