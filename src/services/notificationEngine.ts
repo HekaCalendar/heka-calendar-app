@@ -129,7 +129,7 @@ class NotificationEngineClass {
   async schedule(req: NotificationRequest): Promise<string | null> { return this.delivery.schedule(req); }
   async cancel(id: string): Promise<boolean> { return this.delivery.cancel(id); }
   async getScheduledIds(): Promise<string[]> { return this.delivery.getScheduledIds(); }
-  getWebScheduledMeta(): Array<{ id: string; type: string; taskId?: string; extra?: Record<string, any> }> { return this.delivery.getWebScheduledMeta(); }
+  getWebScheduledMeta(): Array<{ id: string; type: string; taskId?: string; extra?: Record<string, unknown> }> { return this.delivery.getWebScheduledMeta(); }
   async cancelByType(type: string): Promise<void> { return this.delivery.cancelByType(type); }
   async cancelAll(): Promise<void> { return this.delivery.cancelAll(); }
 
@@ -144,7 +144,7 @@ class NotificationEngineClass {
   // GENIUS SCHEDULER (delegated to genius)
   // ═══════════════════════════════════════════════════════════════════════════
 
-  async scheduleGenius(type: string, tier: NotificationTier, section: NotificationSection, scheduleAt: Date, seed: string, vars: Record<string, string>, extra?: Record<string, any>, id?: number, dedupKey?: string): Promise<void> {
+  async scheduleGenius(type: string, tier: NotificationTier, section: NotificationSection, scheduleAt: Date, seed: string, vars: Record<string, string>, extra?: Record<string, unknown>, id?: number, dedupKey?: string): Promise<void> {
     return this.genius.scheduleGenius(type, tier, section, scheduleAt, seed, vars, extra, id, dedupKey);
   }
 
@@ -234,7 +234,7 @@ class NotificationEngineClass {
   // HIGH-LEVEL SCHEDULERS
   // ═══════════════════════════════════════════════════════════════════════════
 
-  async scheduleTemplated(type: string, tier: NotificationTier, section: NotificationSection, scheduleAt: Date, seed: string, vars: Record<string, string>, extra?: Record<string, any>, id?: number, dedupKey?: string): Promise<string | null> {
+  async scheduleTemplated(type: string, tier: NotificationTier, section: NotificationSection, scheduleAt: Date, seed: string, vars: Record<string, string>, extra?: Record<string, unknown>, id?: number, dedupKey?: string): Promise<string | null> {
     if (this.checkerDepth > 0) {
       await this.genius.scheduleGenius(type, tier, section, scheduleAt, seed, vars, extra, id, dedupKey);
       return null;
@@ -243,15 +243,15 @@ class NotificationEngineClass {
     return this.delivery.schedule({ type, tier, title, body, scheduleAt, section, extra: { ...extra, templateIndex }, replaceExisting: true, id, dedupKey });
   }
 
-  async notifyCore(type: string, section: NotificationSection, title: string, body: string, extra?: Record<string, any>, id?: number): Promise<string | null> {
+  async notifyCore(type: string, section: NotificationSection, title: string, body: string, extra?: Record<string, unknown>, id?: number): Promise<string | null> {
     return this.schedule({ type, tier: 'core', title, body, scheduleAt: new Date(Date.now() + 1000), section, extra, id });
   }
 
-  async notifyStandard(type: string, section: NotificationSection, title: string, body: string, scheduleAt: Date, extra?: Record<string, any>, id?: number): Promise<string | null> {
+  async notifyStandard(type: string, section: NotificationSection, title: string, body: string, scheduleAt: Date, extra?: Record<string, unknown>, id?: number): Promise<string | null> {
     return this.schedule({ type, tier: 'standard', title, body, scheduleAt, section, extra, replaceExisting: true, id });
   }
 
-  async notifyAmbient(type: string, section: NotificationSection, title: string, body: string, scheduleAt: Date, extra?: Record<string, any>, id?: number): Promise<string | null> {
+  async notifyAmbient(type: string, section: NotificationSection, title: string, body: string, scheduleAt: Date, extra?: Record<string, unknown>, id?: number): Promise<string | null> {
     return this.schedule({ type, tier: 'ambient', title, body, scheduleAt, section, extra, replaceExisting: true, id });
   }
 

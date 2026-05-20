@@ -39,7 +39,7 @@ export interface GeniusProposal {
   scheduleAt: Date;
   seed: string;
   vars: Record<string, string>;
-  extra?: Record<string, any>;
+  extra?: Record<string, unknown>;
   id?: number;
   dedupKey?: string;
   score: number;
@@ -330,7 +330,7 @@ export class NotificationGenius {
     scheduleAt: Date,
     seed: string,
     vars: Record<string, string>,
-    extra?: Record<string, any>,
+    extra?: Record<string, unknown>,
     id?: number,
     dedupKey?: string
   ): Promise<void> {
@@ -552,7 +552,7 @@ export class NotificationGenius {
       const parsed = loadGeniusQueue() as Array<{
         type: string; tier: NotificationTier; section: NotificationSection;
         scheduleAt: string; seed: string; vars: Record<string, string>;
-        extra?: Record<string, any>; id?: number; score: number;
+        extra?: Record<string, unknown>; id?: number; score: number;
         context: { sunrise: string | null; sunset: string | null; moonPhase: string; moonSign: string; daySegment: string; voidOfCourse: boolean; mercuryRetrograde: boolean };
       }>;
       if (parsed.length > 0) {

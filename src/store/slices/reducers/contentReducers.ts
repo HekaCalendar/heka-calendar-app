@@ -7,6 +7,10 @@ import type { PayloadAction } from '@reduxjs/toolkit';
 import type { CalendarState, NoteData, NoteCategory, DayNotes, RecurringConfig } from '../../../types';
 import type { UsageStatistics, CommunityHoliday, CommunityFeature, CalendarInvite } from '../../../types';
 
+interface ActionWithTimestamp {
+  meta?: { timestamp?: number };
+}
+
 // ─── Statistics Helpers ───
 
 function updateStatisticsOnNoteAdd(
@@ -230,7 +234,7 @@ export const addNote = (state: CalendarState, action: PayloadAction<{
   duplicatedFrom?: string;
   tags?: string[];
 }>) => {
-  const timestamp = (action as any).meta?.timestamp || Date.now();
+  const timestamp = (action as ActionWithTimestamp).meta?.timestamp || Date.now();
   const now = new Date(timestamp).toISOString();
   const noteData: NoteData = {
     id: `${action.payload.key}-${timestamp}`,
@@ -256,7 +260,7 @@ export const addNote = (state: CalendarState, action: PayloadAction<{
 
 export const updateNote = (state: CalendarState, action: PayloadAction<{ dayKey: string; noteId: string; updates: { content: string; category?: NoteCategory; recurring?: RecurringConfig } }>) => {
   const { dayKey, noteId, updates } = action.payload;
-  const timestamp = (action as any).meta?.timestamp || Date.now();
+  const timestamp = (action as ActionWithTimestamp).meta?.timestamp || Date.now();
   if (state.notes[dayKey]) {
     const note = state.notes[dayKey].find(n => n.id === noteId);
     if (note) {
@@ -297,7 +301,7 @@ export const loadNotes = (state: CalendarState, action: PayloadAction<Record<str
 
 export const moveNote = (state: CalendarState, action: PayloadAction<{ fromKey: string; toKey: string; noteId: string }>) => {
   const { fromKey, toKey, noteId } = action.payload;
-  const timestamp = (action as any).meta?.timestamp || Date.now();
+  const timestamp = (action as ActionWithTimestamp).meta?.timestamp || Date.now();
   if (state.notes[fromKey]) {
     const noteIndex = state.notes[fromKey].findIndex(n => n.id === noteId);
     if (noteIndex >= 0) {

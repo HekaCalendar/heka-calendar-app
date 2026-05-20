@@ -4,7 +4,7 @@
  * ═══════════════════════════════════════════════════════════════════════════════
  */
 
-import { LocalNotifications } from '@capacitor/local-notifications';
+import { LocalNotifications, type LocalNotificationSchema } from '@capacitor/local-notifications';
 import type {
   NotificationRequest,
   NotificationSection,
@@ -51,7 +51,7 @@ export function generateId(section: NotificationSection, type: string): number {
 
 export class NotificationDelivery {
   private webTimeouts: Map<string, number> = new Map();
-  private webMeta: Map<string, { type: string; taskId?: string; extra?: Record<string, any> }> = new Map();
+  private webMeta: Map<string, { type: string; taskId?: string; extra?: Record<string, unknown> }> = new Map();
   /** Track scheduled IDs by type so cancelByType() actually works. */
   private typeToIds: Map<string, Set<string>> = new Map();
 
@@ -122,7 +122,7 @@ export class NotificationDelivery {
         const actionTypeId = enrichedReq.actionTypeId || enrichedReq.type;
         void getActionsForType(actionTypeId); // Ensure actions are registered
 
-        const nativeNotification: any = {
+        const nativeNotification: LocalNotificationSchema = {
           id: notificationId,
           title: enrichedReq.title,
           body: enrichedReq.body,
@@ -249,7 +249,7 @@ export class NotificationDelivery {
   /**
    * Get metadata for all web notifications currently scheduled.
    */
-  getWebScheduledMeta(): Array<{ id: string; type: string; taskId?: string; extra?: Record<string, any> }> {
+  getWebScheduledMeta(): Array<{ id: string; type: string; taskId?: string; extra?: Record<string, unknown> }> {
     return Array.from(this.webMeta.entries()).map(([id, meta]) => ({ id, ...meta }));
   }
 

@@ -18,7 +18,7 @@ interface CapacitorWindow {
 const IS_NATIVE_APP = typeof (window as unknown as CapacitorWindow).Capacitor !== 'undefined';
 
 // Import the plugin directly
-import { LocalNotifications } from '@capacitor/local-notifications';
+import { LocalNotifications, type PendingLocalNotificationSchema } from '@capacitor/local-notifications';
 
 // Check if native plugin methods are available
 function isNativePluginAvailable(): boolean {
@@ -165,7 +165,7 @@ export async function scheduleNotification(
   title: string,
   body: string,
   date: Date,
-  options?: { id?: number; extra?: any }
+  options?: { id?: number; extra?: Record<string, unknown> }
 ): Promise<string | null> {
   const notificationId = options?.id || Math.floor(Math.random() * 100000);
   
@@ -332,7 +332,7 @@ export async function syncNoteNotifications(notes: Record<string, NoteData[]>): 
 /**
  * Get all pending notifications (native apps only)
  */
-export async function getPendingNotifications(): Promise<any[]> {
+export async function getPendingNotifications(): Promise<PendingLocalNotificationSchema[]> {
   if (!IS_NATIVE_APP || !isNativePluginAvailable()) return [];
   
   try {
