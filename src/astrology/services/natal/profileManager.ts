@@ -12,7 +12,7 @@
 import type { NatalChart, BirthData } from './natalChart';
 import { saveNatalChart, getNatalChart, deleteNatalChart, getDignity, getHouseFromLongitude } from './natalChart';
 import { calculateCurrentSky, calculateLocalHouses } from '../calculations/swissCalculations';
-import { birthDateTimeToUTC, setZodiacFrame, setSignCount } from '../swiss-ephemeris/engine';
+import { birthDateTimeToUTC, setZodiacFrame, setSignCount, isUsingFallback } from '../swiss-ephemeris/engine';
 import { getSignFromLongitude, SIGN_ELEMENTS_13, SIGN_ELEMENTS } from '../../types/core';
 import { getZodiacSystemPreference, getZodiacFramePreference, getSignCountPreference, calculateElementalBalanceWithSystem, calculateModalityBalanceWithSystem } from './zodiacHelpers';
 
@@ -423,7 +423,12 @@ export class ProfileManager {
     const targetCount = signCount || getSignCountPreference();
     const targetSystem = zodiacSystem || (targetFrame === 'sidereal' ? 'sidereal' : targetCount === 13 ? '13-sign' : '12-sign');
     
-    if (currentChart.zodiacSystem === targetSystem && (currentChart as any).zodiacFrame === targetFrame && (currentChart as any).signCount === targetCount) {
+    if (
+      currentChart.zodiacSystem === targetSystem &&
+      (currentChart as any).zodiacFrame === targetFrame &&
+      (currentChart as any).signCount === targetCount &&
+      !currentChart.calculatedWithFallback
+    ) {
       return currentChart;
     }
 
@@ -622,6 +627,7 @@ export class ProfileManager {
       zodiacSystem: frame === 'sidereal' ? 'sidereal' : (count === 13 ? '13-sign' : '12-sign'),
       zodiacFrame: frame,
       signCount: count,
+      calculatedWithFallback: isUsingFallback(),
     };
 
     saveNatalChart(chart, profileId);

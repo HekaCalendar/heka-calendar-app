@@ -265,7 +265,7 @@ const LunaCard: React.FC<LunaCardProps> = ({ moonPhase, moonPosition, isExpanded
   const { t } = useTranslation('celestial');
   if (!moonPhase) {
     return (
-      <div className="premium-card luna loading">
+      <div className="premium-card luna loading" onClick={onToggle}>
         <div className="card-sheen" />
         <div className="loading-spinner">☽</div>
         <div>{t('premiumCards.calculatingLunar')}</div>
@@ -466,7 +466,7 @@ const KronosCard: React.FC<KronosCardProps> = ({ planetaryHour, isExpanded, onTo
   const { t } = useTranslation('celestial');
   if (!planetaryHour) {
     return (
-      <div className="premium-card kronos loading">
+      <div className="premium-card kronos loading" onClick={onToggle}>
         <div className="card-sheen" />
         <div className="loading-spinner">◷</div>
         <div>{t('premiumCards.calculatingPlanetary')}</div>

@@ -860,34 +860,34 @@
   "dictionaries": {
     "planetInSign": {
       "sun": {
-        "leo": "El Sol en Leo brilla con confianza creativa. Expresarse auténticamente y liderar con el corazón.",
-        "aries": "El Sol en Aries trae energía audaz y pionera. Un momento para la iniciación, el liderazgo y la acción valiente.",
-        "virgo": "El Sol en Virgo llama a la refinación y el servicio. Organizar, mejorar sistemas y atender a los detalles.",
-        "libra": "El Sol en Libra busca armonía y asociación. Equilibrar relaciones y apreciar la belleza estética.",
-        "taurus": "El Sol en Tauro nos conecta con la estabilidad y el placer sensorial. Enfoque en construir, nutrir y apreciar la belleza.",
-        "gemini": "El Sol en Géminis despierta la curiosidad y la comunicación. Intercambia ideas, aprende y conecta con tu comunidad.",
-        "cancer": "El Sol en Cáncer profundiza las conexiones emocionales. Nutrir relaciones, honrar sentimientos y crear santuario.",
-        "pisces": "El Sol en Piscis disuelve fronteras. Conectar con lo infinito, practicar compasión y confiar en la intuición.",
-        "scorpio": "El Sol en Escorpio se sumerge en la transformación. Abrazar la intensidad, investigar misterios y liberar lo que ya no sirve.",
-        "aquarius": "El Sol en Acuario innova por el colectivo. Abrazar la unicidad, pensar progresivamente y servir a la humanidad.",
-        "ophiuchus": "El Sol en Ofiuco ilumina el conocimiento curativo. Un tiempo para el conocimiento transformador, la medicina de serpiente y la restauración sagrada.",
-        "capricorn": "El Sol en Capricornio construye a largo plazo. Asumir responsabilidad, establecer metas ambiciosas y dominar tu oficio.",
-        "sagittarius": "El Sol en Sagitario expande los horizontes. Buscar sabiduría, explorar nuevos territorios y abrazar el optimismo."
+        "leo": "The Sun in Leo shines with creative confidence. Express authentically and lead from the heart.",
+        "aries": "The Sun in Aries brings bold, pioneering energy. A time for initiation, leadership, and courageous action.",
+        "virgo": "The Sun in Virgo calls for refinement and service. Organize, improve systems, and attend to the details.",
+        "libra": "The Sun in Libra seeks harmony and partnership. Balance relationships and appreciate aesthetic beauty.",
+        "taurus": "The Sun in Taurus connects us to stability and sensory pleasure. Focus on building, nurturing, and appreciating beauty.",
+        "gemini": "The Sun in Gemini awakens curiosity and communication. Exchange ideas, learn, and connect with your community.",
+        "cancer": "The Sun in Cancer deepens emotional connections. Nurture relationships, honor feelings, and create sanctuary.",
+        "pisces": "The Sun in Pisces dissolves boundaries. Connect with the infinite, practice compassion, and trust intuition.",
+        "scorpio": "The Sun in Scorpio dives into transformation. Embrace intensity, investigate mysteries, and release what no longer serves.",
+        "aquarius": "The Sun in Aquarius innovates for the collective. Embrace uniqueness, think progressively, and serve humanity.",
+        "ophiuchus": "The Sun in Ophiuchus illuminates healing knowledge. A time for transformative wisdom, serpent medicine, and sacred restoration.",
+        "capricorn": "The Sun in Capricorn builds for the long term. Assume responsibility, set ambitious goals, and master your craft.",
+        "sagittarius": "The Sun in Sagittarius expands horizons. Seek wisdom, explore new territories, and embrace optimism."
       },
       "moon": {
-        "leo": "La Luna en Leo expresa los sentimientos de forma dramática. Calidez, creatividad y necesidad de reconocimiento en las relaciones.",
-        "aries": "La Luna en Aries trae respuestas emocionales rápidas. Sentimientos impulsivos, reacciones apasionadas e independencia emocional.",
-        "virgo": "La Luna en Virgo busca orden y utilidad. Satisfacción emocional a través del servicio, la salud y la mejora.",
-        "libra": "La Luna en Libra armoniza los sentimientos. Necesidades",
-        "taurus": "La Luna en Tauro busca comodidad y estabilidad. Cuidar a través de sensualidad, paciencia y seguridad material.",
-        "gemini": "La Luna en Géminis fluctúa con pensamientos y conversaciones. Curiosidad emocional y necesidades de estimulación mental.",
-        "cancer": "La Luna está en casa en Cáncer. Nutrir profundamente, instintos protectores y sensibilidad emocional profunda.",
-        "pisces": "La Luna en Piscis disuelve las fronteras emocionales. Empatía, imaginación y sensibilidad espiritual.",
+        "leo": "The Moon in Leo expresses feelings dramatically. Warmth, creativity, and a need for recognition in relationships.",
+        "aries": "The Moon in Aries brings quick emotional responses. Impulsive feelings, passionate reactions, and emotional independence.",
+        "virgo": "The Moon in Virgo seeks order and utility. Emotional satisfaction through service, health, and improvement.",
+        "libra": "The Moon in Libra harmonizes feelings. Emotional needs met through partnership, beauty, and balanced connection.",
+        "taurus": "The Moon in Taurus seeks comfort and stability. Nurturing through sensuality, patience, and material security.",
+        "gemini": "The Moon in Gemini fluctuates with thoughts and conversations. Emotional curiosity and needs for mental stimulation.",
+        "cancer": "The Moon is at home in Cancer. Deep nurturing, protective instincts, and profound emotional sensitivity.",
+        "pisces": "The Moon in Pisces dissolves emotional boundaries. Empathy, imagination, and spiritual sensitivity.",
         "scorpio": "The Moon in Scorpio feels intensely. Emotional depth, transformative experiences, and powerful intuition.",
-        "aquarius": "La Luna en Acuario se separa para observar. Objetividad emocional, preocupaciones humanitarias y necesidades únicas.",
-        "ophiuchus": "La Luna en Ofiucocura sanando a través de la emoción. Medicina intuitiva, sentimientos transformadores y sabiduría de serpiente.",
-        "capricorn": "La Luna en Capricornio restringe las emociones. Manejo maduro de los sentimientos, responsabilidad y seguridad a largo plazo.",
-        "sagittarius": "La Luna en Sagitario explora emocionalmente. Necesidades de libertad, sentimientos filosóficos y espíritu aventurero."
+        "aquarius": "The Moon in Aquarius detaches to observe. Emotional objectivity, humanitarian concerns, and unique needs.",
+        "ophiuchus": "The Moon in Ophiuchus heals through emotion. Intuitive medicine, transformative feelings, and serpent wisdom.",
+        "capricorn": "The Moon in Capricorn restrains emotions. Mature feeling management, responsibility, and long-term security.",
+        "sagittarius": "The Moon in Sagittarius explores emotionally. Needs for freedom, philosophical feelings, and adventurous spirit."
       },
       "mars": {
         "leo": "Mars in Leo performs boldly. Dramatic action, creative drive, and confident leadership.",
@@ -1289,122 +1289,122 @@
     "planetaryGuidance": {
       "sun": {
         "do": {
-          "0": "Tomar liderazgo",
-          "1": "Hacer peticiones importantes",
-          "2": "Enfocar en visibilidad",
-          "3": "Expresarte",
-          "4": "Buscar reconocimiento"
+          "0": "Take leadership",
+          "1": "Make important requests",
+          "2": "Focus on visibility",
+          "3": "Express yourself",
+          "4": "Seek recognition"
         },
-        "title": "LA HORA SOLAR",
+        "title": "THE SOLAR HOUR",
         "dont": {
-          "0": "Esconderse en las sombras",
-          "1": "Evitar responsabilidades",
-          "2": "Apagar tu luz"
+          "0": "Hide in the shadows",
+          "1": "Avoid responsibilities",
+          "2": "Dim your light"
         },
-        "quality": "Vitalidad y Reconocimiento",
-        "description": "El Sol ilumina todo lo que toca. Esta hora favorece la visibilidad, el liderazgo y asuntos del corazón y el ego."
+        "quality": "Vitality & Recognition",
+        "description": "The Sun illuminates everything it touches. This hour favors visibility, leadership, and matters of the heart and ego."
       },
       "moon": {
         "do": {
-          "0": "Cuidar las relaciones",
-          "1": "Confiar en la intuición",
-          "2": "Asuntos del hogar y la familia",
-          "3": "Procesamiento emocional",
-          "4": "Trabajo de sueños"
+          "0": "Tend to relationships",
+          "1": "Trust intuition",
+          "2": "Home and family matters",
+          "3": "Emotional processing",
+          "4": "Dream work"
         },
-        "title": "LA HORA LUNAR",
+        "title": "THE LUNAR HOUR",
         "dont": {
-          "0": "Forzar decisiones racionales",
-          "1": "Ignorar sentimientos",
-          "2": "Empujar demasiado"
+          "0": "Force rational decisions",
+          "1": "Ignore feelings",
+          "2": "Push too hard"
         },
-        "quality": "Emoción e Intuición",
-        "description": "La Luna rige las mareas de emociones e intuición. Un momento para el cuidado, el hogar y la receptividad psíquica."
+        "quality": "Emotion & Intuition",
+        "description": "The Moon governs the tides of emotion and intuition. A time for care, home, and psychic receptivity."
       },
       "mars": {
         "do": {
-          "0": "Actividad física",
-          "1": "Manejar conflictos directamente",
-          "2": "Hacer ejercicio",
-          "3": "Pursuitas competitivos",
-          "4": "Tomar acción audaz"
+          "0": "Physical activity",
+          "1": "Handle conflicts directly",
+          "2": "Exercise",
+          "3": "Competitive pursuits",
+          "4": "Take bold action"
         },
-        "title": "LA HORA MARTIANA",
+        "title": "THE MARTIAN HOUR",
         "dont": {
-          "0": "Evitar el enfrentamiento necesario",
-          "1": "Reprimir la ira",
-          "2": "Comenzar discusiones"
+          "0": "Avoid necessary confrontation",
+          "1": "Repress anger",
+          "2": "Start arguments"
         },
-        "quality": "Acción y Impulso",
-        "description": "Marte trae fuego, impulso y energía competitiva. La acción física y el enfrentamiento están favorecidos."
+        "quality": "Action & Drive",
+        "description": "Mars brings fire, impulse, and competitive energy. Physical action and confrontation are favored."
       },
       "venus": {
         "do": {
-          "0": "Romanticismo y cortejo",
-          "1": "Creación artística",
-          "2": "Socializar",
-          "3": "Crear belleza",
-          "4": "Resolver conflictos pacíficamente"
+          "0": "Romance and courtship",
+          "1": "Artistic creation",
+          "2": "Socialize",
+          "3": "Create beauty",
+          "4": "Resolve conflicts peacefully"
         },
-        "title": "LA HORA DE VENUS",
+        "title": "THE HOUR OF VENUS",
         "dont": {
-          "0": "Forzar resultados",
-          "1": "Ignorar la estética",
-          "2": "Apresurarse en la intimidad"
+          "0": "Force outcomes",
+          "1": "Ignore aesthetics",
+          "2": "Rush intimacy"
         },
-        "quality": "Amor y Belleza",
-        "description": "Venus baña el mundo en belleza y deseo. El amor, el arte y la armonía reinan supremos."
+        "quality": "Love & Beauty",
+        "description": "Venus bathes the world in beauty and desire. Love, art, and harmony reign supreme."
       },
       "saturn": {
         "do": {
-          "0": "Centrate en las responsabilidades",
-          "1": "Estudia y organiza",
-          "2": "Planifica con antelación",
-          "3": "Construye fundamentos",
-          "4": "Acepta las limitaciones"
+          "0": "Focus on responsibilities",
+          "1": "Study and organize",
+          "2": "Plan ahead",
+          "3": "Build foundations",
+          "4": "Accept limitations"
         },
-        "title": "LA HORA DE SATURNO",
+        "title": "THE HOUR OF SATURN",
         "dont": {
-          "0": "Cortar esquinas",
-          "1": "Evitar deberes",
-          "2": "Esperar resultados inmediatos"
+          "0": "Cut corners",
+          "1": "Avoid duties",
+          "2": "Expect immediate results"
         },
-        "quality": "Disciplina y Estructura",
-        "description": "Saturno exige disciplina y estructura. El trabajo duro ahora lleva a resultados duraderos."
+        "quality": "Discipline & Structure",
+        "description": "Saturn demands discipline and structure. Hard work now leads to lasting results."
       },
       "mercury": {
         "do": {
-          "0": "Enviar mensajes importantes",
-          "1": "Firmar contratos (si directo)",
-          "2": "Escribir y estudiar",
-          "3": "Negociar",
-          "4": "Viajar cortas distancias"
+          "0": "Send important messages",
+          "1": "Sign contracts (if direct)",
+          "2": "Write and study",
+          "3": "Negotiate",
+          "4": "Travel short distances"
         },
-        "title": "LA HORA DE MERCURIO",
+        "title": "THE HOUR OF MERCURY",
         "dont": {
-          "0": "Engañar",
-          "1": "Esparcir chismes",
-          "2": "Firmar si Mercurio está en retrogrado"
+          "0": "Deceive",
+          "1": "Spread gossip",
+          "2": "Sign if Mercury is retrograde"
         },
-        "quality": "Mente y Comunicación",
-        "description": "Mercurio agiliza la mente y la lengua. La comunicación, el aprendizaje y el comercio fluyen con facilidad ahora."
+        "quality": "Mind & Communication",
+        "description": "Mercury quickens the mind and tongue. Communication, learning, and commerce flow with ease now."
       },
       "jupiter": {
         "do": {
-          "0": "Operaciones comerciales",
-          "1": "Buscar sabiduría",
-          "2": "Expandir horizontes",
-          "3": "Enseñar y aprender",
-          "4": "Actos de generosidad"
+          "0": "Business operations",
+          "1": "Seek wisdom",
+          "2": "Expand horizons",
+          "3": "Teach and learn",
+          "4": "Acts of generosity"
         },
-        "title": "LA HORA DE JUPITER",
+        "title": "THE HOUR OF JUPITER",
         "dont": {
-          "0": "Ser avaro",
-          "1": "Pensar en pequeño",
-          "2": "Limitarse a uno mismo"
+          "0": "Be greedy",
+          "1": "Think small",
+          "2": "Limit yourself"
         },
-        "quality": "Expansión y Fortuna",
-        "description": "Júpiter amplía todo lo que toca. La fortuna, la sabiduría y el crecimiento están bendecidos en esta hora."
+        "quality": "Expansion & Fortune",
+        "description": "Jupiter expands everything it touches. Fortune, wisdom, and growth are blessed in this hour."
       }
     }
   }

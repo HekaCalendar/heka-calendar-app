@@ -187,16 +187,13 @@ export function getSiderealMode(): number | null {
 }
 
 export function calculateAyanamsa(jd: number): number {
-  if (!swissModule) {
+  if (!swissModule || !swissModule.get_ayanamsa_ex_ut) {
     // Fallback: Lahiri ayanamsa approximation (~23.86° at J2000, precesses 1° per 72 years)
     const yearsSince2000 = (jd - 2451545.0) / 365.25;
     return 23.86 + yearsSince2000 * (50.29 / 3600); // 50.29 arcsec/year
   }
-  if (swissModule.get_ayanamsa_ex_ut) {
-    const aya = swissModule.get_ayanamsa_ex_ut(jd, SEFLG_SIDEREAL);
-    return aya?.ayanamsa ?? 0;
-  }
-  return 0;
+  const aya = swissModule.get_ayanamsa_ex_ut(jd, SEFLG_SIDEREAL);
+  return aya?.ayanamsa ?? 0;
 }
 
 const DEFAULT_FLAGS = SEFLG_SPEED;

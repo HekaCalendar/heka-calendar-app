@@ -16,6 +16,7 @@ import {
 } from '../src/astrology/services/calculations/swissCalculations';
 import type { CelestialBody } from '../src/astrology/types';
 import * as engine from '../src/astrology/services/swiss-ephemeris/engine';
+import { calculateJulianDay } from '../src/astrology/services/swiss-ephemeris/engine';
 
 function makeBody(overrides: Partial<CelestialBody> & { longitude: number }): CelestialBody {
   const lon = overrides.longitude;
@@ -630,6 +631,54 @@ describe('swissCalculations', () => {
         expect(body.longitude).toBeGreaterThanOrEqual(0);
         expect(body.longitude).toBeLessThan(360);
       });
+    });
+
+    it('sidereal fallback subtracts ayanamsa — Feb 3 1998 sun is capricorn', () => {
+      const jd1998Feb3 = calculateJulianDay(1998, 2, 3, 12, 0, 0);
+      const positions = getFallbackPositions(jd1998Feb3, false, true);
+      expect(positions.sun).toBeDefined();
+      expect(positions.sun.sign).toBe('capricorn');
+    });
+
+    it('tropical fallback does not subtract ayanamsa — Feb 3 1998 sun is aquarius', () => {
+      const jd1998Feb3 = calculateJulianDay(1998, 2, 3, 12, 0, 0);
+      const positions = getFallbackPositions(jd1998Feb3, false, false);
+      expect(positions.sun).toBeDefined();
+      expect(positions.sun.sign).toBe('aquarius');
+    });
+  });
+
+  describe('calculateCurrentSky — sidereal regression: Feb 3 1998', () => {
+    let originalFrame: ReturnType<typeof engine.getZodiacFrame>;
+    let originalCount: ReturnType<typeof engine.getSignCount>;
+
+    beforeEach(() => {
+      originalFrame = engine.getZodiacFrame();
+      originalCount = engine.getSignCount();
+    });
+
+    afterEach(() => {
+      engine.setZodiacFrame(originalFrame);
+      engine.setSignCount(originalCount);
+    });
+
+    it('returns sun in capricorn when sidereal frame is active', async () => {
+      engine.setZodiacFrame('sidereal');
+      engine.setSignCount(12);
+      const jd1998Feb3 = calculateJulianDay(1998, 2, 3, 12, 0, 0);
+      const date = new Date(Date.UTC(1998, 1, 3, 12, 0, 0));
+      const result = await calculateCurrentSky(date);
+      expect(result.positions.sun).toBeDefined();
+      expect(result.positions.sun.sign).toBe('capricorn');
+    });
+
+    it('returns sun in aquarius when tropical frame is active', async () => {
+      engine.setZodiacFrame('tropical');
+      engine.setSignCount(12);
+      const date = new Date(Date.UTC(1998, 1, 3, 12, 0, 0));
+      const result = await calculateCurrentSky(date);
+      expect(result.positions.sun).toBeDefined();
+      expect(result.positions.sun.sign).toBe('aquarius');
     });
   });
 });

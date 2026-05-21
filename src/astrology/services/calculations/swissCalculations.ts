@@ -11,6 +11,7 @@ import {
   calculateHouses,
   getZodiacFrame,
   getSignCount,
+  calculateAyanamsa,
 } from '../swiss-ephemeris/engine';
 import type { CelestialBody, VoidMoonData, VoidMoonEvent } from '../../types';
 import { toDegree, getSignFromLongitude, SIGN_BOUNDARIES_13, getDegreeInSign } from '../../types/core';
@@ -67,9 +68,10 @@ export async function calculateCurrentSky(date: Date = new Date()): Promise<{
 
     // Ensure we have valid positions (fallback if WASM not ready)
     const use13Signs = count === 13;
+    const isSidereal = frame === 'sidereal';
     const validPositions = positions && Object.keys(positions).length > 0
       ? positions
-      : getFallbackPositions(jd, use13Signs);
+      : getFallbackPositions(jd, use13Signs, isSidereal);
     
     const result = {
       positions: validPositions,
@@ -98,8 +100,9 @@ export async function calculateCurrentSky(date: Date = new Date()): Promise<{
       date.getUTCSeconds()
     );
     const use13Signs = getSignCount() === 13;
+    const isSidereal = getZodiacFrame() === 'sidereal';
     return {
-      positions: getFallbackPositions(jd, use13Signs),
+      positions: getFallbackPositions(jd, use13Signs, isSidereal),
       julianDay: jd,
       timestamp: date.getTime(),
     };
@@ -110,7 +113,7 @@ export async function calculateCurrentSky(date: Date = new Date()): Promise<{
  * Fallback planet positions when WASM is not available
  * Uses mean orbital elements for approximate positions
  */
-export function getFallbackPositions(jd: number, use13Signs?: boolean): Record<string, CelestialBody> {
+export function getFallbackPositions(jd: number, use13Signs?: boolean, isSidereal?: boolean): Record<string, CelestialBody> {
   const elements: Record<string, { meanLong: number; dailyMotion: number; distance: number }> = {
     sun: { meanLong: 280.46646, dailyMotion: 0.98564736, distance: 1.0 },
     moon: { meanLong: 218.316, dailyMotion: 13.176396, distance: 0.00257 },
@@ -123,15 +126,21 @@ export function getFallbackPositions(jd: number, use13Signs?: boolean): Record<s
     neptune: { meanLong: 304.349, dailyMotion: 0.005965, distance: 30.1 },
     pluto: { meanLong: 238.929, dailyMotion: 0.003964, distance: 39.5 },
   };
-  
+
   const jd2000 = 2451545.0;
   const daysSince2000 = jd - jd2000;
+  const ayanamsa = isSidereal ? calculateAyanamsa(jd) : 0;
   const result: Record<string, CelestialBody> = {};
-  
+
   for (const [name, el] of Object.entries(elements)) {
     let longitude = (el.meanLong + el.dailyMotion * daysSince2000) % 360;
     if (longitude < 0) longitude += 360;
-    
+
+    // Apply ayanamsa subtraction for sidereal mode
+    if (isSidereal) {
+      longitude = (longitude - ayanamsa + 360) % 360;
+    }
+
     result[name] = {
       id: name as any,
       longitude: toDegree(longitude),
@@ -143,7 +152,7 @@ export function getFallbackPositions(jd: number, use13Signs?: boolean): Record<s
       degreeInSign: getDegreeInSign(toDegree(longitude), use13Signs),
     };
   }
-  
+
   return result;
 }
 

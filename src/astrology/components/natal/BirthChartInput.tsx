@@ -94,6 +94,8 @@ const styles: Record<string, React.CSSProperties> = {
     fontSize: '1rem',
     outline: 'none',
     transition: 'all 0.2s ease',
+    width: '100%',
+    boxSizing: 'border-box',
   },
   row: {
     display: 'grid',
@@ -622,7 +624,7 @@ export const BirthChartInput: React.FC<BirthChartInputProps> = ({
           >
             {TIMEZONES.map(tz => (
               <option key={tz.value} value={tz.value} style={{ background: '#1a1a2e', color: '#fff' }}>
-                {tz.label}
+                {t(tz.label)}
               </option>
             ))}
           </select>

@@ -30,30 +30,33 @@ describe('oracleUtils', () => {
     });
 
     it('counts consecutive days', () => {
-      const today = new Date().toISOString().split('T')[0];
+      const today = new Date();
+      const todayStr = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`;
       const yesterday = new Date();
       yesterday.setDate(yesterday.getDate() - 1);
-      const yStr = yesterday.toISOString().split('T')[0];
-      expect(calculateStreak([{ date: yStr }, { date: today }])).toBe(2);
+      const yStr = `${yesterday.getFullYear()}-${String(yesterday.getMonth() + 1).padStart(2, '0')}-${String(yesterday.getDate()).padStart(2, '0')}`;
+      expect(calculateStreak([{ date: yStr }, { date: todayStr }])).toBe(2);
     });
 
     it('stops at gap in entries', () => {
-      const today = new Date().toISOString().split('T')[0];
+      const today = new Date();
+      const todayStr = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`;
       const twoDaysAgo = new Date();
       twoDaysAgo.setDate(twoDaysAgo.getDate() - 2);
-      const tdaStr = twoDaysAgo.toISOString().split('T')[0];
-      expect(calculateStreak([{ date: tdaStr }, { date: today }])).toBe(1);
+      const tdaStr = `${twoDaysAgo.getFullYear()}-${String(twoDaysAgo.getMonth() + 1).padStart(2, '0')}-${String(twoDaysAgo.getDate()).padStart(2, '0')}`;
+      expect(calculateStreak([{ date: tdaStr }, { date: todayStr }])).toBe(1);
     });
 
     it('deduplicates same-day entries', () => {
-      const today = new Date().toISOString().split('T')[0];
-      expect(calculateStreak([{ date: today }, { date: today }, { date: today }])).toBe(1);
+      const today = new Date();
+      const todayStr = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`;
+      expect(calculateStreak([{ date: todayStr }, { date: todayStr }, { date: todayStr }])).toBe(1);
     });
 
     it('includes yesterday grace period', () => {
       const yesterday = new Date();
       yesterday.setDate(yesterday.getDate() - 1);
-      const yStr = yesterday.toISOString().split('T')[0];
+      const yStr = `${yesterday.getFullYear()}-${String(yesterday.getMonth() + 1).padStart(2, '0')}-${String(yesterday.getDate()).padStart(2, '0')}`;
       expect(calculateStreak([{ date: yStr }])).toBe(1);
     });
   });

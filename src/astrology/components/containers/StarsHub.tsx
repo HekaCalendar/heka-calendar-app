@@ -270,12 +270,8 @@ export const StarsHub: React.FC = () => {
   
   // Calculate astronomical data (only when ready)
   // Uses AbortController to cancel stale calculations
-  const calculationInProgressRef = useRef(false);
   useEffect(() => {
     if (!isReady) return;
-    
-    // Skip if a calculation is already in progress (prevents overlapping on rapid re-renders)
-    if (calculationInProgressRef.current) return;
     
     // Cancel any previous calculation
     if (calculationAbortControllerRef.current) {
@@ -287,7 +283,6 @@ export const StarsHub: React.FC = () => {
     const { signal } = abortController;
     
     const calculate = async () => {
-      calculationInProgressRef.current = true;
       try {
         // Calculate current sky positions
         const skyData = await calculateCurrentSky(currentTime);
@@ -339,8 +334,6 @@ export const StarsHub: React.FC = () => {
         if (!signal.aborted) {
           console.error('[StarsHub] Calculation error:', error);
         }
-      } finally {
-        calculationInProgressRef.current = false;
       }
     };
     

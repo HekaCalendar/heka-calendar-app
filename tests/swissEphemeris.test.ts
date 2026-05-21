@@ -60,10 +60,12 @@ describe('swissEphemeris engine', () => {
   });
 
   describe('calculateAyanamsa', () => {
-    it('returns 0 when mock engine lacks ayanamsa function', () => {
+    it('returns fallback approximation when mock engine lacks ayanamsa function', () => {
       // MockSwissEngine does not have get_ayanamsa_ex_ut
+      // Fallback returns Lahiri approximation (~23.86° at J2000)
       const aya = calculateAyanamsa(2451545.0);
-      expect(aya).toBe(0);
+      expect(aya).toBeGreaterThan(20);
+      expect(aya).toBeLessThan(30);
     });
   });
 
@@ -254,6 +256,53 @@ describe('swissEphemeris engine', () => {
       expect(getZodiacSystem()).toBe('12-sign');
       expect(getZodiacFrame()).toBe('tropical');
       expect(getSignCount()).toBe(12);
+    });
+  });
+
+  describe('sidereal calculations — regression: Feb 3 1998 should be Capricorn, not Aquarius', () => {
+    const jd1998Feb3 = calculateJulianDay(1998, 2, 3, 12, 0, 0);
+    let originalFrame: ReturnType<typeof getZodiacFrame>;
+    let originalCount: ReturnType<typeof getSignCount>;
+
+    beforeEach(() => {
+      originalFrame = getZodiacFrame();
+      originalCount = getSignCount();
+    });
+
+    afterEach(() => {
+      setZodiacFrame(originalFrame);
+      setSignCount(originalCount);
+    });
+
+    it('calculateAyanamsa returns Lahiri fallback (~23.8°) for Feb 3 1998 in mock mode', () => {
+      const aya = calculateAyanamsa(jd1998Feb3);
+      expect(aya).toBeGreaterThan(23);
+      expect(aya).toBeLessThan(25);
+    });
+
+    it('calculateAllPlanets with sidereal frame returns sun in capricorn for Feb 3 1998', () => {
+      setZodiacFrame('sidereal');
+      setSignCount(12);
+      const planets = calculateAllPlanets(jd1998Feb3);
+      expect(planets.sun).toBeDefined();
+      expect(planets.sun.sign).toBe('capricorn');
+    });
+
+    it('calculateAllPlanets with tropical frame returns sun in aquarius for Feb 3 1998', () => {
+      setZodiacFrame('tropical');
+      setSignCount(12);
+      const planets = calculateAllPlanets(jd1998Feb3);
+      expect(planets.sun).toBeDefined();
+      expect(planets.sun.sign).toBe('aquarius');
+    });
+
+    it('calculateHouses with sidereal frame respects ayanamsa', () => {
+      setZodiacFrame('sidereal');
+      setSignCount(12);
+      const houses = calculateHouses(jd1998Feb3, { latitude: 40.7, longitude: -74.0 });
+      expect(houses.ascendant).toBeGreaterThan(0);
+      expect(houses.ascendant).toBeLessThan(360);
+      expect(houses.cusps).toHaveLength(12);
     });
   });
 });

@@ -48,6 +48,7 @@ export interface NatalChart {
   zodiacSystem: '12-sign' | '13-sign' | 'sidereal';
   zodiacFrame?: 'tropical' | 'sidereal';
   signCount?: 12 | 13;
+  calculatedWithFallback?: boolean;
 }
 
 export interface Transit {

@@ -18,6 +18,7 @@ import {
 import { generateNatalPromise, type NatalPromise } from '../../services/natal/natalPromise';
 import type { NatalPlanet } from '../../services/natal/natalChart';
 import { getZodiacFramePreference, getSignCountPreference } from '../../services/natal/zodiacHelpers';
+import { isUsingFallback } from '../../services/swiss-ephemeris/engine';
 
 // Import sub-components
 import { ChartWheel } from './ChartWheel';
@@ -452,8 +453,13 @@ export const BirthChartView: React.FC<BirthChartViewProps> = ({ initialProfileId
       const currentFrame = getZodiacFramePreference();
       const currentCount = getSignCountPreference();
 
-      if (profile.chart.zodiacFrame !== currentFrame || profile.chart.signCount !== currentCount) {
-        console.log('[BirthChartView] Zodiac prefs changed, recalculating...');
+      const needsRecalc =
+        profile.chart.zodiacFrame !== currentFrame ||
+        profile.chart.signCount !== currentCount ||
+        (profile.chart.calculatedWithFallback && !isUsingFallback());
+
+      if (needsRecalc) {
+        console.log('[BirthChartView] Zodiac prefs changed or fallback chart detected, recalculating...');
         profileManager.recalculateChartWithZodiacSystem(profile.id, undefined, currentFrame, currentCount)
           .then(() => loadProfile(profile.id))
           .catch((err) => console.error('[BirthChartView] Recalculation failed:', err))
