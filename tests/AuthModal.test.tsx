@@ -108,7 +108,6 @@ describe('AuthModal', () => {
     renderWithProviders(
       <AuthModal isOpen={true} onClose={vi.fn()} />
     );
-    // The component should show the not-configured state
     expect(document.querySelector('.auth-modal')).toBeInTheDocument();
   });
 
@@ -189,5 +188,82 @@ describe('AuthModal', () => {
     const overlay = container.querySelector('.modal-overlay');
     fireEvent.click(overlay!);
     expect(onClose).toHaveBeenCalledTimes(1);
+  });
+
+  it('shows validation errors by preventing login with empty fields', async () => {
+    renderWithProviders(
+      <AuthModal isOpen={true} onClose={vi.fn()} />
+    );
+
+    const emailInput = screen.getByPlaceholderText(/email/i) as HTMLInputElement;
+    const passwordInput = screen.getByPlaceholderText(/password/i) as HTMLInputElement;
+
+    expect(emailInput).toHaveAttribute('required');
+    expect(passwordInput).toHaveAttribute('required');
+
+    // Attempt submit without filling fields
+    fireEvent.click(screen.getByRole('button', { name: /signIn/i }));
+
+    await waitFor(() => {
+      expect(mockLogIn).not.toHaveBeenCalled();
+    });
+  });
+
+  it('toggles to signup and shows validation on empty fields', async () => {
+    renderWithProviders(
+      <AuthModal isOpen={true} onClose={vi.fn()} />
+    );
+
+    fireEvent.click(screen.getByText(/create account/i));
+
+    const displayNameInput = screen.getByPlaceholderText('auth.displayNamePlaceholder') as HTMLInputElement;
+    const emailInput = screen.getByPlaceholderText(/email/i) as HTMLInputElement;
+    const passwordInput = screen.getAllByPlaceholderText(/password/i)[0] as HTMLInputElement;
+
+    expect(displayNameInput).toHaveAttribute('required');
+    expect(emailInput).toHaveAttribute('required');
+    expect(passwordInput).toHaveAttribute('required');
+    expect(passwordInput).toHaveAttribute('minLength', '6');
+
+    // Leave fields empty and try to submit
+    fireEvent.click(screen.getByRole('button', { name: /signUp/i }));
+
+    await waitFor(() => {
+      expect(mockSignUp).not.toHaveBeenCalled();
+    });
+  });
+
+  it('displays error message on signup failure', async () => {
+    mockSignUp.mockRejectedValueOnce(new Error('Email already in use'));
+
+    renderWithProviders(
+      <AuthModal isOpen={true} onClose={vi.fn()} />
+    );
+
+    fireEvent.click(screen.getByText(/create account/i));
+
+    fireEvent.change(screen.getByPlaceholderText('auth.displayNamePlaceholder'), { target: { value: 'New User' } });
+    fireEvent.change(screen.getByPlaceholderText(/email/i), { target: { value: 'new@test.com' } });
+    fireEvent.change(screen.getAllByPlaceholderText(/password/i)[0], { target: { value: 'password123' } });
+    fireEvent.click(screen.getByRole('button', { name: /signUp/i }));
+
+    await waitFor(() => {
+      expect(screen.getByText(/Email already in use/)).toBeInTheDocument();
+    });
+  });
+
+  it('renders Google social auth button in login view', () => {
+    renderWithProviders(
+      <AuthModal isOpen={true} onClose={vi.fn()} />
+    );
+    expect(screen.getByText(/continue with google/i)).toBeInTheDocument();
+  });
+
+  it('renders Google social auth button in signup view', () => {
+    renderWithProviders(
+      <AuthModal isOpen={true} onClose={vi.fn()} />
+    );
+    fireEvent.click(screen.getByText(/create account/i));
+    expect(screen.getByText(/continue with google/i)).toBeInTheDocument();
   });
 });

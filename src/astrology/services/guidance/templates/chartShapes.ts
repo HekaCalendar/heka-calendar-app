@@ -29,7 +29,7 @@ export interface ShapeReading {
 }
 
 /** Calculate angular gaps between sorted planet longitudes */
-function calculateGaps(longitudes: number[]): number[] {
+export function calculateGaps(longitudes: number[]): number[] {
   const sorted = [...longitudes].sort((a, b) => a - b);
   const gaps: number[] = [];
   for (let i = 0; i < sorted.length; i++) {
@@ -109,7 +109,7 @@ export function detectChartShape(
   // Check if there's a single planet opposite the main cluster
   const handleCandidates = entries.filter(([, p]) => {
     const gapToCluster = Math.min(
-      ...sorted.filter(l => Math.abs(l - p.longitude) > 90).map(l => {
+      ...sorted.filter(l => Math.abs(l - p.longitude) > 0.001).map(l => {
         const d = Math.abs(l - p.longitude);
         return Math.min(d, 360 - d);
       })
