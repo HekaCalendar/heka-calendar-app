@@ -1,38 +1,49 @@
 /* ============================================================
    HEKAVERSE — Shared JavaScript
-   Vanilla JS only. No GSAP dependencies.
+   Optimized: throttled cursor, lighter particles, idle skip
    ============================================================ */
 
 document.addEventListener('DOMContentLoaded', function() {
   'use strict';
 
   // ============================================================
-  // CUSTOM CURSOR
+  // CUSTOM CURSOR (throttled, idle-skip)
   // ============================================================
   const cursor = document.getElementById('customCursor');
   if (cursor && window.matchMedia('(pointer: fine)').matches) {
     let cursorX = 0, cursorY = 0;
     let targetX = 0, targetY = 0;
+    let mouseMoved = false;
+    let cursorRaf;
 
     document.addEventListener('mousemove', (e) => {
       targetX = e.clientX;
       targetY = e.clientY;
-    });
+      mouseMoved = true;
+    }, { passive: true });
 
     function updateCursor() {
-      cursorX += (targetX - cursorX) * 0.92;
-      cursorY += (targetY - cursorY) * 0.92;
-      cursor.style.transform = `translate3d(${cursorX.toFixed(1)}px, ${cursorY.toFixed(1)}px, 0)`;
-      requestAnimationFrame(updateCursor);
+      if (mouseMoved) {
+        cursorX += (targetX - cursorX) * 0.92;
+        cursorY += (targetY - cursorY) * 0.92;
+        cursor.style.transform = `translate3d(${cursorX.toFixed(1)}px, ${cursorY.toFixed(1)}px, 0)`;
+        if (Math.abs(targetX - cursorX) < 0.5 && Math.abs(targetY - cursorY) < 0.5) {
+          mouseMoved = false;
+        }
+      }
+      cursorRaf = requestAnimationFrame(updateCursor);
     }
     updateCursor();
 
-    // Hover states
-    const hoverTargets = document.querySelectorAll('a, button, .venture-node, .power-pillar, .connect-card, .venture-preview-item');
-    hoverTargets.forEach(el => {
-      el.addEventListener('mouseenter', () => cursor.classList.add('hovering'));
-      el.addEventListener('mouseleave', () => cursor.classList.remove('hovering'));
-    });
+    // Hover states — delegated to reduce listeners
+    document.body.addEventListener('mouseenter', (e) => {
+      const target = e.target.closest('a, button, .venture-node, .power-pillar, .connect-card, .venture-preview-item');
+      if (target) cursor.classList.add('hovering');
+    }, true);
+    document.body.addEventListener('mouseleave', (e) => {
+      const target = e.target.closest('a, button, .venture-node, .power-pillar, .connect-card, .venture-preview-item');
+      if (target) cursor.classList.remove('hovering');
+    }, true);
   }
 
   // ============================================================
@@ -44,17 +55,13 @@ document.addEventListener('DOMContentLoaded', function() {
     navToggle.addEventListener('click', () => {
       navLinks.classList.toggle('open');
     });
-
-    // Close nav on link click
     navLinks.querySelectorAll('a').forEach(link => {
-      link.addEventListener('click', () => {
-        navLinks.classList.remove('open');
-      });
+      link.addEventListener('click', () => navLinks.classList.remove('open'));
     });
   }
 
   // ============================================================
-  // NAV SCROLL STATE
+  // NAV SCROLL STATE (passive + rAF throttle)
   // ============================================================
   const mainNav = document.getElementById('mainNav');
   if (mainNav) {
@@ -62,11 +69,7 @@ document.addEventListener('DOMContentLoaded', function() {
     function onScroll() {
       if (!ticking) {
         requestAnimationFrame(() => {
-          if (window.scrollY > 100) {
-            mainNav.classList.add('scrolled');
-          } else {
-            mainNav.classList.remove('scrolled');
-          }
+          mainNav.classList.toggle('scrolled', window.scrollY > 100);
           ticking = false;
         });
         ticking = true;
@@ -86,9 +89,8 @@ document.addEventListener('DOMContentLoaded', function() {
       const target = document.querySelector(targetId);
       if (target) {
         e.preventDefault();
-        const offset = 80;
-        const top = target.getBoundingClientRect().top + window.pageYOffset - offset;
-        window.scrollTo({ top: top, behavior: 'smooth' });
+        const top = target.getBoundingClientRect().top + window.pageYOffset - 80;
+        window.scrollTo({ top, behavior: 'smooth' });
       }
     });
   });
@@ -109,52 +111,49 @@ document.addEventListener('DOMContentLoaded', function() {
           observer.unobserve(entry.target);
         }
       });
-    }, {
-      threshold: 0.1,
-      rootMargin: '0px 0px -15% 0px'
-    });
+    }, { threshold: 0.1, rootMargin: '0px 0px -15% 0px' });
 
     elements.forEach(el => observer.observe(el));
   };
 
   // ============================================================
-  // PARTICLE SYSTEM
+  // PARTICLE SYSTEM (optimized)
+  // 400 particles desktop / 120 mobile
+  // Spatial-skip connections, squared distance, frame skip
   // ============================================================
   (function initParticles() {
     const canvas = document.getElementById('particleCanvas');
     if (!canvas) return;
 
-    const ctx = canvas.getContext('2d');
+    const ctx = canvas.getContext('2d', { alpha: false });
     let width, height;
     let particles = [];
     let mouse = { x: -1000, y: -1000, active: false };
     let animationId;
     let isVisible = true;
+    let frameCount = 0;
 
-    // Check for data-particle-count attribute
+    const isMobile = window.innerWidth < 768;
     const dataCount = canvas.getAttribute('data-particle-count');
-    const defaultCount = window.innerWidth < 768 ? 300 : 800;
     const CONFIG = {
-      particleCount: dataCount ? parseInt(dataCount, 10) : defaultCount,
+      particleCount: dataCount ? parseInt(dataCount, 10) : (isMobile ? 120 : 400),
       baseSpeed: 0.15,
       mouseRadius: 150,
       mouseForce: 0.8,
-      driftSpeed: 0.3,
       colors: [
-        'rgba(212, 175, 55, ',   // gold
-        'rgba(201, 184, 232, ',  // maat purple
-        'rgba(232, 106, 60, ',   // heka flame
-        'rgba(240, 237, 232, ',  // stella white
+        'rgba(212, 175, 55, ',
+        'rgba(201, 184, 232, ',
+        'rgba(232, 106, 60, ',
+        'rgba(240, 237, 232, ',
       ],
       minSize: 0.5,
-      maxSize: 2.5,
+      maxSize: 2.2,
+      connDistSq: 100 * 100,
+      connEvery: 2,
     };
 
     class Particle {
-      constructor() {
-        this.reset();
-      }
-
+      constructor() { this.reset(); }
       reset() {
         this.x = Math.random() * width;
         this.y = Math.random() * height;
@@ -165,26 +164,21 @@ document.addEventListener('DOMContentLoaded', function() {
         this.alpha = 0.1 + Math.random() * 0.5;
         this.alphaSpeed = 0.002 + Math.random() * 0.005;
         this.alphaDir = Math.random() > 0.5 ? 1 : -1;
-        this.driftAngle = Math.random() * Math.PI * 2;
-        this.driftRadius = 20 + Math.random() * 80;
-        this.driftSpeed = 0.0005 + Math.random() * 0.001;
         this.driftOffset = Math.random() * Math.PI * 2;
+        this.driftSpeed = 0.0005 + Math.random() * 0.001;
+        this.driftRadius = 20 + Math.random() * 80;
       }
-
-      update(time) {
+      update() {
         this.driftOffset += this.driftSpeed;
-        const driftX = Math.cos(this.driftOffset) * this.driftRadius * 0.01;
-        const driftY = Math.sin(this.driftOffset * 0.7) * this.driftRadius * 0.01;
-
-        this.x += this.vx + driftX;
-        this.y += this.vy + driftY;
+        this.x += this.vx + Math.cos(this.driftOffset) * this.driftRadius * 0.01;
+        this.y += this.vy + Math.sin(this.driftOffset * 0.7) * this.driftRadius * 0.01;
 
         if (mouse.active) {
           const dx = mouse.x - this.x;
           const dy = mouse.y - this.y;
-          const dist = Math.sqrt(dx * dx + dy * dy);
-
-          if (dist < CONFIG.mouseRadius && dist > 5) {
+          const distSq = dx * dx + dy * dy;
+          if (distSq < CONFIG.mouseRadius * CONFIG.mouseRadius && distSq > 25) {
+            const dist = Math.sqrt(distSq);
             const force = (CONFIG.mouseRadius - dist) / CONFIG.mouseRadius;
             const angle = Math.atan2(dy, dx);
             this.vx += Math.cos(angle) * force * CONFIG.mouseForce * 0.05;
@@ -194,32 +188,27 @@ document.addEventListener('DOMContentLoaded', function() {
 
         this.vx *= 0.99;
         this.vy *= 0.99;
-
         this.vx += (Math.random() - 0.5) * 0.01;
         this.vy += (Math.random() - 0.5) * 0.01;
 
         this.alpha += this.alphaSpeed * this.alphaDir;
-        if (this.alpha > 0.7 || this.alpha < 0.05) {
-          this.alphaDir *= -1;
-        }
+        if (this.alpha > 0.7 || this.alpha < 0.05) this.alphaDir *= -1;
 
         if (this.x < -10) this.x = width + 10;
         if (this.x > width + 10) this.x = -10;
         if (this.y < -10) this.y = height + 10;
         if (this.y > height + 10) this.y = -10;
       }
-
       draw() {
-        const color = CONFIG.colors[this.colorIndex];
+        const c = CONFIG.colors[this.colorIndex];
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-        ctx.fillStyle = color + this.alpha + ')';
+        ctx.fillStyle = c + this.alpha + ')';
         ctx.fill();
-
         if (this.size > 1.5) {
           ctx.beginPath();
           ctx.arc(this.x, this.y, this.size * 3, 0, Math.PI * 2);
-          ctx.fillStyle = color + (this.alpha * 0.1) + ')';
+          ctx.fillStyle = c + (this.alpha * 0.1) + ')';
           ctx.fill();
         }
       }
@@ -228,9 +217,10 @@ document.addEventListener('DOMContentLoaded', function() {
     function resize() {
       width = window.innerWidth;
       height = window.innerHeight;
-      canvas.width = width * window.devicePixelRatio;
-      canvas.height = height * window.devicePixelRatio;
-      ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
+      const dpr = Math.min(window.devicePixelRatio, 2);
+      canvas.width = width * dpr;
+      canvas.height = height * dpr;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
       canvas.style.width = width + 'px';
       canvas.style.height = height + 'px';
     }
@@ -238,37 +228,42 @@ document.addEventListener('DOMContentLoaded', function() {
     function init() {
       resize();
       particles = [];
-      const count = window.innerWidth < 768 ? Math.floor(CONFIG.particleCount * 0.375) : CONFIG.particleCount;
-      for (let i = 0; i < count; i++) {
-        particles.push(new Particle());
-      }
+      for (let i = 0; i < CONFIG.particleCount; i++) particles.push(new Particle());
     }
 
-    function animate(time) {
+    function animate() {
       if (!isVisible) {
         animationId = requestAnimationFrame(animate);
         return;
       }
-
-      ctx.clearRect(0, 0, width, height);
+      frameCount++;
+      ctx.fillStyle = '#020203';
+      ctx.fillRect(0, 0, width, height);
 
       for (let i = 0; i < particles.length; i++) {
-        particles[i].update(time);
+        particles[i].update();
         particles[i].draw();
       }
 
-      ctx.strokeStyle = 'rgba(212, 175, 55, 0.03)';
-      ctx.lineWidth = 0.5;
-      for (let i = 0; i < particles.length; i += 3) {
-        for (let j = i + 1; j < particles.length; j += 5) {
-          const dx = particles[i].x - particles[j].x;
-          const dy = particles[i].y - particles[j].y;
-          const dist = Math.sqrt(dx * dx + dy * dy);
-          if (dist < 100) {
-            ctx.beginPath();
-            ctx.moveTo(particles[i].x, particles[i].y);
-            ctx.lineTo(particles[j].x, particles[j].y);
-            ctx.stroke();
+      // Connections: only every Nth frame, skip-checked loops
+      if (frameCount % CONFIG.connEvery === 0) {
+        ctx.strokeStyle = 'rgba(212, 175, 55, 0.03)';
+        ctx.lineWidth = 0.5;
+        const len = particles.length;
+        for (let i = 0; i < len; i += 3) {
+          const pi = particles[i];
+          for (let j = i + 1; j < len; j += 5) {
+            const pj = particles[j];
+            const dx = pi.x - pj.x;
+            const dy = pi.y - pj.y;
+            if (dx > 100 || dx < -100 || dy > 100 || dy < -100) continue;
+            const distSq = dx * dx + dy * dy;
+            if (distSq < CONFIG.connDistSq) {
+              ctx.beginPath();
+              ctx.moveTo(pi.x, pi.y);
+              ctx.lineTo(pj.x, pj.y);
+              ctx.stroke();
+            }
           }
         }
       }
@@ -276,26 +271,25 @@ document.addEventListener('DOMContentLoaded', function() {
       animationId = requestAnimationFrame(animate);
     }
 
+    let resizeTimer;
     window.addEventListener('resize', () => {
-      resize();
-      init();
-    });
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(() => { resize(); init(); }, 150);
+    }, { passive: true });
 
     document.addEventListener('mousemove', (e) => {
       mouse.x = e.clientX;
       mouse.y = e.clientY;
       mouse.active = true;
-    });
+    }, { passive: true });
 
-    document.addEventListener('mouseleave', () => {
-      mouse.active = false;
-    });
+    document.addEventListener('mouseleave', () => { mouse.active = false; });
 
     document.addEventListener('visibilitychange', () => {
       isVisible = !document.hidden;
     });
 
     init();
-    animate(0);
+    animate();
   })();
 });

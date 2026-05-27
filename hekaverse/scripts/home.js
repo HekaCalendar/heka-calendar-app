@@ -17,8 +17,8 @@ document.addEventListener('DOMContentLoaded', function() {
       loadingRitual.classList.add('ended');
       setTimeout(() => {
         initHeroAnimations();
-      }, 500);
-    }, 3500);
+      }, 400);
+    }, 2000);
   } else {
     initHeroAnimations();
   }

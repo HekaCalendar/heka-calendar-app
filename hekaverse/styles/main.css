@@ -278,12 +278,7 @@ body {
   z-index: 2;
   pointer-events: none;
   background: radial-gradient(ellipse at 50% 50%, transparent 40%, var(--nun) 100%);
-  animation: vignetteBreathe 8s ease-in-out infinite;
-}
-
-@keyframes vignetteBreathe {
-  0%, 100% { opacity: 0.7; }
-  50% { opacity: 0.9; }
+  opacity: 0.8;
 }
 
 /* ============================================================
