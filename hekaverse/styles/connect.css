@@ -1,0 +1,168 @@
+/* ============================================================
+   CONNECT PAGE — Three Paths
+   ============================================================ */
+
+.connect-section {
+  padding: var(--space-xxl) 3rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.connect-header {
+  text-align: center;
+  margin-bottom: var(--space-xl);
+}
+
+.connect-header .section-eyebrow {
+  justify-content: center;
+}
+
+.connect-header .section-eyebrow::before {
+  display: none;
+}
+
+.connect-header .section-title {
+  text-align: center;
+}
+
+.connect-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+}
+
+.connect-card {
+  padding: 2.5rem;
+  border-radius: var(--radius-lg);
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  backdrop-filter: blur(10px);
+  transition: all 0.5s ease;
+  text-align: center;
+}
+
+.connect-card:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-md);
+}
+
+.invest-card {
+  border-top: 2px solid rgba(212, 175, 55, 0.4);
+}
+
+.invest-card:hover {
+  border-color: rgba(212, 175, 55, 0.6);
+  box-shadow: 0 12px 40px rgba(212, 175, 55, 0.08);
+}
+
+.collaborate-card {
+  border-top: 2px solid rgba(45, 125, 138, 0.4);
+}
+
+.collaborate-card:hover {
+  border-color: rgba(45, 125, 138, 0.6);
+  box-shadow: 0 12px 40px rgba(45, 125, 138, 0.08);
+}
+
+.recommend-card {
+  border-top: 2px solid rgba(201, 184, 232, 0.4);
+}
+
+.recommend-card:hover {
+  border-color: rgba(201, 184, 232, 0.6);
+  box-shadow: 0 12px 40px rgba(201, 184, 232, 0.08);
+}
+
+.connect-icon {
+  width: 48px;
+  height: 48px;
+  margin: 0 auto 1.25rem;
+  color: var(--text-dim);
+  transition: color 0.4s ease;
+}
+
+.connect-card:hover .connect-icon {
+  color: var(--gold);
+}
+
+.connect-title {
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: var(--stella);
+  margin-bottom: 0.75rem;
+  letter-spacing: 0.05em;
+}
+
+.connect-desc {
+  font-family: var(--font-philosophy);
+  font-size: 1rem;
+  font-weight: 300;
+  color: var(--text-secondary);
+  line-height: 1.7;
+  margin-bottom: 1.5rem;
+}
+
+.connect-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.7rem 1.5rem;
+  border-radius: var(--radius-sm);
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.connect-cta:hover {
+  background: var(--gold-muted);
+  border-color: var(--gold);
+  color: var(--gold);
+}
+
+.connect-socials {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.connect-socials a {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  font-family: var(--font-future);
+  font-size: 0.8rem;
+  color: var(--text-tertiary);
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.connect-socials a:hover {
+  border-color: var(--maat);
+  color: var(--maat);
+  background: rgba(201, 184, 232, 0.08);
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .connect-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .connect-grid {
+    grid-template-columns: 1fr;
+  }
+}

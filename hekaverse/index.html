@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hekaverse — The Universe Where Magic Is Real</title>
+  <meta name="description" content="Hekaverse: bringing magic back into the world. A universe of ventures built on the ancient Egyptian principle that intention creates reality.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Cinzel+Decorative:wght@400;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles/main.css">
+  <link rel="stylesheet" href="styles/home.css">
+</head>
+<body>
+
+  <!-- ============================================================
+       LOADING RITUAL
+       ============================================================ -->
+  <div id="loadingRitual" class="loading-ritual">
+    <div class="ritual-void">
+      <div class="ritual-point"></div>
+      <div class="ritual-glyphs">
+        <span class="glyph">&#x131F3;</span>
+        <span class="glyph">&#x13080;</span>
+        <span class="glyph">&#x131CB;</span>
+        <span class="glyph">&#x1309F;</span>
+        <span class="glyph">&#x1318B;</span>
+      </div>
+      <p class="ritual-text">In the beginning, there was Heka.</p>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       CUSTOM CURSOR
+       ============================================================ -->
+  <div id="customCursor" class="custom-cursor">
+    <div class="cursor-core"></div>
+    <div class="cursor-trail"></div>
+  </div>
+
+  <!-- ============================================================
+       PARTICLE CANVAS (fixed background)
+       ============================================================ -->
+  <canvas id="particleCanvas" class="particle-canvas"></canvas>
+
+  <!-- ============================================================
+       NOISE & TEXTURE OVERLAYS
+       ============================================================ -->
+  <div class="noise-overlay"></div>
+  <div class="papyrus-overlay"></div>
+  <div class="vignette-overlay"></div>
+
+  <!-- ============================================================
+       NAVIGATION
+       ============================================================ -->
+  <nav id="mainNav" class="main-nav">
+    <a href="./index.html" class="nav-logo">
+      <span class="nav-ankh">&#x2625;</span>
+      <span class="nav-word">HEKA<span class="nav-verse">VERSE</span></span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="./index.html" aria-current="page">Home</a></li>
+      <li><a href="./mythology.html">Mythology</a></li>
+      <li><a href="./ventures.html">Ventures</a></li>
+      <li><a href="./connect.html">Connect</a></li>
+    </ul>
+    <button class="nav-toggle" aria-label="Toggle navigation">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <!-- ============================================================
+       SECTION 1: NUN — THE VOID (Hero)
+       ============================================================ -->
+  <section id="hero" class="hero-section">
+    <div class="hero-content">
+      <div class="hero-eyebrow reveal-hero">
+        <span class="eyebrow-line"></span>
+        <span class="eyebrow-text">The Primordial Universe</span>
+        <span class="eyebrow-line"></span>
+      </div>
+      <h1 class="hero-title reveal-hero">
+        <span class="title-heka">HEKA</span><span class="title-verse">VERSE</span>
+      </h1>
+      <p class="hero-subtitle reveal-hero">The universe where intention creates reality.</p>
+      <div class="hero-scroll-indicator reveal-hero">
+        <div class="ankh-pulse">&#x2625;</div>
+        <span class="scroll-text">Descend into creation</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       SECTION 2: THE MANIFESTO
+       ============================================================ -->
+  <section id="manifesto" class="manifesto-section">
+    <div class="manifesto-particles" id="manifestoParticles"></div>
+    <div class="manifesto-content">
+      <p class="manifesto-line reveal-manifesto">We do not believe magic was left behind in ancient Egypt.</p>
+      <p class="manifesto-line reveal-manifesto">We believe it was forgotten.</p>
+      <p class="manifesto-line reveal-manifesto">And we are here to remember.</p>
+      <p class="manifesto-line reveal-manifesto final-line">This is the <span class="manifesto-gold">Hekaverse</span>.</p>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       SECTION 3: VENTURE PREVIEW
+       ============================================================ -->
+  <section id="ventures-preview" class="venture-preview-section">
+    <div class="venture-preview-header reveal-section">
+      <span class="section-eyebrow">The Verse</span>
+      <h2 class="section-title">Ten Stars.<br>One Constellation.</h2>
+      <p class="section-lead">Each venture in the Hekaverse is an expression of the same principle: that magic — intention made real — can be woven into the fabric of modern life.</p>
+    </div>
+
+    <div class="venture-preview-grid">
+      <a href="./ventures.html" class="venture-preview-item" style="--preview-color: #e8a838;">
+        <div class="preview-orb" style="background: #e8a83815; border: 1px solid #e8a83840; color: #e8a838;"><span>H</span></div>
+        <span class="preview-name">Hekatae</span>
+      </a>
+      <a href="./ventures.html" class="venture-preview-item" style="--preview-color: #d4af37;">
+        <div class="preview-orb" style="background: #d4af3715; border: 1px solid #d4af3740; color: #d4af37;"><span>C</span></div>
+        <span class="preview-name">Heka Calendar</span>
+      </a>
+      <a href="./ventures.html" class="venture-preview-item" style="--preview-color: #8ab4c7;">
+        <div class="preview-orb" style="background: #8ab4c715; border: 1px solid #8ab4c740; color: #8ab4c7;"><span>T</span></div>
+        <span class="preview-name">Heka Time</span>
+      </a>
+      <a href="./ventures.html" class="venture-preview-item" style="--preview-color: #2d8a5e;">
+        <div class="preview-orb" style="background: #2d8a5e15; border: 1px solid #2d8a5e40; color: #2d8a5e;"><span>A</span></div>
+        <span class="preview-name">Antidosis</span>
+      </a>
+      <a href="./ventures.html" class="venture-preview-item" style="--preview-color: #c43e3e;">
+        <div class="preview-orb" style="background: #c43e3e15; border: 1px solid #c43e3e40; color: #c43e3e;"><span>N</span></div>
+        <span class="preview-name">Cinaema</span>
+      </a>
+      <a href="./ventures.html" class="venture-preview-item" style="--preview-color: #d4a0a0;">
+        <div class="preview-orb" style="background: #d4a0a015; border: 1px solid #d4a0a040; color: #d4a0a0;"><span>R</span></div>
+        <span class="preview-name">Srevol</span>
+      </a>
+      <a href="./ventures.html" class="venture-preview-item" style="--preview-color: #c44444;">
+        <div class="preview-orb" style="background: #c4444415; border: 1px solid #c4444440; color: #c44444;"><span>S</span></div>
+        <span class="preview-name">Stigmator</span>
+      </a>
+      <a href="./ventures.html" class="venture-preview-item" style="--preview-color: #a08060;">
+        <div class="preview-orb" style="background: #a0806015; border: 1px solid #a0806040; color: #a08060;"><span>M</span></div>
+        <span class="preview-name">Meek Meet</span>
+      </a>
+      <a href="./ventures.html" class="venture-preview-item" style="--preview-color: #7a5a9a;">
+        <div class="preview-orb" style="background: #7a5a9a15; border: 1px solid #7a5a9a40; color: #7a5a9a;"><span>O</span></div>
+        <span class="preview-name">Oilamor</span>
+      </a>
+      <a href="./ventures.html" class="venture-preview-item" style="--preview-color: #5a9b5a;">
+        <div class="preview-orb" style="background: #5a9b5a15; border: 1px solid #5a9b5a40; color: #5a9b5a;"><span>E</span></div>
+        <span class="preview-name">Rehealia</span>
+      </a>
+    </div>
+
+    <div class="venture-preview-cta reveal-section">
+      <a href="./ventures.html">
+        <span>Explore All Ventures</span>
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       SECTION 4: FOOTER — THE ETERNAL RETURN
+       ============================================================ -->
+  <footer class="main-footer">
+    <div class="footer-ankh">&#x2625;</div>
+    <p class="footer-motto">In Heka we trust.</p>
+    <nav class="footer-ventures">
+      <a href="https://hekatae.com" target="_blank" rel="noopener">Hekatae</a>
+      <a href="https://hekacalendar.com" target="_blank" rel="noopener">Heka Calendar</a>
+      <a href="https://hekatime.com" target="_blank" rel="noopener">Heka Time</a>
+      <a href="https://antidosis.com" target="_blank" rel="noopener">Antidosis</a>
+      <a href="#">Cinaema</a>
+      <a href="https://stigmator.com" target="_blank" rel="noopener">Stigmator</a>
+      <a href="https://meekmeet.com" target="_blank" rel="noopener">Meek Meet</a>
+      <a href="https://srevol.com" target="_blank" rel="noopener">Srevol</a>
+      <a href="#">Oilamor</a>
+      <a href="#">Rehealia</a>
+    </nav>
+    <p class="footer-copy">Hekaverse &copy; 2026. All rights reserved.</p>
+  </footer>
+
+  <!-- ============================================================
+       SCRIPTS
+       ============================================================ -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollToPlugin.min.js"></script>
+  <script src="scripts/shared.js"></script>
+  <script src="scripts/home.js"></script>
+</body>
+</html>

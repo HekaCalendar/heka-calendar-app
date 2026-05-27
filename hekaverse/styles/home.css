@@ -1,0 +1,278 @@
+/* ============================================================
+   HOME PAGE — Hero & Manifesto
+   ============================================================ */
+
+/* Hero Section */
+.hero-section {
+  position: relative;
+  z-index: 10;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 2rem;
+}
+
+.hero-content {
+  max-width: 900px;
+}
+
+.hero-eyebrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.eyebrow-line {
+  width: 48px;
+  height: 1px;
+  background: linear-gradient(to right, transparent, var(--gold-dim));
+}
+
+.eyebrow-line:last-child {
+  background: linear-gradient(to left, transparent, var(--gold-dim));
+}
+
+.eyebrow-text {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+}
+
+.hero-title {
+  font-family: var(--font-mythology);
+  font-size: clamp(4rem, 14vw, 12rem);
+  font-weight: 400;
+  line-height: 0.9;
+  letter-spacing: 0.02em;
+  margin-bottom: 1.5rem;
+}
+
+.title-heka {
+  color: var(--stella);
+  text-shadow: 0 0 80px rgba(240, 237, 232, 0.08);
+}
+
+.title-verse {
+  color: var(--gold);
+  text-shadow: 0 0 80px var(--gold-glow);
+}
+
+.hero-subtitle {
+  font-family: var(--font-philosophy);
+  font-size: clamp(1.1rem, 2.5vw, 1.6rem);
+  font-weight: 300;
+  font-style: italic;
+  color: var(--text-secondary);
+  max-width: 500px;
+  margin: 0 auto 4rem;
+  line-height: 1.6;
+}
+
+.hero-scroll-indicator {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.ankh-pulse {
+  font-size: 1.5rem;
+  color: var(--gold-dim);
+  animation: ankhPulse 3s ease-in-out infinite;
+}
+
+@keyframes ankhPulse {
+  0%, 100% { opacity: 0.3; transform: scale(1); }
+  50% { opacity: 0.8; transform: scale(1.1); }
+}
+
+.scroll-text {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+}
+
+/* Manifesto Section */
+.manifesto-section {
+  position: relative;
+  padding: var(--space-xxl) 2rem;
+  min-height: 80vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  overflow: hidden;
+}
+
+.manifesto-particles {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.manifesto-content {
+  position: relative;
+  z-index: 2;
+  max-width: 800px;
+}
+
+.manifesto-line {
+  font-family: var(--font-philosophy);
+  font-size: clamp(1.4rem, 3.5vw, 2.4rem);
+  font-weight: 300;
+  font-style: italic;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin-bottom: 1rem;
+  opacity: 0;
+  transform: translateY(30px);
+}
+
+.manifesto-line.final-line {
+  font-family: var(--font-display);
+  font-size: clamp(1.8rem, 4vw, 3rem);
+  font-weight: 600;
+  font-style: normal;
+  color: var(--stella);
+  margin-top: 2rem;
+}
+
+.manifesto-gold {
+  color: var(--gold);
+  text-shadow: 0 0 40px var(--gold-glow);
+}
+
+/* Venture Preview Section */
+.venture-preview-section {
+  padding: var(--space-xxl) 3rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.venture-preview-header {
+  text-align: center;
+  margin-bottom: var(--space-xl);
+}
+
+.venture-preview-header .section-eyebrow {
+  justify-content: center;
+}
+
+.venture-preview-header .section-eyebrow::before {
+  display: none;
+}
+
+.venture-preview-header .section-title {
+  text-align: center;
+}
+
+.venture-preview-header .section-lead {
+  margin: 0 auto;
+  text-align: center;
+}
+
+.venture-preview-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 1.5rem;
+  margin-bottom: 3rem;
+}
+
+.venture-preview-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1.5rem 1rem;
+  border-radius: var(--radius-lg);
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  backdrop-filter: blur(10px);
+  transition: all 0.4s ease;
+  text-decoration: none;
+  color: inherit;
+}
+
+.venture-preview-item:hover {
+  transform: translateY(-4px);
+  border-color: var(--glass-border-bright);
+}
+
+.preview-orb {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--stella);
+}
+
+.preview-name {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+  text-align: center;
+}
+
+.venture-preview-cta {
+  text-align: center;
+}
+
+.venture-preview-cta a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--gold-dim);
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.venture-preview-cta a:hover {
+  color: var(--gold);
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .venture-preview-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .venture-preview-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-title {
+    font-size: 3.5rem;
+  }
+
+  .manifesto-line {
+    font-size: 1.1rem;
+  }
+
+  .venture-preview-grid {
+    grid-template-columns: 1fr;
+  }
+}

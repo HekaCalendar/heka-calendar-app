@@ -1,0 +1,280 @@
+/* ============================================================
+   VENTURES PAGE — Constellation & Venture Cards
+   ============================================================ */
+
+.ventures-section {
+  padding: var(--space-xxl) 3rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.ventures-header {
+  text-align: center;
+  margin-bottom: var(--space-xl);
+}
+
+.ventures-header .section-eyebrow {
+  justify-content: center;
+}
+
+.ventures-header .section-eyebrow::before {
+  display: none;
+}
+
+.ventures-header .section-title {
+  text-align: center;
+}
+
+.ventures-header .section-lead {
+  margin: 0 auto;
+  text-align: center;
+}
+
+/* Constellation */
+.constellation-container {
+  position: relative;
+  width: 100%;
+  max-width: 1000px;
+  margin: 0 auto var(--space-xl);
+  aspect-ratio: 1000 / 600;
+}
+
+.constellation-svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.constellation-lines line {
+  stroke: rgba(212, 175, 55, 0.15);
+  stroke-width: 1;
+  stroke-linecap: round;
+}
+
+.venture-nodes {
+  position: absolute;
+  inset: 0;
+}
+
+.venture-node {
+  position: absolute;
+  width: 64px;
+  height: 64px;
+  transform: translate(-50%, -50%);
+  cursor: pointer;
+  z-index: 10;
+}
+
+.node-orb {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.4s ease;
+  position: relative;
+}
+
+.node-orb::before {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  border-radius: 50%;
+  border: 1px solid currentColor;
+  opacity: 0.3;
+  transition: all 0.4s ease;
+}
+
+.venture-node:hover .node-orb {
+  transform: scale(1.2);
+}
+
+.venture-node:hover .node-orb::before {
+  inset: -8px;
+  opacity: 0.6;
+}
+
+.node-initial {
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--stella);
+}
+
+.node-label-float {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+  white-space: nowrap;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.venture-node:hover .node-label-float {
+  opacity: 1;
+}
+
+/* Venture Cards Grid */
+.ventures-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+}
+
+.venture-card {
+  padding: 2rem;
+  border-radius: var(--radius-lg);
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  backdrop-filter: blur(10px);
+  transition: all 0.4s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.venture-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--venture-color, var(--gold));
+  opacity: 0.6;
+}
+
+.venture-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(255, 255, 255, 0.1);
+  box-shadow: var(--shadow-md);
+}
+
+.venture-card:hover::before {
+  opacity: 1;
+}
+
+.venture-number {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  color: var(--text-dim);
+  letter-spacing: 0.15em;
+  margin-bottom: 0.75rem;
+}
+
+.venture-name {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--stella);
+  margin-bottom: 0.25rem;
+  letter-spacing: 0.02em;
+}
+
+.venture-domain {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+  margin-bottom: 1rem;
+}
+
+.venture-essence {
+  font-family: var(--font-philosophy);
+  font-size: 0.95rem;
+  font-weight: 300;
+  font-style: italic;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin-bottom: 1.25rem;
+}
+
+.venture-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.venture-myth {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.1em;
+  color: var(--text-dim);
+}
+
+.venture-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--gold-dim);
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.venture-link:hover {
+  color: var(--gold);
+}
+
+.venture-link svg {
+  width: 12px;
+  height: 12px;
+}
+
+.venture-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.25rem 0.6rem;
+  border-radius: 100px;
+  font-family: var(--font-mono);
+  font-size: 0.55rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  background: var(--gold-muted);
+  color: var(--gold);
+  border: 1px solid rgba(212, 175, 55, 0.2);
+}
+
+.status-pulse {
+  width: 5px;
+  height: 5px;
+  background: var(--gold);
+  border-radius: 50%;
+  animation: statusPulse 2s ease-in-out infinite;
+}
+
+@keyframes statusPulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.4; transform: scale(0.7); }
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .ventures-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .ventures-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .constellation-container {
+    display: none;
+  }
+}

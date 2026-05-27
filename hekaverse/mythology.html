@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mythology — The First Word | Hekaverse</title>
+  <meta name="description" content="Discover the ancient Egyptian principle of Heka — the primordial creative force that predated the gods. Explore the Four Powers: Sia, Hu, Heka, and Ren.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Cinzel+Decorative:wght@400;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles/main.css">
+  <link rel="stylesheet" href="styles/mythology.css">
+</head>
+<body>
+
+  <!-- ============================================================
+       CUSTOM CURSOR
+       ============================================================ -->
+  <div id="customCursor" class="custom-cursor">
+    <div class="cursor-core"></div>
+    <div class="cursor-trail"></div>
+  </div>
+
+  <!-- ============================================================
+       PARTICLE CANVAS (fixed background)
+       ============================================================ -->
+  <canvas id="particleCanvas" class="particle-canvas" data-particle-count="300"></canvas>
+
+  <!-- ============================================================
+       NOISE & TEXTURE OVERLAYS
+       ============================================================ -->
+  <div class="noise-overlay"></div>
+  <div class="papyrus-overlay"></div>
+  <div class="vignette-overlay"></div>
+
+  <!-- ============================================================
+       NAVIGATION
+       ============================================================ -->
+  <nav id="mainNav" class="main-nav">
+    <a href="./index.html" class="nav-logo">
+      <span class="nav-ankh">&#x2625;</span>
+      <span class="nav-word">HEKA<span class="nav-verse">VERSE</span></span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="./index.html">Home</a></li>
+      <li><a href="./mythology.html" aria-current="page">Mythology</a></li>
+      <li><a href="./ventures.html">Ventures</a></li>
+      <li><a href="./connect.html">Connect</a></li>
+    </ul>
+    <button class="nav-toggle" aria-label="Toggle navigation">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <!-- ============================================================
+       SECTION 1: THE FIRST WORD — WHAT IS HEKA?
+       ============================================================ -->
+  <section id="heka" class="heka-section">
+    <div class="heka-inner">
+      <div class="heka-quote-block reveal-section">
+        <blockquote class="heka-quote">
+          <span class="quote-mark">&ldquo;</span>
+          <span class="quote-text" id="quoteText">I am Heka, the magic, the child of Atum&hellip; before the gods came into being, I was.</span>
+          <span class="quote-mark">&rdquo;</span>
+        </blockquote>
+        <cite class="quote-source">— The Coffin Texts, c. 2000 BCE</cite>
+      </div>
+
+      <div class="heka-explanation reveal-section">
+        <div class="explanation-text">
+          <p class="lead">In ancient Egypt, <strong>Heka</strong> was not illusion or trickery. It was the <em>primordial creative force</em> — the fundamental energy that predated the gods themselves.</p>
+          <p>When the creator god Atum-Ra rose from the chaos waters of <strong>Nun</strong>, it was Heka that empowered him to speak <strong>Ma'at</strong> — divine order, truth, and balance — into existence.</p>
+          <p>Without Heka, the universe collapses. With it, <em>intention becomes reality</em>.</p>
+        </div>
+        <div class="explanation-visual">
+          <div class="creation-diagram">
+            <div class="diagram-node nun">
+              <span class="node-label">Nun</span>
+              <span class="node-desc">Chaos Waters</span>
+            </div>
+            <div class="diagram-arrow">
+              <svg viewBox="0 0 40 20" xmlns="http://www.w3.org/2000/svg"><path d="M0 10 L30 10 M25 4 L30 10 L25 16" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>
+            </div>
+            <div class="diagram-node heka">
+              <span class="node-label">Heka</span>
+              <span class="node-desc">The Spark</span>
+            </div>
+            <div class="diagram-arrow">
+              <svg viewBox="0 0 40 20" xmlns="http://www.w3.org/2000/svg"><path d="M0 10 L30 10 M25 4 L30 10 L25 16" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>
+            </div>
+            <div class="diagram-node maat">
+              <span class="node-label">Ma'at</span>
+              <span class="node-desc">Divine Order</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       SECTION 2: THE FOUR POWERS
+       ============================================================ -->
+  <section id="powers" class="powers-section">
+    <div class="powers-header reveal-section">
+      <span class="section-eyebrow">The Anatomy of Magic</span>
+      <h2 class="section-title">Four Powers.<br>One Force.</h2>
+      <p class="section-lead">Heka is not singular. It is composed of four inseparable powers — the complete circuit through which reality is shaped.</p>
+    </div>
+
+    <div class="powers-grid">
+      <article class="power-pillar reveal-section" data-power="sia">
+        <div class="pillar-glow sia-glow"></div>
+        <div class="pillar-inner">
+          <div class="pillar-symbol">
+            <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="32" cy="32" r="14" fill="none" stroke="currentColor" stroke-width="2"/>
+              <circle cx="32" cy="32" r="6" fill="currentColor"/>
+              <path d="M32 4 L32 14 M32 50 L32 60 M4 32 L14 32 M50 32 L60 32 M13 13 L20 20 M44 44 L51 51 M13 51 L20 44 M44 20 L51 13" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <h3 class="pillar-name">Sia</h3>
+          <p class="pillar-egyptian">Divine Perception</p>
+          <p class="pillar-desc">The ability to <em>see</em> what could be — to visualize the unmanifest, to perceive the hidden connections between the physical and the divine.</p>
+          <div class="pillar-modern">
+            <span class="modern-label">Modern Expression</span>
+            <span class="modern-text">Vision. Foresight. The blueprint before the building.</span>
+          </div>
+        </div>
+      </article>
+
+      <article class="power-pillar reveal-section" data-power="hu">
+        <div class="pillar-glow hu-glow"></div>
+        <div class="pillar-inner">
+          <div class="pillar-symbol">
+            <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+              <ellipse cx="32" cy="28" rx="18" ry="14" fill="none" stroke="currentColor" stroke-width="2"/>
+              <path d="M24 42 Q32 52 40 42" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              <line x1="32" y1="42" x2="32" y2="56" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <h3 class="pillar-name">Hu</h3>
+          <p class="pillar-egyptian">Authoritative Utterance</p>
+          <p class="pillar-desc">The spoken word that <em>brings form</em> into being. In Egyptian cosmogony, the world was spoken into existence. To speak was to create.</p>
+          <div class="pillar-modern">
+            <span class="modern-label">Modern Expression</span>
+            <span class="modern-text">Communication. Declaration. The word made manifest.</span>
+          </div>
+        </div>
+      </article>
+
+      <article class="power-pillar reveal-section" data-power="heka">
+        <div class="pillar-glow heka-glow"></div>
+        <div class="pillar-inner">
+          <div class="pillar-symbol">
+            <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+              <path d="M28 8 Q20 20 28 32 Q20 44 28 56" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+              <path d="M36 8 Q28 20 36 32 Q28 44 36 56" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+              <line x1="32" y1="4" x2="32" y2="60" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              <circle cx="32" cy="32" r="4" fill="currentColor"/>
+            </svg>
+          </div>
+          <h3 class="pillar-name">Heka</h3>
+          <p class="pillar-egyptian">The Primal Energy</p>
+          <p class="pillar-desc">The force that <em>activates</em> vision into reality. The electricity that powers the circuit of perception and utterance. The spark itself.</p>
+          <div class="pillar-modern">
+            <span class="modern-label">Modern Expression</span>
+            <span class="modern-text">Action. Energy. The moment intention becomes motion.</span>
+          </div>
+        </div>
+      </article>
+
+      <article class="power-pillar reveal-section" data-power="ren">
+        <div class="pillar-glow ren-glow"></div>
+        <div class="pillar-inner">
+          <div class="pillar-symbol">
+            <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+              <rect x="12" y="12" width="40" height="40" rx="4" fill="none" stroke="currentColor" stroke-width="2"/>
+              <line x1="12" y1="24" x2="52" y2="24" stroke="currentColor" stroke-width="1.5"/>
+              <line x1="12" y1="40" x2="52" y2="40" stroke="currentColor" stroke-width="1.5"/>
+              <circle cx="32" cy="32" r="6" fill="none" stroke="currentColor" stroke-width="1.5"/>
+            </svg>
+          </div>
+          <h3 class="pillar-name">Ren</h3>
+          <p class="pillar-egyptian">The True Name</p>
+          <p class="pillar-desc">To name something is to <em>know</em> it — to hold power over its essence. In Egypt, nothing fully existed until it had a name.</p>
+          <div class="pillar-modern">
+            <span class="modern-label">Modern Expression</span>
+            <span class="modern-text">Identity. Essence. Knowing the truth of what you are.</span>
+          </div>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       SECTION 3: FOOTER
+       ============================================================ -->
+  <footer class="main-footer">
+    <div class="footer-ankh">&#x2625;</div>
+    <p class="footer-motto">In Heka we trust.</p>
+    <nav class="footer-ventures">
+      <a href="https://hekatae.com" target="_blank" rel="noopener">Hekatae</a>
+      <a href="https://hekacalendar.com" target="_blank" rel="noopener">Heka Calendar</a>
+      <a href="https://hekatime.com" target="_blank" rel="noopener">Heka Time</a>
+      <a href="https://antidosis.com" target="_blank" rel="noopener">Antidosis</a>
+      <a href="#">Cinaema</a>
+      <a href="https://stigmator.com" target="_blank" rel="noopener">Stigmator</a>
+      <a href="https://meekmeet.com" target="_blank" rel="noopener">Meek Meet</a>
+      <a href="https://srevol.com" target="_blank" rel="noopener">Srevol</a>
+      <a href="#">Oilamor</a>
+      <a href="#">Rehealia</a>
+    </nav>
+    <p class="footer-copy">Hekaverse &copy; 2026. All rights reserved.</p>
+  </footer>
+
+  <!-- ============================================================
+       SCRIPTS
+       ============================================================ -->
+  <script src="scripts/shared.js"></script>
+  <script src="scripts/mythology.js"></script>
+</body>
+</html>

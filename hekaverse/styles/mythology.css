@@ -1,0 +1,342 @@
+/* ============================================================
+   MYTHOLOGY PAGE — Heka Quote, Explanation, Four Powers
+   ============================================================ */
+
+/* Heka Quote Section */
+.heka-section {
+  padding: var(--space-xxl) 3rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.heka-inner {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xl);
+}
+
+.heka-quote-block {
+  text-align: center;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.heka-quote {
+  position: relative;
+  font-family: var(--font-philosophy);
+  font-size: clamp(1.6rem, 4vw, 2.8rem);
+  font-weight: 300;
+  font-style: italic;
+  line-height: 1.4;
+  color: var(--papyrus);
+  margin-bottom: 1.5rem;
+}
+
+.quote-mark {
+  color: var(--gold-dim);
+  font-size: 1.2em;
+  line-height: 0;
+}
+
+.quote-source {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  color: var(--text-tertiary);
+  font-style: normal;
+}
+
+.heka-explanation {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-lg);
+  align-items: center;
+}
+
+.explanation-text {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.explanation-text p {
+  font-family: var(--font-philosophy);
+  font-size: 1.1rem;
+  font-weight: 300;
+  color: var(--text-secondary);
+  line-height: 1.8;
+}
+
+.explanation-text .lead {
+  font-size: 1.25rem;
+  color: var(--text-primary);
+}
+
+.explanation-text strong {
+  color: var(--gold);
+  font-weight: 500;
+}
+
+.explanation-text em {
+  color: var(--papyrus);
+  font-style: italic;
+}
+
+.explanation-visual {
+  display: flex;
+  justify-content: center;
+}
+
+.creation-diagram {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 2rem;
+  border-radius: var(--radius-lg);
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  backdrop-filter: blur(10px);
+}
+
+.diagram-node {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 1rem 2rem;
+  border-radius: var(--radius-md);
+  min-width: 140px;
+}
+
+.diagram-node.nun {
+  background: rgba(45, 125, 138, 0.1);
+  border: 1px solid rgba(45, 125, 138, 0.3);
+}
+
+.diagram-node.heka {
+  background: rgba(212, 175, 55, 0.1);
+  border: 1px solid rgba(212, 175, 55, 0.3);
+}
+
+.diagram-node.maat {
+  background: rgba(201, 184, 232, 0.1);
+  border: 1px solid rgba(201, 184, 232, 0.3);
+}
+
+.node-label {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  color: var(--stella);
+  letter-spacing: 0.1em;
+}
+
+.node-desc {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  color: var(--text-tertiary);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.diagram-arrow {
+  color: var(--text-dim);
+  width: 40px;
+  height: 20px;
+}
+
+/* Powers Section */
+.powers-section {
+  padding: var(--space-xxl) 3rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.powers-header {
+  text-align: center;
+  margin-bottom: var(--space-xl);
+}
+
+.powers-header .section-eyebrow {
+  justify-content: center;
+}
+
+.powers-header .section-eyebrow::before {
+  display: none;
+}
+
+.powers-header .section-title {
+  text-align: center;
+}
+
+.powers-header .section-lead {
+  margin: 0 auto;
+  text-align: center;
+}
+
+.powers-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem;
+}
+
+.power-pillar {
+  position: relative;
+  border-radius: var(--radius-lg);
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  backdrop-filter: blur(10px);
+  overflow: hidden;
+  transition: all 0.5s ease;
+  min-height: 480px;
+}
+
+.power-pillar:hover {
+  transform: translateY(-8px);
+  border-color: var(--glass-border-bright);
+}
+
+.pillar-glow {
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  pointer-events: none;
+}
+
+.power-pillar:hover .pillar-glow {
+  opacity: 1;
+}
+
+.sia-glow {
+  background: radial-gradient(circle at 50% 30%, var(--sia-glow), transparent 60%);
+}
+
+.hu-glow {
+  background: radial-gradient(circle at 50% 30%, var(--hu-glow), transparent 60%);
+}
+
+.heka-glow {
+  background: radial-gradient(circle at 50% 30%, var(--heka-glow), transparent 60%);
+}
+
+.ren-glow {
+  background: radial-gradient(circle at 50% 30%, var(--ren-glow), transparent 60%);
+}
+
+.pillar-inner {
+  position: relative;
+  z-index: 2;
+  padding: 2.5rem 1.75rem;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.pillar-symbol {
+  width: 56px;
+  height: 56px;
+  margin-bottom: 1.5rem;
+  color: var(--text-dim);
+  transition: color 0.4s ease, transform 0.4s ease;
+}
+
+.power-pillar:hover .pillar-symbol {
+  color: var(--gold);
+}
+
+.pillar-name {
+  font-family: var(--font-display);
+  font-size: 1.6rem;
+  font-weight: 600;
+  color: var(--stella);
+  margin-bottom: 0.25rem;
+  letter-spacing: 0.05em;
+}
+
+.pillar-egyptian {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+  margin-bottom: 1.25rem;
+}
+
+.pillar-desc {
+  font-family: var(--font-philosophy);
+  font-size: 1rem;
+  font-weight: 300;
+  color: var(--text-secondary);
+  line-height: 1.7;
+  flex-grow: 1;
+}
+
+.pillar-desc em {
+  color: var(--papyrus);
+  font-style: italic;
+}
+
+.pillar-modern {
+  margin-top: 1.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--glass-border);
+}
+
+.modern-label {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--gold-dim);
+  margin-bottom: 0.4rem;
+}
+
+.modern-text {
+  font-family: var(--font-future);
+  font-size: 0.85rem;
+  font-weight: 400;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .powers-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .heka-explanation {
+    grid-template-columns: 1fr;
+  }
+
+  .powers-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .power-pillar {
+    min-height: auto;
+  }
+
+  .creation-diagram {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .diagram-arrow {
+    transform: rotate(90deg);
+  }
+}
+
+@media (max-width: 480px) {
+  .heka-quote {
+    font-size: 1.3rem;
+  }
+}

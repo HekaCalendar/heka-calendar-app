@@ -1,0 +1,625 @@
+/* ============================================================
+   HOME PAGE STYLES
+   ============================================================ */
+
+/* ============================================================
+   HERO SECTION
+   ============================================================ */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 2rem;
+  position: relative;
+  z-index: 2;
+}
+
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1.25rem;
+  border: 1px solid var(--glass-border);
+  border-radius: 100px;
+  background: var(--glass-bg);
+  backdrop-filter: blur(10px);
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 2.5rem;
+  animation: fadeInUp 1s ease 0.2s both;
+}
+
+.hero-badge .pulse {
+  width: 6px;
+  height: 6px;
+  background: var(--gold);
+  border-radius: 50%;
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.4; transform: scale(0.8); }
+}
+
+.hero h1 {
+  font-family: var(--font-display);
+  font-size: clamp(3rem, 8vw, 6rem);
+  font-weight: 700;
+  color: var(--text-primary);
+  line-height: 1.05;
+  letter-spacing: 0.02em;
+  margin-bottom: 1.5rem;
+  animation: fadeInUp 1s ease 0.4s both;
+}
+
+.hero h1 .gold-accent {
+  color: var(--gold);
+  text-shadow: 0 0 60px rgba(212,175,55,0.3);
+}
+
+.hero-subtitle {
+  font-family: var(--font-body);
+  font-size: 1.15rem;
+  font-weight: 300;
+  color: var(--text-secondary);
+  max-width: 560px;
+  margin: 0 auto 3rem;
+  line-height: 1.7;
+  animation: fadeInUp 1s ease 0.6s both;
+}
+
+.hero-cta {
+  display: flex;
+  gap: 1rem;
+  animation: fadeInUp 1s ease 0.8s both;
+}
+
+.hero-scroll {
+  position: absolute;
+  bottom: 2.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--text-tertiary);
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  animation: fadeIn 1s ease 1.2s both;
+}
+
+.hero-scroll-line {
+  width: 1px;
+  height: 48px;
+  background: linear-gradient(to bottom, var(--gold), transparent);
+  animation: scrollLine 2s ease-in-out infinite;
+}
+
+@keyframes scrollLine {
+  0%, 100% { opacity: 0.3; transform: scaleY(0.5); }
+  50% { opacity: 1; transform: scaleY(1); }
+}
+
+/* ============================================================
+   WATCH HERO VISUAL
+   ============================================================ */
+.watch-hero-container {
+  position: relative;
+  width: 320px;
+  height: 320px;
+  margin: 0 auto 3rem;
+  animation: fadeInUp 1s ease 0.3s both;
+}
+
+.watch-case {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #2a2a30 0%, #0f0f12 60%, #050507 100%);
+  box-shadow:
+    0 0 0 2px rgba(212,175,55,0.15),
+    0 0 0 6px rgba(212,175,55,0.05),
+    0 20px 60px rgba(0,0,0,0.8),
+    inset 0 2px 8px rgba(255,255,255,0.03);
+}
+
+.watch-bezel {
+  position: absolute;
+  inset: 12px;
+  border-radius: 50%;
+  border: 1px solid rgba(212,175,55,0.2);
+}
+
+.watch-dial {
+  position: absolute;
+  inset: 24px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 50% 50%, #111114 0%, #070708 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.watch-center-text {
+  text-align: center;
+}
+
+.watch-center-text .heka-label {
+  font-family: var(--font-display);
+  font-size: 0.7rem;
+  letter-spacing: 0.3em;
+  color: var(--gold);
+  text-transform: uppercase;
+  margin-bottom: 0.25rem;
+}
+
+.watch-center-text .time-display {
+  font-family: var(--font-mono);
+  font-size: 2.2rem;
+  color: var(--text-primary);
+  font-weight: 300;
+  letter-spacing: 0.15em;
+  text-shadow: 0 0 20px rgba(255,255,255,0.1);
+}
+
+.watch-center-text .date-display {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--text-secondary);
+  letter-spacing: 0.15em;
+  margin-top: 0.5rem;
+}
+
+.watch-center-text .heka-date {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  color: var(--gold);
+  letter-spacing: 0.2em;
+  margin-top: 0.25rem;
+  text-transform: uppercase;
+}
+
+.watch-month-ring {
+  position: absolute;
+  inset: 36px;
+  border-radius: 50%;
+}
+
+.month-tick {
+  position: absolute;
+  width: 2px;
+  height: 8px;
+  left: 50%;
+  top: 0;
+  transform-origin: 50% 116px;
+  border-radius: 1px;
+}
+
+.month-tick.opening {
+  background: rgba(220,38,38,0.7);
+  box-shadow: 0 0 4px rgba(220,38,38,0.4);
+}
+
+.month-tick.core {
+  background: rgba(22,163,74,0.7);
+  box-shadow: 0 0 4px rgba(22,163,74,0.4);
+}
+
+.month-tick.closing {
+  background: rgba(124,58,237,0.7);
+  box-shadow: 0 0 4px rgba(124,58,237,0.4);
+}
+
+.month-tick.hexa {
+  background: rgba(212,175,55,0.8);
+  box-shadow: 0 0 6px rgba(212,175,55,0.5);
+  height: 10px;
+  width: 3px;
+}
+
+.month-label {
+  position: absolute;
+  font-family: var(--font-mono);
+  font-size: 0.55rem;
+  color: var(--text-tertiary);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  transform-origin: center;
+  white-space: nowrap;
+}
+
+.watch-hand {
+  position: absolute;
+  left: 50%;
+  bottom: 50%;
+  transform-origin: 50% 100%;
+  border-radius: 2px;
+}
+
+.watch-hand.hour {
+  width: 3px;
+  height: 50px;
+  background: var(--gold);
+  margin-left: -1.5px;
+  animation: rotateHour 60s linear infinite;
+}
+
+.watch-hand.minute {
+  width: 2px;
+  height: 70px;
+  background: var(--text-secondary);
+  margin-left: -1px;
+  animation: rotateMinute 10s linear infinite;
+}
+
+.watch-hand.second {
+  width: 1px;
+  height: 80px;
+  background: var(--arc-opening);
+  margin-left: -0.5px;
+  animation: rotateSecond 2s linear infinite;
+}
+
+.watch-center-dot {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  background: var(--gold);
+  border-radius: 50%;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  box-shadow: 0 0 8px rgba(212,175,55,0.5);
+}
+
+@keyframes rotateHour { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+@keyframes rotateMinute { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+@keyframes rotateSecond { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+/* ============================================================
+   PROBLEM SECTION
+   ============================================================ */
+.problem-section {
+  background: linear-gradient(to bottom, var(--bg-deep), var(--bg-elevated));
+  border-top: 1px solid var(--glass-border);
+  border-bottom: 1px solid var(--glass-border);
+}
+
+.problem-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+  margin-top: 3rem;
+}
+
+.problem-card {
+  padding: 2rem;
+  border-radius: 16px;
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  backdrop-filter: blur(10px);
+  transition: all 0.4s ease;
+}
+
+.problem-card:hover {
+  border-color: rgba(212,175,55,0.2);
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.4);
+}
+
+.problem-card .number {
+  font-family: var(--font-display);
+  font-size: 2.5rem;
+  color: var(--gold);
+  opacity: 0.4;
+  margin-bottom: 0.5rem;
+  line-height: 1;
+}
+
+.problem-card h4 {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  color: var(--text-primary);
+  margin-bottom: 0.75rem;
+}
+
+.problem-card p {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  margin-bottom: 0;
+}
+
+/* ============================================================
+   THE 13 MONTHS SECTION
+   ============================================================ */
+.months-visual {
+  display: grid;
+  grid-template-columns: repeat(13, 1fr);
+  gap: 0.5rem;
+  margin: 3rem 0;
+}
+
+.month-pillar {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.month-bar {
+  width: 100%;
+  border-radius: 8px 8px 4px 4px;
+  position: relative;
+  transition: all 0.4s ease;
+  cursor: default;
+}
+
+.month-bar.opening {
+  height: 80px;
+  background: linear-gradient(to top, rgba(220,38,38,0.3), rgba(220,38,38,0.1));
+  border: 1px solid rgba(220,38,38,0.3);
+}
+
+.month-bar.core {
+  height: 160px;
+  background: linear-gradient(to top, rgba(22,163,74,0.3), rgba(22,163,74,0.1));
+  border: 1px solid rgba(22,163,74,0.3);
+}
+
+.month-bar.closing {
+  height: 120px;
+  background: linear-gradient(to top, rgba(124,58,237,0.3), rgba(124,58,237,0.1));
+  border: 1px solid rgba(124,58,237,0.3);
+}
+
+.month-bar.march {
+  height: 100px;
+  background: linear-gradient(to top, rgba(124,58,237,0.4), rgba(124,58,237,0.15));
+  border: 1px solid rgba(124,58,237,0.4);
+}
+
+.month-bar .days-label {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(-90deg);
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  color: var(--text-secondary);
+  white-space: nowrap;
+  opacity: 0.7;
+}
+
+.month-bar:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+}
+
+.month-name-label {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  color: var(--text-tertiary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  text-align: center;
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  transform: rotate(180deg);
+}
+
+.month-name-label.hexa {
+  color: var(--gold);
+  font-weight: 500;
+}
+
+.equation {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 2rem;
+  padding: 1.5rem;
+  border-radius: 12px;
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+}
+
+.equation .term {
+  color: var(--text-secondary);
+}
+
+.equation .operator {
+  color: var(--text-tertiary);
+}
+
+.equation .result {
+  color: var(--gold);
+  font-weight: 500;
+}
+
+/* ============================================================
+   ARC SECTIONS
+   ============================================================ */
+.arc-section {
+  border-radius: 24px;
+  padding: 4rem;
+  margin: 2rem 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.arc-section::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  opacity: 0.08;
+  pointer-events: none;
+}
+
+.arc-section.opening-arc {
+  background: linear-gradient(135deg, rgba(220,38,38,0.08), transparent);
+  border: 1px solid rgba(220,38,38,0.15);
+}
+
+.arc-section.opening-arc::before {
+  background: radial-gradient(circle at 80% 20%, rgba(220,38,38,0.3), transparent 70%);
+}
+
+.arc-section.core-arc {
+  background: linear-gradient(135deg, rgba(22,163,74,0.08), transparent);
+  border: 1px solid rgba(22,163,74,0.15);
+}
+
+.arc-section.core-arc::before {
+  background: radial-gradient(circle at 20% 80%, rgba(22,163,74,0.3), transparent 70%);
+}
+
+.arc-section.closing-arc {
+  background: linear-gradient(135deg, rgba(124,58,237,0.08), transparent);
+  border: 1px solid rgba(124,58,237,0.15);
+}
+
+.arc-section.closing-arc::before {
+  background: radial-gradient(circle at 50% 50%, rgba(124,58,237,0.3), transparent 70%);
+}
+
+.arc-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.4rem 1rem;
+  border-radius: 100px;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  margin-bottom: 1.5rem;
+}
+
+.arc-badge.opening {
+  background: rgba(220,38,38,0.15);
+  color: #fca5a5;
+  border: 1px solid rgba(220,38,38,0.3);
+}
+
+.arc-badge.core {
+  background: rgba(22,163,74,0.15);
+  color: #86efac;
+  border: 1px solid rgba(22,163,74,0.3);
+}
+
+.arc-badge.closing {
+  background: rgba(124,58,237,0.15);
+  color: #c4b5fd;
+  border: 1px solid rgba(124,58,237,0.3);
+}
+
+.arc-months-list {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  margin-top: 1.5rem;
+}
+
+.arc-month-tag {
+  padding: 0.4rem 0.9rem;
+  border-radius: 6px;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  color: var(--text-secondary);
+}
+
+/* ============================================================
+   CTA SECTION
+   ============================================================ */
+.cta-section {
+  text-align: center;
+  padding: 10rem 2rem;
+}
+
+.cta-section h2 {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+.cta-section p {
+  max-width: 520px;
+  margin: 0 auto 2.5rem;
+  font-size: 1.1rem;
+}
+
+.cta-glow {
+  display: inline-block;
+  position: relative;
+}
+
+.cta-glow::before {
+  content: '';
+  position: absolute;
+  inset: -20px;
+  background: radial-gradient(circle, rgba(212,175,55,0.15), transparent 70%);
+  z-index: -1;
+  animation: ctaBreath 4s ease-in-out infinite;
+}
+
+@keyframes ctaBreath {
+  0%, 100% { opacity: 0.5; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.1); }
+}
+
+/* ============================================================
+   HOME RESPONSIVE
+   ============================================================ */
+@media (max-width: 900px) {
+  .problem-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .months-visual {
+    grid-template-columns: repeat(7, 1fr);
+    gap: 0.35rem;
+  }
+
+  .month-name-label {
+    writing-mode: horizontal-tb;
+    transform: none;
+    font-size: 0.5rem;
+  }
+
+  .arc-section {
+    padding: 2.5rem;
+  }
+
+  .hero h1 {
+    font-size: clamp(2.5rem, 10vw, 4rem);
+  }
+}
+
+@media (max-width: 600px) {
+  .watch-hero-container {
+    width: 260px;
+    height: 260px;
+  }
+
+  .months-visual {
+    grid-template-columns: repeat(5, 1fr);
+  }
+
+  .cta-section h2 {
+    font-size: 2rem;
+  }
+}

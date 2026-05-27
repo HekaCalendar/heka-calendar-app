@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Invitation — Three Paths. One Purpose. | Hekaverse</title>
+  <meta name="description" content="Connect with the Hekaverse. Invest in magic, collaborate with builders, or spread the word. Three paths, one purpose: bringing intention back into reality.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Cinzel+Decorative:wght@400;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles/main.css">
+  <link rel="stylesheet" href="styles/connect.css">
+</head>
+<body>
+
+  <!-- ============================================================
+       CUSTOM CURSOR
+       ============================================================ -->
+  <div id="customCursor" class="custom-cursor">
+    <div class="cursor-core"></div>
+    <div class="cursor-trail"></div>
+  </div>
+
+  <!-- ============================================================
+       PARTICLE CANVAS (fixed background)
+       ============================================================ -->
+  <canvas id="particleCanvas" class="particle-canvas" data-particle-count="300"></canvas>
+
+  <!-- ============================================================
+       NOISE & TEXTURE OVERLAYS
+       ============================================================ -->
+  <div class="noise-overlay"></div>
+  <div class="papyrus-overlay"></div>
+  <div class="vignette-overlay"></div>
+
+  <!-- ============================================================
+       NAVIGATION
+       ============================================================ -->
+  <nav id="mainNav" class="main-nav">
+    <a href="./index.html" class="nav-logo">
+      <span class="nav-ankh">&#x2625;</span>
+      <span class="nav-word">HEKA<span class="nav-verse">VERSE</span></span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="./index.html">Home</a></li>
+      <li><a href="./mythology.html">Mythology</a></li>
+      <li><a href="./ventures.html">Ventures</a></li>
+      <li><a href="./connect.html" aria-current="page">Connect</a></li>
+    </ul>
+    <button class="nav-toggle" aria-label="Toggle navigation">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <!-- ============================================================
+       SECTION 1: INVEST · COLLABORATE · RECOMMEND
+       ============================================================ -->
+  <section id="connect" class="connect-section">
+    <div class="connect-header reveal-section">
+      <span class="section-eyebrow">The Invitation</span>
+      <h2 class="section-title">Three Paths.<br>One Purpose.</h2>
+    </div>
+
+    <div class="connect-grid">
+      <article class="connect-card invest-card">
+        <div class="connect-icon">
+          <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+            <path d="M24 4 L28 18 L42 18 L30 26 L34 40 L24 32 L14 40 L18 26 L6 18 L20 18 Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <h3 class="connect-title">Invest</h3>
+        <p class="connect-desc">Fund the return of magic. Back ventures that restore meaning, beauty, and intention to a world that has lost its way.</p>
+        <a href="mailto:invest@hekaverse.com" class="connect-cta">
+          <span>Begin the Conversation</span>
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+      </article>
+
+      <article class="connect-card collaborate-card">
+        <div class="connect-icon">
+          <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="16" cy="20" r="8" fill="none" stroke="currentColor" stroke-width="2"/>
+            <circle cx="32" cy="20" r="8" fill="none" stroke="currentColor" stroke-width="2"/>
+            <path d="M24 36 Q16 32 12 28" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            <path d="M24 36 Q32 32 36 28" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <h3 class="connect-title">Collaborate</h3>
+        <p class="connect-desc">Join the pantheon. Engineers, artists, designers, writers — we seek builders who understand that craft is a form of magic.</p>
+        <a href="mailto:build@hekaverse.com" class="connect-cta">
+          <span>Enter the Circle</span>
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+      </article>
+
+      <article class="connect-card recommend-card">
+        <div class="connect-icon">
+          <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+            <path d="M24 8 Q32 4 36 12 Q42 16 38 24 Q40 32 32 36 Q28 42 24 38 Q20 42 16 36 Q8 32 10 24 Q6 16 12 12 Q16 4 24 8Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <h3 class="connect-title">Recommend</h3>
+        <p class="connect-desc">Spread the word. Share the Hekaverse with those who sense that something essential is missing from modern life.</p>
+        <div class="connect-socials">
+          <a href="#" aria-label="Twitter">𝕏</a>
+          <a href="#" aria-label="Instagram">◈</a>
+          <a href="#" aria-label="LinkedIn">in</a>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       SECTION 2: FOOTER
+       ============================================================ -->
+  <footer class="main-footer">
+    <div class="footer-ankh">&#x2625;</div>
+    <p class="footer-motto">In Heka we trust.</p>
+    <nav class="footer-ventures">
+      <a href="https://hekatae.com" target="_blank" rel="noopener">Hekatae</a>
+      <a href="https://hekacalendar.com" target="_blank" rel="noopener">Heka Calendar</a>
+      <a href="https://hekatime.com" target="_blank" rel="noopener">Heka Time</a>
+      <a href="https://antidosis.com" target="_blank" rel="noopener">Antidosis</a>
+      <a href="#">Cinaema</a>
+      <a href="https://stigmator.com" target="_blank" rel="noopener">Stigmator</a>
+      <a href="https://meekmeet.com" target="_blank" rel="noopener">Meek Meet</a>
+      <a href="https://srevol.com" target="_blank" rel="noopener">Srevol</a>
+      <a href="#">Oilamor</a>
+      <a href="#">Rehealia</a>
+    </nav>
+    <p class="footer-copy">Hekaverse &copy; 2026. All rights reserved.</p>
+  </footer>
+
+  <!-- ============================================================
+       SCRIPTS
+       ============================================================ -->
+  <script src="scripts/shared.js"></script>
+  <script src="scripts/connect.js"></script>
+</body>
+</html>
