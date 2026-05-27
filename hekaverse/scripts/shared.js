@@ -7,18 +7,23 @@ document.addEventListener('DOMContentLoaded', function() {
   'use strict';
 
   // ============================================================
-  // CUSTOM CURSOR — Native feel, zero lag
-  // Direct 1:1 tracking with micro CSS smoothing (0.05s)
+  // CUSTOM CURSOR — Zero lag, native feel
+  // Stores every mousemove, writes to DOM once per frame
   // ============================================================
   const cursor = document.getElementById('customCursor');
   if (cursor && window.matchMedia('(pointer: fine)').matches) {
-    let cursorRafId = null;
+    let latestX = 0;
+    let latestY = 0;
+    let scheduled = false;
 
     document.addEventListener('mousemove', (e) => {
-      if (cursorRafId) return;
-      cursorRafId = requestAnimationFrame(() => {
-        cursor.style.transform = `translate3d(${e.clientX}px, ${e.clientY}px, 0)`;
-        cursorRafId = null;
+      latestX = e.clientX;
+      latestY = e.clientY;
+      if (scheduled) return;
+      scheduled = true;
+      requestAnimationFrame(() => {
+        cursor.style.transform = `translate3d(${latestX}px, ${latestY}px, 0)`;
+        scheduled = false;
       });
     }, { passive: true });
 
