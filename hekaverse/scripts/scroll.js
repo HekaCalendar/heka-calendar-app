@@ -170,7 +170,7 @@ document.addEventListener('DOMContentLoaded', function() {
   // ============================================================
   const venturesData = [
     { name: 'Hekatae', initial: 'H', domain: 'Message Keepsaking', myth: 'Hu — the spoken word preserved', color: '#e8a838', x: 18, y: 22, url: 'https://hekatae.com', live: true },
-    { name: 'Heka Calendar', initial: 'C', domain: 'Time & Cosmos', myth: "Ma'at — divine order", color: '#d4af37', x: 50, y: 8, url: '#', live: false },
+    { name: 'Heka Calendar', initial: 'C', domain: 'Time & Cosmos', myth: "Ma'at — divine order", color: '#d4af37', x: 50, y: 8, url: 'https://hekacalendar.com', live: true },
     { name: 'Heka Time', initial: 'T', domain: 'Horology', myth: 'Sia — perceiving time', color: '#8ab4c7', x: 82, y: 22, url: 'https://hekatime.com', live: true },
     { name: 'Antidosis', initial: 'A', domain: 'Barter & Exchange', myth: 'Reciprocity — the flow of value', color: '#2d8a5e', x: 10, y: 50, url: 'https://antidosis.com', live: true },
     { name: 'Cinaema', initial: 'N', domain: 'Cinema & Streaming', myth: 'Sia — the vision made visible', color: '#c43e3e', x: 32, y: 38, url: 'https://cinaema.com', live: false },
@@ -179,6 +179,8 @@ document.addEventListener('DOMContentLoaded', function() {
     { name: 'Meek Meet', initial: 'M', domain: 'Community Circles', myth: 'Collective Heka — shared intention', color: '#a08060', x: 90, y: 50, url: 'https://meekmeet.com', live: true },
     { name: 'Oilamor', initial: 'O', domain: 'Essential Oils', myth: "Nefertem's breath — essence & healing", color: '#7a5a9a', x: 35, y: 82, url: 'https://oilamor.com', live: false },
     { name: 'Rehealia', initial: 'E', domain: 'Healing Herbs', myth: "Heka — medicine made manifest", color: '#5a9b5a', x: 72, y: 78, url: 'https://rehealia.com', live: false },
+    { name: 'PUNYCODEX', initial: 'P', domain: 'Digital Protocols', myth: 'The language beneath language', color: '#00e5ff', x: 18, y: 72, url: '#', live: false },
+    { name: 'GHOULVERSE', initial: 'G', domain: 'The Afterlife', myth: 'Where the dead still speak', color: '#ff2a6d', x: 85, y: 72, url: '#', live: false },
   ];
 
   // Build constellation SVG lines
@@ -189,7 +191,8 @@ document.addEventListener('DOMContentLoaded', function() {
   if (constellationLines && ventureNodes) {
     // Draw connecting lines
     const connections = [
-      [0, 1], [1, 2], [0, 3], [1, 5], [2, 7], [3, 4], [4, 5], [5, 6], [6, 7], [4, 8], [5, 8], [6, 9], [7, 9], [8, 9], [0, 5], [2, 5], [3, 5], [7, 5]
+      [0, 1], [1, 2], [0, 3], [1, 5], [2, 7], [3, 4], [4, 5], [5, 6], [6, 7], [4, 8], [5, 8], [6, 9], [7, 9], [8, 9], [0, 5], [2, 5], [3, 5], [7, 5],
+      [3, 10], [5, 10], [7, 11], [5, 11], [10, 11]
     ];
 
     connections.forEach(([a, b]) => {
@@ -302,7 +305,9 @@ document.addEventListener('DOMContentLoaded', function() {
       'Meek Meet': 'The meek shall inherit the earth — one circle at a time.',
       'Srevol': 'Travel the world with the one who makes it worth seeing.',
       'Oilamor': 'Pure essence in violet glass. Blend your own ritual.',
-      'Rehealia': "Nature's pharmacy, prescribed by the earth itself."
+      'Rehealia': "Nature's pharmacy, prescribed by the earth itself.",
+      'PUNYCODEX': 'Every character a spell. Every protocol, a doorway.',
+      'GHOULVERSE': 'The veil is thin here. Walk carefully among the echoes.'
     };
     return essences[name] || '';
   }
