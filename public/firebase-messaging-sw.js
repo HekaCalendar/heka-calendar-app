@@ -55,7 +55,7 @@ if (self.__firebaseConfig) {
 // Also accept config from the main app via postMessage
 self.addEventListener('message', (event) => {
   const ALLOWED_ORIGINS = [
-    'https://heka-calendar-pro.vercel.app',
+    'https://hekacalendar.com',
     'https://localhost:5173',
     'http://localhost:5173',
     'capacitor://localhost',

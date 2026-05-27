@@ -13,7 +13,7 @@ export interface DeepLinkData {
   date?: { year: number; month: number; day: number };
 }
 
-const WEB_LANDING_BASE = 'https://heka-calendar-pro.vercel.app/invite';
+const WEB_LANDING_BASE = 'https://hekacalendar.com/invite';
 
 let isInitialized = false;
 let pendingInviteCode: string | null = null;

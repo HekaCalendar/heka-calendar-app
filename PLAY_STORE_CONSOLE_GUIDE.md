@@ -333,7 +333,7 @@ Based on the above answers, your app should receive:
 - [ ] Data Safety form completed with this guide
 - [ ] AI-generated content declaration completed with this guide
 - [ ] Content rating questionnaire completed with this guide
-- [ ] Privacy policy URL linked: `https://heka-calendar-pro.vercel.app/privacy.html`
+- [ ] Privacy policy URL linked: `https://hekacalendar.com/privacy.html`
 - [ ] App category set: **Lifestyle**
 - [ ] Target audience: **Not designed for children**
 - [ ] Content rating: **E / PEGI 3 / G** (depending on authority)

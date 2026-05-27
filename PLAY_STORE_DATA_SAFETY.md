@@ -9,7 +9,7 @@ Last updated: May 7, 2026
 ## Section 1: Overview
 
 **App Name:** HEKA Calendar Pro  
-**Privacy Policy:** https://heka-calendar-pro.vercel.app/privacy.html  
+**Privacy Policy:** https://hekacalendar.com/privacy.html  
 **App Category:** Lifestyle
 
 ---
