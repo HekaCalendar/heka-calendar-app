@@ -7,35 +7,22 @@ document.addEventListener('DOMContentLoaded', function() {
   'use strict';
 
   // ============================================================
-  // CUSTOM CURSOR (throttled, idle-skip)
+  // CUSTOM CURSOR — Native feel, zero lag
+  // Direct 1:1 tracking with micro CSS smoothing (0.05s)
   // ============================================================
   const cursor = document.getElementById('customCursor');
   if (cursor && window.matchMedia('(pointer: fine)').matches) {
-    let cursorX = 0, cursorY = 0;
-    let targetX = 0, targetY = 0;
-    let mouseMoved = false;
-    let cursorRaf;
+    let cursorRafId = null;
 
     document.addEventListener('mousemove', (e) => {
-      targetX = e.clientX;
-      targetY = e.clientY;
-      mouseMoved = true;
+      if (cursorRafId) return;
+      cursorRafId = requestAnimationFrame(() => {
+        cursor.style.transform = `translate3d(${e.clientX}px, ${e.clientY}px, 0)`;
+        cursorRafId = null;
+      });
     }, { passive: true });
 
-    function updateCursor() {
-      if (mouseMoved) {
-        cursorX += (targetX - cursorX) * 0.92;
-        cursorY += (targetY - cursorY) * 0.92;
-        cursor.style.transform = `translate3d(${cursorX.toFixed(1)}px, ${cursorY.toFixed(1)}px, 0)`;
-        if (Math.abs(targetX - cursorX) < 0.5 && Math.abs(targetY - cursorY) < 0.5) {
-          mouseMoved = false;
-        }
-      }
-      cursorRaf = requestAnimationFrame(updateCursor);
-    }
-    updateCursor();
-
-    // Hover states — delegated to reduce listeners
+    // Hover states — delegated
     document.body.addEventListener('mouseenter', (e) => {
       const target = e.target.closest('a, button, .venture-node, .power-pillar, .connect-card, .venture-preview-item');
       if (target) cursor.classList.add('hovering');

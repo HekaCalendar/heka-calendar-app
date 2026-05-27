@@ -210,6 +210,7 @@ body {
   z-index: 9999;
   mix-blend-mode: difference;
   will-change: transform;
+  transition: transform 0.05s ease-out;
 }
 
 .cursor-core {
