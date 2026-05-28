@@ -219,7 +219,7 @@ Last updated: May 7, 2026
 | Data Type | How to Delete |
 |-----------|---------------|
 | Local app data | Uninstall app or clear app storage |
-| Cloud account data | Delete account in Settings → Data Management |
+| Cloud account data | Email request to hekacalendar@gmail.com (processed within 7 days) |
 | Individual notes/items | Delete within app |
 | Export before deletion | JSON export available in Settings |
 
