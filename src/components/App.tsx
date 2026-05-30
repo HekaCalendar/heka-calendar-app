@@ -28,6 +28,7 @@ import { DayPanel } from './day-panel/DayPanel';
 import { PureCalendarView } from './PureCalendarView';
 import { PureModeDayPanel } from './PureModeDayPanel';
 import { CommunityHub } from './CommunityHub';
+import { CommunityVotingModal } from './CommunityVotingModal';
 import { hekaToCivil } from '../services/calendarService';
 import type { CalendarDay, HekaMonthIndex } from '../types';
 import { SearchModal } from './SearchModal';
@@ -130,6 +131,7 @@ const useModalState = () => {
   const [showFriendsModal, setShowFriendsModal] = useState(false);
   const [showStatsModal, setShowStatsModal] = useState(false);
   const [showCommunityModal, setShowCommunityModal] = useState(false);
+  const [showCommunityVotingModal, setShowCommunityVotingModal] = useState(false);
   const [showJournalModal, setShowJournalModal] = useState(false);
   const [showInfoModal, setShowInfoModal] = useState(false);
   const [showAuthModal, setShowAuthModal] = useState(false);
@@ -154,6 +156,7 @@ const useModalState = () => {
     showFriendsModal, setShowFriendsModal,
     showStatsModal, setShowStatsModal,
     showCommunityModal, setShowCommunityModal,
+    showCommunityVotingModal, setShowCommunityVotingModal,
     showJournalModal, setShowJournalModal,
     showInfoModal, setShowInfoModal,
     showAuthModal, setShowAuthModal,
@@ -274,7 +277,7 @@ const AppContentComponent: React.FC = () => {
   }, [
     currentView, selectedDate, isSettingsOpen, isPureMode,
     modalState.showJournalModal, modalState.showFriendsModal, modalState.showStatsModal,
-    modalState.showSearchModal, modalState.showCommunityModal, modalState.showInfoModal,
+    modalState.showSearchModal, modalState.showCommunityModal, modalState.showCommunityVotingModal, modalState.showInfoModal,
     modalState.showYearModal,
   ]);
 
@@ -901,7 +904,7 @@ const AppContentComponent: React.FC = () => {
     modalState.setShowFriendsModal(true);
   }, [modalState, auth.isAuthenticated]);
   const handleStatsClick = useCallback(() => modalState.setShowStatsModal(true), [modalState]);
-  const handleCommunityClick = useCallback(() => modalState.setShowCommunityModal(true), [modalState]);
+  const handleCommunityClick = useCallback(() => modalState.setShowCommunityVotingModal(true), [modalState]);
   const handleJournalClick = useCallback(() => modalState.setShowJournalModal(true), [modalState]);
 
   const handleInfoClick = useCallback(() => modalState.setShowInfoModal(true), [modalState]);
@@ -928,6 +931,8 @@ const AppContentComponent: React.FC = () => {
     isCalendarExpandedHorizontal,
     onToggleExpandHorizontal: toggleCalendarExpandHorizontal,
   }), [handlePrintClick, handleAstrologyClick, handleYearClick, handleSearchClick, handleFriendsClick, handleStatsClick, handleCommunityClick, handleJournalClick, handleInfoClick, isCalendarExpanded, toggleCalendarExpand, isCalendarExpandedHorizontal, toggleCalendarExpandHorizontal]);
+
+
   
   return (
     <>
@@ -1092,6 +1097,9 @@ const AppContentComponent: React.FC = () => {
           )}
           {modalState.showCommunityModal && (
             <CommunityHub isOpen={true} onClose={() => modalState.setShowCommunityModal(false)} />
+          )}
+          {modalState.showCommunityVotingModal && (
+            <CommunityVotingModal isOpen={true} onClose={() => modalState.setShowCommunityVotingModal(false)} />
           )}
           {modalState.showJournalModal && (
             <OracleJournal isOpen={true} onClose={() => modalState.setShowJournalModal(false)} />

@@ -115,9 +115,9 @@ const STEPS: TutorialStep[] = [
   },
   {
     id: 'tracker',
-    title: 'Track Your Cycles',
+    title: 'Track Your Rhythm',
     instruction: 'Your body is part of the calendar.',
-    detail: 'Menstrual cycle with flow intensity and symptoms. Mood: 1-10 slider with real-time emoji. Sleep: duration and quality. Energy: physical, mental, emotional, spiritual. Insights dashboard reveals patterns over time. Your calendar holds your story.',
+    detail: 'Mood: 1-10 slider with real-time emoji. Sleep: duration and quality. Energy: physical, mental, emotional, spiritual. Insights dashboard reveals patterns over time. Your calendar holds your story.',
     action: 'Continue',
     requiresInteraction: false,
     spotlightSelector: '.tracker-panel, [aria-label*="Tracker"]',
