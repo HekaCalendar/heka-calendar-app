@@ -3,7 +3,7 @@
  * Requires users to create a username before using Cosmic Circle
  */
 
-import React, { useState, useCallback, useRef } from 'react';
+import React, { useState, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import type { RootState, AppDispatch } from '../store';
@@ -43,8 +43,7 @@ export const ProfileSetupModal: React.FC<ProfileSetupModalProps> = ({
   const [selectedAvatar, setSelectedAvatar] = useState(AVATAR_OPTIONS[0].emoji);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const fileInputRef = useRef<HTMLInputElement>(null);
-  const [customPhoto, setCustomPhoto] = useState<string | null>(null);
+
 
   const validateUsername = (name: string): boolean => {
     if (!name.trim()) return false;
@@ -55,26 +54,7 @@ export const ProfileSetupModal: React.FC<ProfileSetupModalProps> = ({
     return true;
   };
 
-  const handleFileSelect = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
-
-    // Validate file type and size
-    if (!file.type.startsWith('image/')) {
-      setError(t('profileSetup.errorImageType'));
-      return;
-    }
-    if (file.size > 2 * 1024 * 1024) {
-      setError(t('profileSetup.errorImageSize'));
-      return;
-    }
-
-    const reader = new FileReader();
-    reader.onload = (event) => {
-      setCustomPhoto(event.target?.result as string);
-    };
-    reader.readAsDataURL(file);
-  }, []);
+  
 
   const handleSubmit = useCallback(async () => {
     if (!validateUsername(username)) {
@@ -155,28 +135,10 @@ export const ProfileSetupModal: React.FC<ProfileSetupModalProps> = ({
               overflow: 'hidden',
               marginBottom: 'var(--space-3)',
             }}>
-              {customPhoto ? (
-                <img src={customPhoto} alt={t('profileSetup.profileFallback')} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-              ) : (
-                finalAvatar
-              )}
+              {finalAvatar}
             </div>
             
-            <input
-              type="file"
-              ref={fileInputRef}
-              onChange={handleFileSelect}
-              accept="image/*"
-              style={{ display: 'none' }}
-            />
-            
-            <button
-              className="btn btn--sm"
-              onClick={() => fileInputRef.current?.click()}
-              style={{ marginBottom: 'var(--space-2)' }}
-            >
-              {t('profileSetup.uploadPhoto')}
-            </button>
+
             
             {customPhoto && (
               <button

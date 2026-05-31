@@ -348,7 +348,7 @@ export interface TrackerState {
   /** UI state */
   ui: {
     isLoading: boolean;
-    viewMode: 'day' | 'week' | 'month' | 'cycle';
+    viewMode: 'day' | 'week' | 'month';
     showPredictions: boolean;
   };
 }
@@ -368,26 +368,6 @@ export interface CustomTrackerDefinition {
 // ═════════════════════════════════════════════════════════════════════════════
 // TRACKER INSIGHTS
 // ═════════════════════════════════════════════════════════════════════════════
-
-export interface CycleInsight {
-  /** Type of insight */
-  type: 'pattern' | 'correlation' | 'prediction' | 'suggestion';
-  
-  /** Insight title */
-  title: string;
-  
-  /** Insight description */
-  description: string;
-  
-  /** Related celestial event if any */
-  celestialCorrelation?: {
-    event: string;
-    strength: number; // 0-1
-  };
-  
-  /** Actionable suggestion */
-  suggestion?: string;
-}
 
 // ═════════════════════════════════════════════════════════════════════════════
 // CONSTANTS

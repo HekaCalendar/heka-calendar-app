@@ -382,10 +382,10 @@ export const CommunityHub: React.FC<CommunityHubProps> = ({ isOpen, onClose }) =
                       <span
                         className="tracker-entry-card__badge"
                         style={{
-                          background: resource.type === 'circle' ? 'var(--t-semantic-fertile)20' :
+                          background: resource.type === 'circle' ? 'var(--t-accent-primary)20' :
                             resource.type === 'online' ? 'var(--t-accent-secondary)20' :
                             'var(--t-accent-primary)20',
-                          color: resource.type === 'circle' ? 'var(--t-semantic-fertile)' :
+                          color: resource.type === 'circle' ? 'var(--t-accent-primary)' :
                             resource.type === 'online' ? 'var(--t-accent-secondary)' :
                             'var(--t-accent-primary)',
                         }}

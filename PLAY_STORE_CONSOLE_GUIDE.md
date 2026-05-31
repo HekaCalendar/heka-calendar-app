@@ -223,14 +223,9 @@ Choose your primary market. For each:
 
 **Q13: Does the app contain references to sexual activity or relationships?**
 
-**Answer:** ⚠️ **Yes — but non-explicit**
+**Answer:** ❌ **No**
 
-**Select:** "Mild references" (if available) or "No" depending on options
-
-**Explanation:** The app tracks menstrual cycles and fertility as part of health tracking. This is clinical/wellness data, not sexual content. If the questionnaire does not have a "clinical health" option, select **"No"** and note in the comment field.
-
-**Comment field (if available):**
-> The app includes menstrual cycle and fertility tracking as part of its health & wellness features. This is clinical health data input by users for personal tracking. There is no sexual imagery, descriptions, or adult content.
+**Explanation:** HEKA Calendar contains no references to sexual activity or relationships. The "Track Your Rhythm" wellness tracker monitors mood, sleep, and energy only — no menstrual, fertility, or reproductive data is collected.
 
 ---
 

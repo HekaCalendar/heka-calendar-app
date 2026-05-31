@@ -54,7 +54,7 @@ const NOTIF_CATEGORIES: NotifCategory[] = [
   {
     icon: <IconHeartPulse size={16} color="rgba(201,162,39,0.6)" />,
     labelKey: 'notifCategoryBodyMind',
-    items: ['notifItemCycleTracking', 'notifItemMoodChecks', 'notifItemSleepLogs', 'notifItemEnergyChecks'],
+    items: ['notifItemMoodChecks', 'notifItemSleepLogs', 'notifItemEnergyChecks'],
   },
   {
     icon: <IconCrescent size={16} color="rgba(201,162,39,0.6)" />,

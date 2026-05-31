@@ -2,7 +2,7 @@
 
 **Use this guide to complete the Data Safety section in Google Play Console.**
 
-Last updated: May 7, 2026
+Last updated: May 28, 2026
 
 ---
 

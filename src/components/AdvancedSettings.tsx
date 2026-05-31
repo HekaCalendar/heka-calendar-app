@@ -44,7 +44,7 @@ export const AdvancedSettings: React.FC<AdvancedSettingsProps> = ({ isOpen, onCl
   // Appearance
   const [selectedTheme, setSelectedTheme] = useState('dark-gold');
   const [selectedFont, setSelectedFont] = useState('default');
-  const [customBackground, setCustomBackground] = useState<string | null>(null);
+
   
   if (!isOpen) return null;
   
@@ -77,16 +77,6 @@ export const AdvancedSettings: React.FC<AdvancedSettingsProps> = ({ isOpen, onCl
     onClose();
   };
   
-  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setCustomBackground(reader.result as string);
-      };
-      reader.readAsDataURL(file);
-    }
-  };
   
   return (
     <div className="modal-overlay" onClick={(e) => e.target === e.currentTarget && onClose()}>
@@ -257,31 +247,7 @@ export const AdvancedSettings: React.FC<AdvancedSettingsProps> = ({ isOpen, onCl
               ))}
             </div>
             
-            <h3 className="settings-section-title">{t('customBackground')}</h3>
-            <div className="custom-background">
-              {customBackground ? (
-                <div className="background-preview">
-                  <img src={customBackground} alt="Custom background" />
-                  <button className="btn btn--sm" onClick={() => setCustomBackground(null)}>
-                    Remove
-                  </button>
-                </div>
-              ) : (
-                <div className="background-upload">
-                  <input
-                    type="file"
-                    accept="image/*"
-                    onChange={handleImageUpload}
-                    id="bg-upload"
-                    hidden
-                  />
-                  <label htmlFor="bg-upload" className="btn">
-                    Upload Image
-                  </label>
-                  <p>{t('recommendedResolution')}</p>
-                </div>
-              )}
-            </div>
+
           </div>
         )}
         
