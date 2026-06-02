@@ -9,7 +9,7 @@
  * Card 5: STELLIUM - The Living Solar System (Positions)
  */
 
-import React, { useState, useCallback, useEffect, useMemo } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { getArcLabel, HEKA_MONTHS, getTodayHekaDate, getHekaYearStart } from '../../../services/calendarService';
 import i18n from '../../../i18n';
@@ -263,17 +263,8 @@ interface LunaCardProps {
 
 const LunaCard: React.FC<LunaCardProps> = ({ moonPhase, moonPosition, isExpanded, onToggle }) => {
   const { t } = useTranslation('celestial');
-  if (!moonPhase) {
-    return (
-      <div className="premium-card luna loading" onClick={onToggle}>
-        <div className="card-sheen" />
-        <div className="loading-spinner">☽</div>
-        <div>{t('premiumCards.calculatingLunar')}</div>
-      </div>
-    );
-  }
-
-  const oracle = useMemo(() => {
+  
+  const oracle = moonPhase ? (() => {
     const fallbackTitle = t('dictionaries.moonOracle.New Moon.title');
     const fallbackPoem = t('dictionaries.moonOracle.New Moon.poem');
     const fallbackFavors = t('dictionaries.moonOracle.New Moon.favors', { returnObjects: true });
@@ -284,68 +275,77 @@ const LunaCard: React.FC<LunaCardProps> = ({ moonPhase, moonPosition, isExpanded
       favors: Object.values(t(`dictionaries.moonOracle.${moonPhase.phase}.favors`, { defaultValue: fallbackFavors, returnObjects: true }) as Record<string, string>),
       warnings: Object.values(t(`dictionaries.moonOracle.${moonPhase.phase}.warnings`, { defaultValue: fallbackWarnings, returnObjects: true }) as Record<string, string>),
     };
-  }, [t, moonPhase.phase]);
+  })() : { title: '', poem: '', favors: [] as string[], warnings: [] as string[] };
   
   // Calculate moon age percentage through cycle (approximate from angle)
   const synodicMonth = 29.53059;
-  const moonAge = (moonPhase.angle / 360) * synodicMonth;
-  const cycleProgress = (moonAge / synodicMonth) * 100;
+  const moonAge = moonPhase ? (moonPhase.angle / 360) * synodicMonth : 0;
+  const cycleProgress = moonPhase ? (moonAge / synodicMonth) * 100 : 0;
 
   return (
-    <div className={`premium-card luna ${isExpanded ? 'expanded' : ''}`} onClick={onToggle}>
+    <div className={`premium-card luna ${isExpanded ? 'expanded' : ''} ${!moonPhase ? 'loading' : ''}`} onClick={onToggle}>
       <div className="card-sheen" />
       
       {/* Default View - Epic 3D Moon */}
       <div className="card-default">
-        <div className="luna-visual">
-          {/* 3D Moon Container */}
-          <div className="moon-3d-container">
-            {/* Moon surface craters */}
-            <div className="moon-crater moon-crater-1" style={{ pointerEvents: 'none' }} />
-            <div className="moon-crater moon-crater-2" style={{ pointerEvents: 'none' }} />
-            <div className="moon-crater moon-crater-3" style={{ pointerEvents: 'none' }} />
+        {!moonPhase ? (
+          <>
+            <div className="loading-spinner">☽</div>
+            <div>{t('premiumCards.calculatingLunar')}</div>
+          </>
+        ) : (
+          <>
+            <div className="luna-visual">
+              {/* 3D Moon Container */}
+              <div className="moon-3d-container">
+                {/* Moon surface craters */}
+                <div className="moon-crater moon-crater-1" style={{ pointerEvents: 'none' }} />
+                <div className="moon-crater moon-crater-2" style={{ pointerEvents: 'none' }} />
+                <div className="moon-crater moon-crater-3" style={{ pointerEvents: 'none' }} />
+                
+                {/* Phase shadow overlay - using clip-path for accurate phase rendering */}
+                <div 
+                  className="moon-phase-shadow"
+                  style={{ 
+                    clipPath: moonPhase.isWaxing 
+                      ? `inset(0 ${100 - moonPhase.illumination}% 0 0)` 
+                      : `inset(0 0 0 ${100 - moonPhase.illumination}%)`,
+                    background: 'rgba(0, 0, 0, 0.85)',
+                    pointerEvents: 'none',
+                  }}
+                />
+                
+                {/* Shadow overlay for depth */}
+                <div className="moon-shadow-overlay" />
+              </div>
+              
+              {/* Glowing rings - opacity based on illumination */}
+              <div 
+                className="moon-glow-ring" 
+                style={{ opacity: 0.3 + (moonPhase.illumination / 200), pointerEvents: 'none' }}
+              />
+              
+              {/* Illumination text */}
+              <div className="moon-illumination-text" style={{ pointerEvents: 'none' }}>{moonPhase.illumination.toFixed(0)}%</div>
+            </div>
             
-            {/* Phase shadow overlay - using clip-path for accurate phase rendering */}
-            <div 
-              className="moon-phase-shadow"
-              style={{ 
-                clipPath: moonPhase.isWaxing 
-                  ? `inset(0 ${100 - moonPhase.illumination}% 0 0)` // Shadow from right
-                  : `inset(0 0 0 ${100 - moonPhase.illumination}%)`, // Shadow from left
-                background: 'rgba(0, 0, 0, 0.85)',
-                pointerEvents: 'none',
-              }}
-            />
-            
-            {/* Shadow overlay for depth */}
-            <div className="moon-shadow-overlay" />
-          </div>
-          
-          {/* Glowing rings - opacity based on illumination */}
-          <div 
-            className="moon-glow-ring" 
-            style={{ opacity: 0.3 + (moonPhase.illumination / 200), pointerEvents: 'none' }}
-          />
-          
-          {/* Illumination text */}
-          <div className="moon-illumination-text" style={{ pointerEvents: 'none' }}>{moonPhase.illumination.toFixed(0)}%</div>
-        </div>
-        
-        <div className="card-primary-content centered">
-          <div className="moon-phase-name">{moonPhase.name.toUpperCase()}</div>
-          <div className="moon-trend">
-            {moonPhase.isWaxing ? t('premiumCards.waxingTrend') : t('premiumCards.waningTrend')}
-          </div>
-        </div>
-        <div className="expand-hint">
-          <span className="expand-icon">↓</span>
-          <span>{t('premiumCards.readOracle')}</span>
-        </div>
+            <div className="card-primary-content centered">
+              <div className="moon-phase-name">{moonPhase.name.toUpperCase()}</div>
+              <div className="moon-trend">
+                {moonPhase.isWaxing ? t('premiumCards.waxingTrend') : t('premiumCards.waningTrend')}
+              </div>
+            </div>
+            <div className="expand-hint">
+              <span className="expand-icon">↓</span>
+              <span>{t('premiumCards.readOracle')}</span>
+            </div>
+          </>
+        )}
       </div>
 
       {/* Expanded View - Lunar Temple */}
-      {isExpanded && (
-        <div key="luna-expanded" className="card-expanded" onClick={(e) => e.stopPropagation()}>
+      {isExpanded && moonPhase && (
+        <div className="card-expanded" onClick={(e) => e.stopPropagation()}>
           <div className="expanded-header">
             <div className="expanded-title">{t('premiumCards.lunarTemple')}</div>
             <button className="close-btn" onClick={onToggle} aria-label={t('common.close')}>×</button>
@@ -471,17 +471,8 @@ const CHALDEAN_ORDER: PlanetId[] = ['saturn', 'jupiter', 'mars', 'sun', 'venus',
 
 const KronosCard: React.FC<KronosCardProps> = ({ planetaryHour, isExpanded, onToggle }) => {
   const { t } = useTranslation('celestial');
-  if (!planetaryHour) {
-    return (
-      <div className="premium-card kronos loading" onClick={onToggle}>
-        <div className="card-sheen" />
-        <div className="loading-spinner">◷</div>
-        <div>{t('premiumCards.calculatingPlanetary')}</div>
-      </div>
-    );
-  }
-
-  const hourData = useMemo(() => {
+  
+  const hourData = planetaryHour ? (() => {
     const fallbackTitle = t('dictionaries.planetaryGuidance.sun.title');
     const fallbackDescription = t('dictionaries.planetaryGuidance.sun.description');
     const fallbackDo = t('dictionaries.planetaryGuidance.sun.do', { returnObjects: true });
@@ -494,37 +485,46 @@ const KronosCard: React.FC<KronosCardProps> = ({ planetaryHour, isExpanded, onTo
       dont: Object.values(t(`dictionaries.planetaryGuidance.${planetaryHour.planet}.dont`, { defaultValue: fallbackDont, returnObjects: true }) as Record<string, string>),
       quality: t(`dictionaries.planetaryGuidance.${planetaryHour.planet}.quality`, { defaultValue: fallbackQuality }),
     };
-  }, [t, planetaryHour.planet]);
-  const currentHourIndex = CHALDEAN_ORDER.indexOf(planetaryHour.planet as PlanetId);
+  })() : { title: '', description: '', do: [] as string[], dont: [] as string[], quality: '' };
+  const currentHourIndex = planetaryHour ? CHALDEAN_ORDER.indexOf(planetaryHour.planet as PlanetId) : -1;
   
   // Calculate current hour progress (mock - would use actual sunrise/sunset)
   const now = new Date();
-  const hourProgress = ((now.getMinutes() + now.getSeconds() / 60) / 60) * 100;
+  const hourProgress = planetaryHour ? ((now.getMinutes() + now.getSeconds() / 60) / 60) * 100 : 0;
 
   return (
-    <div className={`premium-card kronos ${isExpanded ? 'expanded' : ''}`} onClick={onToggle}>
+    <div className={`premium-card kronos ${isExpanded ? 'expanded' : ''} ${!planetaryHour ? 'loading' : ''}`} onClick={onToggle}>
       <div className="card-sheen" />
       
       {/* Default View */}
       <div className="card-default">
-        <div className="hour-symbol-container">
-          <div className="hour-glow" style={{ pointerEvents: 'none' }} />
-          <span className="hour-symbol-large">{planetaryHour.symbol}</span>
-        </div>
-        <div className="card-primary-content centered">
-          <div className="hour-planet-name">{planetaryHour.planet.toUpperCase()}</div>
-          <div className="hour-ruler-label">{t('premiumCards.hourRuler')}</div>
-          <div className="hour-quality">{hourData.quality}</div>
-        </div>
-        <div className="expand-hint">
-          <span className="expand-icon">↓</span>
-          <span>{t('premiumCards.chaldeanOrder')}</span>
-        </div>
+        {!planetaryHour ? (
+          <>
+            <div className="loading-spinner">◷</div>
+            <div>{t('premiumCards.calculatingPlanetary')}</div>
+          </>
+        ) : (
+          <>
+            <div className="hour-symbol-container">
+              <div className="hour-glow" style={{ pointerEvents: 'none' }} />
+              <span className="hour-symbol-large">{planetaryHour.symbol}</span>
+            </div>
+            <div className="card-primary-content centered">
+              <div className="hour-planet-name">{planetaryHour.planet.toUpperCase()}</div>
+              <div className="hour-ruler-label">{t('premiumCards.hourRuler')}</div>
+              <div className="hour-quality">{hourData.quality}</div>
+            </div>
+            <div className="expand-hint">
+              <span className="expand-icon">↓</span>
+              <span>{t('premiumCards.chaldeanOrder')}</span>
+            </div>
+          </>
+        )}
       </div>
 
       {/* Expanded View - The Solar Chariot */}
-      {isExpanded && (
-        <div key="kronos-expanded" className="card-expanded" onClick={(e) => e.stopPropagation()}>
+      {isExpanded && planetaryHour && (
+        <div className="card-expanded" onClick={(e) => e.stopPropagation()}>
           <div className="expanded-header">
             <div className="expanded-title">{t('premiumCards.chaldeanHourglass')}</div>
             <button className="close-btn" onClick={onToggle} aria-label={t('common.close')}>×</button>
