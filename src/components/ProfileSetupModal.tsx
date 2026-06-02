@@ -73,7 +73,7 @@ export const ProfileSetupModal: React.FC<ProfileSetupModalProps> = ({
       }
 
       // Update Firebase profile
-      const photoURL = customPhoto || selectedAvatar;
+      const photoURL = selectedAvatar;
       await updateProfile(user, {
         displayName: username.trim(),
         photoURL: photoURL,
@@ -93,11 +93,11 @@ export const ProfileSetupModal: React.FC<ProfileSetupModalProps> = ({
     } finally {
       setIsLoading(false);
     }
-  }, [username, selectedAvatar, customPhoto, dispatch, onComplete]);
+  }, [username, selectedAvatar, dispatch, onComplete]);
 
   if (!isOpen) return null;
 
-  const finalAvatar = customPhoto || selectedAvatar;
+  const finalAvatar = selectedAvatar;
 
   return (
     <div className="modal-overlay" onClick={(e) => e.stopPropagation()}>
@@ -131,7 +131,7 @@ export const ProfileSetupModal: React.FC<ProfileSetupModalProps> = ({
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              fontSize: customPhoto ? 'inherit' : '3rem',
+              fontSize: '3rem',
               overflow: 'hidden',
               marginBottom: 'var(--space-3)',
             }}>
@@ -140,18 +140,10 @@ export const ProfileSetupModal: React.FC<ProfileSetupModalProps> = ({
             
 
             
-            {customPhoto && (
-              <button
-                className="btn btn--sm btn--ghost"
-                onClick={() => setCustomPhoto(null)}
-              >
-                {t('profileSetup.useEmojiInstead')}
-              </button>
-            )}
           </div>
 
           {/* Emoji Avatar Selection */}
-          {!customPhoto && (
+          {
             <div className="profile-setup__emoji-grid" style={{ marginBottom: 'var(--space-5)' }}>
               <label style={{ 
                 display: 'block', 
@@ -190,7 +182,7 @@ export const ProfileSetupModal: React.FC<ProfileSetupModalProps> = ({
                 ))}
               </div>
             </div>
-          )}
+          }
 
           {/* Username Input */}
           <div className="profile-setup__username" style={{ marginBottom: 'var(--space-4)' }}>

@@ -9,7 +9,7 @@
  * Card 5: STELLIUM - The Living Solar System (Positions)
  */
 
-import React, { useState, useCallback, useEffect } from 'react';
+import React, { useState, useCallback, useEffect, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { getArcLabel, HEKA_MONTHS, getTodayHekaDate, getHekaYearStart } from '../../../services/calendarService';
 import i18n from '../../../i18n';
@@ -138,7 +138,7 @@ const ChronosCard: React.FC<ChronosCardProps> = ({ currentTime, julianDay, posit
 
       {/* Expanded View - The Aeon Gate */}
       {isExpanded && (
-        <div className="card-expanded" onClick={(e) => e.stopPropagation()}>
+        <div key="chronos-expanded" className="card-expanded" onClick={(e) => e.stopPropagation()}>
           <div className="expanded-header">
             <div className="expanded-title">{t('premiumCards.aeonGate')}</div>
             <button className="close-btn" onClick={onToggle} aria-label={t('common.close')}>×</button>
@@ -273,12 +273,18 @@ const LunaCard: React.FC<LunaCardProps> = ({ moonPhase, moonPosition, isExpanded
     );
   }
 
-  const oracle = {
-    title: t(`dictionaries.moonOracle.${moonPhase.phase}.title`, { defaultValue: t('dictionaries.moonOracle.New Moon.title') }),
-    poem: t(`dictionaries.moonOracle.${moonPhase.phase}.poem`, { defaultValue: t('dictionaries.moonOracle.New Moon.poem') }),
-    favors: Object.values(t(`dictionaries.moonOracle.${moonPhase.phase}.favors`, { defaultValue: t('dictionaries.moonOracle.New Moon.favors'), returnObjects: true }) as Record<string, string>),
-    warnings: Object.values(t(`dictionaries.moonOracle.${moonPhase.phase}.warnings`, { defaultValue: t('dictionaries.moonOracle.New Moon.warnings'), returnObjects: true }) as Record<string, string>),
-  };
+  const oracle = useMemo(() => {
+    const fallbackTitle = t('dictionaries.moonOracle.New Moon.title');
+    const fallbackPoem = t('dictionaries.moonOracle.New Moon.poem');
+    const fallbackFavors = t('dictionaries.moonOracle.New Moon.favors', { returnObjects: true });
+    const fallbackWarnings = t('dictionaries.moonOracle.New Moon.warnings', { returnObjects: true });
+    return {
+      title: t(`dictionaries.moonOracle.${moonPhase.phase}.title`, { defaultValue: fallbackTitle }),
+      poem: t(`dictionaries.moonOracle.${moonPhase.phase}.poem`, { defaultValue: fallbackPoem }),
+      favors: Object.values(t(`dictionaries.moonOracle.${moonPhase.phase}.favors`, { defaultValue: fallbackFavors, returnObjects: true }) as Record<string, string>),
+      warnings: Object.values(t(`dictionaries.moonOracle.${moonPhase.phase}.warnings`, { defaultValue: fallbackWarnings, returnObjects: true }) as Record<string, string>),
+    };
+  }, [t, moonPhase.phase]);
   
   // Calculate moon age percentage through cycle (approximate from angle)
   const synodicMonth = 29.53059;
@@ -295,9 +301,9 @@ const LunaCard: React.FC<LunaCardProps> = ({ moonPhase, moonPosition, isExpanded
           {/* 3D Moon Container */}
           <div className="moon-3d-container">
             {/* Moon surface craters */}
-            <div className="moon-crater moon-crater-1" />
-            <div className="moon-crater moon-crater-2" />
-            <div className="moon-crater moon-crater-3" />
+            <div className="moon-crater moon-crater-1" style={{ pointerEvents: 'none' }} />
+            <div className="moon-crater moon-crater-2" style={{ pointerEvents: 'none' }} />
+            <div className="moon-crater moon-crater-3" style={{ pointerEvents: 'none' }} />
             
             {/* Phase shadow overlay - using clip-path for accurate phase rendering */}
             <div 
@@ -306,7 +312,8 @@ const LunaCard: React.FC<LunaCardProps> = ({ moonPhase, moonPosition, isExpanded
                 clipPath: moonPhase.isWaxing 
                   ? `inset(0 ${100 - moonPhase.illumination}% 0 0)` // Shadow from right
                   : `inset(0 0 0 ${100 - moonPhase.illumination}%)`, // Shadow from left
-                background: 'rgba(0, 0, 0, 0.85)'
+                background: 'rgba(0, 0, 0, 0.85)',
+                pointerEvents: 'none',
               }}
             />
             
@@ -317,11 +324,11 @@ const LunaCard: React.FC<LunaCardProps> = ({ moonPhase, moonPosition, isExpanded
           {/* Glowing rings - opacity based on illumination */}
           <div 
             className="moon-glow-ring" 
-            style={{ opacity: 0.3 + (moonPhase.illumination / 200) }}
+            style={{ opacity: 0.3 + (moonPhase.illumination / 200), pointerEvents: 'none' }}
           />
           
           {/* Illumination text */}
-          <div className="moon-illumination-text">{moonPhase.illumination.toFixed(0)}%</div>
+          <div className="moon-illumination-text" style={{ pointerEvents: 'none' }}>{moonPhase.illumination.toFixed(0)}%</div>
         </div>
         
         <div className="card-primary-content centered">
@@ -338,7 +345,7 @@ const LunaCard: React.FC<LunaCardProps> = ({ moonPhase, moonPosition, isExpanded
 
       {/* Expanded View - Lunar Temple */}
       {isExpanded && (
-        <div className="card-expanded" onClick={(e) => e.stopPropagation()}>
+        <div key="luna-expanded" className="card-expanded" onClick={(e) => e.stopPropagation()}>
           <div className="expanded-header">
             <div className="expanded-title">{t('premiumCards.lunarTemple')}</div>
             <button className="close-btn" onClick={onToggle} aria-label={t('common.close')}>×</button>
@@ -474,13 +481,20 @@ const KronosCard: React.FC<KronosCardProps> = ({ planetaryHour, isExpanded, onTo
     );
   }
 
-  const hourData = {
-    title: t(`dictionaries.planetaryGuidance.${planetaryHour.planet}.title`, { defaultValue: t('dictionaries.planetaryGuidance.sun.title') }),
-    description: t(`dictionaries.planetaryGuidance.${planetaryHour.planet}.description`, { defaultValue: t('dictionaries.planetaryGuidance.sun.description') }),
-    do: Object.values(t(`dictionaries.planetaryGuidance.${planetaryHour.planet}.do`, { defaultValue: t('dictionaries.planetaryGuidance.sun.do'), returnObjects: true }) as Record<string, string>),
-    dont: Object.values(t(`dictionaries.planetaryGuidance.${planetaryHour.planet}.dont`, { defaultValue: t('dictionaries.planetaryGuidance.sun.dont'), returnObjects: true }) as Record<string, string>),
-    quality: t(`dictionaries.planetaryGuidance.${planetaryHour.planet}.quality`, { defaultValue: t('dictionaries.planetaryGuidance.sun.quality') }),
-  };
+  const hourData = useMemo(() => {
+    const fallbackTitle = t('dictionaries.planetaryGuidance.sun.title');
+    const fallbackDescription = t('dictionaries.planetaryGuidance.sun.description');
+    const fallbackDo = t('dictionaries.planetaryGuidance.sun.do', { returnObjects: true });
+    const fallbackDont = t('dictionaries.planetaryGuidance.sun.dont', { returnObjects: true });
+    const fallbackQuality = t('dictionaries.planetaryGuidance.sun.quality');
+    return {
+      title: t(`dictionaries.planetaryGuidance.${planetaryHour.planet}.title`, { defaultValue: fallbackTitle }),
+      description: t(`dictionaries.planetaryGuidance.${planetaryHour.planet}.description`, { defaultValue: fallbackDescription }),
+      do: Object.values(t(`dictionaries.planetaryGuidance.${planetaryHour.planet}.do`, { defaultValue: fallbackDo, returnObjects: true }) as Record<string, string>),
+      dont: Object.values(t(`dictionaries.planetaryGuidance.${planetaryHour.planet}.dont`, { defaultValue: fallbackDont, returnObjects: true }) as Record<string, string>),
+      quality: t(`dictionaries.planetaryGuidance.${planetaryHour.planet}.quality`, { defaultValue: fallbackQuality }),
+    };
+  }, [t, planetaryHour.planet]);
   const currentHourIndex = CHALDEAN_ORDER.indexOf(planetaryHour.planet as PlanetId);
   
   // Calculate current hour progress (mock - would use actual sunrise/sunset)
@@ -494,7 +508,7 @@ const KronosCard: React.FC<KronosCardProps> = ({ planetaryHour, isExpanded, onTo
       {/* Default View */}
       <div className="card-default">
         <div className="hour-symbol-container">
-          <div className="hour-glow" />
+          <div className="hour-glow" style={{ pointerEvents: 'none' }} />
           <span className="hour-symbol-large">{planetaryHour.symbol}</span>
         </div>
         <div className="card-primary-content centered">
@@ -510,7 +524,7 @@ const KronosCard: React.FC<KronosCardProps> = ({ planetaryHour, isExpanded, onTo
 
       {/* Expanded View - The Solar Chariot */}
       {isExpanded && (
-        <div className="card-expanded" onClick={(e) => e.stopPropagation()}>
+        <div key="kronos-expanded" className="card-expanded" onClick={(e) => e.stopPropagation()}>
           <div className="expanded-header">
             <div className="expanded-title">{t('premiumCards.chaldeanHourglass')}</div>
             <button className="close-btn" onClick={onToggle} aria-label={t('common.close')}>×</button>
@@ -694,7 +708,7 @@ const StationCard: React.FC<StationCardProps> = ({ retrogrades, positions, isExp
 
       {/* Expanded View - Planetary Stations */}
       {isExpanded && (
-        <div className="card-expanded" onClick={(e) => e.stopPropagation()}>
+        <div key="station-expanded" className="card-expanded" onClick={(e) => e.stopPropagation()}>
           <div className="expanded-header">
             <div className="expanded-title">{t('premiumCards.celestialWeather')}</div>
             <button className="close-btn" onClick={onToggle} aria-label={t('common.close')}>×</button>
@@ -844,7 +858,7 @@ const StelliumCard: React.FC<StelliumCardProps> = ({ positions, isExpanded, onTo
 
       {/* Expanded View - Planetary Spheres */}
       {isExpanded && (
-        <div className="card-expanded" onClick={(e) => e.stopPropagation()}>
+        <div key="stellium-expanded" className="card-expanded" onClick={(e) => e.stopPropagation()}>
           <div className="expanded-header">
             <div className="expanded-title">{t('premiumCards.planetarySpheres')}</div>
             <button className="close-btn" onClick={onToggle} aria-label={t('common.close')}>×</button>
@@ -968,9 +982,9 @@ export interface PremiumCardsProps {
 export const PremiumCards: React.FC<PremiumCardsProps> = (props) => {
   const [expandedCard, setExpandedCard] = useState<string | null>(null);
   
-  const toggleCard = (cardId: string) => {
-    setExpandedCard(expandedCard === cardId ? null : cardId);
-  };
+  const toggleCard = useCallback((cardId: string) => {
+    setExpandedCard(prev => prev === cardId ? null : cardId);
+  }, []);
 
   return (
     <div className="premium-cards-container">
