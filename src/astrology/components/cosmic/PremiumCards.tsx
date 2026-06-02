@@ -276,8 +276,8 @@ const LunaCard: React.FC<LunaCardProps> = ({ moonPhase, moonPosition, isExpanded
   const oracle = {
     title: t(`dictionaries.moonOracle.${moonPhase.phase}.title`, { defaultValue: t('dictionaries.moonOracle.New Moon.title') }),
     poem: t(`dictionaries.moonOracle.${moonPhase.phase}.poem`, { defaultValue: t('dictionaries.moonOracle.New Moon.poem') }),
-    favors: t(`dictionaries.moonOracle.${moonPhase.phase}.favors`, { defaultValue: t('dictionaries.moonOracle.New Moon.favors'), returnObjects: true }) as string[],
-    warnings: t(`dictionaries.moonOracle.${moonPhase.phase}.warnings`, { defaultValue: t('dictionaries.moonOracle.New Moon.warnings'), returnObjects: true }) as string[],
+    favors: Object.values(t(`dictionaries.moonOracle.${moonPhase.phase}.favors`, { defaultValue: t('dictionaries.moonOracle.New Moon.favors'), returnObjects: true }) as Record<string, string>),
+    warnings: Object.values(t(`dictionaries.moonOracle.${moonPhase.phase}.warnings`, { defaultValue: t('dictionaries.moonOracle.New Moon.warnings'), returnObjects: true }) as Record<string, string>),
   };
   
   // Calculate moon age percentage through cycle (approximate from angle)
@@ -477,8 +477,8 @@ const KronosCard: React.FC<KronosCardProps> = ({ planetaryHour, isExpanded, onTo
   const hourData = {
     title: t(`dictionaries.planetaryGuidance.${planetaryHour.planet}.title`, { defaultValue: t('dictionaries.planetaryGuidance.sun.title') }),
     description: t(`dictionaries.planetaryGuidance.${planetaryHour.planet}.description`, { defaultValue: t('dictionaries.planetaryGuidance.sun.description') }),
-    do: t(`dictionaries.planetaryGuidance.${planetaryHour.planet}.do`, { defaultValue: t('dictionaries.planetaryGuidance.sun.do'), returnObjects: true }) as string[],
-    dont: t(`dictionaries.planetaryGuidance.${planetaryHour.planet}.dont`, { defaultValue: t('dictionaries.planetaryGuidance.sun.dont'), returnObjects: true }) as string[],
+    do: Object.values(t(`dictionaries.planetaryGuidance.${planetaryHour.planet}.do`, { defaultValue: t('dictionaries.planetaryGuidance.sun.do'), returnObjects: true }) as Record<string, string>),
+    dont: Object.values(t(`dictionaries.planetaryGuidance.${planetaryHour.planet}.dont`, { defaultValue: t('dictionaries.planetaryGuidance.sun.dont'), returnObjects: true }) as Record<string, string>),
     quality: t(`dictionaries.planetaryGuidance.${planetaryHour.planet}.quality`, { defaultValue: t('dictionaries.planetaryGuidance.sun.quality') }),
   };
   const currentHourIndex = CHALDEAN_ORDER.indexOf(planetaryHour.planet as PlanetId);

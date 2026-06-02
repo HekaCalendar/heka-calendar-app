@@ -472,8 +472,8 @@ const CelestialPanelComponent: React.FC = () => {
           planet: `${t(`planets.${planetKeys[dayIndex]}`)} ${daySymbols[dayIndex]}`,
           symbol: dayEmojis[dayIndex],
           color: dayColors[dayIndex],
-          qualities: t(`planetaryDays.${dayKey}.qualities`, { returnObjects: true }) as string[],
-          activities: t(`planetaryDays.${dayKey}.activities`, { returnObjects: true }) as string[],
+          qualities: Object.values(t(`planetaryDays.${dayKey}.qualities`, { returnObjects: true }) as Record<string, string>),
+          activities: Object.values(t(`planetaryDays.${dayKey}.activities`, { returnObjects: true }) as Record<string, string>),
           description: t(`planetaryDays.${dayKey}.description`),
         };
 
