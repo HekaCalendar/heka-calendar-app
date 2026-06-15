@@ -239,6 +239,22 @@
         
         @media (max-width: 500px) {
             .stats-row { grid-template-columns: 1fr; gap: 16px; }
+            
+            .answer-grid {
+                grid-template-columns: repeat(3, minmax(0, 1fr));
+                gap: 8px;
+            }
+            
+            .answer-btn {
+                padding: 16px 8px;
+                font-size: 1.1rem;
+            }
+            
+            .progress-node {
+                width: 26px;
+                height: 26px;
+                font-size: 0.55rem;
+            }
         }
         
         .stat-box {

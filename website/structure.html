@@ -241,8 +241,14 @@
         
         /* Responsive */
         @media (max-width: 768px) {
+            .months-scroll-container {
+                margin: 0;
+                padding: var(--space-md) var(--space-md);
+            }
+            
             .month-card {
-                width: 140px;
+                width: clamp(120px, 38vw, 160px);
+                flex: 0 0 auto;
             }
             
             .month-name-elite {
