@@ -227,6 +227,14 @@ body {
     color: var(--light-primary);
 }
 
+.brand-logo {
+    width: 42px;
+    height: 42px;
+    object-fit: contain;
+    border-radius: 10px;
+    display: block;
+}
+
 .navbar-menu {
     display: flex;
     align-items: center;
