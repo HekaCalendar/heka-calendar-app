@@ -91,9 +91,6 @@
     <!-- Core functionality: Internet for weather, APIs, and cloud sync -->
     <uses-permission android:name="android.permission.INTERNET" />
 
-    <!-- Storage: Audio journal attachments and PDF export -->
-    <uses-permission android:name="android.permission.READ_MEDIA_AUDIO" />
-
     <!-- Location: Real-time sky calculations, sunrise/sunset times, weather -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />

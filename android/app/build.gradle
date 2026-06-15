@@ -9,7 +9,7 @@ android {
         applicationId "com.heka.calendar"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 269
+        versionCode 270
         versionName "2.2.22"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         androidResources {
