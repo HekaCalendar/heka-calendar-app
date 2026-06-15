@@ -234,11 +234,18 @@ body {
 }
 
 .brand-logo {
-    width: 42px;
-    height: 42px;
+    width: 56px;
+    height: 56px;
     object-fit: contain;
     border-radius: 10px;
     display: block;
+}
+
+@media (max-width: 600px) {
+    .brand-logo {
+        width: 48px;
+        height: 48px;
+    }
 }
 
 .navbar-menu {
@@ -1058,6 +1065,14 @@ h4 { font-size: clamp(1.2rem, 2vw, 1.5rem); }
     font-family: var(--font-ritual);
     font-size: 1.5rem;
     color: var(--gold);
+}
+
+.footer-sigil-logo {
+    width: 64px;
+    height: 64px;
+    object-fit: contain;
+    border-radius: 12px;
+    display: block;
 }
 
 .footer-sigil-text {
