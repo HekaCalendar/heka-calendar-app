@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Privacy Policy - HEKA Calendar</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        
+        h1 {
+            color: #1a1a2e;
+            font-size: 2rem;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .subtitle {
+            color: #c9a227;
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 24px;
+        }
+        
+        .last-updated {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 32px;
+            padding-bottom: 24px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+        
+        h2 {
+            color: #1a1a2e;
+            font-size: 1.3rem;
+            margin-top: 32px;
+            margin-bottom: 16px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid #c9a227;
+        }
+        
+        h3 {
+            color: #1a1a2e;
+            font-size: 1.05rem;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+        
+        p {
+            margin-bottom: 14px;
+            color: #444;
+        }
+        
+        ul, ol {
+            margin-bottom: 16px;
+            padding-left: 24px;
+        }
+        
+        li {
+            margin-bottom: 8px;
+            color: #444;
+        }
+        
+        strong {
+            color: #1a1a2e;
+        }
+        
+        code {
+            background: #f4f4f4;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.9em;
+            color: #d63384;
+        }
+        
+        .highlight-box {
+            background: #f8f9fa;
+            border-left: 4px solid #c9a227;
+            padding: 16px 20px;
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0;
+        }
+        
+        .highlight-box p {
+            margin: 0;
+            color: #555;
+        }
+        
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 0.95rem;
+        }
+        
+        .data-table th {
+            background: #1a1a2e;
+            color: white;
+            padding: 12px;
+            text-align: left;
+            font-weight: 600;
+        }
+        
+        .data-table td {
+            padding: 12px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .data-table tr:nth-child(even) {
+            background: #f8f9fa;
+        }
+        
+        .badge-local {
+            display: inline-block;
+            background: #d4edda;
+            color: #155724;
+            padding: 2px 10px;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        
+        .badge-cloud {
+            display: inline-block;
+            background: #fff3cd;
+            color: #856404;
+            padding: 2px 10px;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        
+        .contact {
+            margin-top: 32px;
+            padding-top: 24px;
+            border-top: 2px solid #f0f0f0;
+            text-align: center;
+        }
+        
+        .contact a {
+            color: #c9a227;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        
+        .contact a:hover {
+            text-decoration: underline;
+        }
+        
+        @media (max-width: 600px) {
+            .container {
+                padding: 24px;
+            }
+            
+            h1 {
+                font-size: 1.5rem;
+            }
+            
+            h2 {
+                font-size: 1.1rem;
+            }
+            
+            .data-table {
+                font-size: 0.85rem;
+            }
+            
+            .data-table th,
+            .data-table td {
+                padding: 8px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔒 Privacy Policy</h1>
+        <div class="subtitle">HEKA Calendar</div>
+        <div class="last-updated">Last Updated: May 7, 2026</div>
+        
+        <p>
+            HEKA is built on a local-first principle. By default, everything lives on your device. 
+            We cannot see it, sell it, or lose it. You choose when — and if — anything leaves your hands.
+        </p>
+        
+        <h2>1. Data Storage</h2>
+        
+        <div class="highlight-box">
+            <p><strong>By default, everything is local.</strong> Your notes, journal entries, birth charts, 
+            tracker data, and app preferences are stored in an <strong>IndexedDB database</strong> on your device 
+            using the Dexie.js library. This is a structured, persistent database that survives browser restarts 
+            and app updates. We cannot access this data. We do not back it up. It cannot be recovered if you lose 
+            your device unless you have enabled cloud sync or performed a manual export.</p>
+        </div>
+        
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>Data Type</th>
+                    <th>Purpose</th>
+                    <th>Storage</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Daily Notes</strong></td>
+                    <td>Calendar day notes with categories and timestamps</td>
+                    <td><span class="badge-local">Device Only</span></td>
+                </tr>
+                <tr>
+                    <td><strong>Journal Entries</strong></td>
+                    <td>Oracle Journal entries with markdown, tags, mood, revision history (up to 50 per entry)</td>
+                    <td><span class="badge-local">Device Only</span></td>
+                </tr>
+                <tr>
+                    <td><strong>Journal Attachments</strong></td>
+                    <td>Images, audio recordings, and files attached to journal entries</td>
+                    <td><span class="badge-local">Device Only</span></td>
+                </tr>
+                <tr>
+                    <td><strong>Birth Charts</strong></td>
+                    <td>Astrological profiles, natal charts, and transit calculations</td>
+                    <td><span class="badge-local">Device Only</span></td>
+                </tr>
+                <tr>
+                    <td><strong>Daily Oracle Cards</strong></td>
+                    <td>Generated oracle cards, celestial snapshots, and draw history</td>
+                    <td><span class="badge-local">Device Only</span></td>
+                </tr>
+                <tr>
+                    <td><strong>Reflection Data</strong></td>
+                    <td>Daily mood, rest quality, vitality, and custom journal reflections</td>
+                    <td><span class="badge-local">Device Only</span></td>
+                </tr>
+                <tr>
+                    <td><strong>App Settings</strong></td>
+                    <td>Theme, location, zodiac preferences, notification settings, language</td>
+                    <td><span class="badge-local">Device Only</span></td>
+                </tr>
+                <tr>
+                    <td><strong>Notifications</strong></td>
+                    <td>Task reminders, celestial alerts, tracker reminders, daily reflections</td>
+                    <td><span class="badge-local">Device Only</span></td>
+                </tr>
+                <tr>
+                    <td><strong>Search Index</strong></td>
+                    <td>Full-text search index of journal entries for fast lookup</td>
+                    <td><span class="badge-local">Device Only</span></td>
+                </tr>
+                <tr>
+                    <td><strong>PDF Export</strong></td>
+                    <td>Print-to-PDF feature output (generated locally)</td>
+                    <td><span class="badge-local">Device Only</span></td>
+                </tr>
+                <tr>
+                    <td><strong>Community Voting</strong></td>
+                    <td>Feature requests, holiday submissions, energy voting</td>
+                    <td><span class="badge-cloud">Cloud (with UID)</span></td>
+                </tr>
+                <tr>
+                    <td><strong>Social Data</strong></td>
+                    <td>Friends, messages, task shares, online presence (if using Cosmic Circle)</td>
+                    <td><span class="badge-cloud">Cloud (encrypted)</span></td>
+                </tr>
+                <tr>
+                    <td><strong>Crash Analytics</strong></td>
+                    <td>App stability diagnostics and error reports</td>
+                    <td><span class="badge-cloud">Cloud (anonymous)</span></td>
+                </tr>
+            </tbody>
+        </table>
+        
+        <h2>2. Your Rights</h2>
+        
+        <p>Under GDPR and CCPA, you have the following rights:</p>
+        
+        <ul>
+            <li><strong>Access:</strong> Export all your data as JSON at any time — journal entries, birth charts, tracker history, settings, and achievements.</li>
+            <li><strong>Deletion:</strong> Erase all data permanently from device and cloud with one action.</li>
+            <li><strong>Portability:</strong> Import and export JSON to transfer your data between devices or systems.</li>
+        </ul>
+        
+        <h2>3. Wellness Reflection Data</h2>
+        
+        <p>
+            HEKA includes optional daily reflection tools for personal awareness. 
+            <strong>All reflection data is stored locally on your device by default.</strong> If you enable cloud 
+            synchronization, this data is encrypted before transmission and stored in Firebase.
+        </p>
+        
+        <p><strong>Reflection categories include:</strong></p>
+        <ul>
+            <li><strong>Daily Reflection:</strong> 1-10 rating, emotional tone, triggers, time of day</li>
+            <li><strong>Rest:</strong> duration, quality, factors</li>
+            <li><strong>Vitality:</strong> energy level, type (physical/mental/emotional/spiritual)</li>
+            <li><strong>Custom reflections:</strong> user-defined categories</li>
+        </ul>
+        
+        <p>
+            <strong>On-device insights:</strong> Pattern recognition and trend analysis are generated entirely on your device using local algorithms. No reflection data is sent to external servers for analysis.
+        </p>
+        
+        <h2>4. Artificial Intelligence & LLM Processing</h2>
+        
+        <p>
+            HEKA offers optional AI-powered features that use external Large Language Models (LLMs). 
+            <strong>AI enhancement is entirely opt-in and disabled by default.</strong> Without enabling it, all 
+            insights, coaching, and analysis use on-device template-based generation — no data leaves your device.
+        </p>
+        
+        <p><strong>When AI is enabled,</strong> you provide your own API key for one of the following providers: 
+        Groq, OpenAI, Anthropic, or a self-hosted Ollama instance. The following contextual data may be sent 
+        to your chosen provider:</p>
+        
+        <ul>
+            <li>Celestial state and transit summary for the current date</li>
+            <li>Your archetype and general mood tone (if available)</li>
+            <li>Pending tasks and task completion count</li>
+            <li>Writing streak and recent journal activity summary</li>
+            <li>Location (for planetary hour and sun time calculations)</li>
+            <li>Zodiac preferences (tropical/sidereal, 12/13 signs)</li>
+        </ul>
+        
+        <div class="highlight-box">
+            <p><strong>We do not store or log your API keys.</strong> They are saved in your device's secure storage. 
+            LLM responses are cached in memory for up to 4 hours to reduce API calls. Sentiment analysis of journal 
+            entries is performed entirely on-device using a local lexicon — no text is transmitted for this purpose.</p>
+        </div>
+        
+        <h2>5. Daily Oracle & Celestial Features</h2>
+        
+        <p>
+            The Daily Oracle generates one personalized card per day based on a real-time celestial snapshot. 
+            Planetary positions, moon phase, retrogrades, and dominant elements are computed on-device using 
+            Swiss Ephemeris WASM. No astronomical data is transmitted to external servers.
+        </p>
+        
+        <p>
+            <strong>Weather data</strong> is fetched from Open-Meteo (<code>open-meteo.com</code>) using your 
+            latitude and longitude. <strong>Sunrise and sunset times</strong> are fetched from NOAA Sunrise-Sunset 
+            (<code>sunrise-sunset.org</code>) using the same location. These services receive only coordinates — 
+            no identifying information.
+        </p>
+        
+        <p>
+            <strong>Location:</strong> Your location is stored locally and used for astronomical calculations, 
+            weather, and sun times. It is never shared with third parties beyond the coordinate-based API calls 
+            described above.
+        </p>
+        
+        <h2>6. Social Features (Cosmic Circle)</h2>
+        
+        <p>
+            The Cosmic Circle enables social features including friend connections, messaging, task sharing, 
+            and collaborative rituals. <strong>Social data is stored in Firebase Firestore</strong> and requires 
+            cloud sync to be enabled.
+        </p>
+        
+        <p><strong>What is stored:</strong></p>
+        <ul>
+            <li>Friend profiles and friendship connections</li>
+            <li>Direct messages</li>
+            <li>Shared tasks and task rituals</li>
+            <li>Online presence and last-active status</li>
+            <li>Invite codes and deep links</li>
+            <li>Community holiday submissions and feature voting (associated with your Firebase Auth UID)</li>
+        </ul>
+        
+        <p>
+            <strong>Shared tasks</strong> create public Firestore documents accessible via share code. They include 
+            the task details and creator display name. <strong>Energy voting</strong> uses a locally-generated 
+            device ID for anonymous daily participation.
+        </p>
+        
+        <h2>7. Content Safety & Crisis Detection</h2>
+        
+        <p>
+            To help protect user safety, journal entries are scanned <strong>on-device</strong> for crisis 
+            indicators including references to self-harm, suicide, severe depression, and violence. This scanning 
+            uses a local keyword list and occurs entirely on your device — no journal text is transmitted for 
+            this purpose.
+        </p>
+        
+        <p>
+            If concerning language is detected, the app displays local support resources such as the 
+            988 Suicide & Crisis Lifeline and Crisis Text Line. No alerts are sent to us or any third party. 
+            This is a user-safety feature designed to provide immediate access to help.
+        </p>
+        
+        <h2>8. Third-Party Services</h2>
+        
+        <h3>Swiss Ephemeris</h3>
+        <p>Astronomical calculations run entirely on your device via WASM. No birth chart data, location, or personal information is transmitted for astrological computation.</p>
+        
+        <h3>Open-Meteo</h3>
+        <p>Weather data is fetched from <code>open-meteo.com</code> using your latitude and longitude. No API key is required. No identifying information is transmitted.</p>
+        
+        <h3>NOAA Sunrise-Sunset</h3>
+        <p>Sun rise and set times are fetched from <code>sunrise-sunset.org</code> using your coordinates. No identifying information is transmitted.</p>
+        
+        <h3>LLM Providers (Opt-In Only)</h3>
+        <p>Groq, OpenAI, Anthropic, or Ollama — only when you enable AI and provide your own API key. Data is sent directly to your chosen provider. We are not an intermediary.</p>
+        
+        <h3>Firebase (Google)</h3>
+        <p>If you enable cloud sync, encrypted data is stored in Firebase Firestore. Firebase Crashlytics is used for anonymous crash reporting. Encryption keys are generated and stored on your device.</p>
+        
+        <h3>Google Fonts</h3>
+        <p>The Print-to-PDF feature loads Playfair Display and other fonts from Google's CDN (<code>fonts.googleapis.com</code>) for styled PDF output.</p>
+        
+        <h2>9. What We Don't Do</h2>
+        
+        <ul>
+            <li>Google Analytics</li>
+            <li>Third-party advertising</li>
+            <li>Behavioral tracking cookies</li>
+            <li>Device fingerprinting</li>
+            <li>Selling your data</li>
+        </ul>
+        
+        <p><strong>Network requests made by the app:</strong></p>
+        <ol>
+            <li>App updates (manual)</li>
+            <li>Cloud sync (if enabled)</li>
+            <li>Weather & sun times (coordinate-only)</li>
+            <li>LLM APIs (opt-in only, your key)</li>
+            <li>Community & social (if enabled)</li>
+        </ol>
+        
+        <h2>10. Children's Privacy</h2>
+        
+        <p>
+            HEKA is not directed to children under 13 years of age. We do not knowingly collect, 
+            use, or disclose personal data from children. The app contains wellness tracking features 
+            that are intended for adult users. If you believe a child has provided 
+            personal information through our services, please contact us immediately for deletion.
+        </p>
+        
+        <h2>11. International Data Transfers</h2>
+        
+        <p>
+            By default, all data remains on your device in your jurisdiction. If you enable cloud 
+            synchronization, encrypted data may be stored on Firebase servers located in your region. For any 
+            transfer outside the European Economic Area, we utilize EU Standard Contractual Clauses 
+            and maintain appropriate safeguards.
+        </p>
+        
+        <h2>12. Changes to This Policy</h2>
+        
+        <p>
+            We may update this privacy policy from time to time to reflect changes in our practices, 
+            features, or legal requirements. We will notify you of significant changes through the app 
+            or via email if you have provided one. Continued use of HEKA after changes constitutes 
+            acceptance of the updated policy.
+        </p>
+        
+        <div class="contact">
+            <p>Questions? Contact us at <a href="mailto:hekacalendar@gmail.com">hekacalendar@gmail.com</a></p>
+        </div>
+    </div>
+</body>
+</html>
