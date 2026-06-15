@@ -79,24 +79,24 @@
                                         <button class="btn btn--icon" id="ap-prev" title="Previous month">←</button>
                                         <button class="btn" id="ap-today">Today</button>
                                         <button class="btn btn--icon" id="ap-next" title="Next month">→</button>
-                                        <button class="btn btn--primary" data-preview="Print preview coming soon">🖨️ Print</button>
+                                        <button class="btn btn--primary" data-modal="print">🖨️ Print</button>
                                     </div>
                                     <div class="month-header__row">
-                                        <button class="btn btn--icon" data-preview="Year view coming soon">Year</button>
-                                        <button class="btn" data-preview="Search coming soon">🔍 Search</button>
+                                        <button class="btn btn--icon" data-modal="year">Year</button>
+                                        <button class="btn" data-modal="search">🔍 Search</button>
                                     </div>
                                 </div>
                                 <div class="month-header__divider"></div>
                                 <div class="month-header__column month-header__column--features">
                                     <div class="month-header__row">
-                                        <button class="btn" data-preview="Stars Hub coming soon">✨ Stars</button>
-                                        <button class="btn" style="background: rgba(167, 139, 250, 0.12); border-color: rgba(167, 139, 250, 0.35);" data-preview="Cosmic Circle coming soon">⭕ Circle</button>
-                                        <button class="btn" style="background: rgba(202, 162, 74, 0.14); border-color: rgba(202, 162, 74, 0.35);" data-preview="Oracle Journal coming soon">📓 Journal</button>
+                                        <button class="btn" data-modal="stars">✨ Stars</button>
+                                        <button class="btn" style="background: rgba(167, 139, 250, 0.12); border-color: rgba(167, 139, 250, 0.35);" data-modal="circle">⭕ Circle</button>
+                                        <button class="btn" style="background: rgba(202, 162, 74, 0.14); border-color: rgba(202, 162, 74, 0.35);" data-modal="journal">📓 Journal</button>
                                     </div>
                                     <div class="month-header__row">
-                                        <button class="btn" data-preview="Info coming soon">ℹ️ About</button>
-                                        <button class="btn" data-preview="Statistics coming soon">📊 Stats</button>
-                                        <button class="btn" data-preview="Community voting coming soon">
+                                        <button class="btn" data-modal="info">ℹ️ About</button>
+                                        <button class="btn" data-modal="stats">📊 Stats</button>
+                                        <button class="btn" data-modal="vote">
                                             <span style="display:inline-flex;align-items:center;gap:4px;">
                                                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="8" width="18" height="13" rx="2"/><path d="M12 3v5"/><path d="M8 8l4-4 4 4"/></svg>
                                                 Vote
@@ -233,6 +233,16 @@
 
     <div class="app-preview-toast" id="ap-toast">
         <span id="ap-toast-text">Coming soon</span>
+    </div>
+
+    <div class="ap-modal-overlay" id="ap-modal-overlay" onclick="closeModal(event)">
+        <div class="ap-modal" id="ap-modal" onclick="event.stopPropagation()">
+            <div class="ap-modal__header">
+                <h3 class="ap-modal__title" id="ap-modal-title">Preview</h3>
+                <button class="ap-modal__close" onclick="closeModal()" aria-label="Close">×</button>
+            </div>
+            <div class="ap-modal__body" id="ap-modal-body"></div>
+        </div>
     </div>
 
     <script src="assets/js/app-preview.js"></script>

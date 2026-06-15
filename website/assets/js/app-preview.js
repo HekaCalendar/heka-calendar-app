@@ -208,8 +208,9 @@
     els.arcPill = document.getElementById('ap-arc-pill');
     els.grid = document.getElementById('ap-grid');
     els.dayPanel = document.getElementById('ap-day-panel');
-    els.toast = document.getElementById('ap-toast');
-    els.toastText = document.getElementById('ap-toast-text');
+    els.modalOverlay = document.getElementById('ap-modal-overlay');
+    els.modalTitle = document.getElementById('ap-modal-title');
+    els.modalBody = document.getElementById('ap-modal-body');
 
     bindControls();
     render();
@@ -230,12 +231,9 @@
       });
     });
 
-    // Preview-only feature buttons
-    const previewButtons = document.querySelectorAll('[data-preview]');
-    previewButtons.forEach((btn) => {
-      btn.addEventListener('click', () => {
-        showToast(btn.dataset.preview || 'Coming soon');
-      });
+    // Feature-preview buttons open app-style modals
+    document.querySelectorAll('[data-modal]').forEach((btn) => {
+      btn.addEventListener('click', () => openModal(btn.dataset.modal));
     });
   }
 
@@ -466,13 +464,128 @@
     `;
   }
 
-  function showToast(message) {
-    els.toastText.textContent = message;
-    els.toast.classList.add('app-preview-toast--visible');
-    setTimeout(() => {
-      els.toast.classList.remove('app-preview-toast--visible');
-    }, 2400);
+  function openModal(type) {
+    const content = MODAL_CONTENT[type];
+    if (!content) return;
+    els.modalTitle.textContent = content.title;
+    els.modalBody.innerHTML = content.body;
+    els.modalOverlay.classList.add('active');
+    document.body.style.overflow = 'hidden';
   }
+
+  function closeModal(event) {
+    if (event && event.target !== els.modalOverlay && event.target.closest('.ap-modal__close') === null) return;
+    els.modalOverlay.classList.remove('active');
+    document.body.style.overflow = '';
+  }
+
+  window.closeModal = closeModal;
+
+  const MODAL_CONTENT = {
+    info: {
+      title: 'About HEKA Calendar',
+      body: `
+        <p>HEKA Calendar is a complete re-imagining of civil time. Thirteen months of 28 days, plus a single correction day in March, align the year with the rhythm of seasons and the human mind.</p>
+        <div class="ap-modal__list">
+          <div class="ap-modal__list-item"><span class="ap-modal__list-icon">📅</span><div class="ap-modal__list-text"><strong>13-Month Structure</strong>Every month has 28 days; every date falls on the same weekday within the year.</div></div>
+          <div class="ap-modal__list-item"><span class="ap-modal__list-icon">🌙</span><div class="ap-modal__list-text"><strong>Civil Overlay</strong>Gregorian dates stay visible, so you never lose coordination with the world.</div></div>
+          <div class="ap-modal__list-item"><span class="ap-modal__list-icon">✨</span><div class="ap-modal__list-text"><strong>Optional Celestial Tools</strong>Birth charts, transits, lunar mansions and AI coaching are available when you want them.</div></div>
+        </div>
+      `
+    },
+    stars: {
+      title: 'Stars Hub',
+      body: `
+        <p>Browse celestial reference cards for any day. The full app uses Swiss Ephemeris for precise positions.</p>
+        <div class="ap-modal__grid">
+          <div class="ap-modal__card"><div class="ap-modal__card-icon">☉</div><div class="ap-modal__card-title">Sun Sign</div><div class="ap-modal__card-sub">Tropical & sidereal</div></div>
+          <div class="ap-modal__card"><div class="ap-modal__card-icon">☽</div><div class="ap-modal__card-title">Moon Phase</div><div class="ap-modal__card-sub">Daily illumination</div></div>
+          <div class="ap-modal__card"><div class="ap-modal__card-icon">♀</div><div class="ap-modal__card-title">Planets</div><div class="ap-modal__card-sub">Transit positions</div></div>
+          <div class="ap-modal__card"><div class="ap-modal__card-icon">✦</div><div class="ap-modal__card-title">Lunar Mansions</div><div class="ap-modal__card-sub">27 nakshatras</div></div>
+        </div>
+      `
+    },
+    circle: {
+      title: 'Cosmic Circle',
+      body: `
+        <p>Share selected calendar moments with friends and family. You control exactly what is visible.</p>
+        <div class="ap-modal__list">
+          <div class="ap-modal__list-item"><span class="ap-modal__list-icon">👥</span><div class="ap-modal__list-text"><strong>Private Circles</strong>Invite only the people you choose.</div></div>
+          <div class="ap-modal__list-item"><span class="ap-modal__list-icon">🔒</span><div class="ap-modal__list-text"><strong>Granular Sharing</strong>Share notes, events, or just moon phases.</div></div>
+          <div class="ap-modal__list-item"><span class="ap-modal__list-icon">💬</span><div class="ap-modal__list-text"><strong>Reactions</strong>Respond to shared days with emoji and comments.</div></div>
+        </div>
+      `
+    },
+    journal: {
+      title: 'Oracle Journal',
+      body: `
+        <p>Capture reflections, intentions, and daily observations. Entries are private by default and tied to HEKA dates.</p>
+        <div class="ap-modal__list">
+          <div class="ap-modal__list-item"><span class="ap-modal__list-icon">📓</span><div class="ap-modal__list-text"><strong>April 5, 2026</strong>Set quarterly intentions for the Opening Arc.</div></div>
+          <div class="ap-modal__list-item"><span class="ap-modal__list-icon">⚡</span><div class="ap-modal__list-text"><strong>May 14, 2026</strong>Quick note: team sync at 10am.</div></div>
+          <div class="ap-modal__list-item"><span class="ap-modal__list-icon">🌕</span><div class="ap-modal__list-text"><strong>Hexa 21, 2026</strong>Full moon reflection on the mid-year harvest.</div></div>
+        </div>
+      `
+    },
+    stats: {
+      title: 'Your Statistics',
+      body: `
+        <div class="ap-modal__stat-row">
+          <div class="ap-modal__stat"><div class="ap-modal__stat-value">28</div><div class="ap-modal__stat-label">Notes</div></div>
+          <div class="ap-modal__stat"><div class="ap-modal__stat-value">13</div><div class="ap-modal__stat-label">Months Viewed</div></div>
+          <div class="ap-modal__stat"><div class="ap-modal__stat-value">4</div><div class="ap-modal__stat-label">Holidays</div></div>
+        </div>
+        <p>Track how you use the calendar over time: notes created, months explored, celestial events observed, and more.</p>
+      `
+    },
+    vote: {
+      title: 'Community Voting',
+      body: `
+        <div class="ap-modal__vote">
+          <h4>Should "Equinox Reflection" be a public holiday?</h4>
+          <p>Community votes shape the default holiday layer in HEKA Calendar.</p>
+          <div class="ap-modal__vote-bar"><div class="ap-modal__vote-fill"></div></div>
+          <div class="ap-modal__vote-options">
+            <button class="btn btn--primary">Yes</button>
+            <button class="btn">No</button>
+          </div>
+        </div>
+        <p style="margin-top: 16px; font-size: 0.85rem;">Voting is anonymous. Tap an option to register your preference.</p>
+      `
+    },
+    search: {
+      title: 'Search',
+      body: `
+        <input type="text" class="ap-modal__input" placeholder="Search dates, notes, or celestial events…" value="">
+        <p>Recent searches</p>
+        <div class="ap-modal__list">
+          <div class="ap-modal__list-item"><span class="ap-modal__list-icon">🔍</span><div class="ap-modal__list-text"><strong>"full moon"</strong>3 results</div></div>
+          <div class="ap-modal__list-item"><span class="ap-modal__list-icon">🔍</span><div class="ap-modal__list-text"><strong>"quarterly review"</strong>1 result</div></div>
+        </div>
+      `
+    },
+    year: {
+      title: 'Year View',
+      body: `
+        <p>See the entire HEKA year at a glance: 13 months, 3 arcs, and the single correction day in March.</p>
+        <div class="ap-modal__list">
+          <div class="ap-modal__list-item"><span class="ap-modal__list-icon">🔴</span><div class="ap-modal__list-text"><strong>Opening Arc</strong>April — the threshold month.</div></div>
+          <div class="ap-modal__list-item"><span class="ap-modal__list-icon">🟢</span><div class="ap-modal__list-text"><strong>Core Arc</strong>May through December — steady growth.</div></div>
+          <div class="ap-modal__list-item"><span class="ap-modal__list-icon">🟣</span><div class="ap-modal__list-text"><strong>Closing Arc</strong>January through March — reflection and correction.</div></div>
+        </div>
+      `
+    },
+    print: {
+      title: 'Print Calendar',
+      body: `
+        <p>Generate a clean, printable month or year layout. Choose which overlays to include.</p>
+        <div class="ap-modal__vote-options" style="margin-top: 8px;">
+          <button class="btn btn--primary">Print Month</button>
+          <button class="btn">Print Year</button>
+        </div>
+      `
+    }
+  };
 
   function chunk(array, size) {
     const result = [];
@@ -490,6 +603,12 @@
       .replace(/"/g, '&quot;')
       .replace(/'/g, '&#039;');
   }
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && els.modalOverlay.classList.contains('active')) {
+      closeModal();
+    }
+  });
 
   document.addEventListener('DOMContentLoaded', init);
 })();
