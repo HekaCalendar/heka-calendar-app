@@ -9,7 +9,7 @@ test('v3 tutorial completion persists across tab close', async ({ browser }) => 
   // Seed setup complete so we land directly on the v3 tutorial
   await page.addInitScript(() => {
     localStorage.setItem('heka-setup-v1', JSON.stringify({ isComplete: true, language: 'en' }));
-    localStorage.setItem('heka-version', '2.2.22');
+    localStorage.setItem('heka-version', process.env.npm_package_version || '2.2.23');
   });
 
   await page.goto(APP_URL);

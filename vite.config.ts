@@ -53,7 +53,9 @@ function injectVersionPlugin() {
           (asset) => asset.fileName?.startsWith('assets/translations-en-') && asset.fileName?.endsWith('.js')
         );
         if (enChunk?.fileName) {
-          const preload = `<link rel="preload" as="script" href="/${enChunk.fileName}" crossorigin="anonymous" />\n  `;
+          // Use a relative path so the preload works both in dev (/) and when
+          // deployed under a sub-path such as /app/.
+          const preload = `<link rel="preload" as="script" href="./${enChunk.fileName}" crossorigin="anonymous" />\n  `;
           result = result.replace(/<title>/, preload + '<title>');
         }
       }

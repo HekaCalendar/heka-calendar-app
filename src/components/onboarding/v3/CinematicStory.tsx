@@ -19,6 +19,7 @@ import { CircleShowcase } from './CircleShowcase';
 import { CommunityShowcase } from './CommunityShowcase';
 import { PureModeShowcase } from './PureModeShowcase';
 import { markTutorialV3Completed } from './tutorialStorage';
+import { ShowcaseScaler } from './ShowcaseScaler';
 
 interface CinematicStoryProps {
   strings: {
@@ -153,7 +154,9 @@ function buildSlides(strings: CinematicStoryProps['strings']): SlideDef[] {
           <Body>
             {strings.tutorialTeaser1Body.split('. ').slice(3).join('. ')}.
           </Body>
-          <CelestialScribe />
+          <ShowcaseScaler designWidth={520} designHeight={220}>
+            <CelestialScribe />
+          </ShowcaseScaler>
         </SlideContainer>
       ),
     },
@@ -171,7 +174,9 @@ function buildSlides(strings: CinematicStoryProps['strings']): SlideDef[] {
           <Body>
             {strings.tutorialPrecisionBody.split('. ').slice(3).join('. ')}.
           </Body>
-          <SwissEphemerisVisual />
+          <ShowcaseScaler designWidth={520} designHeight={290}>
+            <SwissEphemerisVisual />
+          </ShowcaseScaler>
         </SlideContainer>
       ),
     },
@@ -189,7 +194,9 @@ function buildSlides(strings: CinematicStoryProps['strings']): SlideDef[] {
           <Body>
             {strings.tutorialTeaser2Body.split('. ').slice(3).join('. ')}.
           </Body>
-          <LivingJournal />
+          <ShowcaseScaler designHeight={360}>
+            <LivingJournal />
+          </ShowcaseScaler>
         </SlideContainer>
       ),
     },
@@ -207,7 +214,9 @@ function buildSlides(strings: CinematicStoryProps['strings']): SlideDef[] {
           <Body>
             {strings.tutorialTempleBody.split('. ').slice(3).join('. ')}.
           </Body>
-          <SacredGeometryShowcase />
+          <ShowcaseScaler designHeight={340}>
+            <SacredGeometryShowcase />
+          </ShowcaseScaler>
         </SlideContainer>
       ),
     },
@@ -225,7 +234,9 @@ function buildSlides(strings: CinematicStoryProps['strings']): SlideDef[] {
           <Body>
             {strings.tutorialCelestialBody.split('. ').slice(3).join('. ')}.
           </Body>
-          <CelestialCardsShowcase />
+          <ShowcaseScaler designHeight={300}>
+            <CelestialCardsShowcase />
+          </ShowcaseScaler>
         </SlideContainer>
       ),
     },
@@ -243,7 +254,9 @@ function buildSlides(strings: CinematicStoryProps['strings']): SlideDef[] {
           <Body>
             {strings.tutorialVeilBody.split('. ').slice(3).join('. ')}.
           </Body>
-          <ThemeShowcase />
+          <ShowcaseScaler designHeight={350}>
+            <ThemeShowcase />
+          </ShowcaseScaler>
         </SlideContainer>
       ),
     },
@@ -261,7 +274,9 @@ function buildSlides(strings: CinematicStoryProps['strings']): SlideDef[] {
           <Body>
             {strings.tutorialCircleBody.split('. ').slice(3).join('. ')}.
           </Body>
-          <CircleShowcase />
+          <ShowcaseScaler designHeight={350}>
+            <CircleShowcase />
+          </ShowcaseScaler>
         </SlideContainer>
       ),
     },
@@ -279,7 +294,9 @@ function buildSlides(strings: CinematicStoryProps['strings']): SlideDef[] {
           <Body>
             {strings.tutorialAssemblyBody.split('. ').slice(3).join('. ')}.
           </Body>
-          <CommunityShowcase />
+          <ShowcaseScaler designHeight={350}>
+            <CommunityShowcase />
+          </ShowcaseScaler>
         </SlideContainer>
       ),
     },
@@ -297,7 +314,9 @@ function buildSlides(strings: CinematicStoryProps['strings']): SlideDef[] {
           <Body>
             {strings.tutorialSilenceBody.split('. ').slice(3).join('. ')}.
           </Body>
-          <PureModeShowcase />
+          <ShowcaseScaler designHeight={350}>
+            <PureModeShowcase />
+          </ShowcaseScaler>
         </SlideContainer>
       ),
     },
@@ -411,7 +430,7 @@ export const CinematicStory: React.FC<CinematicStoryProps> = ({ strings, onCompl
       {currentSlide.render(phase)}
 
       {/* Progress dots */}
-      <div style={{
+      <div className="tt-story-dots" style={{
         position: 'fixed', bottom: 32, left: 0, right: 0, zIndex: 10002,
         display: 'flex', justifyContent: 'center', gap: 8,
         pointerEvents: 'none',
@@ -428,7 +447,7 @@ export const CinematicStory: React.FC<CinematicStoryProps> = ({ strings, onCompl
 
       {/* Continue hint */}
       {!isLastSlide && (
-        <div style={{
+        <div className="tt-story-hint" style={{
           position: 'fixed', bottom: 56, left: 0, right: 0, zIndex: 10002,
           textAlign: 'center', pointerEvents: 'none',
         }}>
@@ -442,7 +461,7 @@ export const CinematicStory: React.FC<CinematicStoryProps> = ({ strings, onCompl
 
       {/* CTA button on last slide */}
       {isLastSlide && (
-        <div style={{
+        <div className="tt-story-cta" style={{
           position: 'fixed', bottom: 80, left: 0, right: 0, zIndex: 10002,
           display: 'flex', justifyContent: 'center',
         }}>
@@ -480,6 +499,7 @@ export const CinematicStory: React.FC<CinematicStoryProps> = ({ strings, onCompl
 
       {/* Skip button */}
       <button
+        className="tt-story-skip"
         onClick={onComplete}
         style={{
           position: 'fixed', top: 20, right: 20, zIndex: 10003,
@@ -494,6 +514,22 @@ export const CinematicStory: React.FC<CinematicStoryProps> = ({ strings, onCompl
       >
         {strings.tutorialSkip}
       </button>
+
+      {/* Responsive overrides for short/narrow viewports (foldables, small phones) */}
+      <style>{`
+        @media (max-height: 760px) {
+          .tt-story-dots { bottom: 18px !important; }
+          .tt-story-hint { bottom: 38px !important; }
+          .tt-story-cta { bottom: 58px !important; }
+          .tt-story-skip { top: 12px !important; right: 12px !important; }
+        }
+        @media (max-height: 640px) {
+          .tt-story-dots { bottom: 10px !important; }
+          .tt-story-hint { bottom: 28px !important; }
+          .tt-story-cta { bottom: 46px !important; }
+          .tt-story-skip { top: 8px !important; right: 8px !important; font-size: 11px !important; }
+        }
+      `}</style>
     </div>
   );
 };
