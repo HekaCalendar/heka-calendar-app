@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>App Preview | HEKA Calendar</title>
+    <meta name="description" content="Try the HEKA Calendar app preview. Explore the 13-month, 28-day calendar, day panel, moon phases, and civil date overlay before it launches.">
+    <meta name="keywords" content="13 month calendar, 13-month calendar, 28 day calendar, HEKA Calendar app preview, calendar app demo, alternative calendar app">
+    <link rel="canonical" href="https://hekacalendar.com/app-preview.html">
+    <link rel="icon" type="image/webp" href="assets/images/heka-logo.webp">
+    <meta property="og:title" content="App Preview | HEKA Calendar">
+    <meta property="og:description" content="Try the HEKA Calendar app preview. Explore the 13-month, 28-day calendar before it launches.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://hekacalendar.com/app-preview.html">
+    <meta property="og:image" content="https://hekacalendar.com/assets/images/heka-banner.webp">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="App Preview | HEKA Calendar">
+    <meta name="twitter:description" content="Try the HEKA Calendar app preview. Explore the 13-month, 28-day calendar before it launches.">
+    <meta name="twitter:image" content="https://hekacalendar.com/assets/images/heka-banner.webp">
+
+    <link rel="stylesheet" href="assets/css/sacred.css">
+    <link rel="stylesheet" href="assets/css/app-preview.css">
+</head>
+<body class="bg-sacred page-app-preview">
+    <nav class="navbar">
+        <div class="container navbar-inner">
+            <a href="index.html" class="navbar-brand">
+                <img src="assets/images/heka-logo.webp" alt="HEKA Calendar" class="brand-logo">
+                <span class="brand-text">HEKA Calendar</span>
+            </a>
+            <button class="navbar-toggle" onclick="toggleNav()" aria-label="Toggle navigation">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <div class="navbar-menu">
+                <a href="structure.html" class="navbar-link">Structure</a>
+                <a href="experience.html" class="navbar-link">Experience</a>
+                <a href="precision.html" class="navbar-link">Precision</a>
+                <a href="harmony.html" class="navbar-link">Harmony</a>
+                <a href="features.html" class="navbar-link">Features</a>
+                <a href="app-preview.html" class="navbar-link" style="color: var(--gold);">Preview</a>
+                <a href="temporal.html" class="navbar-link">Temporal</a>
+                <a href="index.html#download" class="navbar-cta" style="border-color: var(--copper); color: var(--copper);">Download</a>
+            </div>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="container">
+            <div class="hero-kicker">Interactive Demo</div>
+            <h1 class="hero-title hero-title-elevated">See the App Before You Download</h1>
+            <p class="hero-lead">
+                This is a live, interactive reconstruction of the HEKA Calendar interface. Navigate months, toggle displays, tap any day, and experience how the 13-month, 28-day calendar actually feels.
+            </p>
+        </div>
+    </section>
+
+    <section class="app-preview-section">
+        <div class="app-preview-stage">
+            <div class="app-device">
+                <header class="app-header">
+                    <div class="app-header__brand">
+                        <img src="assets/images/heka-logo.webp" alt="HEKA Calendar" class="app-header__logo">
+                        <span class="app-header__title">HEKA Calendar</span>
+                    </div>
+                    <div class="app-header__mode">
+                        <span class="app-header__mode-dot"></span>
+                        <span>SYNC Mode</span>
+                    </div>
+                </header>
+
+                <div class="app-main">
+                    <div class="app-calendar-area">
+                        <div class="month-header">
+                            <div class="month-header__controls">
+                                <div class="month-header__column month-header__column--controls">
+                                    <div class="month-header__row">
+                                        <button class="btn btn--icon" id="ap-prev" title="Previous month">←</button>
+                                        <button class="btn" id="ap-today">Today</button>
+                                        <button class="btn btn--icon" id="ap-next" title="Next month">→</button>
+                                        <button class="btn btn--primary" data-preview="Print preview coming soon">🖨️ Print</button>
+                                    </div>
+                                    <div class="month-header__row">
+                                        <button class="btn btn--icon" data-preview="Year view coming soon">Year</button>
+                                        <button class="btn" data-preview="Search coming soon">🔍 Search</button>
+                                    </div>
+                                </div>
+                                <div class="month-header__divider"></div>
+                                <div class="month-header__column month-header__column--features">
+                                    <div class="month-header__row">
+                                        <button class="btn" data-preview="Stars Hub coming soon">✨ Stars</button>
+                                        <button class="btn" style="background: rgba(167, 139, 250, 0.12); border-color: rgba(167, 139, 250, 0.35);" data-preview="Cosmic Circle coming soon">⭕ Circle</button>
+                                        <button class="btn" style="background: rgba(202, 162, 74, 0.14); border-color: rgba(202, 162, 74, 0.35);" data-preview="Oracle Journal coming soon">📓 Journal</button>
+                                    </div>
+                                    <div class="month-header__row">
+                                        <button class="btn" data-preview="Info coming soon">ℹ️ About</button>
+                                        <button class="btn" data-preview="Statistics coming soon">📊 Stats</button>
+                                        <button class="btn" data-preview="Community voting coming soon">
+                                            <span style="display:inline-flex;align-items:center;gap:4px;">
+                                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="8" width="18" height="13" rx="2"/><path d="M12 3v5"/><path d="M8 8l4-4 4 4"/></svg>
+                                                Vote
+                                            </span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="month-header__display-toggles">
+                                <button class="btn btn--active" id="ap-toggle-civil">📅 Civil</button>
+                                <button class="btn btn--active" id="ap-toggle-moon">🌙 Moon</button>
+                                <button class="btn btn--active" id="ap-toggle-holidays">🎉 Holidays</button>
+                            </div>
+                        </div>
+
+                        <div class="calendar-grid">
+                            <div class="calendar-grid__month-header">
+                                <div class="calendar-grid__month-title">
+                                    <span class="calendar-grid__month-name" id="ap-month-name">April</span>
+                                    <span class="calendar-grid__year" id="ap-year-display">2026</span>
+                                </div>
+                                <div class="calendar-grid__arc" id="ap-arc-pill">Opening Arc</div>
+                            </div>
+                            <div class="calendar-grid__month-index" id="ap-month-index">Month 1 of 13</div>
+
+                            <div class="calendar-grid__dow" role="row">
+                                <div class="calendar-grid__dow-cell">Sat</div>
+                                <div class="calendar-grid__dow-cell">Sun</div>
+                                <div class="calendar-grid__dow-cell">Mon</div>
+                                <div class="calendar-grid__dow-cell">Tue</div>
+                                <div class="calendar-grid__dow-cell">Wed</div>
+                                <div class="calendar-grid__dow-cell">Thu</div>
+                                <div class="calendar-grid__dow-cell">Fri</div>
+                            </div>
+
+                            <div id="ap-grid"></div>
+                        </div>
+                    </div>
+
+                    <aside class="app-day-panel" id="ap-day-panel">
+                        <div class="app-day-panel--empty">
+                            <div>
+                                <div style="font-size: 2rem; margin-bottom: 12px;">👆</div>
+                                <p>Select any day to see the full HEKA Calendar day panel.</p>
+                            </div>
+                        </div>
+                    </aside>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="app-preview-features">
+        <div class="container">
+            <div class="section-header reveal">
+                <span class="section-number section-number-copper">WHAT YOU GET</span>
+                <h2 class="section-title">The Full App Experience</h2>
+                <p class="section-subtitle">The preview above is just the surface. The HEKA Calendar app builds on this foundation with deeper tools for reflection, planning, and celestial awareness.</p>
+            </div>
+            <div class="app-preview-features__grid">
+                <div class="app-preview-feature reveal-scale">
+                    <div class="app-preview-feature__icon">📅</div>
+                    <h3>13-Month Grid</h3>
+                    <p>Every month has 28 days. Every date falls on the same weekday within the year. The structure removes the friction of the Gregorian calendar.</p>
+                </div>
+                <div class="app-preview-feature reveal-scale">
+                    <div class="app-preview-feature__icon">🌙</div>
+                    <h3>Moon & Civil Overlay</h3>
+                    <p>See moon phases and Gregorian civil dates alongside HEKA dates. Switch overlays on or off to match how you think about time.</p>
+                </div>
+                <div class="app-preview-feature reveal-scale">
+                    <div class="app-preview-feature__icon">📝</div>
+                    <h3>Journal & Notes</h3>
+                    <p>Attach notes, tasks, and reflections to any day. The day panel becomes a personal record of intentions, events, and insights.</p>
+                </div>
+                <div class="app-preview-feature reveal-scale">
+                    <div class="app-preview-feature__icon">✨</div>
+                    <h3>Celestial Guidance</h3>
+                    <p>Optional birth charts, transits, lunar mansions, and AI coaching add layers of meaning without cluttering the core calendar.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section section-alt" style="padding: 60px 0;">
+        <div class="container" style="text-align: center;">
+            <p style="font-family: var(--font-wisdom); font-size: 1.3rem; color: var(--light-secondary); max-width: 600px; margin: 0 auto 28px;">
+                Android is currently in closed testing. Public release on Google Play is coming soon.
+            </p>
+            <a href="index.html#download" class="btn btn-primary">Get Notified</a>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div>
+                    <div class="footer-sigil">
+                        <img src="assets/images/heka-logo.webp" alt="HEKA Calendar" class="footer-sigil-logo">
+                        <span class="footer-sigil-text">HEKA Calendar</span>
+                    </div>
+                    <p class="footer-mantra">
+                        Time is the structure we live inside. What if it fit better?
+                    </p>
+                </div>
+                <div class="footer-links">
+                    <div>
+                        <h4 class="footer-column-title">Learn</h4>
+                        <a href="structure.html" class="footer-link">Structure</a>
+                        <a href="experience.html" class="footer-link">Experience</a>
+                        <a href="precision.html" class="footer-link">Precision</a>
+                        <a href="harmony.html" class="footer-link">Harmony</a>
+                    </div>
+                    <div>
+                        <h4 class="footer-column-title">Product</h4>
+                        <a href="features.html" class="footer-link">Features</a>
+                        <a href="app-preview.html" class="footer-link">App Preview</a>
+                        <a href="privacy.html" class="footer-link">Privacy</a>
+                        <a href="terms.html" class="footer-link">Terms of Service</a>
+                    </div>
+                    <div>
+                        <h4 class="footer-column-title">Universe</h4>
+                        <a href="https://hekaverse.com" class="footer-link" target="_blank" rel="noopener">Hekaverse</a>
+                        <a href="https://hekacalendar.com" class="footer-link">Calendar</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-base">
+                <p class="footer-copyright">© 2026 HEKA Calendar</p>
+                <p class="footer-precision">SYNC • 13 Months • 28 Days</p>
+            </div>
+        </div>
+    </footer>
+
+    <div class="app-preview-toast" id="ap-toast">
+        <span id="ap-toast-text">Coming soon</span>
+    </div>
+
+    <script src="assets/js/app-preview.js"></script>
+    <script>
+        function toggleNav() {
+            document.querySelector('.navbar-menu').classList.toggle('active');
+            document.querySelector('.navbar-toggle').classList.toggle('active');
+        }
+    </script>
+</body>
+</html>
