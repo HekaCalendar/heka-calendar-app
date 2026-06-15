@@ -23,7 +23,7 @@ import type {
   FeatureDiscoveryProgress,
 } from '../types';
 import { DEFAULT_NOTIFICATION_PREFERENCES } from '../types/notifications';
-import { getTodayHekaDate } from '../services/calendarService';
+import { getTodayHekaDate, civilToHeka } from '../services/calendarService';
 import { encryptState, decryptState, isEncryptedState } from '../utils/stateCrypto';
 
 // ============================================================================
@@ -179,6 +179,8 @@ const initialState: CalendarState = {
   statistics: initialStatistics,
   communityHolidays: [],
   communityFeatures: [],
+  communityResources: {},
+  selectedCommunityRegion: null,
   subscribedCalendars: [],
   pendingInvites: [],
   progress: initialProgress,
@@ -322,6 +324,8 @@ export const {
   addCommunityFeature,
   updateCommunityFeature,
   voteForFeature,
+  setCommunityResources,
+  setSelectedCommunityRegion,
   addInvite,
   respondToInvite,
   subscribeToCalendar,
@@ -668,37 +672,97 @@ export function loadPersistedState(): any {
   return loadPersistedStateRaw();
 }
 
-export async function persistState(state: RootState): Promise<void> {
+function buildPersistedPayload(state: RootState): PersistedState {
+  return {
+    display: state.calendar.display,
+    location: state.calendar.location,
+    subRegion: state.calendar.subRegion,
+    timeMode: state.calendar.timeMode,
+    theme: state.calendar.theme,
+    font: state.calendar.font,
+    headerGeometry: state.calendar.headerGeometry,
+    backgroundGeometry: state.calendar.backgroundGeometry,
+    auth: state.calendar.auth,
+    notes: state.calendar.notes,
+    statistics: state.calendar.statistics,
+    subscribedCalendars: state.calendar.subscribedCalendars,
+    progress: state.calendar.progress,
+    astroProfiles: state.calendar.astroProfiles,
+    selectedAstroProfileId: state.calendar.selectedAstroProfileId,
+    astroPreferences: state.calendar.astroPreferences,
+    notificationPreferences: state.calendar.notificationPreferences,
+    // Persist diary preferences
+    diaryPreferences: state.diary?.preferences,
+    // Phase 1: App Engagement persistence
+    appEngagement: state.calendar.progress.appEngagement,
+    featureDiscovery: state.calendar.progress.featureDiscovery,
+    subscription: state.calendar.subscription,
+  };
+}
+
+type IdleHandle = ReturnType<typeof requestIdleCallback>;
+
+let latestStateToPersist: RootState | null = null;
+let pendingPersistHandle: IdleHandle | null = null;
+
+function scheduleIdleTask(callback: () => void, timeout = 2000): IdleHandle {
+  if (typeof requestIdleCallback !== 'undefined') {
+    return requestIdleCallback(callback, { timeout });
+  }
+  return setTimeout(callback, 1) as unknown as IdleHandle;
+}
+
+function cancelIdleTask(handle: IdleHandle): void {
+  if (typeof cancelIdleCallback !== 'undefined') {
+    cancelIdleCallback(handle);
+  } else {
+    clearTimeout(handle as unknown as ReturnType<typeof setTimeout>);
+  }
+}
+
+async function executePersist(state: RootState): Promise<void> {
   try {
-    const serialized = JSON.stringify({
-      display: state.calendar.display,
-      location: state.calendar.location,
-      subRegion: state.calendar.subRegion,
-      timeMode: state.calendar.timeMode,
-      theme: state.calendar.theme,
-      font: state.calendar.font,
-      headerGeometry: state.calendar.headerGeometry,
-      backgroundGeometry: state.calendar.backgroundGeometry,
-      auth: state.calendar.auth,
-      notes: state.calendar.notes,
-      statistics: state.calendar.statistics,
-      subscribedCalendars: state.calendar.subscribedCalendars,
-      progress: state.calendar.progress,
-      astroProfiles: state.calendar.astroProfiles,
-      selectedAstroProfileId: state.calendar.selectedAstroProfileId,
-      astroPreferences: state.calendar.astroPreferences,
-      notificationPreferences: state.calendar.notificationPreferences,
-      // Persist diary preferences
-      diaryPreferences: state.diary?.preferences,
-      // Phase 1: App Engagement persistence
-      appEngagement: state.calendar.progress.appEngagement,
-      featureDiscovery: state.calendar.progress.featureDiscovery,
-      subscription: state.calendar.subscription,
-    });
+    const serialized = JSON.stringify(buildPersistedPayload(state));
     const encrypted = await encryptState(serialized);
     localStorage.setItem('heka-calendar-state', encrypted);
   } catch (err) {
     console.error('Failed to persist state:', err);
+  }
+}
+
+export async function persistState(state: RootState): Promise<void> {
+  latestStateToPersist = state;
+
+  if (pendingPersistHandle) {
+    cancelIdleTask(pendingPersistHandle);
+    pendingPersistHandle = null;
+  }
+
+  return new Promise((resolve) => {
+    pendingPersistHandle = scheduleIdleTask(async () => {
+      pendingPersistHandle = null;
+      const captured = latestStateToPersist;
+      latestStateToPersist = null;
+      if (captured) {
+        await executePersist(captured);
+      }
+      resolve();
+    }, 2000);
+  });
+}
+
+/** Flush any queued persistence immediately (e.g. before the app backgrounds). */
+export function flushPendingPersistence(): void {
+  if (pendingPersistHandle) {
+    cancelIdleTask(pendingPersistHandle);
+    pendingPersistHandle = null;
+  }
+  const captured = latestStateToPersist;
+  latestStateToPersist = null;
+  if (captured) {
+    executePersist(captured).catch((err) => {
+      console.error('[Persistence] Flush failed:', err);
+    });
   }
 }
 
@@ -787,6 +851,17 @@ store.subscribe(() => {
   previousState = currentState;
 });
 
+// Flush pending persistence when the app is hidden to reduce data loss risk.
+// requestIdleCallback may not fire once the page is in the background, so we
+// force an immediate save in that case.
+if (typeof document !== 'undefined') {
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) {
+      flushPendingPersistence();
+    }
+  });
+}
+
 // ============================================================================
 // Memoized Selectors for Performance
 // ============================================================================
@@ -844,4 +919,135 @@ export const selectSelectedAstroProfile = createSelector(
 export const selectAllAstroProfiles = createSelector(
   [selectCalendar],
   (calendar) => calendar.astroProfiles
+);
+
+// ============================================================================
+// Performance-Optimized Selectors (Phase 1)
+// These selectors return stable references and only recompute when the
+// specific data they depend on actually changes.
+// ============================================================================
+
+const selectPlannerTasks = (state: RootState) => state.planner.tasks;
+const selectAuth = (state: RootState) => state.calendar.auth;
+const selectSetupState = (state: RootState) => state.setup;
+
+/** Primitive auth fields — use instead of selecting the whole auth object */
+export const selectAuthStatus = createSelector(
+  [selectAuth],
+  (auth) => ({
+    isAuthenticated: auth.isAuthenticated,
+    userId: auth.userId,
+    email: auth.email,
+    displayName: auth.displayName,
+    photoURL: auth.photoURL,
+  })
+);
+
+/** Primitive setup fields — use instead of selecting the whole setup slice */
+export const selectSetupStatus = createSelector(
+  [selectSetupState],
+  (setup) => ({
+    isComplete: setup.isComplete,
+    language: setup.language,
+    timeMode: setup.timeMode,
+    notificationsEnabled: setup.notificationsEnabled,
+  })
+);
+
+/** Notes for the visible month only. Combined with shallowEqual in components,
+ *  this prevents re-renders when notes change in other months. */
+export const selectMonthNotes = createSelector(
+  [selectViewDate, selectNotes],
+  (viewDate, notes) => {
+    const result: Record<string, NoteData[]> = {};
+    const prefix = `${viewDate.year}-${viewDate.month}-`;
+    Object.keys(notes).forEach((key) => {
+      if (key.startsWith(prefix)) {
+        result[key] = notes[key];
+      }
+    });
+    return result;
+  }
+);
+
+/** Planner tasks for the visible month only. */
+export const selectMonthPlannerTasks = createSelector(
+  [selectViewDate, selectPlannerTasks],
+  (viewDate, tasks) => {
+    const result: Record<string, any[]> = {};
+    const prefix = `${viewDate.year}-${viewDate.month}-`;
+    Object.keys(tasks).forEach((key) => {
+      if (key.startsWith(prefix)) {
+        result[key] = tasks[key];
+      }
+    });
+    return result;
+  }
+);
+
+/** Calendar note entries formatted for the journal. Memoized so the journal only
+ *  recomputes when the notes object reference changes. */
+export const selectCalendarNoteEntries = createSelector(
+  [selectNotes],
+  (notes) => {
+    const result: {
+      id: string;
+      date: string;
+      hekaDate: any;
+      timestamp: string;
+      content: string;
+      category: string;
+      mood?: number;
+      sourceKey: string;
+    }[] = [];
+
+    Object.entries(notes).forEach(([key, dayNotes]) => {
+      dayNotes.forEach((note, index) => {
+        if (!note || !note.createdAt) return;
+
+        const civilDate = new Date(note.createdAt);
+        const hekaDate = civilToHeka(civilDate);
+
+        result.push({
+          id: `calendar-${key}-${index}`,
+          date: note.createdAt,
+          hekaDate: hekaDate || { year: civilDate.getFullYear(), month: 0, day: 1 },
+          timestamp: note.createdAt,
+          content: note.content,
+          category: note.category || 'general',
+          mood: note.mood,
+          sourceKey: key,
+        });
+      });
+    });
+
+    return result.sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime());
+  }
+);
+
+/** Lightweight selector: does the selected day have any notes or tasks? */
+export const selectDayHasItems = (dayKey: string) =>
+  createSelector(
+    [selectNotes, selectPlannerTasks],
+    (notes, tasks) => {
+      const dayNotes = notes[dayKey];
+      const dayTasks = tasks[dayKey];
+      return (dayNotes && dayNotes.length > 0) || (dayTasks && dayTasks.length > 0);
+    }
+  );
+
+/** Set of note IDs that have duplicate copies somewhere in the calendar */
+export const selectNoteIdsWithDuplicates = createSelector(
+  [selectNotes],
+  (notes) => {
+    const duplicatedFrom = new Set<string>();
+    Object.values(notes).forEach((dayNotes) => {
+      dayNotes.forEach((note) => {
+        if (note.duplicatedFrom) {
+          duplicatedFrom.add(note.duplicatedFrom);
+        }
+      });
+    });
+    return duplicatedFrom;
+  }
 );

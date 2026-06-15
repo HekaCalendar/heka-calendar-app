@@ -1,0 +1,20 @@
+{
+  "name": "heka-calendar-server",
+  "version": "2.2.16",
+  "private": true,
+  "type": "commonjs",
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "scripts": {
+    "start": "node ai-proxy.js",
+    "dev": "node --watch ai-proxy.js",
+    "health": "node -e \"fetch(process.env.AI_PROXY_URL||'http://localhost:8787/health').then(r=>r.json()).then(j=>console.log(j)).catch(e=>console.error(e))\""
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.21.0",
+    "firebase-admin": "^12.0.0",
+    "helmet": "^7.1.0"
+  }
+}

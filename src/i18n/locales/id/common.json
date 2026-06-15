@@ -1,372 +1,380 @@
 {
-  "appTitle": "Kalender HEKA",
+  "appTitle": "HEKA Calendar",
   "appName": "HEKA",
-  "appSubtitle": "Kalender Tiga Belas Bulan",
-  "loading": "Memuat...",
-  "save": "Simpan",
-  "cancel": "Batal",
-  "delete": "Hapus",
+  "appSubtitle": "The Thirteen-Month Calendar",
+  "loading": "Loading...",
+  "save": "Save",
+  "cancel": "Cancel",
+  "delete": "Delete",
   "edit": "Edit",
-  "done": "Selesai",
-  "back": "Kembali",
-  "next": "Berikutnya",
-  "close": "Tutup",
-  "open": "Buka",
-  "yes": "Ya",
-  "no": "Tidak",
+  "done": "Done",
+  "back": "Back",
+  "next": "Next",
+  "close": "Close",
+  "open": "Open",
+  "yes": "Yes",
+  "no": "No",
   "ok": "OK",
-  "confirm": "Konfirmasi",
-  "skip": "Lewati",
-  "continue": "Lanjutkan",
-  "search": "Cari",
+  "confirm": "Confirm",
+  "skip": "Skip",
+  "continue": "Continue",
+  "search": "Search",
   "filter": "Filter",
-  "sort": "Urutkan",
-  "add": "Tambah",
-  "remove": "Hapus",
-  "copy": "Salin",
-  "share": "Bagikan",
-  "print": "Cetak",
-  "download": "Unduh",
-  "export": "Ekspor",
-  "import": "Impor",
-  "settings": "Pengaturan",
-  "profile": "Profil",
-  "account": "Akun",
-  "signIn": "Masuk",
-  "signOut": "Keluar",
-  "signUp": "Daftar",
-  "welcome": "Selamat Datang",
-  "goodbye": "Selamat Tinggal",
-  "error": "Kesalahan",
-  "warning": "Peringatan",
-  "success": "Sukses",
+  "sort": "Sort",
+  "add": "Add",
+  "remove": "Remove",
+  "copy": "Copy",
+  "share": "Share",
+  "print": "Print",
+  "download": "Download",
+  "export": "Export",
+  "import": "Import",
+  "settings": "Settings",
+  "profile": "Profile",
+  "account": "Account",
+  "signIn": "Sign In",
+  "signOut": "Sign Out",
+  "signUp": "Sign Up",
+  "welcome": "Welcome",
+  "goodbye": "Goodbye",
+  "error": "Error",
+  "warning": "Warning",
+  "success": "Success",
   "info": "Info",
-  "retry": "Coba Lagi",
-  "refresh": "Segarkan",
-  "today": "Hari Ini",
-  "yesterday": "Kemarin",
-  "tomorrow": "Besok",
-  "now": "Sekarang",
-  "later": "Nanti",
-  "soon": "Segera",
-  "never": "Jangan Pernah",
-  "always": "Selalu",
-  "none": "Tidak Ada",
-  "all": "Semua",
-  "selected": "Terpilih",
-  "unselected": "Tidak Terpilih",
-  "active": "Aktif",
-  "inactive": "Tidak Aktif",
-  "enabled": "Diaktifkan",
-  "disabled": "Dinonaktifkan",
-  "on": "Hidup",
-  "off": "Mati",
-  "visible": "Terlihat",
-  "hidden": "Tersembunyi",
-  "expand": "Perluas",
-  "collapse": "Ciutkan",
-  "showMore": "Tampilkan Lebih Banyak",
-  "showLess": "Tampilkan Lebih Sedikit",
-  "readMore": "Baca Lebih Lanjut",
-  "learnMore": "Pelajari Lebih Lanjut",
-  "gotIt": "Mengerti",
-  "understood": "Memahami",
-  "notNow": "Jangan Sekarang",
-  "maybeLater": "Mungkin Nanti",
-  "dismiss": "Abaikan",
-  "undo": "Urungkan",
-  "redo": "Ulangi",
-  "reset": "Atur Ulang",
-  "restore": "Pulihkan",
-  "clear": "Kosongkan",
-  "empty": "Kosong",
-  "blank": "Kosong",
-  "new": "Baru",
-  "old": "Lama",
-  "recent": "Terbaru",
-  "earlier": "Sebelumnya",
-  "upcoming": "Akan Datang",
-  "past": "Lalu",
-  "future": "Mendatang",
-  "present": "Saat ini",
-  "current": "Saat ini",
-  "previous": "Sebelumnya",
-  "nextItem": "Berikutnya",
-  "first": "Pertama",
-  "last": "Terakhir",
-  "of": "dari",
-  "page": "Halaman",
+  "retry": "Retry",
+  "refresh": "Refresh",
+  "today": "Today",
+  "yesterday": "Yesterday",
+  "tomorrow": "Tomorrow",
+  "now": "Now",
+  "later": "Later",
+  "soon": "Soon",
+  "never": "Never",
+  "always": "Always",
+  "none": "None",
+  "all": "All",
+  "selected": "Selected",
+  "unselected": "Unselected",
+  "active": "Active",
+  "inactive": "Inactive",
+  "enabled": "Enabled",
+  "disabled": "Disabled",
+  "on": "On",
+  "off": "Off",
+  "visible": "Visible",
+  "hidden": "Hidden",
+  "expand": "Expand",
+  "collapse": "Collapse",
+  "showMore": "Show More",
+  "showLess": "Show Less",
+  "readMore": "Read More",
+  "learnMore": "Learn More",
+  "gotIt": "Got It",
+  "understood": "Understood",
+  "notNow": "Not Now",
+  "maybeLater": "Maybe Later",
+  "dismiss": "Dismiss",
+  "undo": "Undo",
+  "redo": "Redo",
+  "reset": "Reset",
+  "restore": "Restore",
+  "clear": "Clear",
+  "empty": "Empty",
+  "blank": "Blank",
+  "new": "New",
+  "old": "Old",
+  "recent": "Recent",
+  "earlier": "Earlier",
+  "upcoming": "Upcoming",
+  "past": "Past",
+  "future": "Future",
+  "present": "Present",
+  "current": "Current",
+  "previous": "Previous",
+  "nextItem": "Next",
+  "first": "First",
+  "last": "Last",
+  "of": "of",
+  "page": "Page",
   "total": "Total",
-  "items": "item",
-  "item": "barang",
-  "noResults": "Tidak ada hasil yang ditemukan",
-  "loadingMore": "Memuat lebih banyak...",
-  "pullToRefresh": "Tarik untuk menyegarkan",
-  "swipeToNavigate": "Geser untuk navigasi",
-  "tapToContinue": "Ketuk untuk melanjutkan",
-  "pressSpaceToContinue": "Tekan spasi untuk melanjutkan",
+  "items": "items",
+  "item": "item",
+  "noResults": "No results found",
+  "loadingMore": "Loading more...",
+  "pullToRefresh": "Pull to refresh",
+  "swipeToNavigate": "Swipe to navigate",
+  "tapToContinue": "Tap to continue",
+  "pressSpaceToContinue": "Press space to continue",
   "pro": "Pro",
   "premium": "Premium",
-  "free": "Gratis",
-  "upgrade": "Naik versi",
-  "subscribe": "Berlangganan",
-  "unsubscribe": "Berhenti berlangganan",
-  "features": "Fitur",
-  "about": "Tentang",
-  "help": "Bantuan",
-  "support": "Dukungan",
-  "feedback": "Umpan balik",
-  "bugReport": "Laporan Bug",
-  "terms": "Syarat Layanan",
-  "privacy": "Kebijakan Privasi",
-  "version": "Versi",
-  "build": "Membangun",
+  "free": "Free",
+  "upgrade": "Upgrade",
+  "subscribe": "Subscribe",
+  "unsubscribe": "Unsubscribe",
+  "features": "Features",
+  "about": "About",
+  "help": "Help",
+  "support": "Support",
+  "feedback": "Feedback",
+  "bugReport": "Bug Report",
+  "terms": "Terms of Service",
+  "privacy": "Privacy Policy",
+  "version": "Version",
+  "build": "Build",
   "copyright": "© HEKA Calendar",
-  "allRightsReserved": "Hak cipta dilindungi undang-undang.",
-  "modernHekaCalendar": "Kalendar HEKA Modern",
-  "trueHekaSubtitle": "Waktu HEKA yang Benar • Koreksi bulan Maret (siklus 4 tahun, kecuali ke-128) • Presisi astronomis",
-  "syncSubtitle": "Waktu HEKA sinkronisasi Gregorian • April hingga Maret • 13 bulan kalender harmonis",
-  "trueHekaMode": "⚡ MODE HEKA YANG BENAR",
-  "syncMode": "🌐 MODE SINKRON",
-  "view": "Tampilan",
-  "welcomeToTheCircle": "✨ Selamat datang di Lingkaran",
-  "enterInviteCode": "Masukkan kode undangan untuk mengirim permintaan teman",
-  "inviteCodeDetected": "Kode Undangan Terdeteksi:",
-  "sending": "✨ Mengirim...",
-  "sendFriendRequest": "🌟 Kirim Permintaan Teman",
-  "orEnterCodeManually": "atau masukkan kode secara manual",
-  "inviteCodePlaceholder": "Masukkan kode undangan (mis., ABC-DEF-GHI)",
-  "sendRequest": "Kirim Permintaan",
-  "friendRequestSent": "✨ Permintaan teman terkirim! Mereka perlu menerima sebelum Anda dapat mengobrol.",
-  "openCosmicCircle": "Buka Lingkaran Kosmik",
-  "skipForNow": "Lewati sekarang",
-  "joiningCircleAllows": "Bergabung dengan Lingkaran memungkinkan Anda untuk:",
-  "sendReceiveTaskRituals": "📜 Mengirim dan menerima Tugas Upacara",
-  "messageCosmicChannels": "💬 Berpesan melalui saluran kosmik",
-  "alignHekaDates": "🗓️ Bersama-sama pada tanggal HEKA",
-  "shareCelestialInsights": "✨ Bagikan wawasan langit",
-  "failedToSendFriendRequest": "Gagal mengirim permintaan teman. Silakan periksa kode dan coba lagi.",
-  "searchPlaceholder": "Cari tanggal, catatan, libur...",
-  "recentSearches": "Pencarian Terkini",
-  "result": "hasil",
-  "results": "hasil",
-  "tryDifferentKeywords": "Coba kata kunci yang berbeda atau periksa ejaan Anda",
-  "trySearchingFor": "Coba Cari",
-  "navigate": "↑↓ Navigasi",
-  "selectKey": "↵ Pilih",
-  "escClose": "Esc Tutup",
-  "hekaUnifiedSearch": "Pencarian HEKA Terintegrasi",
-  "dates": "Tanggal",
-  "notes": "Catatan",
-  "holidays": "Libur",
-  "hekaDate": "Tanggal HEKA",
-  "civilDate": "Tanggal sipil",
-  "calendarNote": "Catatan kalender",
-  "holiday": "Hari libur",
+  "allRightsReserved": "All rights reserved.",
+  "modernHekaCalendar": "The Modern HEKA Calendar",
+  "trueHekaSubtitle": "True HEKA Timekeeping • March correction (4-year cycle, except 128th) • Astronomical precision",
+  "syncSubtitle": "HEKA Gregorian synchronised timekeeping • April to March • 13-month harmonic calendar",
+  "trueHekaMode": "⚡ TRUE HEKA Mode",
+  "syncMode": "🌐 SYNC Mode",
+  "view": "View",
+  "welcomeToTheCircle": "✨ Welcome to the Circle",
+  "enterInviteCode": "Enter an invite code to send a friend request",
+  "inviteCodeDetected": "Invite Code Detected:",
+  "sending": "✨ Sending...",
+  "sendFriendRequest": "🌟 Send Friend Request",
+  "orEnterCodeManually": "or enter a code manually",
+  "inviteCodePlaceholder": "Enter invite code (e.g., ABC-DEF-GHI)",
+  "sendRequest": "Send Request",
+  "friendRequestSent": "✨ Friend request sent! They'll need to accept before you can chat.",
+  "openCosmicCircle": "Open Cosmic Circle",
+  "skipForNow": "Skip for now",
+  "joiningCircleAllows": "Joining a Circle allows you to:",
+  "sendReceiveTaskRituals": "📜 Send and receive Task Rituals",
+  "messageCosmicChannels": "💬 Message through cosmic channels",
+  "alignHekaDates": "🗓️ Align on HEKA dates together",
+  "shareCelestialInsights": "✨ Share celestial insights",
+  "failedToSendFriendRequest": "Failed to send friend request. Please check the code and try again.",
+  "searchPlaceholder": "Search dates, notes, holidays...",
+  "recentSearches": "Recent Searches",
+  "result": "result",
+  "results": "results",
+  "tryDifferentKeywords": "Try different keywords or check your spelling",
+  "trySearchingFor": "Try Searching For",
+  "navigate": "↑↓ Navigate",
+  "selectKey": "↵ Select",
+  "escClose": "Esc Close",
+  "hekaUnifiedSearch": "HEKA Unified Search",
+  "dates": "Dates",
+  "notes": "Notes",
+  "holidays": "Holidays",
+  "hekaDate": "HEKA Date",
+  "civilDate": "Civil Date",
+  "calendarNote": "Calendar Note",
+  "holiday": "Holiday",
   "infoModal": {
-    "goTo": "Pergi ke {{title}}",
-    "home": "Rumah",
-    "backToHome": "Kembali ke Beranda",
-    "deeperQuestions": "Pertanyaan yang lebih dalam",
+    "goTo": "Go to {{title}}",
+    "home": "Home",
+    "backToHome": "Back to Home",
+    "deeperQuestions": "Deeper Questions",
     "hero": {
-      "title": "Kalender HEKA",
-      "subtitleLine1": "Waktu adalah struktur yang kita hidupi dalam.",
-      "subtitleLine2": "Mengapakah tidak lebih cocok?"
+      "title": "The HEKA Calendar",
+      "subtitleLine1": "Time is the structure we live inside.",
+      "subtitleLine2": "What if it fit better?"
     },
     "cards": {
       "whatChanges": {
-        "title": "Apa yang Berubah",
+        "title": "What Changes",
         "items": {
-          "0": "Tiga belas bulan, semua sama",
-          "1": "Empat minggu per bulan, selalu",
-          "2": "Tahun dimulai pada April, berakhir pada Maret",
-          "3": "Arc pembuka, inti, dan penutup",
-          "4": "Perbaikan terkandung dalam satu bulan"
+          "0": "Thirteen months, all equal",
+          "1": "Four weeks per month, always",
+          "2": "The year begins in April and ends in March",
+          "3": "Opening, core, and closing arcs",
+          "4": "Correction contained in one month"
         }
       },
       "whatStays": {
-        "title": "Apa yang Tetap",
+        "title": "What Stays",
         "items": {
-          "0": "Minggu tujuh hari tidak berubah",
-          "1": "Musim tetap terjalin",
-          "2": "Tanggal sipil selalu terlihat",
-          "3": "Jadwal Anda disinkronkan",
-          "4": "Dunia tidak memerlukan pemberitahuan"
+          "0": "Seven-day weeks remain unchanged",
+          "1": "Seasons stay aligned",
+          "2": "Civil dates always visible",
+          "3": "Your appointments stay synced",
+          "4": "The world needs no notice"
         }
       },
       "beginHere": {
-        "title": "Mulai dari Sini",
+        "title": "Begin Here",
         "items": {
-          "0": "Baca \"Apa Itu HEKA?\" terlebih dahulu",
-          "1": "Jelajahi \"Bentuk Tahun\"",
-          "2": "Aktifkan lapisan sipil",
-          "3": "Pilih mode SYNC atau TRUE",
-          "4": "Tinggal di dalamnya selama satu bulan"
+          "0": "Read \"What is HEKA?\" first",
+          "1": "Explore \"The Shape of a Year\"",
+          "2": "Activate the civil overlay",
+          "3": "Choose SYNC or TRUE mode",
+          "4": "Live inside it for a month"
         }
       }
     },
-    "chaptersLabel": "Tujuh Bab",
+    "chaptersLabel": "Seven Chapters",
     "chapters": {
       "home": {
-        "num": "BERANDA",
-        "chip": "MULAI",
-        "title": "Kalender HEKA",
-        "hook": "Waktu adalah struktur yang kita hidupi dalam. Mengapa tidak lebih cocok?"
+        "num": "HOME",
+        "chip": "BEGIN",
+        "title": "The HEKA Calendar",
+        "hook": "Time is the structure we live inside. What if it fit better?",
+        "teaser": ""
       },
       "ch1": {
         "num": "01",
-        "chip": "ESSENSI",
-        "title": "Apa Itu HEKA?",
-        "hook": "Kalender adalah lebih dari sistem penghitungan. Ini adalah irama kehidupan Anda."
+        "chip": "ESSENCE",
+        "title": "What Is HEKA?",
+        "hook": "A calendar is more than a counting system. It is the rhythm of your life.",
+        "teaser": "13 months. 28 days each. One perfect year."
       },
       "ch2": {
         "num": "02",
-        "chip": "STRUKTUR",
-        "title": "Bentuk Tahun",
-        "hook": "April dimulai. Maret berakhir. Segala sesuatu di antaranya masuk akal."
+        "chip": "STRUCTURE",
+        "title": "The Shape of a Year",
+        "hook": "April begins. March closes. Everything in between makes sense.",
+        "teaser": "April opens. The core holds. March closes."
       },
       "ch3": {
         "num": "03",
         "chip": "PRACTICE",
-        "title": "Hidup di HEKA",
-        "hook": "Anda tidak memerlukan izin untuk menggunakan alat yang lebih baik."
+        "title": "Living in HEKA",
+        "hook": "You do not need permission to use a better tool.",
+        "teaser": "Your calendar. Your journal. Your oracle."
       },
       "ch4": {
         "num": "04",
         "chip": "PRECISION",
-        "title": "Dua Mode",
-        "hook": "Satu kalender. Dua cara untuk menghormati matahari. Anda memilih."
+        "title": "The Two Modes",
+        "hook": "One calendar. Two ways of honoring the sun. You choose.",
+        "teaser": "Follow the civil world. Or follow the sky."
       },
       "ch5": {
         "num": "05",
         "chip": "LINEAGE",
-        "title": "Revolusi Kalender",
-        "hook": "Gregorian adalah perbaikan. HEKA adalah desain yang baru."
+        "title": "The Calendar Revolution",
+        "hook": "Gregorian was a patch. HEKA is a redesign.",
+        "teaser": "Roman egos broke the year. We fixed it."
       },
       "ch6": {
         "num": "06",
         "chip": "BEGINNING",
-        "title": "Mulai Menggunakan HEKA Hari Ini",
-        "hook": "Tidak ada institusi yang perlu diubah. Hanya pandangan Anda."
+        "title": "Start Using HEKA Today",
+        "hook": "No institutions need to change. Only your view.",
+        "teaser": "No institutions required. Just your phone."
       },
       "ch7": {
         "num": "07",
         "chip": "MEANING",
-        "title": "Waktu Yang Layani Anda",
-        "hook": "Kalender yang Anda gunakan membentuk kehidupan yang Anda tinggali."
+        "title": "Time That Serves You",
+        "hook": "The calendar you use shapes the life you live.",
+        "teaser": "The calendar you use shapes the life you live."
       }
     },
     "cardsByChapter": {
       "ch1": {
         "0": {
-          "h": "Masalah yang Anda Rasakan",
-          "b": "Bulan-bulan tidak merata. Libur-hari yang tersebar. Tahun yang terjun dari Januari ke Desember tanpa rasa pembukaan, pertengahan, atau penutupan. Anda telah merasakan gesekan ini. HEKA menghapusnya."
+          "h": "The Problem You Feel",
+          "b": "Irregular months. Scattered holidays. A year that stumbles from January to December with no sense of beginning, middle, or end. You have felt this friction. HEKA removes it."
         },
         "1": {
-          "h": "Solusi yang Kami Bangun",
-          "b": "Tiga belas bulan. Dua belas bulan memiliki dua puluh delapan hari dengan simetri yang sempurna. Maret, bulan penutup, membawa hari lonjakan. Empat minggu yang sempurna per bulan. Tahun yang mengalir: April membuka, Mei hingga Desember membentuk inti yang stabil, Januari hingga Maret menamatkannya."
+          "h": "The Solution We Built",
+          "b": "Thirteen months. Twelve have twenty-eight days in perfect symmetry. March, the closing month, carries the leap day. Four perfect weeks per month. A year that flows: April opens, May through December form the stable core, January through March complete it."
         },
         "2": {
-          "h": "Dunia yang Anda Pertahankan",
-          "b": "HEKA tidak mengganggu kehidupan Anda. Tanggal sipil tetap terlihat. Rapat Anda, janji temu Anda, dan kewajiban hukum Anda tetap di tempat yang Anda harapkan. Anda hanya mendapatkan lensa yang lebih jelas."
+          "h": "The World You Keep",
+          "b": "HEKA does not disrupt your life. Civil dates remain visible. Your appointments, commitments, and legal obligations stay exactly where they are. You simply gain a clearer lens."
         }
       },
       "ch2": {
         "0": {
-          "h": "Bulan Pembuka",
-          "b": "April adalah ambang. Tahun dimulai bukan dalam kelelahan musim dingin tetapi dalam kekuatan musim semi. Pertumbuhan baru. Proyek baru. Pembukaan mengumumkan: sesuatu yang sedang dimulai."
+          "h": "The Opening Arc",
+          "b": "April is the threshold. The year does not begin in winter exhaustion, but in spring vitality. New growth. New projects. The opening announces: something is beginning."
         },
         "1": {
-          "h": "Bulan Inti",
-          "b": "Mei hingga Desember adalah pertengahan yang stabil dan panjang. Sembilan bulan dengan ritme yang sama, terprediksi. Rencana dengan yakin. Bangun momentum. Di sinilah kerja dilakukan."
+          "h": "The Core Arc",
+          "b": "May through December is the long, stable middle. Nine months of perfectly regular and predictable rhythm. Plan with confidence. Build momentum. This is where the work happens."
         },
         "2": {
-          "h": "Bulan Penutup",
-          "b": "Januari hingga Maret menamatkan tahun. Selesaikan apa yang Anda mulai. Panen apa yang Anda tumbuhkan. Penutup menciptakan ruang untuk refleksi dan menyiapkan Anda untuk pembukaan berikutnya."
+          "h": "The Closing Arc",
+          "b": "January through March bring the year to its resolution. Finish what you started. Harvest what you grew. Closure creates space for reflection and prepares you for the next opening."
         }
       },
       "ch3": {
         "0": {
-          "h": "Tanggal Sipil Anda Tetap",
-          "b": "Aktifkan tampilan sipil dan lihat tanggal Gregorian di samping HEKA. Janji temu dengan dokter gigi Anda, ulang tahun ibu Anda, tenggat pajak Anda - semua tetap di tempat yang Anda harapkan."
+          "h": "Your Civil Dates Stay",
+          "b": "Activate the civil overlay and see Gregorian dates alongside HEKA. Your dentist appointment, your mother's birthday, your tax deadline -- everything stays exactly where you expect."
         },
         "1": {
-          "h": "Catatan Anda Tetap",
-          "b": "Simpan pikiran sesuai hari atau"
+          "h": "Your Journal",
+          "b": "Daily entries with revision history — up to 50 versions kept automatically. Full-text search across everything. Local by default; cloud backup when you sign in."
         },
         "2": {
-          "h": "Your Moon If You Want It",
-          "b": "Lunar phases appear at a glance. Not superimposed mysticism—just information. Another rhythm you can choose to notice or ignore. The choice is yours."
+          "h": "Your Moon & Stars",
+          "b": "Moon phases, planetary positions, and transits appear at a glance. Optional and precise. Add your birth chart for personal readings through the Oracle."
         }
       },
       "ch4": {
         "0": {
-          "h": "MODE SYNC: Jalur yang Akrabah",
-          "b": "Maret mendapatkan hari ekstra saat kalender Gregorian mengatakan demikian. Untuk koordinasi harian dengan dunia sipil, ini adalah mode Anda. Struktur yang sama. Waktu yang akrab."
+          "h": "SYNC MODE: The Familiar Path",
+          "b": "March gains its extra day when the Gregorian calendar says so. For daily coordination with the civil world, this is your mode. Same structure. Familiar time."
         },
         "1": {
-          "h": "MODE BENAR: Jalur yang Jujur",
-          "b": "HEKA mengikuti aturan koreksi sendiri: setiap tahun keempat memiliki Maree selama 30 hari, kecuali setiap 128 tahun sekali yang tidak. Ini adalah presisi astronomis. Ini adalah integritas jangka panjang."
+          "h": "TRUE MODE: The Honest Path",
+          "b": "HEKA follows its own correction rule: every fourth year has a 30-day March, except every 128 years which does not. This is astronomical precision. This is long-term integrity."
         },
         "2": {
-          "h": "Beralih Kapan Saja",
-          "b": "Bulan tidak berubah. Minggu tidak berubah. Hanya pencetus koreksi yang berpindah. Eksperimen. Lihat mode mana yang paling cocok dengan kebutuhan Anda. Anda tidak terkunci."
+          "h": "Change at Any Time",
+          "b": "The months do not change. The week does not change. Only the correction trigger shifts. Experiment. See which mode fits your needs. You are not trapped."
         }
       },
       "ch5": {
         "0": {
-          "h": "Warisan, Bukan Rancangan",
-          "b": "Kalender kita saat ini adalah tumpukan dari kejadian historis. Politik Romawi. Majelis agama. Pembetulan astronomi yang ditambahkan berapa abad sekali. Ini tidak pernah dirancang sebagai sistem."
+          "h": "Inheritance, Not Design",
+          "b": "Our current calendar is a pile of historical accidents. Roman politics. Religious councils. Astronomical patches added centuries apart. It was never designed as a system."
         },
         "1": {
-          "h": "Perbaikan Gregorian",
-          "b": "1582: Pope Gregory memperbaiki masalah penyimpangan. Tapi dia mengkeep irregular bulan, struktur tersebar, kekacauan yang diwariskan. Koreksi yang perlu, tapi bukan solusi lengkap."
+          "h": "The Gregorian Patch",
+          "b": "1582: Pope Gregory fixed the drift problem. But he kept the irregular months, the scattered structure, the inherited chaos. A necessary correction, but not a complete solution."
         },
         "2": {
-          "h": "Respon HEKA",
-          "b": "Kami mengkeep yang berfungsi: minggu tujuh hari, peralihan musim, pelacakan tahun surya. Kami merancang ulang yang tidak: struktur bulan, aliran tahun, penempatan koreksi. Dibangun untuk pikiran yang berpikir."
+          "h": "The HEKA Answer",
+          "b": "We keep what works: seven-day weeks, seasonal alignment, solar year tracking. We redesign what does not: month structure, yearly flow, correction placement. Built for minds that think."
         }
       },
       "ch6": {
         "0": {
-          "h": "Langkah Satu: Aktifkan Tumpukan",
-          "b": "Aktifkan tanggal sipil. Sekarang Anda melihat kedua sistem secara bersamaan. Tanggal HEKA Anda dan tanggal Gregorian Anda. Jembatan dibangun. Silakan lintas kapan saja Anda memerlukan."
+          "h": "Step One: Activate the Overlay",
+          "b": "Activate civil dates. Now you see both systems simultaneously. Your HEKA date and your Gregorian date. The bridge is built. Cross when you need to."
         },
         "1": {
-          "h": "Langkah Dua: Pilih Mode Anda",
-          "b": "Mulai dengan SYNC jika Anda menginginkan akrab. Beralih ke TRUE jika Anda menginginkan kebersihan. Anda dapat mengganti pikiran. Kalender menyesuaikan diri dengan Anda, bukan sebaliknya."
+          "h": "Step Two: Choose Your Mode",
+          "b": "Start with SYNC if you want familiarity. Switch to TRUE if you want purity. You can change your mind. The calendar adapts to you, not the other way around."
         },
         "2": {
-          "h": "Langkah Tiga: Hidup Di Dalamnya",
-          "b": "Gunakan HEKA sebagai tampilan primer Anda. Rencana bulan Anda. Catat hari Anda. Rasakan perbedaan tahun dengan struktur yang sebenarnya. Dunia sipil tidak perlu tahu. Anda akan tahu."
+          "h": "Step Three: Live Inside It",
+          "b": "Use HEKA as your main view. Plan your month. Note your days. Feel the difference of a year with real structure. The civil world does not need to know. You will know."
         }
       },
       "ch7": {
         "0": {
-          "h": "Biaya Frikasi Menghabiskan Energi",
-          "b": "Setiap kali Anda bertanya berapa hari dalam bulan ini, Anda membayar pajak kecil. Ketidakregulan setiap menguras fokus. HEKA menghapus pajak ini. Anda simpan energi Anda untuk yang penting."
+          "h": "Friction Costs Energy",
+          "b": "Every time you wonder how many days are in this month, you pay a small tax. Every irregularity drains focus. HEKA removes these taxes. You keep your energy for what matters."
         },
         "1": {
-          "h": "Ritme Membuat Tenang",
-          "b": "Ketika struktur dapat diprediksi, pikiran tenang. Anda tahu di mana Anda dalam tahun. Anda merasa pembuka, inti, penutup. Waktu menjadi ruang yang dihuni, bukan kekacauan yang harus disimpang."
+          "h": "Rhythm Creates Calm",
+          "b": "When structure is predictable, the mind relaxes. You know where you are in the year. You feel the opening, the core, the closing. Time becomes a space you inhabit, not a chaos you survive."
         },
         "2": {
-          "h": "Otoritas atas Waktu",
-          "b": "Anda tidak memilih kalender Gregorian. Diberikan kepada Anda. HEKA adalah pilihan. Menggunakan alat yang dirancang untuk kejelasan. Mengklaim otoritas atas struktur hari Anda. Ini adalah kalender Anda."
+          "h": "Agency Over Time",
+          "b": "You did not choose the Gregorian calendar. It was given to you. HEKA is a choice. To use a tool designed for clarity. To reclaim agency over the structure of your days. This is your calendar."
         }
       }
     },
     "gatesByChapter": {
       "ch1": {
         "0": {
-          "t": "Apakah ini agama atau gerakan?",
+          "t": "Is this a religion or movement?",
           "tag": "CLARITY",
-          "b": "Neither. HEKA is a tool. Like a better hammer or a clearer map. No membership required. No beliefs to adopt. Just a calendar that works better than the one you inherited."
+          "b": "Neither. HEKA is a tool. Like a better hammer or a clearer map."
         },
         "1": {
           "t": "Why thirteen months?",
           "tag": "LOGIC",
-          "b": "Twelve months of irregular length force mental gymnastics. Thirteen months of four weeks each creates perfect regularity. 13 × 28 = 364. Plus one special day. The math is clean. The experience is cleaner."
+          "b": "Twelve months of irregular length force mental gymnastics. Thirteen months of four weeks each creates perfect regularity. 13 x 28 = 364. Plus one special day. The math is clean. The experience is cleaner."
         },
         "2": {
           "t": "Will this confuse other people?",
@@ -383,123 +391,153 @@
         "1": {
           "t": "What are the month names?",
           "tag": "ORDER",
-          "b": "April, May, June, July, August, Hexa, September, October, November, December, January, February, March. Hexa—the sixth month—fills the gap. The rest you already know. Only their positions change."
+          "b": "April, May, June, July, August, Hexa, September, October, November, December, January, February, March. Hexa -- the sixth month -- fills the gap. The rest you already know. Only their positions change."
         },
         "2": {
           "t": "How is correction handled?",
           "tag": "PRECISION",
-          "b": "Setiap kalender surya memerlukan koreksi. HEKA menempatkannya pada bulan Maret, di akhir tahun. Maret memiliki 29 hari, atau 30 hari pada tahun kudus. Sebelas bulan lainnya adalah reguler dan permanen. Koreksi terkandung, tidak tersebar."
+          "b": "Every solar calendar needs correction. HEKA places it all in March, at the year's end. March has 29 days, or 30 in leap years. The other twelve months are perfect and permanently regular. Correction is contained, not scattered."
         }
       },
       "ch3": {
         "0": {
           "t": "Can I print HEKA calendars?",
           "tag": "PHYSICAL",
-          "b": "Ya. Cetak tampilan bulanan atau tampilan tahun penuh. Bersih, tidak berantakan, dirancang untuk kertas. Senggangkan pada dinding. Bawakan dalam buku catatan. Kenyamanan digital dan artefak fisik, keduanya."
+          "b": "Yes. Print monthly views or full-year panoramas. Clean, clear, designed for paper. Put them on walls. Carry them in notebooks. Digital convenience and physical artifact, both."
         },
         "1": {
           "t": "What about holidays?",
           "tag": "CUSTOM",
-          "b": "Alihkan set libur untuk wilayah Anda. Atau abaikannya. HEKA tidak menentukan liburnya sendiri—itu membantu Anda melacak libur yang penting bagi Anda, di atas struktur yang lebih jelas."
+          "b": "Activate holiday sets for your region. Or ignore them. HEKA does not impose its own holidays; it helps you follow the ones that matter to you, overlaid on a clearer structure."
         },
         "2": {
-          "t": "Are my notes private?",
+          "t": "Where does my data live?",
           "tag": "TRUST",
-          "b": "Semua penyimpanan lokal di perangkat Anda. Pikiran Anda tetap milik Anda. Ekspor jika Anda mau. Impor ke tempat lain. Anda memiliki kontrol penuh atas data Anda."
+          "b": "By default, everything stays on your device — notes, journal, settings. If you create an account, your data backs up to encrypted cloud storage. You can export everything at any time. You stay in control."
+        },
+        "3": {
+          "t": "What can the journal do?",
+          "tag": "CAPABILITY",
+          "b": "Daily entries with automatic revision history. Full-text search across your entire archive. All local by default; syncs to the cloud when you sign in."
         }
       },
       "ch4": {
         "0": {
           "t": "Which mode is \"correct\"?",
           "tag": "CHOICE",
-          "b": "Keduanya. SYNC benar untuk koordinasi dengan dunia sipil. TRUE benar untuk presisi astronomis. Kebutuhan Anda menentukan kapan kebenaran lebih penting bagi Anda sekarang."
+          "b": "Both. SYNC is correct for coordination with the civil world. TRUE is correct for astronomical precision. Your needs determine which correction is more important to you right now."
         },
         "1": {
           "t": "Does TRUE mode drift from civil dates?",
           "tag": "DIVERGENCE",
-          "b": "Pada akhirnya, ya. Mode TRUE mengikuti aturan kudusnya sendiri, bukan Gregorian. Seiring berjalannya abad, perbedaan menjadi jelas. Untuk kehidupan sehari-hari, perbedaan tidak terdeteksi. Untuk pemikiran jangka panjang, keaslian itu penting."
+          "b": "Slowly, yes. TRUE mode follows its own leap year rule, not the Gregorian one. Over centuries, the divergence becomes noticeable. For daily life, the difference is imperceptible. For long-term thinking, purity matters."
         },
         "2": {
           "t": "Can institutions adopt HEKA?",
           "tag": "SCALE",
-          "b": "Mungkin, pada akhirnya. Namun lembaga tidak perlu berubah untuk Anda manfaat. HEKA bekerja dengan sempurna sebagai lapisan personal. Mulailah dari sana. Biarkan alat itu membuktikannya sendiri."
+          "b": "Eventually, perhaps. But institutions do not need to change for you to benefit. HEKA works perfectly as a personal overlay. Start there. Let the tool prove itself."
         }
       },
       "ch5": {
         "0": {
           "t": "Why do months have different lengths?",
           "tag": "HISTORY",
-          "b": "Politik Romawi. Julius Caesar dan Augustus memerlukan bulan yang dinamai sesuai dengan mereka. Kalender diubah untuk menampung ego. Ketidakregulan ini menetes menjadi \"tradisi.\" Tradisi tidak selalu kebijakan."
+          "b": "Roman politics. Julius Caesar and Augustus needed months named in their honor. The calendar was adjusted to accommodate egos. These irregularities became 'tradition.' Tradition is not always wisdom."
         },
         "1": {
           "t": "Was the Gregorian reform enough?",
           "tag": "ASSESSMENT",
-          "b": "Menggaitkan perbedaan. Itu tidak memperbaiki struktur. Bulan tetap tidak merata, kuarter tidak sama, tahun tanpa bentuk naratif. Perbaikan yang diperlukan, tapi bukan desain dasar."
+          "b": "It fixed the drift. It did not fix the structure. Months remained irregular, quarters remained unequal, the year had no narrative shape. A necessary patch, but not a fundamental redesign."
         },
         "2": {
           "t": "Have others tried calendar reform?",
           "tag": "ATTEMPTS",
-          "b": "Banyak. Kalender Republik Rakyat Prancis. Kalender Dunia. Kalender Tetap Internasional. Beberapa brilian, semua gagal secara politik. HEKA belajar dari mereka: kompatibilitas dengan waktu sipil sangat penting. Revolusi melalui evolusi."
+          "b": "Many. The French Republican calendar. The World Calendar. The International Fixed Calendar. Some brilliant, all politically failed. HEKA learns from them: civil time compatibility is essential. Revolution through evolution."
         }
       },
       "ch6": {
         "0": {
           "t": "How do I explain this to others?",
           "tag": "CONVERSATION",
-          "b": "Anda tidak perlu. Gunakan. Jika ditanya, katakan: \"Saya menemukan kalender yang membantu saya merencanakan lebih baik.\" Tunjukkan pada mereka. Biarkan mereka melihat kejelasannya. Persuasi terjadi melalui demonstrasi, bukan deklarasi."
+          "b": "You do not need to. Use it. If they ask, say: \"I found a calendar that helps me plan better.\" Show them. Let them see the clarity. Persuasion happens through demonstration, not declaration."
         },
         "1": {
           "t": "What if I want to stop using it?",
           "tag": "FREEDOM",
-          "b": "Berhenti. Tanggal sipil Anda tetap. Janji temu Anda tetap di tempatnya. Tanpa pengunci. Tanpa biaya terikat. HEKA harus menggerakkan tempatnya dalam kehidupan Anda setiap hari, atau tidak pantas untuk tinggal."
+          "b": "Stop using it. Your civil dates remain. Your appointments stay where they are. No lock-in. No sunk cost. HEKA must earn its place in your life every day, or it does not deserve to stay."
         },
         "2": {
           "t": "Where do I begin right now?",
           "tag": "ACTION",
-          "b": "Dimana saya memulai sekarang? Buka pengaturan. Aktifkan lapisan sipil. Lihat hari ini dalam kedua sistem. Itu langkah pertama. Anda sudah mengambilnya dengan membuka panduan ini."
+          "b": "Open settings. Activate the civil overlay. Look at today in both systems. That is the first step. You have already taken it by opening this guide."
+        },
+        "3": {
+          "t": "What is the Oracle?",
+          "tag": "INTELLIGENCE",
+          "b": "A celestial intelligence that reads planetary positions for any date you select and offers guidance. Optional. Add your birth chart for personalized transits and deeper insight."
         }
       },
       "ch7": {
         "0": {
           "t": "Does the calendar really affect mindset?",
           "tag": "PSYCHOLOGY",
-          "b": "Sangat mendalam. Kita berpikir dalam struktur yang kita huni. Bulan yang tidak regular menciptakan gesekan kognitif tingkat rendah. Bulan yang regular menciptakan aliran kognitif. Anda mungkin tidak menyadari gesekan hingga ia hilang. Kemudian Anda tidak dapat tidak sadari."
+          "b": "Deeply. We think in the structures we inhabit. Irregular months create low-level cognitive friction. Regular months create cognitive flow. You may not notice the friction until it disappears. Then you cannot stop noticing it."
         },
         "1": {
-          "t": "Bagaimana dengan kepekaan budaya?",
-          "tag": "HORMAT",
-          "b": "Simak mereka. Ulang tahun Anda. Perayaan tahun baru Anda. Festival musim Anda. HEKA tidak menghapus budaya—Ia menyediakan wadah yang lebih jelas untuk itu. Konten tetap ada. Wadahnya lebih baik."
+          "t": "What about cultural ties?",
+          "tag": "RESPECT",
+          "b": "Keep them. Your birthday. Your New Year celebrations. Your seasonal festivals. HEKA does not erase culture; it provides a clearer container for it. The content remains. The container improves."
         },
         "2": {
-          "t": "Mengapa ini cukup penting untuk dibangun?",
-          "tag": "MISI",
-          "b": "Karena waktu adalah substrat kehidupan. Karena kita layak mendapatkan alat yang dirancang untuk pikiran, bukan mewarisi dari kecelakaan. Karena seseorang harus mencoba untuk membangun sesuatu yang lebih baik. Kami melakukannya. Anda di sini."
+          "t": "Why is this important enough to build?",
+          "tag": "MISSION",
+          "b": "Because time is the substrate of life. Because we deserve tools designed for minds, not inherited from accidents. Because someone should try to build something better. We did. You are here."
         }
       }
     },
     "chapterLeads": {
-      "ch1": "Anda telah merasakannya. Kebingungan sedikit saat perencanaan di bulan-bulan yang berbeda. Hitung mental: \"Berapa hari sampai...?\" Irama yang tidak konsisten dari tahun yang terjun dari Januari hingga Desember tanpa bentuk yang koheren. HEKA adalah tanggapan itu.",
-      "ch2": "Tahun bukan hanya hitungan hari. Ini adalah arus naratif. HEKA mengatur tahun surya menjadi tiga gerakan yang berbeda: Pembukaan, Inti, dan Penutup. Masing-masing memiliki karakternya sendiri. Masing-masing memiliki tujuan yang berbeda dalam irama kerja dan istirahat, pertumbuhan dan panen.",
-      "ch3": "Teori menjadi berguna hanya ketika dipraktik. HEKA dirancang untuk adopsi langsung tanpa gangguan. Tanggal sipil tetap terlihat. Janji temu Anda tetap sinkron. Anda hanya mendapatkan kerangka yang lebih jelas, lebih regular untuk menavigasi hari Anda.",
-      "ch4": "Setiap kalender surya harus mengoreksi ketidakcocokan antara siklus hari dan siklus tahun. HEKA menawarkan dua pendekatan untuk koreksi ini: yang satu yang harmonis dengan harapan sipil, dan yang satu yang mengikuti akurasi astronomi murni. Struktur tetap konstan. Hanya mekanisme koreksi yang berubah.",
-      "ch5": "Kalender Gregorian tidak buruk. Ini adalah standar yang berhasil yang memperbaiki masalah longgar yang krusial. Namun itu juga adalah perbaikan pada perbaikan—a struktur yang dibentuk oleh politik Romawi, dewan agama, dan kecelakaan historis daripada kebutuhan manusia. Mengerti sejarah ini menjelaskan mengapa perancangan ulang layak mencoba.",
-      "ch6": "Perubahan institusional lambat. Perubahan pribadi segera. Anda tidak memerlukan pemerintah atau perusahaan untuk mengadopsi HEKA untuk Anda untuk mendapatkan manfaat dari itu. Mulai hari ini. Gunakan sebagai lapisan perencanaan pribadi Anda. Biarkan alat ini membuktikan nilainya dalam pengalaman Anda sendiri.",
-      "ch7": "Kita hidup di dalam kalender kita. Mereka membentuk kesadaran waktu, kemajuan, dan kemungkinan kita. Kalender yang tidak regular menciptakan gesekan tingkat rendah sepanjang tahun. Kalender yang regular menciptakan aliran. Pilihan struktur yang akan dihuni pada akhirnya adalah pilihan tentang macam lingkungan waktu apa yang Anda ingin tinggali."
+      "ch1": "You have felt it. The slight confusion when planning across months. The irregular rhythm of a year that stumbles from January through December with no coherent shape. HEKA is the response. Thirteen months. Twenty-eight days each. One perfect year.",
+      "ch2": "A year is not merely a count of days. It is a narrative arc. HEKA structures the solar year into three distinct movements: the Opening, the Core, and the Closing. Each with its own character. Each serving a different purpose in the rhythm of work and rest, growth and harvest.",
+      "ch3": "Theory becomes useful only when practiced. HEKA is designed for immediate adoption without disruption. Civil dates remain visible. Your appointments stay synchronized. The Oracle, Cosmic Circle, and your personal journal are here when you want them. You simply gain a clearer framework for navigating your days.",
+      "ch4": "Every solar calendar must correct for the mismatch between day-cycles and year-cycles. HEKA offers two approaches to this correction: one that harmonizes with civil expectations, and one that follows pure astronomical precision. The structure stays constant. Only the correction mechanism changes.",
+      "ch5": "The Gregorian calendar is not bad. It is a successful standard that fixed critical drift problems. But it is also a patch on a patch—a structure shaped by Roman politics, religious councils, and historical accidents rather than human needs. Understanding this history clarifies why redesign is worth attempting.",
+      "ch6": "Institutional change is slow. Personal change is immediate. You do not need governments or corporations to adopt HEKA for you to benefit from it. Start today. Use it as your personal planning layer. Let the tool prove its value in your own experience.",
+      "ch7": "We live inside our calendars. They shape our sense of time, progress, and possibility. An irregular calendar creates low-level friction throughout the year. A regular calendar creates flow. The choice of which structure to inhabit is ultimately a choice about what kind of temporal environment you want to live within."
+    },
+    "spotlight": {
+      "title": "Did you know?",
+      "facts": {
+        "0": "The Oracle reads real-time planetary positions for any date you select.",
+        "1": "Your journal keeps 50 revisions per entry — never lose a thought.",
+        "2": "Cosmic Circle lets you share moon phases and transits with friends.",
+        "3": "Print month views or full-year panoramas, designed for paper.",
+        "4": "SYNC mode matches civil dates. TRUE mode follows astronomical precision."
+      }
     }
   },
   "months": {
     "apr": "Apr",
-    "may": "Mei",
+    "may": "May",
     "jun": "Jun",
     "jul": "Jul",
-    "aug": "Agu",
+    "aug": "Aug",
     "hex": "Hex",
     "sep": "Sep",
-    "oct": "Okt",
+    "oct": "Oct",
     "nov": "Nov",
-    "dec": "Des",
+    "dec": "Dec",
     "jan": "Jan",
     "feb": "Feb",
     "mar": "Mar"
+  },
+  "openSettings": "Open Settings",
+  "syncConflict": {
+    "title": "Sync Conflict",
+    "subtitle": "This item changed on the server while you were offline. Which version should keep?",
+    "local": "My Version",
+    "localHint": "The change I made on this device",
+    "server": "Server Version",
+    "serverHint": "The version already saved online",
+    "resolve": "Keep This Version"
   }
 }

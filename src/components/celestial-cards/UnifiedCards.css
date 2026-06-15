@@ -221,7 +221,7 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  font-size: 9px;
+  font-size: 11px;
   font-weight: 700;
   color: var(--heka-text-secondary);
   font-family: ui-monospace, SFMono-Regular, monospace;
@@ -329,7 +329,7 @@
 }
 
 .heka-data-cell__label {
-  font-size: 9px;
+  font-size: 11px;
   text-transform: uppercase;
   letter-spacing: 1px;
   color: var(--heka-text-tertiary);
@@ -365,7 +365,7 @@
 }
 
 .heka-section__title {
-  font-size: 10px;
+  font-size: 12px;
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 2px;
@@ -591,7 +591,7 @@
 }
 
 .chaldean-timeline__label {
-  font-size: 8px;
+  font-size: 11px;
   color: var(--heka-text-tertiary);
   font-family: ui-monospace, SFMono-Regular, monospace;
   font-weight: 600;
@@ -694,7 +694,7 @@
   background: rgba(0,0,0,0.35);
   border: 1px solid rgba(255,255,255,0.08);
   border-radius: 20px;
-  font-size: 9px;
+  font-size: 11px;
   font-weight: 600;
   color: var(--heka-text-secondary);
   text-transform: uppercase;
@@ -769,7 +769,7 @@
 }
 
 .heka-epic-counter__label {
-  font-size: 9px;
+  font-size: 11px;
   text-transform: uppercase;
   letter-spacing: 1.5px;
   color: var(--heka-text-tertiary);
@@ -786,7 +786,7 @@
 }
 
 .heka-epic-counter__title {
-  font-size: 10px;
+  font-size: 12px;
   text-transform: uppercase;
   letter-spacing: 2px;
   color: var(--heka-text-secondary);
@@ -826,7 +826,7 @@
 }
 
 .heka-forecast__time {
-  font-size: 10px;
+  font-size: 12px;
   text-transform: uppercase;
   letter-spacing: 1px;
   color: var(--heka-text-tertiary);
@@ -846,7 +846,7 @@
 }
 
 .heka-forecast__condition {
-  font-size: 9px;
+  font-size: 11px;
   color: var(--heka-text-tertiary);
   text-transform: uppercase;
   letter-spacing: 0.5px;
@@ -860,7 +860,7 @@
 }
 
 .heka-ring--large .heka-ring__text {
-  font-size: 10px;
+  font-size: 12px;
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════════

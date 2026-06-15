@@ -1,0 +1,49 @@
+{
+  "best": "Nejlepší: {{count}}",
+  "title": "Tvá Cesta",
+  "close": "Zavřít",
+  "reset": "Obnovit Statistiky",
+  "avgMood": "Průměrný Nálada",
+  "dayStreak": "Denní Sériová",
+  "totalNotes": "Celkem Poznámek",
+  "wordsWritten": "Napsáno Slov",
+  "achievements": "Úspěchy ({{earned}}/{{total}})",
+  "resetConfirm": "Obnovit",
+  "progressRatio": "{{current}} / {{target}}",
+  "monthlyTooltip": "{{month}} {{year}}: {{count}} poznámek",
+  "notesByCategory": "Poznámky podle Kategorie",
+  "monthlyActivity": "Měsíční Aktivita",
+  "mostActiveMonth": "Nejaktivnější měsíc byl \u003cstrong\u003e{{month}}\u003c/strong\u003e s \u003cstrong\u003e{{count}}\u003c/strong\u003e poznámkami",
+  "categories": {
+    "work": "Práce",
+    "family": "Rodina",
+    "health": "Zdraví",
+    "general": "Obecné",
+    "personal": "Osobní",
+    "creative": "Tvůrčí",
+    "spiritual": "Duchovné"
+  },
+  "progressToCentury": "Průběh ke Stovkového Klubu",
+  "resetConfirmTitle": "Obnovit Statistiky",
+  "badges": {
+    "century": {
+      "name": "Stovkový Klub"
+    },
+    "explorer": {
+      "name": "Průzkumník"
+    },
+    "archivist": {
+      "name": "Archivář"
+    },
+    "first-note": {
+      "name": "První Slova"
+    },
+    "week-streak": {
+      "name": "Týdenní Bojovník"
+    },
+    "month-streak": {
+      "name": "Měsíční Mistr"
+    }
+  },
+  "resetConfirmDescription": "Jste si jistý, že chcete obnovit všechny statistiky? Tuto akci nelze vrátit."
+}

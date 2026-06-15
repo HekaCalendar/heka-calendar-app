@@ -1,372 +1,380 @@
 {
-  "appTitle": "HEKA Kalender",
+  "appTitle": "HEKA Calendar",
   "appName": "HEKA",
-  "appSubtitle": "Tredje-Måneds Kalenderen",
-  "loading": "Henter...",
-  "save": "Gem",
-  "cancel": "Annuller",
-  "delete": "Slet",
-  "edit": "Rediger",
-  "done": "Færdig",
-  "back": "Tilbage",
-  "next": "Næste",
-  "close": "Luk",
-  "open": "Åbn",
-  "yes": "Ja",
-  "no": "Nej",
+  "appSubtitle": "The Thirteen-Month Calendar",
+  "loading": "Loading...",
+  "save": "Save",
+  "cancel": "Cancel",
+  "delete": "Delete",
+  "edit": "Edit",
+  "done": "Done",
+  "back": "Back",
+  "next": "Next",
+  "close": "Close",
+  "open": "Open",
+  "yes": "Yes",
+  "no": "No",
   "ok": "OK",
-  "confirm": "Bekræft",
-  "skip": "Spring over",
-  "continue": "Fortsæt",
-  "search": "Søg",
+  "confirm": "Confirm",
+  "skip": "Skip",
+  "continue": "Continue",
+  "search": "Search",
   "filter": "Filter",
-  "sort": "Sorter",
-  "add": "Tilføj",
-  "remove": "Fjern",
-  "copy": "Kopiér",
-  "share": "Del",
-  "print": "Udskriv",
-  "download": "Hent",
-  "export": "Eksporter",
-  "import": "Importer",
-  "settings": "Indstillinger",
-  "profile": "Profil",
-  "account": "Konto",
-  "signIn": "Log ind",
-  "signOut": "Log ud",
-  "signUp": "Tilmeld dig",
-  "welcome": "Velkommen",
-  "goodbye": "Farvel",
-  "error": "Fejl",
-  "warning": "Advarsel",
-  "success": "Succes",
+  "sort": "Sort",
+  "add": "Add",
+  "remove": "Remove",
+  "copy": "Copy",
+  "share": "Share",
+  "print": "Print",
+  "download": "Download",
+  "export": "Export",
+  "import": "Import",
+  "settings": "Settings",
+  "profile": "Profile",
+  "account": "Account",
+  "signIn": "Sign In",
+  "signOut": "Sign Out",
+  "signUp": "Sign Up",
+  "welcome": "Welcome",
+  "goodbye": "Goodbye",
+  "error": "Error",
+  "warning": "Warning",
+  "success": "Success",
   "info": "Info",
-  "retry": "Prøv igen",
-  "refresh": "Opdater",
-  "today": "I dag",
-  "yesterday": "I går",
-  "tomorrow": "I morgen",
-  "now": "Nu",
-  "later": "Senere",
-  "soon": "Snart",
-  "never": "Aldrig",
-  "always": "Altid",
-  "none": "Ingen",
-  "all": "Alle",
-  "selected": "Valgte",
-  "unselected": "Ikke valgt",
-  "active": "Aktiv",
-  "inactive": "Inaktiv",
-  "enabled": "Aktiveret",
-  "disabled": "Deaktiveret",
-  "on": "Tændt",
-  "off": "Slukket",
-  "visible": "Synlig",
-  "hidden": "Skjult",
-  "expand": "Udvid",
-  "collapse": "Sammenfold",
-  "showMore": "Vis mere",
-  "showLess": "Vis mindre",
-  "readMore": "Læs mere",
-  "learnMore": "Lær mere",
-  "gotIt": "Forstået",
-  "understood": "Forstået",
-  "notNow": "Ikke nu",
-  "maybeLater": "Måske senere",
-  "dismiss": "Afvis",
-  "undo": "Fortryd",
-  "redo": "Gentag",
-  "reset": "Nulstil",
-  "restore": "Gendan",
-  "clear": "Ryd",
-  "empty": "Tom",
+  "retry": "Retry",
+  "refresh": "Refresh",
+  "today": "Today",
+  "yesterday": "Yesterday",
+  "tomorrow": "Tomorrow",
+  "now": "Now",
+  "later": "Later",
+  "soon": "Soon",
+  "never": "Never",
+  "always": "Always",
+  "none": "None",
+  "all": "All",
+  "selected": "Selected",
+  "unselected": "Unselected",
+  "active": "Active",
+  "inactive": "Inactive",
+  "enabled": "Enabled",
+  "disabled": "Disabled",
+  "on": "On",
+  "off": "Off",
+  "visible": "Visible",
+  "hidden": "Hidden",
+  "expand": "Expand",
+  "collapse": "Collapse",
+  "showMore": "Show More",
+  "showLess": "Show Less",
+  "readMore": "Read More",
+  "learnMore": "Learn More",
+  "gotIt": "Got It",
+  "understood": "Understood",
+  "notNow": "Not Now",
+  "maybeLater": "Maybe Later",
+  "dismiss": "Dismiss",
+  "undo": "Undo",
+  "redo": "Redo",
+  "reset": "Reset",
+  "restore": "Restore",
+  "clear": "Clear",
+  "empty": "Empty",
   "blank": "Blank",
-  "new": "Ny",
-  "old": "Gamle",
-  "recent": "Seneste",
-  "earlier": "Tidligere",
-  "upcoming": "Kommende",
-  "past": "Forbi",
-  "future": "Fremtidig",
-  "present": "Nuværende",
-  "current": "Aktuel",
-  "previous": "Forrige",
-  "nextItem": "Næste",
-  "first": "Første",
-  "last": "Sidste",
-  "of": "af",
-  "page": "Side",
-  "total": "I alt",
-  "items": "emner",
-  "item": "emne",
-  "noResults": "Ingen resultater fundet",
-  "loadingMore": "Indlæser flere...",
-  "pullToRefresh": "Træk for at opdatere",
-  "swipeToNavigate": "Swipe for at navigere",
-  "tapToContinue": "Tryk for at fortsætte",
-  "pressSpaceToContinue": "Tryk mellemrum for at fortsætte",
+  "new": "New",
+  "old": "Old",
+  "recent": "Recent",
+  "earlier": "Earlier",
+  "upcoming": "Upcoming",
+  "past": "Past",
+  "future": "Future",
+  "present": "Present",
+  "current": "Current",
+  "previous": "Previous",
+  "nextItem": "Next",
+  "first": "First",
+  "last": "Last",
+  "of": "of",
+  "page": "Page",
+  "total": "Total",
+  "items": "items",
+  "item": "item",
+  "noResults": "No results found",
+  "loadingMore": "Loading more...",
+  "pullToRefresh": "Pull to refresh",
+  "swipeToNavigate": "Swipe to navigate",
+  "tapToContinue": "Tap to continue",
+  "pressSpaceToContinue": "Press space to continue",
   "pro": "Pro",
   "premium": "Premium",
-  "free": "Gratis",
-  "upgrade": "Opgrader",
-  "subscribe": "Abonnér",
-  "unsubscribe": "Afmeld",
-  "features": "Funktioner",
-  "about": "Om",
-  "help": "Hjælp",
+  "free": "Free",
+  "upgrade": "Upgrade",
+  "subscribe": "Subscribe",
+  "unsubscribe": "Unsubscribe",
+  "features": "Features",
+  "about": "About",
+  "help": "Help",
   "support": "Support",
-  "feedback": "Tilbagemelding",
-  "bugReport": "Fejlrapport",
-  "terms": "Vilkår for tjenesten",
-  "privacy": "Privatlivspolitik",
+  "feedback": "Feedback",
+  "bugReport": "Bug Report",
+  "terms": "Terms of Service",
+  "privacy": "Privacy Policy",
   "version": "Version",
   "build": "Build",
-  "copyright": "© HEKA Kalender",
-  "allRightsReserved": "Alle rettigheder forbeholdes.",
-  "modernHekaCalendar": "Den Moderne HEKA Kalender",
-  "trueHekaSubtitle": "Sand HEKA Tidtagning • Martskorrektion (4-årig cyklus, undtaget 128.) • Astronomisk præcision",
-  "syncSubtitle": "HEKA Gregorian synkroniseret tidtagning • April til Marts • 13-måneders harmonisk kalender",
-  "trueHekaMode": "⚡ SAND HEKA-tilstand",
-  "syncMode": "🌐 SYNKRONISERINGStilstand",
-  "view": "Vis",
-  "welcomeToTheCircle": "✨ Velkommen til Cirkel",
-  "enterInviteCode": "Indtast en invitationkode for at sende en veneforespørgsel",
-  "inviteCodeDetected": "Invitationkode opdaget:",
-  "sending": "✨ Sender...",
-  "sendFriendRequest": "🌟 Send Veneforespørgsel",
-  "orEnterCodeManually": "eller indtast en kode manuelt",
-  "inviteCodePlaceholder": "Indtast invitationkode (f.eks., ABC-DEF-GHI)",
-  "sendRequest": "Send Anmodning",
-  "friendRequestSent": "✨ Veneforespørgsel sendt! De skal acceptere, før I kan chatte.",
-  "openCosmicCircle": "Åbn Kosmisk Cirkel",
-  "skipForNow": "Spring over for nu",
-  "joiningCircleAllows": "Deltagelse i en Cirkel giver dig mulighed for at:",
-  "sendReceiveTaskRituals": "📜 Send og modtag Opgave Ritualer",
-  "messageCosmicChannels": "💬 Besked gennem kosmiske kanaler",
-  "alignHekaDates": "🗓️ Udjævn på HEKA-datoer sammen",
-  "shareCelestialInsights": "✨ Del himmelske indsigter",
-  "failedToSendFriendRequest": "Kunne ikke sende veneforespørgsel. Tjek koden, og prøv igen.",
-  "searchPlaceholder": "Søg efter datoer, noter, helligdage...",
-  "recentSearches": "Nylige Søgninger",
-  "result": "resultat",
-  "results": "resultater",
-  "tryDifferentKeywords": "Prøv forskellige nøgleord eller tjek stavningen",
-  "trySearchingFor": "Prøv at søge efter",
-  "navigate": "↑↓Naviger",
-  "selectKey": "↵ Vælg",
-  "escClose": "Esc Luk",
-  "hekaUnifiedSearch": "HEKA Enheds søgning",
-  "dates": "Datoer",
-  "notes": "Noter",
-  "holidays": "Helligdage",
-  "hekaDate": "HEKA Dato",
-  "civilDate": "Civil Dato",
-  "calendarNote": "Kalender Bemærkning",
-  "holiday": "Helligdag",
+  "copyright": "© HEKA Calendar",
+  "allRightsReserved": "All rights reserved.",
+  "modernHekaCalendar": "The Modern HEKA Calendar",
+  "trueHekaSubtitle": "True HEKA Timekeeping • March correction (4-year cycle, except 128th) • Astronomical precision",
+  "syncSubtitle": "HEKA Gregorian synchronised timekeeping • April to March • 13-month harmonic calendar",
+  "trueHekaMode": "⚡ TRUE HEKA Mode",
+  "syncMode": "🌐 SYNC Mode",
+  "view": "View",
+  "welcomeToTheCircle": "✨ Welcome to the Circle",
+  "enterInviteCode": "Enter an invite code to send a friend request",
+  "inviteCodeDetected": "Invite Code Detected:",
+  "sending": "✨ Sending...",
+  "sendFriendRequest": "🌟 Send Friend Request",
+  "orEnterCodeManually": "or enter a code manually",
+  "inviteCodePlaceholder": "Enter invite code (e.g., ABC-DEF-GHI)",
+  "sendRequest": "Send Request",
+  "friendRequestSent": "✨ Friend request sent! They'll need to accept before you can chat.",
+  "openCosmicCircle": "Open Cosmic Circle",
+  "skipForNow": "Skip for now",
+  "joiningCircleAllows": "Joining a Circle allows you to:",
+  "sendReceiveTaskRituals": "📜 Send and receive Task Rituals",
+  "messageCosmicChannels": "💬 Message through cosmic channels",
+  "alignHekaDates": "🗓️ Align on HEKA dates together",
+  "shareCelestialInsights": "✨ Share celestial insights",
+  "failedToSendFriendRequest": "Failed to send friend request. Please check the code and try again.",
+  "searchPlaceholder": "Search dates, notes, holidays...",
+  "recentSearches": "Recent Searches",
+  "result": "result",
+  "results": "results",
+  "tryDifferentKeywords": "Try different keywords or check your spelling",
+  "trySearchingFor": "Try Searching For",
+  "navigate": "↑↓ Navigate",
+  "selectKey": "↵ Select",
+  "escClose": "Esc Close",
+  "hekaUnifiedSearch": "HEKA Unified Search",
+  "dates": "Dates",
+  "notes": "Notes",
+  "holidays": "Holidays",
+  "hekaDate": "HEKA Date",
+  "civilDate": "Civil Date",
+  "calendarNote": "Calendar Note",
+  "holiday": "Holiday",
   "infoModal": {
-    "goTo": "Gå til {{title}}",
-    "home": "Hjem",
-    "backToHome": "Tilbage til Hjem",
-    "deeperQuestions": "Dybere Spørgsmål",
+    "goTo": "Go to {{title}}",
+    "home": "Home",
+    "backToHome": "Back to Home",
+    "deeperQuestions": "Deeper Questions",
     "hero": {
-      "title": "HEKA Kalenderen",
-      "subtitleLine1": "Tid er strukturen, vi lever indeni.",
-      "subtitleLine2": "Hvad hvis den passede bedre?"
+      "title": "The HEKA Calendar",
+      "subtitleLine1": "Time is the structure we live inside.",
+      "subtitleLine2": "What if it fit better?"
     },
     "cards": {
       "whatChanges": {
-        "title": "Hvad Ændres",
+        "title": "What Changes",
         "items": {
-          "0": "Tredive måneder, alle lige",
-          "1": "Fire uger pr. måned, altid",
-          "2": "Året begynder i April, slutter i Marts",
-          "3": "Åbning, Kerne og Lukning",
-          "4": "Korrektur indeholdt i én måned"
+          "0": "Thirteen months, all equal",
+          "1": "Four weeks per month, always",
+          "2": "The year begins in April and ends in March",
+          "3": "Opening, core, and closing arcs",
+          "4": "Correction contained in one month"
         }
       },
       "whatStays": {
-        "title": "Hvad Forbliver",
+        "title": "What Stays",
         "items": {
-          "0": "Syv-dages uger uændret",
-          "1": "Sæsoner forbliver tilpasset",
-          "2": "Civile datoer altid synlige",
-          "3": "Dine aftaler synkroniseret",
-          "4": "Verden behøver ingen notits"
+          "0": "Seven-day weeks remain unchanged",
+          "1": "Seasons stay aligned",
+          "2": "Civil dates always visible",
+          "3": "Your appointments stay synced",
+          "4": "The world needs no notice"
         }
       },
       "beginHere": {
-        "title": "Begynd Her",
+        "title": "Begin Here",
         "items": {
-          "0": "Læs \"Hvad Er HEKA?\" først",
-          "1": "Udforsk \"Formen af Et År\"",
-          "2": "Aktivér civil overlejring",
-          "3": "Vælg SYNC eller TRUE tilstand",
-          "4": "Liv indeni i en måned"
+          "0": "Read \"What is HEKA?\" first",
+          "1": "Explore \"The Shape of a Year\"",
+          "2": "Activate the civil overlay",
+          "3": "Choose SYNC or TRUE mode",
+          "4": "Live inside it for a month"
         }
       }
     },
-    "chaptersLabel": "Syv Kapitler",
+    "chaptersLabel": "Seven Chapters",
     "chapters": {
       "home": {
-        "num": "HJEM",
-        "chip": "BEGYND",
-        "title": "HEKA Kalenderen",
-        "hook": "Tid er strukturen, vi lever indeni. Hvad hvis den passede bedre?"
+        "num": "HOME",
+        "chip": "BEGIN",
+        "title": "The HEKA Calendar",
+        "hook": "Time is the structure we live inside. What if it fit better?",
+        "teaser": ""
       },
       "ch1": {
         "num": "01",
-        "chip": "VÆSEN",
-        "title": "Hvad Er HEKA?",
-        "hook": "En kalender er mere end et tællingssystem. Det er rytmen i dit liv."
+        "chip": "ESSENCE",
+        "title": "What Is HEKA?",
+        "hook": "A calendar is more than a counting system. It is the rhythm of your life.",
+        "teaser": "13 months. 28 days each. One perfect year."
       },
       "ch2": {
         "num": "02",
-        "chip": "STRUKTUR",
-        "title": "Formet af et år",
-        "hook": "April begynder. Marts slutter. Alt imellem giver mening."
+        "chip": "STRUCTURE",
+        "title": "The Shape of a Year",
+        "hook": "April begins. March closes. Everything in between makes sense.",
+        "teaser": "April opens. The core holds. March closes."
       },
       "ch3": {
         "num": "03",
         "chip": "PRACTICE",
-        "title": "At leve i HEKA",
-        "hook": "Du behøver ikke tilladelse til at bruge et bedre værktøj."
+        "title": "Living in HEKA",
+        "hook": "You do not need permission to use a better tool.",
+        "teaser": "Your calendar. Your journal. Your oracle."
       },
       "ch4": {
         "num": "04",
         "chip": "PRECISION",
-        "title": "De To Tilstande",
-        "hook": "En kalender. To måder at ære solen. Du vælger."
+        "title": "The Two Modes",
+        "hook": "One calendar. Two ways of honoring the sun. You choose.",
+        "teaser": "Follow the civil world. Or follow the sky."
       },
       "ch5": {
         "num": "05",
         "chip": "LINEAGE",
-        "title": "Kalenderrevolutionen",
-        "hook": "Gregorian var et patch. HEKA er en omdesign."
+        "title": "The Calendar Revolution",
+        "hook": "Gregorian was a patch. HEKA is a redesign.",
+        "teaser": "Roman egos broke the year. We fixed it."
       },
       "ch6": {
         "num": "06",
         "chip": "BEGINNING",
-        "title": "Begynd at bruge HEKA i dag",
-        "hook": "Ingen institutioner behøver at ændre sig. Kun din udsigt."
+        "title": "Start Using HEKA Today",
+        "hook": "No institutions need to change. Only your view.",
+        "teaser": "No institutions required. Just your phone."
       },
       "ch7": {
         "num": "07",
         "chip": "MEANING",
-        "title": "Tid Der Tjener Dig",
-        "hook": "Den kalender du bruger former livet du lever."
+        "title": "Time That Serves You",
+        "hook": "The calendar you use shapes the life you live.",
+        "teaser": "The calendar you use shapes the life you live."
       }
     },
     "cardsByChapter": {
       "ch1": {
         "0": {
-          "h": "Problemet Du Føler",
-          "b": "Uregelmæssige måneder. Fordelagtlige helligdage. Et år der vakler fra januar til december uden nogen fornemmelse af åbning, midte eller slutning. Du har følt denne gnidning. HEKA fjerner den."
+          "h": "The Problem You Feel",
+          "b": "Irregular months. Scattered holidays. A year that stumbles from January to December with no sense of beginning, middle, or end. You have felt this friction. HEKA removes it."
         },
         "1": {
-          "h": "Løsningen Vi Byggede",
-          "b": "Tredive måneder. Tolv holder tyve og otte dage i perfekt symmeri. Marts, den afsluttende måned, bærer skuddagen. Fire perfekte uger pr. måned. Et år der flyder: April åbner, maj til december danner den stabile kerne, januar til marts bringer det til fuldendelse."
+          "h": "The Solution We Built",
+          "b": "Thirteen months. Twelve have twenty-eight days in perfect symmetry. March, the closing month, carries the leap day. Four perfect weeks per month. A year that flows: April opens, May through December form the stable core, January through March complete it."
         },
         "2": {
-          "h": "Verdenen Du Beholder",
-          "b": "HEKA forstyrrer ikke dit liv. Borgerlige datoer forbliver synlige. Dine aftaler, aftaler og juridiske forpligtelser forbliver nøjagtigt, hvor de er. Du får bare et klartere syn."
+          "h": "The World You Keep",
+          "b": "HEKA does not disrupt your life. Civil dates remain visible. Your appointments, commitments, and legal obligations stay exactly where they are. You simply gain a clearer lens."
         }
       },
       "ch2": {
         "0": {
-          "h": "Åbningsbuen",
-          "b": "April er tærsklen. Året begynder ikke i vinterudmattelse, men i forårsvækst. Ny vækst. Nye projekter. Åbningen annoncerer: noget begynder."
+          "h": "The Opening Arc",
+          "b": "April is the threshold. The year does not begin in winter exhaustion, but in spring vitality. New growth. New projects. The opening announces: something is beginning."
         },
         "1": {
-          "h": "Kernebuen",
-          "b": "Maj til december er den lange stabile midte. Ni måneder med fuldt regelmæssig, forudsigelig rytme. Planlæg med tillid. Bygg opmærksomhed. Dette er, hvor arbejdet sker."
+          "h": "The Core Arc",
+          "b": "May through December is the long, stable middle. Nine months of perfectly regular and predictable rhythm. Plan with confidence. Build momentum. This is where the work happens."
         },
         "2": {
-          "h": "Afslutningsbuen",
-          "b": "Januar til marts bringer året til afslutning. Afslut, hvad du startede. Høst, hvad du voksede. Afslutningen skaber plads til refleksion og forbereder dig på næste åbning."
+          "h": "The Closing Arc",
+          "b": "January through March bring the year to its resolution. Finish what you started. Harvest what you grew. Closure creates space for reflection and prepares you for the next opening."
         }
       },
       "ch3": {
         "0": {
-          "h": "Dine Borgerlige Datoer Forbliver",
-          "b": "Slå den borgerlige overlejring til og se Gregorianske datoer ved siden af HEKA. Din tandlægetime, din mors fødselsdag, din skattefrist - alt forbliver præcist, hvor du forventer dem."
+          "h": "Your Civil Dates Stay",
+          "b": "Activate the civil overlay and see Gregorian dates alongside HEKA. Your dentist appointment, your mother's birthday, your tax deadline -- everything stays exactly where you expect."
         },
         "1": {
-          "h": "Dine Noter Forbliver",
-          "b": "Gem tanker efter dag eller efter måned. Udskriv rene månedsvisninger eller fuld årsoversigter. Kalenderen bliver"
+          "h": "Your Journal",
+          "b": "Daily entries with revision history — up to 50 versions kept automatically. Full-text search across everything. Local by default; cloud backup when you sign in."
         },
         "2": {
-          "h": "Your Moon If You Want It",
-          "b": "Lunar phases appear at a glance. Not superimposed mysticism—just information. Another rhythm you can choose to notice or ignore. The choice is yours."
+          "h": "Your Moon & Stars",
+          "b": "Moon phases, planetary positions, and transits appear at a glance. Optional and precise. Add your birth chart for personal readings through the Oracle."
         }
       },
       "ch4": {
         "0": {
-          "h": "SYNC-tilstand: Den Familiare Sti",
-          "b": "Marts får sin ekstra dag, når den gregorianske kalender siger, at den skal. For daglig koordination med den civile verden er dette din tilstand. Samme struktur. Familiar timing."
+          "h": "SYNC MODE: The Familiar Path",
+          "b": "March gains its extra day when the Gregorian calendar says so. For daily coordination with the civil world, this is your mode. Same structure. Familiar time."
         },
         "1": {
-          "h": "TRUE-tilstand: Den Ærlige Sti",
-          "b": "HEKA følger sin egen korrekturregel: hver fjerde år har en 30-dages marts, undtagen hvert 128. år, hvilket ikke gør. Dette er astronomisk præcision. Dette er langtidsintegritet."
+          "h": "TRUE MODE: The Honest Path",
+          "b": "HEKA follows its own correction rule: every fourth year has a 30-day March, except every 128 years which does not. This is astronomical precision. This is long-term integrity."
         },
         "2": {
-          "h": "Skift何时",
-          "b": "Månederne ændres ikke. Ugen ændres ikke. Kun korrekturtriggeren flyttes. Eksperimenter. Se, hvilken tilstand der passer dine behov. Du er ikke låst fast."
+          "h": "Change at Any Time",
+          "b": "The months do not change. The week does not change. Only the correction trigger shifts. Experiment. See which mode fits your needs. You are not trapped."
         }
       },
       "ch5": {
         "0": {
-          "h": "Arv, Ikke Design",
-          "b": "Vores nuværende kalender er en bunke historiske ulykker. Romerske politik. Religionsråd. Astronomiske patches tilføjet århundreder fra hinanden. Det var aldrig designet som et system."
+          "h": "Inheritance, Not Design",
+          "b": "Our current calendar is a pile of historical accidents. Roman politics. Religious councils. Astronomical patches added centuries apart. It was never designed as a system."
         },
         "1": {
-          "h": "Den Gregorianske Patch",
-          "b": "1582: Pave Gregor fik bugen med at dreje problemet. Men han beholdt de uregelmæssige måneder, den spredte struktur, den arvede kaos. En nødvendig korrektur, men ikke en komplet løsning."
+          "h": "The Gregorian Patch",
+          "b": "1582: Pope Gregory fixed the drift problem. But he kept the irregular months, the scattered structure, the inherited chaos. A necessary correction, but not a complete solution."
         },
         "2": {
-          "h": "HEKA-respons",
-          "b": "Vi beholdt, hvad der virker: syv-dages uger, årstidssammenkørsel, solårssporing. Vi omdannede, hvad der ikke gjorde: månedsstruktur, årsstrømning, korrektionsplacering. Bygget til sind, der tænker."
+          "h": "The HEKA Answer",
+          "b": "We keep what works: seven-day weeks, seasonal alignment, solar year tracking. We redesign what does not: month structure, yearly flow, correction placement. Built for minds that think."
         }
       },
       "ch6": {
         "0": {
-          "h": "Trin Et: Aktivér Overlaget",
-          "b": "Tænd civile datoer. Nu kan du se begge systemer samtidigt. Din HEKA-dato og din gregorianske dato. Broen er bygget. Kryd over, når du har brug for det."
+          "h": "Step One: Activate the Overlay",
+          "b": "Activate civil dates. Now you see both systems simultaneously. Your HEKA date and your Gregorian date. The bridge is built. Cross when you need to."
         },
         "1": {
-          "h": "Trin To: Vælg Din Tilstand",
-          "b": "Start med SYNC, hvis du vil kende. Skift til TRUE, hvis du vil rene. Du kan ændre din tanke. Kalenderen tilpasses dig, ikke omvendt."
+          "h": "Step Two: Choose Your Mode",
+          "b": "Start with SYNC if you want familiarity. Switch to TRUE if you want purity. You can change your mind. The calendar adapts to you, not the other way around."
         },
         "2": {
-          "h": "Trin Tre: Lev Inde I",
-          "b": "Brug HEKA som dit primære udsyn. Planlæg din måned. Note dine dage. Føl forskellen på et år med faktisk struktur. Den civile verden behøver ikke at vide. Du vil vide."
+          "h": "Step Three: Live Inside It",
+          "b": "Use HEKA as your main view. Plan your month. Note your days. Feel the difference of a year with real structure. The civil world does not need to know. You will know."
         }
       },
       "ch7": {
         "0": {
-          "h": "Friktion Koster Energi",
-          "b": "Hver gang du undrer dig over, hvor mange dage der er i denne måned, betaler du en lille skat. Hver uregelmæssighed tømmer fokus. HEKA fjerner disse skatter. Du beholde din energi til, hvad der betyder noget."
+          "h": "Friction Costs Energy",
+          "b": "Every time you wonder how many days are in this month, you pay a small tax. Every irregularity drains focus. HEKA removes these taxes. You keep your energy for what matters."
         },
         "1": {
-          "h": "Rytme Skaber Ro",
-          "b": "Når strukturen er forudsigbar, slapper sindet af. Du ved, hvor du er i året. Du føler åbningen, kernen, lukningen. Tid bliver et rum, du bebor, ikke et kaos, du overlever."
+          "h": "Rhythm Creates Calm",
+          "b": "When structure is predictable, the mind relaxes. You know where you are in the year. You feel the opening, the core, the closing. Time becomes a space you inhabit, not a chaos you survive."
         },
         "2": {
-          "h": "Myndighed Over Tid",
-          "b": "Du valgte ikke den gregorianske kalender. Den blev givet til dig. HEKA er et valg. At bruge et værktøj designet til klarhed. At påtage sig myndighed over strukturen af dine dage. Dette er din kalender."
+          "h": "Agency Over Time",
+          "b": "You did not choose the Gregorian calendar. It was given to you. HEKA is a choice. To use a tool designed for clarity. To reclaim agency over the structure of your days. This is your calendar."
         }
       }
     },
     "gatesByChapter": {
       "ch1": {
         "0": {
-          "t": "Er dette en religion eller bevægelse?",
-          "tag": "KLARHED",
-          "b": "Ingen af ​​"
+          "t": "Is this a religion or movement?",
+          "tag": "CLARITY",
+          "b": "Neither. HEKA is a tool. Like a better hammer or a clearer map."
         },
         "1": {
           "t": "Why thirteen months?",
           "tag": "LOGIC",
-          "b": "Twelve months of irregular length force mental gymnastics. Thirteen months of four weeks each creates perfect regularity. 13 × 28 = 364. Plus one special day. The math is clean. The experience is cleaner."
+          "b": "Twelve months of irregular length force mental gymnastics. Thirteen months of four weeks each creates perfect regularity. 13 x 28 = 364. Plus one special day. The math is clean. The experience is cleaner."
         },
         "2": {
           "t": "Will this confuse other people?",
@@ -383,123 +391,153 @@
         "1": {
           "t": "What are the month names?",
           "tag": "ORDER",
-          "b": "April, May, June, July, August, Hexa, September, October, November, December, January, February, March. Hexa—the sixth month—fills the gap. The rest you already know. Only their positions change."
+          "b": "April, May, June, July, August, Hexa, September, October, November, December, January, February, March. Hexa -- the sixth month -- fills the gap. The rest you already know. Only their positions change."
         },
         "2": {
           "t": "How is correction handled?",
           "tag": "PRECISION",
-          "b": "Enhver solkalender har brug for korrigering. HEKA placerer den alligevel i marts, ved årets slut. Marts har 29 dage, eller 30 i skudåre. De andre tolv måneder er perfekt og permanent regelmæssige. Korrektionen er indeholdt, ikke spredte."
+          "b": "Every solar calendar needs correction. HEKA places it all in March, at the year's end. March has 29 days, or 30 in leap years. The other twelve months are perfect and permanently regular. Correction is contained, not scattered."
         }
       },
       "ch3": {
         "0": {
           "t": "Can I print HEKA calendars?",
           "tag": "PHYSICAL",
-          "b": "Ja. Udskriv månedsvisninger eller hele årsvisninger. Ren, uden overflødigheder, designet til papir. Fastgør dem på vægge. Bær dem i notesbøger. Den digitale bekvemmelighed og den fysiske genstand, begge."
+          "b": "Yes. Print monthly views or full-year panoramas. Clean, clear, designed for paper. Put them on walls. Carry them in notebooks. Digital convenience and physical artifact, both."
         },
         "1": {
           "t": "What about holidays?",
           "tag": "CUSTOM",
-          "b": "Skift mellem feriesæt for din region. Eller ignorer dem. HEKA påtvinger ikke sine egne helligdage - det hjælper dig med at spore de, der betyder noget for dig, lagt over et mere klart struktur."
+          "b": "Activate holiday sets for your region. Or ignore them. HEKA does not impose its own holidays; it helps you follow the ones that matter to you, overlaid on a clearer structure."
         },
         "2": {
-          "t": "Are my notes private?",
+          "t": "Where does my data live?",
           "tag": "TRUST",
-          "b": "Alt gemmes lokalt på din enhed. Dit tænkning forbliver dit. Eksportér dem, hvis du ønsker. Importér dem et andet sted. Du styrer dine data fuldstændigt."
+          "b": "By default, everything stays on your device — notes, journal, settings. If you create an account, your data backs up to encrypted cloud storage. You can export everything at any time. You stay in control."
+        },
+        "3": {
+          "t": "What can the journal do?",
+          "tag": "CAPABILITY",
+          "b": "Daily entries with automatic revision history. Full-text search across your entire archive. All local by default; syncs to the cloud when you sign in."
         }
       },
       "ch4": {
         "0": {
           "t": "Which mode is \"correct\"?",
           "tag": "CHOICE",
-          "b": "Begge. SYNC er korrekt for koordination med den civile verden. TRUE er korrekt for astronomisk præcision. Dine behov bestemmer, hvilken korrekthed der betyder mere for dig lige nu."
+          "b": "Both. SYNC is correct for coordination with the civil world. TRUE is correct for astronomical precision. Your needs determine which correction is more important to you right now."
         },
         "1": {
           "t": "Does TRUE mode drift from civil dates?",
           "tag": "DIVERGENCE",
-          "b": "Langsomt, ja. TRUE-tilstanden følger sine egne skudårer, ikke Gregorianske. Over århundreder bliver afvigelsen bemærkelsesværdig. For dagligdagen er forskellen utilsigtet. For langtidstankegang betyder renheden noget."
+          "b": "Slowly, yes. TRUE mode follows its own leap year rule, not the Gregorian one. Over centuries, the divergence becomes noticeable. For daily life, the difference is imperceptible. For long-term thinking, purity matters."
         },
         "2": {
           "t": "Can institutions adopt HEKA?",
           "tag": "SCALE",
-          "b": "Kan institutioner adoptere HEKA?"
+          "b": "Eventually, perhaps. But institutions do not need to change for you to benefit. HEKA works perfectly as a personal overlay. Start there. Let the tool prove itself."
         }
       },
       "ch5": {
         "0": {
           "t": "Why do months have different lengths?",
           "tag": "HISTORY",
-          "b": "Romersk politik. Julius Cæsar og Augustus havde behov for måneder navngivet efter dem. Kalenderen blev justeret for at imødekomme egoer. Disse uregelmæssigheder fossiliserede sig i \"tradition\". Tradition er ikke altid visdom."
+          "b": "Roman politics. Julius Caesar and Augustus needed months named in their honor. The calendar was adjusted to accommodate egos. These irregularities became 'tradition.' Tradition is not always wisdom."
         },
         "1": {
           "t": "Was the Gregorian reform enough?",
           "tag": "ASSESSMENT",
-          "b": "Fik Gregorian-reformen nok?"
+          "b": "It fixed the drift. It did not fix the structure. Months remained irregular, quarters remained unequal, the year had no narrative shape. A necessary patch, but not a fundamental redesign."
         },
         "2": {
           "t": "Have others tried calendar reform?",
           "tag": "ATTEMPTS",
-          "b": "Mange. Den Franske Republikanske Kalender. Den Verdens Kalender. Den Internationale Faste Kalender. Nogle geniale, alle politiske mislyk."
+          "b": "Many. The French Republican calendar. The World Calendar. The International Fixed Calendar. Some brilliant, all politically failed. HEKA learns from them: civil time compatibility is essential. Revolution through evolution."
         }
       },
       "ch6": {
         "0": {
           "t": "How do I explain this to others?",
           "tag": "CONVERSATION",
-          "b": "Du behøver ikke. Brug den. Hvis spurgt, siger du: \"Jeg fandt en kalender, der hjælper mig bedre med at planlægge.\" Vis dem. Lad dem se klarheden. Overbevisning sker gennem demonstration, ikke erklæring."
+          "b": "You do not need to. Use it. If they ask, say: \"I found a calendar that helps me plan better.\" Show them. Let them see the clarity. Persuasion happens through demonstration, not declaration."
         },
         "1": {
           "t": "What if I want to stop using it?",
           "tag": "FREEDOM",
-          "b": "Hvad hvis jeg vil stoppe med at bruge den?"
+          "b": "Stop using it. Your civil dates remain. Your appointments stay where they are. No lock-in. No sunk cost. HEKA must earn its place in your life every day, or it does not deserve to stay."
         },
         "2": {
           "t": "Where do I begin right now?",
           "tag": "ACTION",
-          "b": "Åbn indstillingerne. Aktivér civil overlejring. Se på i dag i begge systemer. Det er den første skridt. Du har allerede taget det ved at åbne denne vejledning."
+          "b": "Open settings. Activate the civil overlay. Look at today in both systems. That is the first step. You have already taken it by opening this guide."
+        },
+        "3": {
+          "t": "What is the Oracle?",
+          "tag": "INTELLIGENCE",
+          "b": "A celestial intelligence that reads planetary positions for any date you select and offers guidance. Optional. Add your birth chart for personalized transits and deeper insight."
         }
       },
       "ch7": {
         "0": {
           "t": "Does the calendar really affect mindset?",
           "tag": "PSYCHOLOGY",
-          "b": "Profundt. Vi tænker i de strukturer, vi bebor. Uregelmæssige måneder skaber lavniveau kognitiv friktion. Regelmæssige måneder skaber kognitiv flyden. Du bemærker måske ikke friktionen, før den er væk. Så kan du ikke lade være med at bemærke den."
+          "b": "Deeply. We think in the structures we inhabit. Irregular months create low-level cognitive friction. Regular months create cognitive flow. You may not notice the friction until it disappears. Then you cannot stop noticing it."
         },
         "1": {
-          "t": "Hvad med kulturelle tilknytninger?",
+          "t": "What about cultural ties?",
           "tag": "RESPECT",
-          "b": "Behold dem. Dit fødselsdags. Dit nytårsfest. Dine årlige festivaler. HEKA sletter ikke kultur - det tilbyder et klart kar for den. Indholdet forbliver. Beholderen forbedres."
+          "b": "Keep them. Your birthday. Your New Year celebrations. Your seasonal festivals. HEKA does not erase culture; it provides a clearer container for it. The content remains. The container improves."
         },
         "2": {
-          "t": "Hvorfor er dette vigtigt nok til at bygge?",
+          "t": "Why is this important enough to build?",
           "tag": "MISSION",
-          "b": "Fordi tid er livssubstratet. Fordi vi fortjener værktøjer, der er designet til sind, ikke arvet fra ulykker. Fordi nogen burde prøve at bygge noget bedre. Vi gjorde. Du er her."
+          "b": "Because time is the substrate of life. Because we deserve tools designed for minds, not inherited from accidents. Because someone should try to build something better. We did. You are here."
         }
       }
     },
     "chapterLeads": {
-      "ch1": "Du har følt det. Den lille forvirring, når du planlægger over måneder. Den mentale beregning: \"Hvor mange dage indtil...?\" Den uregelmæssige rytme i et år, der tramper fra januar gennem december uden nogen sammenhængende form. HEKA er svaret.",
-      "ch2": "Et år er ikke bare en optælling af dage. Det er en fortælling. HEKA strukturerer det solære år i tre distinkte bevægelser: Åbningen, Core og Lukningen. Hver med sin egen karakter. Hver tjener et andet formål i arbejds- og hvilerytmen, vækst og høst.",
-      "ch3": "Teori bliver kun brugbar, når den praktiseres. HEKA er designet til øjeblikkelig indførelse uden forstyrrelse. Civile datoer er stadig synlige. Dine aftaler forbliver synkroniserede. Du får bare et klart, mere regelmæssigt rammeværk til at navigere dine dage.",
-      "ch4": "Hvert solkalendar skal korrigere for uoverensstemmelsen mellem dagcykler og årcykler. HEKA tilbyder to metoder til denne korrektur: en, der harmonerer med civile forventninger, og en, der følger ren astronomisk præcision. Strukturen forbliver konstant. Kun korrekturmekanismen ændres.",
-      "ch5": "Den gregorianske kalender er ikke dårlig. Det er en vellykket standard, der fik kritiske driftsproblemer. Men det er også et patch på et patch - en struktur formet af romerske politik, religiøse råd og historiske ulykker snarere end menneskelige behov. At forstå denne historie klarer, hvorfor redesign er værd at prøve.",
-      "ch6": "Institutional ændring er langsom. Personlig ændring er øjeblikkelig. Du behøver ikke regeringer eller virksomheder til at adoptere HEKA for at drage fordel af det. Start i dag. Brug det som dit personlige planlægningslag. Lad værktøjet bevise sin værdi i din egen erfaring.",
-      "ch7": "Vi lever inden for vores kalendere. De former vores sans for tid, fremgang og mulighed. En uregelmæssig kalender skaber lavniveau friktion hele året. En regelmæssig kalender skaber flyden. Valget af hvilken struktur at bebo er i sidste ende et valg om, hvilken slags tidsmiljø du vil leve i."
+      "ch1": "You have felt it. The slight confusion when planning across months. The irregular rhythm of a year that stumbles from January through December with no coherent shape. HEKA is the response. Thirteen months. Twenty-eight days each. One perfect year.",
+      "ch2": "A year is not merely a count of days. It is a narrative arc. HEKA structures the solar year into three distinct movements: the Opening, the Core, and the Closing. Each with its own character. Each serving a different purpose in the rhythm of work and rest, growth and harvest.",
+      "ch3": "Theory becomes useful only when practiced. HEKA is designed for immediate adoption without disruption. Civil dates remain visible. Your appointments stay synchronized. The Oracle, Cosmic Circle, and your personal journal are here when you want them. You simply gain a clearer framework for navigating your days.",
+      "ch4": "Every solar calendar must correct for the mismatch between day-cycles and year-cycles. HEKA offers two approaches to this correction: one that harmonizes with civil expectations, and one that follows pure astronomical precision. The structure stays constant. Only the correction mechanism changes.",
+      "ch5": "The Gregorian calendar is not bad. It is a successful standard that fixed critical drift problems. But it is also a patch on a patch—a structure shaped by Roman politics, religious councils, and historical accidents rather than human needs. Understanding this history clarifies why redesign is worth attempting.",
+      "ch6": "Institutional change is slow. Personal change is immediate. You do not need governments or corporations to adopt HEKA for you to benefit from it. Start today. Use it as your personal planning layer. Let the tool prove its value in your own experience.",
+      "ch7": "We live inside our calendars. They shape our sense of time, progress, and possibility. An irregular calendar creates low-level friction throughout the year. A regular calendar creates flow. The choice of which structure to inhabit is ultimately a choice about what kind of temporal environment you want to live within."
+    },
+    "spotlight": {
+      "title": "Did you know?",
+      "facts": {
+        "0": "The Oracle reads real-time planetary positions for any date you select.",
+        "1": "Your journal keeps 50 revisions per entry — never lose a thought.",
+        "2": "Cosmic Circle lets you share moon phases and transits with friends.",
+        "3": "Print month views or full-year panoramas, designed for paper.",
+        "4": "SYNC mode matches civil dates. TRUE mode follows astronomical precision."
+      }
     }
   },
   "months": {
     "apr": "Apr",
-    "may": "Maj",
+    "may": "May",
     "jun": "Jun",
     "jul": "Jul",
     "aug": "Aug",
     "hex": "Hex",
     "sep": "Sep",
-    "oct": "Okt",
+    "oct": "Oct",
     "nov": "Nov",
     "dec": "Dec",
     "jan": "Jan",
     "feb": "Feb",
     "mar": "Mar"
+  },
+  "openSettings": "Open Settings",
+  "syncConflict": {
+    "title": "Sync Conflict",
+    "subtitle": "This item changed on the server while you were offline. Which version should keep?",
+    "local": "My Version",
+    "localHint": "The change I made on this device",
+    "server": "Server Version",
+    "serverHint": "The version already saved online",
+    "resolve": "Keep This Version"
   }
 }

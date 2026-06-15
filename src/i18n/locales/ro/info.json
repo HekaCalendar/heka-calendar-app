@@ -1,0 +1,322 @@
+{
+  "infoModal": {
+    "hero": {
+      "title": "HEKA — Un calendar construit pentru minți",
+      "subtitleLine1": "Treizeci de luni.",
+      "subtitleLine2": "Fiecare cu patru săptămâni. Un an clar."
+    },
+    "guideComplete": "Ghid completat",
+    "spotlight": {
+      "title": "Știi tu?",
+      "facts": [
+        "Lunile neregulate ale calendarului gregorian sunt în mare parte rezultatul politicii romane și al egourilor imperiilor.",
+        "Treizeci de luni ale HEKA, fiecare de douăzeci și opt de zile, creează trimestre perfecte și perioade salariale previzibile.",
+        "În modul TRUE, HEKA urmează o regulă de săritură a anului de 128 de ani pentru o precizie astronomică pe termen lung.",
+        "Suprapunerea civilă îți permite să vezi datele gregoriane alături de HEKA, astfel încât să nu pierzi niciodată coordonarea.",
+        "Intrările tale în jurnal rămân locale în mod implicit și se sincronizează numai atunci când alegi să te autentifici."
+      ]
+    },
+    "home": "Acasă",
+    "backToHome": "Înapoi Acasă",
+    "deeperQuestions": "Întrebări mai adânci",
+    "chapters": {
+      "home": {
+        "num": "0",
+        "chip": "START",
+        "title": "Bun venit",
+        "hook": "O modalitate diferită de a trăi anul.",
+        "teaser": "Începe de aici."
+      },
+      "ch1": {
+        "num": "01",
+        "chip": "FUNDAȚIE",
+        "title": "Calendarul",
+        "hook": "Treizeci de luni. Fiecare cu patru săptămâni. Un an clar.",
+        "teaser": "Ce este HEKA și de ce se simte diferit."
+      },
+      "ch2": {
+        "num": "02",
+        "chip": "STRUCTURĂ",
+        "title": "Arcul Anului",
+        "hook": "Deschidere, nucleu și închidere: un an cu formă narativă.",
+        "teaser": "Cum se desfășoară lunile de la aprilie până în martie."
+      },
+      "ch3": {
+        "num": "03",
+        "chip": "INSTRUMENTE",
+        "title": "Companionul tău zilnic",
+        "hook": "Jurnal, lună, stele și suprapunere civilă — toate ale tale.",
+        "teaser": "Caracteristicile care fac ca HEKA să fie practic."
+      },
+      "ch4": {
+        "num": "04",
+        "chip": "MODURI",
+        "title": "SYNC vs ADEVĂRAT",
+        "hook": "Două modalități de a gestiona ziua de săritură. Alege corectitudinea ta.",
+        "teaser": "Coordonare familiară sau purețe astronomică."
+      },
+      "ch5": {
+        "num": "05",
+        "chip": "ISTORIE",
+        "title": "De ce calendarele se deplasează",
+        "hook": "Haine moștenite, reparaturile politice și șansa de a reface.",
+        "teaser": "Povestirea calendarului pe care i l-ai primit."
+      },
+      "ch6": {
+        "num": "06",
+        "chip": "ÎNREGISTRARE",
+        "title": "Începe să trăiești în el",
+        "hook": "Trei pași mici pentru a face HEKA vizualizarea ta implicită.",
+        "teaser": "Cum să începi fără a deranja viața ta."
+      },
+      "ch7": {
+        "num": "07",
+        "chip": "SENS",
+        "title": "Timpul ca Agenție",
+        "hook": "Claritate, ritm și alegerea de a folosi un instrument mai bun.",
+        "teaser": "De ce structura timpului contează."
+      }
+    },
+    "chapterLeads": {
+      "home": "Acest ghid este un pod. Treci peste el la propriul ritm.",
+      "ch1": "HEKA nu este o ajustare a calendarului gregorian. Este un înlocuitor construit din principii fundamentale.",
+      "ch2": "Anul are formă atunci când structura sa reflectă ritmul acțiunii și repausului.",
+      "ch3": "Un calendar este util doar dacă se integrează cu viața pe care o trăiești deja.",
+      "ch4": "Aceași structură poate servi diferite nevoi. Modul pe care îl alegi este o preferință, nu un dogmatism.",
+      "ch5": "Înțelegerea cum a apărut calendarul actual face ca defectele sale să fie mai ușor de iertat — și mai ușor de părăsit.",
+      "ch6": "Adopția se întâmplă în pași mici. Nu ai nevoie de permisiune sau un manifest.",
+      "ch7": "Containerul timpului modelează conținutul vieții. Alege-ți-l în mod deliberat."
+    },
+    "cardsByChapter": {
+      "ch1": [
+        {
+          "h": "Problema pe care o Simți",
+          "b": "Luni iregulare. Sărbători dispersate. Un an care se îndepărtează de ianuarie până în decembrie fără nicio senzație de început, mijloc sau sfârșit. Ai simțit această fricțiune. HEKA o elimină."
+        },
+        {
+          "h": "Soluția pe care am Construit-o",
+          "b": "Treizeci de luni. Douăzeci și șase au douăzeci și opt zile în simetrii perfecte. Martie, luna închisă, păstrează ziua de săritură. Patru săptămâni perfecte în fiecare lună. Un an care curge: aprilie se deschide, mai până în decembrie formează nucleul stabil, ianuarie până în martie îl completează."
+        },
+        {
+          "h": "Lumea pe care o Păstrezi",
+          "b": "HEKA nu îți deranjează viața. Datele civile rămân vizibile. Programările, angajamentele și obligațiile legale rămân exact unde le aștepți. Pur și simplu obții o lentă mai clară."
+        }
+      ],
+      "ch2": [
+        {
+          "h": "Arcul de Deschidere",
+          "b": "Aprilie este pragul. Anul nu începe în epuizarea iernii, ci în vitalitatea primăverii. Creștere nouă. Proiecte noi. Deschiderea anunță: ceva începe."
+        },
+        {
+          "h": "Arcul de Core",
+          "b": "Mai până în decembrie este mijlocul lung, stabil. Nouă luni de ritm perfect regulat și previzibil. Planifică cu încredere. Construiește momenți. Aici se întâmplă munca."
+        },
+        {
+          "h": "Arcul de Închidere",
+          "b": "Ianuarie până în martie aduc anul la rezoluția lui. Termină ceea ce ai început. Recoltează ceea ce ai crescut. Închiderea creează spațiu pentru reflect"
+        }
+      ],
+      "ch3": [
+        {
+          "h": "Următoarele tale de date civile rămân",
+          "b": "Comutați suprafața civilă și vedeți datele gregoriane alături de HEKA. Programul la dentist, ziua de naștere a mamei tale, termenul limită de plată a impozitelor - toate rămân exact unde te aștepți."
+        },
+        {
+          "h": "Jurnalul tău",
+          "b": "Înregistrări zilnice cu istoric revizuire - până la 50 de versiuni păstrate în mod automat. Căutare în text integral în toate. Implicit local; copie de rezervă în cloud când te autentifici."
+        },
+        {
+          "h": "Luna ta și stelele",
+          "b": "Fazele lunii, pozițiile planetelor și tranzitele apar imediat. Opțional și precis. Adaugă harta ta natală pentru citiri personale prin intermediul Oracle."
+        }
+      ],
+      "ch4": [
+        {
+          "h": "Modul SYNC: Drumul familiar",
+          "b": "Martie câștigă ziua sa extra atunci când calendarul gregorian spune că ar trebui să o facă. Pentru coordonarea zilnică cu lumea civilă, acesta este modul tău. Aceeași structură. Timpuri familiare."
+        },
+        {
+          "h": "Modul TRUE: Drumul Sincer",
+          "b": "HEKA urmează propria sa regulă de corecție: în fiecare al patrulea an are Martie de 30 de zile, cu excepția fiecărei a 128-a ani care nu are. Aceasta este precizie astronomică. Aceasta este integritate pe termen lung."
+        },
+        {
+          "h": "Comută Oricând",
+          "b": "Lunile nu se schimbă. Saptea săptămâni nu se schimbă. Doar declanșatorul corecturii se mută. Experimentează. Vezi care modul se potrivește nevoilor tale. Nu ești blocat."
+        }
+      ],
+      "ch5": [
+        {
+          "h": "Moştenire, Nu Proiectare",
+          "b": "Calendarul nostru actual este un stack de accidente istorice. Politica romană. Consilii religioase. Patch-uri astronomice adăugate cu secole între ele. Nu a fost proiectat niciodată ca un sistem."
+        },
+        {
+          "h": "Patch-ul Gregorian",
+          "b": "1582: Papele Grigore a reparator problemă de decalare. Dar a păstrat lunile iregolare, structura dispersată, haosul moștenit. O corectură necesară, dar nu o soluție completă."
+        },
+        {
+          "h": "Răspunsul HEKA",
+          "b": "Am păstrat ce funcționează: săptămâni de șapte zile, alinierea sezonală, urmărirea anului solar. Am redesenat ce nu a funcționat: structura lunilor, fluxul anului, plasarea corecturii. Construit pentru mințile care gândesc."
+        }
+      ],
+      "ch6": [
+        {
+          "h": "Pasul Unu: Activează Suprapunerea",
+          "b": "Activează datele civile. Acum vezi ambele sisteme în același timp. Data ta HEKA și data ta gregoriană. Podul este construit. Treci peste el ori de câte ori ai nevoie."
+        },
+        {
+          "h": "Pasul Doi: Alege Modulul Tau",
+          "b": "Începe cu SYNC dacă vrei familiaritate. Comută la TRUE dacă vrei purețe. Poți să-ți schimbi mintea. Calendarul se adaptează ție, nu invers."
+        },
+        {
+          "h": "Pasul Trei: Trăi în E",
+          "b": "Folosește HEKA ca vizualizare principală. Planifică luna ta. Notează zilele tale. Simte diferența unui an cu o structură reală. Lumea civilă nu trebuie să știe. Vei ști."
+        }
+      ],
+      "ch7": [
+        {
+          "h": "Frictia Costă Energie",
+          "b": "De fiecare dată când te întrebi câți zi au în această lună, plătești o mică taxă. Fiecare iregularitate scurge focalizare. HEKA elimină aceste taxe. Îți păstrezi energia pentru ceea ce contează."
+        },
+        {
+          "h": "Ritmul Creează Liniște",
+          "b": "Când structura este previzibilă, mintea se relaxează. Știi unde ești în anul. Simți deschiderea, nucleul, închiderea. Timpul devine un spațiu pe care îl locuiești, nu un haos prin care supraviețui."
+        },
+        {
+          "h": "Agenție peste Timp",
+          "b": "Nu ai ales calendarul gregorian. I s-a dat ție. HEKA este o alegere. Să folosești un instrument proiectat pentru claritate. Să preiei agenția asupra structurii zilelor tale. Acesta este calendarul tău."
+        }
+      ]
+    },
+    "gatesByChapter": {
+      "ch1": [
+        {
+          "t": "Acesta este o religie sau un mișcare?",
+          "tag": "LIMPEZĂ",
+          "b": "Niciuna dintre acestea. HEKA este un instrument. Ca un ciocănel mai bun sau o hartă mai clară. Nu este necesară nicio aflare. Nu sunt credințe de adoptat. Doar o calendar care funcționează mai bine decât cel pe care l-ai moștenit."
+        },
+        {
+          "t": "De ce treisprezece luni?",
+          "tag": "LOGICĂ",
+          "b": "Douăzeci și șase de luni de lungime neregulată forțează gimnastică mintală. Treisprezece luni de patru săptămâni fiecare creează o regularitate perfectă. 13 × 28 = 364. Plus o zi specială. Matematica este curată. Experiența este și mai curată."
+        },
+        {
+          "t": "Acest lucru va困惑其他人吗？",
+          "tag": "REALITATE",
+          "b": "Vezi datele HEKA. Ei văd datele civile. Când spui \"15 martie\", vrei să spui aceeași zi pe care o fac ei. Suprapunerea civilă îți asigură că nu pierzi niciodată coordonarea. Îți obții claritate. Ei nu pierd nimic."
+        }
+      ],
+      "ch2": [
+        {
+          "t": "De ce anul începe în aprilie?",
+          "tag": "SIMBOL",
+          "b": "Primăvara este deschiderea universală. Creșterea începe. Energie crește. Începând cu anul în aprilie, calendarul se aliniază cu experiența simțită a reînnoirii. Ianuarie începe cu epuizarea iernii. Aprilie începe cu posibilitățile de primăvară."
+        },
+        {
+          "t": "Ce sunt numele lunilor?",
+          "tag": "ORDINE",
+          "b": "Aprilie, Mai, Iunie, Iulie, August, Hexa, Septembrie, Octombrie, Noiembrie, Decembrie, Ianuarie, Februarie, Martie. Hexa - a șasea lună - umple golul. Restul le cunoaște deja. Doar pozițiile lor se schimbă."
+        },
+        {
+          "t": "Cum se gestionează corectarea?",
+          "tag": "PRECIZIE",
+          "b": "Fiecare calendar solar are nevoie de corectare. HEKA plasează toate în martie, la sfârșitul anului. Martie are 29 de zile, sau 30 în ani buni. Celelalte douăsprezece luni sunt perfect regulate, permanente. Corecția este inclusă, nu dispersată."
+        }
+      ],
+      "ch3": [
+        {
+          "t": "Pot imprima calendare HEKA?",
+          "tag": "FIZIC",
+          "b": "Da. Imprimă vizualizări lunare sau vizualizări anuale complete. Curate, neîngreunează, concepute pentru hârtie. Agăță-le pe pereți. Purtă-le în cărți cu spirale. Conveniența digitală și artefactul fizic, amândouă."
+        },
+        {
+          "t": "Ce este cu sărbătorile?",
+          "tag": "PERSONAL",
+          "b": "Comutați seturile de sărbători pentru regiunea dvs. Sau ignorați-le. HEKA nu impune propriile sărbători — te ajută să urmărești pe cele care contează pentru tine, suprapusă peste o structură mai clară."
+        },
+        {
+          "t": "Unde trăiesc datele mele?",
+          "tag": "ÎNCREZERE",
+          "b": "În mod implicit, totul rămân pe dispozitivul tău — note, jurnal, setări. Dacă creezi un cont, datele tale se salvează în spațiul de stocare în cloud criptat. Îți poți exporta totul în orice moment. Rămâi în control."
+        },
+        {
+          "t": "Ce poate face jurnalul?",
+          "tag": "CAPACITATE",
+          "b": "Înscrieri zilnice cu istoricul automat de revizuire. Căutare în text complet în întregul tău arhivă. Toate locale în mod implicit; se sincronizează cu cloud-ul când te conectezi."
+        }
+      ],
+      "ch4": [
+        {
+          "t": "Care modul este \"corect\"?",
+          "tag": "ALEGERE",
+          "b": "Ambele. SYNC este corect pentru coordonare cu lumea civilă. TRUE este corect pentru precizie astronomică. Nevoile tale determină care corectitudine contează mai mult pentru tine în acest moment."
+        },
+        {
+          "t": "Modul TRUE se deplasează de la datele civile?",
+          "tag": "DIVERGENȚĂ",
+          "b": "Încet, da. Modul TRUE urmează propria sa regulă a sărituri, nu cea a Gregorian. Pe termen lung, deplasarea devine notabilă. Pentru viața cotidiană, diferența este imperceptibilă. Pentru gândirea pe termen lung, purețea contează."
+        },
+        {
+          "t": "Pot instituțiile să adopte HEKA?",
+          "tag": "SCALĂ",
+          "b": "În cele din urmă, poate. Dar instituțiile nu trebuie să se schimbe pentru ca tine să beneficiezi. HEKA funcționează perfect ca o suprapunere personală. Începe de acolo. Lasă instrumentul să-și dovedească valoarea."
+        }
+      ],
+      "ch5": [
+        {
+          "t": "De ce lunile au lungimi diferite?",
+          "tag": "ISTORIE",
+          "b": "Politica romană. Iulius Cesar și Augustus au avut nevoie de luni numite după ei. Calendarul a fost ajustat pentru a face față ego-urilor. Aceste nereguli s-au transformat în \"tradition\". Tradiția nu este întotdeauna înțelepciune."
+        },
+        {
+          "t": "A fost reformarea Gregoriană suficientă?",
+          "tag": "EVALUARE",
+          "b": "A remediat derapaj. Nu a reformat structura. Lunile au rămas neregulate, trimestrele inegale, anul fără formă narativă. O reparare necesară, dar nu o restructurare fundamentală."
+        },
+        {
+          "t": "Au încercat alții reformarea calendarului?",
+          "tag": "ÎNCERCĂRI",
+          "b": "Mulți. Calendarul republican francez. Calendarul Mondial. Calendarul Internațional Fix. Unii mințitori, toți au eșuat politic. HEKA învață de la ei: compatibilitatea cu timpul civil este esențială. Revoluție prin evoluție."
+        }
+      ],
+      "ch6": [
+        {
+          "t": "Cum explic asta altora?",
+          "tag": "CONVERSAȚIE",
+          "b": "Nu ai nevoie. Folosește-l. Dacă întrebat, spune: \"Am găsit un calendar care mă ajută să planific mai bine.\" Arată-le. Lasă-i să vadă claritatea. Persuația se întâmplă prin demonstrare, nu prin declarație."
+        },
+        {
+          "t": "Dacă vreau să o înceteze folosirea?",
+          "tag": "LIBERTATE",
+          "b": "Oprește-te. Datele tale civile rămân. Întâlnirile tale rămân unde sunt. Fără blocare. Fără costuri irezversibile. HEKA trebuie să-și câștige locul în viața ta în fiecare zi, altfel nu merită să rămână."
+        },
+        {
+          "t": "Unde încep chiar acum?",
+          "tag": "ACȚIUNE",
+          "b": "Deschide setările. Activează suprapunerea civilă. Uită-te la ziua de azi în ambele sisteme. Este primul pas. L-ai luat deja deschidend acest ghid."
+        },
+        {
+          "t": "Ce este Oracle-ul?",
+          "tag": "INȚELES",
+          "b": "O inteligență cerească care citește pozițiile planetare pentru orice dată pe care o selectezi și oferă îndrumări. Opțional. Adaugă afișul tău natal pentru tranzituri personalizate și înțelegere mai profundă."
+        }
+      ],
+      "ch7": [
+        {
+          "t": "Calendarul afectează cu adevărat mentalitatea?",
+          "tag": "PSIHOLOGIE",
+          "b": "Profund. Gândim în structurile în care trăim. Luni irregulare creează fricțiune cognitivă de nivel scăzut. Luni regulate creează flux cognitiv. S-ar putea să nu observi fricțiunea până când nu o scapi. Apoi nu mai poți să nu o observi."
+        },
+        {
+          "t": "Și atașamentele culturale?",
+          "tag": "RSPUNZĂ",
+          "b": "Păstrează-le. Aniversarea ta. Sărbătoriri de anul nou. Festivalurile tale sezoniere. HEKA nu șterge cultura - oferă un recipient mai clar pentru aceasta. Conținutul rămâne. Recipientul se îmbunătățește."
+        },
+        {
+          "t": "De ce contează suficient pentru a construi?",
+          "tag": "MISIUNE",
+          "b": "Pentru că timpul este substratul vieții. Pentru că merităm unelte concepute pentru minte, nu moștenite din accidente. Pentru că ar trebui să încercăm să construim ceva mai bun. Noi am făcut-o. Ești aici."
+        }
+      ]
+    }
+  }
+}

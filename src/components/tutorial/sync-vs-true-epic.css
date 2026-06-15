@@ -95,7 +95,7 @@
 }
 
 .svte-label {
-  font-size: 10px;
+  font-size: 12px;
   color: rgba(255, 255, 255, 0.5);
   text-transform: uppercase;
 }
@@ -136,7 +136,7 @@
 }
 
 .svte-accuracy-label {
-  font-size: 9px;
+  font-size: 11px;
   color: rgba(255, 255, 255, 0.5);
   text-align: center;
   display: block;
@@ -204,7 +204,7 @@
 }
 
 .svte-drift-label {
-  font-size: 9px;
+  font-size: 11px;
   color: rgba(255, 255, 255, 0.5);
 }
 

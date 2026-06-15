@@ -12,6 +12,30 @@ import { calculateAspects } from './aspects';
 import { getSignFromLongitude, SIGN_ELEMENTS_13, SIGN_ELEMENTS } from '../../types/core';
 import { getZodiacSystemPreference } from '../natal/zodiacHelpers';
 
+// ── LRU cache for pattern detection ───────────────────────────────────────────
+const MAX_CACHED_PATTERNS = 16;
+const patternsCache = new Map<string, ChartPattern[]>();
+
+function getPatternsCacheKey(bodies: Record<PlanetId, CelestialBody>): string {
+  const bodyIds = (Object.keys(bodies) as PlanetId[]).sort();
+  return bodyIds
+    .map(id => {
+      const b = bodies[id];
+      return `${id}:${b.longitude.toFixed(4)}:${(b.speed ?? 0).toFixed(4)}:${b.sign ?? ''}`;
+    })
+    .join('|');
+}
+
+function setCachedPatterns(key: string, patterns: ChartPattern[]): void {
+  patternsCache.set(key, patterns);
+  while (patternsCache.size > MAX_CACHED_PATTERNS) {
+    const first = patternsCache.keys().next().value;
+    if (first !== undefined) {
+      patternsCache.delete(first);
+    }
+  }
+}
+
 export type PatternType = 
   | 'yod'                    // Finger of God
   | 'grand_trine'           // Three trines forming triangle
@@ -46,6 +70,10 @@ export interface ChartPattern {
 export function detectPatterns(
   bodies: Record<PlanetId, CelestialBody>
 ): ChartPattern[] {
+  const cacheKey = getPatternsCacheKey(bodies);
+  const cached = patternsCache.get(cacheKey);
+  if (cached) return cached;
+
   const patterns: ChartPattern[] = [];
   const aspects = calculateAspects(bodies, { includeMinorAspects: true });
   
@@ -73,7 +101,9 @@ export function detectPatterns(
   );
   
   // Sort by strength (strongest first)
-  return patterns.sort((a, b) => b.strength - a.strength);
+  const result = patterns.sort((a, b) => b.strength - a.strength);
+  setCachedPatterns(cacheKey, result);
+  return result;
 }
 
 /**

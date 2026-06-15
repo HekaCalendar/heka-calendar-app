@@ -144,6 +144,7 @@ const CelestialWelcome: React.FC<{ step: TutorialStep }> = ({ step }) => {
         justifyContent: 'center',
         padding: '24px 24px 100px',
         overflowY: 'auto',
+        touchAction: 'pan-y',
       }}
     >
       <div className="ca-orb" style={{ marginTop: 'auto', marginBottom: 'auto' }}>

@@ -14,7 +14,6 @@ const API_BASE = process.env.MOONSHOT_API_BASE || 'https://api.moonshot.ai/v1';
 const MODEL = 'moonshot-v1-32k';
 
 const LOCALES_DIR = path.resolve(__dirname, '../src/i18n/locales');
-const PUBLIC_LOCALES_DIR = path.resolve(__dirname, '../public/locales');
 
 const TARGET_LANGUAGES = [
   'es', 'fr', 'de', 'it', 'pt', 'zh', 'ja', 'ko', 'ar', 'hi', 'ru',
@@ -152,12 +151,9 @@ async function translateNamespace(namespace: string, lang: string) {
   const keys = Object.keys(flat);
 
   const targetDir = path.join(LOCALES_DIR, lang);
-  const publicTargetDir = path.join(PUBLIC_LOCALES_DIR, lang);
   const targetPath = path.join(targetDir, `${namespace}.json`);
-  const publicTargetPath = path.join(publicTargetDir, `${namespace}.json`);
 
   if (!fs.existsSync(targetDir)) fs.mkdirSync(targetDir, { recursive: true });
-  if (!fs.existsSync(publicTargetDir)) fs.mkdirSync(publicTargetDir, { recursive: true });
 
   let existingFlat: Record<string, string> = {};
   if (fs.existsSync(targetPath)) {
@@ -182,48 +178,75 @@ async function translateNamespace(namespace: string, lang: string) {
 
   console.log(`  Translating ${namespace} → ${lang} (${keysToTranslate.length} new keys)...`);
 
-  const CHUNK_SIZE = 40;
+  const CHUNK_SIZE = 20;
+  const FINAL_CHUNK_SIZE = 5;
+  const MAX_FINAL_PASSES = 2;
   const translatedFlat: Record<string, string> = { ...existingFlat };
 
-  for (let i = 0; i < keysToTranslate.length; i += CHUNK_SIZE) {
-    const chunkKeys = keysToTranslate.slice(i, i + CHUNK_SIZE);
-    const chunk: Record<string, string> = {};
-    for (const k of chunkKeys) chunk[k] = flat[k];
+  async function runChunked(
+    keysList: string[],
+    chunkSize: number,
+    isFinal: boolean
+  ) {
+    const totalChunks = Math.ceil(keysList.length / chunkSize);
+    for (let i = 0; i < keysList.length; i += chunkSize) {
+      const chunkKeys = keysList.slice(i, i + chunkSize);
+      const chunk: Record<string, string> = {};
+      for (const k of chunkKeys) chunk[k] = flat[k];
 
-    let attempts = 0;
-    const maxAttempts = 3;
-    while (attempts < maxAttempts) {
-      try {
-        const result = await translateChunk(chunk, lang);
-        for (const k of chunkKeys) {
-          if (result[k]) {
-            translatedFlat[k] = result[k];
-          } else {
-            console.warn(`    Missing key in response: ${k}, using English fallback`);
-            translatedFlat[k] = flat[k];
+      let attempts = 0;
+      const maxAttempts = 3;
+      while (attempts < maxAttempts) {
+        try {
+          const result = await translateChunk(chunk, lang);
+          for (const k of chunkKeys) {
+            if (result[k]) {
+              translatedFlat[k] = result[k];
+            } else {
+              if (isFinal && attempts === maxAttempts - 1) {
+                console.warn(`    Missing key in response: ${k}, using English fallback`);
+              }
+              translatedFlat[k] = flat[k];
+            }
           }
-        }
-        console.log(`    Chunk ${Math.floor(i / CHUNK_SIZE) + 1}/${Math.ceil(keysToTranslate.length / CHUNK_SIZE)} OK`);
-        break;
-      } catch (err) {
-        attempts++;
-        console.error(`    Chunk ${Math.floor(i / CHUNK_SIZE) + 1} attempt ${attempts} failed:`, (err as Error).message);
-        if (attempts >= maxAttempts) {
-          console.error(`    Giving up on chunk, using English fallback`);
-          for (const k of chunkKeys) translatedFlat[k] = flat[k];
+          if (!isFinal) {
+            console.log(`    Chunk ${Math.floor(i / chunkSize) + 1}/${totalChunks} OK`);
+          }
           break;
+        } catch (err) {
+          attempts++;
+          const label = isFinal ? 'Final' : `Chunk ${Math.floor(i / chunkSize) + 1}`;
+          console.error(`    ${label} attempt ${attempts} failed:`, (err as Error).message);
+          if (attempts >= maxAttempts) {
+            console.error(`    Giving up on chunk, using English fallback`);
+            for (const k of chunkKeys) translatedFlat[k] = flat[k];
+            break;
+          }
+          await new Promise(r => setTimeout(r, 2000 * attempts));
         }
-        await new Promise(r => setTimeout(r, 2000 * attempts));
       }
-    }
 
-    await new Promise(r => setTimeout(r, 300));
+      await new Promise(r => setTimeout(r, isFinal ? 500 : 300));
+    }
+  }
+
+  await runChunked(keysToTranslate, CHUNK_SIZE, false);
+
+  for (let pass = 0; pass < MAX_FINAL_PASSES; pass++) {
+    const remaining = keys.filter(k => !translatedFlat[k] || translatedFlat[k] === flat[k]);
+    if (remaining.length === 0) break;
+    console.log(`  Final pass ${pass + 1}: ${remaining.length} keys still need translation...`);
+    await runChunked(remaining, FINAL_CHUNK_SIZE, true);
+  }
+
+  const stillRemaining = keys.filter(k => !translatedFlat[k] || translatedFlat[k] === flat[k]);
+  if (stillRemaining.length > 0) {
+    console.warn(`  ${stillRemaining.length} keys still use English fallback`);
   }
 
   const translatedJson = unflatten(translatedFlat);
   const output = JSON.stringify(translatedJson, null, 2) + '\n';
   fs.writeFileSync(targetPath, output, 'utf-8');
-  fs.writeFileSync(publicTargetPath, output, 'utf-8');
   console.log(`  ✓ ${namespace} → ${lang} (${keysToTranslate.length} keys updated)`);
 }
 

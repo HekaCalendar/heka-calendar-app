@@ -429,10 +429,10 @@ export const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose }) => 
   const hasContent = query.trim().length > 0;
 
   return (
-    <div className="modal-overlay" onClick={(e) => e.target === e.currentTarget && onClose()}>
-      <div className="modal" style={{ maxWidth: '560px', padding: 0, overflow: 'hidden' }}>
+    <div className="modal-overlay search-modal" onClick={(e) => e.target === e.currentTarget && onClose()}>
+      <div className="modal search-modal__content" style={{ maxWidth: '560px', padding: 0, overflow: 'hidden' }}>
         {/* Search Header */}
-        <div style={{
+        <div className="search-modal__header" style={{
           padding: '1.25rem 1.5rem',
           borderBottom: '1px solid rgba(201, 162, 74, 0.15)',
           background: 'linear-gradient(180deg, rgba(201, 162, 74, 0.04) 0%, transparent 100%)',
@@ -470,7 +470,7 @@ export const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose }) => 
                   display: 'flex', alignItems: 'center', justifyContent: 'center',
                   fontSize: '1rem',
                 }}
-                aria-label={t('common.clear')}
+                aria-label={t('clear')}
               >
                 ×
               </button>
@@ -486,14 +486,14 @@ export const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose }) => 
                 fontSize: '1.25rem',
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
               }}
-              aria-label={t('common.close')}
+              aria-label={t('close')}
             >
               ×
             </button>
           </div>
 
           {/* Category Tabs */}
-          <div style={{ display: 'flex', gap: 6 }}>
+          <div className="search-modal__tabs" style={{ display: 'flex', gap: 6 }}>
             {categories.map(cat => (
               <button
                 key={cat.id}
@@ -519,7 +519,7 @@ export const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose }) => 
         </div>
 
         {/* Results Area */}
-        <div style={{
+        <div className="search-modal__results" style={{
           maxHeight: '55vh',
           overflowY: 'auto',
           padding: '0.75rem',
@@ -668,7 +668,7 @@ export const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose }) => 
         </div>
 
         {/* Footer */}
-        <div style={{
+        <div className="search-modal__footer" style={{
           padding: '8px 1rem',
           borderTop: '1px solid rgba(255,255,255,0.06)',
           background: 'rgba(0,0,0,0.2)',

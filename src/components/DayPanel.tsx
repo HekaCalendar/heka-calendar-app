@@ -18,6 +18,7 @@ import { useState, useCallback, memo, useMemo, useRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import type { RootState } from '../store';
+import { selectNoteIdsWithDuplicates } from '../store';
 import { selectDate, addNote, deleteNote, deleteDuplicates } from '../store';
 import { HEKA_MONTHS, hekaToCivil, civilToHeka, formatCivilDate, getNoteKey, getDaysInMonth, getCivilStartOfHekaMonth } from '../services/calendarService';
 import { getHolidaysForDateWithSubRegion, getYearLabel, LOCATIONS, getHemisphere, NOTE_CATEGORIES, type NoteData, type SubRegionCode } from '../types';
@@ -32,6 +33,7 @@ import type { PersonalTransit, BirthChart } from '../oracle/birthChartIntegratio
 import type { HekaMonthIndex } from '../types';
 import { calculateSunTimes, calculatePlanetaryHours } from '../astrology/services/calculations/swissCalculations';
 import { tutorialService } from '../services/tutorialService';
+import { dialogService } from './ui/DialogProvider';
 
 const MOOD_EMOJIS: Record<number, string> = {
   1: '😢',
@@ -75,11 +77,8 @@ const DayPanelComponent: React.FC = () => {
     shallowEqual
   );
   
-  // Get all notes to check for duplicates and for multi-day selection
-  const allNotes = useSelector(
-    (state: RootState) => Object.values(state.calendar.notes).flat(),
-    shallowEqual
-  );
+  // Set of source note IDs that have duplicate copies elsewhere
+  const noteIdsWithDuplicates = useSelector(selectNoteIdsWithDuplicates);
   
   // Get full notes object for looking up by day key
   const allNotesByDay = useSelector(
@@ -295,8 +294,9 @@ const DayPanelComponent: React.FC = () => {
     }
   }, [dispatch, noteKey, noteText, selectedCategory, selectedMood]);
   
-  const handleDeleteNote = useCallback((noteId: string) => {
-    if (confirm(t('confirmations.deleteNote'))) {
+  const handleDeleteNote = useCallback(async (noteId: string) => {
+    const confirmed = await dialogService.showConfirm({ description: t('confirmations.deleteNote') });
+    if (confirmed) {
       dispatch(deleteNote({ dayKey: noteKey, noteId }));
     }
   }, [dispatch, noteKey, t]);
@@ -375,7 +375,7 @@ const DayPanelComponent: React.FC = () => {
     // Convert back to HEKA
     const targetHeka = civilToHeka(nextWeekCivil);
     if (!targetHeka) {
-      alert(t('alerts.couldNotCalculateDate'));
+      dialogService.showAlert({ description: t('alerts.couldNotCalculateDate') });
       return;
     }
     
@@ -391,17 +391,16 @@ const DayPanelComponent: React.FC = () => {
       }));
     });
     
-    alert(t('alerts.duplicatedToNextWeek', { items: `${selectedNotes.length} note(s)`, month: HEKA_MONTHS[targetHeka.month].name, day: targetHeka.day }));
+    dialogService.showAlert({ description: t('alerts.duplicatedToNextWeek', { items: `${selectedNotes.length} note(s)`, month: HEKA_MONTHS[targetHeka.month].name, day: targetHeka.day }) });
     handleExitSelectionMode();
   }, [selectedDate, selectedNotes, dispatch, t]);
   
-  const handleDuplicateToEveryDayOfWeek = useCallback(() => {
+  const handleDuplicateToEveryDayOfWeek = useCallback(async () => {
     if (!selectedDate || selectedNotes.length === 0) return;
     
     const dayName = DAY_NAMES[currentDayOfWeek];
-    if (!confirm(t('confirmations.duplicateEveryDay', { count: selectedNotes.length, day: dayName }))) {
-      return;
-    }
+    const confirmed = await dialogService.showConfirm({ description: t('confirmations.duplicateEveryDay', { count: selectedNotes.length, day: dayName }) });
+    if (!confirmed) return;
     
     // Get all days of this day-of-week in remaining months
     let duplicateCount = 0;
@@ -427,7 +426,7 @@ const DayPanelComponent: React.FC = () => {
       }
     }
     
-    alert(t('alerts.duplicatedToDays', { count: duplicateCount, day: dayName }));
+    dialogService.showAlert({ description: t('alerts.duplicatedToDays', { count: duplicateCount, day: dayName }) });
     handleExitSelectionMode();
   }, [selectedDate, selectedNotes, currentDayOfWeek, dispatch, t]);
   
@@ -450,13 +449,15 @@ const DayPanelComponent: React.FC = () => {
       }));
     });
     
-    alert(t('alerts.duplicatedNotes', { count: `${selectedNotes.length} note(s)` }));
+    dialogService.showAlert({ description: t('alerts.duplicatedNotes', { count: `${selectedNotes.length} note(s)` }) });
     setShowDayPicker(false);
     handleExitSelectionMode();
   }, [selectedNotes, dispatch, t]);
   
-  const handleDeleteSelected = useCallback(() => {
-    if (!confirm(t('confirmations.deleteSelected', { count: selectedNotesMap.size, days: selectedDayCount }))) return;
+  const handleDeleteSelected = useCallback(async () => {
+    const confirmed = await dialogService.showConfirm({ description: t('confirmations.deleteSelected', { count: selectedNotesMap.size, days: selectedDayCount }) });
+
+    if (!confirmed) return; return;
     
     // Delete from the correct day for each note
     selectedNotesMap.forEach((dayKey, noteId) => {
@@ -468,28 +469,28 @@ const DayPanelComponent: React.FC = () => {
   // Check if selected notes have duplicates (for showing Undo option)
   const notesWithDuplicates = useMemo(() => {
     const result = new Set<string>();
-    
+
     selectedNotes.forEach(note => {
-      // Check if any note in the entire calendar was duplicated from this note
-      const hasDuplicates = allNotes.some(n => n.duplicatedFrom === note.id);
-      if (hasDuplicates) {
+      if (noteIdsWithDuplicates.has(note.id)) {
         result.add(note.id);
       }
     });
-    
+
     return result;
-  }, [selectedNotes, allNotes]);
+  }, [selectedNotes, noteIdsWithDuplicates]);
   
   const hasAnyDuplicates = notesWithDuplicates.size > 0;
   
-  const handleUndoDuplicates = useCallback(() => {
-    if (!confirm(`Remove all duplicated instances of these ${notesWithDuplicates.size} note(s)?`)) return;
+  const handleUndoDuplicates = useCallback(async () => {
+    const confirmed = await dialogService.showConfirm({ description: `Remove all duplicated instances of these ${notesWithDuplicates.size} note(s)?` });
+
+    if (!confirmed) return; return;
     
     notesWithDuplicates.forEach(sourceNoteId => {
       dispatch(deleteDuplicates({ sourceNoteId }));
     });
     
-    alert(t('alerts.removedDuplicates'));
+    dialogService.showAlert({ description: t('alerts.removedDuplicates') });
     handleExitSelectionMode();
   }, [notesWithDuplicates, dispatch, handleExitSelectionMode, t]);
   
@@ -505,7 +506,7 @@ const DayPanelComponent: React.FC = () => {
       
       const targetHeka = civilToHeka(nextMonthCivil);
       if (!targetHeka) {
-        alert(t('alerts.couldNotCalculateDate'));
+        dialogService.showAlert({ description: t('alerts.couldNotCalculateDate') });
         return;
       }
       
@@ -521,7 +522,7 @@ const DayPanelComponent: React.FC = () => {
         }));
       });
       
-      alert(t('alerts.duplicatedToNextMonth', { items: `${selectedNotes.length} note(s)`, month: HEKA_MONTHS[targetHeka.month].name, day: targetHeka.day }));
+      dialogService.showAlert({ description: t('alerts.duplicatedToNextMonth', { items: `${selectedNotes.length} note(s)`, month: HEKA_MONTHS[targetHeka.month].name, day: targetHeka.day }) });
       handleExitSelectionMode();
       return;
     }
@@ -566,7 +567,7 @@ const DayPanelComponent: React.FC = () => {
       });
     });
     
-    alert(t('alerts.duplicatedToMonth', { count: duplicateCount }));
+    dialogService.showAlert({ description: t('alerts.duplicatedToMonth', { count: duplicateCount }) });
     handleExitSelectionMode();
   }, [selectedNotes, selectedNotesWithKeys, selectedDate, isMultiDaySelection, dispatch, t]);
   
@@ -590,7 +591,7 @@ const DayPanelComponent: React.FC = () => {
       });
     });
     
-    alert(t('alerts.duplicatedToDaysCount', { count: selectedNotes.length, days: targetDates.length }));
+    dialogService.showAlert({ description: t('alerts.duplicatedToDaysCount', { count: selectedNotes.length, days: targetDates.length }) });
     setShowMultiDayPicker(false);
     handleExitSelectionMode();
   }, [selectedNotes, dispatch, t]);
@@ -1081,7 +1082,7 @@ const DayPicker = memo(({ currentViewDate, onSelectDay, onCancel }: {
           } else {
             setPickerMonth(m => m - 1);
           }
-        }} aria-label={t('common.previous')}>←</button>
+        }} aria-label={t('previous')}>←</button>
         <span className="day-picker__month">{monthName} {pickerYear}</span>
         <button className="btn btn--icon" onClick={() => {
           if (pickerMonth === 12) {
@@ -1090,7 +1091,7 @@ const DayPicker = memo(({ currentViewDate, onSelectDay, onCancel }: {
           } else {
             setPickerMonth(m => m + 1);
           }
-        }} aria-label={t('common.nextItem')}>→</button>
+        }} aria-label={t('nextItem')}>→</button>
       </div>
       <div className="day-picker__grid" style={{ marginBottom: '4px' }}>
         {DOW_HEADERS.map(dow => (
@@ -1184,7 +1185,7 @@ const MultiDayPicker = memo(({ currentViewDate, onSelectDays, onCancel }: {
             setPickerMonth(m => m - 1);
           }
           setSelectedDays(new Set());
-        }} aria-label={t('common.previous')}>←</button>
+        }} aria-label={t('previous')}>←</button>
         <span className="day-picker__month">{monthName} {pickerYear}</span>
         <button className="btn btn--icon" onClick={() => {
           if (pickerMonth === 12) {
@@ -1194,7 +1195,7 @@ const MultiDayPicker = memo(({ currentViewDate, onSelectDays, onCancel }: {
             setPickerMonth(m => m + 1);
           }
           setSelectedDays(new Set());
-        }} aria-label={t('common.nextItem')}>→</button>
+        }} aria-label={t('nextItem')}>→</button>
       </div>
       <div className="day-picker__grid" style={{ marginBottom: '4px' }}>
         {DOW_HEADERS.map(dow => (

@@ -101,7 +101,7 @@
 }
 
 .arc-desc {
-  font-size: 9px;
+  font-size: 11px;
   color: rgba(255, 255, 255, 0.5);
 }
 
@@ -177,13 +177,13 @@
 }
 
 .month-num {
-  font-size: 10px;
+  font-size: 12px;
   font-weight: 700;
   color: rgba(255, 255, 255, 0.5);
 }
 
 .month-leap {
-  font-size: 8px;
+  font-size: 11px;
   background: #c9a227;
   color: #000;
   padding: 1px 3px;
@@ -192,14 +192,14 @@
 }
 
 .month-name {
-  font-size: 10px;
+  font-size: 12px;
   font-weight: 600;
   color: #fff;
   margin-bottom: 2px;
 }
 
 .month-days {
-  font-size: 9px;
+  font-size: 11px;
   color: rgba(255, 255, 255, 0.5);
   margin-bottom: 6px;
 }
@@ -259,7 +259,7 @@
 }
 
 .demo-label {
-  font-size: 10px;
+  font-size: 12px;
   color: rgba(255, 255, 255, 0.6);
 }
 
@@ -270,7 +270,7 @@
 }
 
 .demo-day {
-  font-size: 10px;
+  font-size: 12px;
   color: rgba(255, 255, 255, 0.8);
 }
 
@@ -347,7 +347,7 @@
   }
   
   .month-name {
-    font-size: 9px;
+    font-size: 11px;
   }
   
   .stat-number {

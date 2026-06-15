@@ -533,15 +533,14 @@ export const CalendarAICoach: React.FC<CalendarAICoachProps> = ({ focusedDate })
       }, 5000);
     };
 
-    const onAchievementUnlocked = ({ achievement: ach }: { achievement: import('../types').UnlockedAchievement }) => {
+    const onAchievementUnlocked = ({ achievement: ach }: { achievement: import('../services/gamificationService').UnlockedAchievement }) => {
       if (ach) {
-        const a = ach as unknown as import('../services/gamificationService').UnlockedAchievement;
         void showImmediateMessage(
           Promise.resolve({
-            id: `achievement-${a.id}`,
+            id: `achievement-${ach.id}`,
             type: 'celebration',
-            text: `✨ ${a.name} unlocked! ${a.description}`,
-            icon: a.icon || '🏆',
+            text: `✨ ${ach.name} unlocked! ${ach.description}`,
+            icon: ach.icon || '🏆',
             color: '#d4af37',
           })
         );

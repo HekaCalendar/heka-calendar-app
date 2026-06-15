@@ -203,7 +203,7 @@ export const FocusSchedulesEditor: React.FC = () => {
                   height: '28px',
                   borderRadius: '6px',
                   border: 'none',
-                  fontSize: '11px',
+                  fontSize: '12px',
                   fontWeight: 600,
                   cursor: globalEnabled ? 'pointer' : 'default',
                   background: schedule.daysOfWeek.includes(idx)
@@ -274,7 +274,7 @@ export const FocusSchedulesEditor: React.FC = () => {
                   padding: '3px 10px',
                   borderRadius: '6px',
                   border: 'none',
-                  fontSize: '11px',
+                  fontSize: '12px',
                   textTransform: 'uppercase',
                   letterSpacing: '0.05em',
                   cursor: globalEnabled ? 'pointer' : 'default',

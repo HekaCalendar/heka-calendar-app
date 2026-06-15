@@ -1,0 +1,126 @@
+{
+  "tutorial": {
+    "back": "رجوع",
+    "skip": "تخطي",
+    "enter": "دخول HEKA",
+    "continue": "متابعة",
+    "stepLabel": "الخطوة {{current}} من {{total}}",
+    "journeyTitle": "رحلتك",
+    "completeLabel": "إكمال",
+    "actionWaiting": "اضغط للمتابعة",
+    "steps": {
+      "welcome": {
+        "title": "مرحبًا بكم في HEKA",
+        "detail": "ثلاثة عشر شهرًا. إثنتا وثمانية أيام لكل شهر. القمر والشمس، والحديقة، والطاقة، والأصدقاء -つい في نظم.",
+        "action": "بدء رحلتك",
+        "instruction": "لم ترون أبدًا تقويم مثل هذا."
+      },
+      "tracker": {
+        "title": "تتبع إيقاعك",
+        "detail": "المزاج: مدرج من 1 إلى 10 مع إيموجي في الوقت الحقيقي. النوم: المدة والجودة. الطاقة: الجسدية، العقلية، العاطفية، الروحية. يكشف لوحة ال洞悉 النماذج مع مرور الوقت. يحمل التقويم قصتك.",
+        "action": "استمر",
+        "instruction": "جسمك جزء من التقويم."
+      },
+      "the-grid": {
+        "title": "الشبكة - ثلاثة عشر شهرًا",
+        "detail": "اثني عشر شهرًا من 28 يومًا بالضبط، بالإضافة على Hexa بين أغسطس وسبتمبر. يحتوي شهر مارس على اليوم الـ 29. يبدأ كل شهر في نفس اليوم. يتنفس العام في ثلاث قوسات - الفتح باللون الأحمر، والجوهر باللون الخضراء، والإغلاق باللون الأرجواني. يمكن التنبؤ به. متماثل. نظيف.",
+        "action": "اضغط على أي يوم للمتابعة",
+        "instruction": "عدهم. ثلاثة عشر. ليس اثني عشر."
+      },
+      "features": {
+        "title": "armory الخاص بك",
+        "detail": "Print: Default Gold، Minimalist، Sacred Geometry مع الخلايا الدائرية، Cyberpunk مع خطوط الفحص CRT، Nature Organic، Ancient Egypt مع ال象形文字. جميعها مجانية. For life. A4، A3، Letter. Stars: مواطن الولادة Swiss Ephemeris، دقة ثانية حادة. Journal: أربعة أنماط مع توليد ال洞悉AI. Circle: الرسائل الحية في الوقت الحقيقي، المهام المشتركة مع HEKA due dates. Stats: 80+ محققة عبر ثمانية مستويات. محققات سرية تنتظر اكتشافها.",
+        "action": "استمر",
+        "instruction": "six print themes. A birth chart engine. A journal. Friends. Stats."
+      },
+      "settings": {
+        "title": "اجعلها لك",
+        "detail": "Civil Dates: overlay Gregorian حتى لا تفوت لقاء. Moon Phases: رمزSwiss Ephemeris على كل خلية. Holidays: الاحتفالات المجتمعية. Pure Mode: ملء الشاشة، بدون تشتت، تبديل Yin-Yang المظلم/المضيء. يكيف التقويم بكيفك رؤية الوقت.",
+        "action": "اضغط على أي إعداد لمتابعة",
+        "instruction": "three toggles. Pure Mode. Complete control."
+      },
+      "ai-coach": {
+        "title": "HIKA الذكاء الاصطناعي — مرشد السماء الخاص بك",
+        "detail": "Floating glass oracle. Synthesizes moon phases, your transits, tasks, journal sentiment, streaks, and location into poetic, actionable messages. Speaks in your archetype — Warrior, Monk, Artist, Strategist, Mystic, Phoenix. Remembers 19 conversations. Detects synchronicities: moments when your words align with the sky. Optional LLM enhancement with graceful offline fallback.这不是一个聊天机器人。这是一个神谕.",
+        "action": "استمر",
+        "instruction": "يراقب السماء. يراقبك."
+      },
+      "complete": {
+        "title": "أنت مستعد",
+        "detail": "تعلمت كيفية التنقل في ثلاثة عشر شهرًا. تعلمت كيفية قراءة القمر. تعلمت كيفية تتبع طاقتك، التصويت على العطلات، طباعة الصفحات الجميلة، الكتابة الذاتية مع النجوم، و استشارة مرشدك الذكاء الاصطناعي. كل شيء آخر ينتظر غرضتك.",
+        "action": "ادخل HIKA",
+        "instruction": "التقويم لك. السماء لك."
+      },
+      "day-cells": {
+        "title": "كل خلية حية",
+        "detail": "رمز相位月亮Swiss Ephemeris. تاريخمدني أسفل. نقاط العطلات - مرش화 من قبل المجتمع. ملاحظات ال小便笺 - كلماتك، مرئية على الشبكة. كل الثلاثة عشر شهراً في وقت واحد.整年، في نظرة واحدة.",
+        "action": "اضغط على أي يوم للفتح",
+        "instruction": "يحكي كل يوم قصة"
+      },
+      "day-panel": {
+        "title": "يفتح اليوم",
+        "detail": "القمر: ال照illumination exact، waxing أو waning، Void of Course detection. Astrology:实时transits ضد مواطن الولادة لديك. Notes: تصنيف حسب المزاج، المهمة، السجل. Tasks: مواعيد الانتهاء، التذكيرات. Energy: التصويت بعد 7:30 مساءً، انظر نبض المجتمع.这不是一个日历条目。这是一个门户.",
+        "action": "اكتشف لوحة اليوم، ثم استمر",
+        "instruction": "مركز الأمر الخاص بك ليوم واحد."
+      },
+      "community": {
+        "title": "تشكيل الكون",
+        "detail": "اقترح عيد جديد. عشرة أصوات لأعلى ويصبح رسميًا. اصوت على الميزات القادمة — مخطط، في الاعتبار، جار التقدم، تم إطلاقه. يتطور التقويم لأن مستخدميه يتطورونه. هذه هواء تعاون.",
+        "action": "استمر",
+        "instruction": "تغير 투تك التقويم."
+      },
+      "navigation": {
+        "title": "التنقل في الزمن",
+        "detail": "السهام تنتقل بين الأشهر. اليوم يعود إلى الآن. يفهم البحث اللغة الطبيعية - \"Hexa 15\" أو \"يناير 31\". توسيع أفقيًا أو عموديًا للمزيد من التفاصيل. الكامل من عام في بضعة حركات.",
+        "action": "اضغط ← أو → للتنقل",
+        "instruction": "أنت أبدًا لا تضيع."
+      },
+      "first-note": {
+        "title": "اجعل أول علامة",
+        "detail": "اضغط على أي يوم. التمرير لملاحظات. اكتب شيئًا — مهمة، مزاج، ذاكرة. هذا هو الإدخال الأول في ما يمكن أن يصبح محفوظاتًا طوال سنوات.",
+        "action": "اكتب ملاحظة لاستكمال البرنامج التعليمي",
+        "instruction": "A calendar is only"
+      },
+      "celestial-guide": {
+        "title": "الدليل السماوي",
+        "detail": "Sun Times: حلقة SVG حية، الطقس، دقة أربعة طبقات. Moon Phase: ال照illumination، void moon، لحظة جديدة القمر العد下一次. Seasons: متابعة الانقلاب السماوي الحقيقي. Agriculture: ماذا تزرعه اليوم، بناءً على موقعك و相位月亮. Digital Clock: أربعة م算计 لحظة حية في المرة. Planetary Hours: ساعات تشلدائية حقيقية بناءً على الشمسر الفعلي والغروب. Scroll من خلالهم. كل واحد هو أداة علمية.",
+        "action": "قم بتمرير بطاقات السماء للمتابعة",
+        "instruction": "alfa six cards. One sky."
+      }
+    },
+    "printThemes": {
+      "egypt": {
+        "name": "مصر",
+        "desc": "ال象形文字"
+      },
+      "sacred": {
+        "name": "الهندسة المقدسة",
+        "desc": "خلايا دائرية"
+      },
+      "nature": {
+        "name": "الطبيعة",
+        "desc": "نباتية"
+      },
+      "default": {
+        "name": "افتراضي",
+        "desc": "ورق و ذهب"
+      },
+      "cyberpunk": {
+        "name": "سيبربانك",
+        "desc": "إشعاع نيون"
+      },
+      "minimalist": {
+        "name": "بسيط",
+        "desc": "ال순ف السويسري"
+      }
+    },
+    "previewAchievements": {
+      "nightOwl": "ال/owl الليلي",
+      "timeLord": "lord الزمن",
+      "firstWords": "الكلمات الأولى",
+      "weekWarrior": "الحرب الأسبوعية",
+      "centuryClub": "نادي القرن",
+      "theChronicler": "المؤرخ"
+    }
+  }
+}

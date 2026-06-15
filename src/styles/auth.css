@@ -681,6 +681,8 @@
     border-radius: 0;
     min-height: 100vh;
     max-height: 100vh;
+    /* Extra breathing room at the top for Samsung Z Fold / punch-hole devices */
+    padding-top: calc(env(safe-area-inset-top, 0px) + 12px);
   }
   
   .auth-modal__header,

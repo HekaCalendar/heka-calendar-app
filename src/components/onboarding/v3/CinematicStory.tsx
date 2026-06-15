@@ -110,12 +110,16 @@ const SlideContainer: React.FC<{ phase: Phase; children: React.ReactNode }> = ({
   <div style={{
     position: 'fixed', inset: 0, zIndex: 10001,
     display: 'flex', flexDirection: 'column',
-    alignItems: 'center', justifyContent: 'center',
-    padding: '28px',
+    alignItems: 'safe center', justifyContent: 'safe center',
+    padding: 'calc(28px + env(safe-area-inset-top)) calc(28px + env(safe-area-inset-right)) calc(28px + env(safe-area-inset-bottom)) calc(28px + env(safe-area-inset-left))',
     opacity: phase === 'exiting' ? 0 : 1,
     transform: phase === 'entering' ? 'translateY(30px) scale(0.96)' : phase === 'exiting' ? 'translateY(-20px) scale(0.98)' : 'translateY(0) scale(1)',
     transition: 'opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1), transform 0.7s cubic-bezier(0.22, 1, 0.36, 1)',
     pointerEvents: phase === 'idle' ? 'auto' : 'none',
+    overflowY: 'auto',
+    WebkitOverflowScrolling: 'touch',
+    overscrollBehavior: 'contain',
+    touchAction: 'pan-y',
   }}>{children}</div>
 );
 

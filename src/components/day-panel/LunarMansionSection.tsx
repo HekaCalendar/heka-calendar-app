@@ -1,6 +1,6 @@
 /**
  * Lunar Mansion Section
- * Displays the 27 Lunar Mansions (Nakshatras) for TRUE HEKA mode
+ * Displays the 27 Lunar Mansions (Nakshatras) for the active HEKA time mode
  */
 
 import { memo } from 'react';
@@ -10,8 +10,13 @@ import type { LunarMansionSectionProps } from './types';
 export const LunarMansionSection = memo(({
   mansion,
   isLoading,
+  timeMode = 'TRUE',
 }: LunarMansionSectionProps) => {
   const { t } = useTranslation('dayPanel');
+
+  const modeLabel = timeMode === 'SYNC'
+    ? t('lunarMansion.syncMode')
+    : t('lunarMansion.trueMode');
 
   if (isLoading) {
     return (
@@ -44,7 +49,7 @@ export const LunarMansionSection = memo(({
     <div className="day-panel__section day-panel__mansion">
       <div className="day-panel__section-title">
         <span>🌟</span> {t('lunarMansion.title')}
-        <span className="mansion-mode-badge">{t('lunarMansion.trueMode')}</span>
+        <span className="mansion-mode-badge">{modeLabel}</span>
       </div>
 
       {/* Moon's Mansion — Primary */}

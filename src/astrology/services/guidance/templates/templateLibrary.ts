@@ -735,28 +735,28 @@ export class TemplateLibrary {
       .replace('{moonPhase}', phaseModifier.prefix.toLowerCase())
       .replace('{theme}', phaseModifier.theme.toLowerCase());
 
-    let narrative = `${opener} ${transition} ${phaseIntegration}`;
+    let narrative = `${opener} ${transition}\n\n${phaseIntegration}`;
 
     if (aspectModifier) {
       const aspectIntegration = this.pickFrom(NARRATIVE_ASPECT_INTEGRATIONS, hash + 3)
         .replace('{aspectFlavor}', aspectModifier.flavor);
-      narrative += ` ${aspectIntegration}`;
+      narrative += `\n\n${aspectIntegration}`;
     }
 
     if (userElement === baseTemplate.element) {
       const elementIntegration = this.pickFrom(NARRATIVE_ELEMENT_INTEGRATIONS, hash + 4)
         .replace('{element}', userElement);
-      narrative += ` ${elementIntegration}`;
+      narrative += `\n\n${elementIntegration}`;
     }
 
     // Add elemental resonance from template
     if ((baseTemplate as any).elementalResonance) {
       const resonance = (baseTemplate as any).elementalResonance;
-      narrative += ` ${resonance}`;
+      narrative += `\n\n${resonance}`;
     }
 
     const closer = this.pickFrom(NARRATIVE_CLOSERS, hash + 5);
-    narrative += ` ${closer}`;
+    narrative += `\n\n${closer}`;
 
     // ── Advice pool: category-lensed + phase + aspect ──
     const advicePool: string[] = [lensed.primary, ...lensed.secondary];

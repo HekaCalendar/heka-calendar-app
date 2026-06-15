@@ -189,7 +189,7 @@ const GoalEditForm: React.FC<GoalEditFormProps> = ({ goal, isNew, onSave, onCanc
           type="text"
           value={g.name}
           onChange={e => set({ name: e.target.value })}
-          placeholder={t('wizard.goalNamePlaceholder')}
+          placeholder={t('goalNamePlaceholder', 'e.g., Meditate daily')}
           autoFocus={isNew}
         />
       </div>
@@ -198,7 +198,7 @@ const GoalEditForm: React.FC<GoalEditFormProps> = ({ goal, isNew, onSave, onCanc
         <textarea
           value={g.description}
           onChange={e => set({ description: e.target.value })}
-          placeholder={t('wizard.goalDetailsPlaceholder')}
+          placeholder={t('goalDetailsPlaceholder', 'Describe your goal...')}
           rows={2}
           style={{ resize: 'vertical', minHeight: 48 }}
         />
@@ -271,7 +271,7 @@ const GoalEditForm: React.FC<GoalEditFormProps> = ({ goal, isNew, onSave, onCanc
             type="text"
             value={g.tags.join(', ')}
             onChange={e => set({ tags: e.target.value.split(',').map(s => s.trim()).filter(Boolean) })}
-            placeholder={t('wizard.tagsPlaceholder')}
+            placeholder={t('tagsPlaceholder', 'Add tags...')}
           />
         </div>
       </div>

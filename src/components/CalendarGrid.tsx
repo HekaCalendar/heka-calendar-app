@@ -14,7 +14,7 @@ import { useMemo, useCallback, memo, useState, useEffect, useRef } from 'react';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import type { RootState } from '../store';
-import { selectDate, addNote } from '../store';
+import { selectDate, addNote, selectMonthNotes, selectMonthPlannerTasks } from '../store';
 import { generateMonthGrid, getNoteKey, getArcType } from '../services/calendarService';
 import { getHolidaysForDateWithSubRegion, type SubRegionCode, type CountryCode } from '../types';
 import type { CalendarDay, ArcType, DayItem } from '../types';
@@ -307,8 +307,8 @@ export const CalendarGrid = memo(({ isExpanded = false, isExpandedHorizontal = f
   const display = useSelector((state: RootState) => state.calendar.display, shallowEqual);
   const location = useSelector((state: RootState) => state.calendar.location);
   const subRegion = useSelector((state: RootState) => state.calendar.subRegion as SubRegionCode | null);
-  const notes = useSelector((state: RootState) => state.calendar.notes);
-  const plannerTasks = useSelector((state: RootState) => state.planner.tasks);
+  const notes = useSelector(selectMonthNotes, shallowEqual);
+  const plannerTasks = useSelector(selectMonthPlannerTasks, shallowEqual);
 
   const timeMode = useSelector((state: RootState) => state.calendar.timeMode);
   const astroProfiles = useSelector((state: RootState) => state.calendar.astroProfiles);
@@ -339,19 +339,39 @@ export const CalendarGrid = memo(({ isExpanded = false, isExpandedHorizontal = f
       .filter(day => day.hekaDate.day !== 0)
       .map(day => day.civilDate);
 
-    // Fetch Swiss Ephemeris phases
-    calculateMoonPhaseBatch(dates, hemisphere)
-      .then(phases => {
-        const phaseMap = new Map<string, { glyph: string; name: string }>();
-        phases.forEach((data, dateKey) => {
-          phaseMap.set(dateKey, { glyph: data.glyph, name: data.name });
+    let cancelled = false;
+
+    // Defer the heavy WASM batch to an idle window so month navigation stays smooth.
+    const runBatch = () => {
+      if (cancelled) return;
+      calculateMoonPhaseBatch(dates, hemisphere)
+        .then(phases => {
+          if (cancelled) return;
+          const phaseMap = new Map<string, { glyph: string; name: string }>();
+          phases.forEach((data, dateKey) => {
+            phaseMap.set(dateKey, { glyph: data.glyph, name: data.name });
+          });
+          setSwissMoonPhases(phaseMap);
+        })
+        .catch(() => {
+          if (cancelled) return;
+          // Silently fail - grid will show approximate phases
+          setSwissMoonPhases(new Map());
         });
-        setSwissMoonPhases(phaseMap);
-      })
-      .catch(() => {
-        // Silently fail - grid will show approximate phases
-        setSwissMoonPhases(new Map());
-      });
+    };
+
+    const idleId = typeof requestIdleCallback !== 'undefined'
+      ? requestIdleCallback(runBatch, { timeout: 200 })
+      : setTimeout(runBatch, 1);
+
+    return () => {
+      cancelled = true;
+      if (typeof cancelIdleCallback !== 'undefined') {
+        cancelIdleCallback(idleId as number);
+      } else {
+        clearTimeout(idleId as number);
+      }
+    };
   }, [gridDays, display.showMoonPhases, hemisphere]);
 
   // True Solar Return calculation — TRUE mode only

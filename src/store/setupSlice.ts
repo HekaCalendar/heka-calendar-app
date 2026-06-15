@@ -6,7 +6,7 @@
  */
 
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
-import { DEFAULT_LANGUAGE } from '../data/languages';
+import { DEFAULT_LANGUAGE } from '../data/languageMeta';
 
 const STORAGE_KEY = 'heka-setup-v1';
 

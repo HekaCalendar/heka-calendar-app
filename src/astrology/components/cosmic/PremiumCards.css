@@ -217,7 +217,7 @@
 }
 
 .section-label {
-  font-size: 10px;
+  font-size: 12px;
   font-weight: 700;
   letter-spacing: 0.15em;
   color: var(--ci-text-muted, #7c3aed);
@@ -338,7 +338,7 @@
 }
 
 .heka-label {
-  font-size: 10px;
+  font-size: 12px;
   letter-spacing: 0.2em;
   color: var(--ci-text-muted, #7c3aed);
   margin-top: 4px;
@@ -731,7 +731,7 @@
   bottom: -8px;
   left: 50%;
   transform: translateX(-50%);
-  font-size: 8px;
+  font-size: 11px;
   color: var(--ci-secondary, #fbbf24);
   animation: twinkle-star 1.5s ease-in-out infinite;
 }
@@ -1023,7 +1023,7 @@
 }
 
 .cp-name {
-  font-size: 9px;
+  font-size: 11px;
   text-transform: uppercase;
   color: var(--ci-text-muted, #7c3aed);
 }
@@ -1031,7 +1031,7 @@
 .current-indicator {
   position: absolute;
   bottom: 2px;
-  font-size: 8px;
+  font-size: 11px;
   color: var(--ci-secondary, #fbbf24);
 }
 
@@ -1555,7 +1555,7 @@
   position: absolute;
   top: -4px;
   right: -4px;
-  font-size: 10px;
+  font-size: 12px;
   color: var(--ci-danger, #f43f5e);
 }
 

@@ -29,22 +29,34 @@
 }
 
 /* ─── Full-Viewport Scene ─── */
+/*
+  Positioned absolutely inside the fixed overlay so it can act as a
+  scroll container on touch devices. A fixed-position scroll container
+  combined with a locked body often refuses pan gestures on Samsung/Android
+  WebViews; absolute positioning avoids that quirk while still filling the
+  viewport.
+*/
 .setup-wizard__scene {
-  position: fixed;
+  position: absolute;
   inset: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   z-index: 10;
   padding:
-    calc(60px + env(safe-area-inset-top))
+    calc(20px + env(safe-area-inset-top))
     calc(24px + env(safe-area-inset-right))
-    calc(80px + env(safe-area-inset-bottom))
+    calc(150px + env(safe-area-inset-bottom))
     calc(24px + env(safe-area-inset-left));
-  overflow: hidden;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
+  touch-action: pan-y;
+  pointer-events: auto;
   animation: sceneEnter 0.6s var(--sw-ease) 0.05s both;
 }
+
 
 @keyframes sceneEnter {
   from { opacity: 0; transform: translateX(50px) scale(0.97); }
@@ -128,6 +140,7 @@
   height: 2px;
   background: rgba(255, 255, 255, 0.04);
   z-index: 20;
+  pointer-events: none;
 }
 
 .setup-wizard__progress-fill {
@@ -184,6 +197,11 @@
   gap: 16px;
   z-index: 20;
   padding: 0 24px;
+  pointer-events: none;
+}
+
+.setup-wizard__nav-btn {
+  pointer-events: auto;
 }
 
 .setup-wizard__nav-btn {
@@ -293,8 +311,20 @@
 }
 
 .setup-step--ai {
-  justify-content: center;
+  justify-content: flex-start;
   max-width: 600px;
+}
+
+.setup-step--mode,
+.setup-step--permissions {
+  justify-content: flex-start;
+}
+
+/* Keep the short language / complete steps vertically centred */
+.setup-step--language,
+.setup-step--complete {
+  margin-top: auto;
+  margin-bottom: auto;
 }
 
 /* ─── Form Elements ─── */
@@ -308,9 +338,9 @@
 @media (max-width: 480px) {
   .setup-wizard__scene {
     padding:
-      calc(48px + env(safe-area-inset-top))
+      calc(16px + env(safe-area-inset-top))
       16px
-      calc(72px + env(safe-area-inset-bottom))
+      calc(140px + env(safe-area-inset-bottom))
       16px;
   }
 
@@ -400,6 +430,237 @@
   border-color: rgba(212, 175, 55, 0.4) !important;
   box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.1);
   outline: none;
+}
+
+/* ─── Compact / Foldable Outer-Screen Fixes ───
+   Samsung Z Fold folded, small phones, short landscape.
+   Keeps headings visible and nav from overlapping content. */
+@media (max-height: 760px), (max-width: 380px) {
+  .setup-wizard__scene {
+    justify-content: flex-start;
+    align-items: center;
+    padding-top: calc(40px + env(safe-area-inset-top));
+    padding-bottom: calc(132px + env(safe-area-inset-bottom));
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+    touch-action: pan-y;
+  }
+
+  .setup-step,
+  .setup-step--mode,
+  .setup-step--permissions {
+    justify-content: flex-start;
+  }
+
+  .sw-ornament {
+    margin-bottom: 16px;
+  }
+
+  .setup-step__title {
+    font-size: clamp(20px, 6vw, 26px);
+    margin-bottom: 8px;
+  }
+
+  .setup-step__subtitle {
+    font-size: 13px;
+    margin-bottom: 18px;
+    max-width: 92%;
+  }
+
+  /* Mode step */
+  .mode-hero {
+    margin-bottom: 12px;
+  }
+
+  .mode-hero__title {
+    font-size: 20px;
+    margin-bottom: 4px;
+  }
+
+  .mode-hero__subtitle {
+    font-size: 12px;
+  }
+
+  .mode-cards {
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+
+  .mode-card {
+    padding: 12px 14px 10px;
+    border-radius: 16px;
+  }
+
+  .mode-card__top {
+    margin-bottom: 8px;
+  }
+
+  .mode-card__header {
+    margin-bottom: 8px;
+    gap: 10px;
+  }
+
+  .mode-card__icon {
+    font-size: 26px;
+  }
+
+  .mode-card__label {
+    font-size: 15px;
+  }
+
+  .mode-card__sublabel {
+    font-size: 11px;
+  }
+
+  .mode-card__desc {
+    font-size: 11px;
+    margin-bottom: 8px;
+    padding-bottom: 8px;
+  }
+
+  .mode-month-grid {
+    gap: 3px;
+    padding: 6px;
+    margin-bottom: 8px;
+    border-radius: 10px;
+  }
+
+  .mode-month-grid__cell {
+    padding: 4px 1px;
+    border-radius: 5px;
+  }
+
+  .mode-month-grid__abbr,
+  .mode-month-grid__days {
+    font-size: 9px;
+  }
+
+  .mode-math {
+    padding: 8px 10px;
+    border-radius: 10px;
+  }
+
+  .mode-math__num {
+    font-size: 14px;
+  }
+
+  .mode-math__op,
+  .mode-math__eq {
+    font-size: 11px;
+  }
+
+  .mode-math__label {
+    font-size: 11px;
+  }
+
+  .mode-persist {
+    margin-bottom: 8px;
+  }
+
+  .mode-card__selected-badge {
+    top: 8px;
+    padding: 3px 10px;
+    font-size: 10px;
+  }
+
+  /* Permissions step */
+  .perm-section {
+    gap: 10px;
+    padding: 14px;
+    border-radius: 16px;
+  }
+
+  .perm-section__header {
+    gap: 10px;
+  }
+
+  .perm-section__icon {
+    width: 34px;
+    height: 34px;
+    border-radius: 10px;
+  }
+
+  .perm-section__title {
+    font-size: 14px;
+  }
+
+  .perm-status {
+    font-size: 10px;
+  }
+
+  .perm-section__features {
+    gap: 5px;
+    margin-bottom: 4px;
+  }
+
+  .perm-section__feature {
+    font-size: 11px;
+    padding-left: 14px;
+  }
+
+  .perm-section__feature::before {
+    width: 5px;
+    height: 5px;
+    top: 6px;
+  }
+
+  .perm-constellation {
+    gap: 0;
+    padding: 2px;
+    margin-bottom: 8px;
+  }
+
+  .perm-constellation__row {
+    padding: 5px 0;
+    gap: 8px;
+  }
+
+  .perm-constellation__icon svg {
+    width: 14px;
+    height: 14px;
+  }
+
+  .perm-constellation__label {
+    font-size: 10px;
+  }
+
+  .perm-constellation__items {
+    font-size: 11px;
+  }
+
+  .perm-action {
+    padding: 8px 14px;
+    font-size: 11px;
+    border-radius: 20px;
+  }
+
+  /* Nav / dots */
+  .setup-wizard__nav {
+    bottom: calc(48px + env(safe-area-inset-bottom));
+    gap: 12px;
+    padding: 0 16px;
+  }
+
+  .setup-wizard__nav-btn {
+    padding: 10px 24px;
+    font-size: 12px;
+    border-radius: 12px;
+  }
+
+  .setup-wizard__dots {
+    bottom: calc(18px + env(safe-area-inset-bottom));
+    gap: 8px;
+  }
+
+  .setup-wizard__dot {
+    height: 5px;
+    border-radius: 2.5px;
+  }
+
+  .setup-wizard__dot--active {
+    width: 22px;
+  }
 }
 
 /* ─── Reduced Motion ─── */

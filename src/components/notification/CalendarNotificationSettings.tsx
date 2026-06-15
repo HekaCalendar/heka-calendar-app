@@ -103,7 +103,7 @@ export const CalendarNotificationSettings: React.FC = () => {
           <span style={{ fontSize: '14px', fontWeight: 500, color: '#e0e0e0' }}>{label}</span>
           {tier && (
             <span style={{
-              fontSize: '10px',
+              fontSize: '12px',
               textTransform: 'uppercase',
               letterSpacing: '0.05em',
               padding: '2px 6px',
@@ -161,7 +161,7 @@ export const CalendarNotificationSettings: React.FC = () => {
         {quietHours.enabled && (
           <div style={{ display: 'flex', gap: '12px', marginTop: '8px', paddingLeft: '52px' }}>
             <div>
-              <div style={{ fontSize: '11px', color: 'rgba(224,224,224,0.5)', marginBottom: '4px' }}>Start</div>
+              <div style={{ fontSize: '12px', color: 'rgba(224,224,224,0.5)', marginBottom: '4px' }}>Start</div>
               <select
                 value={quietHours.start}
                 onChange={(e) => updateQuietHours({ start: parseInt(e.target.value) })}
@@ -180,7 +180,7 @@ export const CalendarNotificationSettings: React.FC = () => {
               </select>
             </div>
             <div>
-              <div style={{ fontSize: '11px', color: 'rgba(224,224,224,0.5)', marginBottom: '4px' }}>End</div>
+              <div style={{ fontSize: '12px', color: 'rgba(224,224,224,0.5)', marginBottom: '4px' }}>End</div>
               <select
                 value={quietHours.end}
                 onChange={(e) => updateQuietHours({ end: parseInt(e.target.value) })}

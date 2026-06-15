@@ -5,7 +5,7 @@
 
 import type { PayloadAction } from '@reduxjs/toolkit';
 import type { CalendarState, NoteData, NoteCategory, DayNotes, RecurringConfig } from '../../../types';
-import type { UsageStatistics, CommunityHoliday, CommunityFeature, CalendarInvite } from '../../../types';
+import type { UsageStatistics, CommunityHoliday, CommunityFeature, CalendarInvite, RegionData } from '../../../types';
 
 interface ActionWithTimestamp {
   meta?: { timestamp?: number };
@@ -368,6 +368,14 @@ export const voteForHoliday = (state: CalendarState, action: PayloadAction<strin
 
 export const setCommunityFeatures = (state: CalendarState, action: PayloadAction<CommunityFeature[]>) => {
   state.communityFeatures = action.payload;
+};
+
+export const setCommunityResources = (state: CalendarState, action: PayloadAction<Record<string, RegionData>>) => {
+  state.communityResources = action.payload;
+};
+
+export const setSelectedCommunityRegion = (state: CalendarState, action: PayloadAction<string | null>) => {
+  state.selectedCommunityRegion = action.payload;
 };
 
 export const addCommunityFeature = (state: CalendarState, action: PayloadAction<CommunityFeature>) => {

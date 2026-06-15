@@ -1,0 +1,126 @@
+{
+  "tutorial": {
+    "back": "Kembali",
+    "skip": "Lewati",
+    "enter": "Masuk HEKA",
+    "continue": "Lanjutkan",
+    "stepLabel": "Langkah {{current}} dari {{total}}",
+    "journeyTitle": "Perjalanan Anda",
+    "completeLabel": "Selesai",
+    "actionWaiting": "Ketik untuk melanjutkan",
+    "steps": {
+      "welcome": {
+        "title": "Selamat Datang di HEKA",
+        "detail": "Tiga belas bulan. Dua puluh delapan hari setiap. Bulan, matahari, kebun Anda, energi Anda, teman-teman Anda — akhirnya dalam irama.",
+        "action": "Mulai Perjalanan Anda",
+        "instruction": "Anda tidak pernah melihat kalender seperti ini."
+      },
+      "tracker": {
+        "title": "Lacak Ritme Anda",
+        "detail": "Suasana Hati: slider 1-10 dengan emoji waktu nyata. Tidur: durasi dan kualitas. Energi: fisik, mental, emosional, spiritual.",
+        "action": "Lanjutkan",
+        "instruction": "Tubuh Anda adalah bagian dari kalender."
+      },
+      "the-grid": {
+        "title": "The Grid — Tiga Belas Bulan",
+        "detail": "Dua belas bulan dengan tepat 28 hari, plus Hexa antara Agustus dan September. Maret memegang hari ke-29. Setiap bulan dimulai pada hari yang sama. Tahun bernapas dalam tiga arc — Pembukaan dalam merah, Inti dalam hijau, Penutup dalam ungu. Terprediksi. Simetris. Bersih.",
+        "action": "Ketik tanggal mana saja untuk melanjutkan",
+        "instruction": "Hitung mereka. Tiga belas. Bukan dua belas."
+      },
+      "features": {
+        "title": "Arsenal Anda",
+        "detail": "Cetak: Default Gold, Minimalist, Sacred Geometry dengan sel lingkaran, Cyberpunk dengan garis scan CRT, Nature Organic, Ancient Egypt dengan hieroglif. Semua gratis. Seumur hidup. A4, A3, Letter. Bintang: Swiss Ephemeris chart lahir, akurasi arc-detik. Jurnal: empat mode dengan generasi wawasan AI. Lingkaran: pesan waktu nyata, tugas bersama dengan tanggal jatuh tempo HEKA. Statistik: 80+ prestasi di delapan tingkatan. Prestasi rahasia menunggu untuk ditemukan.",
+        "action": "Lanjutkan",
+        "instruction": "Enam tema cetak. Mesin chart lahir. Jurnal. Teman. Statistik."
+      },
+      "settings": {
+        "title": "Buat Jadi Milik Anda",
+        "detail": "Tanggal Sipil: tumpuk Gregorian sehingga Anda tidak pernah melewatkan pertemuan. Fase Bulan: glif Swiss Ephemeris di setiap sel. Libur: pengamatan komunitas. Mode Murni: layar penuh, bebas gangguan, toggle Gelap/Terang Yin-Yang. Kalender beradaptasi pada bagaimana Anda melihat waktu.",
+        "action": "Toggle pengaturan apa saja untuk melanjutkan",
+        "instruction": "Tiga toggle. Mode Murni. Kontrol penuh."
+      },
+      "ai-coach": {
+        "title": "HEKA AI — Coach Langit Anda",
+        "detail": "Oracle kaca mengambang. Mewadahi fase bulan, transit Anda, tugas, suasana hati jurnal, streak, dan lokasi menjadi pesan yang poetik dan dapat dikerjakan. Berbicara dalam arketip Anda — Warrior, Monk, Artist, Strategist, Mystic, Phoenix. Ingat 19 percakapan. Deteksi sinkronisitas: momen saat kata-kata Anda selaras dengan langit. Pengayaan LLM opsional dengan fallback offline yang gracios. Ini bukan bot obrolan. Ini adalah oracle.",
+        "action": "Lanjutkan",
+        "instruction": "Itu menonton langit. Itu menonton Anda."
+      },
+      "complete": {
+        "title": "Kamu Siap",
+        "detail": "Kamu tahu bagaimana menavigasi tiga belas bulan. Kamu tahu bagaimana membaca bulan. Kamu tahu bagaimana melacak energi kamu, memilih libur, mencetak halaman yang indah, menulis jurnal dengan bintang, dan berkonsultasi dengan jurulati kamu. Yang lainnya menunggu keingintahuanmu.",
+        "action": "Masuk HEKA",
+        "instruction": "Kalender milikmu. Langit milikmu."
+      },
+      "day-cells": {
+        "title": "Setiap Sel Hayat",
+        "detail": "emoji fase bulan Swiss Ephemeris. Tanggal sipil di bawah. Titik-titik libur — kurasi komunitas. Catatan cuplikan — kata-kata Anda, terlihat di grid. Semua tiga belas bulan sekaligus. Seluruh tahun, dalam satu pandangan.",
+        "action": "Ketuk tanggal apa saja untuk membuka",
+        "instruction": "Setiap hari menceritakan kisah."
+      },
+      "day-panel": {
+        "title": "Hari Terbuka",
+        "detail": "Bulan: cahaya yang tepat, membesar atau mengecil, Deteksi Void of Course. Astrologi: transit waktu nyata terhadap CHART LAHIR Anda. Catatan: dikategorikan menurut suasana hati, tugas, jurnal. Tugas: waktu jatuh tempo, pengingat. Energi: vote setelah 7:30 malam, lihat pulsa komunitas. Ini bukan entri kalender. Ini adalah portal.",
+        "action": "Jelajahi panel hari, kemudian lanjutkan",
+        "instruction": "Pusat perintah Anda untuk satu hari."
+      },
+      "community": {
+        "title": "Bentuk Alam Semesta",
+        "detail": "Usulkan libur baru. Delapan upvote dan itu resmi. Vote fitur yang akan datang — Direncanakan, Sedang Dipertimbangkan, Sedang Berlangsung, Dirilis. Kalender berkembang karena penggunanya berkembang. Ini adalah kolaborasi.",
+        "action": "Lanjutkan",
+        "instruction": "Suara Anda mengubah kalender."
+      },
+      "navigation": {
+        "title": "Pindah Melalui Waktu",
+        "detail": "Panah bergerak antara bulan. Hari ini kembali ke sekarang. Pencarian memahami bahasa alami — \"Hexa 15\" atau \"31 Januari.\" Perluas secara horizontal atau vertikal untuk lebih detail. Seluruh tahun hanya satu gerakan jauh.",
+        "action": "Ketik ← atau → untuk navigasi",
+        "instruction": "Anda tidak pernah tersesat."
+      },
+      "first-note": {
+        "title": "Tandai Pertama Kamu",
+        "detail": "Ketuk suatu hari. Gulir ke Catatan. Tulis sesuatu — tugas, suasana hati, ingatan. Ini adalah entri pertama dalam apa yang bisa menjadi kronik bertahun-tahun.",
+        "action": "Tulis catatan untuk menyelesaikan tutorial",
+        "instruction": "Kalender hanyalah alat sebelum kamu membuatnya milikmu."
+      },
+      "celestial-guide": {
+        "title": "Panduan Langit",
+        "detail": "Waktu Matahari: cincin SVG langsung, cuaca, akurasi empat tingkat. Fase Bulan: cahaya, bulan kosong, hitungan mundur tahun baru bulan. Musim: pelacakan solstis astronomi yang sebenarnya. Pertanian: apa yang harus ditanam hari ini, berdasarkan lokasi dan fase bulan Anda. Jam Digital: empat hitungan mundur langsung bersamaan. Jam Planet: jam Chaldean yang sebenarnya berdasarkan matahari terbit dan terbenam. Gulir melalui mereka. Satu demi satu adalah alat ilmiah.",
+        "action": "Gulir kartu langit untuk melanjutkan",
+        "instruction": "Enam kartu. Satu langit."
+      }
+    },
+    "printThemes": {
+      "egypt": {
+        "name": "Mesir",
+        "desc": "Hieroglyph"
+      },
+      "sacred": {
+        "name": "Geo Suci",
+        "desc": "Sel-sel melingkar"
+      },
+      "nature": {
+        "name": "Alam",
+        "desc": "Botani"
+      },
+      "default": {
+        "name": "Default",
+        "desc": "Parchment & emas"
+      },
+      "cyberpunk": {
+        "name": "Cyberpunk",
+        "desc": "Sinar Neon"
+      },
+      "minimalist": {
+        "name": "Minimalis",
+        "desc": "Kebersihan Swiss"
+      }
+    },
+    "previewAchievements": {
+      "nightOwl": "Burung Hantu Malam",
+      "timeLord": "Tuan Waktu",
+      "firstWords": "Kata Pertama",
+      "weekWarrior": "Warrior Minggu",
+      "centuryClub": "Klub Abad",
+      "theChronicler": "Kronikler"
+    }
+  }
+}

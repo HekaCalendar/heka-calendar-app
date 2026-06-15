@@ -63,7 +63,7 @@
   border: 1px solid rgba(202, 162, 74, 0.35);
   border-radius: var(--radius-full);
   padding: 3px 10px;
-  font-size: 10px;
+  font-size: 12px;
   font-weight: 700;
   color: var(--color-gold-light);
   text-transform: uppercase;
@@ -74,7 +74,7 @@
 
 .astro-personalized-badge::before {
   content: '✦';
-  font-size: 9px;
+  font-size: 11px;
   filter: drop-shadow(0 0 4px rgba(212, 175, 55, 0.6));
 }
 
@@ -334,7 +334,7 @@
   color: var(--color-text-muted);
   font-weight: 500;
   text-transform: uppercase;
-  font-size: 10px;
+  font-size: 12px;
   letter-spacing: 1px;
 }
 
@@ -370,7 +370,7 @@
 }
 
 .astro-content-card__label {
-  font-size: 10px;
+  font-size: 12px;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 1.5px;
@@ -644,7 +644,7 @@
 }
 
 .mansion-mode-badge {
-  font-size: 9px;
+  font-size: 11px;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 1.5px;
@@ -744,7 +744,7 @@
 }
 
 .mansion-totem-label {
-  font-size: 10px;
+  font-size: 12px;
   color: var(--color-text-muted);
   text-transform: uppercase;
   letter-spacing: 1px;
@@ -774,7 +774,7 @@
 }
 
 .mansion-detail__label {
-  font-size: 9px;
+  font-size: 11px;
   color: var(--color-text-subtle);
   text-transform: uppercase;
   letter-spacing: 1.2px;
@@ -811,7 +811,7 @@
 }
 
 .solar-return-mode-badge {
-  font-size: 9px;
+  font-size: 11px;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 1.5px;

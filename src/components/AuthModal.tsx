@@ -336,7 +336,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   className="auth-form__input"
-                  placeholder={t('auth.emailPlaceholder')}
+                  placeholder={t('emailPlaceholder', 'Enter your email')}
                   required
                 />
               </div>
@@ -347,7 +347,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   className="auth-form__input"
-                  placeholder={t('auth.passwordPlaceholder')}
+                  placeholder={t('passwordPlaceholder', 'Enter your password')}
                   required
                 />
               </div>
@@ -400,7 +400,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
                   value={displayName}
                   onChange={(e) => setDisplayName(e.target.value)}
                   className="auth-form__input"
-                  placeholder={t('auth.displayNamePlaceholder')}
+                  placeholder={t('displayNamePlaceholder', 'Enter your display name')}
                   required
                 />
               </div>
@@ -411,7 +411,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   className="auth-form__input"
-                  placeholder={t('auth.emailPlaceholder')}
+                  placeholder={t('emailPlaceholder', 'Enter your email')}
                   required
                 />
               </div>
@@ -422,7 +422,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   className="auth-form__input"
-                  placeholder={t('auth.passwordPlaceholder')}
+                  placeholder={t('passwordPlaceholder', 'Enter your password')}
                   required
                   minLength={6}
                 />
@@ -473,7 +473,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   className="auth-form__input"
-                  placeholder={t('auth.emailPlaceholder')}
+                  placeholder={t('emailPlaceholder', 'Enter your email')}
                   required
                 />
               </div>

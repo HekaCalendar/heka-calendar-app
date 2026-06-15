@@ -1,0 +1,322 @@
+{
+  "infoModal": {
+    "hero": {
+      "title": "HEKA — Kalendář postavený pro mysli",
+      "subtitleLine1": "Třista tři měsíce.",
+      "subtitleLine2": "Každý měsíc čtyři týdny. Jeden jasný rok."
+    },
+    "guideComplete": "Průvodce dokončen",
+    "spotlight": {
+      "title": "Věděl jste?",
+      "facts": [
+        "Neregulární měsíce Gregoriánského kalendáře jsou v velké míře výsledkem římské politiky a císařských ego.",
+        "Třista tři měsíce HEKA s dvaceti dny vytváří dokonalá čtvrtletá a předvídatelné platby.",
+        "V PRUŽNÉM režimu HEKA následuje 128leté pravidlo pro skok den pro dlouhodobou astronomickou přesnost.",
+        "Civilní překrytí vám umožňuje vidět Gregoriánská data vedle HEKA, takže nikdy neztratíte koordinaci.",
+        "Vaše zápisy zůstávají místní ve výchozím nastavení a synchronizují se pouze tehdy, když se rozhodnete přihlásit."
+      ]
+    },
+    "home": "Domů",
+    "backToHome": "Zpět na Domů",
+    "deeperQuestions": "Hlubší otázky",
+    "chapters": {
+      "home": {
+        "num": "0",
+        "chip": "ZAČÍT",
+        "title": "Vítejte",
+        "hook": "Jiný způsob, jak obývat rok.",
+        "teaser": "Začněte tady."
+      },
+      "ch1": {
+        "num": "01",
+        "chip": "ZÁKLADY",
+        "title": "Kalendář",
+        "hook": "Třista tři měsíce. Každý měsíc čtyři týdny. Jeden jasný rok.",
+        "teaser": "Co je HEKA a proč se cítí jinak."
+      },
+      "ch2": {
+        "num": "02",
+        "chip": "STRUKTURA",
+        "title": "Obloha roku",
+        "hook": "Otevření, jádro a uzávěrka: rok s narrativem tvarem.",
+        "teaser": "Jak měsíce plynou od dubna do března."
+      },
+      "ch3": {
+        "num": "03",
+        "chip": "NÁSTROJE",
+        "title": "Váš denní společník",
+        "hook": "Deník, měsíc, hvězdy a civilní překrytí - všechno je vaše.",
+        "teaser": "Funkce, které činí HEKA praktickým."
+      },
+      "ch4": {
+        "num": "04",
+        "chip": "REŽIMY",
+        "title": "SYNC vs PRAVDA",
+        "hook": "Dva způsoby, jak zvládnout skok den. Vyberte svou správnost.",
+        "teaser": "Zvyklá koordinace nebo astronomická čistota."
+      },
+      "ch5": {
+        "num": "05",
+        "chip": "HISTORIE",
+        "title": "Proč kalendáře odcházejí",
+        "hook": "Zděděná chaos, politické opravy a šance na přetvoření.",
+        "teaser": "Příběh kalendáře, který jste dostal."
+      },
+      "ch6": {
+        "num": "06",
+        "chip": "ZAČÍNÁME",
+        "title": "Začít žít uvnitř",
+        "hook": "Tři malé kroky, jak udělat z HEKA svou výchozí perspektivu.",
+        "teaser": "Jak začít bez narušování vašeho života."
+      },
+      "ch7": {
+        "num": "07",
+        "chip": "Smysl",
+        "title": "Čas jako agentura",
+        "hook": "Jasnost, rytmus a možnost použít lepší nástroj.",
+        "teaser": "Proč struktura času má význam."
+      }
+    },
+    "chapterLeads": {
+      "home": "Tento průvodce je most. Přejděte přes něj vlastním tempem.",
+      "ch1": "HEKA není úpravou Gregoriánského kalendáře. Je to náhrada postavená ze základních principů.",
+      "ch2": "Rok má tvar, když jeho struktura odráží rytmus akce a odpočinku.",
+      "ch3": "Kalendář je užitečný, pouze pokud se integruje do života, který už žijete.",
+      "ch4": "Stejná struktura může sloužit různým potřebám. Režim, který zvolíte, je upřednostnění, ne dogma.",
+      "ch5": "Porozumění, jak se současný kalendář stalo, usnadňuje odpouštění jeho chyb — a usnadňuje mu také odejít.",
+      "ch6": "Přijetí se děje v malých krocích. Nemusíte potřebovat povolení nebo manifest.",
+      "ch7": "Kontejner času tvaruje obsah života. Vyberte si jej úmyslně."
+    },
+    "cardsByChapter": {
+      "ch1": [
+        {
+          "h": "Problém, který cítíte",
+          "b": "Neregulární měsíce. Rozptýlené svátky. Rok, který kolébá od ledna do prosince bez smyslu začátku, středu nebo konce. Tento odpor jste cítili. HEKA jej odstraňuje."
+        },
+        {
+          "h": "Řešení, které jsme postavili",
+          "b": "Třináct měsíců. Dvanáct má dvaadvacet dní v dokonalé symetrii. Březen, uzavující měsíc, nesou leap den. Čtyři dokonalé týdny za měsíc. Rok, který teče: Duben otevře, květen až prosinec tvoří stabilní jádro, leden až březen jej dokončí."
+        },
+        {
+          "h": "Svět, který si ponecháte",
+          "b": "HEKA nerušuje váš život. Občanské kalendářní data zůstávají viditelná. Vaše schůzky, závazky a právní povinnosti zůstávají přesně tam, kde jsou. Jednoduše získáváte jasnější linse."
+        }
+      ],
+      "ch2": [
+        {
+          "h": "Otevírací oblouk",
+          "b": "Duben je práh. Rok nezačíná v zimní unáhlení, ale v jaře života. Nové růst. Nové projekty. Otevření oznámuje: něco začíná."
+        },
+        {
+          "h": "Střední oblouk",
+          "b": "Květen až prosinec tvoří dlouhý, stabilní střed. Devít měsíců dokonale pravidelného a předvídatelného rytmu. Plánujte se jistotou. Budujte dynamiku. To je místo, kde se dělá práce."
+        },
+        {
+          "h": "Uzavující oblouk",
+          "b": "Leden až březen přináší rok k jeho uzavření. Dokončete to, co jste začali. Skusíte to, co jste zplodili. Uzávěr vytváří prostor pro zrcadlení a připravuje vás na další otevření."
+        }
+      ],
+      "ch3": [
+        {
+          "h": "Vaše obecné data zůstávají",
+          "b": "Přepněte překrytí obecných dat a podívejte se na Gregoriánská data vedle HEKA. Vaše návštěva u zubaře, narozeniny vaší matky, termín pro přihlášení k dani - vše zůstává přesně tam, kde očekáváte."
+        },
+        {
+          "h": "Váš deník",
+          "b": "Denní zápisy s historií revizí - automaticky uchovává až 50 verzí. Plný textový vyhledávání ve všech. Ve východě místní; zálohování v cloudu, když se přihlašte."
+        },
+        {
+          "h": "Vaše Měsíc & Hvězdy",
+          "b": "Fáze měsíce, pozice planet a průjezdy se zobrazují okamžitě. Volitelné a přesné. Přidejte svůj narozený graf pro osobní čtení prostřednictvím Oracle."
+        }
+      ],
+      "ch4": [
+        {
+          "h": "SYNC režim: Obvyklá cesta",
+          "b": "Březen získává svůj extra den, když říká kalendář Gregoriánský. Pro denní koordinaci s civilním světem je to tvůj mód. Stejná struktura. Obvyklé časování."
+        },
+        {
+          "h": "TRUE Mód: Upřímná Cesta",
+          "b": "HEKA sleduje svou vlastní pravidlo oprav: každý čtvrtý rok má 30denní březen, kromě každého 128. roku, který ne. Toto je astronomická přesnost. Toto je dlouhodobá integrity."
+        },
+        {
+          "h": "Přepnout kdykoli",
+          "b": "Měsíce se nemění. Týden se nemění. Jen se posouvá spouštěč korekce. Experimentuj. Podívej se, který mód vyhovuje tvým potřebám. Nejsi uzavřen."
+        }
+      ],
+      "ch5": [
+        {
+          "h": "Zděno, ne Navrženo",
+          "b": "Náš současný kalendář je zásobníkem historických nehod. Politické hádky Říma. Náboženské rady. Astronomické opravky přidané několik století od sebe. Nikdy nebyl navržen jako systém."
+        },
+        {
+          "h": "Gregoriánská oprava",
+          "b": "1582: Papež Grégor opravil problém odchýlení. Ale zachoval nepravidelné měsíce, rozptýlení struktury, zděněé chaos. To bylo nutné opravit, ale ne úplná řešení."
+        },
+        {
+          "h": "HEKA Odpověď",
+          "b": "Zachovali jsme to, co funguje: sedmidenní týdny, zarovnání se seasons, sledování solárního roku. Přetvořili jsme to, co ne: struktura měsíce, průběh roku, umístění korekce. Postaveno pro mysli, které přemýšlejí."
+        }
+      ],
+      "ch6": [
+        {
+          "h": "Krok Jeden: Povolit překrytí",
+          "b": "Zapni civilní datum. Teď vidíš oba systémy současně. Tvůj HEKA den a tvůj Gregoriánský den. Most je postaven. Pěkně se na něj kdykoli překroč."
+        },
+        {
+          "h": "Krok Dva: Vyber svůj mód",
+          "b": "Začni s SYNC, pokud chceš熟悉。 Přepni se na TRUE, pokud chceš čistotu. Můžeš změnit názor. Kalendář se přizpůsobí tobě, ne naopak."
+        },
+        {
+          "h": "Krok Tři: Ži在里面",
+          "b": "Používej HEKA jako tvůj primární pohled. Plánuj tvůj měsíc. Poznamej si tvoje dny. Cítit rozdíl roku s reálnou strukturou. Civilní svět nemusí vědět. Ty víš."
+        }
+      ],
+      "ch7": [
+        {
+          "h": "Frekvence Náklady Energie",
+          "b": "Každý den, kdy se ptáš, kolik dní je v tomto měsíci, platíš malý daň. Každá nepravidelnost odstraňuje soustředění. HEKA odstraňuje tyto daně. Držíš energii pro to, co má význam."
+        },
+        {
+          "h": "Rytmus Tvoří Klid",
+          "b": "Když je struktura předvídatelná, mysl se uvolňuje. Víš, kde jsi v roce. Cítíš otevření, jádro, uzávěrku. Čas se stává prostorem, který obýváš, ne chaosem, který přežíváš."
+        },
+        {
+          "h": "Agentura Nad Časem",
+          "b": "Nesel jsi Grégorienský kalendář. Byl ti dán. HEKA je volba."
+        }
+      ]
+    },
+    "gatesByChapter": {
+      "ch1": [
+        {
+          "t": "Je to náboženství nebo hnutí?",
+          "tag": "JASNOST",
+          "b": "Ani jedno. HEKA je nástroj. Jako lepší kladivo nebo jasnější mapa. Žádné členství není nutné. Žádné přesvědčení není nutné přijmout. Jen kalendář, který funguje lépe než ten, který jste zdědil."
+        },
+        {
+          "t": "Proč třináct měsíců?",
+          "tag": "LOGIKA",
+          "b": "Dvanáct měsíců s nepravidelnou délkou vyžaduje mentální cvičení. Třináct měsíců po čtyři týdny každý vytváří dokonalou pravidelnost. 13 × 28 = 364. Plus jeden zvláštní den. Matika je čistá. Zážitek je čistější."
+        },
+        {
+          "t": "To ostatním lidem nezmátlo?",
+          "tag": "SKUTEČNOST",
+          "b": "Vidíš HEKA datum. Vidí civilní datum. Když řekneš \"15. března\", myslíš si stejný den, který oni také. Civilní překrytí zajišťuje, že nikdy neztratíš koordinaci. Získáš jasnost. Oni nic neztratí."
+        }
+      ],
+      "ch2": [
+        {
+          "t": "Proč年开始在四月？",
+          "tag": "SYMBOL",
+          "b": "Jaro je univerzálním otevřením. Růst začíná. Energie stoupá. Začátek roku v dubnu zarovná kalendář s pocitem obnovy. Ledna začíná v zimní unáhlení. Duben začíná v jaře možnosti."
+        },
+        {
+          "t": "Jaké jsou názvy měsíců?",
+          "tag": "PORADÍ",
+          "b": "Duben, Květen, Červen, Červenec, Srpen, Sest, Září, Říjen, Listopad, Prosinec, Ledna, Únor, Březen, Duben. Sest — šestý měsíc — vyplňuje mezeru. Zbylé už znáš. Jen jejich pozice se mění."
+        },
+        {
+          "t": "Jak se řeší oprava?",
+          "tag": "PŘESNOST",
+          "b": "Každý solární kalendář potřebuje opravu. HEKA to umístí do března, na konci roku. Březen má 29 dní, nebo 30 v přestupných letech. Ostatních dvanáct měsíců je perfektně, trvale pravidelných. Oprava je obsažena, nerozptyluje se."
+        }
+      ],
+      "ch3": [
+        {
+          "t": "Můžu vytisknout kalendáře HEKA?",
+          "tag": "FYZICKÝ",
+          "b": "Ano. Vytiskněte zobrazení měsíců nebo celý rok. Čisté, nekomplikované, navržené pro papír. Připněte je na stěny. Nesete je v zápiskách. Digitální pohodlí a fyzikální artefakt, oba."
+        },
+        {
+          "t": "Co s prásky?",
+          "tag": "VLASTNOSTI",
+          "b": "Přepněte sady práskových sad pro vaši oblast. Nebo je ignorujte. HEKA nevnucuje vlastní prásky - pomáhá vám sledovat ty, které vám záleží, překryté na jasnějším struktuře."
+        },
+        {
+          "t": "Kde se můj data nacházejí?",
+          "tag": "DÔVERA",
+          "b": "Ve výchozím nastavení zůstávají ve vašem zařízení - poznámky, deník, nastavení. Pokud vytvoříte účet, vaše data se zálohují do šifrovaného cloudového úložiště. Můžete exportovat vše kdykoli. Zůstáváte v kontrole."
+        },
+        {
+          "t": "Co může deník dělat?",
+          "tag": "SCHOPENOST",
+          "b": "Denní zápisy s automatickým historiatem revizí. Plný textový vyhledávání ve vašem celém archivu. Ve výchozím nastavení jsou všechny místní; synchronizují se do cloudu, když se přihlásíte."
+        }
+      ],
+      "ch4": [
+        {
+          "t": "Který režim je \"správný\"?",
+          "tag": "VOLBA",
+          "b": "Oba. SYNC je správný pro koordinaci se světským světem. TRUE je správný pro astronomickou přesnost. Vaše potřeby určují, která správnost je pro vás teď důležitější."
+        },
+        {
+          "t": "Se liší režim TRUE od civilních dat?",
+          "tag": "ODCHYLKA",
+          "b": "Pomalu, ano. Režim TRUE následuje vlastní pravidlo pro přestupné roky, ne Gregoriánské. Během staletí se odchylka stává zajímavá. Pro každodenní život je rozdíl nevýrazný. Pro dlouhodobé myšlení záleží na čistotě."
+        },
+        {
+          "t": "Můžou instituce přijmout HEKA?",
+          "tag": "MÉRA",
+          "b": "Možná později. Ale instituce se nemusejí měnit, abyste získali výhody. HEKA funguje dokonale jako osobní překryv. Začněte tam. Nech tool dokázat sám sebe."
+        }
+      ],
+      "ch5": [
+        {
+          "t": "Proč mají měsíce různé délky?",
+          "tag": "HISTORIE",
+          "b": "Rímská politika. Julius Caesar a Augustus potřebovaly měsíce pojmenované po sobě. Kalendář byl upraven, aby byl uvědomitelný egó. Tyto nesrovnalosti se vyklastily do \"tradice\". Tradice není vždy moudrost."
+        },
+        {
+          "t": "Byla reforma Gregoriánská dostačující?",
+          "tag": "POSOUZENÍ",
+          "b": "Opravila to odchylku. Neopravela strukturu. Měsíce zůstaly nepravidelné, čtvrtletí nerovnoměrná, rok bez sdělovacího tvaru. Nutná oprava, ale ne základní přestavba."
+        },
+        {
+          "t": "Dali se jindy pokusit o reformu kalendáře?",
+          "tag": "POKUSY",
+          "b": "Mnoho. Francouzský republikánský kalendář. Světový kalendář. Mezinárodní pevný kalendář. Někteří skvělí, všichni politicky selhali. HEKA se od nich učí: kompatibility s civilním časem je zásadní. Revoluce prostřednictvím evoluce."
+        }
+      ],
+      "ch6": [
+        {
+          "t": "Jak to ostatním vysvětlím?",
+          "tag": "KONVERZACE",
+          "b": "Není třeba. Používej to. Pokud se zeptají, řekni: \"Našel jsem kalendář, který mi pomáhá lépe plánovat.\" Ukaž mu. Nech je vidí jasnost. Přesvědčení se děje prostřednictvím demonstrace, ne prohlášení."
+        },
+        {
+          "t": "Co když chci přestat to používat?",
+          "tag": "SVOBODA",
+          "b": "Přestaň. Tvoje občanská data zůstanou. Tvoje schůzky zůstanou tam, kde jsou. Žádné uzamčení. Žádné dodatečné náklady. HEKA musí každý den zasloužit svou pozici ve tvém životě, jinak si ji nezaslouží, aby zůstala."
+        },
+        {
+          "t": "Odkud začít právě teď?",
+          "tag": "AKCE",
+          "b": "Otevři nastavení. Povol civilní překryv. Podívej se na dnešek v obou systémech. To je první krok. Již jsi jej udělal, když jsi otevřel tento průvodce."
+        },
+        {
+          "t": "Co je to Orakel?",
+          "tag": "INTELIGENCE",
+          "b": "Nebesa inteligence, která čte pozice planet pro jakýkoli zvolený den a nabízí pokyny. Volitelné. Přidejte svůj narození pro personalizovaná přetisky a hloubější zřetelnost."
+        }
+      ],
+      "ch7": [
+        {
+          "t": "Opravdu má kalendář opravdu vliv na myslení?",
+          "tag": "PSYCHOLOGIE",
+          "b": "Hluboko. Myslíme si v strukturách, které obýváme. Nerovnoměrné měsíce vytvářejí nízký kognitivní trz. Pravidelné měsíce vytvářejí kognitivní proud. Trz si možná nevšimnete, dokud nebude pryč. Pak ho nemůžete nevidět."
+        },
+        {
+          "t": "Co s kulturními připoutaniami?",
+          "tag": "RESPECT",
+          "b": "Ponechte je. Váš narozeniny. Vaše Nový rok oslavy. Vaše období festivalů. HEKA nerozmaže kulturu - poskytuje jasnější obal pro ni. Obsah zůstává. Obal se zlepšuje."
+        },
+        {
+          "t": "Proč je to tak důležité, že je postavit?",
+          "tag": "MISI",
+          "b": "Protože čas je podkladem života. Protože si zasloužíme nástroje navržené pro mysli, ne zděděné z nehod. Protože by měl někdo zkusit postavit něco lepšího. Udělali jsme to. Jste tady."
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "best": "Mejor: {{count}}",
+  "title": "Tu Jornada",
+  "close": "Cerrar",
+  "reset": "Reiniciar Estadísticas",
+  "avgMood": "Estado Promedio",
+  "dayStreak": "Racha Diaria",
+  "totalNotes": "Notas Totales",
+  "wordsWritten": "Palabras Escritas",
+  "achievements": "Logros ({{earned}}/{{total}})",
+  "resetConfirm": "Reiniciar",
+  "progressRatio": "{{current}} / {{target}}",
+  "monthlyTooltip": "{{month}} {{year}}: {{count}} notas",
+  "notesByCategory": "Notas por Categoría",
+  "monthlyActivity": "Actividad Mensual",
+  "mostActiveMonth": "Tu mes más activo fue \u003cstrong\u003e{{month}}\u003c/strong\u003e con \u003cstrong\u003e{{count}}\u003c/strong\u003e notas",
+  "categories": {
+    "work": "Trabajo",
+    "family": "Familia",
+    "health": "Salud",
+    "general": "General",
+    "personal": "Personal",
+    "creative": "Creativo",
+    "spiritual": "Espiritual"
+  },
+  "progressToCentury": "Progreso hacia el Club del Siglo",
+  "resetConfirmTitle": "Reiniciar Estadísticas",
+  "badges": {
+    "century": {
+      "name": "Club del Siglo"
+    },
+    "explorer": {
+      "name": "Explorador"
+    },
+    "archivist": {
+      "name": "Archivista"
+    },
+    "first-note": {
+      "name": "Primeras Palabras"
+    },
+    "week-streak": {
+      "name": "Guerrero de la Semana"
+    },
+    "month-streak": {
+      "name": "Maestro del Mes"
+    }
+  },
+  "resetConfirmDescription": "¿Seguro que quieres reiniciar todas las estadísticas? Esto no se puede deshacer."
+}

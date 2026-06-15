@@ -1,0 +1,49 @@
+{
+  "best": "Bester: {{count}}",
+  "title": "Deine Reise",
+  "close": "Schließen",
+  "reset": "Statistiken zurücksetzen",
+  "avgMood": "Durchschnittliche Stimmung",
+  "dayStreak": "Tägliche Serie",
+  "totalNotes": "Insgesamt Notizen",
+  "wordsWritten": "Geschriebene Wörter",
+  "achievements": "Errungenschaften ({{earned}}/{{total}})",
+  "resetConfirm": "Zurücksetzen",
+  "progressRatio": "{{current}} / {{ziel}}",
+  "monthlyTooltip": "{{month}} {{year}}: {{count}} Notizen",
+  "notesByCategory": "Notizen nach Kategorie",
+  "monthlyActivity": "Monatliche Aktivität",
+  "mostActiveMonth": "Dein aktivster Monat war \u003cstrong\u003e{{month}}\u003c/strong\u003e mit \u003cstrong\u003e{{count}}\u003c/strong\u003e Notizen",
+  "categories": {
+    "work": "Arbeit",
+    "family": "Familie",
+    "health": "Gesundheit",
+    "general": "Allgemein",
+    "personal": "Persönlich",
+    "creative": "Kreativ",
+    "spiritual": "Spirituell"
+  },
+  "progressToCentury": "Fortschritt zum Jahrhundert-Club",
+  "resetConfirmTitle": "Statistiken zurücksetzen",
+  "badges": {
+    "century": {
+      "name": "Jahrhundert-Club"
+    },
+    "explorer": {
+      "name": "Entdecker"
+    },
+    "archivist": {
+      "name": "Archivar"
+    },
+    "first-note": {
+      "name": "Erste Worte"
+    },
+    "week-streak": {
+      "name": "Wochenkrieger"
+    },
+    "month-streak": {
+      "name": "Monatsmeister"
+    }
+  },
+  "resetConfirmDescription": "Bist du sicher, dass du alle Statistiken zurücksetzen möchtest? Dies kann nicht rückgängig gemacht werden."
+}

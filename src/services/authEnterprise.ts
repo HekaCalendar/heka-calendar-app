@@ -20,6 +20,7 @@ import {
 } from 'firebase/auth';
 import { getErrorMessage, getErrorCode } from '../utils/errorUtils';
 import { getApp } from 'firebase/app';
+import { deleteUserPersonalData } from './userDataDeletion';
 
 // Security configuration
 const SECURITY_CONFIG = {
@@ -362,14 +363,28 @@ class EnterpriseAuthService {
     await this.reAuthenticate(password);
 
     try {
+      // Delete personal data before removing the auth account so the user
+      // record can still be referenced during cleanup.
+      const deletionResult = await deleteUserPersonalData();
+      if (!deletionResult.success) {
+        console.error('[EnterpriseAuth] Data deletion warnings:', deletionResult.errors);
+      }
+
       await deleteUser(user);
-      
+
+      // Clear remaining local state after auth deletion.
+      if (typeof window !== 'undefined') {
+        localStorage.clear();
+        sessionStorage.clear();
+      }
+
       this.logAudit({
         action: 'ACCOUNT_DELETE',
         userId: user.uid,
-        success: true
+        success: true,
+        details: `Cloud items removed: ${deletionResult.cloudItemsDeleted}`
       });
-      
+
       this.session = null;
       if (this.sessionTimeoutId) {
         clearTimeout(this.sessionTimeoutId);

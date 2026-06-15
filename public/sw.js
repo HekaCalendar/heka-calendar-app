@@ -1,7 +1,7 @@
-// HEKA Calendar Service Worker - v2.2.0
+// HEKA Calendar Service Worker - v%APP_VERSION%
 // Manual update handling with skipWaiting on message
 
-const CACHE_VERSION = '2.2.1-taskbuttons';
+const CACHE_VERSION = '%APP_VERSION%';
 const CACHE_NAME = 'heka-cache-v' + CACHE_VERSION;
 
 // Assets to cache

@@ -300,7 +300,7 @@
         },
         "1": {
           "h": "Your Journal",
-          "b": "Daily entries with revision history — up to 50 versions kept automatically. Attach photos up to 5 MB. Full-text search across everything. Local by default; cloud backup when you sign in."
+          "b": "Daily entries with revision history — up to 50 versions kept automatically. Full-text search across everything. Local by default; cloud backup when you sign in."
         },
         "2": {
           "h": "Your Moon & Stars",
@@ -418,7 +418,7 @@
         "3": {
           "t": "What can the journal do?",
           "tag": "CAPABILITY",
-          "b": "Daily entries with automatic revision history. Attach photos up to 5 MB. Full-text search across your entire archive. All local by default; syncs to the cloud when you sign in."
+          "b": "Daily entries with automatic revision history. Full-text search across your entire archive. All local by default; syncs to the cloud when you sign in."
         }
       },
       "ch4": {
@@ -530,5 +530,14 @@
     "feb": "Feb",
     "mar": "Mar"
   },
-  "openSettings": "Open Settings"
+  "openSettings": "Open Settings",
+  "syncConflict": {
+    "title": "Sync Conflict",
+    "subtitle": "This item changed on the server while you were offline. Which version should keep?",
+    "local": "My Version",
+    "localHint": "The change I made on this device",
+    "server": "Server Version",
+    "serverHint": "The version already saved online",
+    "resolve": "Keep This Version"
+  }
 }

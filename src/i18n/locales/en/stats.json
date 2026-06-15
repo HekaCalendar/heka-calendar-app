@@ -1,0 +1,49 @@
+{
+  "title": "Your Journey",
+  "close": "Close",
+  "totalNotes": "Total Notes",
+  "dayStreak": "Day Streak",
+  "best": "Best: {{count}}",
+  "wordsWritten": "Words Written",
+  "avgMood": "Avg Mood",
+  "progressToCentury": "Progress to Century Club",
+  "progressRatio": "{{current}} / {{target}}",
+  "notesByCategory": "Notes by Category",
+  "monthlyActivity": "Monthly Activity",
+  "monthlyTooltip": "{{month}} {{year}}: {{count}} notes",
+  "achievements": "Achievements ({{earned}}/{{total}})",
+  "mostActiveMonth": "Your most active month was \u003cstrong\u003e{{month}}\u003c/strong\u003e with \u003cstrong\u003e{{count}}\u003c/strong\u003e notes",
+  "reset": "Reset Statistics",
+  "resetConfirmTitle": "Reset Statistics",
+  "resetConfirmDescription": "Are you sure you want to reset all statistics? This cannot be undone.",
+  "resetConfirm": "Reset",
+  "categories": {
+    "personal": "Personal",
+    "work": "Work",
+    "spiritual": "Spiritual",
+    "family": "Family",
+    "health": "Health",
+    "creative": "Creative",
+    "general": "General"
+  },
+  "badges": {
+    "first-note": {
+      "name": "First Words"
+    },
+    "week-streak": {
+      "name": "Week Warrior"
+    },
+    "month-streak": {
+      "name": "Month Master"
+    },
+    "century": {
+      "name": "Century Club"
+    },
+    "archivist": {
+      "name": "Archivist"
+    },
+    "explorer": {
+      "name": "Explorer"
+    }
+  }
+}

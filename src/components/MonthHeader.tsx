@@ -4,6 +4,7 @@
  */
 
 import { useSelector, useDispatch } from 'react-redux';
+import { memo } from 'react';
 import type { RootState } from '../store';
 import { prevMonth, nextMonth, navigateToToday, toggleDisplay, setView } from '../store';
 
@@ -29,7 +30,7 @@ interface MonthHeaderProps {
   onToggleExpandHorizontal?: () => void;
 }
 
-export const MonthHeader: React.FC<MonthHeaderProps> = ({ 
+export const MonthHeader: React.FC<MonthHeaderProps> = memo(({ 
   onPrintClick, 
   onAstrologyClick,
   onYearClick,
@@ -263,15 +264,22 @@ export const MonthHeader: React.FC<MonthHeaderProps> = ({
             </button>
 
             <button
-              className="btn"
+              className="btn btn--vote"
               onClick={() => {
                 discover('viewedCommunityHolidays');
                 onCommunityClick();
               }}
-              title={t('features.communityHolidays')}
+              title={t('features.voteOnHolidays')}
             >
-              <span className="pill-emoji">🌍</span>
-              {isEnglish && <span className="pill-text"> {t('features.community')}</span>}
+              <span className="pill-emoji vote-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <rect x="3" y="8" width="18" height="13" rx="2"/>
+                  <path d="M12 3v5"/>
+                  <path d="M8 8l4-4 4 4"/>
+                </svg>
+              </span>
+              {isEnglish && <span className="pill-text">Vote</span>}
+              <span className="vote-pulse" aria-hidden="true" />
             </button>
 
           </div>
@@ -309,6 +317,8 @@ export const MonthHeader: React.FC<MonthHeaderProps> = ({
 
     </div>
   );
-};
+});
+
+MonthHeader.displayName = 'MonthHeader';
 
 export default MonthHeader;

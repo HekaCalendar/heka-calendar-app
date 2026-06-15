@@ -1036,7 +1036,7 @@
 
 .mode-month-strip__label {
   font-family: var(--font-mono, monospace);
-  font-size: 9px;
+  font-size: 11px;
   font-weight: 500;
   color: rgba(255, 255, 255, 0.4);
   letter-spacing: 0.02em;
@@ -1048,7 +1048,7 @@
 }
 
 .mode-month-strip__badge {
-  font-size: 10px;
+  font-size: 12px;
   line-height: 1;
 }
 
@@ -1149,7 +1149,7 @@
   border: 1px solid rgba(59, 130, 246, 0.3);
   border-radius: 100px;
   font-family: var(--font-body, 'Inter', sans-serif);
-  font-size: 10px;
+  font-size: 12px;
   font-weight: 600;
   color: #60a5fa;
   letter-spacing: 0.04em;
@@ -1840,7 +1840,7 @@
   }
 
   .ai-provider-card__desc {
-    font-size: 10px;
+    font-size: 12px;
   }
 
   .ai-config-panel {
@@ -1903,7 +1903,7 @@
 
 .mode-month-grid__abbr {
   font-family: var(--font-mono, monospace);
-  font-size: 9px;
+  font-size: 11px;
   font-weight: 600;
   color: rgba(255, 255, 255, 0.5);
   letter-spacing: 0.02em;
@@ -1915,7 +1915,7 @@
 
 .mode-month-grid__days {
   font-family: var(--font-mono, monospace);
-  font-size: 9px;
+  font-size: 11px;
   font-weight: 500;
   color: rgba(255, 255, 255, 0.3);
 }
@@ -1971,7 +1971,7 @@
 }
 
 .mode-math__label {
-  font-size: 10px;
+  font-size: 12px;
   color: rgba(255, 255, 255, 0.25);
   letter-spacing: 0.03em;
 }
@@ -2341,7 +2341,7 @@
   justify-content: center;
   padding: 3px 10px;
   border-radius: 100px;
-  font-size: 10px;
+  font-size: 12px;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.08em;
@@ -2511,11 +2511,11 @@
   }
 
   .mode-month-grid__abbr {
-    font-size: 8px;
+    font-size: 11px;
   }
 
   .mode-month-grid__days {
-    font-size: 8px;
+    font-size: 11px;
   }
 
   .ai-provider-card {
@@ -2581,7 +2581,7 @@
   }
 
   .perm-constellation__items {
-    font-size: 10px;
+    font-size: 12px;
   }
 
   /* Info modal mobile */
@@ -2669,7 +2669,7 @@
   }
 
   .mode-card__sublabel {
-    font-size: 10px;
+    font-size: 12px;
   }
 
   .ai-provider-card__name {
@@ -2677,7 +2677,7 @@
   }
 
   .ai-provider-card__desc {
-    font-size: 10px;
+    font-size: 12px;
   }
 }
 

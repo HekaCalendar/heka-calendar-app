@@ -839,6 +839,12 @@ export async function generateNatalChart(params: GenerateNatalChartParams): Prom
   setSignCount(count);
   // Also update legacy module state for callers still reading it
   setZodiacSystem(params.zodiacSystem || (frame === 'sidereal' ? 'sidereal' : count === 13 ? '13-sign' : '12-sign'));
+  // Configure sidereal mode so WASM applies correct ayanamsa
+  if (frame === 'sidereal') {
+    setSiderealMode('lahiri');
+  } else {
+    setSiderealMode(null);
+  }
 
   const dt = birthDateTimeToUTC(params.birthData.birthDate, params.birthData.birthTime, params.birthData.timezone);
   const jd = calculateJulianDay(dt.getUTCFullYear(), dt.getUTCMonth() + 1, dt.getUTCDate(), dt.getUTCHours(), dt.getUTCMinutes(), 0);

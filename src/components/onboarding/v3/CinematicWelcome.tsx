@@ -6,6 +6,7 @@
 
 import React, { useEffect, useState, useMemo, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useVisibility } from '../../../hooks/useVisibility';
 
 interface CinematicWelcomeProps {
   onBegin: () => void;
@@ -39,6 +40,15 @@ interface ShootingStar {
   maxLife: number;
 }
 
+const LOW_POWER_MEMORY = 4;
+
+function getStarCount() {
+  const memory = (navigator as any).deviceMemory;
+  const cores = navigator.hardwareConcurrency || 4;
+  if ((memory && memory <= LOW_POWER_MEMORY) || cores <= 4) return 80;
+  return 200;
+}
+
 export const CinematicWelcome: React.FC<CinematicWelcomeProps> = ({ onBegin, onSkip, strings }) => {
   const [phase, setPhase] = useState<'stars' | 'logo' | 'tagline' | 'grid' | 'ready'>('stars');
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -46,6 +56,7 @@ export const CinematicWelcome: React.FC<CinematicWelcomeProps> = ({ onBegin, onS
   const starsRef = useRef<Star[]>([]);
   const shootingStarsRef = useRef<ShootingStar[]>([]);
   const mouseRef = useRef({ x: 0, y: 0 });
+  const isVisible = useVisibility();
 
   // Phase transitions
   useEffect(() => {
@@ -77,7 +88,7 @@ export const CinematicWelcome: React.FC<CinematicWelcomeProps> = ({ onBegin, onS
     window.addEventListener('resize', resize);
 
     // Initialize stars with depth layers
-    starsRef.current = Array.from({ length: 200 }, () => ({
+    starsRef.current = Array.from({ length: getStarCount() }, () => ({
       x: Math.random() * window.innerWidth,
       y: Math.random() * window.innerHeight,
       size: Math.random() * 2.5 + 0.3,
@@ -227,7 +238,7 @@ export const CinematicWelcome: React.FC<CinematicWelcomeProps> = ({ onBegin, onS
       window.removeEventListener('resize', resize);
       window.removeEventListener('mousemove', handleMouseMove);
     };
-  }, []);
+  }, [isVisible]);
 
   const months = useMemo(() => [
     { key: 'apr', arc: 'opening' as const },

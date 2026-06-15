@@ -1,0 +1,49 @@
+{
+  "best": "Meilleure: {{count}}",
+  "title": "Votre Voyage",
+  "close": "Fermer",
+  "reset": "Réinitialiser les Statistiques",
+  "avgMood": "Humeur Moyenne",
+  "dayStreak": "Série de Jours",
+  "totalNotes": "Notes Totales",
+  "wordsWritten": "Mots Écrits",
+  "achievements": "Succès ({{earned}}/{{total}})",
+  "resetConfirm": "Réinitialiser",
+  "progressRatio": "{{current}} / {{cible}}",
+  "monthlyTooltip": "{{mois}} {{year}}: {{count}} notes",
+  "notesByCategory": "Notes par Catégorie",
+  "monthlyActivity": "Activité Mensuelle",
+  "mostActiveMonth": "Votre mois le plus actif était \u003cstrong\u003e{{month}}\u003c/strong\u003e avec \u003cstrong\u003e{{count}}\u003c/strong\u003e notes",
+  "categories": {
+    "work": "Travail",
+    "family": "Famille",
+    "health": "Santé",
+    "general": "Général",
+    "personal": "Personnel",
+    "creative": "Créatif",
+    "spiritual": "Spirituel"
+  },
+  "progressToCentury": "Progression vers le Club du Siècle",
+  "resetConfirmTitle": "Réinitialiser les Statistiques",
+  "badges": {
+    "century": {
+      "name": "Club du Siècle"
+    },
+    "explorer": {
+      "name": "Explorateur"
+    },
+    "archivist": {
+      "name": "Archiviste"
+    },
+    "first-note": {
+      "name": "Premiers Mots"
+    },
+    "week-streak": {
+      "name": "Guerrier de la Semaine"
+    },
+    "month-streak": {
+      "name": "Maître du Mois"
+    }
+  },
+  "resetConfirmDescription": "Êtes-vous sûr de vouloir réinitialiser toutes les statistiques ? Cette action est irréversible."
+}

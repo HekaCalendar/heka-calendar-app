@@ -1,0 +1,322 @@
+{
+  "infoModal": {
+    "hero": {
+      "title": "HEKA — Um Calendário Construído para as Mentes",
+      "subtitleLine1": "Treze meses.",
+      "subtitleLine2": "Cada um com quatro semanas. Um ano claro."
+    },
+    "guideComplete": "Guia Completa",
+    "spotlight": {
+      "title": "Você sabia?",
+      "facts": [
+        "Os meses irregulares do calendário gregoriano são em grande parte o resultado da política romana e egos imperiais.",
+        "Os treze meses do HEKA, com vinte e oito dias, criam trimestres perfeitos e períodos de pagamento previsíveis.",
+        "No modo TRUE, o HEKA segue uma regra de salto de 128 anos para precisão astronômica a longo prazo.",
+        "A sobreposição civil permite que você veja as datas gregorianas ao lado do HEKA para que você nunca perca a coordenação.",
+        "Suas entradas de diário permanecem locais por padrão e só sincronizam quando você optar por entrar."
+      ]
+    },
+    "home": "Início",
+    "backToHome": "Voltar para Início",
+    "deeperQuestions": "Perguntas Mais Profundas",
+    "chapters": {
+      "home": {
+        "num": "0",
+        "chip": "INICIAR",
+        "title": "Bem-vindo",
+        "hook": "Uma maneira diferente de habitar o ano.",
+        "teaser": "Comece aqui."
+      },
+      "ch1": {
+        "num": "01",
+        "chip": "FUNDAMENTO",
+        "title": "O Calendário",
+        "hook": "Treze meses. Cada um com quatro semanas. Um ano claro.",
+        "teaser": "O que é HEKA e por que se sente diferente."
+      },
+      "ch2": {
+        "num": "02",
+        "chip": "ESTRUTURA",
+        "title": "O Arco do Ano",
+        "hook": "Abertura, núcleo e fechamento: um ano com forma narrativa.",
+        "teaser": "Como os meses fluem de abril a março."
+      },
+      "ch3": {
+        "num": "03",
+        "chip": "FERRAMENTAS",
+        "title": "Seu Companheiro Diário",
+        "hook": "Diário, lua, estrelas e sobreposição civil — tudo seu.",
+        "teaser": "Os recursos que tornam o HEKA prático."
+      },
+      "ch4": {
+        "num": "04",
+        "chip": "MODOS",
+        "title": "SYNC vs VERDADEIRO",
+        "hook": "Duas maneiras de lidar com o dia bissexto. Escolha sua correção.",
+        "teaser": "Coordenação familiar ou pureza astronômica."
+      },
+      "ch5": {
+        "num": "05",
+        "chip": "HISTÓRIA",
+        "title": "Por que os calendários deslocam-se",
+        "hook": "Caos herdado, patches políticos e a chance de redesenhar.",
+        "teaser": "A história por trás do calendário que lhe foi dado."
+      },
+      "ch6": {
+        "num": "06",
+        "chip": "INTEGRAÇÃO",
+        "title": "Comece a viver nele",
+        "hook": "Três pequenos passos para fazer HEKA sua visão padrão.",
+        "teaser": "Como começar sem perturbar sua vida."
+      },
+      "ch7": {
+        "num": "07",
+        "chip": "SIGNIFICADO",
+        "title": "Tempo como Agência",
+        "hook": "Clareza, ritmo e a escolha de usar uma ferramenta melhor.",
+        "teaser": "Por que a estrutura do tempo importa."
+      }
+    },
+    "chapterLeads": {
+      "home": "Este guia é uma ponte. Cruze a seu próprio ritmo.",
+      "ch1": "HEKA não é uma ajuste ao calendário gregoriano. É um substituto construído a partir de princípios primeiros.",
+      "ch2": "O ano tem forma quando sua estrutura reflete o ritmo da ação e descanso.",
+      "ch3": "Um calendário só é útil se integrar à vida que você já vive.",
+      "ch4": "A mesma estrutura pode servir diferentes necessidades. O modo que você escolhe é uma preferência, não um dogma.",
+      "ch5": "Entender como o calendário atual veio a ser torna suas falhas mais fácil de perdoar — e mais fácil de deixar.",
+      "ch6": "A adoção acontece em pequenos passos. Você não precisa de permissão ou um manifesto.",
+      "ch7": "O recipiente do tempo molda o conteúdo da vida. Escolha o seu intencionalmente."
+    },
+    "cardsByChapter": {
+      "ch1": [
+        {
+          "h": "O Problema que Você Sente",
+          "b": "Meses irregulares. Feriados dispersos. Um ano que tropeça de janeiro a dezembro sem sentido de início, meio ou fim. Você sentiu essa frição. HEKA remove-a."
+        },
+        {
+          "h": "A Solução que Construímos",
+          "b": "Treze meses. Doze têm vinte e oito dias em perfeita simetria. Março, o mês de encerramento, carrega o dia bissexto. Quatro semanas perfeitas por mês. Um ano que flui: abril abre, maio a dezembro formam o núcleo estável, janeiro a março o completam."
+        },
+        {
+          "h": "O Mundo que Você Mantém",
+          "b": "HEKA não perturba sua vida.Datas civis permanecem visíveis. Seus compromissos, compromissos e obrigações legais ficam exatamente onde eles estão. Você simplesmente ganha uma lente mais clara."
+        }
+      ],
+      "ch2": [
+        {
+          "h": "O Arco de Abertura",
+          "b": "Abril é o limiar. O ano não começa no cansaço do inverno, mas na vitalidade da primavera. Novo crescimento. Novos projetos. A abertura anuncia: algo está começando."
+        },
+        {
+          "h": "O Arco Central",
+          "b": "Maio a dezembro é o longo meio. Nove meses de ritmo perfeitamente regular e previsível. Planeje com confiança. Construa impulso. É aqui que o trabalho acontece."
+        },
+        {
+          "h": "O Arco de Encerramento",
+          "b": "Janeiro a março trazem o ano à sua resolução. Termine o que você começou. Colhe o que você cultivou. O fechamento cria espaço para reflexão e prepara você para a próxima abertura."
+        }
+      ],
+      "ch3": [
+        {
+          "h": "SuasDatas Civis Ficam",
+          "b": "Alterne a sobreposição civil e veja datas gregorianas ao lado de HEKA. Seu compromisso com o dentista, o aniversário de sua mãe, seu prazo de impostos — tudo permanece ex"
+        },
+        {
+          "h": "Seu Diário",
+          "b": "Entradas diárias com histórico de revisão — até 50 versões mantidas automaticamente. Busca de texto completo em tudo. Local por padrão; backup na nuvem quando você se autenticar."
+        },
+        {
+          "h": "Sua Lua e Estrelas",
+          "b": "Fases da lua, posições planetárias e transições aparecem à vista. Opcional e preciso. Adicione seu mapa natalício para leituras pessoais através da Oracle."
+        }
+      ],
+      "ch4": [
+        {
+          "h": "Modo SYNC: O Caminho Familiar",
+          "b": "Março ganha seu dia extra quando o calendário Gregoriano diz que deve. Para coordenação diária com o mundo civil, este é o seu modo. Mesma estrutura. Tempo familiar."
+        },
+        {
+          "h": "Modo VERDADEIRO: O Caminho Sincero",
+          "b": "HEKA segue sua própria regra de correção: a cada quarto ano, março tem 30 dias, exceto a cada 128º ano que não. Isso é precisão astronômica. Isso é integridade a longo prazo."
+        },
+        {
+          "h": "Mude Sempre que Quiser",
+          "b": "Os meses não mudam. A semana não muda. Apenas o gatilho de correção se desloca. Experimente. Veja qual modo atende às suas necessidades. Você não está preso."
+        }
+      ],
+      "ch5": [
+        {
+          "h": "Herança, Não Design",
+          "b": "Nosso calendário atual é um acúmulo de acidentes históricos. Política romana. Conselhos religiosos. Correções astronômicas adicionadas séculos apart. Nunca foi projetado como um sistema."
+        },
+        {
+          "h": "O Remendo Gregoriano",
+          "b": "1582: O Papa Gregório corrigiu o problema de deriva. Mas ele manteve os meses irregulares, a estrutura dispersa, o caos herdado. Uma correção necessária, mas não uma solução completa."
+        },
+        {
+          "h": "A Resposta HEKA",
+          "b": "Mantivemos o que funciona: semanas de sete dias, alinhamento sazonal, acompanhamento do ano solar. Reprojetamos o que não funcionava: estrutura do mês, fluxo do ano, posicionamento da correção. Construído para mentes que pensam."
+        }
+      ],
+      "ch6": [
+        {
+          "h": "Passo Um: Ativar a Sobreposição",
+          "b": "Ligue as datas civis. Agora você vê ambos os sistemas simultaneamente. Sua data HEKA e sua data Gregoriana. A ponte é construída. Cruze-a sempre que precisar."
+        },
+        {
+          "h": "Passo Dois: Escolha Seu Modo",
+          "b": "Comece com SINCRO se você quiser familiaridade. Mude para VERDADEIRO se você quiser pureza. Você pode mudar de ideia. O calendário se adapta a você, não ao contrário."
+        },
+        {
+          "h": "Passo Três: Vive Dentro Dele",
+          "b": "Use HEKA como sua visão principal. Planeje seu mês. Anote seus dias. Sinta a diferença de um ano com estrutura real. O mundo civil não precisa saber. Você vai saber."
+        }
+      ],
+      "ch7": [
+        {
+          "h": "A Frição Custa Energia",
+          "b": "Sempre que você se pergunta quantos dias há neste mês, você paga uma pequena taxa. Cada irregularidade drenou o foco. HEKA remove esses impostos. Você mantém sua energia para o que importa."
+        },
+        {
+          "h": "Ritmo Cria Calma",
+          "b": "Quando a estrutura é previsível, a mente se relaxa. Você sabe onde está no ano. Você sente o início, o núcleo, o fechamento. O tempo torna-se um espaço que você habita, não um caos que você sobrevive."
+        },
+        {
+          "h": "Agência Sobre o Tempo",
+          "b": "Você não escolheu o calendário Gregoriano. Foi dado a você. HEKA é uma escolha. Para usar uma ferramenta projetada para clareza. Para reivindicar agência sobre a estrutura de seus dias. Este é seu calendário."
+        }
+      ]
+    },
+    "gatesByChapter": {
+      "ch1": [
+        {
+          "t": "Isso é uma religião ou movimento?",
+          "tag": "CLARIDADE",
+          "b": "Nenhum. HEKA é uma ferramenta. Como um martelo melhor ou um mapa mais claro. Não é necessário membro. Não há crenças a ad"
+        },
+        {
+          "t": "Por que treze meses?",
+          "tag": "LÓGICA",
+          "b": "Doze meses de comprimento irregular forçan maldição mental. Treze meses de quatro semanas cada criam regularidade perfeita. 13 × 28 = 364. Mais um dia especial. A matemática é limpa. A experiência é ainda mais limpa."
+        },
+        {
+          "t": "Isso confundiria outras pessoas?",
+          "tag": "REALIDADE",
+          "b": "Você vê datas HEKA. Eles veem datas civis. Quando você diz \"15 de março\", você significa o mesmo dia que eles fazem. A sobreposição civil garante que você nunca perca coordenação. Você ganha clareza. Eles não perdem nada."
+        }
+      ],
+      "ch2": [
+        {
+          "t": "Por que o ano começa em abril?",
+          "tag": "SINAL",
+          "b": "A primavera é a abertura universal. O crescimento começa. A energia sobe. Começar o ano em abril alinha o calendário com a experiência sentida de renovação. Janeiro começa no cansaço de inverno. Abril começa na possibilidade de primavera."
+        },
+        {
+          "t": "Quais são os nomes dos meses?",
+          "tag": "ORDEM",
+          "b": "Abril, Maio, Junho, Julho, Agosto, Sexta, Setembro, Outubro, Novembro, Dezembro, Janeiro, Fevereiro, Março. Sexta — o sexto mês — preenche a lacuna. O resto você já conhece. Apenas suas posições mudam."
+        },
+        {
+          "t": "Como é tratada a correção?",
+          "tag": "PRECISÃO",
+          "b": "Cada calendário solar precisa de correção. HEKA coloca tudo em março, no final do ano. Março tem 29 dias, ou 30 em anos bissextos. Os outros doze meses são perfeitamente, permanentemente regulares. A correção está contida, não espalhada."
+        }
+      ],
+      "ch3": [
+        {
+          "t": "Posso imprimir calendários HEKA?",
+          "tag": "FÍSICO",
+          "b": "Sim. Imprima visualizações mensais ou visualizações de ano inteiro. Limpos, sem desordem, desenhados para papel. Cole-os nas paredes. Carregue-os em notebooks. O conveniência digital e o artefato físico, ambos."
+        },
+        {
+          "t": "E quanto aos feriados?",
+          "tag": "PERSONALIZAÇÃO",
+          "b": "Alterne conjuntos de feriados para sua região. Ou ignore-os. HEKA não impõe seus próprios feriados — ele ajuda você a acompanhar os que importam para você, sobrepostos em uma estrutura mais clara."
+        },
+        {
+          "t": "Onde meus dados residem?",
+          "tag": "CONFIANÇA",
+          "b": "Por padrão, tudo fica em seu dispositivo — anotações, diário, configurações. Se você criar uma conta, seus dados são backup para armazenamento de nuvem criptografado. Você pode exportar tudo a qualquer momento. Você mantém o controle."
+        },
+        {
+          "t": "O que o diário pode fazer?",
+          "tag": "CAPACIDADE",
+          "b": "Entradas diárias com histórico de revisão automático. Pesquisa de texto completo em todo o seu arquivo. Tudo local por padrão; sincroniza com a nuvem quando você entrar."
+        }
+      ],
+      "ch4": [
+        {
+          "t": "Qual modo é \"correto\"?",
+          "tag": "ESCOLHA",
+          "b": "Ambos. SYNC é correto para coordenação com o mundo civil. TRUE é correto para precisão astronômica. Suas necessidades determinam qual correção importa mais para você agora."
+        },
+        {
+          "t": "O modo TRUE se desvia das datas civis?",
+          "tag": "DIVERGÊNCIA",
+          "b": "Devagar, sim. O modo TRUE segue sua própria regra de bissexto, não a Gregoriana. Ao longo de séculos, a divergência se torna perceptível. Para a vida diária, a diferença é imperceptível. Para o pensamento a longo prazo, a pureza importa."
+        },
+        {
+          "t": "As instituições podem adotar HEKA?",
+          "tag": "Escala",
+          "b": "Eventualmente, talvez. Mas as instituições não precisam mudar para que você se beneficie. HEKA funciona perfeitamente como uma sobreposição pessoal. Comece por lá. Deixe a ferramenta provar-se."
+        }
+      ],
+      "ch5": [
+        {
+          "t": "Por que os meses têm comprimentos diferentes?",
+          "tag": "HISTÓRIA",
+          "b": "Política romana. Júlio César e Augusto precisavam de meses nomeados após eles. O calendário foi ajustado para acomodar egos. Essas irregularidades se fossilizaram em \"tradição\". A tradição nem sempre é sabedoria."
+        },
+        {
+          "t": "A reforma Gregoriana foi suficiente?",
+          "tag": "AVALIAÇÂO",
+          "b": "Corrigiu a deriva. Não corrigiu a estrutura. Os meses permaneceram irregulares, os trimestres desiguais, o ano sem forma narrativa. Um remendo necessário, mas não um redesign fundamental."
+        },
+        {
+          "t": "Outros já tentaram reforma do calendário?",
+          "tag": "TENTATIVAS",
+          "b": "Muitos. O calendário republicano francês. O calendário mundial. O calendário internacional fixo. Alguns brilhantes, todos falharam politicamente. HEKA aprende com eles: a compatibilidade com o tempo civil é essencial. Revolução através da evolução."
+        }
+      ],
+      "ch6": [
+        {
+          "t": "Como explico isso para os outros?",
+          "tag": "CONVERSA",
+          "b": "Você não precisa. Use-o. Se perguntarem, diga: \"Encontrei um calendário que me ajuda a planejar melhor.\" Mostre-os. Deixe-os ver a clareza. A persuasão ocorre através da demonstração, não da declaração."
+        },
+        {
+          "t": "E se eu quiser parar de usá-lo?",
+          "tag": "LIVRE-ARBITRAMENTO",
+          "b": "Pare. Seus dias civis permanecem. Seus compromissos ficam onde estão. Sem bloqueio. Sem custos fixos. HEKA deve ganhar seu lugar em sua vida todos os dias, ou não merece ficar."
+        },
+        {
+          "t": "Onde começo agora?",
+          "tag": "AÇÃO",
+          "b": "Abra as configurações. Habilite a sobreposição civil. Olhe para hoje em ambos os sistemas. Esse é o primeiro passo. Você já o deu ao abrir este guia."
+        },
+        {
+          "t": "O que é a Oracle?",
+          "tag": "INTELIGÊNCIA",
+          "b": "Uma inteligência celestial que lê as posições planetárias para qualquer data que você escolher e oferece orientação. Opcional. Adicione seu mapa natal para transitos personalizados e uma compreensão mais profunda."
+        }
+      ],
+      "ch7": [
+        {
+          "t": "O calendário realmente afeta a mentalidade?",
+          "tag": "PSICOLOGIA",
+          "b": "Profundamente. Pensamos nas estruturas que habitamos. Meses irregulares criam frição cognitiva de nível baixo. Meses regulares criam fluxo cognitivo. Você pode não notar a frição até que ela esteja ausente. Então você não pode deixar de notar."
+        },
+        {
+          "t": "E quanto aos vínculos culturais?",
+          "tag": "RESPECTO",
+          "b": "Mantenha-os. Seu aniversário. Suas celebrações de ano novo. Seus festivais sazonais. HEKA não apaga a cultura — proporciona um recipiente mais claro para ela. O conteúdo permanece. O recipiente melhora."
+        },
+        {
+          "t": "Por que isso importa o suficiente para construir?",
+          "tag": "MISSÃO",
+          "b": "Porque o tempo é o substrato da vida. Porque merecemos ferramentas desenhadas para mentes, não herdadas de acidentes. Porque alguém deve tentar construir algo melhor. Nós fizemos. Você está aqui."
+        }
+      ]
+    }
+  }
+}

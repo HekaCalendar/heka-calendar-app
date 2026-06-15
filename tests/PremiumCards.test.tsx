@@ -15,6 +15,10 @@ vi.mock('react-i18next', () => ({
         if (key.includes('.activities')) return ['Activity 1', 'Activity 2'];
         return [];
       }
+      // Return translated text for moonOracle and planetaryGuidance keys
+      if (key === 'moonOracle.First Quarter.title') return 'The Crossroads';
+      if (key === 'moonOracle.First Quarter.poem') return 'Half-illuminated, half in shadow.';
+      if (key === 'planetaryGuidance.sun.description') return 'The Sun hour radiates vitality and leadership.';
       return key;
     },
     i18n: { language: 'en' },
@@ -51,16 +55,16 @@ describe('PremiumCards', () => {
     const luna = screen.getByText('FIRST QUARTER').closest('.premium-card');
     expect(luna).toBeInTheDocument();
     fireEvent.click(luna!);
-    expect(screen.getByText('dictionaries.moonOracle.0.25.title')).toBeInTheDocument();
+    expect(screen.getByText('The Crossroads')).toBeInTheDocument();
   });
 
   it('collapses Luna card when clicked again', () => {
     renderWithProviders(<PremiumCards {...baseProps} />);
     const luna = screen.getByText('FIRST QUARTER').closest('.premium-card');
     fireEvent.click(luna!);
-    expect(screen.getByText('dictionaries.moonOracle.0.25.title')).toBeInTheDocument();
+    expect(screen.getByText('The Crossroads')).toBeInTheDocument();
     fireEvent.click(luna!);
-    expect(screen.queryByText('dictionaries.moonOracle.0.25.title')).not.toBeInTheDocument();
+    expect(screen.queryByText('The Crossroads')).not.toBeInTheDocument();
   });
 
   it('expands Kronos card on click when planetaryHour data is present', () => {
@@ -68,17 +72,17 @@ describe('PremiumCards', () => {
     const kronos = screen.getByText('SUN').closest('.premium-card');
     expect(kronos).toBeInTheDocument();
     fireEvent.click(kronos!);
-    expect(screen.getByText('dictionaries.planetaryGuidance.sun.title')).toBeInTheDocument();
+    expect(screen.getByText('The Sun hour radiates vitality and leadership.')).toBeInTheDocument();
   });
 
   it('collapses Kronos card via close button', () => {
     renderWithProviders(<PremiumCards {...baseProps} />);
     const kronos = screen.getByText('SUN').closest('.premium-card');
     fireEvent.click(kronos!);
-    expect(screen.getByText('dictionaries.planetaryGuidance.sun.title')).toBeInTheDocument();
-    const closeBtn = screen.getByLabelText('common.close');
+    expect(screen.getByText('The Sun hour radiates vitality and leadership.')).toBeInTheDocument();
+    const closeBtn = screen.getByLabelText('close');
     fireEvent.click(closeBtn);
-    expect(screen.queryByText('dictionaries.planetaryGuidance.sun.title')).not.toBeInTheDocument();
+    expect(screen.queryByText('The Sun hour radiates vitality and leadership.')).not.toBeInTheDocument();
   });
 
   it('Luna loading state is clickable (regression: missing onToggle)', () => {

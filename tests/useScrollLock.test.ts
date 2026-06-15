@@ -3,32 +3,25 @@ import { renderHook } from '@testing-library/react';
 import { useScrollLock } from '../src/components/setup/useScrollLock';
 
 describe('useScrollLock', () => {
-  it('sets body overflow to hidden when active', () => {
-    const originalOverflow = document.body.style.overflow;
+  it('suppresses scrolling on html and body when active without blocking touch pan', () => {
     renderHook(() => useScrollLock(true));
     expect(document.body.style.overflow).toBe('hidden');
-    document.body.style.overflow = originalOverflow;
-  });
-
-  it('sets html overflow to hidden when active', () => {
-    const originalHtmlOverflow = document.documentElement.style.overflow;
-    renderHook(() => useScrollLock(true));
     expect(document.documentElement.style.overflow).toBe('hidden');
-    document.documentElement.style.overflow = originalHtmlOverflow;
+    // touch-action is intentionally left untouched on the document root so
+    // that foreground scroll containers can declare their own pan-y on
+    // Android/Samsung WebView without ancestor intersection swallowing it.
+    expect(document.body.style.touchAction).toBe('');
+    expect(document.documentElement.style.touchAction).toBe('');
+    expect(document.body.style.overscrollBehavior).toBe('');
+    expect(document.documentElement.style.overscrollBehavior).toBe('');
   });
 
-  it('sets body touchAction to none when active', () => {
-    const original = document.body.style.touchAction;
+  it('does not fix body position (keeps inner scroll containers usable)', () => {
     renderHook(() => useScrollLock(true));
-    expect(document.body.style.touchAction).toBe('none');
-    document.body.style.touchAction = original;
-  });
-
-  it('sets html height to 100% when active', () => {
-    const original = document.documentElement.style.height;
-    renderHook(() => useScrollLock(true));
-    expect(document.documentElement.style.height).toBe('100%');
-    document.documentElement.style.height = original;
+    expect(document.body.style.position).toBe('');
+    expect(document.body.style.width).toBe('');
+    expect(document.body.style.left).toBe('');
+    expect(document.documentElement.style.height).toBe('');
   });
 
   it('restores original styles on unmount', () => {

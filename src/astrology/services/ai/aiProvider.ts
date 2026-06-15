@@ -17,6 +17,7 @@ import type { PersonalizedReading } from '../guidance/templates/templateLibrary'
 import { sanitizeForPrompt } from '../../utils/sanitization';
 import { aiConfigService } from '../../../services/aiConfigService';
 import { secureKeyStore } from '../../../services/secureKeyStore';
+import { chatViaProxy, isAIProxyEnabled } from '../../../services/aiProxyClient';
 
 // ═══════════════════════════════════════════════════════════════════════════════
 // UTILITY: Fetch with timeout using AbortController
@@ -53,7 +54,7 @@ async function fetchWithTimeout(
 // TYPES & INTERFACES
 // ═══════════════════════════════════════════════════════════════════════════════
 
-export type AIProviderType = 'groq' | 'openai' | 'anthropic' | 'ollama' | 'template';
+export type AIProviderType = 'groq' | 'openai' | 'anthropic' | 'ollama' | 'template' | 'proxy';
 
 export interface AIProviderConfig {
   type: AIProviderType;
@@ -886,6 +887,179 @@ Base guidance: ${summary}`;
 }
 
 // ═══════════════════════════════════════════════════════════════════════════════
+// BACKEND PROXY PROVIDER
+// Routes AI calls through the HEKA AI proxy so keys never reach the client.
+// ═══════════════════════════════════════════════════════════════════════════════
+
+class ProxyProvider implements AIProvider {
+  readonly type: AIProviderType = 'proxy';
+  readonly name = 'HEKA AI Proxy';
+  readonly description = 'Server-managed AI provider with rate limiting and audit logging';
+
+  private config: AIProviderConfig = {
+    type: 'proxy',
+    model: 'llama-3.1-70b-versatile',
+    maxTokens: 500,
+    temperature: 0.7,
+  };
+
+  private lastError?: string;
+  private cache = new Map<string, AIResponse>();
+  private readonly MAX_CACHE_SIZE = 100;
+
+  configure(config: AIProviderConfig): void {
+    this.config = { ...this.config, ...config };
+  }
+
+  isConfigured(): boolean {
+    return isAIProxyEnabled();
+  }
+
+  getStatus(): AIProviderStatus {
+    return {
+      available: this.isConfigured(),
+      configured: this.isConfigured(),
+      lastError: this.lastError,
+    };
+  }
+
+  private enforceCacheLimit(): void {
+    while (this.cache.size > this.MAX_CACHE_SIZE) {
+      const firstKey = this.cache.keys().next().value;
+      if (firstKey) this.cache.delete(firstKey);
+      else break;
+    }
+  }
+
+  private generateCacheKey(request: AIRequest): string {
+    const { context } = request;
+    return `proxy-${context.planet}-${context.sign}-${context.moonPhase}-${context.category || 'general'}`;
+  }
+
+  private getSystemPrompt(): string {
+    return `You are a wise astrological guide combining ancient wisdom with modern psychology.
+Your guidance is compassionate, empowering, and practical.
+You write in a warm, conversational tone while maintaining depth and insight.
+
+Respond ONLY in JSON format with this structure:
+{
+  "narrative": "2-3 paragraph personalized astrological guidance (200-300 words)",
+  "poeticSummary": "A poetic 2-sentence summary of the day's energy",
+  "affirmations": ["3 powerful affirmations for this celestial energy"],
+  "rituals": ["2-3 simple rituals aligned with the cosmic weather"],
+  "journalPrompts": ["3 introspective questions for reflection"]
+}`;
+  }
+
+  private buildPrompt(request: AIRequest): string {
+    const { context, templateReading } = request;
+    const planet = sanitizeForPrompt(context.planet);
+    const sign = sanitizeForPrompt(context.sign);
+    const moonPhase = sanitizeForPrompt(context.moonPhase);
+    const category = sanitizeForPrompt(context.category || 'general');
+    const summary = sanitizeForPrompt(templateReading.summary);
+
+    return `You are an astrological guide.
+
+Celestial positions: ${planet} in ${sign}, Moon phase: ${moonPhase}
+Focus: ${category}
+
+Respond ONLY in JSON format:
+{
+  "narrative": "Personalized astrological guidance (2-3 paragraphs)",
+  "poeticSummary": "A poetic 2-sentence summary",
+  "affirmations": ["3 affirmations"],
+  "rituals": ["2-3 simple rituals"],
+  "journalPrompts": ["3 reflection questions"]
+}
+
+Base guidance: ${summary}`;
+  }
+
+  private parseResponse(content: string, request: AIRequest): PersonalizedReading {
+    try {
+      const json = JSON.parse(content);
+      return {
+        ...request.templateReading,
+        narrative: json.narrative || request.templateReading.narrative,
+        poeticSummary: json.poeticSummary || request.templateReading.poeticSummary,
+        affirmations: json.affirmations || request.templateReading.affirmations,
+        rituals: json.rituals || request.templateReading.rituals,
+        journalPrompts: json.journalPrompts || request.templateReading.journalPrompts,
+        aiGenerated: true,
+        aiProvider: 'proxy',
+        aiModel: this.config.model,
+      };
+    } catch {
+      return {
+        ...request.templateReading,
+        narrative: content,
+        aiGenerated: true,
+        aiProvider: 'proxy',
+        aiModel: this.config.model,
+      };
+    }
+  }
+
+  async generateReading(request: AIRequest): Promise<AIResponse> {
+    const startTime = performance.now();
+    const cacheKey = this.generateCacheKey(request);
+    const cached = this.cache.get(cacheKey);
+    if (cached && Date.now() - (cached.cachedAt || 0) < 3600000) {
+      return { ...cached, cached: true, latency: performance.now() - startTime };
+    }
+
+    if (!this.isConfigured()) {
+      throw new Error('AI proxy not configured');
+    }
+
+    try {
+      const data = await chatViaProxy({
+        provider: 'groq',
+        model: this.config.model,
+        messages: [
+          { role: 'system', content: this.getSystemPrompt() },
+          { role: 'user', content: this.buildPrompt(request) },
+        ],
+        max_tokens: this.config.maxTokens,
+        temperature: this.config.temperature,
+      });
+
+      const content = data.choices?.[0]?.message?.content || '';
+      const aiReading = this.parseResponse(content, request);
+
+      const result: AIResponse = {
+        reading: aiReading,
+        provider: 'proxy',
+        model: this.config.model,
+        latency: performance.now() - startTime,
+        cached: false,
+      };
+
+      this.cache.set(cacheKey, { ...result, cachedAt: Date.now() });
+      this.enforceCacheLimit();
+      return result;
+    } catch (error) {
+      this.lastError = error instanceof Error ? error.message : 'Unknown error';
+      throw error;
+    }
+  }
+
+  async validateApiKey(): Promise<boolean> {
+    try {
+      await chatViaProxy({
+        provider: 'groq',
+        messages: [{ role: 'user', content: 'ping' }],
+        max_tokens: 1,
+      });
+      return true;
+    } catch {
+      return false;
+    }
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════════════════════
 // AI PROVIDER MANAGER
 // ═══════════════════════════════════════════════════════════════════════════════
 
@@ -901,6 +1075,7 @@ export class AIProviderManager {
     this.registerProvider(new OpenAIProvider());
     this.registerProvider(new AnthropicProvider());
     this.registerProvider(new OllamaProvider());
+    this.registerProvider(new ProxyProvider());
     
     // Load saved configuration asynchronously
     void this.loadConfiguration();
@@ -1046,6 +1221,12 @@ export class AIProviderManager {
         }
       }
       
+      // Auto-enable backend proxy when VITE_AI_PROXY_URL is present
+      if (isAIProxyEnabled()) {
+        this.activeProvider = 'proxy';
+        this.configureProvider('proxy', { type: 'proxy' });
+      }
+
       // Load API keys from secure storage
       const groqKey = await secureKeyStore.get('heka-ai-groq');
       if (groqKey) {

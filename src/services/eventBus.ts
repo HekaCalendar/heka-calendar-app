@@ -19,7 +19,7 @@
 
 import type { HekaDate } from '../types';
 import type { PlannerTask } from '../types';
-import type { UnlockedAchievement } from '../types';
+import type { UnlockedAchievement } from '../services/gamificationService';
 
 // ═══════════════════════════════════════════════════════════════════════════════
 // EVENT MAP — Single source of truth for all app events
@@ -59,6 +59,8 @@ export interface EventMap {
   'heka-task-completed': { task: PlannerTask; streak: number };
 
   // ─── Gamification ───
+  // NOTE: uses the gamification service's UnlockedAchievement (extends Achievement)
+  // so consumers receive name, description, icon, etc., not just id/unlockedAt.
   'heka-achievement-detected': { achievement: UnlockedAchievement };
   'heka-achievement-unlocked': { achievement: UnlockedAchievement };
 
@@ -68,6 +70,17 @@ export interface EventMap {
   // ─── Security ───
   'heka:secure-storage:unavailable': void;
   'heka:error:logged': { context: string; message: string; code?: string };
+
+  // ─── Offline Sync ───
+  'offline:mutationEnqueued': { mutation: import('./offlineSyncEngine').PendingMutation };
+  'offline:syncStarted': Record<string, never>;
+  'offline:syncFinished': { pending: number };
+  'offline:mutationApplied': { mutation: import('./offlineSyncEngine').PendingMutation };
+  'offline:mutationFailed': { mutation: import('./offlineSyncEngine').PendingMutation; error: string };
+  'offline:conflict': import('./offlineSyncEngine').SyncConflict;
+  'offline:conflictResolved': { conflict: import('./offlineSyncEngine').SyncConflict; resolution: import('./offlineSyncEngine').ConflictResolution };
+  'offline:requestApplyMutation': { mutation: import('./offlineSyncEngine').PendingMutation };
+  'offline:applyMutation': { mutationId: string; success: boolean; conflict?: import('./offlineSyncEngine').SyncConflict };
 }
 
 export type EventName = keyof EventMap;

@@ -4,6 +4,7 @@
  */
 
 import { useState, useEffect, useCallback } from 'react';
+import { AlertDialog } from './ui/AlertDialog';
 
 interface BeforeInstallPromptEvent extends Event {
   prompt: () => Promise<void>;
@@ -14,6 +15,7 @@ export const InstallButton: React.FC = () => {
   const [deferredPrompt, setDeferredPrompt] = useState<BeforeInstallPromptEvent | null>(null);
   const [isInstalled, setIsInstalled] = useState(false);
   const [isIOS, setIsIOS] = useState(false);
+  const [showIOSHint, setShowIOSHint] = useState(false);
 
   useEffect(() => {
     // Check if already installed
@@ -62,13 +64,22 @@ export const InstallButton: React.FC = () => {
   // iOS Safari doesn't support beforeinstallprompt
   if (isIOS) {
     return (
-      <button
-        className="btn btn--primary install-btn"
-        onClick={() => alert('To install: Tap the share button below, then scroll down and tap "Add to Home Screen"')}
-        title="Install on iOS"
-      >
-        📲 Install App
-      </button>
+      <>
+        <button
+          className="btn btn--primary install-btn"
+          onClick={() => setShowIOSHint(true)}
+          title="Install on iOS"
+        >
+          📲 Install App
+        </button>
+        <AlertDialog
+          isOpen={showIOSHint}
+          onClose={() => setShowIOSHint(false)}
+          title="Install on iOS"
+          description="Tap the share button below, then scroll down and tap 'Add to Home Screen'."
+          confirmText="Got it"
+        />
+      </>
     );
   }
 

@@ -1,34 +1,37 @@
-/**
- * Body Scroll Lock Hook
- * Prevents background scroll when modal is active. Restores on unmount.
- * Handles iOS Safari bounce/overscroll properly.
- */
-
 import { useEffect } from 'react';
 
+/**
+ * Lock body scrolling while keeping an inner scroll container usable.
+ *
+ * We suppress scrolling on `<html>` and `<body>` with `overflow: hidden`.
+ * We intentionally do **not** set `touch-action: none` on the document root,
+ * because on Android/Samsung WebView the browser intersects `touch-action`
+ * values from the touched element up to the scrolling element. A root value
+ * of `none` can swallow the `pan-y` declared by foreground scroll containers
+ * such as the wizard scene or modal body, breaking vertical scroll on narrow
+ * foldable cover screens (e.g. Samsung Z Fold 7 closed).
+ *
+ * Foreground scroll containers are responsible for their own
+ * `touch-action: pan-y` / `overscroll-behavior: contain` declarations.
+ */
 export function useScrollLock(active: boolean) {
   useEffect(() => {
     if (!active) return;
 
-    const originalBodyOverflow = document.body.style.overflow;
-    const originalBodyTouchAction = document.body.style.touchAction;
-    const originalHtmlOverflow = document.documentElement.style.overflow;
-    const originalHtmlTouchAction = document.documentElement.style.touchAction;
-    const originalHtmlHeight = document.documentElement.style.height;
+    const html = document.documentElement;
+    const body = document.body;
 
-    document.body.style.overflow = 'hidden';
-    document.body.style.touchAction = 'none';
-    document.documentElement.style.overflow = 'hidden';
-    document.documentElement.style.touchAction = 'none';
-    // Prevent iOS Safari from allowing scroll on html element
-    document.documentElement.style.height = '100%';
+    const original = {
+      htmlOverflow: html.style.overflow,
+      bodyOverflow: body.style.overflow,
+    };
+
+    html.style.overflow = 'hidden';
+    body.style.overflow = 'hidden';
 
     return () => {
-      document.body.style.overflow = originalBodyOverflow;
-      document.body.style.touchAction = originalBodyTouchAction;
-      document.documentElement.style.overflow = originalHtmlOverflow;
-      document.documentElement.style.touchAction = originalHtmlTouchAction;
-      document.documentElement.style.height = originalHtmlHeight;
+      html.style.overflow = original.htmlOverflow;
+      body.style.overflow = original.bodyOverflow;
     };
   }, [active]);
 }

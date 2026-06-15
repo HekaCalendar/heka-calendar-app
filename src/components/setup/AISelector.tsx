@@ -109,6 +109,21 @@ const API_PROVIDERS: ProviderMeta[] = [
       { id: 'mistral', name: 'Mistral' },
     ],
   },
+  {
+    type: 'proxy',
+    name: 'HEKA AI Proxy',
+    icon: <IconHomeServer size={20} color="#c9a227" />,
+    description: 'Server-managed AI with rate limiting and audit logging. No client key required.',
+    color: '#c9a227',
+    requiresKey: false,
+    keyLabel: '',
+    keyPlaceholder: '',
+    helpUrl: '',
+    helpText: 'Your administrator configures the proxy server. Select this to route AI calls securely through the backend.',
+    models: [
+      { id: 'llama-3.1-70b-versatile', name: 'Llama 3.1 70B' },
+    ],
+  },
 ];
 
 export const AISelector: React.FC<AISelectorProps> = ({
@@ -180,6 +195,16 @@ export const AISelector: React.FC<AISelectorProps> = ({
           dispatch(setAIProvider('template'));
           dispatch(setAIModel(null));
           dispatch(setAIApiKeyConfigured(false));
+        } else if (selectedProvider === 'proxy') {
+          aiConfigService.setProvider('proxy');
+          aiConfigService.setGlobalEnabled(true);
+          if (selectedModel) {
+            aiConfigService.updateConfig({ model: selectedModel });
+          }
+          aiProviderManager.setActiveProvider('proxy');
+          dispatch(setAIProvider('proxy'));
+          dispatch(setAIModel(selectedModel || null));
+          dispatch(setAIApiKeyConfigured(true));
         } else {
           if (apiKey.trim()) {
             void aiProviderManager.saveApiKey(selectedProvider, apiKey.trim());

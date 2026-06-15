@@ -118,6 +118,7 @@ export interface LunarMansionSectionProps {
     };
   } | null;
   isLoading: boolean;
+  timeMode?: 'SYNC' | 'TRUE';
 }
 
 export interface SolarReturnSectionProps {

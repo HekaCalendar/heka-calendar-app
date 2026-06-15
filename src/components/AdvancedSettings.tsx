@@ -8,6 +8,7 @@ import { useTranslation } from 'react-i18next';
 
 import { HEKA_MONTHS } from '../services/calendarService';
 import { CalendarNotificationSettings } from './notification/CalendarNotificationSettings';
+import { ConfirmDialog } from './ui/ConfirmDialog';
 
 interface AdvancedSettingsProps {
   isOpen: boolean;
@@ -44,6 +45,7 @@ export const AdvancedSettings: React.FC<AdvancedSettingsProps> = ({ isOpen, onCl
   // Appearance
   const [selectedTheme, setSelectedTheme] = useState('dark-gold');
   const [selectedFont, setSelectedFont] = useState('default');
+  const [showResetConfirm, setShowResetConfirm] = useState(false);
 
   
   if (!isOpen) return null;
@@ -68,9 +70,7 @@ export const AdvancedSettings: React.FC<AdvancedSettingsProps> = ({ isOpen, onCl
   };
   
   const handleResetMonths = () => {
-    if (confirm('Reset all month names to defaults?')) {
-      setCustomMonths(HEKA_MONTHS.map(m => m.name));
-    }
+    setShowResetConfirm(true);
   };
   
   const handleSaveAll = () => {
@@ -164,6 +164,17 @@ export const AdvancedSettings: React.FC<AdvancedSettingsProps> = ({ isOpen, onCl
         {/* Month Names Tab */}
         {activeTab === 'months' && (
           <div className="settings-section">
+            <ConfirmDialog
+              isOpen={showResetConfirm}
+              onClose={() => setShowResetConfirm(false)}
+              onConfirm={() => {
+                setCustomMonths(HEKA_MONTHS.map(m => m.name));
+                setShowResetConfirm(false);
+              }}
+              title={t('resetMonthNames', 'Reset month names')}
+              description={t('resetMonthNamesConfirm', 'Reset all month names to their defaults?')}
+              confirmText={t('reset', 'Reset')}
+            />
             <div className="month-names-header">
               <h3 className="settings-section-title">{t('customizeMonthNames')}</h3>
               <button className="btn btn--sm" onClick={handleResetMonths}>

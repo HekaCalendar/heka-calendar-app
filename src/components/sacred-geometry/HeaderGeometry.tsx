@@ -2,7 +2,7 @@
  * HeaderGeometry — Redux-connected wrapper that renders the chosen header pattern
  */
 
-import React from 'react';
+import React, { memo } from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../store';
 import { SacredGeometry } from './SacredGeometry';
@@ -11,7 +11,7 @@ interface HeaderGeometryProps {
   isPureMode?: boolean;
 }
 
-export const HeaderGeometry: React.FC<HeaderGeometryProps> = ({ isPureMode }) => {
+export const HeaderGeometry: React.FC<HeaderGeometryProps> = memo(({ isPureMode }) => {
   const pattern = useSelector((state: RootState) => state.calendar.headerGeometry);
   if (isPureMode) return null;
   if (pattern === 'none') return null;
@@ -22,6 +22,8 @@ export const HeaderGeometry: React.FC<HeaderGeometryProps> = ({ isPureMode }) =>
       </div>
     </div>
   );
-};
+});
+
+HeaderGeometry.displayName = 'HeaderGeometry';
 
 export default HeaderGeometry;

@@ -74,7 +74,7 @@ export const PlanetDetailModal: React.FC<PlanetDetailModalProps> = ({
     <div style={styles.overlay} onClick={onClose}>
       <div style={styles.modal} onClick={(e) => e.stopPropagation()}>
         {/* Close Button */}
-        <button style={styles.closeButton} onClick={onClose} aria-label={t('common.close')}>
+        <button style={styles.closeButton} onClick={onClose} aria-label={t('close')}>
           ✕
         </button>
         
@@ -356,7 +356,7 @@ const styles: Record<string, React.CSSProperties> = {
     borderLeftWidth: '4px',
   },
   archetypeLabel: {
-    fontSize: '11px',
+    fontSize: '12px',
     textTransform: 'uppercase',
     letterSpacing: '2px',
     color: 'rgba(255, 255, 255, 0.5)',
@@ -461,7 +461,7 @@ const styles: Record<string, React.CSSProperties> = {
     transition: 'all 0.2s ease',
   },
   copyHint: {
-    fontSize: '11px',
+    fontSize: '12px',
     color: 'rgba(255, 255, 255, 0.4)',
   },
   shadowBox: {

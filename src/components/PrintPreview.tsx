@@ -9,6 +9,7 @@ import { PrintManager } from '../services/PrintManager';
 import { getPrintDimensions } from '../services/printEngine';
 import './PrintPreview.css';
 import { getErrorMessage } from '../utils/errorUtils';
+import { dialogService } from './ui/DialogProvider';
 
 const DEFAULT_OPTIONS: PrintOptions = {
   includeNotes: true,
@@ -146,14 +147,14 @@ export function PrintPreview() {
       setShowOverlay(true);
     } catch (error) {
       console.error('[PrintPreview] Preview generation error:', error);
-      alert('Failed to generate preview. Please try again.');
+      dialogService.showAlert({ description: 'Failed to generate preview. Please try again.' });
     }
     setIsGenerating(false);
   }, [mode, viewDate, options, notes, location, timeMode, isGenerating]);
 
   const downloadPDF = useCallback(async () => {
     if (!pagesRef.current.length) {
-      alert('Please generate preview first');
+      dialogService.showAlert({ description: 'Please generate preview first' });
       return;
     }
     setIsGenerating(true);
@@ -170,7 +171,7 @@ export function PrintPreview() {
       });
       setPdfFilePath(result.filePath);
       const filename = result.filePath.split('/').pop();
-      alert(`✓ PDF saved to Downloads\n\nFile: ${filename}\n\nSelect an app below to open your PDF.`);
+      dialogService.showAlert({ description: `✓ PDF saved to Downloads\n\nFile: ${filename}\n\nSelect an app below to open your PDF.` });
       try {
         await PrintManager.openPDF(result.filePath, `HEKA_Calendar_${new Date().getFullYear()}.pdf`);
       } catch (e) {
@@ -178,7 +179,7 @@ export function PrintPreview() {
       }
     } catch (error) {
       console.error('[PrintPreview] PDF generation error:', error);
-      alert('Failed to generate PDF. Please try again.');
+      dialogService.showAlert({ description: 'Failed to generate PDF. Please try again.' });
     }
     setIsGenerating(false);
     setPrintTotalPages(0);
@@ -187,7 +188,7 @@ export function PrintPreview() {
 
   const handlePrint = useCallback(async () => {
     if (!isOnline) {
-      alert('Internet connection required for printing. Please connect to WiFi or mobile data.');
+      dialogService.showAlert({ description: 'Internet connection required for printing. Please connect to WiFi or mobile data.' });
       return;
     }
     setIsPrinting(true);
@@ -195,7 +196,7 @@ export function PrintPreview() {
     if (!filePath) {
       if (!pagesRef.current.length) {
         setIsPrinting(false);
-        alert('Please generate preview first');
+        dialogService.showAlert({ description: 'Please generate preview first' });
         return;
       }
       setPrintTotalPages(pagesRef.current.length);
@@ -216,7 +217,7 @@ export function PrintPreview() {
         setIsPrinting(false);
         setPrintTotalPages(0);
         setPrintStatus('');
-        alert('Failed to generate PDF for printing. Please try again.');
+        dialogService.showAlert({ description: 'Failed to generate PDF for printing. Please try again.' });
         return;
       }
     }
@@ -225,7 +226,7 @@ export function PrintPreview() {
       await PrintManager.printPDF(filePath, options.orientation, options.paperSize || 'A4');
     } catch (e) {
       console.error('[PrintPreview] Print error:', e);
-      alert('Print failed: ' + getErrorMessage(e, 'Unknown error'));
+      dialogService.showAlert({ description: 'Print failed: ' + getErrorMessage(e, 'Unknown error') });
     } finally {
       setIsPrinting(false);
       setPrintTotalPages(0);

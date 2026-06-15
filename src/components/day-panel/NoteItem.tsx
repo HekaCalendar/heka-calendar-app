@@ -176,7 +176,7 @@ export const NoteItem = memo(({
             <span
               className="task-time-badge"
               style={{
-                fontSize: '11px',
+                fontSize: '12px',
                 padding: '2px 8px',
                 background: 'rgba(212,175,55,0.12)',
                 border: '1px solid rgba(212,175,55,0.25)',
@@ -192,7 +192,7 @@ export const NoteItem = memo(({
             <span
               className="task-celestial-badge"
               style={{
-                fontSize: '11px',
+                fontSize: '12px',
                 padding: '2px 8px',
                 background: 'rgba(139,92,246,0.12)',
                 border: '1px solid rgba(139,92,246,0.25)',
@@ -213,7 +213,7 @@ export const NoteItem = memo(({
                 e.preventDefault();
                 onDelete();
               }}
-              aria-label={t('common.delete')}
+              aria-label={t('delete')}
               onTouchStart={(e) => {
                 e.stopPropagation();
                 if (longPressTimer.current) {

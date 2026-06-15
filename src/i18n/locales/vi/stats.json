@@ -1,0 +1,49 @@
+{
+  "best": "Tốt Nhất: {{count}}",
+  "title": "Hành Trình Của Bạn",
+  "close": "Đóng",
+  "reset": "Đặt Lại Thống Kê",
+  "avgMood": "Trung Bình Tình Cảm",
+  "dayStreak": "Số Ngày Liên Xuyên",
+  "totalNotes": "Tổng Số Ghi Chép",
+  "wordsWritten": "Tổng Số Từ Đã Viết",
+  "achievements": "Thành Tích ({{earned}}/{{total}})",
+  "resetConfirm": "Đặt Lại",
+  "progressRatio": "{{current}} / {{target}}",
+  "monthlyTooltip": "{{month}} {{year}}: {{count}} ghi chú",
+  "notesByCategory": "Ghi Chép Theo Danh Mục",
+  "monthlyActivity": "Hoạt Động Hàng Tháng",
+  "mostActiveMonth": "Tháng bạn hoạt động nhiều nhất là \u003cstrong\u003e{{month}}\u003c/strong\u003e với \u003cstrong\u003e{{count}}\u003c/strong\u003e ghi chú",
+  "categories": {
+    "work": "Làm Việc",
+    "family": "Gia Đình",
+    "health": "Sức Khỏe",
+    "general": "Chung",
+    "personal": "Cá Nhân",
+    "creative": "Sáng Tạo",
+    "spiritual": "Tinh Thần"
+  },
+  "progressToCentury": "Tiến Trình Tới Century Club",
+  "resetConfirmTitle": "Đặt Lại Thống Kê",
+  "badges": {
+    "century": {
+      "name": "Câu lạc bộ thế kỷ"
+    },
+    "explorer": {
+      "name": "Nhà Khám Phá"
+    },
+    "archivist": {
+      "name": "Lưu Trữ Viên"
+    },
+    "first-note": {
+      "name": "Lời Nói Đầu Tiên"
+    },
+    "week-streak": {
+      "name": "Tuần Chiến binh"
+    },
+    "month-streak": {
+      "name": "Tháng Chuyên Viên"
+    }
+  },
+  "resetConfirmDescription": "Bạn có chắc chắn muốn đặt lại tất cả thống kê? Hành động này không thể hoàn tác."
+}

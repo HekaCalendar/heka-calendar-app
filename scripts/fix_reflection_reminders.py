@@ -3,10 +3,9 @@ import json, os, sys, glob, re
 sys.stdout.reconfigure(encoding='utf-8')
 
 # Rename trackerReminders -> reflectionReminders in all journal.json files
-folders = ['public/locales', 'src/i18n/locales']
+folder = 'src/i18n/locales'
 
-for folder in folders:
-    for path in glob.glob(f'{folder}/*/journal.json'):
+for path in glob.glob(f'{folder}/*/journal.json'):
         with open(path, 'r', encoding='utf-8') as f:
             content = f.read()
         content = content.replace('"trackerReminders"', '"reflectionReminders"')

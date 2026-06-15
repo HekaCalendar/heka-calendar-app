@@ -1,0 +1,126 @@
+{
+  "tutorial": {
+    "back": "Voltar",
+    "skip": "Pular",
+    "enter": "Entrar HEKA",
+    "continue": "Continuar",
+    "stepLabel": "Passo {{current}} de {{total}}",
+    "journeyTitle": "Sua Jornada",
+    "completeLabel": "Completo",
+    "actionWaiting": "Toque para continuar",
+    "steps": {
+      "welcome": {
+        "title": "Bem-vindo ao HEKA",
+        "detail": "Treze meses. Vinte e oito dias cada. A lua, o sol, seu jardim, sua energia, seus amigos — finalmente em ritmo.",
+        "action": "Inicie Sua Jornada",
+        "instruction": "Você nunca viu um calendário como este."
+      },
+      "tracker": {
+        "title": "Acompanhe Seu Ritmo",
+        "detail": "Humor: controle deslizante de 1-10 com emoji em tempo real. Sono: duração e qualidade. Energia: física, mental, emocional, espiritual",
+        "action": "Continuar",
+        "instruction": "Seu corpo faz parte do calendário."
+      },
+      "the-grid": {
+        "title": "A Grade — Treze Meses",
+        "detail": "Doze meses de exatamente 28 dias, mais Hexa entre agosto e setembro. Março tem o dia 29. Todo mês começa no mesmo dia. O ano respira em três arcos — Abertura em vermelho, Núcleo em verde, Encerramento em roxo. Previsível. Simétrico. Limpo.",
+        "action": "Toque em qualquer dia para continuar",
+        "instruction": "Conte-os. Treze. Não doze."
+      },
+      "features": {
+        "title": "Seu Arsenal",
+        "detail": "Impressão: Padrão Ouro, Minimalista, Geometria Sagrada com células circulares, Cyberpunk com linhas de varredura CRT, Natureza Orgânica, Egito Antigo com hieróglifos. Todos gratuitos. Para toda a vida. A4, A3, Carta. Estrelas: gráficos de nascimento do Swiss Ephemeris, precisão de arc-segundo. Diário: quatro modos com geração de insights de IA. Círculo: mensagens em tempo real, tarefas compartilhadas com datas de vencimento HEKA. Estatísticas: 80+ conquistas em oito níveis. Conquistas secretas aguardam ser descobertas.",
+        "action": "Continuar",
+        "instruction": "Seis temas de impressão. Um motor de gráfico de nascimento. Um diário. Amigos. Estatísticas."
+      },
+      "settings": {
+        "title": "Faça-Seu",
+        "detail": "Datas Civis: sobreposição Gregoriano para que você nunca perca um encontro. Fases da Lua: glifos do Swiss Ephemeris em cada célula. Feriados: observâncias da comunidade. Modo Puro: tela cheia, sem distrações, alternância de luz/escuridão Yin-Yang. O calendário se adapta a como VOCÊ vê o tempo.",
+        "action": "Alterne qualquer configuração para continuar",
+        "instruction": "Três interruptores. Modo Puro. Controle total."
+      },
+      "ai-coach": {
+        "title": "HEKA IA — Seu Treinador Celestial",
+        "detail": "Óculo flutuante de vidro. Sintetiza fases da lua, seus transições, tarefas, humor do diário, sequências e localização em mensagens poéticas e açãoáveis. Fala em seu arquétipo — Guerreiro, Monge, Artista, Estrategista, Místico, Fênix. Lembre-se de 19 conversas. Detecta sincronias: momentos em que suas palavras se alinham com o céu. Aprimoramento opcional LLM com fallback elegante offline. Isso não é um chatbot. Isso é um oráculo.",
+        "action": "Continuar",
+        "instruction": "Ela observa o céu. Ela observa você."
+      },
+      "complete": {
+        "title": "Você Está Pronto",
+        "detail": "Você sabe como navegar pelos treze meses. Você sabe como ler a lua. Você sabe como acompanhar sua energia, votar em feriados, imprimir belas páginas, fazer diário com as estrelas e consultar seu coach IA. O resto espera pela sua curiosidade.",
+        "action": "Entrar no HEKA",
+        "instruction": "O calendário é seu. O céu é seu."
+      },
+      "day-cells": {
+        "title": "Cada Célula Está Viva",
+        "detail": "Fase da lua do Swiss Ephemeris emoji. Data civil embaixo. Pontos de feriado — curados pela comunidade. Snippets de nota — suas palavras, visíveis na grade. Todos os treze meses de uma vez. Todo o ano, de um único golpe.",
+        "action": "Toque em qualquer dia para abri-lo",
+        "instruction": "Cada dia conta uma história."
+      },
+      "day-panel": {
+        "title": "O Dia Se Abre",
+        "detail": "Lua: iluminação exata, crescente ou menguante, detecção de Curso Vazio. Astrologia: transições em tempo real contra o seu gráfico de nascimento. Notas: categorizadas por humor, tarefa, diário. Tarefas: prazos, lembretes. Energia: vote após 19:30, veja o pulso da comunidade. Isso não é uma entrada de calendário. Isso é um portal.",
+        "action": "Explore o painel do dia, então continue",
+        "instruction": "Seu centro de comando para um único dia."
+      },
+      "community": {
+        "title": "Molde o Cosmos",
+        "detail": "Sugira feriados novos. Dez votos a favor e torna-se oficial. Vote em recursos futuros — Planejados, Considerando, Em Andamento, Lançados. O calendário evolui porque seus usuários o evoluem. Esta é uma colaboração.",
+        "action": "Continuar",
+        "instruction": "Seu voto muda o calendário."
+      },
+      "navigation": {
+        "title": "Mova-se pelo Tempo",
+        "detail": "Setas movem entre meses. Hoje volta para o momento. Pesquisa entende linguagem natural — \"Hexa 15\" ou \"31 de janeiro\". Expanda horizontal ou verticalmente para mais detalhes. Todo o ano está a um gesto de distância.",
+        "action": "Toque ← ou → para navegar",
+        "instruction": "Você nunca está perdido."
+      },
+      "first-note": {
+        "title": "Faça Sua Primeira Marca",
+        "detail": "Toque em qualquer dia. Role para Notas. Escreva algo — uma tarefa, um humor, uma lembrança. Esta é a primeira entrada do que pode se tornar uma crônica de anos.",
+        "action": "Escreva uma nota para completar o tutorial",
+        "instruction": "Um calendário é apenas uma ferramenta até que você o personalize."
+      },
+      "celestial-guide": {
+        "title": "O Guia Celestial",
+        "detail": "Horários do Sol: anel SVG ao vivo, clima, precisão de quatro níveis. Fase Lunar: iluminação, lua vazia, contagem regressiva do Ano Novo Lunar. Estações: rastreamento verdadeiro do solstício astronômico. Agricultura: o que plantar hoje, por sua localização e fase lunar. Relógio Digital: quatro contagens regressivas ao vivo simultâneas. Horas Planetárias: horas caldeanas reais baseadas na verdadeira nascer e pôr do sol. Percorra-as. Cada uma é um instrumento científico.",
+        "action": "Percorra as cartas celestiais para continuar",
+        "instruction": "Seis cartas. Um céu."
+      }
+    },
+    "printThemes": {
+      "egypt": {
+        "name": "Egito",
+        "desc": "Hieróglifos"
+      },
+      "sacred": {
+        "name": "Geo Sagrada",
+        "desc": "Células circulares"
+      },
+      "nature": {
+        "name": "Natureza",
+        "desc": "Botânico"
+      },
+      "default": {
+        "name": "Padrão",
+        "desc": "Pergaminho & ouro"
+      },
+      "cyberpunk": {
+        "name": "Cyberpunk",
+        "desc": "Brilho neon"
+      },
+      "minimalist": {
+        "name": "Minimalista",
+        "desc": "Pureza suico"
+      }
+    },
+    "previewAchievements": {
+      "nightOwl": "Coruja da Noite",
+      "timeLord": "Senhor do Tempo",
+      "firstWords": "Primeiras Palavras",
+      "weekWarrior": "Guerreiro da Semana",
+      "centuryClub": "Clube do Século",
+      "theChronicler": "O Cronista"
+    }
+  }
+}

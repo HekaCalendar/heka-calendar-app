@@ -7,211 +7,22 @@
  * ╚═══════════════════════════════════════════════════════════════════════════╝
  */
 
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import i18n from '../i18n';
 import '../styles/tracker-panel.css';
-
-// ═════════════════════════════════════════════════════════════════════════════
-// TYPES
-// ═════════════════════════════════════════════════════════════════════════════
-
-interface CommunityResource {
-  id: string;
-  name: string;
-  description: string;
-  type: 'local' | 'circle' | 'online' | 'space';
-  location?: string;
-  timezone?: string;
-  languages?: string[];
-  contact?: string;
-  website?: string;
-  schedule?: string;
-}
-
-interface RegionData {
-  country: string;
-  flag: string;
-  timezone: string;
-  resources: CommunityResource[];
-}
+import type { RootState, AppDispatch } from '../store';
+import { setSelectedCommunityRegion } from '../store';
+import { attachCommunityResourcesListener, detachCommunityResourcesListener } from '../services/communityService';
+import { DEFAULT_COMMUNITY_RESOURCES } from '../data/communityResources';
+import type { RegionData } from '../types';
 
 // ═════════════════════════════════════════════════════════════════════════════
 // COMMUNITY RESOURCE DATA
-// Expandable — add regions and resources as the community grows
+// Bundled offline fallback. Live Firestore data merges with / overrides this.
 // ═════════════════════════════════════════════════════════════════════════════
 
-const COMMUNITY_DATA: Record<string, RegionData> = {
-  au: {
-    country: 'Australia',
-    flag: '🇦🇺',
-    timezone: 'Australia/Sydney',
-    resources: [
-      {
-        id: 'au-1',
-        name: 'Sydney Moon Circle',
-        description: 'Monthly gathering for lunar observation, intention setting, and community connection under the southern sky.',
-        type: 'circle',
-        location: 'Sydney, NSW',
-        schedule: 'New Moon, 7:00 PM AEST',
-        contact: 'sydneymooncircle@example.com',
-      },
-      {
-        id: 'au-2',
-        name: 'Biodynamic Gardening Collective',
-        description: 'Learn to plant by moon phases and planetary rhythms with experienced growers.',
-        type: 'local',
-        location: 'Melbourne, VIC',
-        schedule: 'First Saturday of each month',
-        website: 'https://example.com/biodynamic-melbourne',
-      },
-      {
-        id: 'au-3',
-        name: 'Aboriginal Astronomy & Culture Centre',
-        description: 'Explore Indigenous Australian astronomical knowledge and Dreamtime stories of the stars.',
-        type: 'space',
-        location: 'National — online & local events',
-        contact: 'culture@example.com',
-      },
-    ],
-  },
-  us: {
-    country: 'United States',
-    flag: '🇺🇸',
-    timezone: 'America/New_York',
-    resources: [
-      {
-        id: 'us-1',
-        name: 'The Astro Lodge',
-        description: 'A welcoming space for astrology enthusiasts, moon ceremonies, and celestial workshops.',
-        type: 'space',
-        location: 'Los Angeles, CA',
-        schedule: 'Open daily, events weekly',
-        website: 'https://example.com/astrolodge',
-      },
-      {
-        id: 'us-2',
-        name: 'Thirteen Moons Collective',
-        description: 'Online community exploring natural timekeeping, lunar cycles, and seasonal living.',
-        type: 'online',
-        schedule: 'Virtual meetups every Full Moon',
-        website: 'https://example.com/13moons',
-      },
-      {
-        id: 'us-3',
-        name: 'Hudson Valley Biodynamic Farm',
-        description: 'Hands-on workshops in planting by celestial rhythms and earth stewardship.',
-        type: 'local',
-        location: 'Hudson Valley, NY',
-        schedule: 'Seasonal workshops',
-        contact: 'farm@example.com',
-      },
-    ],
-  },
-  uk: {
-    country: 'United Kingdom',
-    flag: '🇬🇧',
-    timezone: 'Europe/London',
-    resources: [
-      {
-        id: 'uk-1',
-        name: 'Stone Circle Gatherings',
-        description: 'Seasonal assemblies at sacred sites for solstice, equinox, and cross-quarter celebrations.',
-        type: 'circle',
-        location: 'Wiltshire & Cornwall',
-        schedule: 'Quarter days and cross-quarters',
-        website: 'https://example.com/stonecircles',
-      },
-      {
-        id: 'uk-2',
-        name: 'The Druid Grove',
-        description: 'Study natural philosophy, tree lore, and Celtic calendar traditions in community.',
-        type: 'local',
-        location: 'Glastonbury & online',
-        schedule: 'Weekly gatherings',
-        contact: 'grove@example.com',
-      },
-    ],
-  },
-  de: {
-    country: 'Germany',
-    flag: '🇩🇪',
-    timezone: 'Europe/Berlin',
-    resources: [
-      {
-        id: 'de-1',
-        name: 'Mondkreis Berlin',
-        description: 'German-speaking moon circle for meditation, ritual, and community under lunar phases.',
-        type: 'circle',
-        location: 'Berlin',
-        schedule: 'Neumond, 19:00 CET',
-        contact: 'mondkreis@example.com',
-      },
-      {
-        id: 'de-2',
-        name: 'Naturrhythmus Zentrum',
-        description: 'Center for biodynamic agriculture and natural time education in the German countryside.',
-        type: 'space',
-        location: 'Bavaria',
-        schedule: 'Workshops seasonally',
-        website: 'https://example.com/naturrhythmus',
-      },
-    ],
-  },
-  jp: {
-    country: 'Japan',
-    flag: '🇯🇵',
-    timezone: 'Asia/Tokyo',
-    resources: [
-      {
-        id: 'jp-1',
-        name: 'Tsukimi Gathering',
-        description: 'Traditional moon-viewing gatherings combining Japanese lunar customs with community celebration.',
-        type: 'circle',
-        location: 'Tokyo & Kyoto',
-        schedule: 'Monthly full moon',
-        contact: 'tsukimi@example.com',
-      },
-      {
-        id: 'jp-2',
-        name: 'Zen & Celestial Rhythm Retreat',
-        description: 'Silent retreats exploring the intersection of Buddhist practice and natural time cycles.',
-        type: 'space',
-        location: 'Mount Koya region',
-        schedule: 'Quarterly retreats',
-        website: 'https://example.com/zen-celestial',
-      },
-    ],
-  },
-  global: {
-    country: 'Global',
-    flag: '🌍',
-    timezone: 'UTC',
-    resources: [
-      {
-        id: 'gl-1',
-        name: 'HEKA Circle — Online',
-        description: 'The global HEKA community. Share observations, ask questions, and connect with natural timekeepers worldwide.',
-        type: 'online',
-        schedule: 'Active 24/7',
-        website: 'https://hekaverse.com/circle',
-      },
-      {
-        id: 'gl-2',
-        name: 'Worldwide Biodynamic Association',
-        description: 'International network of farms, gardens, and educators working with celestial planting calendars.',
-        type: 'online',
-        website: 'https://example.com/biodynamic-global',
-      },
-      {
-        id: 'gl-3',
-        name: 'Sacred Timekeepers Guild',
-        description: 'A loose federation of communities across cultures preserving traditional calendar systems.',
-        type: 'online',
-        website: 'https://example.com/sacred-time',
-      },
-    ],
-  },
-};
+const COMMUNITY_DATA: Record<string, RegionData> = DEFAULT_COMMUNITY_RESOURCES;
 
 // Map supported languages to regions for intelligent defaults
 const LOCALE_TO_REGION: Record<string, string> = {
@@ -233,25 +44,60 @@ interface CommunityHubProps {
 
 type HubTab = 'nearby' | 'circles' | 'online' | 'all';
 
+function mergeCommunityData(
+  fallback: Record<string, RegionData>,
+  live: Record<string, RegionData>
+): Record<string, RegionData> {
+  const merged: Record<string, RegionData> = { ...fallback };
+  for (const [region, data] of Object.entries(live)) {
+    if (!data?.resources) continue;
+    const existing = merged[region];
+    if (existing) {
+      const resourceMap = new Map(existing.resources.map((r) => [r.id, r]));
+      for (const r of data.resources) resourceMap.set(r.id, r);
+      merged[region] = { ...existing, ...data, resources: Array.from(resourceMap.values()) };
+    } else {
+      merged[region] = data;
+    }
+  }
+  return merged;
+}
+
 export const CommunityHub: React.FC<CommunityHubProps> = ({ isOpen, onClose }) => {
+  const dispatch = useDispatch<AppDispatch>();
+  const liveResources = useSelector((state: RootState) => state.calendar.communityResources);
+  const persistedRegion = useSelector((state: RootState) => state.calendar.selectedCommunityRegion);
+
+  const communityData = useMemo(() => mergeCommunityData(COMMUNITY_DATA, liveResources), [liveResources]);
+
   const [activeTab, setActiveTab] = useState<HubTab>('nearby');
   const [selectedRegion, setSelectedRegion] = useState<string>(() => {
+    if (persistedRegion && communityData[persistedRegion]) return persistedRegion;
     const lang = (i18n.language || 'en').split('-')[0].toLowerCase();
     return LOCALE_TO_REGION[lang] || 'global';
   });
 
-  const currentRegion = COMMUNITY_DATA[selectedRegion] || COMMUNITY_DATA.global;
+  useEffect(() => {
+    attachCommunityResourcesListener();
+    return () => detachCommunityResourcesListener();
+  }, []);
+
+  useEffect(() => {
+    dispatch(setSelectedCommunityRegion(selectedRegion));
+  }, [selectedRegion, dispatch]);
+
+  const currentRegion = communityData[selectedRegion] || communityData.global;
 
   const filteredResources = useMemo(() => {
     const all = [
       ...currentRegion.resources,
-      ...(selectedRegion !== 'global' ? COMMUNITY_DATA.global.resources : []),
+      ...(selectedRegion !== 'global' ? communityData.global.resources : []),
     ];
     if (activeTab === 'all') return all;
     return all.filter(r => r.type === activeTab);
-  }, [activeTab, selectedRegion, currentRegion]);
+  }, [activeTab, selectedRegion, currentRegion, communityData.global.resources]);
 
-  const regions = useMemo(() => Object.entries(COMMUNITY_DATA), []);
+  const regions = useMemo(() => Object.entries(communityData), [communityData]);
 
   const getTypeIcon = (type: string) => {
     switch (type) {

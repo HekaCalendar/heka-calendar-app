@@ -294,11 +294,6 @@ export interface UnlockedAchievement {
 // Gamification
 // ============================================================================
 
-export interface UnlockedAchievement {
-  id: string;
-  unlockedAt: string;
-}
-
 export interface UserProgress {
   level: number;
   experience: number;
@@ -386,6 +381,31 @@ export interface SubscriptionState {
   purchasedProductIds: string[]; // one-time purchases (physical items, etc.)
 }
 
+export type CommunityResourceType = 'local' | 'circle' | 'online' | 'space';
+
+export interface CommunityResource {
+  id: string;
+  name: string;
+  description: string;
+  type: CommunityResourceType;
+  location?: string;
+  timezone?: string;
+  languages?: string[];
+  contact?: string;
+  website?: string;
+  schedule?: string;
+  region?: string; // e.g. 'au', 'us', 'global'
+  isCurated?: boolean;
+  approvedAt?: string; // ISO timestamp
+}
+
+export interface RegionData {
+  country: string;
+  flag: string;
+  timezone: string;
+  resources: CommunityResource[];
+}
+
 export interface CalendarState {
   currentView: 'month' | 'year' | 'print-preview' | 'astrology-hub' | 'stars' | 'store' | 'certificate-builder' | 'routine-builder' | 'natal-report';
   viewDate: HekaDate;
@@ -421,6 +441,8 @@ export interface CalendarState {
   // Social features
   communityHolidays: CommunityHoliday[];
   communityFeatures: CommunityFeature[];
+  communityResources: Record<string, RegionData>;
+  selectedCommunityRegion: string | null;
   subscribedCalendars: string[];
   pendingInvites: CalendarInvite[];
   // Gamification

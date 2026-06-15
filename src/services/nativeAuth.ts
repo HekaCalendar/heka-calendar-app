@@ -44,7 +44,9 @@ export async function signInWithGoogleNative(): Promise<UserCredential> {
 
   try {
     // Trigger native Google Sign-In (Play Services on Android)
-    const result = await FirebaseAuthentication.signInWithGoogle();
+    // useCredentialManager: false uses the legacy GoogleSignInClient which reliably
+    // shows the account picker/creation dialog instead of failing silently.
+    const result = await FirebaseAuthentication.signInWithGoogle({ useCredentialManager: false });
 
     if (!result.credential) {
       throw new NativeAuthError('Google Sign-In did not return credentials');
@@ -64,7 +66,10 @@ export async function signInWithGoogleNative(): Promise<UserCredential> {
     // Map common plugin errors to friendly messages
     if (getErrorCode(error) === '10' || getErrorMessage(error).includes('DEVELOPER_ERROR')) {
       throw new NativeAuthError(
-        'Google Sign-In configuration error. Please ensure the SHA-1 fingerprint is added to Firebase Console.',
+        'Google Sign-In: SHA-1 fingerprint not registered in Firebase Console. ' +
+        'Go to Firebase Console → Project Settings → com.heka.calendar → Add fingerprint: ' +
+        '7F:C3:60:5D:6B:E2:39:40:0A:0D:D3:67:93:F8:30:EC:7A:67:58:9A. ' +
+        'If using Google Play, also add the App Signing key SHA-1 from Play Console.',
         'auth/configuration-error'
       );
     }

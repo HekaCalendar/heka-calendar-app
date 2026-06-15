@@ -83,7 +83,7 @@ export const selectLatestChartForProfile = (profileId: ProfileId) =>
     [selectChartsForProfile(profileId)],
     (charts) => {
       if (charts.length === 0) return null;
-      return charts.sort((a, b) => b.calculatedAt - a.calculatedAt)[0];
+      return charts.sort((a, b) => new Date(b.calculatedAt).getTime() - new Date(a.calculatedAt).getTime())[0];
     }
   );
 
@@ -93,7 +93,7 @@ export const selectSelectedProfileChart = createSelector(
     if (!profile) return null;
     const profileCharts = charts.filter(c => c.profileId === profile.id);
     if (profileCharts.length === 0) return null;
-    return profileCharts.sort((a, b) => b.calculatedAt - a.calculatedAt)[0];
+    return profileCharts.sort((a, b) => new Date(b.calculatedAt).getTime() - new Date(a.calculatedAt).getTime())[0];
   }
 );
 

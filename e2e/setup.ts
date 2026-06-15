@@ -7,6 +7,6 @@ export async function skipOnboarding(page: Page) {
   await page.addInitScript(() => {
     localStorage.setItem('heka-setup-v1', JSON.stringify({ isComplete: true, language: 'en' }));
     localStorage.setItem('heka-tutorial-v3', JSON.stringify({ completed: true }));
-    localStorage.setItem('heka-version', '2.2.1');
+    localStorage.setItem('heka-version', '2.2.16');
   });
 }

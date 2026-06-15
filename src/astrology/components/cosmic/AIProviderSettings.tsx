@@ -265,6 +265,34 @@ const PROVIDER_SETUP: Record<AIProviderType, ProviderInfo> = {
         tip: 'Ollama must be running whenever you want AI-enhanced readings'
       }
     ]
+  },
+  proxy: {
+    type: 'proxy',
+    name: 'HEKA AI Proxy',
+    description: 'Server-managed AI provider with rate limiting and audit logging. No client API key required.',
+    website: '',
+    signupUrl: '',
+    apiKeysUrl: '',
+    freeTierInfo: 'Configured by your organization',
+    keyPlaceholder: '',
+    keyFormat: '',
+    logo: '🛡️',
+    color: '#c9a227',
+    pricingNote: 'Keys are managed server-side. Contact your admin for usage limits.',
+    setupSteps: [
+      {
+        number: 1,
+        title: 'Enable AI Proxy',
+        description: 'Your administrator configures the proxy server with provider keys.',
+        tip: 'No API key is needed on this device'
+      },
+      {
+        number: 2,
+        title: 'Start Using AI',
+        description: 'Select HEKA AI Proxy and all requests will be routed through the secure backend.',
+        tip: 'The proxy logs prompts for compliance and enforces rate limits'
+      }
+    ]
   }
 };
 
@@ -360,24 +388,39 @@ export const AIProviderSettings: React.FC<AIProviderSettingsProps> = ({ onConfig
     
     try {
       if (selectedProvider === 'template') {
-        localStorage.setItem('celestial-ai-config', JSON.stringify({ 
+        localStorage.setItem('celestial-ai-config', JSON.stringify({
           activeProvider: 'template',
-          enabled: false 
+          enabled: false
         }));
         aiProviderManager.setActiveProvider('template');
         aiConfigService.setProvider('template');
         aiConfigService.setGlobalEnabled(false);
-        
+
         setActiveProvider('template');
         setIsEnabled(false);
         setTestResult({ success: true, message: t('aiSettings.usingTemplateShort') });
         onConfigChange?.(false);
+      } else if (selectedProvider === 'proxy') {
+        aiProviderManager.setActiveProvider('proxy');
+        aiConfigService.setProvider('proxy');
+        aiConfigService.setGlobalEnabled(true);
+        aiConfigService.setAreaEnabled('stars', true);
+
+        localStorage.setItem('celestial-ai-config', JSON.stringify({
+          activeProvider: 'proxy',
+          enabled: true
+        }));
+
+        setActiveProvider('proxy');
+        setIsEnabled(true);
+        setTestResult({ success: true, message: t('aiSettings.connectedShort', { provider: t(`dictionaries.providerSetup.${selectedProvider}.name`) }) });
+        onConfigChange?.(true);
       } else {
         if (!apiKey.trim()) {
           setTestResult({ success: false, message: t('aiSettings.pleaseEnterKey') });
           return;
         }
-        
+
         await aiProviderManager.saveApiKey(selectedProvider, apiKey.trim());
         aiProviderManager.setActiveProvider(selectedProvider);
         
@@ -412,7 +455,23 @@ export const AIProviderSettings: React.FC<AIProviderSettingsProps> = ({ onConfig
       setTestResult({ success: true, message: t('aiSettings.templateAvailable') });
       return;
     }
-    
+
+    if (selectedProvider === 'proxy') {
+      try {
+        const isValid = await aiProviderManager.validateApiKey('proxy', '');
+        setTestResult({
+          success: isValid,
+          message: isValid ? t('aiSettings.connectionSuccess') : t('aiSettings.connectionFailed')
+        });
+      } catch (error) {
+        setTestResult({
+          success: false,
+          message: error instanceof Error ? error.message : t('aiSettings.connectionFailed')
+        });
+      }
+      return;
+    }
+
     if (!apiKey.trim()) {
       setTestResult({ success: false, message: t('aiSettings.pleaseEnterKeyFirst') });
       return;

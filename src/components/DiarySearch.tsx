@@ -192,13 +192,13 @@ export const DiarySearch: React.FC<DiarySearchProps> = ({
             <input
               type="text"
               className="diary-search-input"
-              placeholder={i18n.t('journal.searchPlaceholder')}
+              placeholder={i18n.t('searchPlaceholder', 'Search dates, notes, holidays...')}
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               autoFocus
             />
             {query && (
-              <button className="diary-search-clear" onClick={() => setQuery('')} aria-label={i18n.t('common.clear')}>
+              <button className="diary-search-clear" onClick={() => setQuery('')} aria-label={i18n.t('clear', { ns: 'common' })}>
                 ×
               </button>
             )}

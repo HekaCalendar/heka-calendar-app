@@ -10,7 +10,7 @@
 import React, { useState, useCallback, useMemo } from 'react';
 import { CinematicWelcome } from './CinematicWelcome';
 import { CinematicStory } from './CinematicStory';
-import { getWizardStrings } from '../../../data/languages';
+import { getWizardStrings } from '../../../data/wizardStrings';
 import { eventBus } from '../../../services/eventBus';
 import { aiConfigService } from '../../../services/aiConfigService';
 import './tutorialV3.css';

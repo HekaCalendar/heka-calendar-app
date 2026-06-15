@@ -73,7 +73,7 @@ export const OutputStep: React.FC<Props> = ({ routine, onApply, onRestart, onCha
             type="text"
             value={routine.name}
             onChange={e => onChange({ name: e.target.value })}
-            placeholder={t('wizard.outputNamePlaceholder')}
+            placeholder={t('outputNamePlaceholder', 'Output name...')}
           />
         </div>
 

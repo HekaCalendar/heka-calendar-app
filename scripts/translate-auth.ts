@@ -13,7 +13,6 @@ const API_BASE = process.env.MOONSHOT_API_BASE || 'https://api.moonshot.ai/v1';
 const MODEL = 'moonshot-v1-32k';
 
 const LOCALES_DIR = path.resolve(__dirname, '../src/i18n/locales');
-const PUBLIC_LOCALES_DIR = path.resolve(__dirname, '../public/locales');
 
 const TARGET_LANGUAGES = [
   'es', 'fr', 'de', 'it', 'pt', 'zh', 'ja', 'ko', 'ar', 'hi', 'ru',
@@ -140,9 +139,7 @@ async function main() {
     console.log(`Translating → ${lang}...`);
 
     const targetDir = path.join(LOCALES_DIR, lang);
-    const publicTargetDir = path.join(PUBLIC_LOCALES_DIR, lang);
     if (!fs.existsSync(targetDir)) fs.mkdirSync(targetDir, { recursive: true });
-    if (!fs.existsSync(publicTargetDir)) fs.mkdirSync(publicTargetDir, { recursive: true });
 
     const CHUNK_SIZE = 40;
     const translatedFlat: Record<string, string> = {};
@@ -185,7 +182,6 @@ async function main() {
     const translatedJson = unflatten(translatedFlat);
     const output = JSON.stringify(translatedJson, null, 2) + '\n';
     fs.writeFileSync(path.join(targetDir, 'auth.json'), output, 'utf-8');
-    fs.writeFileSync(path.join(publicTargetDir, 'auth.json'), output, 'utf-8');
     console.log(`  ✓ auth → ${lang} (${keys.length} keys)`);
   }
 

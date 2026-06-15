@@ -141,7 +141,7 @@ const ChronosCard: React.FC<ChronosCardProps> = ({ currentTime, julianDay, posit
         <div key="chronos-expanded" className="card-expanded" onClick={(e) => e.stopPropagation()}>
           <div className="expanded-header">
             <div className="expanded-title">{t('premiumCards.aeonGate')}</div>
-            <button className="close-btn" onClick={onToggle} aria-label={t('common.close')}>×</button>
+            <button className="close-btn" onClick={onToggle} aria-label={t('close')}>×</button>
           </div>
           
           {/* HEKA Section */}
@@ -264,29 +264,14 @@ interface LunaCardProps {
 const LunaCard: React.FC<LunaCardProps> = ({ moonPhase, moonPosition, isExpanded, onToggle }) => {
   const { t } = useTranslation('celestial');
   
-  const oracle = moonPhase ? (() => {
-    const fallbackTitle = t('dictionaries.moonOracle.New Moon.title');
-    const fallbackPoem = t('dictionaries.moonOracle.New Moon.poem');
-    const fallbackFavors = t('dictionaries.moonOracle.New Moon.favors', { returnObjects: true });
-    const fallbackWarnings = t('dictionaries.moonOracle.New Moon.warnings', { returnObjects: true });
-    return {
-      title: t(`dictionaries.moonOracle.${moonPhase.phase}.title`, { defaultValue: fallbackTitle }),
-      poem: t(`dictionaries.moonOracle.${moonPhase.phase}.poem`, { defaultValue: fallbackPoem }),
-      favors: Object.values(t(`dictionaries.moonOracle.${moonPhase.phase}.favors`, { defaultValue: fallbackFavors, returnObjects: true }) as Record<string, string>),
-      warnings: Object.values(t(`dictionaries.moonOracle.${moonPhase.phase}.warnings`, { defaultValue: fallbackWarnings, returnObjects: true }) as Record<string, string>),
-    };
-  })() : { title: '', poem: '', favors: [] as string[], warnings: [] as string[] };
-  
-  // Calculate moon age percentage through cycle (approximate from angle)
-  const synodicMonth = 29.53059;
-  const moonAge = moonPhase ? (moonPhase.angle / 360) * synodicMonth : 0;
-  const cycleProgress = moonPhase ? (moonAge / synodicMonth) * 100 : 0;
+  const handleToggle = useCallback(() => {
+    onToggle();
+  }, [onToggle]);
 
   return (
-    <div className={`premium-card luna ${isExpanded ? 'expanded' : ''} ${!moonPhase ? 'loading' : ''}`} onClick={onToggle}>
+    <div className={`premium-card luna ${isExpanded ? 'expanded' : ''}`} onClick={handleToggle}>
       <div className="card-sheen" />
       
-      {/* Default View - Epic 3D Moon */}
       <div className="card-default">
         {!moonPhase ? (
           <>
@@ -296,14 +281,10 @@ const LunaCard: React.FC<LunaCardProps> = ({ moonPhase, moonPosition, isExpanded
         ) : (
           <>
             <div className="luna-visual">
-              {/* 3D Moon Container */}
               <div className="moon-3d-container">
-                {/* Moon surface craters */}
                 <div className="moon-crater moon-crater-1" style={{ pointerEvents: 'none' }} />
                 <div className="moon-crater moon-crater-2" style={{ pointerEvents: 'none' }} />
                 <div className="moon-crater moon-crater-3" style={{ pointerEvents: 'none' }} />
-                
-                {/* Phase shadow overlay - using clip-path for accurate phase rendering */}
                 <div 
                   className="moon-phase-shadow"
                   style={{ 
@@ -314,21 +295,14 @@ const LunaCard: React.FC<LunaCardProps> = ({ moonPhase, moonPosition, isExpanded
                     pointerEvents: 'none',
                   }}
                 />
-                
-                {/* Shadow overlay for depth */}
                 <div className="moon-shadow-overlay" />
               </div>
-              
-              {/* Glowing rings - opacity based on illumination */}
               <div 
                 className="moon-glow-ring" 
                 style={{ opacity: 0.3 + (moonPhase.illumination / 200), pointerEvents: 'none' }}
               />
-              
-              {/* Illumination text */}
               <div className="moon-illumination-text" style={{ pointerEvents: 'none' }}>{moonPhase.illumination.toFixed(0)}%</div>
             </div>
-            
             <div className="card-primary-content centered">
               <div className="moon-phase-name">{moonPhase.name.toUpperCase()}</div>
               <div className="moon-trend">
@@ -343,105 +317,123 @@ const LunaCard: React.FC<LunaCardProps> = ({ moonPhase, moonPosition, isExpanded
         )}
       </div>
 
-      {/* Expanded View - Lunar Temple */}
-      {isExpanded && moonPhase && (
-        <div className="card-expanded" onClick={(e) => e.stopPropagation()}>
-          <div className="expanded-header">
-            <div className="expanded-title">{t('premiumCards.lunarTemple')}</div>
-            <button className="close-btn" onClick={onToggle} aria-label={t('common.close')}>×</button>
-          </div>
-
-          {/* Phase Cycle Visual */}
-          <div className="expanded-section">
-            <div className="phase-cycle-visual">
-              {['🌑', '🌒', '🌓', '🌔', '🌕', '🌖', '🌗', '🌘'].map((emoji, i) => {
-                const phasePos = (i / 8) * 100;
-                const currentPos = cycleProgress;
-                const isActive = Math.abs(phasePos - currentPos) < 12.5;
-                return (
-                  <div key={i} className={`cycle-phase ${isActive ? 'active' : ''}`}>
-                    <span>{emoji}</span>
-                    {isActive && <div className="phase-indicator">★</div>}
-                  </div>
-                );
-              })}
+      {isExpanded && (
+        <div key="luna-expanded" className="card-expanded" onClick={(e) => e.stopPropagation()}>
+          {moonPhase ? (<>
+            <div className="expanded-header">
+              <div className="expanded-title">{t('premiumCards.lunarTemple')}</div>
+              <button className="close-btn" onClick={handleToggle} aria-label={t('close')}>×</button>
             </div>
-            <div className="cycle-line">
-              <div className="cycle-progress" style={{ width: `${cycleProgress}%` }} />
-            </div>
-          </div>
 
-          {/* Oracle Message */}
-          <div className="expanded-section oracle-section">
-            <div className="oracle-title">{oracle.title}</div>
-            <div className="oracle-poem">&ldquo;{oracle.poem}&rdquo;</div>
-          </div>
-
-          {/* Moon Position */}
-          {moonPosition && (
+            {/* Phase Cycle Visual */}
             <div className="expanded-section">
-              <div className="section-label">{t('premiumCards.moonsCurrentThrone')}</div>
-              <div className="moon-position-card">
-                <span className="mp-sign">{SIGN_SYMBOLS[moonPosition.sign as ZodiacSign]}</span>
-                <span className="mp-degree">{(moonPosition.degreeInSign ?? 0).toFixed(1)}°</span>
-                <span className="mp-name">{moonPosition.sign.charAt(0).toUpperCase() + moonPosition.sign.slice(1)}</span>
+              <div className="phase-cycle-visual">
+                {['🌑', '🌒', '🌓', '🌔', '🌕', '🌖', '🌗', '🌘'].map((emoji, i) => {
+                  const phasePos = (i / 8) * 100;
+                  const cycleProgress = ((moonPhase.angle / 360) * 29.53059 / 29.53059) * 100;
+                  const isActive = Math.abs(phasePos - cycleProgress) < 12.5;
+                  return (
+                    <div key={i} className={`cycle-phase ${isActive ? 'active' : ''}`}>
+                      <span>{emoji}</span>
+                      {isActive && <div className="phase-indicator">★</div>}
+                    </div>
+                  );
+                })}
               </div>
-              <div className="moon-qualities">
-                <span className="quality-tag element">
-                  {ELEMENT_META[SIGN_ELEMENTS[moonPosition.sign as ZodiacSign]]?.symbol}
-                  {' '}{SIGN_ELEMENTS[moonPosition.sign as ZodiacSign]}
+              <div className="cycle-line">
+                <div className="cycle-progress" style={{ width: `${((moonPhase.angle / 360) * 29.53059 / 29.53059) * 100}%` }} />
+              </div>
+            </div>
+
+            {/* Oracle Message */}
+            <div className="expanded-section oracle-section">
+              {(() => {
+                const title = t(`moonOracle.${moonPhase.name}.title`);
+                const poem = t(`moonOracle.${moonPhase.name}.poem`);
+                const hasTitle = title && title !== `moonOracle.${moonPhase.name}.title`;
+                const hasPoem = poem && poem !== `moonOracle.${moonPhase.name}.poem`;
+                return (
+                  <>
+                    {hasTitle && <div className="oracle-title">{title}</div>}
+                    {hasPoem && <div className="oracle-poem">&ldquo;{poem}&rdquo;</div>}
+                    {!hasTitle && !hasPoem && (
+                      <div className="oracle-poem" style={{ opacity: 0.6, fontStyle: 'italic' }}>
+                        {moonPhase.name} — {Math.round(moonPhase.illumination)}% illuminated
+                      </div>
+                    )}
+                  </>
+                );
+              })()}
+            </div>
+
+            {/* Moon Position */}
+            {moonPosition && (
+              <div className="expanded-section">
+                <div className="section-label">{t('premiumCards.moonsCurrentThrone')}</div>
+                <div className="moon-position-card">
+                  <span className="mp-sign">{SIGN_SYMBOLS[moonPosition.sign as ZodiacSign]}</span>
+                  <span className="mp-degree">{(moonPosition.degreeInSign ?? 0).toFixed(1)}°</span>
+                  <span className="mp-name">{moonPosition.sign.charAt(0).toUpperCase() + moonPosition.sign.slice(1)}</span>
+                </div>
+              </div>
+            )}
+
+            {/* Phase Guidance */}
+            <div className="expanded-section">
+              <div className="section-label">{t('premiumCards.thisPhaseFavors')}</div>
+              <div className="favors-list">
+                {[0, 1, 2, 3].map(i => {
+                  const favor = t(`moonOracle.${moonPhase.name}.favors.${i}`);
+                  return favor && favor !== `moonOracle.${moonPhase.name}.favors.${i}` ? (
+                    <div key={i} className="favor-item">
+                      <span className="favor-icon">✦</span>
+                      <span>{favor}</span>
+                    </div>
+                  ) : null;
+                })}
+              </div>
+            </div>
+
+            <div className="expanded-section">
+              <div className="section-label">{t('premiumCards.beMindful')}</div>
+              <div className="warnings-list">
+                {[0, 1].map(i => {
+                  const warning = t(`moonOracle.${moonPhase.name}.warnings.${i}`);
+                  return warning && warning !== `moonOracle.${moonPhase.name}.warnings.${i}` ? (
+                    <div key={i} className="warning-item">
+                      <span className="warning-icon">⚠</span>
+                      <span>{warning}</span>
+                    </div>
+                  ) : null;
+                })}
+              </div>
+            </div>
+
+            {/* Next Phase */}
+            <div className="expanded-section next-phase">
+              <div className="section-label">{t('premiumCards.nextPhase')}</div>
+              <div className="next-phase-info">
+                <span className="next-phase-name">
+                  {moonPhase.isWaxing 
+                    ? (moonPhase.name === 'New Moon' ? 'Waxing Crescent' : moonPhase.name === 'Waxing Crescent' ? 'First Quarter' : moonPhase.name === 'First Quarter' ? 'Waxing Gibbous' : 'Full Moon')
+                    : (moonPhase.name === 'Full Moon' ? 'Waning Gibbous' : moonPhase.name === 'Waning Gibbous' ? 'Last Quarter' : moonPhase.name === 'Last Quarter' ? 'Waning Crescent' : 'New Moon')
+                  }
                 </span>
-                <span className="quality-tag modality">
-                  {MODALITY_SYMBOLS[SIGN_MODALITIES[moonPosition.sign as ZodiacSign]]}
-                  {' '}{SIGN_MODALITIES[moonPosition.sign as ZodiacSign]}
+                <span className="next-phase-when">
+                  {moonPhase.isWaxing 
+                    ? `in ~${Math.ceil((180 - moonPhase.angle) / 12)} days`
+                    : `in ~${Math.ceil((360 - moonPhase.angle) / 12)} days`
+                  }
                 </span>
               </div>
             </div>
-          )}
-
-          {/* Phase Guidance */}
-          <div className="expanded-section">
-            <div className="section-label">{t('premiumCards.thisPhaseFavors')}</div>
-            <div className="favors-list">
-              {oracle.favors.map((favor, i) => (
-                <div key={i} className="favor-item">
-                  <span className="favor-icon">✦</span>
-                  <span>{favor}</span>
-                </div>
-              ))}
-            </div>
+          </>)
+         : (
+          <div className="expanded-loading" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '40px 0', gap: '12px' }}>
+            <div className="loading-spinner">☽</div>
+            <div>{t('premiumCards.calculatingLunar')}</div>
           </div>
-
-          <div className="expanded-section">
-            <div className="section-label">{t('premiumCards.beMindful')}</div>
-            <div className="warnings-list">
-              {oracle.warnings.map((warning, i) => (
-                <div key={i} className="warning-item">
-                  <span className="warning-icon">⚠</span>
-                  <span>{warning}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Next Phase (calculated) */}
-          <div className="expanded-section next-phase">
-            <div className="section-label">{t('premiumCards.nextPhase')}</div>
-            <div className="next-phase-info">
-              <span className="next-phase-name">
-                {moonPhase.isWaxing 
-                  ? (moonPhase.name === 'New Moon' ? 'Waxing Crescent' : moonPhase.name === 'Waxing Crescent' ? 'First Quarter' : moonPhase.name === 'First Quarter' ? 'Waxing Gibbous' : 'Full Moon')
-                  : (moonPhase.name === 'Full Moon' ? 'Waning Gibbous' : moonPhase.name === 'Waning Gibbous' ? 'Last Quarter' : moonPhase.name === 'Last Quarter' ? 'Waning Crescent' : 'New Moon')
-                }
-              </span>
-              <span className="next-phase-when">
-                {moonPhase.isWaxing 
-                  ? `in ~${Math.ceil((180 - moonPhase.angle) / 12)} days`
-                  : `in ~${Math.ceil((360 - moonPhase.angle) / 12)} days`
-                }
-              </span>
-            </div>
-          </div>
+        )}
         </div>
       )}
     </div>
@@ -467,36 +459,17 @@ interface KronosCardProps {
   onToggle: () => void;
 }
 
-const CHALDEAN_ORDER: PlanetId[] = ['saturn', 'jupiter', 'mars', 'sun', 'venus', 'mercury', 'moon'];
-
 const KronosCard: React.FC<KronosCardProps> = ({ planetaryHour, isExpanded, onToggle }) => {
   const { t } = useTranslation('celestial');
   
-  const hourData = planetaryHour ? (() => {
-    const fallbackTitle = t('dictionaries.planetaryGuidance.sun.title');
-    const fallbackDescription = t('dictionaries.planetaryGuidance.sun.description');
-    const fallbackDo = t('dictionaries.planetaryGuidance.sun.do', { returnObjects: true });
-    const fallbackDont = t('dictionaries.planetaryGuidance.sun.dont', { returnObjects: true });
-    const fallbackQuality = t('dictionaries.planetaryGuidance.sun.quality');
-    return {
-      title: t(`dictionaries.planetaryGuidance.${planetaryHour.planet}.title`, { defaultValue: fallbackTitle }),
-      description: t(`dictionaries.planetaryGuidance.${planetaryHour.planet}.description`, { defaultValue: fallbackDescription }),
-      do: Object.values(t(`dictionaries.planetaryGuidance.${planetaryHour.planet}.do`, { defaultValue: fallbackDo, returnObjects: true }) as Record<string, string>),
-      dont: Object.values(t(`dictionaries.planetaryGuidance.${planetaryHour.planet}.dont`, { defaultValue: fallbackDont, returnObjects: true }) as Record<string, string>),
-      quality: t(`dictionaries.planetaryGuidance.${planetaryHour.planet}.quality`, { defaultValue: fallbackQuality }),
-    };
-  })() : { title: '', description: '', do: [] as string[], dont: [] as string[], quality: '' };
-  const currentHourIndex = planetaryHour ? CHALDEAN_ORDER.indexOf(planetaryHour.planet as PlanetId) : -1;
-  
-  // Calculate current hour progress (mock - would use actual sunrise/sunset)
-  const now = new Date();
-  const hourProgress = planetaryHour ? ((now.getMinutes() + now.getSeconds() / 60) / 60) * 100 : 0;
+  const handleToggle = useCallback(() => {
+    onToggle();
+  }, [onToggle]);
 
   return (
-    <div className={`premium-card kronos ${isExpanded ? 'expanded' : ''} ${!planetaryHour ? 'loading' : ''}`} onClick={onToggle}>
+    <div className={`premium-card kronos ${isExpanded ? 'expanded' : ''}`} onClick={handleToggle}>
       <div className="card-sheen" />
       
-      {/* Default View */}
       <div className="card-default">
         {!planetaryHour ? (
           <>
@@ -512,7 +485,6 @@ const KronosCard: React.FC<KronosCardProps> = ({ planetaryHour, isExpanded, onTo
             <div className="card-primary-content centered">
               <div className="hour-planet-name">{planetaryHour.planet.toUpperCase()}</div>
               <div className="hour-ruler-label">{t('premiumCards.hourRuler')}</div>
-              <div className="hour-quality">{hourData.quality}</div>
             </div>
             <div className="expand-hint">
               <span className="expand-icon">↓</span>
@@ -522,120 +494,129 @@ const KronosCard: React.FC<KronosCardProps> = ({ planetaryHour, isExpanded, onTo
         )}
       </div>
 
-      {/* Expanded View - The Solar Chariot */}
-      {isExpanded && planetaryHour && (
-        <div className="card-expanded" onClick={(e) => e.stopPropagation()}>
-          <div className="expanded-header">
-            <div className="expanded-title">{t('premiumCards.chaldeanHourglass')}</div>
-            <button className="close-btn" onClick={onToggle} aria-label={t('common.close')}>×</button>
-          </div>
+      {isExpanded && (
+        <div key="kronos-expanded" className="card-expanded" onClick={(e) => e.stopPropagation()}>
+          {planetaryHour ? (<>
+            <div className="expanded-header">
+              <div className="expanded-title">{t('premiumCards.chaldeanHourglass')}</div>
+              <button className="close-btn" onClick={handleToggle} aria-label={t('close')}>×</button>
+            </div>
 
-          {/* Current Hour Display */}
-          <div className="expanded-section current-hour">
-            <div className="hour-display-large">
-              <span className="hour-planet-symbol">{planetaryHour.symbol}</span>
-              <div className="hour-info">
-                <span className="hour-name">{hourData.title}</span>
-                <span className="hour-time">{now.getHours()}:00 — {(now.getHours() + 1) % 24}:00</span>
-                {planetaryHour.location && (
-                  <span className="hour-location" style={{ fontSize: '11px', opacity: 0.7 }}>
-                    📍 {planetaryHour.location}
-                  </span>
-                )}
+            {/* Current Hour Display */}
+            <div className="expanded-section current-hour">
+              <div className="hour-display-large">
+                <span className="hour-planet-symbol">{planetaryHour.symbol}</span>
+                <div className="hour-info">
+                  <span className="hour-name">{planetaryHour.planet.toUpperCase()} HOUR</span>
+                  <span className="hour-time">{new Date().getHours()}:00 — {(new Date().getHours() + 1) % 24}:00</span>
+                  {planetaryHour.location && (
+                    <span className="hour-location" style={{ fontSize: '12px', opacity: 0.7 }}>
+                      📍 {planetaryHour.location}
+                    </span>
+                  )}
+                </div>
               </div>
             </div>
-            
-            {/* Hour Progress */}
-            <div className="hour-progress-container">
-              <div className="hour-progress-track">
-                <div className="hour-progress-fill" style={{ width: `${hourProgress}%` }} />
-              </div>
-              <span className="hour-progress-label">{t('premiumCards.minutesRemaining', { minutes: Math.round(100 - hourProgress) })}</span>
-            </div>
-          </div>
 
-          {/* Chaldean Order Visual */}
-          <div className="expanded-section">
-            <div className="section-label">{t('premiumCards.chaldeanOrder')}</div>
-            <div className="chaldean-order">
-              {CHALDEAN_ORDER.map((planet, i) => {
-                const isCurrent = i === currentHourIndex;
-                const isPast = i < currentHourIndex;
-                return (
-                  <div key={planet} className={`chaldean-planet ${isCurrent ? 'current' : ''} ${isPast ? 'past' : ''}`}>
-                    <span className="cp-symbol">{SYMBOLS[planet]}</span>
-                    <span className="cp-name">{planet}</span>
-                    {isCurrent && <div className="current-indicator">★</div>}
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-
-          {/* Sunrise/Sunset Times */}
-          {(planetaryHour.sunrise || planetaryHour.sunset) && (
+            {/* Chaldean Order Visual */}
             <div className="expanded-section">
-              <div className="section-label">{t('premiumCards.localSolarTimes')}</div>
-              <div style={{ 
-                display: 'grid', 
-                gridTemplateColumns: '1fr 1fr', 
-                gap: '12px',
-                padding: '12px',
-                background: 'rgba(255,255,255,0.05)',
-                borderRadius: '10px'
-              }}>
-                {planetaryHour.sunrise && (
-                  <div style={{ textAlign: 'center' }}>
-                    <div style={{ fontSize: '20px', marginBottom: '4px' }}>🌅</div>
-                    <div style={{ fontSize: '11px', opacity: 0.7 }}>{t('premiumCards.sunrise')}</div>
-                    <div style={{ fontSize: '16px', fontWeight: 600 }}>
-                      {planetaryHour.sunrise.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+              <div className="section-label">{t('premiumCards.chaldeanOrder')}</div>
+              <div className="chaldean-order">
+                {(['saturn', 'jupiter', 'mars', 'sun', 'venus', 'mercury', 'moon'] as PlanetId[]).map((planet, i) => {
+                  const currentHourIndex = ['saturn', 'jupiter', 'mars', 'sun', 'venus', 'mercury', 'moon'].indexOf(planetaryHour.planet);
+                  const isCurrent = i === currentHourIndex;
+                  const isPast = i < currentHourIndex;
+                  return (
+                    <div key={planet} className={`chaldean-planet ${isCurrent ? 'current' : ''} ${isPast ? 'past' : ''}`}>
+                      <span className="cp-symbol">{SYMBOLS[planet]}</span>
+                      <span className="cp-name">{planet}</span>
+                      {isCurrent && <div className="current-indicator">★</div>}
                     </div>
-                  </div>
-                )}
-                {planetaryHour.sunset && (
-                  <div style={{ textAlign: 'center' }}>
-                    <div style={{ fontSize: '20px', marginBottom: '4px' }}>🌇</div>
-                    <div style={{ fontSize: '11px', opacity: 0.7 }}>{t('premiumCards.sunset')}</div>
-                    <div style={{ fontSize: '16px', fontWeight: 600 }}>
-                      {planetaryHour.sunset.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
-                    </div>
-                  </div>
-                )}
+                  );
+                })}
               </div>
             </div>
-          )}
 
-          {/* Why This Hour */}
-          <div className="expanded-section">
-            <div className="section-label">{t('premiumCards.whyNow', { planet: planetaryHour.planet.toUpperCase() })}</div>
-            <p className="hour-description">{hourData.description}</p>
-          </div>
-
-          {/* Do's and Don'ts */}
-          <div className="expanded-section">
-            <div className="section-label">{t('premiumCards.favoredActivities')}</div>
-            <div className="activities-list do">
-              {hourData.do.map((activity, i) => (
-                <div key={i} className="activity-item">
-                  <span className="activity-icon">✓</span>
-                  <span>{activity}</span>
+            {/* Sunrise/Sunset Times */}
+            {(planetaryHour.sunrise || planetaryHour.sunset) && (
+              <div className="expanded-section">
+                <div className="section-label">{t('premiumCards.localSolarTimes')}</div>
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px', padding: '12px', background: 'rgba(255,255,255,0.05)', borderRadius: '10px' }}>
+                  {planetaryHour.sunrise && (
+                    <div style={{ textAlign: 'center' }}>
+                      <div style={{ fontSize: '20px', marginBottom: '4px' }}>🌅</div>
+                      <div style={{ fontSize: '12px', opacity: 0.7 }}>{t('premiumCards.sunrise')}</div>
+                      <div style={{ fontSize: '16px', fontWeight: 600 }}>
+                        {planetaryHour.sunrise.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                      </div>
+                    </div>
+                  )}
+                  {planetaryHour.sunset && (
+                    <div style={{ textAlign: 'center' }}>
+                      <div style={{ fontSize: '20px', marginBottom: '4px' }}>🌇</div>
+                      <div style={{ fontSize: '12px', opacity: 0.7 }}>{t('premiumCards.sunset')}</div>
+                      <div style={{ fontSize: '16px', fontWeight: 600 }}>
+                        {planetaryHour.sunset.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                      </div>
+                    </div>
+                  )}
                 </div>
-              ))}
-            </div>
-          </div>
+              </div>
+            )}
 
-          <div className="expanded-section">
-            <div className="section-label">{t('premiumCards.bestToAvoid')}</div>
-            <div className="activities-list dont">
-              {hourData.dont.map((activity, i) => (
-                <div key={i} className="activity-item">
-                  <span className="activity-icon">✗</span>
-                  <span>{activity}</span>
-                </div>
-              ))}
+            {/* Why This Hour */}
+            <div className="expanded-section">
+              <div className="section-label">{t('premiumCards.whyNow', { planet: planetaryHour.planet })}</div>
+              {(() => {
+                const desc = t(`planetaryGuidance.${planetaryHour.planet}.description`);
+                const hasDesc = desc && desc !== `planetaryGuidance.${planetaryHour.planet}.description`;
+                return hasDesc ? (
+                  <p className="hour-description">{desc}</p>
+                ) : (
+                  <p className="hour-description" style={{ opacity: 0.6, fontStyle: 'italic' }}>
+                    The hour of {planetaryHour.planet.charAt(0).toUpperCase() + planetaryHour.planet.slice(1)} favors {planetaryHour.activities.slice(0, 3).join(', ')}.
+                  </p>
+                );
+              })()}
             </div>
+
+            {/* Do's and Don'ts */}
+            <div className="expanded-section">
+              <div className="section-label">{t('premiumCards.favoredActivities')}</div>
+              <div className="activities-list do">
+                {[0, 1, 2, 3, 4].map(i => {
+                  const activity = t(`planetaryGuidance.${planetaryHour.planet}.do.${i}`);
+                  return activity && activity !== `planetaryGuidance.${planetaryHour.planet}.do.${i}` ? (
+                    <div key={i} className="activity-item">
+                      <span className="activity-icon">✓</span>
+                      <span>{activity}</span>
+                    </div>
+                  ) : null;
+                })}
+              </div>
+            </div>
+
+            <div className="expanded-section">
+              <div className="section-label">{t('premiumCards.bestToAvoid')}</div>
+              <div className="activities-list dont">
+                {[0, 1, 2].map(i => {
+                  const activity = t(`planetaryGuidance.${planetaryHour.planet}.dont.${i}`);
+                  return activity && activity !== `planetaryGuidance.${planetaryHour.planet}.dont.${i}` ? (
+                    <div key={i} className="activity-item">
+                      <span className="activity-icon">✗</span>
+                      <span>{activity}</span>
+                    </div>
+                  ) : null;
+                })}
+              </div>
+            </div>
+          </>)
+         : (
+          <div className="expanded-loading" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '40px 0', gap: '12px' }}>
+            <div className="loading-spinner">◷</div>
+            <div>{t('premiumCards.calculatingPlanetary')}</div>
           </div>
+        )}
         </div>
       )}
     </div>
@@ -702,7 +683,7 @@ const StationCard: React.FC<StationCardProps> = ({ retrogrades, positions, isExp
         </div>
         <div className="expand-hint">
           <span className="expand-icon">↓</span>
-          <span>Celestial Weather Report</span>
+          <span>{t('premiumCards.celestialWeather')}</span>
         </div>
       </div>
 
@@ -711,7 +692,7 @@ const StationCard: React.FC<StationCardProps> = ({ retrogrades, positions, isExp
         <div key="station-expanded" className="card-expanded" onClick={(e) => e.stopPropagation()}>
           <div className="expanded-header">
             <div className="expanded-title">{t('premiumCards.celestialWeather')}</div>
-            <button className="close-btn" onClick={onToggle} aria-label={t('common.close')}>×</button>
+            <button className="close-btn" onClick={onToggle} aria-label={t('close')}>×</button>
           </div>
 
           {/* Weather Summary */}
@@ -766,7 +747,7 @@ const StationCard: React.FC<StationCardProps> = ({ retrogrades, positions, isExp
           {/* Retrograde Guidance */}
           {retroCount > 0 && (
             <div className="expanded-section">
-              <div className="section-label">RETROGRADE GUIDANCE</div>
+              <div className="section-label">{t('premiumCards.retrogradeGuidance')}</div>
               <div className="retro-guidance">
                 <p>
                   With {retroCount} planet{retroCount !== 1 ? 's' : ''} retrograde, this is a time for 
@@ -861,7 +842,7 @@ const StelliumCard: React.FC<StelliumCardProps> = ({ positions, isExpanded, onTo
         <div key="stellium-expanded" className="card-expanded" onClick={(e) => e.stopPropagation()}>
           <div className="expanded-header">
             <div className="expanded-title">{t('premiumCards.planetarySpheres')}</div>
-            <button className="close-btn" onClick={onToggle} aria-label={t('common.close')}>×</button>
+            <button className="close-btn" onClick={onToggle} aria-label={t('close')}>×</button>
           </div>
 
           {/* Elemental Balance */}

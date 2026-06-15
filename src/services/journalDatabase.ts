@@ -21,21 +21,8 @@ export interface JournalEntry extends DiaryEntry {
   syncStatus: 'synced' | 'pending' | 'failed';
   /** Last sync attempt */
   lastSyncAt?: string;
-  /** Attachments (base64 data URIs or blob refs) */
-  attachments?: JournalAttachment[];
   /** Whether content is markdown */
   isMarkdown?: boolean;
-}
-
-export interface JournalAttachment {
-  id: string;
-  type: 'image' | 'audio' | 'file';
-  name: string;
-  data?: string;        // base64 data URI (for small files)
-  blobRef?: string;     // IndexedDB blob key (for large files)
-  size: number;
-  mimeType: string;
-  createdAt: string;
 }
 
 // ─── Revision History ────────────────────────────────────────────────────────
@@ -80,18 +67,22 @@ class JournalDatabase extends Dexie {
   revisions!: Table<EntryRevision, string>;
   syncQueue!: Table<SyncQueueItem, string>;
   searchIndex!: Table<SearchIndexDoc, string>;
-  attachments!: Table<JournalAttachment, string>;
   oracleCards!: Table<import('../components/oracle/dailyOracle/cardEngine').DailyOracleCard, string>;
 
   constructor() {
     super('HekaJournalDB');
-    this.version(2).stores({
+    this.version(3).stores({
       entries: 'id, date, timestamp, [date+timestamp], syncStatus, *tags',
       revisions: 'id, entryId, [entryId+revNumber]',
       syncQueue: 'id, entryId, createdAt',
       searchIndex: 'entryId, *words',
-      attachments: 'id, entryId',
       oracleCards: 'date, archetypeId, element',
+    }).upgrade((trans) => {
+      // Remove the orphaned attachments object store from older installs.
+      const idb = trans.idbtrans.db;
+      if (idb.objectStoreNames.contains('attachments')) {
+        idb.deleteObjectStore('attachments');
+      }
     });
   }
 }
@@ -101,7 +92,6 @@ const db = new JournalDatabase();
 // ─── Constants ───────────────────────────────────────────────────────────────
 
 const MAX_ENTRY_SIZE_BYTES = 500_000;           // ~500 KB per entry
-const MAX_ATTACHMENT_SIZE_BYTES = 5_000_000;    // ~5 MB per attachment
 const MAX_REVISIONS_PER_ENTRY = 50;
 
 // ─── Tokenizer for search ────────────────────────────────────────────────────
@@ -384,4 +374,4 @@ export async function dbMigrateFromLocalStorage(): Promise<number> {
 // ─── Export ──────────────────────────────────────────────────────────────────
 
 export { db };
-export { MAX_ENTRY_SIZE_BYTES, MAX_ATTACHMENT_SIZE_BYTES, MAX_REVISIONS_PER_ENTRY };
+export { MAX_ENTRY_SIZE_BYTES, MAX_REVISIONS_PER_ENTRY };

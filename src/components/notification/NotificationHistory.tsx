@@ -94,7 +94,7 @@ export const NotificationHistory: React.FC = () => {
       >
         <span>📜</span>
         <span>Notification History</span>
-        <span style={{ marginLeft: 'auto', fontSize: '11px', color: 'rgba(224,224,224,0.4)' }}>View recent</span>
+        <span style={{ marginLeft: 'auto', fontSize: '12px', color: 'rgba(224,224,224,0.4)' }}>View recent</span>
       </button>
     );
   }
@@ -153,7 +153,7 @@ export const NotificationHistory: React.FC = () => {
           borderBottom: '1px solid rgba(255,255,255,0.04)',
           display: 'flex',
           gap: '16px',
-          fontSize: '11px',
+          fontSize: '12px',
           color: 'rgba(224,224,224,0.5)',
         }}>
           <span style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
@@ -189,12 +189,12 @@ export const NotificationHistory: React.FC = () => {
                   }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '4px' }}>
                       <span style={{ fontSize: '12px' }}>{TIER_ICONS[item.tier] || '⚪'} {SECTION_ICONS[item.section] || ''}</span>
-                      <span style={{ fontSize: '11px', color: 'rgba(224,224,224,0.4)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                      <span style={{ fontSize: '12px', color: 'rgba(224,224,224,0.4)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
                         {item.type}
                       </span>
                       <span style={{
                         marginLeft: 'auto',
-                        fontSize: '10px',
+                        fontSize: '12px',
                         fontWeight: 600,
                         textTransform: 'uppercase',
                         letterSpacing: '0.05em',
@@ -208,7 +208,7 @@ export const NotificationHistory: React.FC = () => {
                       </span>
                     </div>
                     <div style={{ display: 'flex', alignItems: 'baseline', gap: '8px' }}>
-                      <span style={{ fontSize: '11px', color: 'rgba(224,224,224,0.35)' }}>
+                      <span style={{ fontSize: '12px', color: 'rgba(224,224,224,0.35)' }}>
                         {dateStr} {timeStr}
                       </span>
                     </div>

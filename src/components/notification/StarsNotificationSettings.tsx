@@ -62,7 +62,7 @@ export const StarsNotificationSettings: React.FC = () => {
           <span style={{ fontSize: '14px', fontWeight: 500, color: '#e0e0e0' }}>{label}</span>
           {tier && (
             <span style={{
-              fontSize: '10px',
+              fontSize: '12px',
               textTransform: 'uppercase',
               letterSpacing: '0.05em',
               padding: '2px 6px',

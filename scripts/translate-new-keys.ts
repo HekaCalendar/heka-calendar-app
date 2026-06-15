@@ -14,7 +14,6 @@ const API_BASE = process.env.MOONSHOT_API_BASE || 'https://api.moonshot.ai/v1';
 const MODEL = 'moonshot-v1-32k';
 
 const LOCALES_DIR = path.resolve(__dirname, '../src/i18n/locales');
-const PUBLIC_LOCALES_DIR = path.resolve(__dirname, '../public/locales');
 
 const TARGET_LANGUAGES = [
   'es', 'fr', 'de', 'it', 'pt', 'zh', 'ja', 'ko', 'ar', 'hi', 'ru',
@@ -114,9 +113,7 @@ async function updateNamespaceFile(
   updates: Record<string, string>
 ) {
   const targetDir = path.join(LOCALES_DIR, lang);
-  const publicTargetDir = path.join(PUBLIC_LOCALES_DIR, lang);
   const targetPath = path.join(targetDir, `${namespace}.json`);
-  const publicTargetPath = path.join(publicTargetDir, `${namespace}.json`);
 
   const json = JSON.parse(fs.readFileSync(targetPath, 'utf-8'));
   for (const [key, value] of Object.entries(updates)) {
@@ -125,7 +122,6 @@ async function updateNamespaceFile(
 
   const output = JSON.stringify(json, null, 2) + '\n';
   fs.writeFileSync(targetPath, output, 'utf-8');
-  fs.writeFileSync(publicTargetPath, output, 'utf-8');
 }
 
 async function main() {
@@ -171,12 +167,10 @@ async function main() {
   // Also update English files (source of truth)
   for (const { namespace, key, value } of KEYS_TO_TRANSLATE) {
     const enPath = path.join(LOCALES_DIR, 'en', `${namespace}.json`);
-    const publicEnPath = path.join(PUBLIC_LOCALES_DIR, 'en', `${namespace}.json`);
     const json = JSON.parse(fs.readFileSync(enPath, 'utf-8'));
     json[key] = value;
     const output = JSON.stringify(json, null, 2) + '\n';
     fs.writeFileSync(enPath, output, 'utf-8');
-    fs.writeFileSync(publicEnPath, output, 'utf-8');
   }
 
   console.log('\n═══════════════════════════════════════════════════════════════');

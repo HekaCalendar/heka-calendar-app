@@ -12,7 +12,7 @@
 import type { NatalChart, BirthData } from './natalChart';
 import { saveNatalChart, getNatalChart, deleteNatalChart, getDignity, getHouseFromLongitude } from './natalChart';
 import { calculateCurrentSky, calculateLocalHouses } from '../calculations/swissCalculations';
-import { birthDateTimeToUTC, setZodiacFrame, setSignCount, isUsingFallback } from '../swiss-ephemeris/engine';
+import { birthDateTimeToUTC, setZodiacFrame, setSignCount, setSiderealMode, isUsingFallback } from '../swiss-ephemeris/engine';
 import { getSignFromLongitude, SIGN_ELEMENTS_13, SIGN_ELEMENTS } from '../../types/core';
 import { getZodiacSystemPreference, getZodiacFramePreference, getSignCountPreference, calculateElementalBalanceWithSystem, calculateModalityBalanceWithSystem } from './zodiacHelpers';
 
@@ -509,6 +509,12 @@ export class ProfileManager {
     // Set engine state so downstream calculations use correct frame/count
     setZodiacFrame(frame);
     setSignCount(count);
+    // Configure sidereal mode so WASM applies correct ayanamsa
+    if (frame === 'sidereal') {
+      setSiderealMode('lahiri');
+    } else {
+      setSiderealMode(null);
+    }
     // Validate birth data
     if (!birthData.date || !birthData.time) {
       throw new ChartCalculationError('Birth date and time are required');

@@ -102,6 +102,7 @@
   "lunarMansion": {
     "title": "Lunar Mansion",
     "trueMode": "TRUE Mode",
+    "syncMode": "SYNC Mode",
     "calculating": "Calculating sidereal moon position...",
     "totem": "Totem",
     "gift": "Gift",

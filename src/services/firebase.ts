@@ -29,6 +29,7 @@ import {
   enableIndexedDbPersistence,
   type Firestore
 } from 'firebase/firestore';
+import { getFunctions, type Functions } from 'firebase/functions';
 
 // Firebase configuration - Replace with your Firebase project config
 // Create a .env file with your Firebase config:
@@ -62,12 +63,14 @@ export function isFirebaseConfigured(): boolean {
 let app: FirebaseApp | null = null;
 let auth: any = null;
 let db: any = null;
+let functions: Functions | null = null;
 
 if (isFirebaseConfigured()) {
   try {
     app = getApps().length === 0 ? initializeApp(firebaseConfig) : getApp();
     auth = getAuth(app);
     db = getFirestore(app);
+    functions = getFunctions(app);
     
     // Force browser local persistence for Auth (more reliable in Capacitor WebView)
     if (typeof window !== 'undefined' && auth) {
@@ -94,7 +97,7 @@ if (isFirebaseConfigured()) {
   console.warn('Firebase not configured. Cloud sync features will be disabled.');
 }
 
-export { app, auth, db, updateProfile };
+export { app, auth, db, functions, updateProfile };
 
 // Refresh the Firebase ID token (useful when Firestore reports permission errors)
 export async function refreshAuthToken(force = true): Promise<string | null> {

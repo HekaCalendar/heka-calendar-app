@@ -1,0 +1,49 @@
+{
+  "best": "Best: {{count}}",
+  "title": "Din Reise",
+  "close": "Lukk",
+  "reset": "Tilbakestill Statistikk",
+  "avgMood": "Gjennomsnittlig Humør",
+  "dayStreak": "Dagsreak",
+  "totalNotes": "Totalt Antall Notater",
+  "wordsWritten": "Ord skrevet",
+  "achievements": "Prestasjoner ({{earned}}/{{total}})",
+  "resetConfirm": "Tilbakestill",
+  "progressRatio": "{{current}} / {{target}}",
+  "monthlyTooltip": "{{month}} {{year}}: {{count}} notater",
+  "notesByCategory": "Notater etter Kategori",
+  "monthlyActivity": "Månedlig Aktivitet",
+  "mostActiveMonth": "Din mest aktive måned var \u003cstrong\u003e{{month}}\u003c/strong\u003e med \u003cstrong\u003e{{count}}\u003c/strong\u003e notater",
+  "categories": {
+    "work": "Arbeid",
+    "family": "Familie",
+    "health": "Helse",
+    "general": "Generell",
+    "personal": "Personlig",
+    "creative": "Kreativ",
+    "spiritual": "Åndelig"
+  },
+  "progressToCentury": "Framdrift mot Åttiårsklubben",
+  "resetConfirmTitle": "Tilbakestill Statistikk",
+  "badges": {
+    "century": {
+      "name": "Åttiårsklubben"
+    },
+    "explorer": {
+      "name": "Utforsker"
+    },
+    "archivist": {
+      "name": "Arkivar"
+    },
+    "first-note": {
+      "name": "Første Ord"
+    },
+    "week-streak": {
+      "name": "Uke Krieger"
+    },
+    "month-streak": {
+      "name": "Måned Herre"
+    }
+  },
+  "resetConfirmDescription": "Er du sikker på at du vil tilbakestille all statistikk? Dette kan ikke omgjøres."
+}

@@ -13,37 +13,49 @@ import { useEffect, useState, useCallback, useMemo, memo, useRef } from 'react';
 import { HashRouter, useLocation, useNavigate } from 'react-router-dom';
 import { Provider, useSelector, useDispatch, shallowEqual } from 'react-redux';
 import { I18nextProvider, useTranslation } from 'react-i18next';
-import { store, loadNotes } from '../store';
+import { store, loadNotes, selectAuthStatus, selectSetupStatus } from '../store';
 import { initDiary } from '../store/diarySlice';
 import type { RootState, AppDispatch } from '../store';
 import i18n from '../i18n';
 import { CalendarGrid } from './CalendarGrid';
 import { MonthHeader } from './MonthHeader';
 import { SettingsPanel } from './SettingsPanel';
-import { YearModal } from './YearModal';
-import { PrintPreview } from './PrintPreview';
-import { AstrologyHub, StarsHub, applyModeDefaults } from '../astrology';
-import { CelestialGuide } from './CelestialGuide';
+
 import { DayPanel } from './day-panel/DayPanel';
 import { PureCalendarView } from './PureCalendarView';
 import { PureModeDayPanel } from './PureModeDayPanel';
-import { CommunityHub } from './CommunityHub';
-import { CommunityVotingModal } from './CommunityVotingModal';
+import {
+  YearModal,
+  SearchModal,
+  FriendsModal,
+  StatsModal,
+  CommunityHub,
+  CommunityVotingModal,
+  OracleJournal,
+  InfoModal,
+  AuthModalEnterprise,
+  WelcomeModal,
+  TaskPreviewModal,
+  PrintPreview,
+  StarsHub,
+  AstrologyHub,
+  CertificateBuilder,
+  RoutineBuilder,
+  NatalReportBuilder,
+  CelestialGuide,
+  CalendarAICoach,
+  SetupWizard,
+  InteractiveTutorial,
+  LazyBoundary,
+} from './lazyComponents';
 import { hekaToCivil } from '../services/calendarService';
 import type { CalendarDay, HekaMonthIndex } from '../types';
-import { SearchModal } from './SearchModal';
-import { FriendsModal } from './FriendsModal';
-import { StatsModal } from './StatsModal';
-import { OracleJournal } from './OracleJournal';
-import { InfoModal } from './InfoModal';
-import { CertificateBuilder } from './certificate';
-import { RoutineBuilder } from './routine';
-import { NatalReportBuilder } from './report';
 import { ErrorBoundary } from './ErrorBoundary';
 import { ThemeProvider } from './ThemeProvider';
-import { AuthModalEnterprise } from './AuthModalEnterprise';
+import { DialogProvider } from './ui/DialogProvider';
 
 import { setTimeMode } from '../services/calendarService';
+import { applyModeDefaults } from '../astrology/store/slice';
 import { setSiderealMode, setZodiacFrame, setSignCount } from '../astrology/services/swiss-ephemeris/engine';
 import { setView, navigateToMonth, selectDate, updateAstroPreferences, setGlobalNotificationsEnabled } from '../store';
 import { syncNoteNotifications, hasNotificationPermission } from '../services/notificationService';
@@ -58,18 +70,19 @@ import { initializeEngagementTracking, stopSessionTracking, markActivity } from 
 import { initializeDeepLinks, getPendingInviteCode, getPendingTaskCode } from '../services/deepLinkService';
 import { App as CapacitorApp } from '@capacitor/app';
 import { useCapacitorBackButton } from '../services/backButtonService';
+import { useNotificationAnalyticsPause } from '../hooks/useNotificationAnalyticsPause';
 import { setAICoachZone } from '../services/aiCoachContextService';
 
-import { WelcomeModal } from './WelcomeModal';
 import { SacredField } from './sacred-geometry/SacredField';
 import { HeaderGeometry } from './sacred-geometry/HeaderGeometry';
-import { InteractiveTutorial } from './onboarding/v3';
-import { SetupWizard } from './setup/SetupWizard';
 import { setActiveTab, acceptInvite } from '../store/friendsSlice';
 import { clearPendingInvite } from '../services/deepLinkService';
 import { TaskNotification } from './TaskNotification';
-import { TaskPreviewModal } from './TaskPreviewModal';
-import { CalendarAICoach } from './CalendarAICoach';
+
+
+import { monitoring } from '../services/monitoring';
+import { useOfflineSyncConflicts } from '../hooks/useOfflineSyncConflicts';
+import { SyncConflictModal } from './SyncConflictModal';
 import { AchievementWatcher } from './AchievementWatcher';
 import { unlockAchievement } from '../store';
 import { eventBus } from '../services/eventBus';
@@ -184,6 +197,14 @@ const AppContentComponent: React.FC = () => {
     dispatch(initDiary());
   }, [dispatch]);
 
+  // Initialise error / crash monitoring (Sentry, Crashlytics)
+  useEffect(() => {
+    void monitoring.init();
+  }, []);
+
+  // Offline sync conflict resolution
+  const { conflict, resolveConflict, dismiss: dismissConflict } = useOfflineSyncConflicts();
+
   // Use granular selectors to prevent unnecessary re-renders
   const currentView = useSelector((state: RootState) => state.calendar.currentView);
   const error = useSelector((state: RootState) => state.calendar.ui.error);
@@ -192,6 +213,7 @@ const AppContentComponent: React.FC = () => {
   const notes = useSelector((state: RootState) => state.calendar.notes, shallowEqual);
   const selectedDate = useSelector((state: RootState) => state.calendar.selectedDate, shallowEqual);
   const isSettingsOpen = useSelector((state: RootState) => state.calendar.ui.isSettingsOpen);
+  const headerGeometry = useSelector((state: RootState) => state.calendar.headerGeometry);
   
   const location = useLocation();
   const navigate = useNavigate();
@@ -201,10 +223,12 @@ const AppContentComponent: React.FC = () => {
   // Capacitor hardware back button (no-op on web)
   useCapacitorBackButton();
 
-  // Auth state for protected features
-  const auth = useSelector((state: RootState) => state.calendar.auth);
-  const setup = useSelector((state: RootState) => state.setup);
-  const headerGeometry = useSelector((state: RootState) => state.calendar.headerGeometry);
+  // Pause analytics flush when app is backgrounded to save battery
+  useNotificationAnalyticsPause();
+
+  // Auth state for protected features — select only the primitives we need
+  const { isAuthenticated: authIsAuthenticated } = useSelector(selectAuthStatus);
+  const { isComplete: setupIsComplete, notificationsEnabled: setupNotificationsEnabled, language: setupLanguage } = useSelector(selectSetupStatus);
 
   // Pending invite code from deep links (deferred until after tutorial)
   const [pendingInviteCode, setPendingInviteCode] = useState<string | null>(null);
@@ -299,6 +323,15 @@ const AppContentComponent: React.FC = () => {
   // Initialize engagement tracking, tutorial service, and deep links on mount
   useEffect(() => {
     try {
+      let cancelled = false;
+
+      function scheduleIdle(fn: () => void): number {
+        if (typeof window.requestIdleCallback === 'function') {
+          return window.requestIdleCallback(fn, { timeout: 2000 });
+        }
+        return window.setTimeout(fn, 1500);
+      }
+
       // Connect tutorial service to Redux
       tutorialService.connectToDispatch(dispatch);
       
@@ -312,7 +345,11 @@ const AppContentComponent: React.FC = () => {
         }, 1500);
       }
       
-      const unsubscribeVisibility = initializeEngagementTracking(dispatch);
+      let unsubscribeVisibility: (() => void) | undefined;
+      const engagementIdleId = scheduleIdle(() => {
+        if (cancelled) return;
+        unsubscribeVisibility = initializeEngagementTracking(dispatch);
+      });
       
       // Initialize deep link handling - store codes but don't show modals yet
       const unsubscribeDeepLinks = initializeDeepLinks(
@@ -449,7 +486,7 @@ const AppContentComponent: React.FC = () => {
 
       // Listen for app foreground/background — pause/resume background work
       void CapacitorApp.addListener('appStateChange', ({ isActive }: { isActive: boolean }) => {
-        if (isActive && setup.isComplete) {
+        if (isActive && setupIsComplete) {
           // Resume background work
           NotificationEngine.startRecurringChecks();
           // Reconcile missed notifications after background suspension
@@ -487,38 +524,55 @@ const AppContentComponent: React.FC = () => {
         appStateUnsub = handle;
       });
 
-      if (setup.isComplete) {
-        safeVoid(NotificationEngine.initialize(), 'engine-init');
-        NotificationEngine.startRecurringChecks();
-        safeVoid(initializePushNotifications(), 'push-init');
-        safeVoid(scheduleDailyBriefing(), 'briefing-init');
-        safeVoid(scheduleDailyTips(store.getState().calendar.notificationPreferences.stars.dailyCelestialTips), 'tips-init');
-        streakSaverInterval = setInterval(() => {
-          safeVoid(scheduleStreakSaverIfNeeded(), 'streak-saver');
-        }, 1000 * 60 * 60); // Check every hour
-        // Re-schedule daily briefing every 6 hours to ensure it always has the next one queued
-        dailyBriefingInterval = setInterval(() => {
-          safeVoid(scheduleDailyBriefing(), 'daily-briefing');
-        }, 1000 * 60 * 60 * 6);
-        // Re-schedule daily celestial tips every 6 hours to ensure the next day's alarm is set
-        dailyTipsInterval = setInterval(() => {
-          safeVoid(scheduleDailyTips(store.getState().calendar.notificationPreferences.stars.dailyCelestialTips), 'daily-tips');
-        }, 1000 * 60 * 60 * 6);
-        // Schedule sunrise wake-up notification (re-computes sunrise time daily)
-        safeVoid(NotificationEngine.scheduleSunriseWakeUp(), 'sunrise-init');
-        // Bidirectional sync: setup wizard notifications <-> main notification system
-        // This ensures wizard choice persists, AND settings-panel changes persist back to wizard state
-        if (setup.notificationsEnabled !== null) {
-          const mainGlobal = store.getState().calendar.notificationPreferences.globalEnabled;
-          if (mainGlobal !== setup.notificationsEnabled) {
-            dispatch(setGlobalNotificationsEnabled(setup.notificationsEnabled));
+      let notificationIdleId: ReturnType<typeof window.requestIdleCallback> | number | null = null;
+      if (setupIsComplete) {
+        notificationIdleId = scheduleIdle(() => {
+          if (cancelled) return;
+          safeVoid(NotificationEngine.initialize(), 'engine-init');
+          NotificationEngine.startRecurringChecks();
+          safeVoid(initializePushNotifications(), 'push-init');
+          safeVoid(scheduleDailyBriefing(), 'briefing-init');
+          safeVoid(scheduleDailyTips(store.getState().calendar.notificationPreferences.stars.dailyCelestialTips), 'tips-init');
+          streakSaverInterval = setInterval(() => {
+            safeVoid(scheduleStreakSaverIfNeeded(), 'streak-saver');
+          }, 1000 * 60 * 60); // Check every hour
+          // Re-schedule daily briefing every 6 hours to ensure it always has the next one queued
+          dailyBriefingInterval = setInterval(() => {
+            safeVoid(scheduleDailyBriefing(), 'daily-briefing');
+          }, 1000 * 60 * 60 * 6);
+          // Re-schedule daily celestial tips every 6 hours to ensure the next day's alarm is set
+          dailyTipsInterval = setInterval(() => {
+            safeVoid(scheduleDailyTips(store.getState().calendar.notificationPreferences.stars.dailyCelestialTips), 'daily-tips');
+          }, 1000 * 60 * 60 * 6);
+          // Schedule sunrise wake-up notification (re-computes sunrise time daily)
+          safeVoid(NotificationEngine.scheduleSunriseWakeUp(), 'sunrise-init');
+          // Bidirectional sync: setup wizard notifications <-> main notification system
+          // This ensures wizard choice persists, AND settings-panel changes persist back to wizard state
+          if (setupNotificationsEnabled !== null) {
+            const mainGlobal = store.getState().calendar.notificationPreferences.globalEnabled;
+            if (mainGlobal !== setupNotificationsEnabled) {
+              dispatch(setGlobalNotificationsEnabled(setupNotificationsEnabled));
+            }
           }
-        }
+        });
       }
       
       return () => {
+        cancelled = true;
+        if (typeof engagementIdleId === 'number') {
+          window.clearTimeout(engagementIdleId);
+        } else {
+          window.cancelIdleCallback(engagementIdleId as ReturnType<typeof window.requestIdleCallback>);
+        }
+        if (notificationIdleId) {
+          if (typeof notificationIdleId === 'number') {
+            window.clearTimeout(notificationIdleId);
+          } else {
+            window.cancelIdleCallback(notificationIdleId);
+          }
+        }
+        if (unsubscribeVisibility) unsubscribeVisibility();
         stopSessionTracking(dispatch);
-        unsubscribeVisibility();
         unsubscribeDeepLinks();
         window.removeEventListener('click', handleActivity);
         window.removeEventListener('scroll', handleActivity);
@@ -547,7 +601,7 @@ const AppContentComponent: React.FC = () => {
     } catch (e) {
       console.warn('[HEKA] Engagement tracking failed:', e);
     }
-  }, [dispatch, setup.isComplete, setup.notificationsEnabled]);
+  }, [dispatch, setupIsComplete, setupNotificationsEnabled]);
   
   // Auto-process pending invite after tutorial + auth, then show toast
   useEffect(() => {
@@ -566,7 +620,7 @@ const AppContentComponent: React.FC = () => {
       if (!legacyOnboardingCompleted && !onboardingSkipped && !v3IsComplete) return;
       
       // Wait for auth
-      if (!auth.isAuthenticated) return;
+      if (!authIsAuthenticated) return;
       
       // Don't show multiple toasts
       if (friendRequestToast.show) return;
@@ -596,7 +650,7 @@ const AppContentComponent: React.FC = () => {
     };
     
     const unsubscribe = tutorialService.subscribe((state) => {
-      if (!state.isActive && pendingInviteCode && auth.isAuthenticated) {
+      if (!state.isActive && pendingInviteCode && authIsAuthenticated) {
         void processPendingInvite();
       }
     });
@@ -609,7 +663,7 @@ const AppContentComponent: React.FC = () => {
       clearTimeout(timer);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [pendingInviteCode, auth.isAuthenticated]);
+  }, [pendingInviteCode, authIsAuthenticated]);
   
   // Show task share toast after tutorial completes (or if no tutorial)
   useEffect(() => {
@@ -801,7 +855,7 @@ const AppContentComponent: React.FC = () => {
   // Sync notifications when notes change - debounced
   // Only run after setup wizard is complete to avoid premature permission checks
   useEffect(() => {
-    if (!setup.isComplete) return;
+    if (!setupIsComplete) return;
     const syncNotifications = async () => {
       try {
         const hasPermission = await hasNotificationPermission();
@@ -815,7 +869,7 @@ const AppContentComponent: React.FC = () => {
     
     const timeoutId = setTimeout(syncNotifications, 1000);
     return () => clearTimeout(timeoutId);
-  }, [notes, setup.isComplete]);
+  }, [notes, setupIsComplete]);
   
   // Calendar expand states
   const [isCalendarExpanded, setIsCalendarExpanded] = useState(false);
@@ -895,14 +949,14 @@ const AppContentComponent: React.FC = () => {
   const handleSearchClick = useCallback(() => modalState.setShowSearchModal(true), [modalState]);
   const handleFriendsClick = useCallback(() => {
     // Check if user is authenticated before entering Cosmic Circle
-    if (!auth.isAuthenticated) {
+    if (!authIsAuthenticated) {
       // Show auth modal first - they need to sign in
       modalState.setShowAuthModal(true);
       return;
     }
     // User is authenticated, show Cosmic Circle
     modalState.setShowFriendsModal(true);
-  }, [modalState, auth.isAuthenticated]);
+  }, [modalState, authIsAuthenticated]);
   const handleStatsClick = useCallback(() => modalState.setShowStatsModal(true), [modalState]);
   const handleCommunityClick = useCallback(() => modalState.setShowCommunityVotingModal(true), [modalState]);
   const handleJournalClick = useCallback(() => modalState.setShowJournalModal(true), [modalState]);
@@ -953,21 +1007,21 @@ const AppContentComponent: React.FC = () => {
           from mounting and triggering notification permission dialogs
           before the user has even chosen a language.
           ═══════════════════════════════════════════════════════════════════ */}
-      {setup.isComplete && (
+      {setupIsComplete && (
         <>
           <main className="app-main">
             {location.pathname === '/print' ? (
-              <PrintPreview />
+              <LazyBoundary><PrintPreview /></LazyBoundary>
             ) : location.pathname === '/stars' ? (
-              <StarsHub />
+              <LazyBoundary><StarsHub /></LazyBoundary>
             ) : location.pathname === '/astrology-hub' ? (
-              <AstrologyHub />
+              <LazyBoundary><AstrologyHub /></LazyBoundary>
             ) : location.pathname === '/certificate' ? (
-              <CertificateBuilder />
+              <LazyBoundary><CertificateBuilder /></LazyBoundary>
             ) : location.pathname === '/routine' ? (
-              <RoutineBuilder />
+              <LazyBoundary><RoutineBuilder /></LazyBoundary>
             ) : location.pathname === '/natal-report' ? (
-              <NatalReportBuilder />
+              <LazyBoundary><NatalReportBuilder /></LazyBoundary>
             ) : isPureMode ? (
               <>
                 <PureCalendarView
@@ -1066,7 +1120,7 @@ const AppContentComponent: React.FC = () => {
                 />
 
                 {/* Celestial Guide - Swiss Ephemeris Powered (deferred to reduce startup jank) */}
-                {deferCelestial && <CelestialGuide />}
+                {deferCelestial && <LazyBoundary><CelestialGuide /></LazyBoundary>}
 
                 <MonthHeader {...headerProps} />
 
@@ -1084,64 +1138,74 @@ const AppContentComponent: React.FC = () => {
           
           {/* Only render modals when open */}
           {modalState.showYearModal && (
-            <YearModal isOpen={true} onClose={() => modalState.setShowYearModal(false)} />
+            <LazyBoundary><YearModal isOpen={true} onClose={() => modalState.setShowYearModal(false)} /></LazyBoundary>
           )}
           {modalState.showSearchModal && (
-            <SearchModal isOpen={true} onClose={() => modalState.setShowSearchModal(false)} />
+            <LazyBoundary><SearchModal isOpen={true} onClose={() => modalState.setShowSearchModal(false)} /></LazyBoundary>
           )}
           {modalState.showFriendsModal && (
-            <FriendsModal isOpen={true} onClose={() => modalState.setShowFriendsModal(false)} />
+            <LazyBoundary><FriendsModal isOpen={true} onClose={() => modalState.setShowFriendsModal(false)} /></LazyBoundary>
           )}
           {modalState.showStatsModal && (
-            <StatsModal isOpen={true} onClose={() => modalState.setShowStatsModal(false)} />
+            <LazyBoundary><StatsModal isOpen={true} onClose={() => modalState.setShowStatsModal(false)} /></LazyBoundary>
           )}
           {modalState.showCommunityModal && (
-            <CommunityHub isOpen={true} onClose={() => modalState.setShowCommunityModal(false)} />
+            <LazyBoundary><CommunityHub isOpen={true} onClose={() => modalState.setShowCommunityModal(false)} /></LazyBoundary>
           )}
           {modalState.showCommunityVotingModal && (
-            <CommunityVotingModal isOpen={true} onClose={() => modalState.setShowCommunityVotingModal(false)} />
+            <LazyBoundary><CommunityVotingModal isOpen={true} onClose={() => modalState.setShowCommunityVotingModal(false)} /></LazyBoundary>
           )}
           {modalState.showJournalModal && (
-            <OracleJournal isOpen={true} onClose={() => modalState.setShowJournalModal(false)} />
+            <LazyBoundary><OracleJournal isOpen={true} onClose={() => modalState.setShowJournalModal(false)} /></LazyBoundary>
           )}
           {modalState.showInfoModal && (
-            <InfoModal isOpen={true} onClose={() => modalState.setShowInfoModal(false)} />
+            <LazyBoundary><InfoModal isOpen={true} onClose={() => modalState.setShowInfoModal(false)} /></LazyBoundary>
           )}
-          
+
+          <SyncConflictModal
+            conflict={conflict}
+            onResolve={(resolution) => resolveConflict(resolution)}
+            onClose={dismissConflict}
+          />
+
           {modalState.showAuthModal && (
-            <AuthModalEnterprise isOpen={true} onClose={() => modalState.setShowAuthModal(false)} />
+            <LazyBoundary><AuthModalEnterprise isOpen={true} onClose={() => modalState.setShowAuthModal(false)} /></LazyBoundary>
           )}
-          
+
           {/* Welcome Modal - For invited users */}
           {modalState.showWelcomeModal && (
-            <WelcomeModal
-              isOpen={true}
-              inviteCode={pendingInviteCode}
-              onClose={() => modalState.setShowWelcomeModal(false)}
-              onAccepted={() => {
-                modalState.setShowWelcomeModal(false);
-                // Open the Circle modal to show the new friend
-                modalState.setShowFriendsModal(true);
-              }}
-            />
+            <LazyBoundary>
+              <WelcomeModal
+                isOpen={true}
+                inviteCode={pendingInviteCode}
+                onClose={() => modalState.setShowWelcomeModal(false)}
+                onAccepted={() => {
+                  modalState.setShowWelcomeModal(false);
+                  // Open the Circle modal to show the new friend
+                  modalState.setShowFriendsModal(true);
+                }}
+              />
+            </LazyBoundary>
           )}
-          
+
           {/* Task Preview Modal - For shared tasks */}
           {showTaskPreview && pendingTaskShare && (
-            <TaskPreviewModal
-              shareCode={pendingTaskShare}
-              isOpen={true}
-              onClose={() => {
-                setShowTaskPreview(false);
-                setPendingTaskShare(null);
-              }}
-              onAccepted={() => {
-                setShowTaskPreview(false);
-                setPendingTaskShare(null);
-                // Open the Circle modal to show the task
-                modalState.setShowFriendsModal(true);
-              }}
-            />
+            <LazyBoundary>
+              <TaskPreviewModal
+                shareCode={pendingTaskShare}
+                isOpen={true}
+                onClose={() => {
+                  setShowTaskPreview(false);
+                  setPendingTaskShare(null);
+                }}
+                onAccepted={() => {
+                  setShowTaskPreview(false);
+                  setPendingTaskShare(null);
+                  // Open the Circle modal to show the task
+                  modalState.setShowFriendsModal(true);
+                }}
+              />
+            </LazyBoundary>
           )}
           
           {/* Friend Request Toast - Shows after tutorial for pending invites/task shares */}
@@ -1182,21 +1246,27 @@ const AppContentComponent: React.FC = () => {
           Runs BEFORE tutorial. Unskippable. Language, Mode, Permissions, AI.
           The ONLY thing rendered when setup.isComplete === false.
           ═══════════════════════════════════════════════════════════════════ */}
-      {!setup.isComplete && <SetupWizard />}
+      {!setupIsComplete && (
+        <LazyBoundary>
+          <SetupWizard />
+        </LazyBoundary>
+      )}
 
       {/* Interactive Tutorial v3 — Comprehensive real-app onboarding. Only shown after setup wizard is complete. */}
-      {setup.isComplete && showNewOnboarding && (
-        <InteractiveTutorial
-          language={setup.language}
-          onComplete={() => {
-            try {
-              localStorage.setItem(TUTORIAL_V3_KEY, JSON.stringify({ completed: true }));
-            } catch {
-              // Non-fatal
-            }
-            setShowNewOnboarding(false);
-          }}
-        />
+      {setupIsComplete && showNewOnboarding && (
+        <LazyBoundary>
+          <InteractiveTutorial
+            language={setupLanguage}
+            onComplete={() => {
+              try {
+                localStorage.setItem(TUTORIAL_V3_KEY, JSON.stringify({ completed: true }));
+              } catch {
+                // Non-fatal
+              }
+              setShowNewOnboarding(false);
+            }}
+          />
+        </LazyBoundary>
       )}
       
 
@@ -1212,7 +1282,7 @@ const AppContentComponent: React.FC = () => {
       />
 
       {/* AI Coach Overlay (deferred to reduce startup jank) */}
-      {deferCoach && <CalendarAICoach focusedDate={selectedDate} />}
+      {deferCoach && <LazyBoundary><CalendarAICoach focusedDate={selectedDate} /></LazyBoundary>}
       <AchievementWatcher />
  </div>
     </>
@@ -1229,9 +1299,11 @@ export function App() {
       <Provider store={store}>
         <I18nextProvider i18n={i18n}>
           <ThemeProvider>
-            <HashRouter>
-              <AppContent />
-            </HashRouter>
+            <DialogProvider>
+              <HashRouter>
+                <AppContent />
+              </HashRouter>
+            </DialogProvider>
           </ThemeProvider>
         </I18nextProvider>
       </Provider>

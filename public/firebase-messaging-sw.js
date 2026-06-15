@@ -5,7 +5,7 @@
 // Note: This worker uses Firebase compat SDK via importScripts.
 // Update the version numbers below to match your firebase package version.
 
-const FIREBASE_VERSION = '9.23.0';
+const FIREBASE_VERSION = '%FIREBASE_VERSION%';
 
 importScripts(
   `https://www.gstatic.com/firebasejs/${FIREBASE_VERSION}/firebase-app-compat.js`,

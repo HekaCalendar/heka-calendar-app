@@ -93,7 +93,7 @@ export const TimePreferenceEditor: React.FC = () => {
               </span>
               {isCustom && (
                 <span style={{
-                  fontSize: '10px',
+                  fontSize: '12px',
                   textTransform: 'uppercase',
                   letterSpacing: '0.05em',
                   padding: '1px 6px',
@@ -236,7 +236,7 @@ export const TimePreferenceEditor: React.FC = () => {
                       background: 'transparent',
                       border: 'none',
                       color: 'rgba(224,224,224,0.4)',
-                      fontSize: '11px',
+                      fontSize: '12px',
                       cursor: globalEnabled ? 'pointer' : 'default',
                       textDecoration: 'underline',
                       fontFamily: "'Cormorant Garamond', Georgia, serif",

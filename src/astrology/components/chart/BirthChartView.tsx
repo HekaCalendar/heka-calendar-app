@@ -61,34 +61,56 @@ interface Aspect {
   orb: number;
 }
 
+const aspectsCache = new Map<string, Aspect[]>();
+const MAX_CACHED_BIRTH_ASPECTS = 8;
+
+function getBirthAspectsCacheKey(chart: ProfileWithChart['chart']): string {
+  const planetEntries = Object.entries(chart.planets)
+    .filter(([id]) => PLANET_ORDER.includes(id))
+    .sort(([a], [b]) => a.localeCompare(b));
+  return planetEntries
+    .map(([id, p]: [string, any]) => `${id}:${p.longitude.toFixed(4)}`)
+    .join('|');
+}
+
 function calculateAspects(chart: ProfileWithChart['chart']): Aspect[] {
+  const key = getBirthAspectsCacheKey(chart);
+  const cached = aspectsCache.get(key);
+  if (cached) return cached;
+
   const aspects: Aspect[] = [];
   const planets = Object.entries(chart.planets).filter(([id]) => PLANET_ORDER.includes(id));
-  
+
   const ASPECT_ANGLES: Record<string, number> = {
     conjunction: 0, sextile: 60, square: 90, trine: 120, opposition: 180,
   };
-  
+
   for (let i = 0; i < planets.length; i++) {
     for (let j = i + 1; j < planets.length; j++) {
       const [id1, p1] = planets[i];
       const [id2, p2] = planets[j];
-      
+
       let diff = Math.abs(p1.longitude - p2.longitude);
       if (diff > 180) diff = 360 - diff;
-      
+
       Object.entries(ASPECT_ANGLES).forEach(([type, angle]) => {
         const orb = Math.abs(diff - angle);
         const maxOrb = type === 'conjunction' || type === 'opposition' ? 8 : 6;
-        
+
         if (orb < maxOrb) {
           aspects.push({ planet1: id1, planet2: id2, type: type as Aspect['type'], orb });
         }
       });
     }
   }
-  
-  return aspects.sort((a, b) => a.orb - b.orb);
+
+  const result = aspects.sort((a, b) => a.orb - b.orb);
+  aspectsCache.set(key, result);
+  while (aspectsCache.size > MAX_CACHED_BIRTH_ASPECTS) {
+    const first = aspectsCache.keys().next().value;
+    if (first !== undefined) aspectsCache.delete(first);
+  }
+  return result;
 }
 
 interface BirthChartViewProps {
@@ -246,7 +268,7 @@ const styles: Record<string, React.CSSProperties> = {
     color: '#fbbf24',
   },
   statLabel: {
-    fontSize: '11px',
+    fontSize: '12px',
     color: 'rgba(255, 255, 255, 0.5)',
     textTransform: 'uppercase' as const,
     letterSpacing: '1px',
@@ -316,11 +338,11 @@ const styles: Record<string, React.CSSProperties> = {
     color: '#fff',
   },
   planetDegree: {
-    fontSize: '11px',
+    fontSize: '12px',
     color: 'rgba(255, 255, 255, 0.4)',
   },
   planetBadge: {
-    fontSize: '10px',
+    fontSize: '12px',
     padding: '3px 6px',
     borderRadius: '4px',
     background: 'rgba(147, 51, 234, 0.3)',
@@ -345,7 +367,7 @@ const styles: Record<string, React.CSSProperties> = {
   aspectType: {
     padding: '2px 8px',
     borderRadius: '4px',
-    fontSize: '11px',
+    fontSize: '12px',
     fontWeight: 500,
   },
   themeItem: {

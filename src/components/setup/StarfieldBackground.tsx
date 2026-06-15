@@ -10,6 +10,7 @@
  */
 
 import React, { useEffect, useRef } from 'react';
+import { useVisibility } from '../../hooks/useVisibility';
 
 interface Star {
   x: number;
@@ -32,11 +33,21 @@ interface ShootingStar {
   maxLife: number;
 }
 
+const LOW_POWER_MEMORY = 4;
+
+function getStarCount() {
+  const memory = (navigator as any).deviceMemory;
+  const cores = navigator.hardwareConcurrency || 4;
+  if ((memory && memory <= LOW_POWER_MEMORY) || cores <= 4) return 60;
+  return 150;
+}
+
 export const StarfieldBackground: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const starsRef = useRef<Star[]>([]);
   const shootingStarsRef = useRef<ShootingStar[]>([]);
   const mouseRef = useRef({ x: 0, y: 0 });
+  const isVisible = useVisibility();
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -56,7 +67,7 @@ export const StarfieldBackground: React.FC = () => {
     window.addEventListener('resize', resize);
 
     // Initialize stars
-    starsRef.current = Array.from({ length: 150 }, () => ({
+    starsRef.current = Array.from({ length: getStarCount() }, () => ({
       x: Math.random() * window.innerWidth,
       y: Math.random() * window.innerHeight,
       size: Math.random() * 1.8 + 0.3,
@@ -200,7 +211,7 @@ export const StarfieldBackground: React.FC = () => {
       window.removeEventListener('resize', resize);
       window.removeEventListener('mousemove', handleMouseMove);
     };
-  }, []);
+  }, [isVisible]);
 
   return (
     <canvas

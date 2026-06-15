@@ -153,7 +153,7 @@ export const PDFPreview: React.FC<PDFPreviewProps> = ({
             className="nav-btn"
             onClick={() => goToPage(currentPage - 1)}
             disabled={currentPage <= 1}
-            aria-label={t('common.previous')}
+            aria-label={t('previous')}
           >
             ‹
           </button>
@@ -164,7 +164,7 @@ export const PDFPreview: React.FC<PDFPreviewProps> = ({
             className="nav-btn"
             onClick={() => goToPage(currentPage + 1)}
             disabled={currentPage >= numPages}
-            aria-label={t('common.nextItem')}
+            aria-label={t('nextItem')}
           >
             ›
           </button>
@@ -172,9 +172,9 @@ export const PDFPreview: React.FC<PDFPreviewProps> = ({
         
         <div className="header-right">
           <div className="zoom-controls">
-            <button className="header-btn" onClick={zoomOut} aria-label={t('common.zoomOut')}>−</button>
+            <button className="header-btn" onClick={zoomOut} aria-label={t('zoomOut')}>−</button>
             <span className="zoom-level">{Math.round(scale * 100)}%</span>
-            <button className="header-btn" onClick={zoomIn} aria-label={t('common.zoomIn')}>+</button>
+            <button className="header-btn" onClick={zoomIn} aria-label={t('zoomIn')}>+</button>
           </div>
           <button className="header-btn secondary" onClick={onDownload}>
             💾 {t('save')}

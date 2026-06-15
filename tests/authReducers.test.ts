@@ -56,15 +56,12 @@ describe('authReducers', () => {
     expect(state.auth.syncError).toBeNull();
   });
 
-  it('setAuthenticated grants admin pro for admin email', () => {
+  it('setAuthenticated does not grant pro based on hardcoded email', () => {
     const state = createAuthState({});
     setAuthenticated(state, {
       payload: { userId: 'u1', email: 'martinkhoury98@gmail.com', displayName: null, photoURL: null },
     });
-    expect(state.subscription.isPro).toBe(true);
-    expect(state.subscription.tier).toBe('yearly');
-    expect(state.subscription.expiryDate).toBe('2099-12-31');
-    expect(state.subscription.purchasedProductIds.length).toBeGreaterThan(0);
+    expect(state.subscription.isPro).toBe(false);
   });
 
   it('setAuthenticated does not grant pro for regular email', () => {
@@ -111,11 +108,10 @@ describe('authReducers', () => {
     expect(state.auth.email).toBe('old@test.com');
   });
 
-  it('updateUserProfile grants admin pro when email changes to admin', () => {
+  it('updateUserProfile does not grant pro when email changes', () => {
     const state = createAuthState({});
     updateUserProfile(state, { payload: { email: 'martinkhoury98@gmail.com' } });
-    expect(state.subscription.isPro).toBe(true);
-    expect(state.subscription.tier).toBe('yearly');
+    expect(state.subscription.isPro).toBe(false);
   });
 
   it('setLastSync updates lastSync', () => {

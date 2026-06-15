@@ -4,6 +4,7 @@
  */
 
 import { useState, useEffect, useMemo, memo } from 'react';
+import { useGlobalTime } from '../../hooks/useGlobalTime';
 import { useTranslation } from 'react-i18next';
 import type { LocationData } from '../../types';
 import { getAgriculturalGuidance } from '../../services/agriculturalService';
@@ -29,13 +30,8 @@ const AgriculturalCardComponent: React.FC<Props> = ({ date, location }) => {
   const [nextEvent, setNextEvent] = useState<ReturnType<typeof getNextSeasonalEvent>>(null);
   const [expanded, setExpanded] = useState(false);
   const [loading, setLoading] = useState(true);
-  const [now, setNow] = useState(new Date());
+  const now = useGlobalTime();
   const { t } = useTranslation(['celestial', 'common']);
-
-  useEffect(() => {
-    const i = setInterval(() => setNow(new Date()), 1000);
-    return () => clearInterval(i);
-  }, []);
 
   useEffect(() => {
     setLoading(true);
@@ -148,7 +144,7 @@ const AgriculturalCardComponent: React.FC<Props> = ({ date, location }) => {
               <span className="heka-epic-counter__title" style={{ color: guidance.isGrowingSeason ? '#4ade80' : '#93c5fd' }}>
                 Until {nextEvent.name}
               </span>
-              <span style={{ fontSize: '10px', color: 'rgba(255,255,255,0.45)', marginTop: '4px' }}>
+              <span style={{ fontSize: '12px', color: 'rgba(255,255,255,0.45)', marginTop: '4px' }}>
                 {plantingContext}
               </span>
             </div>
@@ -181,11 +177,11 @@ const AgriculturalCardComponent: React.FC<Props> = ({ date, location }) => {
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                       <span>{rec.icon} <strong>{rec.plant}</strong> — {ACTION_ICONS[rec.action] || '🌱'} {rec.action}</span>
                       <span style={{
-                        fontSize: '10px', padding: '3px 8px', borderRadius: '10px', textTransform: 'uppercase',
+                        fontSize: '12px', padding: '3px 8px', borderRadius: '10px', textTransform: 'uppercase',
                         background: `${URGENCY_COLORS.now}20`, color: URGENCY_COLORS.now
                       }}>now</span>
                     </div>
-                    <div style={{ fontSize: '11px', color: 'rgba(255,255,255,0.5)', marginTop: '2px' }}>
+                    <div style={{ fontSize: '12px', color: 'rgba(255,255,255,0.5)', marginTop: '2px' }}>
                       {rec.daysToHarvest} to harvest • {rec.difficulty}
                     </div>
                   </div>
@@ -207,7 +203,7 @@ const AgriculturalCardComponent: React.FC<Props> = ({ date, location }) => {
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                       <span>{rec.icon} <strong>{rec.plant}</strong> — {ACTION_ICONS[rec.action] || '🌱'} {rec.action}</span>
                       <span style={{
-                        fontSize: '10px', padding: '3px 8px', borderRadius: '10px', textTransform: 'uppercase',
+                        fontSize: '12px', padding: '3px 8px', borderRadius: '10px', textTransform: 'uppercase',
                         background: `${URGENCY_COLORS.soon}20`, color: URGENCY_COLORS.soon
                       }}>soon</span>
                     </div>

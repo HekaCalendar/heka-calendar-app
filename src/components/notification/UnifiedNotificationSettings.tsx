@@ -133,7 +133,7 @@ export const UnifiedNotificationSettings: React.FC = () => {
           <span style={{ fontSize: '16px' }}>{emoji}</span>
           <span style={{ fontSize: '15px', fontWeight: 600, color: '#e0e0e0' }}>{label}</span>
           <span style={{
-            fontSize: '11px',
+            fontSize: '12px',
             fontWeight: 700,
             textTransform: 'uppercase',
             letterSpacing: '0.05em',

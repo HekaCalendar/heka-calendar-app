@@ -46,6 +46,7 @@ export const DayPanelComponent: React.FC = () => {
     noteKey,
     dayItems,
     astroPreferences,
+    timeMode,
     currentMansion,
     mansionLoading,
     solarReturnInfo,
@@ -147,7 +148,7 @@ export const DayPanelComponent: React.FC = () => {
         />
       )}
 
-      {/* Lunar Mansion Section — TRUE mode only */}
+      {/* Lunar Mansion Section */}
       {astroPreferences.showNakshatras && (
         <LunarMansionSection
           mansion={currentMansion ? {
@@ -156,6 +157,7 @@ export const DayPanelComponent: React.FC = () => {
             sunMansion: currentMansion.sunMansion,
           } : null}
           isLoading={mansionLoading}
+          timeMode={timeMode}
         />
       )}
 

@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta id="heka-viewport" name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <meta name="description" content="HEKA Calendar v2.2.1 - The 13-month calendar aligned with celestial rhythms" />
+  <meta name="description" content="HEKA Calendar v%APP_VERSION% - The 13-month calendar aligned with celestial rhythms" />
   <meta name="theme-color" content="#0c0c0f" />
   
   <!-- NO CACHE -->
@@ -11,12 +11,12 @@
   <meta http-equiv="Pragma" content="no-cache" />
   <meta http-equiv="Expires" content="0" />
   
-  <title>HEKA Calendar v2.2.1</title>
+  <title>HEKA Calendar v%APP_VERSION%</title>
   
   <!-- INLINE KILL SWITCH - Cannot be cached separately -->
   <script>
     (function() {
-      var VERSION = '2.2.1';
+      var VERSION = '%APP_VERSION%';
       var KEY = 'heka-v220-loaded';
       
       // Check if we already loaded this version
@@ -161,42 +161,42 @@
 </head>
 <body>
   <div id="root">
-    <div id="heka-loading" class="loading">HEKA v2.2.1</div>
+    <div id="heka-loading" class="loading">HEKA v%APP_VERSION%</div>
   </div>
 
   <script>
     (function() {
       var META = {
-        en: { title: 'HEKA Calendar v2.2.1', desc: 'HEKA Calendar v2.2.1 - The 13-month calendar aligned with celestial rhythms', loading: 'HEKA v2.2.1' },
-        es: { title: 'HEKA Calendar v2.2.1', desc: 'HEKA Calendar v2.2.1 - El calendario de 13 meses alineado con los ritmos celestiales', loading: 'HEKA v2.2.1' },
-        fr: { title: 'HEKA Calendrier v2.2.1', desc: 'HEKA Calendrier v2.2.1 - Le calendrier de 13 mois aligné avec les rythmes célestes', loading: 'HEKA v2.2.1' },
-        de: { title: 'HEKA Kalender v2.2.1', desc: 'HEKA Kalender v2.2.1 - Der 13-monatige Kalender, der den himmlischen Rhythmen entspricht.', loading: 'HEKA v2.2.1' },
-        it: { title: 'HEKA Calendar v2.2.1', desc: 'HEKA Calendar v2.2.1 - Il calendario di 13 mesi allineato ai ritmi celesti', loading: 'HEKA v2.2.1' },
-        pt: { title: 'Calendário HEKA v2.2.1', desc: 'HEKA Calendário v2.2.1 - O calendário de 13 meses alinhado com os ritmos celestiais', loading: 'HEKA v2.2.1' },
-        zh: { title: 'HEKA 日历 v2.2.1', desc: 'HEKA日历v2.2.1 - 与天体节奏对齐的13个月日历', loading: 'HEKA v2.2.1' },
-        ja: { title: 'HEKA カレンダー v2.2.1', desc: 'HEKA カレンダー v2.2.1 - 天体リズムに合った13ヶ月カレンダー', loading: 'HEKA v2.2.1' },
-        ko: { title: 'HEKA 캘린더 v2.2.1', desc: 'HEKA 캘린더 v2.2.1 - 천체 리듬과 맞춘 13개월 캘린더', loading: 'HEKA v2.2.1' },
-        ar: { title: 'HEKA التقويم v2.2.1', desc: 'HEKA التقويم v2.2.1 - التقويم الذي يحتوي على 13 شهرًا متناغمًا مع الإيقاع السماوي', loading: 'HEKA v2.2.1' },
-        hi: { title: 'HEKA कैलेंडर v2.2.1', desc: 'HEKA कैलेंडर v2.2.1 - स्वर्गीय लयों के साथ संरेखित 13 महीने का कैलेंडर', loading: 'HEKA v2.2.1' },
-        ru: { title: 'HEKA Календарь v2.2.1', desc: 'HEKA Календарь v2.2.1 - 13-месячный календарь, согласованный с небесными ритмами', loading: 'HEKA v2.2.1' },
-        tr: { title: 'HEKA Takvim v2.2.1', desc: 'HEKA Takvim v2.2.1 - Gök cisimleriyle uyumlu 13 aylık takvim', loading: 'HEKA v2.2.1' },
-        pl: { title: 'Kalendarz HEKA v2.2.1', desc: 'HEKA Kalendarz v2.2.1 - 13-miesięczny kalendarz dostosowany do rytmiów niebios', loading: 'HEKA v2.2.1' },
-        nl: { title: 'HEKA Agenda v2.2.1', desc: 'HEKA Kalender v2.2.1 - De 13-maanden kalender uitgelijnd met hemelse ritmpjes', loading: 'HEKA v2.2.1' },
-        sv: { title: 'HEKA Kalender v2.2.1', desc: 'HEKA Kalender v2.2.1 - Den 13-månaderskalender som är anpassad till himlakropars rytm', loading: 'HEKA v2.2.1' },
-        el: { title: 'Ημερολόγιο HEKA v2.2.1', desc: 'ΗKA Ημερολόγιο v2.2.1 - Το 13-μηνο ημερολόγιο που συντονίζεται με τους ουρανίους ρυθμούς', loading: 'HEKA v2.2.1' },
-        he: { title: 'לוח שנה HEKA v2.2.1', desc: 'לוח שנה HEKA v2.2.1 - לוח השנה ה-13 חולק עם ריטמים שמיים', loading: 'HEKA v2.2.1' },
-        th: { title: 'ปฏิทิน HEKA v2.2.1', desc: 'HEKA ปฏิทิน v2.2.1 - ปฏิทิน 13 เดือนที่จัดเต็มกับจังหวะของดาราจักร', loading: 'HEKA v2.2.1' },
-        vi: { title: 'Lịch HEKA phiên bản v2.2.1', desc: 'Lịch HEKA v2.2.1 - Lịch 13 tháng được canh lề với nhịp đập của các vì sao chưởng', loading: 'HEKA v2.2.1' },
-        id: { title: 'Kalender HEKA v2.2.1', desc: 'HEKA Kalender v2.2.1 - Kalender 13 bulan yang sejalan dengan ritme langit', loading: 'HEKA v2.2.1' },
-        uk: { title: 'КАлендар HEKA версії v2.2.1', desc: 'HEKA Календар v2.2.1 - 13-місячний календар, що вирівнюється з небесними ритмами', loading: 'HEKA v2.2.1' },
-        ro: { title: 'HEKA Calendar v2.2.1', desc: 'HEKA Calendar v2.2.1 - Calendarul de 13 luni aliniat cu ritmurile cereşti', loading: 'HEKA v2.2.1' },
-        cs: { title: 'HEKA Kalendář v2.2.1', desc: 'HEKA Kalendář v2.2.1 - 13měsíční kalendář zarovnaný s nebeskými rytmy', loading: 'HEKA v2.2.1' },
-        hu: { title: 'HEKA Naptár v2.2.1', desc: 'HEKA Naptár v2.2.1 - A 13 hónapos naptár, amely az égi ritmusokkal összhangban van', loading: 'HEKA v2.2.1' },
-        da: { title: 'HEKA Kalender v2.2.1', desc: 'HEKA Kalender v2.2.1 - Den 13-måneders kalender, der er afstemt efter himmelige rytmer', loading: 'HEKA v2.2.1' },
-        fi: { title: 'HEKA Kalenteri v2.2.1', desc: 'HEKA Kalenteri v2.2.1 - 13 kuukautta pitkä kalenteri, joka on suunniteltu tärmätahtiin mukautumaan', loading: 'HEKA v2.2.1' },
-        no: { title: 'HEKA Kalender v2.2.1', desc: 'HEKA Kalender v2.2.1 - Den 13-måneders kalender som er i samklang med himmelrytmer', loading: 'HEKA v2.2.1' },
-        sk: { title: 'HEKA Kalendár v2.2.1', desc: 'HEKA Kalendár v2.2.1 - 13-mesičný kalendár zarovnávaný s nebeskými rytmy', loading: 'HEKA v2.2.1' },
-        bg: { title: 'HEKA Календар v2.2.1', desc: 'HEKA Календар v2.2.1 - 13-месечен календар, подравнен с небесни ритми', loading: 'HEKA v2.2.1' }
+        en: { title: 'HEKA Calendar v%APP_VERSION%', desc: 'HEKA Calendar v%APP_VERSION% - The 13-month calendar aligned with celestial rhythms', loading: 'HEKA v%APP_VERSION%' },
+        es: { title: 'HEKA Calendar v%APP_VERSION%', desc: 'HEKA Calendar v%APP_VERSION% - El calendario de 13 meses alineado con los ritmos celestiales', loading: 'HEKA v%APP_VERSION%' },
+        fr: { title: 'HEKA Calendrier v%APP_VERSION%', desc: 'HEKA Calendrier v%APP_VERSION% - Le calendrier de 13 mois aligné avec les rythmes célestes', loading: 'HEKA v%APP_VERSION%' },
+        de: { title: 'HEKA Kalender v%APP_VERSION%', desc: 'HEKA Kalender v%APP_VERSION% - Der 13-monatige Kalender, der den himmlischen Rhythmen entspricht.', loading: 'HEKA v%APP_VERSION%' },
+        it: { title: 'HEKA Calendar v%APP_VERSION%', desc: 'HEKA Calendar v%APP_VERSION% - Il calendario di 13 mesi allineato ai ritmi celesti', loading: 'HEKA v%APP_VERSION%' },
+        pt: { title: 'Calendário HEKA v%APP_VERSION%', desc: 'HEKA Calendário v%APP_VERSION% - O calendário de 13 meses alinhado com os ritmos celestiais', loading: 'HEKA v%APP_VERSION%' },
+        zh: { title: 'HEKA 日历 v%APP_VERSION%', desc: 'HEKA日历v%APP_VERSION% - 与天体节奏对齐的13个月日历', loading: 'HEKA v%APP_VERSION%' },
+        ja: { title: 'HEKA カレンダー v%APP_VERSION%', desc: 'HEKA カレンダー v%APP_VERSION% - 天体リズムに合った13ヶ月カレンダー', loading: 'HEKA v%APP_VERSION%' },
+        ko: { title: 'HEKA 캘린더 v%APP_VERSION%', desc: 'HEKA 캘린더 v%APP_VERSION% - 천체 리듬과 맞춘 13개월 캘린더', loading: 'HEKA v%APP_VERSION%' },
+        ar: { title: 'HEKA التقويم v%APP_VERSION%', desc: 'HEKA التقويم v%APP_VERSION% - التقويم الذي يحتوي على 13 شهرًا متناغمًا مع الإيقاع السماوي', loading: 'HEKA v%APP_VERSION%' },
+        hi: { title: 'HEKA कैलेंडर v%APP_VERSION%', desc: 'HEKA कैलेंडर v%APP_VERSION% - स्वर्गीय लयों के साथ संरेखित 13 महीने का कैलेंडर', loading: 'HEKA v%APP_VERSION%' },
+        ru: { title: 'HEKA Календарь v%APP_VERSION%', desc: 'HEKA Календарь v%APP_VERSION% - 13-месячный календарь, согласованный с небесными ритмами', loading: 'HEKA v%APP_VERSION%' },
+        tr: { title: 'HEKA Takvim v%APP_VERSION%', desc: 'HEKA Takvim v%APP_VERSION% - Gök cisimleriyle uyumlu 13 aylık takvim', loading: 'HEKA v%APP_VERSION%' },
+        pl: { title: 'Kalendarz HEKA v%APP_VERSION%', desc: 'HEKA Kalendarz v%APP_VERSION% - 13-miesięczny kalendarz dostosowany do rytmiów niebios', loading: 'HEKA v%APP_VERSION%' },
+        nl: { title: 'HEKA Agenda v%APP_VERSION%', desc: 'HEKA Kalender v%APP_VERSION% - De 13-maanden kalender uitgelijnd met hemelse ritmpjes', loading: 'HEKA v%APP_VERSION%' },
+        sv: { title: 'HEKA Kalender v%APP_VERSION%', desc: 'HEKA Kalender v%APP_VERSION% - Den 13-månaderskalender som är anpassad till himlakropars rytm', loading: 'HEKA v%APP_VERSION%' },
+        el: { title: 'Ημερολόγιο HEKA v%APP_VERSION%', desc: 'ΗKA Ημερολόγιο v%APP_VERSION% - Το 13-μηνο ημερολόγιο που συντονίζεται με τους ουρανίους ρυθμούς', loading: 'HEKA v%APP_VERSION%' },
+        he: { title: 'לוח שנה HEKA v%APP_VERSION%', desc: 'לוח שנה HEKA v%APP_VERSION% - לוח השנה ה-13 חולק עם ריטמים שמיים', loading: 'HEKA v%APP_VERSION%' },
+        th: { title: 'ปฏิทิน HEKA v%APP_VERSION%', desc: 'HEKA ปฏิทิน v%APP_VERSION% - ปฏิทิน 13 เดือนที่จัดเต็มกับจังหวะของดาราจักร', loading: 'HEKA v%APP_VERSION%' },
+        vi: { title: 'Lịch HEKA phiên bản v%APP_VERSION%', desc: 'Lịch HEKA v%APP_VERSION% - Lịch 13 tháng được canh lề với nhịp đập của các vì sao chưởng', loading: 'HEKA v%APP_VERSION%' },
+        id: { title: 'Kalender HEKA v%APP_VERSION%', desc: 'HEKA Kalender v%APP_VERSION% - Kalender 13 bulan yang sejalan dengan ritme langit', loading: 'HEKA v%APP_VERSION%' },
+        uk: { title: 'КАлендар HEKA версії v%APP_VERSION%', desc: 'HEKA Календар v%APP_VERSION% - 13-місячний календар, що вирівнюється з небесними ритмами', loading: 'HEKA v%APP_VERSION%' },
+        ro: { title: 'HEKA Calendar v%APP_VERSION%', desc: 'HEKA Calendar v%APP_VERSION% - Calendarul de 13 luni aliniat cu ritmurile cereşti', loading: 'HEKA v%APP_VERSION%' },
+        cs: { title: 'HEKA Kalendář v%APP_VERSION%', desc: 'HEKA Kalendář v%APP_VERSION% - 13měsíční kalendář zarovnaný s nebeskými rytmy', loading: 'HEKA v%APP_VERSION%' },
+        hu: { title: 'HEKA Naptár v%APP_VERSION%', desc: 'HEKA Naptár v%APP_VERSION% - A 13 hónapos naptár, amely az égi ritmusokkal összhangban van', loading: 'HEKA v%APP_VERSION%' },
+        da: { title: 'HEKA Kalender v%APP_VERSION%', desc: 'HEKA Kalender v%APP_VERSION% - Den 13-måneders kalender, der er afstemt efter himmelige rytmer', loading: 'HEKA v%APP_VERSION%' },
+        fi: { title: 'HEKA Kalenteri v%APP_VERSION%', desc: 'HEKA Kalenteri v%APP_VERSION% - 13 kuukautta pitkä kalenteri, joka on suunniteltu tärmätahtiin mukautumaan', loading: 'HEKA v%APP_VERSION%' },
+        no: { title: 'HEKA Kalender v%APP_VERSION%', desc: 'HEKA Kalender v%APP_VERSION% - Den 13-måneders kalender som er i samklang med himmelrytmer', loading: 'HEKA v%APP_VERSION%' },
+        sk: { title: 'HEKA Kalendár v%APP_VERSION%', desc: 'HEKA Kalendár v%APP_VERSION% - 13-mesičný kalendár zarovnávaný s nebeskými rytmy', loading: 'HEKA v%APP_VERSION%' },
+        bg: { title: 'HEKA Календар v%APP_VERSION%', desc: 'HEKA Календар v%APP_VERSION% - 13-месечен календар, подравнен с небесни ритми', loading: 'HEKA v%APP_VERSION%' }
       };
       var lang = 'en';
       try {

@@ -1,0 +1,49 @@
+{
+  "best": "Terbaik: {{count}}",
+  "title": "Perjalanan Anda",
+  "close": "Tutup",
+  "reset": "Reset Statistik",
+  "avgMood": "Rata-Rata suasana hati",
+  "dayStreak": "Seri Hari",
+  "totalNotes": "Total Catatan",
+  "wordsWritten": "Kata Tertulis",
+  "achievements": "Pencapaian ({{earned}}/{{total}})",
+  "resetConfirm": "Reset",
+  "progressRatio": "{{current}} / {{target}}",
+  "monthlyTooltip": "{{month}} {{year}}: {{count}} catatan",
+  "notesByCategory": "Catatan berdasarkan Kategori",
+  "monthlyActivity": "Aktivitas Bulanan",
+  "mostActiveMonth": "Bulan aktifitas terbanyak Anda adalah \u003cstrong\u003e{{month}}\u003c/strong\u003e dengan \u003cstrong\u003e{{count}}\u003c/strong\u003e catatan",
+  "categories": {
+    "work": "Kerja",
+    "family": "Keluarga",
+    "health": "Kesehatan",
+    "general": "Umum",
+    "personal": "Pribadi",
+    "creative": "Kreatif",
+    "spiritual": "Rohani"
+  },
+  "progressToCentury": "Kemajuan menuju Klub Abad",
+  "resetConfirmTitle": "Reset Statistik",
+  "badges": {
+    "century": {
+      "name": "Klub Abad"
+    },
+    "explorer": {
+      "name": "Pengexploras"
+    },
+    "archivist": {
+      "name": "Arsiparis"
+    },
+    "first-note": {
+      "name": "Kata Pertama"
+    },
+    "week-streak": {
+      "name": "Wira Minggu"
+    },
+    "month-streak": {
+      "name": "Penguasa Bulan"
+    }
+  },
+  "resetConfirmDescription": "Apakah Anda yakin ingin mereset semua statistik? Tidak bisa dibatalkan."
+}

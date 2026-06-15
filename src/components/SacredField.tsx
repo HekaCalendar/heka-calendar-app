@@ -11,7 +11,7 @@
  * No filters. No scale transforms. No individual element animations.
  */
 
-import React from 'react';
+import { memo } from 'react';
 
 const R = 85;                          // circle radius
 const SPACING = R * 1.35;              // center-to-center distance (slight gap so arcs show)
@@ -43,7 +43,22 @@ function generateCircles(): Array<{ cx: number; cy: number; r: number }> {
 
 const CIRCLES = generateCircles();
 
-export const SacredField: React.FC = () => {
+/** Pack many circles into a single <path> d attribute to reduce DOM node count. */
+function circlesToPath(circles: Array<{ cx: number; cy: number; r: number }>): string {
+  const parts: string[] = new Array(circles.length);
+  for (let i = 0; i < circles.length; i++) {
+    const c = circles[i];
+    parts[i] =
+      `M ${c.cx + c.r} ${c.cy} ` +
+      `A ${c.r} ${c.r} 0 1 0 ${c.cx - c.r} ${c.cy} ` +
+      `A ${c.r} ${c.r} 0 1 0 ${c.cx + c.r} ${c.cy}`;
+  }
+  return parts.join(' ');
+}
+
+const CIRCLE_PATH = circlesToPath(CIRCLES);
+
+export const SacredField = memo(() => {
   return (
     <div className="sacred-field" aria-hidden="true">
       <svg
@@ -51,24 +66,21 @@ export const SacredField: React.FC = () => {
         viewBox="0 0 800 800"
         preserveAspectRatio="xMidYMid slice"
       >
-        {/* Static grid — rotated as a single unit */}
+        {/* Single path replaces dozens of <circle> nodes */}
         <g className="sacred-field__grid">
-          {CIRCLES.map((c, i) => (
-            <circle
-              key={i}
-              cx={c.cx}
-              cy={c.cy}
-              r={c.r}
-              fill="none"
-              stroke="var(--sacred-primary)"
-              strokeWidth="0.7"
-              strokeOpacity="0.32"
-            />
-          ))}
+          <path
+            d={CIRCLE_PATH}
+            fill="none"
+            stroke="var(--sacred-primary)"
+            strokeWidth="0.7"
+            strokeOpacity="0.32"
+          />
         </g>
       </svg>
     </div>
   );
-};
+});
+
+SacredField.displayName = 'SacredField';
 
 export default SacredField;

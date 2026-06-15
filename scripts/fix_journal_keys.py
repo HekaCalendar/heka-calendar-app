@@ -81,10 +81,8 @@ def fix_file(filepath):
 
     return changed
 
-# Update both public and src directories
-paths = []
-paths.extend(glob.glob(r'public\locales\*\journal.json'))
-paths.extend(glob.glob(r'src\i18n\locales\*\journal.json'))
+# Update source locales
+paths = glob.glob(r'src\i18n\locales\*\journal.json')
 
 updated = 0
 for p in paths:

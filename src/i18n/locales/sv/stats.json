@@ -1,0 +1,49 @@
+{
+  "best": "Bäst: {{count}}",
+  "title": "Din resa",
+  "close": "Stäng",
+  "reset": "Återställ statistik",
+  "avgMood": "Genomsnittligt humör",
+  "dayStreak": "Dagars sträcka",
+  "totalNotes": "Totalt antal anteckningar",
+  "wordsWritten": "Ord skrivna",
+  "achievements": "Prestationer ({{earned}}/{{total}})",
+  "resetConfirm": "Återställ",
+  "progressRatio": "{{current}} / {{mål}}",
+  "monthlyTooltip": "{{month}} {{year}}: {{count}} anteckningar",
+  "notesByCategory": "Anteckningar efter kategori",
+  "monthlyActivity": "Månatlig aktivitet",
+  "mostActiveMonth": "Du var mest aktiv i månaden \u003cstrong\u003e{{month}}\u003c/strong\u003e med \u003cstrong\u003e{{count}}\u003c/strong\u003e anteckningar",
+  "categories": {
+    "work": "Arbete",
+    "family": "Familj",
+    "health": "Hälsa",
+    "general": "Allmänt",
+    "personal": "Personligt",
+    "creative": "Kreativ",
+    "spiritual": "Andligt"
+  },
+  "progressToCentury": "Framsteg mot Century Club",
+  "resetConfirmTitle": "Återställ statistik",
+  "badges": {
+    "century": {
+      "name": "Århundradsklan"
+    },
+    "explorer": {
+      "name": "Utforskare"
+    },
+    "archivist": {
+      "name": "Arkivarie"
+    },
+    "first-note": {
+      "name": "Första orden"
+    },
+    "week-streak": {
+      "name": "Vecka Krigetare"
+    },
+    "month-streak": {
+      "name": "Månads Mästare"
+    }
+  },
+  "resetConfirmDescription": "Är du säker på att du vill återställa all statistik? Detta kan inte ångras."
+}

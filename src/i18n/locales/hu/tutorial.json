@@ -1,0 +1,126 @@
+{
+  "tutorial": {
+    "back": "Vissza",
+    "skip": "Kihagyás",
+    "enter": "Jelentkezzen be a HEKA-ba",
+    "continue": "Folytatás",
+    "stepLabel": "Lépés {{current}} a {{total}}-ból",
+    "journeyTitle": "Az Ön útja",
+    "completeLabel": "Teljes",
+    "actionWaiting": "Koppintson a folytatáshoz",
+    "steps": {
+      "welcome": {
+        "title": "Üdvözöljük a HEKA-ban",
+        "detail": "Tizenhárom hónap. Minden hónap 28 nap, a hold, a nap, a kert, az energia, a barátok – végre egybevágó rytmusban.",
+        "action": "Kezdjük az utazásunkat",
+        "instruction": "Soha nem látott ilyen naptárt."
+      },
+      "tracker": {
+        "title": "Nyomon követés Rítmused",
+        "detail": "Hangulat: 1-10 csúszka valós idejű emojivel. Alszik: időtartam és minőség. Energia: fizikai, mental, érzelmi, szellemi. Az Insight irányítópult a mintázatokat mutatja az idő múltán. A naptár tartalmazza a történeted.",
+        "action": "Folytatás",
+        "instruction": "A test a naptár része."
+      },
+      "the-grid": {
+        "title": "A rács – Tizenhárom hónap",
+        "detail": "Tizenkét hónap, amelynek mindene pontosan 28 nap, plusz a Hexa augusztus és szeptember között. A március a 29. napot tartja. Minden hónap ugyanazon a napon kezdődik. Az év három ívben van – a nyitó piros, a magzat zöld, a záró lila. Predicíható. Szimmetrikus. Tisztán.",
+        "action": "Koppintson bármely napra a folytatáshoz",
+        "instruction": "Számmal számoljuk. Tizenhárom. Nem tizenkét."
+      },
+      "features": {
+        "title": "Az Öregséged",
+        "detail": "Nyomtatás: Alapértelmezett Arany, Minimalista, Szent Geometria körökkel, Cyberpunk CRT szaggatott vonallal, Természet Orgánikus, Ókori Egyiptom hieroglifákkal. Mindegyik ingyenes. Életben marad. A4, A3, Letter. Csillagok: Svájci Ephemeris születési térképek, ívmásod-pontosság. Napló: négy mód az AI betekintéssel. Kör: valós idejű üzenetek, közös feladatok HEKA esedékességekkel. Statisztika: 80+ elért dicsőség nyolc szinten. Titkos elért dicsőségek várják a felfedezést.",
+        "action": "Folytass",
+        "instruction": "Hat nyomtatási témá. Születési térkép motor. Napló. Barátok. Statisztika."
+      },
+      "settings": {
+        "title": "Tedd Sajátdra",
+        "detail": "Civil Dátumok: Gregorius fedve, így sosem maradsz ki egy találkozóról. Holdfázisok: Svájci Ephemeris szimbólumok minden cellán. Ünnepnapok: közösségi ünnepségek. Tiszta Mód: teljes képernyős, zavartalan, Yin-Yang sötét/világos kapcsoló. A naptár úgy alakul, ahogyan TE SZEMESZI az időt.",
+        "action": "Kapcsold be bármelyik beállítást, hogy folytathasd",
+        "instruction": "Három kapcsoló. Tiszta Mód. Teljes kontroll."
+      },
+      "ai-coach": {
+        "title": "HEKA AI — A Célestis Trénered",
+        "detail": "Lebegő üveg oracle. Összefűzi a holdfázisokat, a tranzitky, a feladatokat, a napló hangulatát, a sorozatokat és a helyszínt poetikus, cselekvésre kész üzenetessé. A saját archetípusodban beszél — Harcos",
+        "action": "Folytatás",
+        "instruction": "Ő figyeli az eget. Ő figyeli téged."
+      },
+      "complete": {
+        "title": "Ön Készen áll",
+        "detail": "Ön tudja, hogyan navigálhaton a tizenharmad hónapon. Tudja, hogyan olvashatja a holdat. Tudja, hogyan követheti az energiáját, szavazhat a ünnepekről, szép oldalakat nyomtatni, csillagokkal naplózni és az AI edzőjével konzultálni. A többi a kíváncsiságára várakozik.",
+        "action": "Jelentkezzen be a HEKA-ba",
+        "instruction": "A naptár az öné. Az ég az öné."
+      },
+      "day-cells": {
+        "title": "Minden cella élet",
+        "detail": "Svájci Ephemeris holdfázis emoji. A civil dátum alatt. Ünnepnapok pontjai — közösség által kialakított. Jegyzetek — a saját szavaid, láthatóak a rácsban. Az összes tizenhárom hónap egyszerre. Az egész év egy pillantásra.",
+        "action": "Koppints bármelyik napra, hogy megnyisd",
+        "instruction": "Minden nap egy történetet mesél."
+      },
+      "day-panel": {
+        "title": "A Nap Megnyitása",
+        "detail": "Hold: pontos megvilágítás, növekvő vagy csökkenő, Üres Út Course detektálása. Astrologia: valós idejű tranzitky a SZÜLETÉSI Térképedhez képest. Jegyzetek: hangulat, feladat, napló szerint kategorizálva. Feladatok: esedékes idők, emlékeztetők. Energia: szavazás 19:30 után, lásd a közösség pulzusát. Ez nem egy naptárbejegyzés. Ez egy portál.",
+        "action": "Fedezd fel a nap panelt, majd folytass",
+        "instruction": "Egyetlen nap parancsközpontja."
+      },
+      "community": {
+        "title": "Az Univerzum alakítása",
+        "detail": "Javasolj új ünnepeket. Tíz upvote és hivatalos lesz. Szavazz a jövőbeli funkciókon — Tervezett, Fontolgatott, Folyamatban, Kiadott. A naptár fejlődik, mert a felhasználók fejlesztik. Ez egy együttműködés.",
+        "action": "Folytatás",
+        "instruction": "A szavazatod megváltoztatja a naptárat."
+      },
+      "navigation": {
+        "title": "Mozgás az időben",
+        "detail": "A nyilak az hónapok között mozgatják. A ma visszaáll mostra. A keresés megérti a természetes nyelvet – \"Hexa 15\" vagy \"január 31.\" Végignyújthatunk vízszintesen vagy függőlegesen a részletekért. Az egész év egy mozdulattal van elérve.",
+        "action": "Koppintson ← vagy → a navigációhoz",
+        "instruction": "Soha nem vagyunk elveszett."
+      },
+      "first-note": {
+        "title": "Hagyj el első nyilatod",
+        "detail": "Koppints bármelyik napra. Görgetés a Jegyzetekhez. Írj valamit — egy feladatot, egy hangulatot, egy emléket. Ez lesz az első bejegyzés, ami évekig tartó krónikának kezdetét jelentheti.",
+        "action": "Írj jegyzetet a tutorial befejezéséhez",
+        "instruction": "A naptár csak egy eszköz, amíg nem te nem tetszel bele."
+      },
+      "celestial-guide": {
+        "title": "A Célestis Útmutató",
+        "detail": "Nap Idők: élő SVG gyűrű, időjárás, négyszintű pontosság. Holdfázis: megvilágítás, üres hold, holdújév visszaszámlálás. Szezonok: igaz astronomiai solsztícium követés. Mezőgazdaság: mit ültess most, a helyed és holdfázisod alapján. Digitális Óra: négy egyidejű élő visszaszámlálás. Bolygó Órák: igaz Chaldean órák a valós napkelte és naplemente alapján. Görgetd őket. Mindegyik egy tudományos készülék.",
+        "action": "Görgetd a celesztis kártyákat, hogy folytathasd",
+        "instruction": "Hat kártya. Egy ég."
+      }
+    },
+    "printThemes": {
+      "egypt": {
+        "name": "Egyiptom",
+        "desc": "Hieroglifák"
+      },
+      "sacred": {
+        "name": "Szent Geo",
+        "desc": "Körkörös cellák"
+      },
+      "nature": {
+        "name": "Természet",
+        "desc": "Botanikus"
+      },
+      "default": {
+        "name": "Alapértelmezett",
+        "desc": "Papír és arany"
+      },
+      "cyberpunk": {
+        "name": "Cyberpunk",
+        "desc": "Neon fény"
+      },
+      "minimalist": {
+        "name": "Minimális",
+        "desc": "Svájci tisztulság"
+      }
+    },
+    "previewAchievements": {
+      "nightOwl": "Éjszakai Bagoly",
+      "timeLord": "Idő Lord",
+      "firstWords": "Első szavak",
+      "weekWarrior": "Hét harcosa",
+      "centuryClub": "Századi Klub",
+      "theChronicler": "A Krónikár"
+    }
+  }
+}

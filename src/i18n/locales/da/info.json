@@ -1,0 +1,322 @@
+{
+  "infoModal": {
+    "hero": {
+      "title": "HEKA — Et Kalenderbygget til Sjæle",
+      "subtitleLine1": "Tredive måneder.",
+      "subtitleLine2": "Fire uger hver. Et klart år."
+    },
+    "guideComplete": "Guide Fuldført",
+    "spotlight": {
+      "title": "Ved du hvad?",
+      "facts": [
+        "Det Gregorianske kalenders uregelmæssige måneder er for det meste resultatet af Romerske politik og Kejseriske egoer.",
+        "HEKA's tredive måneder på tyve dage skaber perfekte kvartaler og forudsigelige lønperioder.",
+        "I SAND mode følger HEKA en 128-årig springregel for langtidsastronomisk præcision.",
+        "Den civile overlap lader dig se Gregorianske datoer ved siden af HEKA, så du aldrig mister koordination.",
+        "Dine journalindlæg forbliver lokale som standard og synkroniseres kun, når du vælger at logge ind."
+      ]
+    },
+    "home": "Hjem",
+    "backToHome": "Tilbage til Hjem",
+    "deeperQuestions": "Dybere Spørgsmål",
+    "chapters": {
+      "home": {
+        "num": "0",
+        "chip": "START",
+        "title": "Velkommen",
+        "hook": "En anden måde at leve året på.",
+        "teaser": "Begynd her."
+      },
+      "ch1": {
+        "num": "01",
+        "chip": "GRUNDLAG",
+        "title": "Kalenderen",
+        "hook": "Tredive måneder. Fire uger hver. Et klart år.",
+        "teaser": "Hvad HEKA er og hvorfor det føles anderledes."
+      },
+      "ch2": {
+        "num": "02",
+        "chip": "STRUKTUR",
+        "title": "Årets Bue",
+        "hook": "Åbning, kerne, og lukning: et år med fortællende form.",
+        "teaser": "Hvordan månederne strømmer fra April til Marts."
+      },
+      "ch3": {
+        "num": "03",
+        "chip": "VÆRKTØJER",
+        "title": "Din Daglige Ledsager",
+        "hook": "Journal, måne, stjerner, og civil overlap - alt dit.",
+        "teaser": "Funktionaliteterne der gør HEKA praktisk."
+      },
+      "ch4": {
+        "num": "04",
+        "chip": "TILSTANDE",
+        "title": "SYNC vs SAND",
+        "hook": "To måder at håndtere springdagen. Vælg din korrekthed.",
+        "teaser": "Familier koordination eller astronomisk renhed."
+      },
+      "ch5": {
+        "num": "05",
+        "chip": "HISTORIE",
+        "title": "Hvorfor Kalendrere Flyder",
+        "hook": "Arv fra kaos, politiske reparater og chancen for at designe om.",
+        "teaser": "Historien bag den kalender, du fik tildelt."
+      },
+      "ch6": {
+        "num": "06",
+        "chip": "ONBOARDING",
+        "title": "Start At leve Inde I Det",
+        "hook": "Tre små skridt til at gøre HEKA til din standardvisning.",
+        "teaser": "Sådan starter du uden at forstyrre dit liv."
+      },
+      "ch7": {
+        "num": "07",
+        "chip": "BETYDNING",
+        "title": "Tid Som Myndighed",
+        "hook": "Klarhed, rytme og valget af at bruge et bedre værktøj.",
+        "teaser": "Hvorfor tidens struktur betyder noget."
+      }
+    },
+    "chapterLeads": {
+      "home": "Dette guide er en bro. Gå over den i din egen fart.",
+      "ch1": "HEKA er ikke en justering af den gregorianske kalender. Det er en erstatning bygget op fra første principper.",
+      "ch2": "Året har form, når dens struktur spejler rytmen af handling og hvile.",
+      "ch3": "En kalender er kun nyttig, hvis den integreres med det liv, du allerede lever.",
+      "ch4": "Samme struktur kan tjene forskellige behov. Den tilstand, du vælger, er en præference, ikke en dogmatik.",
+      "ch5": "Forståelse af, hvordan den nuværende kalender kom til at være, gør det lettere at tilgive dens fejl - og lettere at forlade den.",
+      "ch6": "Optagelse sker i små skridt. Du behøver ikke tilladelse eller et manifest.",
+      "ch7": "Tidenes beholder former indholdet af livet. Vælg den med vilje."
+    },
+    "cardsByChapter": {
+      "ch1": [
+        {
+          "h": "Problemet Du Føler",
+          "b": "Uregelmæssige måneder. Fordelagtlige helligdage. Et år, der vakler fra januar til december uden nogen fornemmelse af begyndelse, midte eller slut. Du har følt denne friktion. HEKA fjerner den."
+        },
+        {
+          "h": "Løsningen Vi Byggede",
+          "b": "Tredive måneder. Tolv har tyve dage i perfekt symmeri. Marts, den afsluttende måned, bærer skuddagen. Fire perfekte uger pr. måned. Et år, der flyder: April åbner, maj gennem december danner den stabile kerne, januar gennem marts fuldender den."
+        },
+        {
+          "h": "Verdenen Du Beholder",
+          "b": "HEKA forstyrrer ikke dit liv. Civile datoer forbliver synlige. Dine aftaler, forpligtelser og juridiske forpligtelser forbliver præcis, hvor de er. Du får bare et klartere syn."
+        }
+      ],
+      "ch2": [
+        {
+          "h": "Åbningsbuen",
+          "b": "April er tærsklen. Året begynder ikke i vinterudmattelse, men i forårsvækst. Ny vækst. Nye projekter. Åbningen annoncerer: noget begynder."
+        },
+        {
+          "h": "Kernebuen",
+          "b": "Maj gennem december er den lange, stabile midte. Ni måneder med fuldstændig regelmæssig og forudsigelig rytme. Planlæg med tillid. Bygge momentum. Dette er, hvor arbejdet sker."
+        },
+        {
+          "h": "Afslutningsbuen",
+          "b": "Januar gennem marts bringer året til sin afslutning. Afslut, hvad du startede. Høst, hvad du voksede. Lukning skaber plads til refleksion og forbereder dig på den næste åbning."
+        }
+      ],
+      "ch3": [
+        {
+          "h": "Dine Civil",
+          "b": "Skift mellem civilt lag og se Gregorianske datoer sammen med HEKA. Din tandlægetime, din mors fødselsdag, din skatfristedato - alt forbliver præcist, hvor du forventer dem."
+        },
+        {
+          "h": "Din Journal",
+          "b": "Daglige indlæg med revisionshistorik - op til 50 versioner gemmes automatisk. Fuldtekstsøgning gennem alt. Lokalt som standard; sky-backup, når du logger ind."
+        },
+        {
+          "h": "Din Måne & Stjerner",
+          "b": "Månefaser, planetpositioner og overgange synlige på et kig. Valgfri og præcise. Tilføj dit fødselsstjernediagram for personlige læsninger gennem Oraklet."
+        }
+      ],
+      "ch4": [
+        {
+          "h": "SYNC-tilstand: Den Bekendte Sti",
+          "b": "Marts får sin ekstra dag, når den gregorianske kalender siger, den skal. For daglig koordination med den civile verden er dette din tilstand. Samme struktur. Familiar timing."
+        },
+        {
+          "h": "SAND Mode: Den Ærlige Sti",
+          "b": "HEKA følger sin egen korrigeringsregel: hver fjerde år har en 30-dages marts, undtagen hvert 128. år, hvilket ikke gør. Dette er astronomisk præcision. Dette er langfristede integritet."
+        },
+        {
+          "h": "Skift何时都行",
+          "b": "Månederne ændres ikke. Ugen ændres ikke. Kun korrigeringstriggeren flyttes. Eksperimenter. Se, hvilken tilstand der passer dine behov. Du er ikke låst fast."
+        }
+      ],
+      "ch5": [
+        {
+          "h": "Arv, Ikke Design",
+          "b": "Vores nuværende kalender er en bunke historiske ulykker. Romerske politik. Religionsråd. Astronomiske patches tilføjet århundreder fra hverandre. Det var aldrig designet som et system."
+        },
+        {
+          "h": "Den Gregorianske Patch",
+          "b": "1582: Pave Gregor fik fat i driftsproblemet. Men han beholdt de uregelmæssige måneder, den spredte struktur, den arvede kaos. En nødvendig korrigering, men ikke en komplet løsning."
+        },
+        {
+          "h": "HEKA-Svaret",
+          "b": "Vi beholdt, hvad der virker: syv-dages uger, årstidssammenkørsel, solårssporing. Vi omdannede, hvad der ikke gjorde: månedsstruktur, årsstrømning, korrigeringsplacering. Bygt for sind, der tænker."
+        }
+      ],
+      "ch6": [
+        {
+          "h": "Trin Et: Aktivér Overlaget",
+          "b": "Tænd civile datoer. Nu kan du se begge systemer samtidigt. Din HEKA-dato og din gregorianske dato. Broen er bygget. Kryd over, når du har brug for det."
+        },
+        {
+          "h": "Trin To: Vælg Din Tilstand",
+          "b": "Begynd med SYNC, hvis du vil kende. Skift til SAND, hvis du vil have renhed. Du kan ændre din tanke. Kalenderen tilpasses dig, ikke omvendt."
+        },
+        {
+          "h": "Trin Tre: Lev Inde I",
+          "b": "Brug HEKA som dit primære synspunkt. Planlæg din måned. Note dine dage. Føl forskellen på et år med faktisk struktur. Den civile verden behøver ikke at vide. Du vil vide."
+        }
+      ],
+      "ch7": [
+        {
+          "h": "Friktion Koster Energi",
+          "b": "Hver gang du undrer dig over, hvor mange dage der er i denne måned, betaler du en lille skat. Hver uregelmæssighed suger fokus. HEKA fjerner disse skatter. Du beholde dit energi til, hvad der betyder noget."
+        },
+        {
+          "h": "Rytme Skaber Ro",
+          "b": "Når strukturen er forudsigbar, slapper sindet af. Du ved, hvor du er i året. Du føler åbningen, kernen, lukningen. Tid bliver et sted du bebor, ikke et kaos du overlever."
+        },
+        {
+          "h": "Myndighed Over Tid",
+          "b": "Du valgte ikke den gregorianske kalender. Den blev givet til dig. HEKA er et valg. At bruge et værktøj designet til klarhed. At påtage sig myndighed over strukturen af dine dage. Dette er din kalender."
+        }
+      ]
+    },
+    "gatesByChapter": {
+      "ch1": [
+        {
+          "t": "Er dette en religion eller bevægelse?",
+          "tag": "KLARHED",
+          "b": "Ingen af ​​delene. HEKA er et værktøj. Ligesom en bedre hammer eller et ty"
+        },
+        {
+          "t": "Hvorfor tretten måneder?",
+          "tag": "LOGIK",
+          "b": "Tolv måneder af uregelmæssig længde tvinger mentale gymnastik. Tretten måneder med hver fire uger skaber perfekt regelmæssighed. 13 × 28 = 364. Plus en særlig dag. Matematikken er ren. Oplevelsen er endnu renere."
+        },
+        {
+          "t": "Vil dette forvirre andre mennesker?",
+          "tag": "REALITET",
+          "b": "Du ser HEKA datoer. De ser civile datoer. Når du siger \"15. marts\", mener du den samme dag, de gør. Den civile overlapning sørger for, at du aldrig mister koordination. Du får klarhed. De mister intet."
+        }
+      ],
+      "ch2": [
+        {
+          "t": "Hvorfor starter året i april?",
+          "tag": "SYMBOL",
+          "b": "Foråret er den universelle åbning. Vækst begynder. Energi stiger. At starte året i april tilpasses kalenderen med den følte oplevelse af fornyelse. Januar starter i vinterudmattelse. April starter i forårsmuligheder."
+        },
+        {
+          "t": "Hvad er månedsnavnene?",
+          "tag": "Rækkefølge",
+          "b": "April, maj, juni, juli, august, seksember, september, oktober, november, december, januar, februar, marts. Seksember - den sjette måned - fylder hulen. De andre kender du allerede. Kun deres positioner ændrer sig."
+        },
+        {
+          "t": "Hvordan håndteres korrigering?",
+          "tag": "PRÆCISION",
+          "b": "Hvert solkalender skal korrigeres. HEKA placerer det alt i marts, ved årets slutning. Marts har 29 dage, eller 30 i skudår. De andre tolv måneder er perfekte, permanent regelmæssige. Korrektionen er indeholdt, ikke spredte."
+        }
+      ],
+      "ch3": [
+        {
+          "t": "Kan jeg printe HEKA-kalendere?",
+          "tag": "FYSISK",
+          "b": "Ja. Udskriv månedsvisninger eller hele årsvisninger. Ren, uden overflod, designet til papir. Sæt dem op på vægge. Bær dem i notesbøger. Den digitale bekvemmelighed og det fysiske artefakt, begge."
+        },
+        {
+          "t": "Hvad med helligdage?",
+          "tag": "BRUGERDEFINERET",
+          "b": "Slå helligdagssæt for din region til. Eller ignorer dem. HEKA påtvinger ikke sine egne helligdage - det hjælper dig med at spore de, der betyder noget for dig, lagt over et klartere struktur."
+        },
+        {
+          "t": "Hvor bor min data?",
+          "tag": "TILLID",
+          "b": "Som standard, bliver alt på din enhed - noter, journal, indstillinger. Hvis du opretter en konto, sikkerhedskopierer dine data til krypteret skylager. Du kan eksportere alt når som helst. Du holder styr på det."
+        },
+        {
+          "t": "Hvad kan journalen gøre?",
+          "tag": "EVNE",
+          "b": "Daglige indlæg med automatisk revisionshistorik. Fuldtekstsøgning gennem hele dit arkiv. Alle lokale som standard; synkroniseres til skyen, når du logger ind."
+        }
+      ],
+      "ch4": [
+        {
+          "t": "Hvilken tilstand er \"korrekt\"?",
+          "tag": "VALG",
+          "b": "Begge. SYNC er korrekt for koordination med den civile verden. TRUE er korrekt for astronomisk præcision. Dine behov bestemmer, hvilken korrekthed der betyder mere for dig lige nu."
+        },
+        {
+          "t": "Glider TRUE-tilstand fra civile datoer?",
+          "tag": "AFSVIGGLE",
+          "b": "Langsomt, ja. TRUE-tilstanden følger sine egne skudårsregler, ikke Gregorianernes. Over århundreder bliver afvigelsen bemærkelsesværdig. For daglig livet er forskellen utilsigtet. For langsigtet tænkning betyder renheden noget."
+        },
+        {
+          "t": "Kan institutioner adoptere HEKA?",
+          "tag": "SKALERING",
+          "b": "Til sidst, måske. Men institutioner behøver ikke at ændre sig, før du kan drage fordel af det. HEKA virker perfekt som et personligt lag. Start der. Lad værktøjet bevise sig selv."
+        }
+      ],
+      "ch5": [
+        {
+          "t": "Hvorfor har måneder forskellige længder?",
+          "tag": "HISTORIE",
+          "b": "Romersk politik. Julius Cæsar og Augustus havde brug for måneder, der var navngivne efter dem. Kalenderen blev justeret for at imødekomme egoer. Disse uregelmæssigheder forvandlede sig til \"tradition\". Tradition er ikke altid visdom."
+        },
+        {
+          "t": "Var Gregorian-reformen nok?",
+          "tag": "VURDERING",
+          "b": "Den fik driften til at stoppe. Den fik ikke strukturen til at fungere. Månederne forblev uregelmæssige, kvarterne ulige, året uden fortæll"
+        },
+        {
+          "t": "Har andre prøvet kalenderreform?",
+          "tag": "FORSØG",
+          "b": "Mange. Den Franske Republikanske kalender. Den Verdenskalender. Den Internationale Faste Kalender. Nogle geniale, alle mislykkedes politisk. HEKA lærer af dem: Kompatibilitet med civil tid er væsentlig. Revolution gennem evolution."
+        }
+      ],
+      "ch6": [
+        {
+          "t": "Hvordan forklarer jeg dette til andre?",
+          "tag": "SAMTALE",
+          "b": "Du behøver ikke. Brug det. Hvis spurgt, siger du: \"Jeg fandt en kalender, der hjælper mig bedre til at planlægge.\" Vis dem. Lad dem se klarheden. Overbevisning sker gennem demonstration, ikke erklæring."
+        },
+        {
+          "t": "Hvad hvis jeg vil stoppe med at bruge det?",
+          "tag": "FRIHED",
+          "b": "Stop. Dine civile datoer forbliver. Dine aftaler forbliver, hvor de er. Ingen lås-in. Intet sunken cost. HEKA skal tjene sin plads i dit liv hver dag, ellers fortjener det ikke at blive."
+        },
+        {
+          "t": "Hvordan begynder jeg lige nu?",
+          "tag": "HANDLING",
+          "b": "Åbn indstillingerne. Aktivér civil overlejring. Se på i dag i begge systemer. Det er det første skridt. Du har allerede taget det ved at åbne denne vejledning."
+        },
+        {
+          "t": "Hvad er Oracle'en?",
+          "tag": "INTELLIGEN",
+          "b": "En himmelsk intelligens, der læser planetære positioner for enhver dato, du vælger, og tilbyder vejledning. Valgfri. Tilføj dit fødselsskema for personlige overgange og dybere indsigt."
+        }
+      ],
+      "ch7": [
+        {
+          "t": "Påvirker kalenderen virkelig tankegangen?",
+          "tag": "PSYKOLOGI",
+          "b": "Profundt. Vi tænker i de strukturer, vi bebor. Uregelmæssige måneder skaber lavniveau kognitive friktion. Regelmæssige måneder skaber kognitiv flyden. Du bemærker måske ikke friktionen, før den er væk. Så kan du ikke lade være med at bemærke den."
+        },
+        {
+          "t": "Hvad med kulturelle tilknytninger?",
+          "tag": "RESPECT",
+          "b": "Behold dem. Dit fødselsdagsdage. Dit nytårsfest. Din sæsonlige festival. HEKA sletter ikke kultur - det tilbyder et klart kar for den. Indholdet forbliver. Beholdningen forbedres."
+        },
+        {
+          "t": "Hvorfor er dette vigtigt nok til at bygge?",
+          "tag": "MISSION",
+          "b": "Fordi tid er livssubstratet. Fordi vi fortjener værktøjer designet til sind, ikke arvet fra ulykker. Fordi nogen burde prøve at bygge noget bedre. Vi gjorde. Du er her."
+        }
+      ]
+    }
+  }
+}

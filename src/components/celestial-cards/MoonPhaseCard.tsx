@@ -4,6 +4,7 @@
  */
 
 import { useState, useEffect, useMemo, memo } from 'react';
+import { useGlobalTimeInterval } from '../../hooks/useGlobalTime';
 import { useTranslation } from 'react-i18next';
 import type { LocationData } from '../../types';
 import { getNextLunarNewYear } from '../../services/astronomyService';
@@ -66,12 +67,7 @@ const MoonPhaseCardComponent: React.FC<Props> = ({ date }) => {
     voidQuality: string;
   } | null>(null);
   const [expanded, setExpanded] = useState(false);
-  const [now, setNow] = useState(new Date());
-
-  useEffect(() => {
-    const i = setInterval(() => setNow(new Date()), 60000);
-    return () => clearInterval(i);
-  }, []);
+  const now = useGlobalTimeInterval(60000);
 
   useEffect(() => {
     const fetch = async () => {
@@ -161,7 +157,7 @@ const MoonPhaseCardComponent: React.FC<Props> = ({ date }) => {
                 </div>
               </div>
               <span className="heka-epic-counter__title" style={{ color: elementColor }}>🎆 Until Lunar New Year</span>
-              <span style={{ fontSize: '10px', color: 'rgba(255,255,255,0.35)', marginTop: '6px' }}>
+              <span style={{ fontSize: '12px', color: 'rgba(255,255,255,0.35)', marginTop: '6px' }}>
                 {lny?.date.toLocaleDateString(undefined, { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' })}
                 {' • '}{zodiac.animal} Year
               </span>

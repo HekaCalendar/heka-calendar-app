@@ -1,358 +1,366 @@
 {
-  "appTitle": "HEKA Naptár",
+  "appTitle": "HEKA Calendar",
   "appName": "HEKA",
-  "appSubtitle": "A Tizenharmad Naptár",
-  "loading": "Betöltés...",
-  "save": "Mentés",
-  "cancel": "Mégse",
-  "delete": "Törlés",
-  "edit": "Szerkesztés",
-  "done": "Kész",
-  "back": "Vissza",
-  "next": "Következő",
-  "close": "Bezárás",
-  "open": "Megnyitás",
-  "yes": "Igen",
-  "no": "Nem",
+  "appSubtitle": "The Thirteen-Month Calendar",
+  "loading": "Loading...",
+  "save": "Save",
+  "cancel": "Cancel",
+  "delete": "Delete",
+  "edit": "Edit",
+  "done": "Done",
+  "back": "Back",
+  "next": "Next",
+  "close": "Close",
+  "open": "Open",
+  "yes": "Yes",
+  "no": "No",
   "ok": "OK",
-  "confirm": "Megerősítés",
-  "skip": "Kihagyás",
-  "continue": "Folytatás",
-  "search": "Keresés",
-  "filter": "Szűrés",
-  "sort": "Rendezés",
-  "add": "Hozzáadás",
-  "remove": "Eltávolítás",
-  "copy": "Másolás",
-  "share": "Megosztás",
-  "print": "Nyomtatás",
-  "download": "Letöltés",
-  "export": "Exportálás",
-  "import": "Importálás",
-  "settings": "Beállítások",
-  "profile": "Profil",
-  "account": "Fiók",
-  "signIn": "Bejelentkezés",
-  "signOut": "Kijelentkezés",
-  "signUp": "Regisztráció",
-  "welcome": "Üdvözöljük",
-  "goodbye": "Viszontlátás",
-  "error": "Hiba",
-  "warning": "Figyelmeztetés",
-  "success": "Sikeres",
-  "info": "Információ",
-  "retry": "Újrapróbálkozás",
-  "refresh": "Frissítés",
-  "today": "Ma",
-  "yesterday": "Tegnap",
-  "tomorrow": "Holnap",
-  "now": "Most",
-  "later": "Később",
-  "soon": "Hamarosan",
-  "never": "Soha",
-  "always": "Mindig",
-  "none": "Nincs",
-  "all": "Mind",
-  "selected": "Kiválasztott",
-  "unselected": "Nincs kiválasztva",
-  "active": "Aktív",
-  "inactive": "Inaktív",
-  "enabled": "Engedélyezett",
-  "disabled": "Letiltott",
-  "on": "Be",
-  "off": "Ki",
-  "visible": "Látható",
-  "hidden": "Rejtett",
-  "expand": "Kibont",
-  "collapse": "Összecsuk",
-  "showMore": "Mutass többet",
-  "showLess": "Mutass kevesebbet",
-  "readMore": "Olvass tovább",
-  "learnMore": "Tudj meg többet",
-  "gotIt": "Rendben",
-  "understood": "Megértettem",
-  "notNow": "Most nem",
-  "maybeLater": "Talán később",
-  "dismiss": "Elutasít",
-  "undo": "Visszavonás",
-  "redo": "Ismét",
-  "reset": "Visszaállítás",
-  "restore": "Visszaállítás",
-  "clear": "Törlés",
-  "empty": "Üres",
-  "blank": "Üres",
-  "new": "Új",
-  "old": "Régi",
-  "recent": "Legutóbbi",
-  "earlier": "Korábbi",
-  "upcoming": "Közelgő",
-  "past": "Múlt",
-  "future": "Jövő",
-  "present": "Jelen",
-  "current": "Jelenlegi",
-  "previous": "Előző",
-  "nextItem": "Következő",
-  "first": "Első",
-  "last": "Utolsó",
-  "of": "-",
-  "page": "Oldal",
-  "total": "Összesen",
-  "items": "elem",
-  "item": "elem",
-  "noResults": "Nincs találat",
-  "loadingMore": "Töltés...",
-  "pullToRefresh": "Húzd le a frissítéshez",
-  "swipeToNavigate": "Húzd az átnavigáláshoz",
-  "tapToContinue": "Koppints a folytatáshoz",
-  "pressSpaceToContinue": "Nyomj szóközt a folytatáshoz",
+  "confirm": "Confirm",
+  "skip": "Skip",
+  "continue": "Continue",
+  "search": "Search",
+  "filter": "Filter",
+  "sort": "Sort",
+  "add": "Add",
+  "remove": "Remove",
+  "copy": "Copy",
+  "share": "Share",
+  "print": "Print",
+  "download": "Download",
+  "export": "Export",
+  "import": "Import",
+  "settings": "Settings",
+  "profile": "Profile",
+  "account": "Account",
+  "signIn": "Sign In",
+  "signOut": "Sign Out",
+  "signUp": "Sign Up",
+  "welcome": "Welcome",
+  "goodbye": "Goodbye",
+  "error": "Error",
+  "warning": "Warning",
+  "success": "Success",
+  "info": "Info",
+  "retry": "Retry",
+  "refresh": "Refresh",
+  "today": "Today",
+  "yesterday": "Yesterday",
+  "tomorrow": "Tomorrow",
+  "now": "Now",
+  "later": "Later",
+  "soon": "Soon",
+  "never": "Never",
+  "always": "Always",
+  "none": "None",
+  "all": "All",
+  "selected": "Selected",
+  "unselected": "Unselected",
+  "active": "Active",
+  "inactive": "Inactive",
+  "enabled": "Enabled",
+  "disabled": "Disabled",
+  "on": "On",
+  "off": "Off",
+  "visible": "Visible",
+  "hidden": "Hidden",
+  "expand": "Expand",
+  "collapse": "Collapse",
+  "showMore": "Show More",
+  "showLess": "Show Less",
+  "readMore": "Read More",
+  "learnMore": "Learn More",
+  "gotIt": "Got It",
+  "understood": "Understood",
+  "notNow": "Not Now",
+  "maybeLater": "Maybe Later",
+  "dismiss": "Dismiss",
+  "undo": "Undo",
+  "redo": "Redo",
+  "reset": "Reset",
+  "restore": "Restore",
+  "clear": "Clear",
+  "empty": "Empty",
+  "blank": "Blank",
+  "new": "New",
+  "old": "Old",
+  "recent": "Recent",
+  "earlier": "Earlier",
+  "upcoming": "Upcoming",
+  "past": "Past",
+  "future": "Future",
+  "present": "Present",
+  "current": "Current",
+  "previous": "Previous",
+  "nextItem": "Next",
+  "first": "First",
+  "last": "Last",
+  "of": "of",
+  "page": "Page",
+  "total": "Total",
+  "items": "items",
+  "item": "item",
+  "noResults": "No results found",
+  "loadingMore": "Loading more...",
+  "pullToRefresh": "Pull to refresh",
+  "swipeToNavigate": "Swipe to navigate",
+  "tapToContinue": "Tap to continue",
+  "pressSpaceToContinue": "Press space to continue",
   "pro": "Pro",
-  "premium": "Prémium",
-  "free": "Ingyenes",
-  "upgrade": "Frissítés",
-  "subscribe": "Feliratkozás",
-  "unsubscribe": "Leiratkozás",
-  "features": "Funkciók",
-  "about": "Rólunk",
-  "help": "Segítség",
-  "support": "Támogatás",
-  "feedback": "Visszajelzés",
-  "bugReport": "Hibajelentés",
-  "terms": "Általános Szerződési Feltételek",
-  "privacy": "Adatvédelmi Szabályzat",
-  "version": "Verzió",
-  "build": "Fordítás",
-  "copyright": "© HEKA Naptár",
-  "allRightsReserved": "Minden jog fenntartva.",
-  "modernHekaCalendar": "A modern HEKA Naptár",
-  "trueHekaSubtitle": "Igaz HEKA időszámítás • Március-korrekció (4 éves ciklus, kivéve a 128.) • Csillagászati pontosság",
-  "syncSubtitle": "HEKA gregorianus szinkron időszámítás • Április és március • 13 hónapos harmónikus naptár",
-  "trueHekaMode": "⚡ IGAZ HEKA Mód",
-  "syncMode": "🌐 SZINKRON Mód",
-  "view": "Nézet",
-  "welcomeToTheCircle": "✨ Üdvözöljük a Körben",
-  "enterInviteCode": "Adjon meg egy meghívókódot, hogy küldjön baráti kérelmet",
-  "inviteCodeDetected": "Meghívókód észlelve:",
-  "sending": "✨ Küldés...",
-  "sendFriendRequest": "🌟 Baráti kérelem küldése",
-  "orEnterCodeManually": "vagy adja meg a kódot manuálisan",
-  "inviteCodePlaceholder": "Adja meg a meghívókódot (pl.: ABC-DEF-GHI)",
-  "sendRequest": "Kérés küldése",
-  "friendRequestSent": "✨ Baráti kérelem elküldve! El kell fogadniuk, mielőtt cseveghetnek.",
-  "openCosmicCircle": "Nyissa meg a Kozmoszati Kört",
-  "skipForNow": "Kihagyja most",
-  "joiningCircleAllows": "A Kör csatlakoztatása lehetővé teszi:",
-  "sendReceiveTaskRituals": "📜 Feladat Ritualok küldése és fogadása",
-  "messageCosmicChannels": "💬 Üzenetküldés kozmoszati csatornákon",
-  "alignHekaDates": "🗓️ HEKA dátumok összehangolása együtt",
-  "shareCelestialInsights": "✨ Csillagászati észrevételek megosztása",
-  "failedToSendFriendRequest": "Nem sikerült elküldeni a baráti kérelmet. Kérjük, ellenőrizze a kódot és próbálja újra.",
-  "searchPlaceholder": "Keresés dátumok, jegyzetek, ünnepnapok...",
-  "recentSearches": "Legutóbbi keresések",
-  "result": "eredmény",
-  "results": "eredmények",
-  "tryDifferentKeywords": "Próbáljon meg különböző kulcsszavakat vagy ellenőrizze a helyesírást",
-  "trySearchingFor": "Próbálja meg keresni",
-  "navigate": "↑↓ Navigáció",
-  "selectKey": "↵ Kiválasztás",
-  "escClose": "Esc Bezárás",
-  "hekaUnifiedSearch": "HEKA Egyesített Keresés",
-  "dates": "Dátumok",
-  "notes": "Jegyzetek",
-  "holidays": "Ünnepnapok",
-  "hekaDate": "HEKA Dátum",
-  "civilDate": "Civil Dátum",
-  "calendarNote": "Naptár Megjegyzés",
-  "holiday": "Szabadnap",
+  "premium": "Premium",
+  "free": "Free",
+  "upgrade": "Upgrade",
+  "subscribe": "Subscribe",
+  "unsubscribe": "Unsubscribe",
+  "features": "Features",
+  "about": "About",
+  "help": "Help",
+  "support": "Support",
+  "feedback": "Feedback",
+  "bugReport": "Bug Report",
+  "terms": "Terms of Service",
+  "privacy": "Privacy Policy",
+  "version": "Version",
+  "build": "Build",
+  "copyright": "© HEKA Calendar",
+  "allRightsReserved": "All rights reserved.",
+  "modernHekaCalendar": "The Modern HEKA Calendar",
+  "trueHekaSubtitle": "True HEKA Timekeeping • March correction (4-year cycle, except 128th) • Astronomical precision",
+  "syncSubtitle": "HEKA Gregorian synchronised timekeeping • April to March • 13-month harmonic calendar",
+  "trueHekaMode": "⚡ TRUE HEKA Mode",
+  "syncMode": "🌐 SYNC Mode",
+  "view": "View",
+  "welcomeToTheCircle": "✨ Welcome to the Circle",
+  "enterInviteCode": "Enter an invite code to send a friend request",
+  "inviteCodeDetected": "Invite Code Detected:",
+  "sending": "✨ Sending...",
+  "sendFriendRequest": "🌟 Send Friend Request",
+  "orEnterCodeManually": "or enter a code manually",
+  "inviteCodePlaceholder": "Enter invite code (e.g., ABC-DEF-GHI)",
+  "sendRequest": "Send Request",
+  "friendRequestSent": "✨ Friend request sent! They'll need to accept before you can chat.",
+  "openCosmicCircle": "Open Cosmic Circle",
+  "skipForNow": "Skip for now",
+  "joiningCircleAllows": "Joining a Circle allows you to:",
+  "sendReceiveTaskRituals": "📜 Send and receive Task Rituals",
+  "messageCosmicChannels": "💬 Message through cosmic channels",
+  "alignHekaDates": "🗓️ Align on HEKA dates together",
+  "shareCelestialInsights": "✨ Share celestial insights",
+  "failedToSendFriendRequest": "Failed to send friend request. Please check the code and try again.",
+  "searchPlaceholder": "Search dates, notes, holidays...",
+  "recentSearches": "Recent Searches",
+  "result": "result",
+  "results": "results",
+  "tryDifferentKeywords": "Try different keywords or check your spelling",
+  "trySearchingFor": "Try Searching For",
+  "navigate": "↑↓ Navigate",
+  "selectKey": "↵ Select",
+  "escClose": "Esc Close",
+  "hekaUnifiedSearch": "HEKA Unified Search",
+  "dates": "Dates",
+  "notes": "Notes",
+  "holidays": "Holidays",
+  "hekaDate": "HEKA Date",
+  "civilDate": "Civil Date",
+  "calendarNote": "Calendar Note",
+  "holiday": "Holiday",
   "infoModal": {
-    "goTo": "Ugrás ide: {{title}}",
-    "home": "Kezdőlap",
-    "backToHome": "Vissza a Kezdőlapra",
-    "deeperQuestions": "Mélyebb Kérdések",
+    "goTo": "Go to {{title}}",
+    "home": "Home",
+    "backToHome": "Back to Home",
+    "deeperQuestions": "Deeper Questions",
     "hero": {
-      "title": "A HEKA Naptár",
-      "subtitleLine1": "Az idő az, amelybe beépítünk.",
-      "subtitleLine2": "Mi lenne, ha jobban megillenne?"
+      "title": "The HEKA Calendar",
+      "subtitleLine1": "Time is the structure we live inside.",
+      "subtitleLine2": "What if it fit better?"
     },
     "cards": {
       "whatChanges": {
-        "title": "Mi Változik",
+        "title": "What Changes",
         "items": {
-          "0": "Tizenhárom hónap, egyenlők mind",
-          "1": "Havonta négy hét, mindig",
-          "2": "Az év áprilisban kezdődik, márciusban végződik",
-          "3": "Nyitó, Mag, és Záró ívek",
-          "4": "Javítás egy hónapban van"
+          "0": "Thirteen months, all equal",
+          "1": "Four weeks per month, always",
+          "2": "The year begins in April and ends in March",
+          "3": "Opening, core, and closing arcs",
+          "4": "Correction contained in one month"
         }
       },
       "whatStays": {
-        "title": "Mi Marad",
+        "title": "What Stays",
         "items": {
-          "0": "A hét napja nem változik",
-          "1": "Az évszakok igazodnak",
-          "2": "A civil dátumok mindig láthatóak",
-          "3": "Az időpontok szinkronizálva vannak",
-          "4": "A világ nem igényel közleményt"
+          "0": "Seven-day weeks remain unchanged",
+          "1": "Seasons stay aligned",
+          "2": "Civil dates always visible",
+          "3": "Your appointments stay synced",
+          "4": "The world needs no notice"
         }
       },
       "beginHere": {
-        "title": "Kezdés Itt",
+        "title": "Begin Here",
         "items": {
-          "0": "\"Mi az a HEKA?\" olvasása először",
-          "1": "\"Az Év Alakja\" felfedezése",
-          "2": "Civil átfedés engedélyezése",
-          "3": "SYNC vagy TRUE mód választása",
-          "4": "Éljen benne egy hónapig"
+          "0": "Read \"What is HEKA?\" first",
+          "1": "Explore \"The Shape of a Year\"",
+          "2": "Activate the civil overlay",
+          "3": "Choose SYNC or TRUE mode",
+          "4": "Live inside it for a month"
         }
       }
     },
-    "chaptersLabel": "Hét Fejezet",
+    "chaptersLabel": "Seven Chapters",
     "chapters": {
       "home": {
-        "num": "KEZDŐLAP",
-        "chip": "KEZDÉS",
-        "title": "A HEKA Naptár",
-        "hook": "Az idő az, amelybe beépítünk. Mi lenne, ha jobban megillenne?"
+        "num": "HOME",
+        "chip": "BEGIN",
+        "title": "The HEKA Calendar",
+        "hook": "Time is the structure we live inside. What if it fit better?",
+        "teaser": ""
       },
       "ch1": {
         "num": "01",
-        "chip": "LÉNYEGES",
-        "title": "Mi az a HEKA?",
-        "hook": "Egy naptár nem csak számolási rendszer. Az életed ritmusa is."
+        "chip": "ESSENCE",
+        "title": "What Is HEKA?",
+        "hook": "A calendar is more than a counting system. It is the rhythm of your life.",
+        "teaser": "13 months. 28 days each. One perfect year."
       },
       "ch2": {
         "num": "02",
-        "chip": "SZERKEZET",
-        "title": "Az év alakja",
-        "hook": "Április kezdődik. Március zárul. Minden a közötti logikus."
+        "chip": "STRUCTURE",
+        "title": "The Shape of a Year",
+        "hook": "April begins. March closes. Everything in between makes sense.",
+        "teaser": "April opens. The core holds. March closes."
       },
       "ch3": {
         "num": "03",
-        "chip": "GYAKORLAT",
-        "title": "Élet HEKA-ban",
-        "hook": "Nem kell engedélyt kérned egy jobb eszköz használatához."
+        "chip": "PRACTICE",
+        "title": "Living in HEKA",
+        "hook": "You do not need permission to use a better tool.",
+        "teaser": "Your calendar. Your journal. Your oracle."
       },
       "ch4": {
         "num": "04",
-        "chip": "PONTOSAN",
-        "title": "A Két Mód",
-        "hook": "Egy naptár. Két módon tisztelet a nap felé. Te választhatod."
+        "chip": "PRECISION",
+        "title": "The Two Modes",
+        "hook": "One calendar. Two ways of honoring the sun. You choose.",
+        "teaser": "Follow the civil world. Or follow the sky."
       },
       "ch5": {
         "num": "05",
-        "chip": "SOR",
-        "title": "A Naptár Forradalma",
-        "hook": "A gregorian egy javítás volt. A HEKA egy újratervezés."
+        "chip": "LINEAGE",
+        "title": "The Calendar Revolution",
+        "hook": "Gregorian was a patch. HEKA is a redesign.",
+        "teaser": "Roman egos broke the year. We fixed it."
       },
       "ch6": {
         "num": "06",
-        "chip": "KEZDŐDÉS",
-        "title": "Használj HEKA-t ma naptól",
-        "hook": "Nincs szükség intézményekre változtatni. Csak a nézetedet."
+        "chip": "BEGINNING",
+        "title": "Start Using HEKA Today",
+        "hook": "No institutions need to change. Only your view.",
+        "teaser": "No institutions required. Just your phone."
       },
       "ch7": {
         "num": "07",
-        "chip": "ÉRTÉK",
-        "title": "Az idő, amely szolgál",
-        "hook": "Az általad használt naptár alakítja az életed."
+        "chip": "MEANING",
+        "title": "Time That Serves You",
+        "hook": "The calendar you use shapes the life you live.",
+        "teaser": "The calendar you use shapes the life you live."
       }
     },
     "cardsByChapter": {
       "ch1": {
         "0": {
-          "h": "Az Ön által érezett probléma",
-          "b": "Nem egyenletes hónapok. Szétszórt ünnepek. Egy év, amely zökkenőmentesen halad át januártól decemberig, nincs nyitó, középső, vagy záró érzése. Ezt a súrlódást érezted. A HEKA eltávolítja."
+          "h": "The Problem You Feel",
+          "b": "Irregular months. Scattered holidays. A year that stumbles from January to December with no sense of beginning, middle, or end. You have felt this friction. HEKA removes it."
         },
         "1": {
-          "h": "A megoldás, amit építettünk",
-          "b": "Tizenharmat hónap. Tizenkettőnek mindegyike 28 napot tartalmaz tökéletes szimmetriában. Március, a záró hónap, hordozza a naptári napot. Négy tökéletes hét minden hónapban. Egy év, amely folyik: Április nyitja, májustól decemberig a stabil alap, januártól márciusig befejezést ad."
+          "h": "The Solution We Built",
+          "b": "Thirteen months. Twelve have twenty-eight days in perfect symmetry. March, the closing month, carries the leap day. Four perfect weeks per month. A year that flows: April opens, May through December form the stable core, January through March complete it."
         },
         "2": {
-          "h": "A világ, amit megtartasz",
-          "b": "A HEKA nem zavarja az életedet. A civil dátumok láthatóak maradnak. A foglalkoztatásaid, találkozásaid, jogi kötelezettségeid pontosan ott vannak, ahol vársz."
+          "h": "The World You Keep",
+          "b": "HEKA does not disrupt your life. Civil dates remain visible. Your appointments, commitments, and legal obligations stay exactly where they are. You simply gain a clearer lens."
         }
       },
       "ch2": {
         "0": {
-          "h": "A nyitó ív",
-          "b": "Április az átjáró. Az év nem a téleni kimerültségben kezdődik, hanem a tavaszi életerőben. Új növekedés. Új projektek. A nyitás jelenti: valami kezdődik."
+          "h": "The Opening Arc",
+          "b": "April is the threshold. The year does not begin in winter exhaustion, but in spring vitality. New growth. New projects. The opening announces: something is beginning."
         },
         "1": {
-          "h": "A középső ív",
-          "b": "Májustól decemberig a hosszú, stabil középső rész. Kilenc hónap tökéletes, előre látható, prediktív rytmus. Tervezz biztonsággal. Hozz létre momentumot. Itt történik a munka."
+          "h": "The Core Arc",
+          "b": "May through December is the long, stable middle. Nine months of perfectly regular and predictable rhythm. Plan with confidence. Build momentum. This is where the work happens."
         },
         "2": {
-          "h": "A záró ív",
-          "b": "Januártól márciusig az év zárul. Befejezd, amit elkezdettél. Aratod, amit növeltél. A zárás helyet teremt a reflexiónak, és felkészít a következő nyitásra."
+          "h": "The Closing Arc",
+          "b": "January through March bring the year to its resolution. Finish what you started. Harvest what you grew. Closure creates space for reflection and prepares you for the next opening."
         }
       },
       "ch3": {
         "0": {
-          "h": "A civil dátumaid maradnak",
-          "b": "Kapcsold be a civil fedélet és lásd a gregorian dátumokat a HEKA mellett. A fogorvosi időpont, anyád születésnapja, az adóhatáridő - mind exact"
+          "h": "Your Civil Dates Stay",
+          "b": "Activate the civil overlay and see Gregorian dates alongside HEKA. Your dentist appointment, your mother's birthday, your tax deadline -- everything stays exactly where you expect."
         },
         "1": {
-          "h": "Your Notes Remain",
-          "b": "Save thoughts by day or by month. Print clean month views or full year overviews. The calendar becomes a journal, a planner, a record of your days."
+          "h": "Your Journal",
+          "b": "Daily entries with revision history — up to 50 versions kept automatically. Full-text search across everything. Local by default; cloud backup when you sign in."
         },
         "2": {
-          "h": "Your Moon If You Want It",
-          "b": "Lunar phases appear at a glance. Not superimposed mysticism—just information. Another rhythm you can choose to notice or ignore. The choice is yours."
+          "h": "Your Moon & Stars",
+          "b": "Moon phases, planetary positions, and transits appear at a glance. Optional and precise. Add your birth chart for personal readings through the Oracle."
         }
       },
       "ch4": {
         "0": {
-          "h": "SYNC Mód: A Szokásos Út",
-          "b": "A március extra napra akkor nyer, amikor a gregorianus naptár ezt mondja. Naponta koordinációra a civil világgal, ez az Ön módja. Azonos szerkezet. Szokásos időzítés."
+          "h": "SYNC MODE: The Familiar Path",
+          "b": "March gains its extra day when the Gregorian calendar says so. For daily coordination with the civil world, this is your mode. Same structure. Familiar time."
         },
         "1": {
-          "h": "TRUE Mód: Az Őszinte Út",
-          "b": "A HEKA saját javítási szabályt követ: minden negyedik évben 30 napos lesz a március, kivéve minden 128. évet, amelyben nem. Ez az astronomiai pontosság. Ez a hosszú távú integritás."
+          "h": "TRUE MODE: The Honest Path",
+          "b": "HEKA follows its own correction rule: every fourth year has a 30-day March, except every 128 years which does not. This is astronomical precision. This is long-term integrity."
         },
         "2": {
-          "h": "Bármikor Váltható",
-          "b": "A hónapok nem változnak meg. A hét nem változik meg. Csak a javítási triggert mozgatjuk. Kipróbálja. Látja, hogy melyik mód illeszkedik legjobban a szükségleteire. Nem zárolunk be."
+          "h": "Change at Any Time",
+          "b": "The months do not change. The week does not change. Only the correction trigger shifts. Experiment. See which mode fits your needs. You are not trapped."
         }
       },
       "ch5": {
         "0": {
-          "h": "Öröklődés, Nem Tervezés",
-          "b": "A jelenlegi naptárunk egy sor történelmi vészesség rétege. Római politika. Vallási tanácsok. Századok alatt hozzáadott astronomiai javítások. Soha nem tervezték rendszerként."
+          "h": "Inheritance, Not Design",
+          "b": "Our current calendar is a pile of historical accidents. Roman politics. Religious councils. Astronomical patches added centuries apart. It was never designed as a system."
         },
         "1": {
-          "h": "A Gregorianus Javítás",
-          "b": "1582: Pápa Gregor kijavította az eltolódást. De megtartotta az szabálytalan hónapokat, a szétszórt szerkezetet, az örökölt kaoszt. Szükséges javítás, de nem teljes megoldás."
+          "h": "The Gregorian Patch",
+          "b": "1582: Pope Gregory fixed the drift problem. But he kept the irregular months, the scattered structure, the inherited chaos. A necessary correction, but not a complete solution."
         },
         "2": {
-          "h": "A HEKA Reakció",
-          "b": "Megtartottuk, amit működik: hét napos hetek, évszaki igazítás, naptári év követés. Újra terveztük, amit nem: hónap szerkezete, év áramlása, javítás elhelyezkedése. Azért épült, hogy az emberek számára legyen."
+          "h": "The HEKA Answer",
+          "b": "We keep what works: seven-day weeks, seasonal alignment, solar year tracking. We redesign what does not: month structure, yearly flow, correction placement. Built for minds that think."
         }
       },
       "ch6": {
         "0": {
-          "h": "Első Lépés: Engedélyezze a Rétegezést",
-          "b": "Kapcsolja be a civil dátumokat. Most egyszerre látja mindkét rendszert. A HEKA dátuma és a gregorianus dátuma. A híd építve. Akkor keresztezze, amikor szüksége van."
+          "h": "Step One: Activate the Overlay",
+          "b": "Activate civil dates. Now you see both systems simultaneously. Your HEKA date and your Gregorian date. The bridge is built. Cross when you need to."
         },
         "1": {
-          "h": "Második Lépés: Válassza ki a Módját",
-          "b": "Kezdje SYNC-kel, ha szeretné a szokásosságot. Váltson TRUE-ra, ha szeretné a tisztát. Megváltoztathatja az érzését. A naptár hozzád alakul, nem fordítva."
+          "h": "Step Two: Choose Your Mode",
+          "b": "Start with SYNC if you want familiarity. Switch to TRUE if you want purity. You can change your mind. The calendar adapts to you, not the other way around."
         },
         "2": {
-          "h": "Harmadik Lépés: Éljen benne",
-          "b": "Használja a HEKA-t elsődleges nézőpontként. Tervezze meg hónapját. Jegyezze fel napjait. Érzze meg az igazi szerkezetű év különbségét. A civil világnak nem kell tudnia. Tudni fogod."
+          "h": "Step Three: Live Inside It",
+          "b": "Use HEKA as your main view. Plan your month. Note your days. Feel the difference of a year with real structure. The civil world does not need to know. You will know."
         }
       },
       "ch7": {
         "0": {
-          "h": "A Frikció Életet Igazol",
-          "b": "Minden alkalommal, amikor megpróbálja meghatározni, hány nap van ebben a hónapban, kifizet egy kis adót. Minden szabálytalanság fókuszt zúdít. A HEKA eltávolítja ezeket az adókat. Az Ön energia azokra a dolgokra marad, amikre számít."
+          "h": "Friction Costs Energy",
+          "b": "Every time you wonder how many days are in this month, you pay a small tax. Every irregularity drains focus. HEKA removes these taxes. You keep your energy for what matters."
         },
         "1": {
-          "h": "A Rítusok Nyugalmat Teremtenek",
-          "b": "Ha a szerkezet megjósolható, az elmél Nyugalomban van. Tudod, hol vagy az évben. Érezed a nyitót,"
+          "h": "Rhythm Creates Calm",
+          "b": "When structure is predictable, the mind relaxes. You know where you are in the year. You feel the opening, the core, the closing. Time becomes a space you inhabit, not a chaos you survive."
         },
         "2": {
           "h": "Agency Over Time",
-          "b": "You did not choose the Gregorian calendar. It was given to you. HEKA is a choice. To use a tool designed for clarity. To claim agency over the structure of your days. This is your calendar."
+          "b": "You did not choose the Gregorian calendar. It was given to you. HEKA is a choice. To use a tool designed for clarity. To reclaim agency over the structure of your days. This is your calendar."
         }
       }
     },
@@ -361,12 +369,12 @@
         "0": {
           "t": "Is this a religion or movement?",
           "tag": "CLARITY",
-          "b": "Neither. HEKA is a tool. Like a better hammer or a clearer map. No membership required. No beliefs to adopt. Just a calendar that works better than the one you inherited."
+          "b": "Neither. HEKA is a tool. Like a better hammer or a clearer map."
         },
         "1": {
           "t": "Why thirteen months?",
           "tag": "LOGIC",
-          "b": "Twelve months of irregular length force mental gymnastics. Thirteen months of four weeks each creates perfect regularity. 13 × 28 = 364. Plus one special day. The math is clean. The experience is cleaner."
+          "b": "Twelve months of irregular length force mental gymnastics. Thirteen months of four weeks each creates perfect regularity. 13 x 28 = 364. Plus one special day. The math is clean. The experience is cleaner."
         },
         "2": {
           "t": "Will this confuse other people?",
@@ -383,123 +391,153 @@
         "1": {
           "t": "What are the month names?",
           "tag": "ORDER",
-          "b": "April, May, June, July, August, Hexa, September, October, November, December, January, February, March. Hexa—the sixth month—fills the gap. The rest you already know. Only their positions change."
+          "b": "April, May, June, July, August, Hexa, September, October, November, December, January, February, March. Hexa -- the sixth month -- fills the gap. The rest you already know. Only their positions change."
         },
         "2": {
           "t": "How is correction handled?",
           "tag": "PRECISION",
-          "b": "Minden naptárnak szüksége van korrekcióra. A HEKA az összeset márciusban helyezi el, az év végén. Március 29 napos, vagy 30-as szökőévekben. A többi tizenkét hónap tökéletesen, állandóan szabályos. A korrekció be van zárva, nem szétszóródik."
+          "b": "Every solar calendar needs correction. HEKA places it all in March, at the year's end. March has 29 days, or 30 in leap years. The other twelve months are perfect and permanently regular. Correction is contained, not scattered."
         }
       },
       "ch3": {
         "0": {
           "t": "Can I print HEKA calendars?",
           "tag": "PHYSICAL",
-          "b": "Igen. Hónap nézeteket vagy teljes év nézeteket nyomtasson ki. Tisztán, zseni nélkül, papírra tervezve. Ragdossal az ajtókon. Füzetekben vigye magával. A digitális kényelem és a fizikai tárgy mindkettőt."
+          "b": "Yes. Print monthly views or full-year panoramas. Clean, clear, designed for paper. Put them on walls. Carry them in notebooks. Digital convenience and physical artifact, both."
         },
         "1": {
           "t": "What about holidays?",
           "tag": "CUSTOM",
-          "b": "Váltógathatja a szünnapok készletét a saját régiójára. Vagy hagyja figyelmen kívül őket. A HEKA nem diktálja saját szünnapjait—segít azon nyomon követésében, amelyek számítanak neked, egyértelműbb szerkesztésen keresztül."
+          "b": "Activate holiday sets for your region. Or ignore them. HEKA does not impose its own holidays; it helps you follow the ones that matter to you, overlaid on a clearer structure."
         },
         "2": {
-          "t": "Are my notes private?",
+          "t": "Where does my data live?",
           "tag": "TRUST",
-          "b": "Minden helyileg tárolódik az eszközén. A gondolataid továbbra is tiédek maradnak. Exportálhatja őket, ha szeretné. Importálhatja őket máshová. Teljesen irányítod az adatokat."
+          "b": "By default, everything stays on your device — notes, journal, settings. If you create an account, your data backs up to encrypted cloud storage. You can export everything at any time. You stay in control."
+        },
+        "3": {
+          "t": "What can the journal do?",
+          "tag": "CAPABILITY",
+          "b": "Daily entries with automatic revision history. Full-text search across your entire archive. All local by default; syncs to the cloud when you sign in."
         }
       },
       "ch4": {
         "0": {
           "t": "Which mode is \"correct\"?",
           "tag": "CHOICE",
-          "b": "Mindkettő. A SYNC a polgári világgal való koordinációra van jó. A TRUE az astronomiai pontosságra van jó. A szükségleteid határozzák meg, hogy melyik pontosság számít számodra jelenleg."
+          "b": "Both. SYNC is correct for coordination with the civil world. TRUE is correct for astronomical precision. Your needs determine which correction is more important to you right now."
         },
         "1": {
           "t": "Does TRUE mode drift from civil dates?",
           "tag": "DIVERGENCE",
-          "b": "Lassan, igen. A TRUE mód követi saját szökőnap szabályát, nem a grégorieusi. Századokon keresztül a különbség észrevehetővé válik. Naponta az életben az eltérés észrevétlen. A hosszú távú gondolkodásban a puhaság számít."
+          "b": "Slowly, yes. TRUE mode follows its own leap year rule, not the Gregorian one. Over centuries, the divergence becomes noticeable. For daily life, the difference is imperceptible. For long-term thinking, purity matters."
         },
         "2": {
           "t": "Can institutions adopt HEKA?",
           "tag": "SCALE",
-          "b": "Valahol, talán. De az intézményeknek nem kell megváltoztatniuk, hogy neked hasznod veheted. A HEKA tökéletesen működik személyes rétegként. Kezdj ott. Hadd bizonyítsa magát az eszköz."
+          "b": "Eventually, perhaps. But institutions do not need to change for you to benefit. HEKA works perfectly as a personal overlay. Start there. Let the tool prove itself."
         }
       },
       "ch5": {
         "0": {
           "t": "Why do months have different lengths?",
           "tag": "HISTORY",
-          "b": "Római politika. Iulius Caesar és Augustusnak volt szükségük a saját nevükre szentelt hónapokra. A naptárt úgy igazították, hogy kiegyezzen az öntisztességgel. Ez a nem szabályosság elhalmozódott \"hagyomány\"-vá. A hagyomány nem mindig bölcsesség."
+          "b": "Roman politics. Julius Caesar and Augustus needed months named in their honor. The calendar was adjusted to accommodate egos. These irregularities became 'tradition.' Tradition is not always wisdom."
         },
         "1": {
           "t": "Was the Gregorian reform enough?",
           "tag": "ASSESSMENT",
-          "b": "Megoldotta az eltérést. Nem oldotta meg a szerkezetet. A hónapok maradtak nem szabályosak, a negyedek egyenetlenek, az év nincs narratív alakban. Szükséges javítás, de nem alapvető újratervezés."
+          "b": "It fixed the drift. It did not fix the structure. Months remained irregular, quarters remained unequal, the year had no narrative shape. A necessary patch, but not a fundamental redesign."
         },
         "2": {
           "t": "Have others tried calendar reform?",
           "tag": "ATTEMPTS",
-          "b": "Sokan. A francia köztársasági naptár. A Világnaptár. Az Nemzetközi Rögzített Naptár. Egyesek csodálatosak, de mind politikailag megbuktak. A HEKA tanulásukból: a polgári idővel való kompatibilitás alapvető. Forradalom evolúción keresztül."
+          "b": "Many. The French Republican calendar. The World Calendar. The International Fixed Calendar. Some brilliant, all politically failed. HEKA learns from them: civil time compatibility is essential. Revolution through evolution."
         }
       },
       "ch6": {
         "0": {
           "t": "How do I explain this to others?",
           "tag": "CONVERSATION",
-          "b": "Nem kell. Használja. Ha kérdezik, mondja: \"Megtaláltam egy naptárat, amely segít jobban tervezni.\" Mutassa meg nekik. Hadd lássák a tisztázást. A meggyőzés bemutatáson, nem nyilatkozatokon keresztül történik."
+          "b": "You do not need to. Use it. If they ask, say: \"I found a calendar that helps me plan better.\" Show them. Let them see the clarity. Persuasion happens through demonstration, not declaration."
         },
         "1": {
           "t": "What if I want to stop using it?",
           "tag": "FREEDOM",
-          "b": "Mi van, ha le akarok állítani a használatát?"
+          "b": "Stop using it. Your civil dates remain. Your appointments stay where they are. No lock-in. No sunk cost. HEKA must earn its place in your life every day, or it does not deserve to stay."
         },
         "2": {
           "t": "Where do I begin right now?",
           "tag": "ACTION",
-          "b": "Open the settings. Enable civil overlay. Look at today in both systems. That is the first step. You have already taken it by opening this guide."
+          "b": "Open settings. Activate the civil overlay. Look at today in both systems. That is the first step. You have already taken it by opening this guide."
+        },
+        "3": {
+          "t": "What is the Oracle?",
+          "tag": "INTELLIGENCE",
+          "b": "A celestial intelligence that reads planetary positions for any date you select and offers guidance. Optional. Add your birth chart for personalized transits and deeper insight."
         }
       },
       "ch7": {
         "0": {
           "t": "Does the calendar really affect mindset?",
           "tag": "PSYCHOLOGY",
-          "b": "Mélyen. Azon szerkezetek között gondolkodunk, amelyekben lakunk. Az szabálytalan hónapok alacsony szintű kognitív szelepet okoznak. Az szabályos hónapok kognitív folyamot teremtenek. Addig nem veszed észre a szelepet, amíg el nem tűnik. Akkor már nem tudod megszüntetni a felismerést."
+          "b": "Deeply. We think in the structures we inhabit. Irregular months create low-level cognitive friction. Regular months create cognitive flow. You may not notice the friction until it disappears. Then you cannot stop noticing it."
         },
         "1": {
-          "t": "Mi a helyzet a kulturális kötődéssel?",
-          "tag": "TISZTELET",
-          "b": "Tartsd meg őket. Az születésnapod. Az új évünnepeld. A széns ünnepeim. Az HEKA nem törli a kultúrát—egyértelműbb edényt nyújtja számára. Az tartalom marad. Az edény javul."
+          "t": "What about cultural ties?",
+          "tag": "RESPECT",
+          "b": "Keep them. Your birthday. Your New Year celebrations. Your seasonal festivals. HEKA does not erase culture; it provides a clearer container for it. The content remains. The container improves."
         },
         "2": {
-          "t": "Miért érdekes ez elég ahhoz, hogy építsünk?",
-          "tag": "KÜLDETÉSE",
-          "b": "Mert az idő az élet alapja. Mert megérdemeljük az eszközöket, amelyek az elmékre tervezve vannak, nem származnak örökségként. Mert valaki megpróbálja építeni valamit jobbat. Megtettük. Itt vagy."
+          "t": "Why is this important enough to build?",
+          "tag": "MISSION",
+          "b": "Because time is the substrate of life. Because we deserve tools designed for minds, not inherited from accidents. Because someone should try to build something better. We did. You are here."
         }
       }
     },
     "chapterLeads": {
-      "ch1": "Érezzük. Az apró zavar, amikor hónapok között tervezünk. A mentalis számítás: \"Hány nap van eddig...?\" Az év szabálytalan rytmusa, amely January-tól December-ig csúsztatva halad, egyértelmű alak nélkül. Az HEKA a válasz.",
-      "ch2": "Az év nem csak napok számlálata. Ez egy narratív ív. Az HEKA három különböző mozgásba szerkeszti a naptári évet: az Nyitó, a Mag, és a Záró. Mindegyik saját karakterével. Mindegyik más célt szolgál a munka és pihenés, növekedés és aratás rytmusában.",
-      "ch3": "Az elmélet csak akkor válik hasznos, ha gyakorolt. Az HEKA azonnali elfogadást tervezte a zavarok nélkül. A civil dátumok láthatóak maradnak. Az találkozók szinkronizálva maradnak. Csak egyértelműbb, szabályosabb keretet nyer a napjaid navigálásához.",
-      "ch4": "Minden naptári naptár kiigazítja a napciklusok és az évciklusok közötti eltérést. Az HEKA két módszert kínál erre a kiigazításra: egyet, amely a civil elvárásokkal harmonizál, és egyet, amely a tisztán astronomi precizitást követi. Az szerkezet állandó. Csak a kiigazítási mechanizmus változik.",
-      "ch5": "A grégorien naptár nem rossz. Ez egy sikeres szabvány, amely a kritikus eltolódások problémáját orvosolta. De ez egy javítás is egy javításon - egy szerkezet, amely a római politikák, vallási tanácsok és történelmi incidensek által alakított, nem emberi szükségletek. Az ezen történelem megértése világosan teszi, hogy miért érdemes megpróbálni újratervezni.",
-      "ch6": "Az intézményi változás lassú. Az személyes változás azonnali. Nem szükséges kormányokat vagy vállalkozásokat használni az HEKA elfogadásához, hogy kihasználhassuk. Kezdj ma. Használd személyes tervező rétegedként. Hadd bizonyítsa az eszköz értékét saját tapasztalatodban.",
-      "ch7": "Bennünket a naptárainkban lakunk. Az idő, a folyamat és a lehetőség érzékét alakítják. Az szabálytalan naptár egész évben alacsony szintű szelepet okoz. Az szabályos naptár folyamot teremt. Az, hogy mely szerkezetet választunk"
+      "ch1": "You have felt it. The slight confusion when planning across months. The irregular rhythm of a year that stumbles from January through December with no coherent shape. HEKA is the response. Thirteen months. Twenty-eight days each. One perfect year.",
+      "ch2": "A year is not merely a count of days. It is a narrative arc. HEKA structures the solar year into three distinct movements: the Opening, the Core, and the Closing. Each with its own character. Each serving a different purpose in the rhythm of work and rest, growth and harvest.",
+      "ch3": "Theory becomes useful only when practiced. HEKA is designed for immediate adoption without disruption. Civil dates remain visible. Your appointments stay synchronized. The Oracle, Cosmic Circle, and your personal journal are here when you want them. You simply gain a clearer framework for navigating your days.",
+      "ch4": "Every solar calendar must correct for the mismatch between day-cycles and year-cycles. HEKA offers two approaches to this correction: one that harmonizes with civil expectations, and one that follows pure astronomical precision. The structure stays constant. Only the correction mechanism changes.",
+      "ch5": "The Gregorian calendar is not bad. It is a successful standard that fixed critical drift problems. But it is also a patch on a patch—a structure shaped by Roman politics, religious councils, and historical accidents rather than human needs. Understanding this history clarifies why redesign is worth attempting.",
+      "ch6": "Institutional change is slow. Personal change is immediate. You do not need governments or corporations to adopt HEKA for you to benefit from it. Start today. Use it as your personal planning layer. Let the tool prove its value in your own experience.",
+      "ch7": "We live inside our calendars. They shape our sense of time, progress, and possibility. An irregular calendar creates low-level friction throughout the year. A regular calendar creates flow. The choice of which structure to inhabit is ultimately a choice about what kind of temporal environment you want to live within."
+    },
+    "spotlight": {
+      "title": "Did you know?",
+      "facts": {
+        "0": "The Oracle reads real-time planetary positions for any date you select.",
+        "1": "Your journal keeps 50 revisions per entry — never lose a thought.",
+        "2": "Cosmic Circle lets you share moon phases and transits with friends.",
+        "3": "Print month views or full-year panoramas, designed for paper.",
+        "4": "SYNC mode matches civil dates. TRUE mode follows astronomical precision."
+      }
     }
   },
   "months": {
-    "apr": "Ápr",
-    "may": "Máj",
-    "jun": "Jún",
-    "jul": "Júl",
+    "apr": "Apr",
+    "may": "May",
+    "jun": "Jun",
+    "jul": "Jul",
     "aug": "Aug",
-    "hex": "Szept",
-    "sep": "Szep",
-    "oct": "Okt",
+    "hex": "Hex",
+    "sep": "Sep",
+    "oct": "Oct",
     "nov": "Nov",
     "dec": "Dec",
     "jan": "Jan",
     "feb": "Feb",
-    "mar": "Már"
+    "mar": "Mar"
+  },
+  "openSettings": "Open Settings",
+  "syncConflict": {
+    "title": "Sync Conflict",
+    "subtitle": "This item changed on the server while you were offline. Which version should keep?",
+    "local": "My Version",
+    "localHint": "The change I made on this device",
+    "server": "Server Version",
+    "serverHint": "The version already saved online",
+    "resolve": "Keep This Version"
   }
 }

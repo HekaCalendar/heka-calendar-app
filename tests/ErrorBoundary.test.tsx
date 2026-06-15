@@ -35,8 +35,9 @@ describe('ErrorBoundary', () => {
         <Bomb shouldThrow={true} />
       </ErrorBoundary>
     );
-    expect(screen.getByText('Something went wrong')).toBeInTheDocument();
+    expect(screen.getByText('The temple needs a moment')).toBeInTheDocument();
     expect(screen.getByRole('button', { name: /Try Again/i })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /Reload App/i })).toBeInTheDocument();
   });
 
   it('resets error state when retry button is clicked', () => {

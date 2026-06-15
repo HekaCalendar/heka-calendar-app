@@ -12,7 +12,8 @@
 
 import React, { useState, useMemo, useCallback, useRef, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { SUPPORTED_LANGUAGES, getWizardStrings } from '../../data/languages';
+import { SUPPORTED_LANGUAGES } from '../../data/languages';
+import { getWizardStrings } from '../../data/wizardStrings';
 import type { Language } from '../../data/languages';
 import { setLanguage } from '../../store/setupSlice';
 import { changeLanguage } from '../../i18n';

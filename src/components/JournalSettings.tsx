@@ -3,6 +3,7 @@
  * Theme and font customization for the HEKA Diary
  */
 
+import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import type { RootState, AppDispatch } from '../store';
 import { 
@@ -20,6 +21,7 @@ import { JOURNAL_THEMES, JOURNAL_FONTS, type JournalTheme, type JournalFont } fr
 import { MODULE_THEMES } from './oracle/config/themes';
 import { AISettingsPanel } from './AISettingsPanel';
 import { JournalNotificationSettings } from './notification/JournalNotificationSettings';
+import { ConfirmDialog } from './ui/ConfirmDialog';
 import '../styles/journal-settings.css';
 
 const JournalNotificationArea: React.FC = () => {
@@ -104,6 +106,7 @@ export const JournalSettings: React.FC<JournalSettingsProps> = ({ isOpen, onClos
   const { t } = useTranslation('journal');
   const dispatch = useDispatch<AppDispatch>();
   const preferences = useSelector((state: RootState) => state.diary.preferences);
+  const [showClearConfirm, setShowClearConfirm] = useState(false);
 
   if (!isOpen) return null;
 
@@ -119,12 +122,23 @@ export const JournalSettings: React.FC<JournalSettingsProps> = ({ isOpen, onClos
   };
 
   const handleClearAll = () => {
-    if (confirm(t('settings.deleteAllConfirm'))) {
-      dispatch(clearAllDiaryEntries());
-    }
+    setShowClearConfirm(true);
   };
 
   return (
+    <>
+      <ConfirmDialog
+        isOpen={showClearConfirm}
+        onClose={() => setShowClearConfirm(false)}
+        onConfirm={() => {
+          dispatch(clearAllDiaryEntries());
+          setShowClearConfirm(false);
+        }}
+        title={t('settings.deleteAllTitle', 'Delete all entries')}
+        description={t('settings.deleteAllConfirm')}
+        confirmText={t('settings.deleteAll', 'Delete All')}
+        variant="danger"
+      />
     <div className={`journal-settings-overlay journal-theme-${safeTheme}`} onClick={onClose}>
       <div className={`journal-settings-modal journal-theme-${safeTheme}`} onClick={(e) => e.stopPropagation()}>
         {/* Header */}
@@ -291,6 +305,7 @@ export const JournalSettings: React.FC<JournalSettingsProps> = ({ isOpen, onClos
         </div>
       </div>
     </div>
+    </>
   );
 };
 

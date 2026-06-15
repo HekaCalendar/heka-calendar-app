@@ -7,6 +7,7 @@
 import { useState, useEffect, useMemo, memo, useCallback } from 'react';
 import { getDayOfWeekData } from '../../services/dayOfWeekService';
 import { getCurrentPlanetaryHour } from '../../astrology/services/calculations/swissCalculations';
+import { useGlobalTime } from '../../hooks/useGlobalTime';
 import type { LocationData } from '../../types';
 import i18n from '../../i18n';
 import './UnifiedCards.css';
@@ -107,25 +108,20 @@ function getLocationDate(date: Date, timezone: string): Date {
 }
 
 const DayOfWeekCardComponent: React.FC<Props> = ({ date, location }) => {
-  const [tick, setTick] = useState(0);
   const [expanded, setExpanded] = useState(false);
   const [planetaryHour, setPlanetaryHour] = useState<Awaited<ReturnType<typeof getCurrentPlanetaryHour>> | null>(null);
   const [loading, setLoading] = useState(false);
 
-  // Tick every 10 seconds for smooth progress bar + minute-level hour changes
-  useEffect(() => {
-    const i = setInterval(() => setTick(t => t + 1), 10000);
-    return () => clearInterval(i);
-  }, []);
+  // Shared live time — ticks once per second.
+  const liveNow = useGlobalTime();
 
   // Derive "now" from the selected date + current real time, so the card stays
   // live while respecting the calendar selection.
   const now = useMemo(() => {
     const base = new Date(date);
-    const real = new Date();
-    base.setHours(real.getHours(), real.getMinutes(), real.getSeconds(), real.getMilliseconds());
+    base.setHours(liveNow.getHours(), liveNow.getMinutes(), liveNow.getSeconds(), liveNow.getMilliseconds());
     return base;
-  }, [date, tick]);
+  }, [date, liveNow]);
 
   // Compute planetary hour whenever now or location changes
   useEffect(() => {
@@ -312,7 +308,7 @@ const DayOfWeekCardComponent: React.FC<Props> = ({ date, location }) => {
                 );
               })}
             </div>
-            <div style={{ fontSize: '10px', color: 'rgba(255,255,255,0.3)', textAlign: 'center', marginTop: '6px' }}>
+            <div style={{ fontSize: '12px', color: 'rgba(255,255,255,0.3)', textAlign: 'center', marginTop: '6px' }}>
               {planetaryHour && !planetaryHour.isDay
                 ? `Hour ${planetaryHour.hour + 1} of the night • Next sunrise at ${planetaryHour.sunrise ? new Intl.DateTimeFormat(i18n.language || 'en', { hour: '2-digit', minute: '2-digit', timeZone: location.timezone }).format(planetaryHour.sunrise) : '...'}`
                 : planetaryHour

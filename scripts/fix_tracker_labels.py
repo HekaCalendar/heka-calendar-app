@@ -37,7 +37,7 @@ translations = {
 
 fixed = 0
 for lang, trans in sorted(translations.items()):
-    path = f'public/locales/{lang}/journal.json'
+    path = f'src/i18n/locales/{lang}/journal.json'
     if os.path.exists(path):
         with open(path, 'r', encoding='utf-8') as f:
             data = json.load(f)

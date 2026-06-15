@@ -16,6 +16,7 @@ import { useState, useCallback, useMemo, useEffect } from 'react';
 import { shallowEqual } from 'react-redux';
 import { useDispatch, useSelector } from 'react-redux';
 import type { RootState } from '../store';
+import { selectNoteIdsWithDuplicates } from '../store';
 import { addNote, deleteNote, deleteDuplicates } from '../store';
 import { selectUnifiedDayItems, addPlannerTask } from '../store/plannerSlice';
 import { createPlannerTask, deletePlannerTask, completePlannerTask, reopenPlannerTask } from '../services/plannerService';
@@ -184,15 +185,16 @@ export const PureModeDayPanel: React.FC<PureModeDayPanelProps> = ({
   const selectedDayCount = uniqueDayKeys.size;
   
   // Check for duplicates
-  const allNotesList = useMemo(() => Object.values(allNotes).flat(), [allNotes]);
+  const noteIdsWithDuplicates = useSelector(selectNoteIdsWithDuplicates);
   const notesWithDuplicates = useMemo(() => {
     const result = new Set<string>();
     selectedNotes.forEach((note: NoteData) => {
-      const hasDuplicates = allNotesList.some((n: NoteData) => n.duplicatedFrom === note.id);
-      if (hasDuplicates) result.add(note.id);
+      if (noteIdsWithDuplicates.has(note.id)) {
+        result.add(note.id);
+      }
     });
     return result;
-  }, [selectedNotes, allNotesList]);
+  }, [selectedNotes, noteIdsWithDuplicates]);
   const hasAnyDuplicates = notesWithDuplicates.size > 0;
   
   // Note actions

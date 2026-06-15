@@ -1,0 +1,49 @@
+{
+  "best": "最佳：{{count}}",
+  "title": "你的旅程",
+  "close": "关闭",
+  "reset": "重置统计",
+  "avgMood": "平均心情",
+  "dayStreak": "连续天数",
+  "totalNotes": "总笔记数",
+  "wordsWritten": "已写文字",
+  "achievements": "成就（{{earned}}/{{total}})",
+  "resetConfirm": "重置",
+  "progressRatio": "{{current}} / {{target}}",
+  "monthlyTooltip": "{{month}} {{year}}: {{count}} 笔记",
+  "notesByCategory": "按类别的笔记",
+  "monthlyActivity": "月度活动",
+  "mostActiveMonth": "你最活跃的月份是 \u003cstrong\u003e{{month}}\u003c/strong\u003e，共 \u003cstrong\u003e{{count}}\u003c/strong\u003e 笔记",
+  "categories": {
+    "work": "工作",
+    "family": "家庭",
+    "health": "健康",
+    "general": "一般",
+    "personal": "个人",
+    "creative": "创意",
+    "spiritual": "精神"
+  },
+  "progressToCentury": "迈向世纪俱乐部的进度",
+  "resetConfirmTitle": "重置统计",
+  "badges": {
+    "century": {
+      "name": "世纪俱乐部"
+    },
+    "explorer": {
+      "name": "探险家"
+    },
+    "archivist": {
+      "name": "档案管理员"
+    },
+    "first-note": {
+      "name": "首语"
+    },
+    "week-streak": {
+      "name": "周战士"
+    },
+    "month-streak": {
+      "name": "月大师"
+    }
+  },
+  "resetConfirmDescription": "你确定要重置所有统计数据吗？此操作无法撤销。"
+}

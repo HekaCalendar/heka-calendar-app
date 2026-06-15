@@ -54,7 +54,7 @@ const styles: Record<string, React.CSSProperties> = {
     color: 'rgba(255, 255, 255, 0.95)',
   },
   details: {
-    fontSize: '11px',
+    fontSize: '12px',
     color: 'rgba(255, 255, 255, 0.5)',
   },
   dropdown: {
@@ -143,12 +143,12 @@ const styles: Record<string, React.CSSProperties> = {
     textOverflow: 'ellipsis',
   },
   profileSigns: {
-    fontSize: '11px',
+    fontSize: '12px',
     color: 'rgba(255, 255, 255, 0.5)',
     marginTop: '2px',
   },
   defaultBadge: {
-    fontSize: '10px',
+    fontSize: '12px',
     padding: '2px 6px',
     background: 'rgba(251, 191, 36, 0.2)',
     color: '#fbbf24',

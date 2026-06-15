@@ -79,6 +79,7 @@
   border-radius: 24px;
   overflow-y: auto;
   overscroll-behavior: contain;
+  touch-action: pan-y;
   background: var(--ca-glass);
   backdrop-filter: blur(24px) saturate(140%);
   -webkit-backdrop-filter: blur(24px) saturate(140%);

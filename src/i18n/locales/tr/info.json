@@ -1,0 +1,322 @@
+{
+  "infoModal": {
+    "hero": {
+      "title": "HEKA — Zihinler için İnşa Edilmiş Bir Takvim",
+      "subtitleLine1": "On üç ay.",
+      "subtitleLine2": "Her biri dört hafta. Açık bir yıl."
+    },
+    "guideComplete": "Rehber Tamamlandı",
+    "spotlight": {
+      "title": "Biliyor muydunuz?",
+      "facts": [
+        "Gregoryen takvimindaki düzensiz aylar büyük ölçüde Roman politikalarından ve imparator egolarından kaynaklanmaktadır.",
+        "HEKA'nın on üç aylık yirmi sekiz günlük ayları mükemmel çeyrek oluşturur ve öngörülebilir maaş dönemleri oluşturur.",
+        "TRUE modunda, HEKA uzun vadeli astronomik doğruluğu için 128 yıllık atlama kuralını takip eder.",
+        "Sivil kaplama, sen Gregoryen tarihlerini HEKA'nın yanında görebilmen için izin verir, böylece koordinasyonunu kaybetmezsin.",
+        "Günlük defteri girdileriniz varsayılan olarak yerel kalır ve oturum açmayı seçtiğinizde senkronize edilir."
+      ]
+    },
+    "home": "Ana Sayfa",
+    "backToHome": "Ana Sayfaya Dön",
+    "deeperQuestions": "Daha Derin Sorular",
+    "chapters": {
+      "home": {
+        "num": "0",
+        "chip": "BAŞLANGIÇ",
+        "title": "Hoş Geldiniz",
+        "hook": "Yılı farklı bir şekilde yaşama.",
+        "teaser": "Buradan başlayın."
+      },
+      "ch1": {
+        "num": "01",
+        "chip": "TEMEL",
+        "title": "Takvim",
+        "hook": "On üç ay. Her biri dört hafta. Açık bir yıl.",
+        "teaser": "HEKA'nın ne olduğu ve neden farklı hissettiği."
+      },
+      "ch2": {
+        "num": "02",
+        "chip": "YAPI",
+        "title": "Yılın Yay",
+        "hook": "Açılış, çekirdek ve kapanış: hikaye yapılı bir yıl.",
+        "teaser": "Aylar Nisan'dan Mart'a nasıl aktı."
+      },
+      "ch3": {
+        "num": "03",
+        "chip": "ALETLER",
+        "title": "Günlük Arkadaşınız",
+        "hook": "Günlük defter, ay, yıldızlar ve sivil kaplama - hepsi sizin.",
+        "teaser": "HEKA'nın pratik olmasını sağlayan özellikler."
+      },
+      "ch4": {
+        "num": "04",
+        "chip": "MODLAR",
+        "title": "SYNC vs GERÇEK",
+        "hook": "Atlama günü iki şekilde ele alınır. Doğruluğunuzu seçin.",
+        "teaser": "Meşhur koordinasyon veya astronomik saflığı."
+      },
+      "ch5": {
+        "num": "05",
+        "chip": "TARIH",
+        "title": "Nedenseli Takvimler",
+        "hook": "Mirasılçık karmaşa, siyasi düzeltmeler ve yeniden tasarlama fırsatı.",
+        "teaser": "Sana verilen takvimin hikayesi."
+      },
+      "ch6": {
+        "num": "06",
+        "chip": "İNTEGRASYON",
+        "title": "İçinde Yaşamaya Başla",
+        "hook": "HEKA'yı varsayılan görünümünüz yapmak için üç küçük adım.",
+        "teaser": "Hayatınızı kesintiye uğratmadan nasıl başlamalısınız."
+      },
+      "ch7": {
+        "num": "07",
+        "chip": "ANLAMI",
+        "title": "Zaman Olarak İcra",
+        "hook": "Açıklık, ritim ve daha iyi bir aracı kullanma seçeneği.",
+        "teaser": "Zaman yapısının neden önemli olduğunu."
+      }
+    },
+    "chapterLeads": {
+      "home": "Bu kılavuz bir köprüdür. Kendi hızınızla geçin.",
+      "ch1": "HEKA, Gregoryen takvimi üzerinde bir ayarlama değildir. İlk prensiplere dayalı inşa edilmiş bir değiştiricidir.",
+      "ch2": "Yıl, eylem ve dinlenme ritminin yansıtmasını镜像时，ayrıca yapısı şeklinde olmalıdır.",
+      "ch3": "Bir takvim, zaten yaşadığınız hayatla bütünleşmezse faydalı değildir.",
+      "ch4": "Aynı yapı farklı ihtiyaçları karşılayabilir. Seçtiğiniz mod tercihdir, bir inanç değildir.",
+      "ch5": "Mevcut takvimin nasıl ortaya çıktığını anlamak, kusurlarının daha kolay affedilebilir ve bırakılabilir hale gelir.",
+      "ch6": "Uygulama küçük adımlarla gerçekleşir. İzin veya bir bildiri gerekli değildir.",
+      "ch7": "Zamanın konteyneri, yaşamın içeriğini şekillendirir. Seçiminize dikkatle karar verin."
+    },
+    "cardsByChapter": {
+      "ch1": [
+        {
+          "h": "Hissedeceğin Sorun",
+          "b": "Düzensiz aylar. Dağıtık tatiller. Ocak'tan Aralık'a hiçbir başlangıç, orta veya son hissi olmayan yıl. Bu sürtüşmeyi hissettin. HEKA bunu kaldırır."
+        },
+        {
+          "h": "İnşa Ettiğimiz Çözüm",
+          "b": "On üç ay. On ikisi mükemmel simetride yirmi sekiz günlüdür. Mart, kapanış ayıdır ve atıl günü barındırır. Her ay dört mükemmel haftadan oluşur. Akışkan bir yıl: Nisan açılıştır, Mayıs ile Aralık sabit çekirdek oluşturur, Ocak ile Mart tamamlamasını sağlar."
+        },
+        {
+          "h": "Koruyacağınız Dünya",
+          "b": "HEKA hayatınıza karıştırmaz. Sivil tarihler görünür kalır. Randevularınız, taahhütleriniz ve yasal yükümlülükleriniz tam nerede olduklarınız gibi orada kalır. Basitçe daha açık bir lens ile donatılıyorsunuz."
+        }
+      ],
+      "ch2": [
+        {
+          "h": "Açılış Yay",
+          "b": "Nisan eşiğidir. Yıl, kış yorgunluğunda değil, ilkbahar canında başlar. Yeni büyüme. Yeni projeler. Açılış bildirir: bir şey başlıyor."
+        },
+        {
+          "h": "Çekirdek Yay",
+          "b": "Mayıs ile Aralık, uzun ve sabit orta kısmıdır. Dokuzajı düzenli ve öngörülebilir ritimli dokuz ay. Güvenle planlayın. İleriye doğru ivme kazanın. İş burada gerçekleşir."
+        },
+        {
+          "h": "Kapanış Yay",
+          "b": "Ocak ile Mart, yılı sona erdirir. Başladığınız şeyi bitirin. Yet"
+        }
+      ],
+      "ch3": [
+        {
+          "h": "Sivil Tarihleriniz Kalır",
+          "b": "Sivil katmanı değiştirin ve HEKA'nın yanı sıra Gregorian tarihlerini görün. Dişçi randevunuz, annenizin doğum günü, vergi son tarihiniz - hepsi beklediğiniz yerde tam olarak kalır."
+        },
+        {
+          "h": "Günlüğünüz",
+          "b": "Günlük girişler ve düzenleme geçmişi - otomatik olarak tutulan 50 versiyon kadar. Her şeyde tam metin arama. Varsayılan olarak yerel; oturum açtığınızda bulut yedeklemesi."
+        },
+        {
+          "h": "Ayınız & Yıldızlarınız",
+          "b": "Ay aynaklar, gezegen konumları ve geçişler bir bakışta görünür. İsteğe bağlı ve hassas. Doğum şematikinizi Oracle aracılığıyla kişisel okumalar için ekleyin."
+        }
+      ],
+      "ch4": [
+        {
+          "h": "SYNC Modu: Tanıdık Yol",
+          "b": "Mart, Gregorian takviminin dediği gibi ekstra bir gün kazanır. Günlük sivil dünya ile koordinasyon için bu sizin modunuzdur. Aynı yapı. Tanıdık zamanlama."
+        },
+        {
+          "h": "DOĞRU Mod: Dürüst Yol",
+          "b": "HEKA kendi düzeltme kuralı takip eder: her dördüncü yıl Mart'ın 30 günlük olması, 128. her yıl hariç. Bu astronomik hassasiyetdir. Bu uzun vadeli entegritedir."
+        },
+        {
+          "h": "Her Zaman Değiştir",
+          "b": "Aylar değişmez. Hafta değişmez. Sadece düzeltme tetikleyicisi kaydırılır. Deneyin. Hangi modun ihtiyaçlarınıza uyduğunu görün. Kilitlendi değilsiniz."
+        }
+      ],
+      "ch5": [
+        {
+          "h": "Mirası, Tasarım Değil",
+          "b": "Mevcut takvimimiz tarihi kazaların bir yığınıdır. Roma politikası. Dini konseyler. Yüzyıllar apartı eklenen astronomik düzeltmeler. Hiçbir zaman bir sistem olarak tasarlanmamıştır."
+        },
+        {
+          "h": "Gregory Düzeltmesi",
+          "b": "1582: Papa Gregory sapma sorununu düzeltmiştir. Ama düzensiz ayları, dağınık yapıyı, miras alınan karmaşayı korudu. Gerekli bir düzeltme, ama tam bir çözüm değil."
+        },
+        {
+          "h": "HEKA Cevabı",
+          "b": "Çalışan şeyleri koruduk: yedi günlük haftalar, mevsim uyumu, güneş yılı izlemesi. Tasarımsız olanları yeniden tasarladık: ay yapısı, yıl akışı, düzeltme yerleşimi. Düşünen akıllar için inşa edildi."
+        }
+      ],
+      "ch6": [
+        {
+          "h": "Adım Bir: Kaplamayı Etkinleştir",
+          "b": "Sivil tarihleri açın. Şimdi her iki sistemde de görebilirsiniz. HEKA tarihiniz ve Gregorian tarihiniz. Köprü inşa edildi. İhtiyacınız olduğunda geçin."
+        },
+        {
+          "h": "Adım İki: Modunuzu Seçin",
+          "b": "Eşanlamlılığı istiyorsanız SYNC ile başlayın. Dürlüğü istiyorsanız TRUE'ya geçin. Aklınız değişebilir. Takvim sizinize uyar, tam tersi değil."
+        },
+        {
+          "h": "Adım Üç: İçinde Yaşayın",
+          "b": "HEKA'yı ana görünümünüz olarak kullanın. Ayınızı planlayın. Günlerinizi not edin. Gerçek yapılı bir yıl hisset. Sivil dünya bunu bilmeyecek. Bileceksiniz."
+        }
+      ],
+      "ch7": [
+        {
+          "h": "Taraflı Maliyetler Enerji Tüketir",
+          "b": "Bu ayın kaç gün olduğundan şüphelendiğiniz her seferinde küçük bir vergi ödüyorsunuz. Her düzensizlik odaklanmanızı drena ediyor. HEKA bu vergileri kaldırır. Enerjiyi önemli şeyler için tutarsınız."
+        },
+        {
+          "h": "Ritim Sakinlik Yaratır",
+          "b": "Yapı öngörülebilir olduğunda, zihniyet rahatlaşır. Yılın nerede olduğunuzu bilirsiniz. Açılışı, çekirdeği, kapanışı hissedebilirsiniz. Zaman, hayatta kalmak için yaşayacağınız karmaşa değil, yaşadığınız bir alan haline gelir."
+        },
+        {
+          "h": "Zaman Üzerindeki İddia",
+          "b": "Siz Gregorian takvimini seçmediniz. Size verildi. HEKA bir seçimdir. Açıkla bir araç kullanmak. Gününuzün yapısına iddianı talep etmek. Bu sizin takviminizdir."
+        }
+      ]
+    },
+    "gatesByChapter": {
+      "ch1": [
+        {
+          "t": "Bu bir din mi yoksa",
+          "tag": "AÇIKLIK",
+          "b": "Hiçbiri. HEKA bir araçtır. Daha iyi bir çekici veya daha açıklayıcı bir harita gibi. Üyelik gerekli değil. Kabul etmeniz gereken inanç yok. Sadece kalıtsal takvimden daha iyi çalışan bir takvim."
+        },
+        {
+          "t": "Neden on üç ay?",
+          "tag": "MANtık",
+          "b": "On düzenliliği zorlaştıran düzensiz uzunlukta on iki ay. Her biri dört haftadan oluşan on üç ay mükemmel düzenlilik yaratır. 13 × 28 = 364. Plus one special day. Matematik temiz. Deneyim daha temiz."
+        },
+        {
+          "t": "Bu diğer insanlar tarafından karışıklık yaratır mı?",
+          "tag": "GERÇEKLİK",
+          "b": "HEKA tarihlerini görüyorsunuz. Onlar sivil tarihleri görüyor. \"Mart 15'i\" dediğinizde, onlar da aynı günü kastediyorlar. Sivil katmanlamaya dayalı olarak asla koordine kaybetmezsiniz. Netlik kazanıyorsunuz. Onlar hiçbir şey kaybetmez."
+        }
+      ],
+      "ch2": [
+        {
+          "t": "Yıl neden Nisan ayında başlıyor?",
+          "tag": "SEMBOL",
+          "b": "İlkbahar evrensel bir açılıştır. Büyüme başlıyor. Enerji yükseliyor. Yılı Nisan ayında başlatmak takvimi yenilenin hissettirdiği deneyimle uyumlaştırır. Ocak kış yorgunluğuyla başlıyor. Nisan ilkbahar olasılıklarıyla başlıyor."
+        },
+        {
+          "t": "Ay isimleri nelerdir?",
+          "tag": "SIRKÜLasyon",
+          "b": "Nisan, Mayıs, Haziran, Temmuz, Ağustos, Eylül, Hexa, Eylül, Ekim, Kasım, Aralık, Ocak, Şubat, Mart. Hexa - altıncı ay - boşluğu doldurur. Gerisini zaten biliyorsunuz. Sadece konumları değişiyor."
+        },
+        {
+          "t": "Düzeltme nasıl ele alınır?",
+          "tag": "HASSASLIK",
+          "b": "Her güneş takvimi düzeltme gerektirir. HEKA, bunu yıl sonundaki Mart ayında yerleştirir. Mart ayının 29 günü var, veya artık yıllarda 30. Diğer on iki ay mükemmel ve kalıcı bir şekilde düzenlidir. Düzeltme içeride tutulur, dağılmaz."
+        }
+      ],
+      "ch3": [
+        {
+          "t": "HEKA takvimlerini yazdırabilir miyim?",
+          "tag": "FİZİKSEL",
+          "b": "Evet. Ay görünümlerini veya tam yıl görünümlerini yazdırabilirsiniz. Kağıt için tasarlanmış, temiz ve düzensiz. Onları duvarlara sapla. Defterlerde taşıyın. Dijital kolaylık ve fiziksel eser her ikisi de."
+        },
+        {
+          "t": "Bayramlar nelerdir?",
+          "tag": "ÖZELLİK",
+          "b": "Bölgeniz için bayram setlerini değiştirin. Ya da onları görmezden gelin. HEKA kendi bayramlarınızı itiraz etmez - size önemsenenleri, daha net bir yapının üzerine izlemenizi kolaylaştırır."
+        },
+        {
+          "t": "Verilerim nerede yaşar?",
+          "tag": "GÜVEN",
+          "b": "Varsayılan olarak, her şey cihazınızda kalır - notlar, günlük, ayarlar. Hesap oluşturursanız, veriler şifrelenmiş bulut depolama alanına yedeklenir. Her zaman her şeyi dışa aktarabilirsiniz. Kontrol sizde."
+        },
+        {
+          "t": "Günlük ne yapabilir?",
+          "tag": "YETENEK",
+          "b": "Otomatik revizyon geçmişi ile günlük girişler. Tüm arşivinizde tam metin arama. Varsayılan olarak yerel; oturum açtığınızda buluta senkronize edilir."
+        }
+      ],
+      "ch4": [
+        {
+          "t": "Hangi mod \"doğru\" mu?",
+          "tag": "SEÇİM",
+          "b": "İkisi de. SYNC, sivil dünya ile koordinasyon için doğrudur. TRUE, astronomik hassasiyet için doğrudur. İhtiyaçlarınız şu anda hangi doğruluğun daha önemli olduğunu belirler."
+        },
+        {
+          "t": "TRUE modu sivil tarihlerden sapıyor mu?",
+          "tag": "AYRIMLILIK",
+          "b": "Yavaşça, evet. TRUE modu kendi sıçrama kuralını takip eder, Gregorian'ın değil. Yüzyıllar boyunca sapma dikkate değer hale gelir. Günlük yaşam için fark edilmez. Uzun vadeli düşünce için, saflığı önemlidir."
+        },
+        {
+          "t": "Kurumlar HEKA'yı benimseebilir mi?",
+          "tag": "ÖLÇEK",
+          "b": "Sonunda belki. Ancak kurumlar sizin yararlanmak için değişmek zorunda değil. HEKA, kişisel bir katman olarak mükemmel çalışır. Orada başlayın. Araç kendisini kanıtlamasına izin verin."
+        }
+      ],
+      "ch5": [
+        {
+          "t": "Aylar neden farklı uzunluklardadır?",
+          "tag": "TARIH",
+          "b": "Roma politikası. Julius Caesar ve Augustus, kendi adlarıyla isimlendirilmiş aylara ihtiyaç duydular. Takvim, egoları barındırmak için ayarlandı. Bu düzensizlikler \"gelenek\" haline geldi. Gelenek her zaman bilgelik değildir."
+        },
+        {
+          "t": "Gregoryan reformu yeterli miydi?",
+          "tag": "DEĞERLENDİRME",
+          "b": "Sapmayı düzeltti. Yapıyı düzeltmedi"
+        },
+        {
+          "t": "Digerleri takvim reformu denememi?",
+          "tag": "GİRİŞİMLER",
+          "b": "Çok. Fransız Cumhuriyeti takvimi. Dünya Takvimi. Uluslararası Sabit Takvim. Bazıları harika, hepsi politik olarak başarısız oldu. HEKA onlardan öğrenir: sivil zamanla uyumluluğun önemi. Evrim yoluyla devrim."
+        }
+      ],
+      "ch6": [
+        {
+          "t": "Bunu diğerlerine nasıl açıklarım?",
+          "tag": "KONUŞMA",
+          "b": "Gerek yok. Kullan. Sorulan olursa, şöyle dersin: \"Daha iyi plan yapmama yardımcı olan bir takvim buldum.\" Onlara göster. Onlara netliği göster. İkna etmen gösterimle, değil beyanla gerçekleşir."
+        },
+        {
+          "t": "Eğer kullanmak istemediğimi söyleyebilir miyim?",
+          "tag": "ÖZGÜRLÜK",
+          "b": "Dur. Sivil tarihleriniz kalır. Randevunuz orada kalır. Kilitleme yok. Batırılmış maliyet yok. HEKA her gün hayatınızda kendi yerini kazanmalı veya orada kalması değersiz."
+        },
+        {
+          "t": "Şu anda nerede başlarım?",
+          "tag": "EYLEM",
+          "b": "Ayarları açın. Sivil kaplamayı etkinleştirin. Her iki sistemde bugüne bakın. İlk adım budur. Bu kılavuzu açarak zaten atmışsındır."
+        },
+        {
+          "t": "Oracle nedir?",
+          "tag": "ZEKA",
+          "b": "Herhangi bir tarihi seçtiğiniz için gezegen konumlarını okuyan ve rehberlik sağlayan bir göksel zeka. İsteğe bağlı. Doğum grafiğinizi ekleyerek kişisel geçişler ve daha derin anlamlı içgüler elde edin."
+        }
+      ],
+      "ch7": [
+        {
+          "t": "Takvim gerçekten zihniyeti etkiler mi?",
+          "tag": "PSİKOLOJİ",
+          "b": "Derinlemesine. Biz yaşadığımız yapılarda düşünürüz. Düzensiz aylar düşük düzeyde zekâ çekişmesi yaratır. Düzensiz aylar zekâ akışını yaratır. Çekişmeyi fark etmeyebilirsiniz, ancak kalkıncaya kadar. O zaman artık fark etmezsiniz."
+        },
+        {
+          "t": "Cultural attachments hakkında ne dersiniz?",
+          "tag": "SAYGILI",
+          "b": "Onları koruyun. Doğum gününuz. Yeni yıl kutlamalarınız. Mevsim festivalleriniz. HEKA kültürü silmez - bunun için daha açık bir kabı sağlar. İçerik kalır. Kabı iyileşir."
+        },
+        {
+          "t": "Bunu neden inşa etmek kadar önemli buluyorsunuz?",
+          "tag": "GÖREV",
+          "b": "Zaman, yaşamın altyapısıdır. Çünkü bizler akıllar için tasarlanmış araçlara layıkız, değil mi miras kalanlardan. Çünkü birilerinin daha iyi bir şeyler inşa etmeye çalışması gerekiyor. Biz yaptık. Buradasınız."
+        }
+      ]
+    }
+  }
+}

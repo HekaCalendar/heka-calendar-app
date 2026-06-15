@@ -9,8 +9,8 @@ android {
         applicationId "com.heka.calendar"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 228
-        versionName "2.2.2"
+        versionCode 269
+        versionName "2.2.22"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         androidResources {
             ignoreAssetsPattern = '!.svn:!.git:!.ds_store:!*.scc:.*:!CVS:!thumbs.db:!picasa.ini:!*~'
@@ -65,6 +65,10 @@ android {
                 }
                 signingConfig signingConfigs.debug
                 println "Warning: Using debug signing for release build type. Create key.properties for Play Store."
+            }
+            // Include native debug symbols for Play Console crash de-obfuscation
+            ndk {
+                debugSymbolLevel 'FULL'
             }
         }
         debug {

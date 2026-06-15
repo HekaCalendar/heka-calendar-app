@@ -5,7 +5,7 @@
  * allowing users to see changes in real-time without content jumping.
  */
 
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, lazy, Suspense } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import type { RootState, AppDispatch } from '../store';
 import { setLocation, setSubRegion, toggleDisplay, toggleTimeMode, toggleAstroPreference, updateAstroPreferences, setGlobalNotificationsEnabled, setNotificationMode, updateNotificationPreferences } from '../store';
@@ -20,7 +20,8 @@ import { TimePreferenceEditor } from './notification/TimePreferenceEditor';
 import { VacationModeEditor } from './notification/VacationModeEditor';
 import { FocusSchedulesEditor } from './notification/FocusSchedulesEditor';
 import { ThemeSettings } from './ThemeSettings';
-import { AISettingsPanel } from './AISettingsPanel';
+// Lazy-load the heavy AI settings panel so its providers/templates stay out of the initial bundle.
+const AISettingsPanel = lazy(() => import('./AISettingsPanel').then((m) => ({ default: m.AISettingsPanel })));
 import { useFeatureDiscovery, useSettingsTracking } from '../hooks/useGamification';
 import { tutorialService } from '../services/tutorialService';
 import { useTranslation } from 'react-i18next';
@@ -439,7 +440,7 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({ onAuthClick, onPur
                       ✓ {t('keepCurrentLocation')}
                     </button>
                   )}
-                  <p style={{ fontSize: '11px', opacity: 0.7, marginTop: '8px' }}>
+                  <p style={{ fontSize: '12px', opacity: 0.7, marginTop: '8px' }}>
                     💡 <strong>{t('tip')}</strong> {t('locationTip')}
                   </p>
                 </div>
@@ -512,7 +513,9 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({ onAuthClick, onPur
                 {/* AI Integration */}
                 <div className="settings-group">
                   <label className="settings-group__label">🤖 {t('hekaAi')}</label>
-                  <AISettingsPanel highlightArea="calendar" />
+                  <Suspense fallback={null}>
+                    <AISettingsPanel highlightArea="calendar" />
+                  </Suspense>
                 </div>
 
                 {/* Notifications */}

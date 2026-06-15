@@ -19,6 +19,7 @@ import {
 } from '../../services/plannerService';
 import { getCurrentUser } from '../../services/firebase';
 import { getErrorMessage } from '../../utils/errorUtils';
+import { dialogService } from '../ui/DialogProvider';
 import { HEKA_MONTHS, hekaToCivil, civilToHeka, getNoteKey, getDaysInMonth } from '../../services/calendarService';
 import { getHolidaysForDateWithSubRegion, getYearLabel, LOCATIONS, getHemisphere, type SubRegionCode, type NoteCategory, type PlannerTask } from '../../types';
 import { getDailyAstrology, type DailyAstrologicalGuidance } from '../../astrology/integration/calendarSync';
@@ -359,7 +360,7 @@ export function useDayPanel() {
       const currentUser = getCurrentUser();
       // Auth preflight check — debug logging removed for production
       if (!currentUser) {
-        window.alert(t('alerts.signInToSaveTasks'));
+        dialogService.showAlert({ description: t('alerts.signInToSaveTasks')});
         return;
       }
     }
@@ -412,7 +413,7 @@ export function useDayPanel() {
       tutorialService.trackNoteCreated();
     } catch (err) {
       console.error('[handleSaveNote] FAILED:', getErrorMessage(err));
-      window.alert(t('alerts.unableToSaveTask', { error: getErrorMessage(err, 'Unknown') }));
+      dialogService.showAlert({ description: t('alerts.unableToSaveTask', { error: getErrorMessage(err, 'Unknown') })});
     }
   }, [dispatch, noteKey, noteText, selectedCategory, selectedMood, isTaskMode, dueTime, reminderMinutesBefore, editingTaskId, selectedDate, dailyAstrology, t]);
 
@@ -529,7 +530,7 @@ export function useDayPanel() {
     nextWeekCivil.setDate(currentCivil.getDate() + 7);
     const targetHeka = civilToHeka(nextWeekCivil);
     if (!targetHeka) {
-      alert(t('alerts.couldNotCalculateDate'));
+      dialogService.showAlert({ description: t('alerts.couldNotCalculateDate')});
       return;
     }
     const targetKey = getNoteKey(targetHeka.year, targetHeka.month, targetHeka.day);
@@ -553,7 +554,7 @@ export function useDayPanel() {
     const parts = [];
     if (noteCount > 0) parts.push(`${noteCount} note(s)`);
     if (taskCount > 0) parts.push(`${taskCount} task(s)`);
-    alert(t('alerts.duplicatedToNextWeek', { items: parts.join(' and '), month: HEKA_MONTHS[targetHeka.month].name, day: targetHeka.day }));
+    dialogService.showAlert({ description: t('alerts.duplicatedToNextWeek', { items: parts.join(' and '), month: HEKA_MONTHS[targetHeka.month].name, day: targetHeka.day })});
     handleExitSelectionMode();
   }, [selectedDate, selectedNotes, dispatch, handleExitSelectionMode, t]);
 
@@ -564,7 +565,7 @@ export function useDayPanel() {
     nextMonthCivil.setDate(currentCivil.getDate() + 28);
     const targetHeka = civilToHeka(nextMonthCivil);
     if (!targetHeka) {
-      alert(t('alerts.couldNotCalculateDate'));
+      dialogService.showAlert({ description: t('alerts.couldNotCalculateDate')});
       return;
     }
     const targetKey = getNoteKey(targetHeka.year, targetHeka.month, targetHeka.day);
@@ -588,18 +589,19 @@ export function useDayPanel() {
     const parts = [];
     if (noteCount > 0) parts.push(`${noteCount} note(s)`);
     if (taskCount > 0) parts.push(`${taskCount} task(s)`);
-    alert(t('alerts.duplicatedToNextMonth', { items: parts.join(' and '), month: HEKA_MONTHS[targetHeka.month].name, day: targetHeka.day }));
+    dialogService.showAlert({ description: t('alerts.duplicatedToNextMonth', { items: parts.join(' and '), month: HEKA_MONTHS[targetHeka.month].name, day: targetHeka.day })});
     handleExitSelectionMode();
   }, [selectedDate, selectedNotes, dispatch, handleExitSelectionMode, t]);
 
-  const handleDuplicateToEveryDayOfWeek = useCallback(() => {
+  const handleDuplicateToEveryDayOfWeek = useCallback(async () => {
     if (!selectedDate || selectedNotes.length === 0) return;
     const currentDayOfWeek = civilDate ? civilDate.getDay() : 0;
     const dayName = [
       t('dow.sunday'), t('dow.monday'), t('dow.tuesday'), t('dow.wednesday'),
       t('dow.thursday'), t('dow.friday'), t('dow.saturday')
     ][currentDayOfWeek];
-    if (!confirm(t('confirmations.duplicateEveryDay', { count: selectedNotes.length, day: dayName }))) return;
+    const confirmed = await dialogService.showConfirm({ description: t('confirmations.duplicateEveryDay', { count: selectedNotes.length, day: dayName }) });
+    if (!confirmed) return;
     let duplicateCount = 0;
     for (let month = selectedDate.month; month < 13; month++) {
       const daysInMonth = getDaysInMonth(selectedDate.year, month as any);
@@ -624,16 +626,17 @@ export function useDayPanel() {
         }
       }
     }
-    alert(t('alerts.duplicatedToDays', { count: duplicateCount, day: dayName }));
+    dialogService.showAlert({ description: t('alerts.duplicatedToDays', { count: duplicateCount, day: dayName })});
     handleExitSelectionMode();
   }, [selectedDate, selectedNotes, civilDate, dispatch, handleExitSelectionMode, t]);
 
-  const handleUndoDuplicates = useCallback(() => {
-    if (!confirm(t('confirmations.undoDuplicates', { count: notesWithDuplicates.size }))) return;
+  const handleUndoDuplicates = useCallback(async () => {
+    const confirmed = await dialogService.showConfirm({ description: t('confirmations.undoDuplicates', { count: notesWithDuplicates.size }) });
+    if (!confirmed) return;
     notesWithDuplicates.forEach(sourceNoteId => {
       dispatch(deleteDuplicates({ sourceNoteId }));
     });
-    alert(t('alerts.removedDuplicates'));
+    dialogService.showAlert({ description: t('alerts.removedDuplicates')});
     handleExitSelectionMode();
   }, [notesWithDuplicates, dispatch, handleExitSelectionMode, t]);
 
@@ -660,7 +663,7 @@ export function useDayPanel() {
     const parts = [];
     if (noteCount > 0) parts.push(`${noteCount} note(s)`);
     if (taskCount > 0) parts.push(`${taskCount} task(s)`);
-    alert(t('alerts.duplicatedNotes', { count: `${parts.join(' and ')}` }));
+    dialogService.showAlert({ description: t('alerts.duplicatedNotes', { count: `${parts.join(' and ')}` })});
     setShowDayPicker(false);
     handleExitSelectionMode();
   }, [selectedNotes, dispatch, handleExitSelectionMode, t]);
@@ -683,7 +686,7 @@ export function useDayPanel() {
         }
       });
     });
-    alert(t('alerts.duplicatedSelectedItems', { count: targetDates.length }));
+    dialogService.showAlert({ description: t('alerts.duplicatedSelectedItems', { count: targetDates.length })});
     setShowMultiDayPicker(false);
     handleExitSelectionMode();
   }, [selectedNotes, dispatch, handleExitSelectionMode, t]);

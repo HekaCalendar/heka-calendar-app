@@ -1,0 +1,49 @@
+{
+  "best": "Legjobb: {{count}}",
+  "title": "Az Útonk",
+  "close": "Bezárás",
+  "reset": "Statisztika Resetelése",
+  "avgMood": "Átlagos Hangulat",
+  "dayStreak": "Napi sorozat",
+  "totalNotes": "Összes Jegyzet",
+  "wordsWritten": "Szavak írva",
+  "achievements": "Eredmények ({{earned}}/{{total}})",
+  "resetConfirm": "Visszaállítás",
+  "progressRatio": "{{current}} / {{target}}",
+  "monthlyTooltip": "{{month}} {{year}}: {{count}} jegyzet",
+  "notesByCategory": "Jegyzetek Kategóriákban",
+  "monthlyActivity": "Havi Tevékenység",
+  "mostActiveMonth": "A legaktívabb hónapja \u003cstrong\u003e{{month}}\u003c/strong\u003e volt, amelyben \u003cstrong\u003e{{count}}\u003c/strong\u003e jegyzetet írtál",
+  "categories": {
+    "work": "Munka",
+    "family": "Család",
+    "health": "Egészség",
+    "general": "Általános",
+    "personal": "Személyes",
+    "creative": "Kreatív",
+    "spiritual": "Szellemi"
+  },
+  "progressToCentury": "Haladás az Évszazad Klubig",
+  "resetConfirmTitle": "Statisztika Resetelése",
+  "badges": {
+    "century": {
+      "name": "Évszazad Klub"
+    },
+    "explorer": {
+      "name": "Felfedező"
+    },
+    "archivist": {
+      "name": "Archivista"
+    },
+    "first-note": {
+      "name": "Első Szavak"
+    },
+    "week-streak": {
+      "name": "Hét Szájharang"
+    },
+    "month-streak": {
+      "name": "Hónap Mester"
+    }
+  },
+  "resetConfirmDescription": "Biztosan le szeretnéd resetelni az összes statisztikát? Ez nem vonható vissza."
+}

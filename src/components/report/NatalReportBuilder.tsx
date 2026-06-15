@@ -278,7 +278,7 @@ export const NatalReportBuilder: React.FC = () => {
               <input
                 className="report-setup-input"
                 type="text"
-                placeholder={t('report.namePlaceholder')}
+                placeholder={t('namePlaceholder', 'Enter name')}
                 value={form.name}
                 onChange={e => setForm(f => ({ ...f, name: e.target.value }))}
               />
@@ -324,7 +324,7 @@ export const NatalReportBuilder: React.FC = () => {
               <input
                 className="report-setup-input"
                 type="text"
-                placeholder={t('report.locationPlaceholder')}
+                placeholder={t('locationPlaceholder', 'e.g., New York, NY')}
                 value={form.locationName}
                 onChange={e => setForm(f => ({ ...f, locationName: e.target.value }))}
               />
@@ -341,7 +341,7 @@ export const NatalReportBuilder: React.FC = () => {
                   step="0.0001"
                   min="-90"
                   max="90"
-                  placeholder={t('report.latitudePlaceholder')}
+                  placeholder={t('latitudePlaceholder', 'e.g., 40.7128')}
                   value={form.latitude}
                   onChange={e => setForm(f => ({ ...f, latitude: e.target.value }))}
                 />
@@ -355,7 +355,7 @@ export const NatalReportBuilder: React.FC = () => {
                   step="0.0001"
                   min="-180"
                   max="180"
-                  placeholder={t('report.longitudePlaceholder')}
+                  placeholder={t('longitudePlaceholder', 'e.g., -74.0060')}
                   value={form.longitude}
                   onChange={e => setForm(f => ({ ...f, longitude: e.target.value }))}
                 />
@@ -368,7 +368,7 @@ export const NatalReportBuilder: React.FC = () => {
               <input
                 className="report-setup-input"
                 type="text"
-                placeholder={t('report.timezonePlaceholder')}
+                placeholder={t('timezonePlaceholder', 'e.g., America/New_York')}
                 value={form.timezone}
                 onChange={e => setForm(f => ({ ...f, timezone: e.target.value }))}
               />

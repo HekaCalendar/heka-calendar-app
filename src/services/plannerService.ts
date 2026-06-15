@@ -20,6 +20,7 @@ import { cancelTaskReminder, scheduleTaskReminder, reconcileTaskNotifications } 
 import { store } from '../store';
 import { getErrorMessage, getErrorCode } from '../utils/errorUtils';
 import { eventBus } from './eventBus';
+import { offlineSyncEngine } from './offlineSyncEngine';
 import {
   syncPlannerTasks,
   addPlannerTask,
@@ -81,6 +82,11 @@ function getPendingTasksCount(): number {
 function getTodayCompletedTasksCount(): number {
   const today = new Date().toISOString().split('T')[0];
   return getAllTasks().filter((t) => t.isCompleted && t.completedAt?.startsWith(today)).length;
+}
+
+function isNetworkError(err: unknown): boolean {
+  const msg = getErrorMessage(err).toLowerCase();
+  return msg.includes('network') || msg.includes('offline') || msg.includes('unavailable') || msg.includes('failed to fetch');
 }
 
 function inferPreferredTaskTime(dueTime?: string): 'morning' | 'afternoon' | 'evening' | 'night' | 'unknown' {
@@ -361,7 +367,20 @@ export async function updatePlannerTaskDoc(
     }
   }
 
-  await updateDoc(taskRef, stripUndefined(patch));
+  try {
+    await updateDoc(taskRef, stripUndefined(patch));
+  } catch (err) {
+    if (isNetworkError(err)) {
+      offlineSyncEngine.enqueue({
+        type: 'plannerTask',
+        entityId: taskId,
+        action: 'update',
+        payload: stripUndefined(patch),
+        localVersion: Date.now(),
+      });
+    }
+    throw err;
+  }
 
   // Handle notification lifecycle
   const current = store.getState().planner.tasks[dayKey]?.find((t) => t.id === taskId);

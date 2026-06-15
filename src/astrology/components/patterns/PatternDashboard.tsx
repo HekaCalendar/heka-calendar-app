@@ -313,7 +313,7 @@ export const PatternDashboard: React.FC<PatternDashboardProps> = ({ onClose }) =
           onMouseLeave={(e) => {
             e.currentTarget.style.background = 'transparent';
           }}
-          aria-label={i18n.t('common.close')}
+          aria-label={i18n.t('close')}
         >
           ×
         </button>

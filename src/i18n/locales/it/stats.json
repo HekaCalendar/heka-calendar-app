@@ -1,0 +1,49 @@
+{
+  "best": "Migliore: {{count}}",
+  "title": "Il Tuo Percorso",
+  "close": "Chiudi",
+  "reset": "Reimposta Statistiche",
+  "avgMood": "Umore Medio",
+  "dayStreak": "Giorno di Serie",
+  "totalNotes": "Note Totali",
+  "wordsWritten": "Parole Scritte",
+  "achievements": "Riconoscimenti ({{earned}}/{{total}})",
+  "resetConfirm": "Reimposta",
+  "progressRatio": "{{current}} / {{target}}",
+  "monthlyTooltip": "{{month}} {{year}}: {{count}} note",
+  "notesByCategory": "Note per Categoria",
+  "monthlyActivity": "Attività Mensile",
+  "mostActiveMonth": "Il tuo mese più attivo fu \u003cstrong\u003e{{month}}\u003c/strong\u003e con \u003cstrong\u003e{{count}}\u003c/strong\u003e note",
+  "categories": {
+    "work": "Lavoro",
+    "family": "Famiglia",
+    "health": "Salute",
+    "general": "Generale",
+    "personal": "Personale",
+    "creative": "Creativo",
+    "spiritual": "Spirituale"
+  },
+  "progressToCentury": "Progresso verso il Century Club",
+  "resetConfirmTitle": "Reimposta Statistiche",
+  "badges": {
+    "century": {
+      "name": "Club del Secolo"
+    },
+    "explorer": {
+      "name": "Esploratore"
+    },
+    "archivist": {
+      "name": "Archivista"
+    },
+    "first-note": {
+      "name": "Prime Parole"
+    },
+    "week-streak": {
+      "name": "Guerriero della Settimana"
+    },
+    "month-streak": {
+      "name": "Maestro del Mese"
+    }
+  },
+  "resetConfirmDescription": "Sei sicuro di voler reimpostare tutte le statistiche? Questa azione non può essere annullata."
+}

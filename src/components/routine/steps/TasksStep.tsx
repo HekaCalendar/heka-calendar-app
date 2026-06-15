@@ -172,7 +172,7 @@ const TaskEditForm: React.FC<TaskEditFormProps> = ({ task, isNew, onSave, onCanc
           type="text"
           value={currentTask.name}
           onChange={e => set({ name: e.target.value })}
-          placeholder={t('wizard.taskNamePlaceholder')}
+          placeholder={t('taskNamePlaceholder', 'Task name...')}
           autoFocus={isNew}
         />
       </div>
@@ -181,7 +181,7 @@ const TaskEditForm: React.FC<TaskEditFormProps> = ({ task, isNew, onSave, onCanc
         <textarea
           value={currentTask.description}
           onChange={e => set({ description: e.target.value })}
-          placeholder={t('wizard.taskDetailsPlaceholder')}
+          placeholder={t('taskDetailsPlaceholder', 'Task details...')}
           rows={2}
           style={{ resize: 'vertical', minHeight: 48 }}
         />
@@ -281,7 +281,7 @@ const TaskEditForm: React.FC<TaskEditFormProps> = ({ task, isNew, onSave, onCanc
             type="text"
             value={currentTask.tags.join(', ')}
             onChange={e => set({ tags: e.target.value.split(',').map(s => s.trim()).filter(Boolean) })}
-            placeholder={t('wizard.tagsPlaceholder')}
+            placeholder={t('tagsPlaceholder', 'Add tags...')}
           />
         </div>
       </div>

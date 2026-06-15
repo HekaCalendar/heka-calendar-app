@@ -273,7 +273,7 @@ export const VoidMoonOverlay: React.FC<{ onClose?: () => void }> = ({ onClose })
 
   return (
     <div className="void-moon-overlay">
-      <button className="void-moon-overlay-close" onClick={handleClose} aria-label={i18n.t('common.close')}>
+      <button className="void-moon-overlay-close" onClick={handleClose} aria-label={i18n.t('close')}>
         ×
       </button>
       <div className="void-moon-overlay-header">

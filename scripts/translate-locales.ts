@@ -18,7 +18,6 @@ const API_BASE = process.env.MOONSHOT_API_BASE || 'https://api.moonshot.ai/v1';
 const MODEL = 'moonshot-v1-32k';
 
 const LOCALES_DIR = path.resolve(__dirname, '../src/i18n/locales');
-const PUBLIC_LOCALES_DIR = path.resolve(__dirname, '../public/locales');
 
 const NAMESPACES = [
   'dayPanel', 'celestial', 'settings',
@@ -165,12 +164,9 @@ async function translateNamespace(namespace: string, lang: string) {
   const keys = Object.keys(flat);
 
   const targetDir = path.join(LOCALES_DIR, lang);
-  const publicTargetDir = path.join(PUBLIC_LOCALES_DIR, lang);
   const targetPath = path.join(targetDir, `${namespace}.json`);
-  const publicTargetPath = path.join(publicTargetDir, `${namespace}.json`);
 
   if (!fs.existsSync(targetDir)) fs.mkdirSync(targetDir, { recursive: true });
-  if (!fs.existsSync(publicTargetDir)) fs.mkdirSync(publicTargetDir, { recursive: true });
 
   console.log(`  Translating ${namespace} → ${lang} (${keys.length} keys)...`);
 
@@ -216,7 +212,6 @@ async function translateNamespace(namespace: string, lang: string) {
   const translatedJson = unflatten(translatedFlat);
   const output = JSON.stringify(translatedJson, null, 2) + '\n';
   fs.writeFileSync(targetPath, output, 'utf-8');
-  fs.writeFileSync(publicTargetPath, output, 'utf-8');
   console.log(`  ✓ ${namespace} → ${lang} (${keys.length} keys)`);
 }
 

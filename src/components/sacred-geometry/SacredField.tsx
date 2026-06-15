@@ -5,7 +5,7 @@
  * or renders a custom SacredGeometry pattern for non-default selections.
  */
 
-import React from 'react';
+import React, { memo } from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../store';
 import { SacredGeometry } from './SacredGeometry';
@@ -17,7 +17,7 @@ interface SacredFieldProps {
   isPureMode?: boolean;
 }
 
-export const SacredField: React.FC<SacredFieldProps> = ({ isPureMode }) => {
+export const SacredField: React.FC<SacredFieldProps> = memo(({ isPureMode }) => {
   const pattern = useSelector((state: RootState) => state.calendar.backgroundGeometry);
 
   // Pure mode hides all decorative geometry
@@ -37,6 +37,8 @@ export const SacredField: React.FC<SacredFieldProps> = ({ isPureMode }) => {
       <SacredGeometry pattern={pattern} variant="background" />
     </div>
   );
-};
+});
+
+SacredField.displayName = 'SacredField';
 
 export default SacredField;

@@ -952,7 +952,8 @@ function analyzeVoidQuality(
  * Uses exact aspect timing to determine void entry/exit
  */
 export async function calculateVoidMoonStatus(
-  date: Date = new Date()
+  date: Date = new Date(),
+  providedPositions?: Record<string, CelestialBody>
 ): Promise<VoidMoonData & {
   quality: 'favorable' | 'challenging' | 'neutral';
   qualityDescription: string;
@@ -965,7 +966,7 @@ export async function calculateVoidMoonStatus(
   }>;
 }> {
   try {
-    const { positions } = await calculateCurrentSky(date);
+    const positions = providedPositions || (await calculateCurrentSky(date)).positions;
     const moon = positions.moon;
     const now = date;
     
@@ -1233,9 +1234,18 @@ export async function calculateMoonPhaseBatch(
   angle: number;
   name: string;
 }>> {
-  const results = new Map();
   const frame = getZodiacFrame();
   const count = getSignCount();
+
+  // Cache key covers the inputs that affect the result.
+  const cacheKey = `moonPhaseBatch:${hemisphere}:${frame}:${count}:${dates
+    .map((d) => d.toISOString().split('T')[0])
+    .sort()
+    .join(',')}`;
+  const cached = calculationCache.get(cacheKey);
+  if (cached) return cached;
+
+  const results = new Map();
 
   // Process in parallel for performance
   const calculations = dates.map(async (date) => {
@@ -1316,7 +1326,8 @@ export async function calculateMoonPhaseBatch(
   settled.forEach(({ dateKey, data }) => {
     results.set(dateKey, data);
   });
-  
+
+  calculationCache.set(cacheKey, results);
   return results;
 }
 

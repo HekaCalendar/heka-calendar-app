@@ -3,7 +3,8 @@
  * Precise epic counters to HEKA and Gregorian milestones
  */
 
-import { useState, useEffect, useMemo, memo } from 'react';
+import { useState, useEffect, useMemo, memo, useRef } from 'react';
+import { useGlobalTime } from '../../hooks/useGlobalTime';
 import { getHekaYearStart, civilToHeka, getDaysInMonth } from '../../services/calendarService';
 import type { LocationData } from '../../types';
 import './UnifiedCards.css';
@@ -15,17 +16,18 @@ interface Props {
 
 const DigitalClockCardComponent: React.FC<Props> = ({ date, location }) => {
   const [expanded, setExpanded] = useState(false);
-  // Live ticking elapsed time so the card remains animated,
-  // but the base "now" is the selected calendar date.
-  const [elapsedMs, setElapsedMs] = useState(0);
+  // Live ticking time shared across all cards.
+  const liveNow = useGlobalTime();
+  const baseTimeRef = useRef(Date.now());
 
   useEffect(() => {
-    const start = Date.now();
-    const i = setInterval(() => setElapsedMs(Date.now() - start), 1000);
-    return () => clearInterval(i);
+    baseTimeRef.current = Date.now();
   }, [date]);
 
-  const now = useMemo(() => new Date(date.getTime() + elapsedMs), [date, elapsedMs]);
+  const now = useMemo(() => {
+    const elapsed = liveNow.getTime() - baseTimeRef.current;
+    return new Date(date.getTime() + elapsed);
+  }, [date, liveNow]);
 
   const counters = useMemo(() => {
     const year = now.getFullYear();
@@ -122,7 +124,7 @@ const DigitalClockCardComponent: React.FC<Props> = ({ date, location }) => {
                 </div>
               </div>
               <span className="heka-epic-counter__title" style={{ color: c.color }}>{c.icon} {c.name}</span>
-              <span style={{ fontSize: '10px', color: 'rgba(255,255,255,0.35)', marginTop: '6px' }}>
+              <span style={{ fontSize: '12px', color: 'rgba(255,255,255,0.35)', marginTop: '6px' }}>
                 Ends {c.target.toLocaleDateString(undefined, { weekday: 'short', month: 'short', day: 'numeric', year: c.target.getFullYear() !== now.getFullYear() ? 'numeric' : undefined })}
                 {' • '}{c.target.toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit' })}
               </span>

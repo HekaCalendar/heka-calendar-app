@@ -117,7 +117,7 @@ describe('AuthModal', () => {
     );
     const signupLink = screen.getByText(/create account/i);
     fireEvent.click(signupLink);
-    expect(screen.getByPlaceholderText('auth.displayNamePlaceholder')).toBeInTheDocument();
+    expect(screen.getByPlaceholderText('displayNamePlaceholder')).toBeInTheDocument();
   });
 
   it('switches from login to forgot password view', () => {
@@ -216,7 +216,7 @@ describe('AuthModal', () => {
 
     fireEvent.click(screen.getByText(/create account/i));
 
-    const displayNameInput = screen.getByPlaceholderText('auth.displayNamePlaceholder') as HTMLInputElement;
+    const displayNameInput = screen.getByPlaceholderText('displayNamePlaceholder') as HTMLInputElement;
     const emailInput = screen.getByPlaceholderText(/email/i) as HTMLInputElement;
     const passwordInput = screen.getAllByPlaceholderText(/password/i)[0] as HTMLInputElement;
 
@@ -242,7 +242,7 @@ describe('AuthModal', () => {
 
     fireEvent.click(screen.getByText(/create account/i));
 
-    fireEvent.change(screen.getByPlaceholderText('auth.displayNamePlaceholder'), { target: { value: 'New User' } });
+    fireEvent.change(screen.getByPlaceholderText('displayNamePlaceholder'), { target: { value: 'New User' } });
     fireEvent.change(screen.getByPlaceholderText(/email/i), { target: { value: 'new@test.com' } });
     fireEvent.change(screen.getAllByPlaceholderText(/password/i)[0], { target: { value: 'password123' } });
     fireEvent.click(screen.getByRole('button', { name: /signUp/i }));

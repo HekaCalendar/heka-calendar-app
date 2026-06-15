@@ -159,7 +159,7 @@ export const VacationModeEditor: React.FC = () => {
               </button>
             )}
           </div>
-          <div style={{ fontSize: '11px', color: 'rgba(224,224,224,0.4)', marginTop: '4px' }}>
+          <div style={{ fontSize: '12px', color: 'rgba(224,224,224,0.4)', marginTop: '4px' }}>
             {t('vacationMode.leaveBlankHint')}
           </div>
         </div>

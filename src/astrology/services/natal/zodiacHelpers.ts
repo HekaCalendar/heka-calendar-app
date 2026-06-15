@@ -5,22 +5,30 @@
  */
 
 import type { CelestialBody } from '../../types';
+import { getZodiacSystem as getEngineZodiacSystem, getZodiacFrame as getEngineZodiacFrame, getSignCount as getEngineSignCount } from '../swiss-ephemeris/engine';
 
 /**
- * Get current zodiac system preference from store (legacy)
+ * Get current zodiac system preference from store (legacy).
+ * Falls back to engine globals since localStorage state is encrypted.
  */
 export function getZodiacSystemPreference(): '12-sign' | '13-sign' {
   try {
     const persistedState = localStorage.getItem('heka-calendar-state');
     if (persistedState) {
-      const state = JSON.parse(persistedState);
-      const sys = state.astroPreferences?.zodiacSystem || '12-sign';
-      return sys === 'sidereal' ? '12-sign' : sys;
+      // State may be encrypted — try parsing only if it looks like JSON
+      if (persistedState.trim().startsWith('{')) {
+        const state = JSON.parse(persistedState);
+        const sys = state.astroPreferences?.zodiacSystem || '12-sign';
+        return sys === 'sidereal' ? '12-sign' : sys;
+      }
     }
   } catch (e) {
-    console.warn('[ZodiacHelpers] Could not read zodiac preference:', e);
+    // encrypted or corrupt — fall through to engine globals
   }
-  return '12-sign';
+  // Fallback: engine module-level globals are kept in sync by UI components
+  const engineSystem = getEngineZodiacSystem();
+  if (engineSystem === 'sidereal') return '12-sign';
+  return engineSystem;
 }
 
 /** New split API: get zodiac frame (tropical | sidereal) from store */
@@ -28,13 +36,15 @@ export function getZodiacFramePreference(): 'tropical' | 'sidereal' {
   try {
     const persistedState = localStorage.getItem('heka-calendar-state');
     if (persistedState) {
-      const state = JSON.parse(persistedState);
-      return state.astroPreferences?.zodiacFrame || 'tropical';
+      if (persistedState.trim().startsWith('{')) {
+        const state = JSON.parse(persistedState);
+        return state.astroPreferences?.zodiacFrame || 'tropical';
+      }
     }
   } catch (e) {
-    console.warn('[ZodiacHelpers] Could not read zodiac frame:', e);
+    // encrypted or corrupt — fall through to engine globals
   }
-  return 'tropical';
+  return getEngineZodiacFrame();
 }
 
 /** New split API: get sign count (12 | 13) from store */
@@ -42,13 +52,15 @@ export function getSignCountPreference(): 12 | 13 {
   try {
     const persistedState = localStorage.getItem('heka-calendar-state');
     if (persistedState) {
-      const state = JSON.parse(persistedState);
-      return state.astroPreferences?.signCount || 12;
+      if (persistedState.trim().startsWith('{')) {
+        const state = JSON.parse(persistedState);
+        return state.astroPreferences?.signCount || 12;
+      }
     }
   } catch (e) {
-    console.warn('[ZodiacHelpers] Could not read sign count:', e);
+    // encrypted or corrupt — fall through to engine globals
   }
-  return 12;
+  return getEngineSignCount();
 }
 
 /**

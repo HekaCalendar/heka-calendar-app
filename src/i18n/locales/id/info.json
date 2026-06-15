@@ -1,0 +1,322 @@
+{
+  "infoModal": {
+    "hero": {
+      "title": "HEKA — Sebuah Kalender yang Dibuat untuk Minda",
+      "subtitleLine1": "Tiga belas bulan.",
+      "subtitleLine2": "Setiap bulan empat minggu. Satu tahun yang jelas."
+    },
+    "guideComplete": "Panduan Lengkap",
+    "spotlight": {
+      "title": "Apakah Anda Tahu?",
+      "facts": [
+        "Bulan-bulan tidak reguler kalender Gregorian banyak merupakan hasil dari politik Roma dan ego kekaisaran.",
+        "Tiga belas bulan HEKA dengan dua puluh delapan hari menciptakan kuarter yang sempurna dan jadwal gaji yang terprediksi.",
+        "Dalam mode TRUE, HEKA mengikuti aturan meloncat tahun 128 tahun untuk akurasi astronomis jangka panjang.",
+        "Tumpukan sipil memungkinkan Anda melihat tanggal Gregorian bersama HEKA sehingga Anda tidak pernah kehilangan koordinasi.",
+        "Masukan jurnal Anda tetap lokal secara default dan hanya sync ketika Anda memilih untuk masuk."
+      ]
+    },
+    "home": "Beranda",
+    "backToHome": "Kembali ke Beranda",
+    "deeperQuestions": "Pertanyaan yang Lebih Dalam",
+    "chapters": {
+      "home": {
+        "num": "0",
+        "chip": "MULAI",
+        "title": "Selamat Datang",
+        "hook": "Cara yang berbeda untuk menginhabit tahun.",
+        "teaser": "Mulailah dari sini."
+      },
+      "ch1": {
+        "num": "01",
+        "chip": "DASAR",
+        "title": "Kalender",
+        "hook": "Tiga belas bulan. Empat minggu setiap. Satu tahun yang jelas.",
+        "teaser": "Apa HEKA itu dan mengapa terasa berbeda."
+      },
+      "ch2": {
+        "num": "02",
+        "chip": "STRUKTUR",
+        "title": "Bulan Tahun",
+        "hook": "Pembuka, inti, dan penutup: tahun dengan bentuk naratif.",
+        "teaser": "Bagaimana bulan mengalir dari April hingga Maret."
+      },
+      "ch3": {
+        "num": "03",
+        "chip": "ALAT",
+        "title": "Kompanion Harian Anda",
+        "hook": "Jurnal, bulan, bintang, dan tumpukan sipil — semua milik Anda.",
+        "teaser": "Fitur-fitur yang membuat HEKA praktis."
+      },
+      "ch4": {
+        "num": "04",
+        "chip": "MODE",
+        "title": "SYNC vs BENAR",
+        "hook": "Dua cara untuk menangani hari meloncat. Pilih kebenaran Anda.",
+        "teaser": "Koordinasi yang familiar atau kebersihan astronomis."
+      },
+      "ch5": {
+        "num": "05",
+        "chip": "SEJARAH",
+        "title": "Mengapa Kalender Mengambang",
+        "hook": "Kacau yang diwarisi, perbaikan politik, dan kesempatan untuk meredesain kembali.",
+        "teaser": "Cerita di balik kalender yang diberikan kepadamu."
+      },
+      "ch6": {
+        "num": "06",
+        "chip": "PENDIDIKAN PANCANG",
+        "title": "Hidup di Dalamnya",
+        "hook": "Tiga langkah kecil untuk membuat HEKA tampilan standar Anda.",
+        "teaser": "Bagaimana memulai tanpa mengganggu kehidupan Anda."
+      },
+      "ch7": {
+        "num": "07",
+        "chip": "ARTI",
+        "title": "Waktu sebagai Agen",
+        "hook": "Kecerdasan, ritme, dan pilihan untuk menggunakan alat yang lebih baik.",
+        "teaser": "Mengapa struktur waktu penting."
+      }
+    },
+    "chapterLeads": {
+      "home": "Panduan ini adalah jembatan. Silakan lintasi dengan ritme Anda sendiri.",
+      "ch1": "HEKA bukan penyesuaian kalender Gregorian. Ini adalah pengganti yang dibangun dari prinsip-prinsip dasar.",
+      "ch2": "Tahun memiliki bentuk ketika strukturnya menggambarkan ritme tindakan dan istirahat.",
+      "ch3": "Kalender hanya berguna jika terintegrasi dengan kehidupan yang sudah Anda jalani.",
+      "ch4": "Struktur yang sama dapat melayani kebutuhan yang berbeda. Mode yang Anda pilih adalah preferensi, bukan doktrin.",
+      "ch5": "Mengerti bagaimana kalender saat ini muncul membuat kekurangannya lebih mudah untuk dimaaf — dan lebih mudah untuk meninggalkan.",
+      "ch6": "Adopsi terjadi dalam langkah kecil. Anda tidak memerlukan izin atau manifest.",
+      "ch7": "Wadah waktu membentuk isi kehidupan. Pilih dengan sengaja."
+    },
+    "cardsByChapter": {
+      "ch1": [
+        {
+          "h": "Masalah yang Anda Rasakan",
+          "b": "Bulan-bulan tidak reguler. Hari libur yang tersebar. Tahun yang terjun dari Januari ke Desember tanpa rasa awal, tengah, atau akhir. Anda telah merasakan gesekan ini. HEKA menghilangkannya."
+        },
+        {
+          "h": "Solusi yang Kami Bangun",
+          "b": "Tiga belas bulan. Dua belas bulan memiliki dua puluh delapan hari dengan simetri yang sempurna. Maret, bulan penutup, membawa hari lepas. Empat minggu yang sempurna setiap bulan. Tahun yang mengalir: April membuka, Mei hingga Desember membentuk inti yang stabil, Januari hingga Maret menamatkannya."
+        },
+        {
+          "h": "Dunia yang Anda Pertahankan",
+          "b": "HEKA tidak mengganggu kehidupan Anda. Tanggal sipil tetap terlihat. Janji temu Anda, komitmen Anda, dan kewajiban hukum Anda tetap di tempat yang Anda harapkan. Anda hanya mendapatkan lensa yang lebih jelas."
+        }
+      ],
+      "ch2": [
+        {
+          "h": "Bulan Pembuka",
+          "b": "April adalah ambang. Tahun tidak dimulai dengan kelelahan musim dingin, tetapi dengan kekuatan musim semi. Pertumbuhan baru. Proyek baru. Pembuka mengumumkan: sesuatu yang sedang dimulai."
+        },
+        {
+          "h": "Bulan Inti",
+          "b": "Mei hingga Desember adalah tengah yang panjang dan stabil. Sembilan bulan dengan ritme yang sama dan terprediksi. Rencana dengan yakin. Bangun momentum. Di sinilah kerjaan terjadi."
+        },
+        {
+          "h": "Bulan Penutup",
+          "b": "Januari hingga Maret menutup tahun. Selesaikan apa yang Anda mulai. Panen apa yang Anda tumbuhkan. Penutupan menciptakan ruang untuk refl"
+        }
+      ],
+      "ch3": [
+        {
+          "h": "Tanggal Sipil Anda Tetap",
+          "b": "Alihkan tampilan sipil dan lihat tanggal Gregorian bersama HEKA. Janji temu dokter gigi Anda, ulang tahun ibu Anda, tenggat pajak Anda — semua tetap di tempat yang Anda harapkan."
+        },
+        {
+          "h": "Jurnal Anda",
+          "b": "Masukan harian dengan riwayat revisi — hingga 50 versi yang disimpan secara otomatis. Pencarian teks penuh di semua konten. Secara default lokal; cadangan awan saat Anda masuk."
+        },
+        {
+          "h": "Bulan & Bintang Anda",
+          "b": "Fase bulan, posisi planet, dan transit terlihat segera. Opsional dan akurat. Tambahkan lambang lahir Anda untuk pembacaan pribadi melalui Oracle."
+        }
+      ],
+      "ch4": [
+        {
+          "h": "MODE SYNC: Jalan yang Akan Ditemui",
+          "b": "Maret mendapatkan hari tambahannya ketika kalender Gregorian mengatakan demikian. Untuk koordinasi harian dengan dunia sipil, ini adalah mode Anda. Struktur yang sama. Waktu yang familiar."
+        },
+        {
+          "h": "Mode BENAR: Jalan Jujur",
+          "b": "HEKA mengikuti aturan koreksi sendiri: setiap tahun keempat memiliki Maretan 30 hari, kecuali setiap 128 tahun yang tidak. Ini adalah presisi astronomis. Ini adalah integritas jangka panjang."
+        },
+        {
+          "h": "Beralih Kapan Saja",
+          "b": "Bulan tidak berubah. Minggu tidak berubah. Hanya pencetus koreksi yang berpindah. Eksperimen. Lihat mode mana yang paling cocok dengan kebutuhan Anda. Anda tidak terkunci."
+        }
+      ],
+      "ch5": [
+        {
+          "h": "Warisan, Bukan Rancangan",
+          "b": "Kalender kita saat ini adalah tumpukan dari kejadian historis. Politik Romawi. Majelis agama. Perbaikan astronomi yang ditambahkan berdasarkan abad. Ini tidak pernah dirancang sebagai sistem."
+        },
+        {
+          "h": "Perbaikan Gregorian",
+          "b": "1582: Pope Gregory memperbaiki masalah penyimpangan. Tapi dia mengkeep不规则的月份，分散的结构，继承的混乱。Koreksi yang perlu，但不是一个完整的解决方案。"
+        },
+        {
+          "h": "Respon HEKA",
+          "b": "Kami mengkeep yang berfungsi: minggu tujuh hari，季节对齐，太阳年跟踪。Kami merancang ulang yang tidak: 结构的月份，年流，更正放置。为思考而构建。"
+        }
+      ],
+      "ch6": [
+        {
+          "h": "Langkah Satu: Aktifkan Tumpukan",
+          "b": "Aktifkan tanggal sipil. Sekarang Anda melihat kedua sistem secara bersamaan. Tanggal HEKA Anda dan tanggal Gregorian Anda. Jembatan dibangun. Silakan lintas kapan saja Anda membutuhkannya."
+        },
+        {
+          "h": "Langkah Dua: Pilih Mode Anda",
+          "b": "Mulailah dengan SYNC jika Anda ingin familiaritas. Beralih ke BENAR jika Anda ingin kebersihan. Anda dapat mengganti pikiran Anda. Kalender beradaptasi pada Anda, bukan sebaliknya."
+        },
+        {
+          "h": "Langkah Tiga: Hidup Di Dalamnya",
+          "b": "Gunakan HEKA sebagai tampilan utama Anda. Rencanakan bulan Anda. Catat hari Anda. Rasakan perbedaan tahun dengan struktur yang sebenarnya. Dunia sipil tidak perlu tahu. Anda akan tahu."
+        }
+      ],
+      "ch7": [
+        {
+          "h": "Biaya Frikasi Menghabiskan Energi",
+          "b": "Setiap kali Anda bertanya-tanya berapa banyak hari dalam bulan ini, Anda membayar pajak kecil. Ketidakregulan setiap menguras fokus. HEKA menghapus pajak ini. Anda simpan energi Anda untuk yang penting."
+        },
+        {
+          "h": "Ritme Membuat Tenang",
+          "b": "Ketika struktur terprediksi, pikiran menjadi longgar. Anda tahu di mana Anda dalam tahun. Anda merasa pembukaan, inti, penutup. Waktu menjadi ruang yang Anda huni, bukan kekacauan yang Anda lakukan."
+        },
+        {
+          "h": "Otoritas atas Waktu",
+          "b": "Anda tidak memilih kalender Gregorian. Ini diberikan kepada Anda. HEKA adalah pilihan. Untuk menggunakan alat yang dirancang untuk kejelasan. Untuk mengklaim otoritas atas struktur hari Anda. Ini adalah kalender Anda."
+        }
+      ]
+    },
+    "gatesByChapter": {
+      "ch1": [
+        {
+          "t": "Apakah ini agama atau gerakan?",
+          "tag": "KEJelasan",
+          "b": "Tidak. HEKA adalah alat. Seperti palu yang lebih baik atau peta"
+        },
+        {
+          "t": "Mengapa tiga belas bulan?",
+          "tag": "LOGIKA",
+          "b": "Dua belas bulan dengan panjang yang tidak sama memaksa olah raga mental. Tiga belas bulan dengan empat minggu masing-masing menciptakan keregularan yang sempurna. 13 × 28 = 364. Plus satu hari istimewa. Matematikanya rapi. Pengalaman lebih rapi."
+        },
+        {
+          "t": "Akan ini membingungkan orang lain?",
+          "tag": "REALITAS",
+          "b": "Kamu melihat tanggal HEKA. Mereka melihat tanggal sipil. Ketika kamu mengatakan \"15 Maret,\" kamu berarti hari yang sama seperti mereka. Tindakan melapisi sipil memastikan kamu tidak kehilangan koordinasi. Kamu mendapatkan kejelasan. Mereka tidak kehilangan apa-apa."
+        }
+      ],
+      "ch2": [
+        {
+          "t": "Mengapa tahun dimulai pada April?",
+          "tag": "SIMBOLIK",
+          "b": "Musim semi adalah pembukaan universal. Pertumbuhan dimulai. Energi naik. Memulai tahun pada April menyesuaikan kalender dengan pengalaman yang dirasakan dari pembaruan. Januari dimulai dalam kelelahan musim dingin. April dimulai dalam kemungkinan musim semi."
+        },
+        {
+          "t": "Apa nama bulan-bulan ini?",
+          "tag": "URUTAN",
+          "b": "April, Mei, Juni, Juli, Agustus, Hexa, September, Oktober, November, Desember, Januari, Februari, Maret. Hexa — bulan keenam — mengisi celah. Yang lain sudah kamu ketahui. Hanya posisi mereka yang berubah."
+        },
+        {
+          "t": "Bagaimana koreksi ditangani?",
+          "tag": "AKURASI",
+          "b": "Setiap kalender surya memerlukan koreksi. HEKA menempatkannya pada bulan Maret, di akhir tahun. Maret memiliki 29 hari, atau 30 hari pada tahun kudus. Sementara bulan-bulan lainnya tujuh belas adalah sempurna, tetap, dan reguler. Koreksi terkandung, tidak tersebar."
+        }
+      ],
+      "ch3": [
+        {
+          "t": "Bisakah saya mencetak kalender HEKA?",
+          "tag": "FISIK",
+          "b": "Ya. Cetak tampilan bulan atau tampilan tahun penuh. Rapi, tidak berantakan, dirancang untuk kertas. Sasarkan pada dinding. Bawanya dalam buku catatan. Keduanya, kenyamanan digital dan artefak fisik."
+        },
+        {
+          "t": "Bagaimana dengan libur?",
+          "tag": "KUSTOMISASI",
+          "b": "Aktifkan atau nonaktifkan set libur untuk wilayah Anda. Atau abaikannya. HEKA tidak menentukan libur sendiri — itu membantu Anda melacak libur yang penting bagi Anda, di atas struktur yang lebih jelas."
+        },
+        {
+          "t": "Dimana data saya tinggal?",
+          "tag": "KEPERCAYAAN",
+          "b": "Secara default, semua tinggal di perangkat Anda — catatan, jurnal, pengaturan. Jika Anda membuat akun, data Anda cadangan ke penyimpanan cloud yang dienkripsi. Anda dapat mengekspor semuanya kapan saja. Anda tetap mengontrol."
+        },
+        {
+          "t": "Apa yang bisa dilakukan jurnal?",
+          "tag": "KETERANGKAIAN",
+          "b": "Masukan harian dengan riwayat revisi otomatis. Pencarian penuh teks di arsip Anda seluruhnya. Semua lokal secara default; sinkron ke cloud saat Anda masuk."
+        }
+      ],
+      "ch4": [
+        {
+          "t": "Mode mana yang \"benar\"?",
+          "tag": "PILIHAN",
+          "b": "Keduanya. SYNC benar untuk koordinasi dengan dunia sipil. TRUE benar untuk akurasi astronomis. Kebutuhan Anda menentukan mana kebenaran yang lebih penting bagi Anda sekarang."
+        },
+        {
+          "t": "Apakah mode TRUE membayol dari tanggal sipil?",
+          "tag": "PENCAKARAN",
+          "b": "Perlahan, ya. Mode TRUE mengikuti aturan kudus sendiri, bukan Gregorian. Seiring berjalannya abad, bayolan menjadi terdeteksi. Untuk kehidupan sehari-hari, perbedaan tidak terdeteksi. Untuk pemikiran jangka panjang, keaslian itu penting."
+        },
+        {
+          "t": "Dapatkah lembaga mengadopsi HEKA?",
+          "tag": "Skala",
+          "b": "Mungkin, pada akhirnya. Tapi lembaga tidak perlu mengubah untuk Anda mendapatkan manfaat. HEKA bekerja dengan sempurna sebagai lapisan personal. Mulailah dari sana. Biarkan alat ini membuktikannya sendiri."
+        }
+      ],
+      "ch5": [
+        {
+          "t": "Mengapa bulan memiliki panjang yang berbeda?",
+          "tag": "SEJARAH",
+          "b": "Politik Romawi. Julius Caesar dan Augustus memerlukan bulan yang dinamai sesuai dengan mereka. Kalender diubah untuk menampung egoisme. Ketidakreguleran ini menetes menjadi \"tradisi.\" Tradisi tidak selalu kebijakan."
+        },
+        {
+          "t": "Apakah reformasi Gregorian cukup?",
+          "tag": "PEnilaian",
+          "b": "Mengatasi bayolan. Tidak memperbaiki struktur. Bulan tetap"
+        },
+        {
+          "t": "Apakah orang lain pernah mencoba reformasi kalender?",
+          "tag": "UPAYA",
+          "b": "Banyak. Kalender Republik Rakyat Prancis. Kalender Dunia. Kalender Tetap Internasional. Beberapa brilian, semua gagal secara politik. HEKA belajar dari mereka: kompatibilitas dengan waktu sipil sangat penting. Revolusi melalui evolusi."
+        }
+      ],
+      "ch6": [
+        {
+          "t": "Bagaimana caranya menjelaskan ini kepada orang lain?",
+          "tag": "PERJALANAN",
+          "b": "Kamu tidak perlu. Gunakan. Jika ditanya, katakan: \"Saya menemukan kalender yang membantu saya untuk merencanakan lebih baik.\" Tunjukkan pada mereka. Biarkan mereka melihat kejelasannya. Persuasi terjadi melalui demonstrasi, bukan deklarasi."
+        },
+        {
+          "t": "Apa jika saya ingin berhenti menggunakannya?",
+          "tag": "KEBEBASAN",
+          "b": "Berhenti. Tanggal sipil kamu tetap ada. Janji temu kamu tetap di tempatnya. Tidak ada penguncian. Tidak ada biaya terpakai. HEKA harus menghasilkan tempatnya dalam kehidupanmu setiap hari, atau tidak pantas untuk tetap ada."
+        },
+        {
+          "t": "Dimana saya memulai sekarang?",
+          "tag": "TINDAKAN",
+          "b": "Buka pengaturan. Aktifkan tata letak sipil. Lihatlah hari ini dalam kedua sistem. Itu adalah langkah pertama. Anda telah mengambilnya dengan membuka panduan ini."
+        },
+        {
+          "t": "Apa Oracle itu?",
+          "tag": "KECERDASAN",
+          "b": "Sebuah kecerdasan langit yang membaca posisi planet untuk tanggal yang Anda pilih dan menawarkan petunjuk. Opsional. Tambahlah kartu lahir Anda untuk transit yang dipersonalisasi dan wawasan yang lebih dalam."
+        }
+      ],
+      "ch7": [
+        {
+          "t": "Apakah kalender sungguh mempengaruhi mindset?",
+          "tag": "PSIKOLOGI",
+          "b": "Sangat. Kita berpikir dalam struktur yang kita huni. Bulan yang tidak regular menciptakan gesekan kognitif tingkat rendah. Bulan yang regular menciptakan aliran kognitif. Anda mungkin tidak pernah memperhatikan gesekan sampai ia hilang. Kemudian Anda tidak bisa tidak memperhatikannya."
+        },
+        {
+          "t": "Bagaimana dengan kepercayaan budaya?",
+          "tag": "HORMAT",
+          "b": "Simak mereka. Ulang tahun Anda. Perayaan tahun baru Anda. Festival musim Anda. HEKA tidak menghapus budaya — ia menyediakan wadah yang lebih jelas untuk itu. Konten tetap. Wadahnya ditingkatkan."
+        },
+        {
+          "t": "Mengapa ini cukup penting untuk dibangun?",
+          "tag": "MISI",
+          "b": "Karena waktu adalah substrat kehidupan. Karena kita pantas memiliki alat yang dirancang untuk otak, bukan diwariskan dari kecelakaan. Karena seseorang harus mencoba untuk membangun sesuatu yang lebih baik. Kami melakukannya. Anda disini."
+        }
+      ]
+    }
+  }
+}

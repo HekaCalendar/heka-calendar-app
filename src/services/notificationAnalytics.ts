@@ -132,6 +132,19 @@ class NotificationAnalyticsClass {
     }, FLUSH_INTERVAL_MS);
   }
 
+  public pauseFlushTimer(): void {
+    if (this.flushTimer) {
+      clearInterval(this.flushTimer);
+      this.flushTimer = null;
+    }
+  }
+
+  public resumeFlushTimer(): void {
+    if (!this.flushTimer) {
+      this.startFlushTimer();
+    }
+  }
+
   /** Record that a notification was scheduled */
   recordScheduled(type: string, tier: NotificationTier, section: NotificationSection): void {
     this.scheduledAt[type] = Date.now();

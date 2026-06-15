@@ -107,7 +107,7 @@ describe('SearchModal', () => {
     fireEvent.change(input, { target: { value: 'test query' } });
     expect(input.value).toBe('test query');
 
-    const clearBtn = screen.getByLabelText('common.clear');
+    const clearBtn = screen.getByLabelText('clear');
     fireEvent.click(clearBtn);
     expect(input.value).toBe('');
   });
@@ -123,7 +123,7 @@ describe('SearchModal', () => {
   it('closes on close button click', () => {
     const onClose = vi.fn();
     renderWithProviders(<SearchModal isOpen={true} onClose={onClose} />);
-    const closeBtn = screen.getByLabelText('common.close');
+    const closeBtn = screen.getByLabelText('close');
     fireEvent.click(closeBtn);
     expect(onClose).toHaveBeenCalledTimes(1);
   });

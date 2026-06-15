@@ -60,7 +60,7 @@
 }
 
 .elite-stat-sub {
-  font-size: 10px;
+  font-size: 12px;
   color: rgba(255, 255, 255, 0.4);
 }
 
@@ -251,7 +251,7 @@
   align-items: center;
   justify-content: flex-end;
   padding-bottom: 8px;
-  font-size: 9px;
+  font-size: 11px;
   opacity: 0;
   animation: chaosAppear 0.3s ease forwards;
 }
@@ -332,7 +332,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: 10px;
+  font-size: 12px;
   opacity: 0;
   transform: scale(0.8);
   animation: perfectAppear 0.4s ease forwards;
@@ -351,7 +351,7 @@
 }
 
 .elite-perfect-num {
-  font-size: 8px;
+  font-size: 11px;
   color: rgba(255, 255, 255, 0.5);
 }
 
@@ -362,7 +362,7 @@
 }
 
 .elite-perfect-days {
-  font-size: 9px;
+  font-size: 11px;
   color: rgba(201, 162, 39, 0.9);
 }
 
@@ -490,7 +490,7 @@
 }
 
 .elite-card-num {
-  font-size: 10px;
+  font-size: 12px;
   color: rgba(255, 255, 255, 0.5);
   margin-bottom: 4px;
 }
@@ -513,7 +513,7 @@
   right: -8px;
   background: linear-gradient(135deg, #c9a227, #f0d878);
   color: #1a1a2e;
-  font-size: 8px;
+  font-size: 11px;
   font-weight: 700;
   padding: 3px 6px;
   border-radius: 8px;
@@ -570,7 +570,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 10px;
+  font-size: 12px;
   font-weight: 600;
   color: #c9a227;
 }
@@ -641,7 +641,7 @@
 }
 
 .elite-routine-day {
-  font-size: 10px;
+  font-size: 12px;
   color: rgba(255, 255, 255, 0.5);
 }
 
@@ -666,7 +666,7 @@
 }
 
 .elite-routine-month-name {
-  font-size: 10px;
+  font-size: 12px;
   font-weight: 600;
   color: rgba(255, 255, 255, 0.6);
   text-align: center;
@@ -686,7 +686,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 8px;
+  font-size: 11px;
   transition: all 0.3s ease;
 }
 
@@ -698,7 +698,7 @@
 }
 
 .elite-routine-marker {
-  font-size: 10px;
+  font-size: 12px;
 }
 
 /* Stats */
@@ -801,7 +801,7 @@
 
 .mockup-weekday {
   text-align: center;
-  font-size: 10px;
+  font-size: 12px;
   color: rgba(255, 255, 255, 0.5);
   padding: 4px;
 }
@@ -1205,7 +1205,7 @@
   padding: 8px 4px;
   background: rgba(255, 255, 255, 0.05);
   border-radius: 6px;
-  font-size: 9px;
+  font-size: 11px;
   text-align: center;
   color: rgba(255, 255, 255, 0.6);
 }
@@ -1280,7 +1280,7 @@
 }
 
 .month-card-header {
-  font-size: 10px;
+  font-size: 12px;
   color: rgba(255, 255, 255, 0.6);
   margin-bottom: 6px;
   letter-spacing: 0.5px;
@@ -1297,7 +1297,7 @@
 }
 
 .month-card-starts {
-  font-size: 9px;
+  font-size: 11px;
   color: rgba(255, 255, 255, 0.4);
   margin-top: 4px;
 }
@@ -1306,7 +1306,7 @@
   position: absolute;
   top: 4px;
   right: 4px;
-  font-size: 10px;
+  font-size: 12px;
   color: #8b5cf6;
 }
 
@@ -1507,13 +1507,13 @@
 }
 
 .phase-name {
-  font-size: 9px;
+  font-size: 11px;
   color: rgba(255, 255, 255, 0.7);
   white-space: nowrap;
 }
 
 .phase-desc {
-  font-size: 8px;
+  font-size: 11px;
   color: rgba(255, 255, 255, 0.4);
 }
 

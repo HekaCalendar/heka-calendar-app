@@ -119,6 +119,18 @@
 }
 
 /* Responsive */
+@media (max-width: 900px) {
+  .sh-settings-grid {
+    max-width: 100%;
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .sh-section-content:has(.sh-settings-grid) {
+    padding: 16px;
+  }
+}
+
 @media (max-width: 600px) {
   .sh-font-selector {
     grid-template-columns: 1fr;

@@ -1,6 +1,6 @@
 /**
  * Community Voting Modal
- * Holiday voting + feature voting — restored to the month header community button.
+ * Holiday voting + feature voting — enterprise-grade redesign.
  */
 
 import { useState, useEffect, useCallback } from 'react';
@@ -18,6 +18,7 @@ import {
   seedCommunityFeaturesIfNeeded,
 } from '../services/communityService';
 import { getCurrentUser } from '../services/firebase';
+import '../styles/community-voting.css';
 
 interface CommunityVotingModalProps {
   isOpen: boolean;
@@ -25,6 +26,46 @@ interface CommunityVotingModalProps {
 }
 
 type Tab = 'holidays' | 'features';
+
+const BallotIcon = () => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <rect x="3" y="8" width="18" height="13" rx="2" />
+    <path d="M12 3v5" />
+    <path d="M8 8l4-4 4 4" />
+  </svg>
+);
+
+const ChevronUpIcon = () => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+    <polyline points="18 15 12 9 6 15" />
+  </svg>
+);
+
+const ChevronDownIcon = () => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+    <polyline points="6 9 12 15 18 9" />
+  </svg>
+);
+
+const CheckIcon = () => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+    <polyline points="20 6 9 17 4 12" />
+  </svg>
+);
+
+const statusBadgeClass = (status?: string) => {
+  switch (status?.toLowerCase()) {
+    case 'approved': return 'voting-card__badge--approved';
+    case 'rejected': return 'voting-card__badge--rejected';
+    case 'planned': return 'voting-card__badge--planned';
+    default: return 'voting-card__badge--pending';
+  }
+};
+
+const statusLabel = (status?: string) => {
+  if (!status) return 'Pending';
+  return status.charAt(0).toUpperCase() + status.slice(1);
+};
 
 export const CommunityVotingModal: React.FC<CommunityVotingModalProps> = ({
   isOpen,
@@ -114,6 +155,11 @@ export const CommunityVotingModal: React.FC<CommunityVotingModalProps> = ({
     return f.voterUids?.includes(user.uid);
   };
 
+  const hasVotedHoliday = (h: any, direction: 'up' | 'down') => {
+    if (!user) return false;
+    return h.voterDirections?.[user.uid] === direction;
+  };
+
   if (!isOpen) return null;
 
   return (
@@ -122,158 +168,199 @@ export const CommunityVotingModal: React.FC<CommunityVotingModalProps> = ({
       style={{ paddingTop: 'max(var(--space-8), 6vh)' }}
       onClick={(e) => e.target === e.currentTarget && onClose()}
     >
-      <div className="modal" style={{ maxWidth: '680px', maxHeight: '85vh', overflowY: 'auto' }}>
-        <div className="modal__header">
-          <h2 className="modal__title">🌍 {t('features.communityHolidays')}</h2>
-          <button className="btn btn--icon" onClick={onClose} aria-label="Close">
+      <div className="voting-modal">
+        {/* Header */}
+        <div className="voting-modal__header">
+          <h2 className="voting-modal__title">
+            <span className="voting-modal__title-icon">
+              <BallotIcon />
+            </span>
+            {t('features.vote', 'Vote')}
+          </h2>
+          <button className="voting-modal__close" onClick={onClose} aria-label="Close">
             ×
           </button>
         </div>
 
-        {/* Tabs */}
-        <div style={{ display: 'flex', gap: 'var(--space-1)', marginBottom: 'var(--space-4)', borderBottom: '1px solid var(--color-border)' }}>
-          <button
-            className={`btn btn--sm ${activeTab === 'holidays' ? 'btn--primary' : 'btn--ghost'}`}
-            onClick={() => setActiveTab('holidays')}
-          >
-            🎉 Holidays
-          </button>
-          <button
-            className={`btn btn--sm ${activeTab === 'features' ? 'btn--primary' : 'btn--ghost'}`}
-            onClick={() => setActiveTab('features')}
-          >
-            🚀 Features
-          </button>
-        </div>
+        {/* Body */}
+        <div className="voting-modal__body">
+          {/* Tabs */}
+          <div className="voting-tabs">
+            <button
+              className={`voting-tab ${activeTab === 'holidays' ? 'voting-tab--active' : ''}`}
+              onClick={() => setActiveTab('holidays')}
+            >
+              <span className="voting-tab__icon">🎉</span>
+              Holidays
+            </button>
+            <button
+              className={`voting-tab ${activeTab === 'features' ? 'voting-tab--active' : ''}`}
+              onClick={() => setActiveTab('features')}
+            >
+              <span className="voting-tab__icon">🚀</span>
+              Features
+            </button>
+          </div>
 
-        {activeTab === 'holidays' && (
-          <div>
-            {/* Submit new holiday */}
-            <form onSubmit={handleSubmitHoliday} style={{ marginBottom: 'var(--space-4)' }}>
-              <div style={{ display: 'grid', gap: 'var(--space-2)' }}>
-                <input
-                  className="input"
-                  placeholder="Holiday name"
-                  value={newHoliday.name}
-                  onChange={(e) => setNewHoliday((p) => ({ ...p, name: e.target.value }))}
-                  maxLength={60}
-                />
-                <input
-                  className="input"
-                  placeholder="Date (MM-DD)"
-                  value={newHoliday.date}
-                  onChange={(e) => setNewHoliday((p) => ({ ...p, date: e.target.value }))}
-                  maxLength={5}
-                />
-                <input
-                  className="input"
-                  placeholder="Description (optional)"
-                  value={newHoliday.description}
-                  onChange={(e) => setNewHoliday((p) => ({ ...p, description: e.target.value }))}
-                  maxLength={200}
-                />
-                <button className="btn btn--sm btn--primary" type="submit" disabled={isSubmitting}>
-                  {isSubmitting ? 'Submitting...' : 'Suggest Holiday'}
-                </button>
-                {submitError && <div className="error-text" style={{ fontSize: '0.875rem' }}>{submitError}</div>}
+          {/* Holidays Tab */}
+          {activeTab === 'holidays' && (
+            <div>
+              {/* Submit Form */}
+              <form onSubmit={handleSubmitHoliday} className="voting-form">
+                <div className="voting-form__grid">
+                  <div className="voting-form__row">
+                    <input
+                      className="voting-input"
+                      placeholder="Holiday name"
+                      value={newHoliday.name}
+                      onChange={(e) => setNewHoliday((p) => ({ ...p, name: e.target.value }))}
+                      maxLength={60}
+                    />
+                    <input
+                      className="voting-input"
+                      placeholder="Date (MM-DD)"
+                      value={newHoliday.date}
+                      onChange={(e) => setNewHoliday((p) => ({ ...p, date: e.target.value }))}
+                      maxLength={5}
+                    />
+                  </div>
+                  <input
+                    className="voting-input"
+                    placeholder="Description (optional)"
+                    value={newHoliday.description}
+                    onChange={(e) => setNewHoliday((p) => ({ ...p, description: e.target.value }))}
+                    maxLength={200}
+                  />
+                  <button className="voting-form__submit" type="submit" disabled={isSubmitting}>
+                    {isSubmitting ? 'Submitting…' : 'Suggest Holiday'}
+                  </button>
+                  {submitError && <div className="voting-form__error">{submitError}</div>}
+                </div>
+              </form>
+
+              {/* Holidays List */}
+              <div className="voting-list">
+                {holidays.length === 0 && (
+                  <div className="voting-empty">
+                    <div className="voting-empty__icon">🌑</div>
+                    <div className="voting-empty__title">No holidays yet</div>
+                    <div className="voting-empty__desc">Be the first to suggest a community holiday.</div>
+                  </div>
+                )}
+                {holidays.map((h) => (
+                  <div
+                    key={h.id}
+                    className={`voting-card ${h.status === 'rejected' ? 'voting-card--rejected' : ''}`}
+                  >
+                    <div className="voting-card__row">
+                      <div className="voting-card__content">
+                        <div className="voting-card__title">
+                          {h.name}{' '}
+                          <span style={{ opacity: 0.55, fontWeight: 400 }}>({h.date})</span>
+                        </div>
+                        {h.description && (
+                          <div className="voting-card__desc">{h.description}</div>
+                        )}
+                        <div className="voting-card__byline">
+                          <span>By {h.suggestedBy}</span>
+                          <span className="voting-card__byline-dot" />
+                          <span className={`voting-card__badge ${statusBadgeClass(h.status)}`}>
+                            {statusLabel(h.status)}
+                          </span>
+                        </div>
+                      </div>
+                      <div className="voting-actions">
+                        <button
+                          className={`vote-btn vote-btn--up ${hasVotedHoliday(h, 'up') ? 'vote-btn--active' : ''}`}
+                          onClick={() => handleVoteHoliday(h.id, 'up')}
+                          disabled={!user || votingId === h.id}
+                          title="Upvote"
+                        >
+                          <span className="vote-btn__icon">
+                            <ChevronUpIcon />
+                          </span>
+                          {h.votesUp}
+                        </button>
+                        <button
+                          className={`vote-btn vote-btn--down ${hasVotedHoliday(h, 'down') ? 'vote-btn--active' : ''}`}
+                          onClick={() => handleVoteHoliday(h.id, 'down')}
+                          disabled={!user || votingId === h.id}
+                          title="Downvote"
+                        >
+                          <span className="vote-btn__icon">
+                            <ChevronDownIcon />
+                          </span>
+                          {h.votesDown}
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                ))}
               </div>
-            </form>
+            </div>
+          )}
 
-            {/* Holidays list */}
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-2)' }}>
-              {holidays.length === 0 && (
-                <div className="empty-state" style={{ textAlign: 'center', padding: 'var(--space-4)' }}>
-                  <div style={{ fontSize: '2rem', marginBottom: 'var(--space-2)' }}>🌑</div>
-                  <p>No holidays yet. Be the first to suggest one.</p>
-                </div>
-              )}
-              {holidays.map((h) => (
-                <div
-                  key={h.id}
-                  className="card"
-                  style={{
-                    padding: 'var(--space-3)',
-                    opacity: h.status === 'rejected' ? 0.5 : 1,
-                  }}
-                >
-                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
-                    <div>
-                      <div style={{ fontWeight: 600 }}>
-                        {h.name} <span style={{ opacity: 0.6, fontWeight: 400 }}>({h.date})</span>
+          {/* Features Tab */}
+          {activeTab === 'features' && (
+            <div>
+              <div className="voting-list">
+                {features.length === 0 && (
+                  <div className="voting-empty">
+                    <div className="voting-empty__icon">🚀</div>
+                    <div className="voting-empty__title">Loading features…</div>
+                    <div className="voting-empty__desc">Community feature requests will appear here.</div>
+                  </div>
+                )}
+                {features.map((f) => (
+                  <div key={f.id} className="voting-card">
+                    <div className="voting-card__row">
+                      <div className="voting-card__content">
+                        <div className="voting-card__title">
+                          <span style={{ marginRight: '6px' }}>{f.icon}</span>
+                          {f.title}
+                        </div>
+                        <div className="voting-card__desc">{f.description}</div>
+                        <div className="voting-card__byline">
+                          <span>{f.category}</span>
+                          <span className="voting-card__byline-dot" />
+                          <span className={`voting-card__badge ${statusBadgeClass(f.status)}`}>
+                            {statusLabel(f.status)}
+                          </span>
+                          <span className="voting-card__byline-dot" />
+                          <span>{f.votes} votes</span>
+                        </div>
                       </div>
-                      <div style={{ fontSize: '0.875rem', opacity: 0.7, marginTop: '2px' }}>{h.description}</div>
-                      <div style={{ fontSize: '0.75rem', opacity: 0.5, marginTop: '4px' }}>
-                        By {h.suggestedBy} · {h.status}
+                      <div className="voting-actions">
+                        <button
+                          className={`vote-btn vote-btn--feature ${hasVotedFeature(f) ? 'vote-btn--active' : ''}`}
+                          onClick={() => handleVoteFeature(f.id)}
+                          disabled={!user || votingId === f.id || hasVotedFeature(f)}
+                          title={hasVotedFeature(f) ? 'Voted' : 'Vote'}
+                        >
+                          <span className="vote-btn__icon">
+                            {hasVotedFeature(f) ? <CheckIcon /> : <ChevronUpIcon />}
+                          </span>
+                          {f.votes}
+                        </button>
                       </div>
-                    </div>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '4px', flexShrink: 0 }}>
-                      <button
-                        className={`btn btn--xs ${h.voterDirections?.[user?.uid || ''] === 'up' ? 'btn--primary' : 'btn--ghost'}`}
-                        onClick={() => handleVoteHoliday(h.id, 'up')}
-                        disabled={!user || votingId === h.id}
-                        title="Upvote"
-                      >
-                        ▲ {h.votesUp}
-                      </button>
-                      <button
-                        className={`btn btn--xs ${h.voterDirections?.[user?.uid || ''] === 'down' ? 'btn--danger' : 'btn--ghost'}`}
-                        onClick={() => handleVoteHoliday(h.id, 'down')}
-                        disabled={!user || votingId === h.id}
-                        title="Downvote"
-                      >
-                        ▼ {h.votesDown}
-                      </button>
                     </div>
                   </div>
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
-          </div>
-        )}
+          )}
 
-        {activeTab === 'features' && (
-          <div>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-2)' }}>
-              {features.length === 0 && (
-                <div className="empty-state" style={{ textAlign: 'center', padding: 'var(--space-4)' }}>
-                  <div style={{ fontSize: '2rem', marginBottom: 'var(--space-2)' }}>🚀</div>
-                  <p>Loading features...</p>
-                </div>
-              )}
-              {features.map((f) => (
-                <div key={f.id} className="card" style={{ padding: 'var(--space-3)' }}>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
-                    <div>
-                      <div style={{ fontWeight: 600 }}>
-                        <span style={{ marginRight: '6px' }}>{f.icon}</span>
-                        {f.title}
-                      </div>
-                      <div style={{ fontSize: '0.875rem', opacity: 0.7, marginTop: '2px' }}>{f.description}</div>
-                      <div style={{ fontSize: '0.75rem', opacity: 0.5, marginTop: '4px' }}>
-                        {f.category} · {f.status} · {f.votes} votes
-                      </div>
-                    </div>
-                    <button
-                      className={`btn btn--xs ${hasVotedFeature(f) ? 'btn--primary' : 'btn--ghost'}`}
-                      onClick={() => handleVoteFeature(f.id)}
-                      disabled={!user || votingId === f.id || hasVotedFeature(f)}
-                      title={hasVotedFeature(f) ? 'Voted' : 'Vote'}
-                    >
-                      {hasVotedFeature(f) ? '✓' : '▲'} {f.votes}
-                    </button>
-                  </div>
-                </div>
-              ))}
+          {/* Auth Banner */}
+          {!user && (
+            <div className="voting-auth-banner">
+              <span>🔒</span>
+              <span>Sign in to vote and submit holidays.</span>
             </div>
-          </div>
-        )}
-
-        {!user && (
-          <div style={{ textAlign: 'center', padding: 'var(--space-3)', opacity: 0.6, fontSize: '0.875rem' }}>
-            Sign in to vote and submit holidays.
-          </div>
-        )}
+          )}
+        </div>
       </div>
     </div>
   );
 };
+
+export default CommunityVotingModal;

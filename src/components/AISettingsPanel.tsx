@@ -18,6 +18,7 @@ const PROVIDER_META: Record<AIProviderType, { name: string; icon: string; descri
   openai: { name: 'OpenAI', icon: '🤖', description: 'GPT-4 / GPT-4o-mini. Requires API key.', color: '#10a37f' },
   anthropic: { name: 'Anthropic', icon: '🧠', description: 'Claude AI. Requires API key.', color: '#d97757' },
   ollama: { name: 'Ollama', icon: '🏠', description: 'Local models. Requires Ollama installation.', color: '#8b5cf6' },
+  proxy: { name: 'HEKA AI Proxy', icon: '🛡️', description: 'Server-managed AI with rate limiting and audit logging. No client key required.', color: '#c9a227' },
 };
 
 // ═══════════════════════════════════════════════════════════════════════════════
@@ -34,6 +35,17 @@ interface SetupGuide {
 }
 
 const PROVIDER_GUIDES: Record<Exclude<AIProviderType, 'template'>, SetupGuide> = {
+  proxy: {
+    keyFormat: 'No key required',
+    placeholder: '',
+    signupUrl: '',
+    keysUrl: '',
+    freeTier: 'Managed by your organization',
+    steps: [
+      { title: 'Enable AI Proxy', desc: 'Your admin configures the proxy server with provider keys.', tip: 'No API key is stored on this device' },
+      { title: 'Select Proxy Provider', desc: 'Choose HEKA AI Proxy to route all requests through the backend.', tip: 'Prompts are audited for compliance' },
+    ],
+  },
   groq: {
     keyFormat: 'Starts with "gsk_" followed by alphanumeric characters',
     placeholder: 'gsk_your_api_key_here',
@@ -121,6 +133,11 @@ export const AISettingsPanel: React.FC<AISettingsPanelProps> = ({ compact, highl
       setIsProviderSet(true); // Template is always "configured"
       return;
     }
+    if (provider === 'proxy') {
+      setApiKeyInput('');
+      setIsProviderSet(true); // Proxy is configured server-side
+      return;
+    }
     const storageKey = provider === 'ollama' ? 'heka-ai-ollama' : `heka-ai-${provider}`;
     try {
       const key = await secureKeyStore.get(storageKey);
@@ -150,6 +167,11 @@ export const AISettingsPanel: React.FC<AISettingsPanelProps> = ({ compact, highl
   }, []);
 
   const handleApiKeySave = useCallback(async () => {
+    if (config.provider === 'proxy') {
+      setIsProviderSet(true);
+      setTestResult(null);
+      return;
+    }
     if (apiKeyInput.trim()) {
       await aiProviderManager.saveApiKey(config.provider, apiKeyInput.trim());
       setIsProviderSet(true);
@@ -161,6 +183,19 @@ export const AISettingsPanel: React.FC<AISettingsPanelProps> = ({ compact, highl
   }, [apiKeyInput, config.provider]);
 
   const handleTestConnection = useCallback(async () => {
+    if (config.provider === 'proxy') {
+      setIsTesting(true);
+      setTestResult(null);
+      try {
+        const ok = await aiProviderManager.validateApiKey('proxy', '');
+        setTestResult({ ok, message: ok ? t('connectionSuccess') : t('connectionFailed') });
+      } catch (err) {
+        setTestResult({ ok: false, message: err instanceof Error ? err.message : t('connectionFailed') });
+      } finally {
+        setIsTesting(false);
+      }
+      return;
+    }
     if (!apiKeyInput.trim()) return;
     setIsTesting(true);
     setTestResult(null);
@@ -341,7 +376,7 @@ export const AISettingsPanel: React.FC<AISettingsPanelProps> = ({ compact, highl
                     </div>
                   )}
                   <>
-                    <p style={{ fontSize: '11px', color: '#71717a', marginTop: '0.5rem' }}>
+                    <p style={{ fontSize: '12px', color: '#71717a', marginTop: '0.5rem' }}>
                       {PROVIDER_GUIDES[config.provider]?.keyFormat || ''} • Stored only on this device.
                     </p>
                       <button
@@ -385,7 +420,7 @@ export const AISettingsPanel: React.FC<AISettingsPanelProps> = ({ compact, highl
                                   borderRadius: '50%',
                                   background: 'rgba(212,175,55,0.15)',
                                   color: '#d4af37',
-                                  fontSize: '11px',
+                                  fontSize: '12px',
                                   fontWeight: 600,
                                   display: 'flex',
                                   alignItems: 'center',
@@ -400,7 +435,7 @@ export const AISettingsPanel: React.FC<AISettingsPanelProps> = ({ compact, highl
                                 <div style={{ fontSize: '13px', fontWeight: 500, color: '#f8f7f5' }}>{step.title}</div>
                                 <div style={{ fontSize: '12px', color: '#a1a1aa', marginTop: 2 }}>{step.desc}</div>
                                 {step.tip && (
-                                  <div style={{ fontSize: '11px', color: '#d4af37', marginTop: 4, fontStyle: 'italic' }}>
+                                  <div style={{ fontSize: '12px', color: '#d4af37', marginTop: 4, fontStyle: 'italic' }}>
                                     💡 {step.tip}
                                   </div>
                                 )}
@@ -417,7 +452,7 @@ export const AISettingsPanel: React.FC<AISettingsPanelProps> = ({ compact, highl
                                       border: '1px solid rgba(255,255,255,0.1)',
                                       borderRadius: '6px',
                                       color: '#f8f7f5',
-                                      fontSize: '11px',
+                                      fontSize: '12px',
                                       textDecoration: 'none',
                                     }}
                                   >

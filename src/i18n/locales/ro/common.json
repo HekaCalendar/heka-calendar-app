@@ -1,358 +1,366 @@
 {
   "appTitle": "HEKA Calendar",
   "appName": "HEKA",
-  "appSubtitle": "CaleNDARUL cu Treizeci de Luna",
-  "loading": "Se încarcă...",
-  "save": "Salvează",
-  "cancel": "Anulează",
-  "delete": "Șterge",
-  "edit": "Editează",
-  "done": "Gata",
-  "back": "Înapoi",
-  "next": "Următor",
-  "close": "Închide",
-  "open": "Deschide",
-  "yes": "Da",
-  "no": "Nu",
+  "appSubtitle": "The Thirteen-Month Calendar",
+  "loading": "Loading...",
+  "save": "Save",
+  "cancel": "Cancel",
+  "delete": "Delete",
+  "edit": "Edit",
+  "done": "Done",
+  "back": "Back",
+  "next": "Next",
+  "close": "Close",
+  "open": "Open",
+  "yes": "Yes",
+  "no": "No",
   "ok": "OK",
-  "confirm": "Confirmă",
-  "skip": "Sari peste",
-  "continue": "Continuă",
-  "search": "Caută",
-  "filter": "Filtrează",
-  "sort": "Sortează",
-  "add": "Adaugă",
-  "remove": "Elimină",
-  "copy": "Copiază",
-  "share": "Împărtășește",
-  "print": "Imprimă",
-  "download": "Descarcă",
-  "export": "Exportă",
-  "import": "Importă",
-  "settings": "Setări",
-  "profile": "Profil",
-  "account": "Cont",
-  "signIn": "Conectare",
-  "signOut": "Deconectare",
-  "signUp": "Înregistrare",
-  "welcome": "Bun venit",
-  "goodbye": "La revedere",
-  "error": "Eroare",
-  "warning": "Avertisment",
-  "success": "Succes",
-  "info": "Informație",
-  "retry": "Reîncearcă",
-  "refresh": "Reîmprospătare",
-  "today": "Astăzi",
-  "yesterday": "Ieri",
-  "tomorrow": "Mâine",
-  "now": "Acum",
-  "later": "Mai târziu",
-  "soon": "În curând",
-  "never": "Niciodată",
-  "always": "Întotdeauna",
-  "none": "Nimic",
-  "all": "Toate",
-  "selected": "Selectate",
-  "unselected": "Neselectate",
-  "active": "Activ",
-  "inactive": "Inactiv",
-  "enabled": "Activat",
-  "disabled": "Dezactivat",
-  "on": "Pornit",
-  "off": "Oprit",
-  "visible": "Vizibil",
-  "hidden": "Ascuns",
-  "expand": "Extinde",
-  "collapse": "Colapsează",
-  "showMore": "Arată mai mult",
-  "showLess": "Arată mai puțin",
-  "readMore": "Citește mai mult",
-  "learnMore": "Află mai mult",
-  "gotIt": "Am înțeles",
-  "understood": "Înțeles",
-  "notNow": "Nu acum",
-  "maybeLater": "Poate mai târziu",
-  "dismiss": "Închide",
-  "undo": "Anulează",
-  "redo": "Reface",
-  "reset": "Resetează",
-  "restore": "Restaurează",
-  "clear": "Golește",
-  "empty": "Gol",
-  "blank": "Gol",
-  "new": "Nou",
-  "old": "Vechi",
-  "recent": "Recente",
-  "earlier": "Mai devreme",
-  "upcoming": "Urmează",
-  "past": "Trecute",
-  "future": "Viitor",
-  "present": "Prezent",
-  "current": "Actual",
-  "previous": "Anterior",
-  "nextItem": "Următor",
-  "first": "Primul",
-  "last": "Ultimul",
-  "of": "din",
-  "page": "Pagina",
+  "confirm": "Confirm",
+  "skip": "Skip",
+  "continue": "Continue",
+  "search": "Search",
+  "filter": "Filter",
+  "sort": "Sort",
+  "add": "Add",
+  "remove": "Remove",
+  "copy": "Copy",
+  "share": "Share",
+  "print": "Print",
+  "download": "Download",
+  "export": "Export",
+  "import": "Import",
+  "settings": "Settings",
+  "profile": "Profile",
+  "account": "Account",
+  "signIn": "Sign In",
+  "signOut": "Sign Out",
+  "signUp": "Sign Up",
+  "welcome": "Welcome",
+  "goodbye": "Goodbye",
+  "error": "Error",
+  "warning": "Warning",
+  "success": "Success",
+  "info": "Info",
+  "retry": "Retry",
+  "refresh": "Refresh",
+  "today": "Today",
+  "yesterday": "Yesterday",
+  "tomorrow": "Tomorrow",
+  "now": "Now",
+  "later": "Later",
+  "soon": "Soon",
+  "never": "Never",
+  "always": "Always",
+  "none": "None",
+  "all": "All",
+  "selected": "Selected",
+  "unselected": "Unselected",
+  "active": "Active",
+  "inactive": "Inactive",
+  "enabled": "Enabled",
+  "disabled": "Disabled",
+  "on": "On",
+  "off": "Off",
+  "visible": "Visible",
+  "hidden": "Hidden",
+  "expand": "Expand",
+  "collapse": "Collapse",
+  "showMore": "Show More",
+  "showLess": "Show Less",
+  "readMore": "Read More",
+  "learnMore": "Learn More",
+  "gotIt": "Got It",
+  "understood": "Understood",
+  "notNow": "Not Now",
+  "maybeLater": "Maybe Later",
+  "dismiss": "Dismiss",
+  "undo": "Undo",
+  "redo": "Redo",
+  "reset": "Reset",
+  "restore": "Restore",
+  "clear": "Clear",
+  "empty": "Empty",
+  "blank": "Blank",
+  "new": "New",
+  "old": "Old",
+  "recent": "Recent",
+  "earlier": "Earlier",
+  "upcoming": "Upcoming",
+  "past": "Past",
+  "future": "Future",
+  "present": "Present",
+  "current": "Current",
+  "previous": "Previous",
+  "nextItem": "Next",
+  "first": "First",
+  "last": "Last",
+  "of": "of",
+  "page": "Page",
   "total": "Total",
-  "items": "articole",
-  "item": "articol",
-  "noResults": "Nu s-au găsit rezultate",
-  "loadingMore": "Se încarcă mai multe...",
-  "pullToRefresh": "Trage pentru a reîmprospăta",
-  "swipeToNavigate": "Glisează pentru a naviga",
-  "tapToContinue": "Atinge pentru a continua",
-  "pressSpaceToContinue": "Apasă spațiu pentru a continua",
+  "items": "items",
+  "item": "item",
+  "noResults": "No results found",
+  "loadingMore": "Loading more...",
+  "pullToRefresh": "Pull to refresh",
+  "swipeToNavigate": "Swipe to navigate",
+  "tapToContinue": "Tap to continue",
+  "pressSpaceToContinue": "Press space to continue",
   "pro": "Pro",
   "premium": "Premium",
-  "free": "Gratuit",
-  "upgrade": "Actualizare",
-  "subscribe": "Abonare",
-  "unsubscribe": "Dezabonare",
-  "features": "Caracteristici",
-  "about": "Despre",
-  "help": "Ajutor",
-  "support": "Susținere",
+  "free": "Free",
+  "upgrade": "Upgrade",
+  "subscribe": "Subscribe",
+  "unsubscribe": "Unsubscribe",
+  "features": "Features",
+  "about": "About",
+  "help": "Help",
+  "support": "Support",
   "feedback": "Feedback",
-  "bugReport": "Raport defect",
-  "terms": "Termeni de Serviciu",
-  "privacy": "Politică de Confidențialitate",
-  "version": "Versiune",
-  "build": "Construire",
+  "bugReport": "Bug Report",
+  "terms": "Terms of Service",
+  "privacy": "Privacy Policy",
+  "version": "Version",
+  "build": "Build",
   "copyright": "© HEKA Calendar",
-  "allRightsReserved": "Toate drepturile rezervate.",
-  "modernHekaCalendar": "Calendarul Modern HEKA",
-  "trueHekaSubtitle": "Timpkeeping HEKA adevărat • Corecție Martie (ciclu de 4 ani, cu excepția 128) • Precizie astronomică",
-  "syncSubtitle": "Timpkeeping sincronizat HEKA Gregorian • Martie la Aprilie • Calendar armonios de 13 luni",
-  "trueHekaMode": "⚡ Modul HEKA ADEVĂRAT",
-  "syncMode": "🌐 Modul de SINCRONIZARE",
-  "view": "Vedere",
-  "welcomeToTheCircle": "✨ Bine ați venit în Cercle",
-  "enterInviteCode": "Introduceți un cod de invitație pentru a trimite o cerere de prietenie",
-  "inviteCodeDetected": "Cod de invitație detectat:",
-  "sending": "✨ Trimitere...",
-  "sendFriendRequest": "🌟 Trimite Cerere de Prietenie",
-  "orEnterCodeManually": "sau introduceți codul manual",
-  "inviteCodePlaceholder": "Introduceți codul de invitație (de exemplu, ABC-DEF-GHI)",
-  "sendRequest": "Trimite Cerere",
-  "friendRequestSent": "✨ Cererea de prietenie a fost trimisă! Ei trebuie să accepte înainte de a putea conversa.",
-  "openCosmicCircle": "Deschideți Cercul Cosmic",
-  "skipForNow": "Săriți peste pentru acum",
-  "joiningCircleAllows": "Alăturarea unui Cercle vă permite să:",
-  "sendReceiveTaskRituals": "📜 Trimiteți și primiți Rituale de Sarcini",
-  "messageCosmicChannels": "💬 Mesaj prin canale cosmice",
-  "alignHekaDates": "🗓️ Aliniați împreună pe datele HEKA",
-  "shareCelestialInsights": "✨ Distribuiți înțelegeri cerești",
-  "failedToSendFriendRequest": "Nu a reușit să trimită cererea de prietenie. Vă rugăm să verificați codul și să încercați din nou.",
-  "searchPlaceholder": "Căutați date, note, sărbători...",
-  "recentSearches": "Căutări recente",
-  "result": "rezultat",
-  "results": "rezultate",
-  "tryDifferentKeywords": "Încercați cuvinte cheie diferite sau verificați ortografia",
-  "trySearchingFor": "Încercați să căutați pentru",
-  "navigate": "↑↓ Navighează",
-  "selectKey": "↵ Selectați",
-  "escClose": "Esc Închide",
-  "hekaUnifiedSearch": "Căutare Unificată HEKA",
-  "dates": "Date",
-  "notes": "Note",
-  "holidays": "Sărbători",
-  "hekaDate": "Dată HEKA",
-  "civilDate": "Dată civilă",
-  "calendarNote": "Notă calendaristică",
-  "holiday": "Sărbătoare",
+  "allRightsReserved": "All rights reserved.",
+  "modernHekaCalendar": "The Modern HEKA Calendar",
+  "trueHekaSubtitle": "True HEKA Timekeeping • March correction (4-year cycle, except 128th) • Astronomical precision",
+  "syncSubtitle": "HEKA Gregorian synchronised timekeeping • April to March • 13-month harmonic calendar",
+  "trueHekaMode": "⚡ TRUE HEKA Mode",
+  "syncMode": "🌐 SYNC Mode",
+  "view": "View",
+  "welcomeToTheCircle": "✨ Welcome to the Circle",
+  "enterInviteCode": "Enter an invite code to send a friend request",
+  "inviteCodeDetected": "Invite Code Detected:",
+  "sending": "✨ Sending...",
+  "sendFriendRequest": "🌟 Send Friend Request",
+  "orEnterCodeManually": "or enter a code manually",
+  "inviteCodePlaceholder": "Enter invite code (e.g., ABC-DEF-GHI)",
+  "sendRequest": "Send Request",
+  "friendRequestSent": "✨ Friend request sent! They'll need to accept before you can chat.",
+  "openCosmicCircle": "Open Cosmic Circle",
+  "skipForNow": "Skip for now",
+  "joiningCircleAllows": "Joining a Circle allows you to:",
+  "sendReceiveTaskRituals": "📜 Send and receive Task Rituals",
+  "messageCosmicChannels": "💬 Message through cosmic channels",
+  "alignHekaDates": "🗓️ Align on HEKA dates together",
+  "shareCelestialInsights": "✨ Share celestial insights",
+  "failedToSendFriendRequest": "Failed to send friend request. Please check the code and try again.",
+  "searchPlaceholder": "Search dates, notes, holidays...",
+  "recentSearches": "Recent Searches",
+  "result": "result",
+  "results": "results",
+  "tryDifferentKeywords": "Try different keywords or check your spelling",
+  "trySearchingFor": "Try Searching For",
+  "navigate": "↑↓ Navigate",
+  "selectKey": "↵ Select",
+  "escClose": "Esc Close",
+  "hekaUnifiedSearch": "HEKA Unified Search",
+  "dates": "Dates",
+  "notes": "Notes",
+  "holidays": "Holidays",
+  "hekaDate": "HEKA Date",
+  "civilDate": "Civil Date",
+  "calendarNote": "Calendar Note",
+  "holiday": "Holiday",
   "infoModal": {
-    "goTo": "Mergi la {{title}}",
-    "home": "Acasă",
-    "backToHome": "Înapoi Acasă",
-    "deeperQuestions": "Întrebări mai adânci",
+    "goTo": "Go to {{title}}",
+    "home": "Home",
+    "backToHome": "Back to Home",
+    "deeperQuestions": "Deeper Questions",
     "hero": {
-      "title": "Calendarul HEKA",
-      "subtitleLine1": "Timpul este structura în care trăim.",
-      "subtitleLine2": "Dacă ar fi mai potrivit?"
+      "title": "The HEKA Calendar",
+      "subtitleLine1": "Time is the structure we live inside.",
+      "subtitleLine2": "What if it fit better?"
     },
     "cards": {
       "whatChanges": {
-        "title": "Ce se schimbă",
+        "title": "What Changes",
         "items": {
-          "0": "Treizeci de luni, toate egale",
-          "1": "Patru săptămâni per lună, întotdeauna",
-          "2": "Anul începe în aprilie, se încheie în martie",
-          "3": "Arcurile Deschidere, Nucleu și Închidere",
-          "4": "Corecția conținută într-o lună"
+          "0": "Thirteen months, all equal",
+          "1": "Four weeks per month, always",
+          "2": "The year begins in April and ends in March",
+          "3": "Opening, core, and closing arcs",
+          "4": "Correction contained in one month"
         }
       },
       "whatStays": {
-        "title": "Ce rămâne",
+        "title": "What Stays",
         "items": {
-          "0": "Săptămânile de șapte zile rămân neschimbate",
-          "1": "Sezonurile rămân aliniate",
-          "2": "Datele civile sunt întotdeauna vizibile",
-          "3": "Programările tale sunt sincronizate",
-          "4": "Lumea nu are nevoie de notificări"
+          "0": "Seven-day weeks remain unchanged",
+          "1": "Seasons stay aligned",
+          "2": "Civil dates always visible",
+          "3": "Your appointments stay synced",
+          "4": "The world needs no notice"
         }
       },
       "beginHere": {
-        "title": "Începe de aici",
+        "title": "Begin Here",
         "items": {
-          "0": "Citește mai întâi \"Ce este HEKA?\"",
-          "1": "Explorează \"Forma unui An\"",
-          "2": "Activează suprapunerea civilă",
-          "3": "Alege modul SYNC sau TRUE",
-          "4": "Trăiește în el pentru o lună"
+          "0": "Read \"What is HEKA?\" first",
+          "1": "Explore \"The Shape of a Year\"",
+          "2": "Activate the civil overlay",
+          "3": "Choose SYNC or TRUE mode",
+          "4": "Live inside it for a month"
         }
       }
     },
-    "chaptersLabel": "Șapte capitole",
+    "chaptersLabel": "Seven Chapters",
     "chapters": {
       "home": {
-        "num": "ACASĂ",
-        "chip": "ÎNCEPE",
-        "title": "Calendarul HEKA",
-        "hook": "Timpul este structura în care trăim. Ce dacă ar fi mai potrivit?"
+        "num": "HOME",
+        "chip": "BEGIN",
+        "title": "The HEKA Calendar",
+        "hook": "Time is the structure we live inside. What if it fit better?",
+        "teaser": ""
       },
       "ch1": {
         "num": "01",
-        "chip": "ESENȚA",
-        "title": "Ce este HEKA?",
-        "hook": "Un calendar este mai mult decât un sistem de numărare. Este ritmul vieții tale."
+        "chip": "ESSENCE",
+        "title": "What Is HEKA?",
+        "hook": "A calendar is more than a counting system. It is the rhythm of your life.",
+        "teaser": "13 months. 28 days each. One perfect year."
       },
       "ch2": {
         "num": "02",
-        "chip": "STRUCTURA",
-        "title": "Forma Anului",
-        "hook": "Aprilia începe. Martie se încheie. Tot restul are sens."
+        "chip": "STRUCTURE",
+        "title": "The Shape of a Year",
+        "hook": "April begins. March closes. Everything in between makes sense.",
+        "teaser": "April opens. The core holds. March closes."
       },
       "ch3": {
         "num": "03",
-        "chip": "PRACTICĂ",
-        "title": "Trăind în HEKA",
-        "hook": "Nu ai nevoie de permisiunea pentru a folosi un instrument mai bun."
+        "chip": "PRACTICE",
+        "title": "Living in HEKA",
+        "hook": "You do not need permission to use a better tool.",
+        "teaser": "Your calendar. Your journal. Your oracle."
       },
       "ch4": {
         "num": "04",
-        "chip": "PRECIZIE",
-        "title": "Modurile Două",
-        "hook": "Un calendar. Două modalități de a onora soarele. Alegi tu."
+        "chip": "PRECISION",
+        "title": "The Two Modes",
+        "hook": "One calendar. Two ways of honoring the sun. You choose.",
+        "teaser": "Follow the civil world. Or follow the sky."
       },
       "ch5": {
         "num": "05",
-        "chip": "LINIE DE DESCENDENTĂ",
-        "title": "Revoluția Calendaristică",
-        "hook": "Gregorian a fost o reparare. HEKA este o reînființare."
+        "chip": "LINEAGE",
+        "title": "The Calendar Revolution",
+        "hook": "Gregorian was a patch. HEKA is a redesign.",
+        "teaser": "Roman egos broke the year. We fixed it."
       },
       "ch6": {
         "num": "06",
-        "chip": "ÎNCEPUT",
-        "title": "Începe să folosești HEKA Azi",
-        "hook": "Nu sunt necesare schimbări în instituții. Doar perspectiva ta se schimbă."
+        "chip": "BEGINNING",
+        "title": "Start Using HEKA Today",
+        "hook": "No institutions need to change. Only your view.",
+        "teaser": "No institutions required. Just your phone."
       },
       "ch7": {
         "num": "07",
-        "chip": "SINZONIFICARE",
-        "title": "Timp care te Servește",
-        "hook": "Calendarul pe care îl folosești modelează viața pe care o trăiești."
+        "chip": "MEANING",
+        "title": "Time That Serves You",
+        "hook": "The calendar you use shapes the life you live.",
+        "teaser": "The calendar you use shapes the life you live."
       }
     },
     "cardsByChapter": {
       "ch1": {
         "0": {
-          "h": "Problema pe care O Simțiți",
-          "b": "Luni iregulare. Sărbători dispersate. Un an care se răsucește de la Ianuarie până în Decembrie fără o senzație de început, mijloc sau încheiere. Ai simțit această frictiune. HEKA o elimină."
+          "h": "The Problem You Feel",
+          "b": "Irregular months. Scattered holidays. A year that stumbles from January to December with no sense of beginning, middle, or end. You have felt this friction. HEKA removes it."
         },
         "1": {
-          "h": "Soluția pe care Am Construit-o",
-          "b": "Treizeci de luni. Douăzeci și șase dețin douăzeci și opt zile în perfectă simetrică. Martie, luna în care se încheie, păstrează ziua de sărit. Patru săptămâni perfecte pe lună. Un an care curge: Aprilia deschide, Mai până în Decembrie formează nucleul stabil, Ianuarie până în Martie îl duc la încheiere."
+          "h": "The Solution We Built",
+          "b": "Thirteen months. Twelve have twenty-eight days in perfect symmetry. March, the closing month, carries the leap day. Four perfect weeks per month. A year that flows: April opens, May through December form the stable core, January through March complete it."
         },
         "2": {
-          "h": "Lumea pe care O Păstrezi",
-          "b": "HEKA nu îți deranjează viața. Datele civile rămân vizibile. Întâlnirile tale, programările și obligațiile legale rămân exact unde le aștepți. Pur și simplu obții o lentă mai clară."
+          "h": "The World You Keep",
+          "b": "HEKA does not disrupt your life. Civil dates remain visible. Your appointments, commitments, and legal obligations stay exactly where they are. You simply gain a clearer lens."
         }
       },
       "ch2": {
         "0": {
-          "h": "Arcul de Deschidere",
-          "b": "Aprilia este pragul. Anul nu începe din epuizarea iernii, ci din vitalitatea primăverii. Creștere nouă. Proiecte noi. Deschiderea anunță: ceva începe."
+          "h": "The Opening Arc",
+          "b": "April is the threshold. The year does not begin in winter exhaustion, but in spring vitality. New growth. New projects. The opening announces: something is beginning."
         },
         "1": {
-          "h": "Arcul de Mijloc",
-          "b": "Mai până în Decembrie este mijlocul lung și stabil. Nouă luni de ritm perfect regulat și previzibil. Planifică cu încredere. Construiește momențium. Aici se întâmplă munca."
+          "h": "The Core Arc",
+          "b": "May through December is the long, stable middle. Nine months of perfectly regular and predictable rhythm. Plan with confidence. Build momentum. This is where the work happens."
         },
         "2": {
-          "h": "Arcul de Încheiere",
-          "b": "Ianuarie până în Martie duc anul la încheiere. Termină ceea ce ai început. Recoltează ceea ce ai crescut. Încheierea creează spațiu pentru reflecție și te pregătește pentru următorul început."
+          "h": "The Closing Arc",
+          "b": "January through March bring the year to its resolution. Finish what you started. Harvest what you grew. Closure creates space for reflection and prepares you for the next opening."
         }
       },
       "ch3": {
         "0": {
-          "h": "Datele Civile Rămân",
-          "b": "Comută suprafața civilă și vezi datele gregoriane alături de HEKA. Programul tău la dentist, ziua de naștere a mamei tale, termenul tău fiscal - toate rămân exact unde le aște"
+          "h": "Your Civil Dates Stay",
+          "b": "Activate the civil overlay and see Gregorian dates alongside HEKA. Your dentist appointment, your mother's birthday, your tax deadline -- everything stays exactly where you expect."
         },
         "1": {
-          "h": "Your Notes Remain",
-          "b": "Save thoughts by day or by month. Print clean month views or full year overviews. The calendar becomes a journal, a planner, a record of your days."
+          "h": "Your Journal",
+          "b": "Daily entries with revision history — up to 50 versions kept automatically. Full-text search across everything. Local by default; cloud backup when you sign in."
         },
         "2": {
-          "h": "Your Moon If You Want It",
-          "b": "Lunar phases appear at a glance. Not superimposed mysticism—just information. Another rhythm you can choose to notice or ignore. The choice is yours."
+          "h": "Your Moon & Stars",
+          "b": "Moon phases, planetary positions, and transits appear at a glance. Optional and precise. Add your birth chart for personal readings through the Oracle."
         }
       },
       "ch4": {
         "0": {
-          "h": "Modul SYNC: Drumul Familiar",
-          "b": "Martie câștigă ziua sa extra când calendarul gregorian spune că ar trebui să o facă. Pentru coordonarea zilnică cu lumea civilă, acesta este modul tău. Același structură. Timpuri familiare."
+          "h": "SYNC MODE: The Familiar Path",
+          "b": "March gains its extra day when the Gregorian calendar says so. For daily coordination with the civil world, this is your mode. Same structure. Familiar time."
         },
         "1": {
-          "h": "Modul TRUE: Drumul Sincer",
-          "b": "HEKA urmează propria sa regulă de corectare: în fiecare al patrulea an are un martie de 30 de zile, cu excepția fiecărei a 128-a ani care nu are. Aceasta este precizie astronomică. Aceasta este integritate pe termen lung."
+          "h": "TRUE MODE: The Honest Path",
+          "b": "HEKA follows its own correction rule: every fourth year has a 30-day March, except every 128 years which does not. This is astronomical precision. This is long-term integrity."
         },
         "2": {
-          "h": "Comută Oricând",
-          "b": "Lunile nu se schimbă. Saptea nu se schimbă. Doar declanșatorul corectării se mută. Experimentează. Vezi care modul se potrivește nevoilor tale. Nu ești blocat."
+          "h": "Change at Any Time",
+          "b": "The months do not change. The week does not change. Only the correction trigger shifts. Experiment. See which mode fits your needs. You are not trapped."
         }
       },
       "ch5": {
         "0": {
-          "h": "Moştenire, Nu Proiectare",
-          "b": "Calendarul nostru actual este o acumulare de incidente istorice. Politica romană. Consfătuiri religioase. Patch-uri astronomice adăugate la secole distante. Nu a fost proiectat niciodată ca un sistem."
+          "h": "Inheritance, Not Design",
+          "b": "Our current calendar is a pile of historical accidents. Roman politics. Religious councils. Astronomical patches added centuries apart. It was never designed as a system."
         },
         "1": {
-          "h": "Patch-ul Gregorian",
-          "b": "1582: Papele Gregor a reparator problemă de decalare. Dar a păstrat lunile neregulate, structura dispersată, haosul moștenit. O corectare necesară, dar nu o soluție completă."
+          "h": "The Gregorian Patch",
+          "b": "1582: Pope Gregory fixed the drift problem. But he kept the irregular months, the scattered structure, the inherited chaos. A necessary correction, but not a complete solution."
         },
         "2": {
-          "h": "Răspunsul HEKA",
-          "b": "Am păstrat ce funcționează: săptămâni de șapte zile, alinierea sezonală, urmărirea anului solar. Am redesenat ce nu a funcționat: structura lunilor, fluxul anului, plasarea corectării. Construit pentru mințile care gândesc."
+          "h": "The HEKA Answer",
+          "b": "We keep what works: seven-day weeks, seasonal alignment, solar year tracking. We redesign what does not: month structure, yearly flow, correction placement. Built for minds that think."
         }
       },
       "ch6": {
         "0": {
-          "h": "Pasul Unu: Activează Suprapunerea",
-          "b": "Activează datele civile. Acum vezi ambele sisteme în același timp. Data ta HEKA și data ta gregoriană. Podul este construit. Treci peste el ori de câte ori ai nevoie."
+          "h": "Step One: Activate the Overlay",
+          "b": "Activate civil dates. Now you see both systems simultaneously. Your HEKA date and your Gregorian date. The bridge is built. Cross when you need to."
         },
         "1": {
-          "h": "Pasul Doi: Alege Modulul Tau",
-          "b": "Începe cu SYNC dacă vrei familiaritate. Schimbă la TRUE dacă vrei purețe. Poți să-ți schimbi mintea. Calendarul se adaptează ție, nu invers."
+          "h": "Step Two: Choose Your Mode",
+          "b": "Start with SYNC if you want familiarity. Switch to TRUE if you want purity. You can change your mind. The calendar adapts to you, not the other way around."
         },
         "2": {
-          "h": "Pasul Trei: Trăi în E",
-          "b": "Folosește HEKA ca vizualizare principală. Planifică luna ta. Notează-ți zilele. Simte diferența unui an cu o structură reală. Lumea civilă nu trebuie să știe. Vei ști."
+          "h": "Step Three: Live Inside It",
+          "b": "Use HEKA as your main view. Plan your month. Note your days. Feel the difference of a year with real structure. The civil world does not need to know. You will know."
         }
       },
       "ch7": {
         "0": {
-          "h": "Frictia Costă Energie",
-          "b": "De fiecare dată când te întrebi câți de zile sunt în această lună, plătești o mică taxă. Fiecare neregulă scapă atenție. HEKA elimină aceste taxe. Ține energia pentru ceea ce contează."
+          "h": "Friction Costs Energy",
+          "b": "Every time you wonder how many days are in this month, you pay a small tax. Every irregularity drains focus. HEKA removes these taxes. You keep your energy for what matters."
         },
         "1": {
-          "h": "Ritmul Creează Liniște",
-          "b": "Când structura este previzibilă, mintea se relaxează. Știi unde ești în anul. Simți deschiderea, nucleul, închiderea. Timpul devine un spațiu pe care îl locuiești, nu un haos prin care supraviețui."
+          "h": "Rhythm Creates Calm",
+          "b": "When structure is predictable, the mind relaxes. You know where you are in the year. You feel the opening, the core, the closing. Time becomes a space you inhabit, not a chaos you survive."
         },
         "2": {
-          "h": "Agența asupra Timpului",
-          "b": "Nu ai ales calendarul gregorian. I s-a dat ție. HEKA este o alegere. Să folosești un instrument proiectat pentru claritate. Să preiei agența asupra"
+          "h": "Agency Over Time",
+          "b": "You did not choose the Gregorian calendar. It was given to you. HEKA is a choice. To use a tool designed for clarity. To reclaim agency over the structure of your days. This is your calendar."
         }
       }
     },
@@ -361,12 +369,12 @@
         "0": {
           "t": "Is this a religion or movement?",
           "tag": "CLARITY",
-          "b": "Neither. HEKA is a tool. Like a better hammer or a clearer map. No membership required. No beliefs to adopt. Just a calendar that works better than the one you inherited."
+          "b": "Neither. HEKA is a tool. Like a better hammer or a clearer map."
         },
         "1": {
           "t": "Why thirteen months?",
           "tag": "LOGIC",
-          "b": "Twelve months of irregular length force mental gymnastics. Thirteen months of four weeks each creates perfect regularity. 13 × 28 = 364. Plus one special day. The math is clean. The experience is cleaner."
+          "b": "Twelve months of irregular length force mental gymnastics. Thirteen months of four weeks each creates perfect regularity. 13 x 28 = 364. Plus one special day. The math is clean. The experience is cleaner."
         },
         "2": {
           "t": "Will this confuse other people?",
@@ -383,123 +391,153 @@
         "1": {
           "t": "What are the month names?",
           "tag": "ORDER",
-          "b": "April, May, June, July, August, Hexa, September, October, November, December, January, February, March. Hexa—the sixth month—fills the gap. The rest you already know. Only their positions change."
+          "b": "April, May, June, July, August, Hexa, September, October, November, December, January, February, March. Hexa -- the sixth month -- fills the gap. The rest you already know. Only their positions change."
         },
         "2": {
           "t": "How is correction handled?",
           "tag": "PRECISION",
-          "b": "Fiecare calendar solar are nevoie de corectare. HEKA plasează toate în martie, la sfârșitul anului. Martie are 29 de zile, sau 30 în ani buni. Celelalte dodici luni sunt perfect și permanent regulate. Corecția este inclusă, nu dispersată."
+          "b": "Every solar calendar needs correction. HEKA places it all in March, at the year's end. March has 29 days, or 30 in leap years. The other twelve months are perfect and permanently regular. Correction is contained, not scattered."
         }
       },
       "ch3": {
         "0": {
           "t": "Can I print HEKA calendars?",
           "tag": "PHYSICAL",
-          "b": "Da. Imprimați vizualizări lunare sau vizualizări anuale complete. Curate, neîngrășate, proiectate pentru hârtie. Împin-le pe pereți. Purtați-le în cărți de schițe. Conveniența digitală și artefactul fizic, ambele."
+          "b": "Yes. Print monthly views or full-year panoramas. Clean, clear, designed for paper. Put them on walls. Carry them in notebooks. Digital convenience and physical artifact, both."
         },
         "1": {
           "t": "What about holidays?",
           "tag": "CUSTOM",
-          "b": "Comutați seturi de sărbători pentru regiunea dvs. Sau ignorați-le. HEKA nu impune propriile sărbători - vă ajută să urmăriți pe cele care vă importă, suprapusă peste o structură mai clară."
+          "b": "Activate holiday sets for your region. Or ignore them. HEKA does not impose its own holidays; it helps you follow the ones that matter to you, overlaid on a clearer structure."
         },
         "2": {
-          "t": "Are my notes private?",
+          "t": "Where does my data live?",
           "tag": "TRUST",
-          "b": "Totul se stocează local pe dispozitivul dvs. Gânduriile dvs. rămân ale dvs. Exportați-le dacă doriți. Importați-le în alte locuri. Aveți control total asupra datelor dvs."
+          "b": "By default, everything stays on your device — notes, journal, settings. If you create an account, your data backs up to encrypted cloud storage. You can export everything at any time. You stay in control."
+        },
+        "3": {
+          "t": "What can the journal do?",
+          "tag": "CAPABILITY",
+          "b": "Daily entries with automatic revision history. Full-text search across your entire archive. All local by default; syncs to the cloud when you sign in."
         }
       },
       "ch4": {
         "0": {
           "t": "Which mode is \"correct\"?",
           "tag": "CHOICE",
-          "b": "Ambele. SYNC este corect pentru coordonare cu lumea civilă. TRUE este corect pentru precizia astronomică. Nevoile dvs. determină care corectitudine contează mai mult pentru dvs. în acest moment."
+          "b": "Both. SYNC is correct for coordination with the civil world. TRUE is correct for astronomical precision. Your needs determine which correction is more important to you right now."
         },
         "1": {
           "t": "Does TRUE mode drift from civil dates?",
           "tag": "DIVERGENCE",
-          "b": "Încet, da. Modul TRUE urmează propria sa regulă de salt, nu cea gregoriană. În secoluri, decalajul devine evident. Pentru viața cotidiană, diferența este imperceptibilă. Pentru gândirea pe termen lung, purețea contează."
+          "b": "Slowly, yes. TRUE mode follows its own leap year rule, not the Gregorian one. Over centuries, the divergence becomes noticeable. For daily life, the difference is imperceptible. For long-term thinking, purity matters."
         },
         "2": {
           "t": "Can institutions adopt HEKA?",
           "tag": "SCALE",
-          "b": "În cele din urmă, poate. Dar instituțiile nu trebuie să se schimbe pentru ca dvs. să beneficiați. HEKA funcționează perfect ca o suprapunere personală. Începeți acolo. Lăsați instrumentul să-și dovedească valoarea."
+          "b": "Eventually, perhaps. But institutions do not need to change for you to benefit. HEKA works perfectly as a personal overlay. Start there. Let the tool prove itself."
         }
       },
       "ch5": {
         "0": {
           "t": "Why do months have different lengths?",
           "tag": "HISTORY",
-          "b": "Politica romană. Iulius Ceza și Augustus au avut nevoie de luni numite după ei. Calendarul a fost ajustat pentru a face față egourilor. Aceste nereguli s-au transformat în \"tradition\". Tradiția nu este întotdeauna înțelepciune."
+          "b": "Roman politics. Julius Caesar and Augustus needed months named in their honor. The calendar was adjusted to accommodate egos. These irregularities became 'tradition.' Tradition is not always wisdom."
         },
         "1": {
           "t": "Was the Gregorian reform enough?",
           "tag": "ASSESSMENT",
-          "b": "A reușit să corecteze decalajul. Nu a reușit să repareze structura. Lunile au rămas neregulate, trimestrile inegale, anul fără formă narativă. O reparare necesară, dar nu o redesenare fundamentală."
+          "b": "It fixed the drift. It did not fix the structure. Months remained irregular, quarters remained unequal, the year had no narrative shape. A necessary patch, but not a fundamental redesign."
         },
         "2": {
           "t": "Have others tried calendar reform?",
           "tag": "ATTEMPTS",
-          "b": "Mulți. Calendarul republican francez. Calendarul Mondial. Calendarul Internațional Fix. Unii minți, toți au eșuat politic. HEKA învață de la ei: compatibilitatea cu timpul civil este esențială. Revoluție prin evoluție."
+          "b": "Many. The French Republican calendar. The World Calendar. The International Fixed Calendar. Some brilliant, all politically failed. HEKA learns from them: civil time compatibility is essential. Revolution through evolution."
         }
       },
       "ch6": {
         "0": {
           "t": "How do I explain this to others?",
           "tag": "CONVERSATION",
-          "b": "Nu trebuie să. Folosiți-l. Dacă sunteți întrebați, spuneți: \"Am găsit un calendar care mă ajută să planific mai bine.\" Arățați-le. Lăsați-i să vadă claritatea. Persuasiunea se întâmplă prin demonstrație, nu prin declarație."
+          "b": "You do not need to. Use it. If they ask, say: \"I found a calendar that helps me plan better.\" Show them. Let them see the clarity. Persuasion happens through demonstration, not declaration."
         },
         "1": {
           "t": "What if I want to stop using it?",
           "tag": "FREEDOM",
-          "b": "Opriți. Datele civile rămân. Întâlnirile dvs. rămân unde sunt. Fără blocare. Fără costuri irecuperabile. HEKA trebuie să-și câștige locul în viața dvs. în fiecare zi, sau nu merită să rămână."
+          "b": "Stop using it. Your civil dates remain. Your appointments stay where they are. No lock-in. No sunk cost. HEKA must earn its place in your life every day, or it does not deserve to stay."
         },
         "2": {
           "t": "Where do I begin right now?",
           "tag": "ACTION",
-          "b": "Deschideți setările. Activați suprapunerea civilă. Uitați-"
+          "b": "Open settings. Activate the civil overlay. Look at today in both systems. That is the first step. You have already taken it by opening this guide."
+        },
+        "3": {
+          "t": "What is the Oracle?",
+          "tag": "INTELLIGENCE",
+          "b": "A celestial intelligence that reads planetary positions for any date you select and offers guidance. Optional. Add your birth chart for personalized transits and deeper insight."
         }
       },
       "ch7": {
         "0": {
           "t": "Does the calendar really affect mindset?",
           "tag": "PSYCHOLOGY",
-          "b": "Profund. Crede în structurile în care trăim. Lunile iregulate creează fricțiune cognitivă de nivel scăzut. Lunile regulate creează flux cognitiv. S-ar putea să nu observi fricțiunea până nu o scapi. Atunci nu mai poți să nu o observi."
+          "b": "Deeply. We think in the structures we inhabit. Irregular months create low-level cognitive friction. Regular months create cognitive flow. You may not notice the friction until it disappears. Then you cannot stop noticing it."
         },
         "1": {
-          "t": "Și atașamentele culturale?",
+          "t": "What about cultural ties?",
           "tag": "RESPECT",
-          "b": "Păstrează-le. Anul tău. Sărbătorile noului tău an. Festivalurile tale sezoniere. HEKA nu șterge cultura - oferă un recipient mai clar pentru aceasta. Conținutul rămâne. Recipientul se îmbunătățește."
+          "b": "Keep them. Your birthday. Your New Year celebrations. Your seasonal festivals. HEKA does not erase culture; it provides a clearer container for it. The content remains. The container improves."
         },
         "2": {
-          "t": "De ce contează suficient pentru a construi?",
+          "t": "Why is this important enough to build?",
           "tag": "MISSION",
-          "b": "Pentru că timpul este substratul vieții. Pentru că merităm unelte concepute pentru minte, nu moștenite din accidente. Pentru că ar trebui să încercăm să construim ceva mai bun. Am făcut-o. Ești aici."
+          "b": "Because time is the substrate of life. Because we deserve tools designed for minds, not inherited from accidents. Because someone should try to build something better. We did. You are here."
         }
       }
     },
     "chapterLeads": {
-      "ch1": "Ai simțit-o. Ușoara confuzie când planifici peste luni. Calculul mental: \"Câte zile până la...?\" Ritmul iregulat al unui an care căde de la ianuarie până în decembrie fără nicio formă coerentă. HEKA este răspunsul.",
-      "ch2": "Un an nu este doar un număr de zile. Este un arc narativ. HEKA structurează anul solar în trei mișcări distincte: Deschiderea, Nucleul și Închiderea. Fiecare are propriul său caracter. Fiecare servește un scop diferit în ritmul muncii și a odihnei, creșterii și recoltării.",
-      "ch3": "Teoria devine utilă doar atunci când este practicată. HEKA este conceput pentru adoptare imediată fără perturbare. Datele civile rămân vizibile. Programările tale rămân sincronizate. Pur și simplu obții un cadru mai clar, mai regular pentru a naviga zilele tale.",
-      "ch4": "Fiecare calendar solar trebuie să corecteze decalajul dintre ciclurile de zile și ciclurile de ani. HEKA oferă două abordări pentru această corecție: una care se armonizează cu așteptările civile și una care urmează o precizie astronomică pură. Structura rămâne constantă. Doar mecanismul de corecție se schimbă.",
-      "ch5": "Calendarul gregorian nu este rău. Este un standard de succes care a rezolvat probleme critice de decalaj. Dar este, de asemenea, o reparare pe o reparare - o structură modelată de politica romană, consilii religioase și accidente istorice mai degrabă decât de nevoile umane. Înțelegerea acestei istorií clarifică de ce redesenarea merită încercare.",
-      "ch6": "Schimbarea instituțională este lentă. Schimbarea personală este imediată. Nu ai nevoie de guverne sau corporații pentru a adopta HEKA pentru ca tine să beneficiezi de acesta. Începe astăzi. Folosește-l ca strat de planificare personal. Lasă instrumentul să-și dovedească valoarea în propria ta experiență.",
-      "ch7": "Trăim în calendarele noastre. Ei modelează senzația noastră de timp, progres și posibilitate. Un calendar iregular creează fricțiune de nivel scăzut în întregul an. Un calendar regular creează flux. Alegerea structurii în care să locuiești este, în cele din urmă, o alegere despre ce tip de mediu temporal vrei să trăiești în."
+      "ch1": "You have felt it. The slight confusion when planning across months. The irregular rhythm of a year that stumbles from January through December with no coherent shape. HEKA is the response. Thirteen months. Twenty-eight days each. One perfect year.",
+      "ch2": "A year is not merely a count of days. It is a narrative arc. HEKA structures the solar year into three distinct movements: the Opening, the Core, and the Closing. Each with its own character. Each serving a different purpose in the rhythm of work and rest, growth and harvest.",
+      "ch3": "Theory becomes useful only when practiced. HEKA is designed for immediate adoption without disruption. Civil dates remain visible. Your appointments stay synchronized. The Oracle, Cosmic Circle, and your personal journal are here when you want them. You simply gain a clearer framework for navigating your days.",
+      "ch4": "Every solar calendar must correct for the mismatch between day-cycles and year-cycles. HEKA offers two approaches to this correction: one that harmonizes with civil expectations, and one that follows pure astronomical precision. The structure stays constant. Only the correction mechanism changes.",
+      "ch5": "The Gregorian calendar is not bad. It is a successful standard that fixed critical drift problems. But it is also a patch on a patch—a structure shaped by Roman politics, religious councils, and historical accidents rather than human needs. Understanding this history clarifies why redesign is worth attempting.",
+      "ch6": "Institutional change is slow. Personal change is immediate. You do not need governments or corporations to adopt HEKA for you to benefit from it. Start today. Use it as your personal planning layer. Let the tool prove its value in your own experience.",
+      "ch7": "We live inside our calendars. They shape our sense of time, progress, and possibility. An irregular calendar creates low-level friction throughout the year. A regular calendar creates flow. The choice of which structure to inhabit is ultimately a choice about what kind of temporal environment you want to live within."
+    },
+    "spotlight": {
+      "title": "Did you know?",
+      "facts": {
+        "0": "The Oracle reads real-time planetary positions for any date you select.",
+        "1": "Your journal keeps 50 revisions per entry — never lose a thought.",
+        "2": "Cosmic Circle lets you share moon phases and transits with friends.",
+        "3": "Print month views or full-year panoramas, designed for paper.",
+        "4": "SYNC mode matches civil dates. TRUE mode follows astronomical precision."
+      }
     }
   },
   "months": {
     "apr": "Apr",
-    "may": "Mai",
-    "jun": "Iun",
-    "jul": "Iul",
+    "may": "May",
+    "jun": "Jun",
+    "jul": "Jul",
     "aug": "Aug",
-    "hex": "Ian",
+    "hex": "Hex",
     "sep": "Sep",
     "oct": "Oct",
-    "nov": "Noi",
+    "nov": "Nov",
     "dec": "Dec",
-    "jan": "Ian",
+    "jan": "Jan",
     "feb": "Feb",
     "mar": "Mar"
+  },
+  "openSettings": "Open Settings",
+  "syncConflict": {
+    "title": "Sync Conflict",
+    "subtitle": "This item changed on the server while you were offline. Which version should keep?",
+    "local": "My Version",
+    "localHint": "The change I made on this device",
+    "server": "Server Version",
+    "serverHint": "The version already saved online",
+    "resolve": "Keep This Version"
   }
 }

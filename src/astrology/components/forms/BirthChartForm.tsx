@@ -222,7 +222,7 @@ export const BirthChartForm: React.FC<BirthChartFormProps> = ({
           type="text"
           value={name}
           onChange={(e) => setName(e.target.value)}
-          placeholder={t('celestial.birthChart.namePlaceholder')}
+          placeholder={t('birthChart.namePlaceholder', 'Enter your name')}
           style={{...styles.input, ...(errors.name ? styles.inputError : {})}}
         />
         {errors.name && <span style={styles.error}>{errors.name}</span>}
@@ -301,7 +301,7 @@ export const BirthChartForm: React.FC<BirthChartFormProps> = ({
             <option value={13}>13 Signs ⛎</option>
           </select>
           {zodiacFrame === 'tropical' && (
-            <span style={{ fontSize: '11px', color: '#888', marginTop: '4px', display: 'block' }}>
+            <span style={{ fontSize: '12px', color: '#888', marginTop: '4px', display: 'block' }}>
               Tropical always uses 12 signs
             </span>
           )}

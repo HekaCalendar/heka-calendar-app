@@ -22,6 +22,7 @@ import { persistence, DEFAULT_PROFILE_PREFERENCES } from '../astrology/services/
 import type { AstroProfile, NatalChart, ProfilePreferences } from '../astrology/types';
 import { tutorialService } from '../services/tutorialService';
 import { getErrorMessage, getErrorCode } from '../utils/errorUtils';
+import { ConfirmDialog } from './ui/ConfirmDialog';
 
 
 interface AuthModalProps {
@@ -95,7 +96,8 @@ export const AuthModalEnterprise: React.FC<AuthModalProps> = ({ isOpen, onClose 
   const [showNewPassword, setShowNewPassword] = useState(false);
   const [passwordStrength, setPasswordStrength] = useState({ score: 0, isValid: false });
   const [deleteConfirm, setDeleteConfirm] = useState('');
-  
+  const [showDeleteConfirmDialog, setShowDeleteConfirmDialog] = useState(false);
+
   const modalRef = useRef<HTMLDivElement>(null);
   const modalContentRef = useRef<HTMLDivElement>(null);
   const firebaseConfigured = isFirebaseConfigured();
@@ -691,7 +693,7 @@ export const AuthModalEnterprise: React.FC<AuthModalProps> = ({ isOpen, onClose 
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
                   className="auth-form__input"
-                  placeholder={t('auth.passwordPlaceholder')}
+                  placeholder={t('passwordPlaceholder', 'Enter your password')}
                   autoComplete="new-password"
                   required
                 />
@@ -833,14 +835,10 @@ export const AuthModalEnterprise: React.FC<AuthModalProps> = ({ isOpen, onClose 
                   <span>🎓</span> Restart Tutorial
                 </button>
                 <button 
-                  className="auth-profile__menu-item auth-profile__menu-item--danger" 
-                  onClick={() => {
-                    if (window.confirm('Are you sure you want to delete your account? This action cannot be undone.')) {
-                      switchView('delete-account');
-                    }
-                  }}
+                  className="auth-profile__menu-item auth-profile__menu-item--danger"
+                  onClick={() => setShowDeleteConfirmDialog(true)}
                 >
-                  <span>🗑️</span> Delete Account
+                  <span>🗑️</span> {t('deleteAccount')}
                 </button>
               </div>
 
@@ -872,7 +870,7 @@ export const AuthModalEnterprise: React.FC<AuthModalProps> = ({ isOpen, onClose 
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
                       className="auth-form__input"
-                      placeholder={t('auth.passwordPlaceholder')}
+                      placeholder={t('passwordPlaceholder', 'Enter your password')}
                       required
                     />
                     <button
@@ -896,7 +894,7 @@ export const AuthModalEnterprise: React.FC<AuthModalProps> = ({ isOpen, onClose 
                         setPasswordStrength(enterpriseAuth.validatePasswordStrength(e.target.value));
                       }}
                       className="auth-form__input"
-                      placeholder={t('auth.passwordPlaceholder')}
+                      placeholder={t('passwordPlaceholder', 'Enter your password')}
                       required
                     />
                     <button
@@ -917,7 +915,7 @@ export const AuthModalEnterprise: React.FC<AuthModalProps> = ({ isOpen, onClose 
                     value={confirmPassword}
                     onChange={(e) => setConfirmPassword(e.target.value)}
                     className="auth-form__input"
-                    placeholder={t('auth.passwordPlaceholder')}
+                    placeholder={t('passwordPlaceholder', 'Enter your password')}
                     required
                   />
                   {confirmPassword && newPassword !== confirmPassword && (
@@ -936,6 +934,19 @@ export const AuthModalEnterprise: React.FC<AuthModalProps> = ({ isOpen, onClose 
             </div>
           )}
 
+          <ConfirmDialog
+            isOpen={showDeleteConfirmDialog}
+            onClose={() => setShowDeleteConfirmDialog(false)}
+            onConfirm={() => {
+              setShowDeleteConfirmDialog(false);
+              switchView('delete-account');
+            }}
+            title={t('deleteAccount')}
+            description={t('deleteConfirmPrompt', 'Are you sure you want to delete your account? This action cannot be undone.')}
+            confirmText={t('deleteAccount')}
+            variant="danger"
+          />
+
           {/* Delete Account View */}
           {view === 'delete-account' && (
             <div className="auth-delete">
@@ -946,10 +957,7 @@ export const AuthModalEnterprise: React.FC<AuthModalProps> = ({ isOpen, onClose 
               <div className="auth-delete__warning">
                 <div className="auth-delete__icon">⚠️</div>
                 <h3 className="auth-delete__title">{t('deleteTitle')}</h3>
-                <p className="auth-delete__text">
-                  This will permanently delete your account and all associated data. 
-                  This action cannot be undone.
-                </p>
+                <p className="auth-delete__text">{t('deleteWarning')}</p>
               </div>
               
               <form onSubmit={handleDeleteAccount} className="auth-form">
@@ -960,7 +968,7 @@ export const AuthModalEnterprise: React.FC<AuthModalProps> = ({ isOpen, onClose 
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     className="auth-form__input"
-                    placeholder={t('auth.passwordPlaceholder')}
+                    placeholder={t('passwordPlaceholder', 'Enter your password')}
                     required
                   />
                 </div>

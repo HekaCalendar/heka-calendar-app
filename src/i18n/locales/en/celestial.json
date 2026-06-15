@@ -897,36 +897,36 @@
         "taurus": "Mars in Taurus persists steadily. Determined effort, sensual energy, and stubborn resistance.",
         "gemini": "Mars in Gemini acts mentally. Quick movements, verbal combat, and scattered initiatives.",
         "cancer": "Mars in Cancer defends protectively. Emotional action, defensive aggression, and nurturing drive.",
-        "pisces": "Mars en Piscis fluye intuitivamente. Acción espiritual, impulso compasivo y iniciativa elusiva.",
+        "pisces": "Mars in Pisces flows intuitively. Spiritual action, compassionate drive, and elusive initiative.",
         "scorpio": "Mars is at home in Scorpio. Intense action, strategic power, and transformative drive.",
-        "aquarius": "Mars en Acuario revoluciona la acción. Impulso reformista, iniciativas grupales y métodos no convencionales.",
+        "aquarius": "Mars in Aquarius revolutionizes action. Reformist drive, group initiatives, and unconventional methods.",
         "ophiuchus": "Mars in Ophiuchus acts as healer. Surgical precision, restorative force, and transformative intervention.",
-        "capricorn": "Mars en Capricornio logra ambiciosamente. Esfuerzo disciplinado, ascenso estratégico y acción autoritaria.",
-        "sagittarius": "Mars en Sagitario explora aventureramente. Iniciativa expansiva, acción filosófica y arriesgado."
+        "capricorn": "Mars in Capricorn achieves ambitiously. Disciplined effort, strategic ascent, and authoritative action.",
+        "sagittarius": "Mars in Sagittarius explores adventurously. Expansive initiative, philosophical action, and risk-taking."
       },
       "venus": {
-        "leo": "Venus en Leo ama dramáticamente. Gestos románticos grandiosos, expresión creativa y afecto leal.",
-        "aries": "Venus en Aries ama apasionadamente. Atracción audaz, romance espontáneo y relaciones independientes.",
-        "virgo": "Venus en Virgo sirve de manera práctica. Amor útil, atracción modesta y atención a los detalles de la relación.",
-        "libra": "Venus está en su casa en Libra. Parejas armoniosas, apreciación estética y relación diplomática.",
-        "taurus": "Venus está en su casa en Tauro. Placer sensual, relaciones estables y apreciación de la belleza.",
-        "gemini": "Venus en Géminis encanta verbalmente. Conexiones coquetas, atracción intelectual y variedad social.",
-        "cancer": "Venus en Cáncer nutre amorosamente. Vínculo emocional, armonía doméstica y cuidado protector.",
+        "leo": "Venus in Leo loves dramatically. Grand romantic gestures, creative expression, and loyal affection.",
+        "aries": "Venus in Aries loves passionately. Bold attraction, spontaneous romance, and independent relationships.",
+        "virgo": "Venus in Virgo serves practically. Useful love, modest attraction, and attention to relationship details.",
+        "libra": "Venus is at home in Libra. Harmonious partnerships, aesthetic appreciation, and diplomatic relating.",
+        "taurus": "Venus is at home in Taurus. Sensual pleasure, stable relationships, and appreciation of beauty.",
+        "gemini": "Venus in Gemini charms verbally. Flirtatious connections, intellectual attraction, and social variety.",
+        "cancer": "Venus in Cancer nurtures lovingly. Emotional bonding, domestic harmony, and protective care.",
         "pisces": "Venus in Pisces loves unconditionally. Romantic idealism, spiritual connection, and compassionate relating.",
-        "scorpio": "Venus en Esc",
+        "scorpio": "Venus in Scorpio loves intensely. Deep transformation through relationships and magnetic attraction.",
         "aquarius": "Venus in Aquarius connects uniquely. Unconventional relationships, friendship-based love, and freedom.",
         "ophiuchus": "Venus in Ophiuchus loves as medicine. Healing relationships, transformative devotion, and heart-centered restoration.",
         "capricorn": "Venus in Capricorn commits seriously. Mature relationships, status considerations, and lasting bonds.",
         "sagittarius": "Venus in Sagittarius explores freely. Adventurous love, philosophical connection, and open relationships."
       },
       "saturn": {
-        "leo": "Saturno en Leo templa la creatividad. Lecciones en humildad, autoexpresión estructurada y liderazgo responsable.",
-        "aries": "Saturno en Aries prueba la iniciativa. Lecciones en paciencia, acción restringida y liderazgo maduro.",
-        "virgo": "Saturno en Virgo perfecciona el servicio. Lecciones en precisión, disciplina de salud y maestría práctica.",
-        "libra": "Saturno en Libra se compromete con el equilibrio. Lecciones en responsabilidad en la asociación, estructuras justas y relación madura.",
-        "taurus": "Saturno en Tauro estabiliza los recursos. Lecciones en persistencia, responsabilidad material y valores duraderos.",
-        "gemini": "Saturno en Géminis disciplina la mente. Lecciones en enfoque, comunicación seria y madurez mental.",
-        "cancer": "Saturno en Cáncer protege los límites. Lecciones en responsabilidad emocional, deber familiar y límites de crianza.",
+        "leo": "Saturn in Leo tempers creativity. Lessons in humility, structured self-expression, and responsible leadership.",
+        "aries": "Saturn in Aries tests initiative. Lessons in patience, restrained action, and mature leadership.",
+        "virgo": "Saturn in Virgo perfects service. Lessons in precision, health discipline, and practical mastery.",
+        "libra": "Saturn in Libra commits to balance. Lessons in partnership responsibility, fair structures, and mature relating.",
+        "taurus": "Saturn in Taurus stabilizes resources. Lessons in persistence, material responsibility, and enduring values.",
+        "gemini": "Saturn in Gemini disciplines the mind. Lessons in focus, serious communication, and mental maturity.",
+        "cancer": "Saturn in Cancer protects boundaries. Lessons in emotional responsibility, family duty, and parenting limits.",
         "pisces": "Saturn in Pisces dissolves boundaries carefully. Lessons in compassion, spiritual discipline, and mystical responsibility.",
         "scorpio": "Saturn in Scorpio transforms deeply. Lessons in power, shared resource responsibility, and psychological maturity.",
         "aquarius": "Saturn is at home in Aquarius. Social responsibility, innovative structures, and humanitarian duty.",
@@ -935,34 +935,34 @@
         "sagittarius": "Saturn in Sagittarius structures beliefs. Lessons in wisdom, disciplined expansion, and responsible freedom."
       },
       "mercury": {
-        "leo": "Mercurio en Leo se expresa creativa. Discurso dramático, ideas confiadas y pensamiento centrado en el corazón.",
-        "aries": "Mercurio en Aries piensa rápida y directamente. Comunicación ágil, impulsiva y ideas pioneras.",
-        "virgo": "Mercurio está en su casa en Virgo. Precisión analítica, inteligencia práctica y análisis detallado.",
-        "libra": "Mercurio en Libra busca pensamiento equilibrado. Comunicación diplomática y consideración de todas las perspectivas.",
-        "taurus": "Mercurio en Tauro piensa de manera práctica. Aprendizaje constante, percepción sensual y comunicación metódica.",
-        "gemini": "Mercurio está en su casa en Géminis. Agudeza rápida, pensamiento versátil y comunicación hábil.",
-        "cancer": "Mercurio en Cáncer piensa intuitivamente. Enfoque en la memoria, inteligencia emocional y palabras que nutren.",
-        "pisces": "Mercurio en Piscis imagina intuitivamente. Expresión poética, escucha receptiva y comprensión espiritual.",
-        "scorpio": "Mercurio en Escorpio explora en profundidad. Pensamiento investigativo, percepción psicológica y palabras penetrantes.",
-        "aquarius": "Mercurio en Acuario innova el pensamiento. Ideas originales, desapego intelectual y conceptos progresistas.",
-        "ophiuchus": "Mercurio en Ofiucocura piensa medicinalmente. Comunicación curativa, conocimiento médico y percepción transformadora.",
-        "capricorn": "Mercurio en Capricornio estructura el pensamiento. Planificación estratégica, discurso autoritario y sabiduría práctica.",
-        "sagittarius": "Mercurio en Sagitario expande la comprensión. Pensamiento filosófico y comunicación amplia."
+        "leo": "Mercury in Leo expresses creatively. Dramatic speech, confident ideas, and heart-centered thinking.",
+        "aries": "Mercury in Aries thinks quickly and directly. Agile communication, impulsive ideas, and pioneering thought.",
+        "virgo": "Mercury is at home in Virgo. Analytical precision, practical intelligence, and detailed analysis.",
+        "libra": "Mercury in Libra seeks balanced thought. Diplomatic communication and consideration of all perspectives.",
+        "taurus": "Mercury in Taurus thinks practically. Steady learning, sensual perception, and methodical communication.",
+        "gemini": "Mercury is at home in Gemini. Quick wit, versatile thinking, and skillful communication.",
+        "cancer": "Mercury in Cancer thinks intuitively. Focus on memory, emotional intelligence, and nurturing words.",
+        "pisces": "Mercury in Pisces imagines intuitively. Poetic expression, receptive listening, and spiritual understanding.",
+        "scorpio": "Mercury in Scorpio explores in depth. Investigative thought, psychological perception, and penetrating words.",
+        "aquarius": "Mercury in Aquarius innovates thought. Original ideas, intellectual detachment, and progressive concepts.",
+        "ophiuchus": "Mercury in Ophiuchus thinks medicinally. Healing communication, medical knowledge, and transformative perception.",
+        "capricorn": "Mercury in Capricorn structures thought. Strategic planning, authoritative speech, and practical wisdom.",
+        "sagittarius": "Mercury in Sagittarius expands understanding. Philosophical thought and broad communication."
       },
       "jupiter": {
-        "leo": "Júpiter en Leo crea grandiosamente. Crecimiento a través de la autoexpresión, abundancia creativa y liderazgo generoso.",
-        "aries": "Júpiter en Aries se expande audazmente. Crecimiento a través de la iniciativa, comienzos afortunados y optimismo confiado.",
-        "virgo": "Júpiter en Virgo mejora hábilmente. Crecimiento a través del servicio, sabiduría práctica y abundancia de salud.",
-        "libra": "Júpiter en Libra armoniza justamente. Crecimiento a través de la asociación, apreciación estética y sabiduría diplomática.",
-        "taurus": "Júpiter en Tauro se manifiesta abundantemente. Crecimiento a través de la paciencia, bendiciones materiales y sabiduría sensual.",
-        "gemini": "Júpiter en Géminis aprende diversamente. Crecimiento a través de la comunicación, expansión intelectual y intereses variados.",
-        "cancer": "Júpiter en Cáncer nutre generosamente. Crecimiento a través de la crianza, abundancia emocional y sabiduría protectora.",
-        "pisces": "Júpiter en Piscis se disuelve en la inmensidad. Crecimiento a través de la compasión, abundancia espiritual y amor universal.",
-        "scorpio": "Júpiter en Escorpio se transforma profundamente. Crecimiento a través de la intensidad, recursos compartidos y sabiduría psicológica.",
-        "aquarius": "Júpiter en Acuario innova progresivamente. Crecimiento a través de la comunidad, sabiduría humanitaria y visión única.",
-        "ophiuchus": "Júpiter en Ofiuco se expande en la curación. Crecimiento a través de la medicina, sabiduría de la serpiente y conocimiento transformador.",
-        "capricorn": "Júpiter en Capricornio estructura sabiamente. Crecimiento a través de la disciplina, éxito estratégico y sabiduría autoritaria.",
-        "sagittarius": "Júpiter está en casa en Sagitario. Expansión ilimitada, sabiduría filosófica y viajes afortunados."
+        "leo": "Jupiter in Leo creates grandly. Growth through self-expression, creative abundance, and generous leadership.",
+        "aries": "Jupiter in Aries expands boldly. Growth through initiative, fortunate beginnings, and confident optimism.",
+        "virgo": "Jupiter in Virgo improves skillfully. Growth through service, practical wisdom, and health abundance.",
+        "libra": "Jupiter in Libra harmonizes justly. Growth through partnership, aesthetic appreciation, and diplomatic wisdom.",
+        "taurus": "Jupiter in Taurus manifests abundantly. Growth through patience, material blessings, and sensual wisdom.",
+        "gemini": "Jupiter in Gemini learns diversely. Growth through communication, intellectual expansion, and varied interests.",
+        "cancer": "Jupiter in Cancer nurtures generously. Growth through nurturing, emotional abundance, and protective wisdom.",
+        "pisces": "Jupiter in Pisces dissolves into immensity. Growth through compassion, spiritual abundance, and universal love.",
+        "scorpio": "Jupiter in Scorpio transforms deeply. Growth through intensity, shared resources, and psychological wisdom.",
+        "aquarius": "Jupiter in Aquarius innovates progressively. Growth through community, humanitarian wisdom, and unique vision.",
+        "ophiuchus": "Jupiter in Ophiuchus expands in healing. Growth through medicine, serpent wisdom, and transformative knowledge.",
+        "capricorn": "Jupiter in Capricorn structures wisely. Growth through discipline, strategic success, and authoritative wisdom.",
+        "sagittarius": "Jupiter is at home in Sagittarius. Unlimited expansion, philosophical wisdom, and fortunate journeys."
       }
     },
     "providerSetup": {
@@ -973,41 +973,41 @@
         "color": "#f43f5e",
         "website": "https://groq.com",
         "signupUrl": "https://console.groq.com/login",
-        "keyFormat": "Comienza con \"gsk_\" seguido de caracteres alfanuméricos",
+        "keyFormat": "Starts with \"gsk_\" followed by alphanumeric characters",
         "apiKeysUrl": "https://console.groq.com/keys",
-        "description": "Inferencia de IA ultrarrápida con Llama 3. La capa gratuita incluye 1M de tokens diarios.",
-        "pricingNote": "Nivel gratuito: 1M tokens/día. Planes de pago disponibles para un uso más alto.",
-        "freeTierInfo": "1.000.000 tokens/día gratis",
-        "keyPlaceholder": "gsk_tu_clave_api_aquí",
+        "description": "Ultra-fast AI inference with Llama 3. Free tier includes 1M tokens per day.",
+        "pricingNote": "Free tier: 1M tokens/day. Paid plans available for higher usage.",
+        "freeTierInfo": "1,000,000 free tokens/day",
+        "keyPlaceholder": "gsk_your_api_key_here",
         "setupSteps": {
           "0": {
-            "tip": "Use su correo electrónico o cuenta de Google para un registro rápido",
+            "tip": "Use your email or Google account for quick registration",
             "link": "https://console.groq.com/login",
             "title": "Create a Groq Account",
-            "action": "Ir a la Consola de Groq →",
-            "description": "Visite la Consola de Groq y regístrese para una cuenta gratuita."
+            "action": "Go to Groq Console →",
+            "description": "Visit the Groq Console and sign up for a free account."
           },
           "1": {
-            "tip": "Busque el ícono de la clave en el menú de navegación",
+            "tip": "Look for the key icon in the navigation menu",
             "link": "https://console.groq.com/keys",
             "title": "Navigate to API Keys",
-            "action": "Abrir Página de Claves API →",
-            "description": "Una vez que inicie sesión, haga clic en \"Claves API\" en la barra lateral izquierda."
+            "action": "Open API Keys Page →",
+            "description": "Once logged in, click \"API Keys\" in the left sidebar."
           },
           "2": {
-            "tip": "Elija un nombre descriptivo para recordar para qué es",
+            "tip": "Choose a descriptive name so you remember what it's for",
             "title": "Create New API Key",
-            "description": "Haga clic en el botón \"Crear Clave API\". Dale un nombre como \"HEKA Calendar\"."
+            "description": "Click the \"Create API Key\" button. Give it a name like \"HEKA Calendar\"."
           },
           "3": {
-            "tip": "⚠️ Por seguridad, Groq solo muestra la clave completa una vez. Si la pierde, cree una nueva.",
+            "tip": "⚠️ For security, Groq only shows the full key once. If you lose it, create a new one.",
             "title": "Copy Your API Key",
-            "description": "Copie la clave generada (comienza con \"gsk_\"). Guárdela de forma segura, ya no la verá de nuevo."
+            "description": "Copy the generated key (starts with \"gsk_\"). Save it securely — you won't see it again."
           },
           "4": {
-            "tip": "Su clave se almacena solo en este dispositivo",
+            "tip": "Your key is stored only on this device",
             "title": "Paste Key in HEKA",
-            "description": "Regrese a esta pantalla y pegue su clave debajo. Haga clic en \"Probar Conexión\" para verificar."
+            "description": "Return to this screen and paste your key below. Click \"Test Connection\" to verify."
           }
         }
       },
@@ -1017,42 +1017,42 @@
         "logo": "🤖",
         "color": "#10a37f",
         "website": "https://openai.com",
-        "signupUrl": "https://platform.openai.com/registro",
-        "keyFormat": "Comienza con \"sk-\" seguido de caracteres alfanuméricos",
-        "apiKeysUrl": "https://platform.openai.com/claves-api",
-        "description": "GPT-4 y GPT-3.5 Turbo para interpretaciones astrológicas matizadas. Calidad líder en la industria.",
-        "pricingNote": "Pago por uso después de los créditos gratuitos. GPT-3.5: ~$0.002 por 1K tokens.",
-        "freeTierInfo": "$5 en créditos gratuitos para nuevos usuarios",
+        "signupUrl": "https://platform.openai.com/signup",
+        "keyFormat": "Starts with \"sk-\" followed by alphanumeric characters",
+        "apiKeysUrl": "https://platform.openai.com/api-keys",
+        "description": "GPT-4 and GPT-3.5 Turbo for nuanced astrological interpretations. Industry-leading quality.",
+        "pricingNote": "Pay-per-use after free credits. GPT-3.5: ~$0.002 per 1K tokens.",
+        "freeTierInfo": "$5 in free credits for new users",
         "keyPlaceholder": "sk-your_api_key_here",
         "setupSteps": {
           "0": {
-            "tip": "Tenga su teléfono listo para verificación por SMS",
+            "tip": "Have your phone ready for SMS verification",
             "link": "https://platform.openai.com/signup",
             "title": "Create OpenAI Account",
-            "action": "Regístrese en OpenAI →",
-            "description": "Regístrese en la Plataforma de OpenAI. Necesitará verificación de correo electrónico y un número de teléfono."
+            "action": "Sign up at OpenAI →",
+            "description": "Sign up on the OpenAI Platform. You'll need email verification and a phone number."
           },
           "1": {
-            "tip": "Puedes establecer límites de uso para controlar los costos en la Configuración de Facturación",
+            "tip": "You can set usage limits to control costs in Billing Settings",
             "title": "Add Payment Method (Optional)",
-            "description": "Mientras obtiene $5 en créditos gratuitos, agregar un método de pago asegura un servicio ininterrumpido."
+            "description": "While you get $5 in free credits, adding a payment method ensures uninterrupted service."
           },
           "2": {
-            "tip": "No confundir esto con \"Claves API de Proyecto\" - necesitamos Claves API de Usuario",
+            "tip": "Don't confuse this with \"Project API Keys\" — we need User API Keys",
             "link": "https://platform.openai.com/api-keys",
-            "title": "Ve a la Sección de Claves API",
-            "action": "Abrir Claves API →",
-            "description": "Haz clic en tu foto de perfil → \"Tu Perfil\" → \"Claves API de Usuario\" o visita el enlace directo."
+            "title": "Go to API Keys Section",
+            "action": "Open API Keys →",
+            "description": "Click your profile picture → \"Your Profile\" → \"User API Keys\" or visit the direct link."
           },
           "3": {
-            "tip": "⚠️ OpenAI solo muestra la clave completa una vez. Cópiala de inmediato!",
-            "title": "Crear Nueva Clave Secreta",
-            "description": "Haz clic en \"Crear nueva clave secreta\". Nombrala \"HEKA Calendar\" para facilitar la identificación."
+            "tip": "⚠️ OpenAI only shows the full key once. Copy it immediately!",
+            "title": "Create New Secret Key",
+            "description": "Click \"Create new secret key\". Name it \"HEKA Calendar\" for easy identification."
           },
           "4": {
-            "tip": "Configura alertas de facturación en platform.openai.com/settings/organization/billing/limits",
-            "title": "Configurar en HEKA",
-            "description": "Pega tu clave aquí y prueba la conexión. Monitorea el uso en el tablero de OpenAI."
+            "tip": "Set up billing alerts at platform.openai.com/settings/organization/billing/limits",
+            "title": "Configure in HEKA",
+            "description": "Paste your key here and test the connection. Monitor usage on the OpenAI dashboard."
           }
         }
       },
@@ -1063,65 +1063,65 @@
         "color": "#ffffff",
         "website": "https://ollama.com",
         "signupUrl": "https://ollama.com/download",
-        "keyFormat": "Formato de URL: http://localhost:11434",
+        "keyFormat": "URL format: http://localhost:11434",
         "apiKeysUrl": "",
-        "description": "Ejecuta modelos de IA completamente en tu propio dispositivo. Privacidad completa, no se necesita internet después de la configuración.",
-        "pricingNote": "Sin costos. Requiere hardware capaz (se recomienda 8GB+ de RAM).",
-        "freeTierInfo": "100% gratis - se ejecuta localmente",
+        "description": "Run AI models entirely on your own device. Complete privacy, no internet needed after setup.",
+        "pricingNote": "No costs. Requires capable hardware (8GB+ RAM recommended).",
+        "freeTierInfo": "100% free — runs locally",
         "keyPlaceholder": "http://localhost:11434",
         "setupSteps": {
           "0": {
-            "tip": "La versión de Windows está disponible a través del Subsistema de Windows para Linux (WSL2)",
+            "tip": "Windows version is available through Windows Subsystem for Linux (WSL2)",
             "link": "https://ollama.com/download",
-            "title": "Descargar Ollama",
-            "action": "Descargar Ollama →",
-            "description": "Descarga e instala Ollama para tu sistema operativo (Mac, Linux o Windows)."
+            "title": "Download Ollama",
+            "action": "Download Ollama →",
+            "description": "Download and install Ollama for your operating system (Mac, Linux, or Windows)."
           },
           "1": {
-            "tip": "Se recomienda Llama 3 para obtener los mejores resultados. Los modelos son de varios GB para descargar.",
-            "title": "Instalar un Modelo",
-            "description": "Abre la terminal y ejecuta: ollama pull llama3 o ollama pull mistral"
+            "tip": "Llama 3 is recommended for best results. Models are several GB to download.",
+            "title": "Install a Model",
+            "description": "Open your terminal and run: ollama pull llama3 or ollama pull mistral"
           },
           "2": {
-            "tip": "El servidor se ejecuta por defecto en http://localhost:11434",
-            "title": "Iniciar Servidor Ollama",
-            "description": "Ejecuta: ollama serve para iniciar el servidor de API local. Mantén esta terminal abierta."
+            "tip": "The server runs by default on http://localhost:11434",
+            "title": "Start Ollama Server",
+            "description": "Run: ollama serve to start the local API server. Keep this terminal open."
           },
           "3": {
-            "tip": "La primera ejecución descarga el modelo. Las ejecuciones subsiguientes son instantáneas.",
-            "title": "Verificar Instalación",
-            "description": "Prueba ejecutando: ollama run llama3 en otra terminal. Escribe un mensaje de prueba."
+            "tip": "First run downloads the model. Subsequent runs are instant.",
+            "title": "Verify Installation",
+            "description": "Test by running: ollama run llama3 in another terminal. Type a test message."
           },
           "4": {
-            "tip": "Ollama debe estar en funcionamiento siempre que quieras lecturas mejoradas con IA",
-            "title": "Conectar HEKA",
-            "description": "Ingresa la URL del servidor (generalmente http://localhost:11434) debajo y prueba la conexión."
+            "tip": "Ollama must be running whenever you want AI-enhanced readings",
+            "title": "Connect HEKA",
+            "description": "Enter the server URL (usually http://localhost:11434) below and test the connection."
           }
         }
       },
       "template": {
-        "type": "plantilla",
-        "name": "Biblioteca de Plantillas",
+        "type": "template",
+        "name": "Template Library",
         "logo": "📚",
         "color": "#fbbf24",
         "website": "",
         "signupUrl": "",
         "keyFormat": "",
         "apiKeysUrl": "",
-        "description": "169+ plantillas de planeta-firmamento artesanales, tejidas en lecturas únicas por fase lunar, aspecto y categoría de vida. Siempre gratis, siempre instantáneo, sin configuración requerida.",
-        "pricingNote": "Ningún costo nunca. Impulsado por nuestro sistema de plantillas curados.",
-        "freeTierInfo": "Completamente gratis",
+        "description": "169+ handcrafted planet-firmament templates, woven into unique readings by lunar phase, aspect, and life category. Always free, always instant, no setup required.",
+        "pricingNote": "No cost ever. Powered by our curated template system.",
+        "freeTierInfo": "Completely free",
         "keyPlaceholder": "",
         "setupSteps": {
           "0": {
-            "tip": "Las plantillas cubren todos los eventos celestes principales y posiciones planetarias",
-            "title": "Seleccionar Biblioteca de Plantillas",
-            "description": "Esta es la opción predeterminada. Sin configuración necesaria."
+            "tip": "Templates cover all major celestial events and planetary positions",
+            "title": "Select Template Library",
+            "description": "This is the default option. No setup required."
           },
           "1": {
-            "tip": "Puedes cambiar a proveedores de IA en cualquier momento en el futuro",
-            "title": "Comenzar a Usar Inmediatamente",
-            "description": "Todas las lecturas astrológicas utilizarán nuestra biblioteca de plantillas pre-escritas."
+            "tip": "You can switch to AI providers at any time in the future",
+            "title": "Start Using Immediately",
+            "description": "All astrological readings will use our pre-written template library."
           }
         }
       },
@@ -1132,41 +1132,41 @@
         "color": "#d97757",
         "website": "https://anthropic.com",
         "signupUrl": "https://console.anthropic.com/login",
-        "keyFormat": "Comienza con \"sk-ant-\" seguido de caracteres alfanuméricos",
+        "keyFormat": "Starts with \"sk-ant-\" followed by alphanumeric characters",
         "apiKeysUrl": "https://console.anthropic.com/settings/keys",
-        "description": "Claude AI para una guía astrológica reflexiva y matizada con contexto extendido.",
-        "pricingNote": "Tarifas competitivas. Claude 3 Haiku: ~$0.25 por 1K tokens.",
-        "freeTierInfo": "$5 en créditos gratuitos para nuevos usuarios",
-        "keyPlaceholder": "sk-ant-tu_clave_api_aqui",
+        "description": "Claude AI for reflective, nuanced astrological guidance with extended context.",
+        "pricingNote": "Competitive rates. Claude 3 Haiku: ~$0.25 per 1K tokens.",
+        "freeTierInfo": "$5 in free credits for new users",
+        "keyPlaceholder": "sk-ant-your_api_key_here",
         "setupSteps": {
           "0": {
-            "tip": "Anthropic puede tener una lista de espera - la aprobación suele ser rápida",
+            "tip": "Anthropic may have a waitlist — approval is usually quick",
             "link": "https://console.anthropic.com/login",
-            "title": "Regístrate en Anthropic",
-            "action": "Ir a la Consola Anthropic →",
-            "description": "Crea una cuenta en la Consola Anthropic utilizando tu correo electrónico de trabajo."
+            "title": "Sign Up at Anthropic",
+            "action": "Go to Anthropic Console →",
+            "description": "Create an account on the Anthropic Console using your work email."
           },
           "1": {
-            "tip": "Revisa la carpeta de spam si no ves el correo electrónico en unos pocos minutos",
-            "title": "Verifica Tu Cuenta",
-            "description": "Revisa tu correo electrónico para el enlace de verificación. Completa cualquier paso de verificación requerido."
+            "tip": "Check your spam folder if you don't see the email within a few minutes",
+            "title": "Verify Your Account",
+            "description": "Check your email for the verification link. Complete any required verification steps."
           },
           "2": {
-            "tip": "El icono de engranaje de configuración está en la esquina superior derecha",
+            "tip": "The settings gear icon is in the top-right corner",
             "link": "https://console.anthropic.com/settings/keys",
-            "title": "Accede a las Claves API",
-            "action": "Abrir Claves API →",
-            "description": "En la consola, ve a Configuración → Claves API o utiliza el enlace directo a continuación."
+            "title": "Access API Keys",
+            "action": "Open API Keys →",
+            "description": "In the console, go to Settings → API Keys or use the direct link below."
           },
           "3": {
-            "tip": "Puedes crear múltiples claves para diferentes aplicaciones",
-            "title": "Generar Clave API",
-            "description": "Haz clic en \"Crear Clave\". Dale un nombre descriptivo como \"HEKA Astrology\"."
+            "tip": "You can create multiple keys for different applications",
+            "title": "Generate API Key",
+            "description": "Click \"Create Key\". Give it a descriptive name like \"HEKA Astrology\"."
           },
           "4": {
-            "tip": "Las claves nunca expiran a menos que las revoques manualmente",
-            "title": "Copiar y Configurar",
-            "description": "Copia la clave (comienza con \"sk-ant-\") y pégala debajo en HEKA."
+            "tip": "Keys never expire unless you manually revoke them",
+            "title": "Copy and Configure",
+            "description": "Copy the key (starts with \"sk-ant-\") and paste it below in HEKA."
           }
         }
       }
@@ -1187,102 +1187,102 @@
         }
       },
       "Full Moon": {
-        "poem": "Todo lo que estaba oculto en la oscuridad ahora se revela a la luz. La semilla plantada en la Luna Nueva rompe la tierra. Tu trabajo culmina. El mundo testifica tu plenitud.",
-        "title": "LA GRAN REVELACIÓN",
+        "poem": "All that was hidden in darkness now reveals itself to light. The seed planted at New Moon breaks through the earth. Your work culminates. The world witnesses your fullness.",
+        "title": "THE GREAT REVELATION",
         "favors": {
-          "0": "Celebración",
-          "1": "Liberar lo que ya no sirve",
-          "2": "Visibilidad pública",
-          "3": "Prácticas de gratitud"
+          "0": "Celebration",
+          "1": "Releasing what no longer serves",
+          "2": "Public visibility",
+          "3": "Gratitude practices"
         },
         "warnings": {
-          "0": "Las emociones están altas",
-          "1": "El sueño puede estar perturbado"
+          "0": "Emotions run high",
+          "1": "Sleep may be disturbed"
         }
       },
       "Last Quarter": {
-        "poem": "Mitad permanece, mitad debe irse. ¿Qué llevarás adelante? ¿Qué dejarás atrás? La elección es tuya, y tuya sola.",
-        "title": "LA LIBERACIÓN",
+        "poem": "Half remains, half must go. What will you carry forward? What will you leave behind? The choice is yours, and yours alone.",
+        "title": "THE RELEASE",
         "favors": {
-          "0": "Dejar ir",
-          "1": "Soltar apego",
-          "2": "Limpiar espacio",
-          "3": "Perdonar"
+          "0": "Letting go",
+          "1": "Releasing attachment",
+          "2": "Clearing space",
+          "3": "Forgiveness"
         },
         "warnings": {
-          "0": "No comiences nuevos proyectos",
-          "1": "Completa lo que puedas"
+          "0": "Don't start new projects",
+          "1": "Complete what you can"
         }
       },
       "First Quarter": {
-        "poem": "Mitad luz, mitad sombra—la decisión colgando en el equilibrio. El camino adelante requiere acción. Elige, y el universo conspira.",
-        "title": "LAS ENCRUcijadas",
+        "poem": "Half light, half shadow—the decision hanging in balance. The path ahead requires action. Choose, and the universe conspires.",
+        "title": "THE CROSSROADS",
         "favors": {
-          "0": "Tomar decisiones",
-          "1": "Tomar acción",
-          "2": "Superar obstáculos",
-          "3": "Comprometerse"
+          "0": "Making decisions",
+          "1": "Taking action",
+          "2": "Overcoming obstacles",
+          "3": "Committing"
         },
         "warnings": {
-          "0": "Evita la hesitación",
-          "1": "No mirar atrás"
+          "0": "Avoid hesitation",
+          "1": "Don't look back"
         }
       },
       "Waxing Gibbous": {
-        "poem": "Casi lleno, casi completo. El impulso se construye como una ola al llegar a su cresta. Refina, ajusta, prepárate para la revelación.",
-        "title": "LA REUNIÓN",
+        "poem": "Almost full, almost complete. Momentum builds like a wave reaching its crest. Refine, adjust, prepare for the revelation.",
+        "title": "THE GATHERING",
         "favors": {
-          "0": "Refinar proyectos",
-          "1": "Ajustar planes",
-          "2": "Prepararse para el lanzamiento",
-          "3": "Reunir recursos"
+          "0": "Refining projects",
+          "1": "Adjusting plans",
+          "2": "Preparing for launch",
+          "3": "Gathering resources"
         },
         "warnings": {
-          "0": "No apresurarse a la finalización",
-          "1": "La paciencia recompensa"
+          "0": "Don't rush to completion",
+          "1": "Patience rewards"
         }
       },
       "Waning Gibbous": {
-        "poem": "La luz comienza su retirada gentil, pero la sabiduría permanece. Comparte lo que has aprendido. Enséñale a otros lo que la plenitud te enseñó.",
-        "title": "LA COMPARTICIÓN",
+        "poem": "The light begins its gentle retreat, but wisdom remains. Share what you have learned. Teach others what fullness taught you.",
+        "title": "THE SHARING",
         "favors": {
-          "0": "Compartir conocimientos",
-          "1": "Enseñar",
-          "2": "Dar de vuelta",
+          "0": "Sharing knowledge",
+          "1": "Teaching",
+          "2": "Giving back",
           "3": "Gratitude"
         },
         "warnings": {
-          "0": "No aferrarte al pico",
-          "1": "Deja que el ciclo se complete"
+          "0": "Don't cling to the peak",
+          "1": "Let the cycle complete"
         }
       },
       "Waxing Crescent": {
         "poem": "A sliver of silver pierces the night. The dream begins to breathe, taking its first steps into form. Trust the unfolding.",
         "title": "THE FIRST BREATH",
         "favors": {
-          "0": "Dar los primeros pasos",
-          "1": "Construir impulso",
-          "2": "Aprender nuevas habilidades",
-          "3": "Hacer conexiones"
+          "0": "Taking first steps",
+          "1": "Building momentum",
+          "2": "Learning new skills",
+          "3": "Making connections"
         },
         "warnings": {
-          "0": "No te sobrecometies",
-          "1": "Mantente flexible"
+          "0": "Don't overcommit",
+          "1": "Stay flexible"
         }
       },
       "Waning Crescent": {
-        "poem": "Un susurro plateado desvanecido en la negrura. Descansa ahora. El trabajo está hecho. Rendirte a la oscuridad, sabiendo que la luz volverá.",
-        "title": "LA RENDICIÓN",
+        "poem": "A silver whisper fading into blackness. Rest now. The work is done. Surrender to the darkness, knowing the light will return.",
+        "title": "THE SURRENDER",
         "favors": {
-          "0": "Descanso profundo",
-          "1": "Rendirse",
-          "2": "Meditación",
-          "3": "Preparación",
-          "4": "Trabajo de sueños"
+          "0": "Deep rest",
+          "1": "Surrender",
+          "2": "Meditation",
+          "3": "Preparation",
+          "4": "Dream work"
         },
         "warnings": {
-          "0": "Evita decisiones importantes",
-          "1": "Ahorra energía"
+          "0": "Avoid major decisions",
+          "1": "Conserve energy"
         }
       }
     },
@@ -1405,6 +1405,227 @@
         },
         "quality": "Expansion & Fortune",
         "description": "Jupiter expands everything it touches. Fortune, wisdom, and growth are blessed in this hour."
+      }
+    }
+  },
+  "moonOracle": {
+    "New Moon": {
+      "title": "The Seed",
+      "poem": "In darkness, potential stirs. What will you begin?",
+      "favors": {
+        "0": "Setting intentions",
+        "1": "Starting new projects",
+        "2": "Planting seeds literal and metaphorical",
+        "3": "Rest and renewal"
+      },
+      "warnings": {
+        "0": "Avoid major decisions without reflection",
+        "1": "Energy is low — pace yourself"
+      }
+    },
+    "Waxing Crescent": {
+      "title": "The Sprout",
+      "poem": "First light breaks. Nourish what you have planted.",
+      "favors": {
+        "0": "Taking first steps",
+        "1": "Learning and research",
+        "2": "Building momentum",
+        "3": "Sharing ideas"
+      },
+      "warnings": {
+        "0": "Do not rush the process",
+        "1": "Patience is required"
+      }
+    },
+    "First Quarter": {
+      "title": "The Crossroads",
+      "poem": "Half-illuminated, half in shadow. Choose your path with courage.",
+      "favors": {
+        "0": "Making decisions",
+        "1": "Overcoming obstacles",
+        "2": "Taking action",
+        "3": "Asserting yourself"
+      },
+      "warnings": {
+        "0": "Conflict may arise",
+        "1": "Balance action with reflection"
+      }
+    },
+    "Waxing Gibbous": {
+      "title": "The Blossom",
+      "poem": "Almost full. Refine and prepare for the harvest to come.",
+      "favors": {
+        "0": "Refinement and polish",
+        "1": "Analysis and review",
+        "2": "Gathering resources",
+        "3": "Strengthening commitments"
+      },
+      "warnings": {
+        "0": "Avoid perfectionism",
+        "1": "Do not overextend"
+      }
+    },
+    "Full Moon": {
+      "title": "The Mirror",
+      "poem": "Illumination complete. What was hidden is now revealed.",
+      "favors": {
+        "0": "Celebration and gratitude",
+        "1": "Releasing what no longer serves",
+        "2": "Heightened intuition",
+        "3": "Culmination and completion"
+      },
+      "warnings": {
+        "0": "Emotions run high",
+        "1": "Restlessness may disrupt sleep"
+      }
+    },
+    "Waning Gibbous": {
+      "title": "The Gratitude",
+      "poem": "Light begins to recede. Give thanks for what you have received.",
+      "favors": {
+        "0": "Sharing wisdom",
+        "1": "Teaching others",
+        "2": "Reflecting on achievements",
+        "3": "Giving back"
+      },
+      "warnings": {
+        "0": "Do not cling to the past",
+        "1": "Let go of expectations"
+      }
+    },
+    "Last Quarter": {
+      "title": "The Reckoning",
+      "poem": "Half-light, half-shadow. Release and forgive what must end.",
+      "favors": {
+        "0": "Letting go",
+        "1": "Forgiveness",
+        "2": "Clearing space",
+        "3": "Inner reflection"
+      },
+      "warnings": {
+        "0": "Resisting change prolongs suffering",
+        "1": "Avoid blame — look within"
+      }
+    },
+    "Waning Crescent": {
+      "title": "The Surrender",
+      "poem": "Darkness returns. Surrender to the cycle. Rest and restore.",
+      "favors": {
+        "0": "Rest and sleep",
+        "1": "Meditation",
+        "2": "Dream work",
+        "3": "Self-care"
+      },
+      "warnings": {
+        "0": "Energy is lowest now",
+        "1": "Avoid demanding tasks"
+      }
+    }
+  },
+  "planetaryGuidance": {
+    "sun": {
+      "description": "The Sun hour radiates vitality, confidence, and leadership. It is the time to shine, take charge, and express your authentic self.",
+      "do": {
+        "0": "Take leadership roles",
+        "1": "Express creativity",
+        "2": "Seek recognition",
+        "3": "Make important decisions",
+        "4": "Exercise and build strength"
+      },
+      "dont": {
+        "0": "Hide in the background",
+        "1": "Avoid responsibility",
+        "2": "Doubt yourself"
+      }
+    },
+    "moon": {
+      "description": "The Moon hour flows with emotion, intuition, and nurturing energy. Listen to your inner voice and care for yourself and others.",
+      "do": {
+        "0": "Meditate and reflect",
+        "1": "Nurture relationships",
+        "2": "Engage in creative arts",
+        "3": "Trust your intuition",
+        "4": "Rest and restore"
+      },
+      "dont": {
+        "0": "Make rash decisions",
+        "1": "Ignore your feelings",
+        "2": "Overexert yourself"
+      }
+    },
+    "mercury": {
+      "description": "The Mercury hour buzzes with mental clarity, communication, and swift movement. Write, speak, negotiate, and solve problems.",
+      "do": {
+        "0": "Write and communicate",
+        "1": "Study and learn",
+        "2": "Negotiate deals",
+        "3": "Travel short distances",
+        "4": "Solve puzzles"
+      },
+      "dont": {
+        "0": "Sign contracts without review",
+        "1": "Gossip or spread rumors",
+        "2": "Rush important messages"
+      }
+    },
+    "venus": {
+      "description": "The Venus hour glows with beauty, harmony, and connection. Create art, enjoy pleasure, and strengthen bonds.",
+      "do": {
+        "0": "Create art or music",
+        "1": "Socialize and flirt",
+        "2": "Decorate your space",
+        "3": "Indulge in beauty",
+        "4": "Reconcile differences"
+      },
+      "dont": {
+        "0": "Start conflicts",
+        "1": "Neglect self-care",
+        "2": "Make financial gambles"
+      }
+    },
+    "mars": {
+      "description": "The Mars hour burns with passion, courage, and drive. Attack challenges head-on and assert your will.",
+      "do": {
+        "0": "Start physical workouts",
+        "1": "Tackle difficult tasks",
+        "2": "Stand up for yourself",
+        "3": "Begin competitive ventures",
+        "4": "Take bold action"
+      },
+      "dont": {
+        "0": "Start unnecessary arguments",
+        "1": "Act recklessly",
+        "2": "Suppress righteous anger"
+      }
+    },
+    "jupiter": {
+      "description": "The Jupiter hour expands with wisdom, luck, and generosity. Teach, learn, give, and grow. Fortune favors the bold.",
+      "do": {
+        "0": "Teach or mentor others",
+        "1": "Seek wisdom and truth",
+        "2": "Make long-term plans",
+        "3": "Give generously",
+        "4": "Explore new horizons"
+      },
+      "dont": {
+        "0": "Be miserly or cynical",
+        "1": "Ignore opportunities",
+        "2": "Overindulge"
+      }
+    },
+    "saturn": {
+      "description": "The Saturn hour demands discipline, structure, and responsibility. Build foundations, honor commitments, and endure.",
+      "do": {
+        "0": "Organize and plan",
+        "1": "Complete tedious tasks",
+        "2": "Set boundaries",
+        "3": "Honor commitments",
+        "4": "Build lasting structures"
+      },
+      "dont": {
+        "0": "Cut corners",
+        "1": "Avoid duty",
+        "2": "Break promises"
       }
     }
   }

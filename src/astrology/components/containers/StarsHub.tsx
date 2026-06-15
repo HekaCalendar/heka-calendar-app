@@ -3,7 +3,8 @@
  * Premium celestial intelligence interface
  */
 
-import React, { useState, useEffect, useRef, useMemo } from 'react';
+import React, { useState, useEffect, useRef, useMemo, useCallback } from 'react';
+import { useVisibility } from '../../../hooks/useVisibility';
 import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
@@ -19,7 +20,7 @@ import {
   calculateLocalHouses,
   clearCalculationCache,
 } from '../../services/calculations/swissCalculations';
-import { initializeSwissEphemeris, setZodiacSystem } from '../../services/swiss-ephemeris/engine';
+import { initializeSwissEphemeris, setZodiacSystem, setSiderealMode } from '../../services/swiss-ephemeris/engine';
 import type { CelestialBody } from '../../types';
 import { PLANET_NAMES, SIGN_ELEMENTS, SIGN_MODALITIES, SIGN_ELEMENTS_13, SIGN_MODALITIES_13 } from '../../types';
 import DailyBriefing from '../presentation/DailyBriefing';
@@ -34,13 +35,41 @@ import { CELESTIAL_THEMES, DEFAULT_CELESTIAL_THEME, generateThemeCSS, type Celes
 import './StarsHub.css';
 import './StarsHub.landscape.css';
 import { NotificationEngine } from '../../../services/notificationEngine';
-import { store } from '../../../store';
 import { profileManager } from '../../services/natal/profileManager';
 import { getUnifiedUserBirthData, deleteUnifiedChart, getUnifiedChart } from '../../utils/chartBridge';
 import { CelestialErrorBoundary } from '../error/CelestialErrorBoundary';
+import { dialogService } from '../../../components/ui/DialogProvider';
 import { StarfieldCanvas } from '../../../components/onboarding/v3/StarfieldCanvas';
 import { TwoSelvesModal } from '../modals/TwoSelvesModal';
+import type { BirthData as TwoSelvesBirthData } from '../../services/natal/natalChart';
 import { StarsNotificationSettings } from '../../../components/notification/StarsNotificationSettings';
+
+// Normalize the two different BirthData shapes used across the app for the Two Selves modal.
+function normalizeTwoSelvesBirthData(chart: any): TwoSelvesBirthData | null {
+  const bd = chart?.birthData;
+  if (!bd) return null;
+  if (typeof bd.date === 'string') {
+    return {
+      date: bd.date,
+      time: bd.time,
+      latitude: typeof bd.latitude === 'number' ? bd.latitude : bd.location?.latitude ?? 0,
+      longitude: typeof bd.longitude === 'number' ? bd.longitude : bd.location?.longitude ?? 0,
+      timezone: String(bd.timezone ?? 'UTC'),
+      locationName: bd.locationName || bd.location?.locationName,
+    };
+  }
+  if (typeof bd.birthDate === 'string') {
+    return {
+      date: bd.birthDate,
+      time: bd.birthTime,
+      latitude: bd.location?.latitude ?? 0,
+      longitude: bd.location?.longitude ?? 0,
+      timezone: String(bd.timezone ?? bd.location?.timezone ?? 'UTC'),
+      locationName: bd.location?.locationName,
+    };
+  }
+  return null;
+}
 
 // Module-level debounce guards — survive rapid remounts
 let globalAstrologyInitTs = 0;
@@ -70,11 +99,27 @@ const ZODIAC_ORDER_13 = [
   'libra', 'scorpio', 'ophiuchus', 'sagittarius', 'capricorn', 'aquarius', 'pisces'
 ];
 
+const VOID_MOON_DEFAULT = { isVoid: false };
+
 // Helper to get signs array based on zodiac system (used for sign displays)
 export const getZodiacSigns = (use13Signs: boolean) => use13Signs ? ZODIAC_ORDER_13 : ZODIAC_ORDER_12;
 
 function getPlanetDomain(planet: string, t: (key: string, options?: any) => string): string {
   return t(`planetDomains.${planet.toLowerCase()}`, { defaultValue: t('planetDomains.default') });
+}
+
+function parseThemeCSS(theme: typeof CELESTIAL_THEMES[CelestialThemeId]): React.CSSProperties {
+  const style: React.CSSProperties = {};
+  generateThemeCSS(theme)
+    .split('\n')
+    .filter((line) => line.includes(':'))
+    .forEach((line) => {
+      const [key, value] = line.split(':');
+      if (key?.trim()) {
+        (style as Record<string, string>)[key.trim()] = value?.replace(';', '').trim() || '';
+      }
+    });
+  return style;
 }
 
 type TabType = 'overview' | 'guidance' | 'void-moon' | 'positions' | 'chart' | 'settings';
@@ -89,27 +134,30 @@ export const StarsHub: React.FC = () => {
   // Use unified chart retrieval that checks BOTH legacy and Redux storage
   const reduxChart = useSelector(selectSelectedProfileChart);
   
-  // Cache unified chart lookup to prevent localStorage reads on every render
-  const unifiedChart = useMemo(() => getUnifiedChart(), []);
-  
+  // Cache unified chart lookup to prevent localStorage reads on every render.
+  // Refresh when the Redux chart changes so the fallback stays in sync.
+  const unifiedChart = useMemo(() => getUnifiedChart(), [reduxChart]);
+
   // Prefer Redux chart if available, fall back to unified (legacy) chart
   const natalChart = reduxChart || unifiedChart;
-  
-  const astroPreferences = useSelector((state: RootState) => state.calendar.astroPreferences);
-  const zodiacSystem = astroPreferences?.zodiacSystem || '12-sign';
-  const zodiacFrame = astroPreferences?.zodiacFrame || 'tropical';
-  const signCount = astroPreferences?.signCount || 12;
+
+  const zodiacSystem = useSelector((state: RootState) => state.calendar.astroPreferences.zodiacSystem);
+  const zodiacFrame = useSelector((state: RootState) => state.calendar.astroPreferences.zodiacFrame);
+  const signCount = useSelector((state: RootState) => state.calendar.astroPreferences.signCount);
   const timeMode = useSelector((state: RootState) => state.calendar.timeMode);
-  const notificationPreferences = useSelector((state: RootState) => state.calendar.notificationPreferences);
+  const dailyCelestialTips = useSelector((state: RootState) => state.calendar.notificationPreferences.stars.dailyCelestialTips);
+  const retrogradeAlerts = useSelector((state: RootState) => state.calendar.notificationPreferences.stars.retrogradeAlerts);
   const selectedProfileId = useSelector((state: RootState) => state.astrology.ui.selectedProfileId);
-  
+
+  // Cache unified birth data; only re-read when the active profile changes
+  const unifiedBirthData = useMemo(() => getUnifiedUserBirthData(), [selectedProfileId, natalChart]);
+
   // Refs for managing async operations and cleanup
   const zodiacAbortControllerRef = useRef<AbortController | null>(null);
   const calculationAbortControllerRef = useRef<AbortController | null>(null);
   const isMountedRef = useRef(true);
-  
+  const isVisible = useVisibility();
 
-  
   const [activeTab, setActiveTab] = useState<TabType>('overview');
   const [positions, setPositions] = useState<Record<string, CelestialBody> | null>(null);
   const [skyData, setSkyData] = useState<{ positions: Record<string, CelestialBody>; julianDay: number; timestamp: number } | null>(null);
@@ -262,11 +310,12 @@ export const StarsHub: React.FC = () => {
     init();
   }, []);
   
-  // Update time every minute
+  // Update time every minute when visible, every 5 minutes when backgrounded
   useEffect(() => {
-    const timer = setInterval(() => setCurrentTime(new Date()), 60000);
+    const interval = isVisible ? 60000 : 300000;
+    const timer = setInterval(() => setCurrentTime(new Date()), interval);
     return () => clearInterval(timer);
-  }, []);
+  }, [isVisible]);
   
   // Calculate astronomical data (only when ready)
   // Uses AbortController to cancel stale calculations
@@ -284,52 +333,49 @@ export const StarsHub: React.FC = () => {
     
     const calculate = async () => {
       try {
-        // Calculate current sky positions
-        const skyData = await calculateCurrentSky(currentTime);
+        // Sky positions and planetary hour can be computed in parallel.
+        const [skyData, hour] = await Promise.all([
+          calculateCurrentSky(currentTime),
+          userLocation
+            ? getCurrentPlanetaryHour(
+                currentTime,
+                userLocation.latitude,
+                userLocation.longitude,
+                userLocation.timezone ?? 0
+              )
+            : Promise.resolve(null),
+        ]);
         if (signal.aborted || !isMountedRef.current) return;
-        
+
         setPositions(skyData.positions);
         setSkyData(skyData);
         setJulianDay(skyData.julianDay);
-        
-        // Calculate moon phase
-        if (skyData.positions.sun && skyData.positions.moon) {
-          const phase = calculatePreciseMoonPhase(
-            skyData.positions.sun,
-            skyData.positions.moon
-          );
-          if (signal.aborted || !isMountedRef.current) return;
-          setMoonPhase(phase);
-        }
-        
-        // Calculate planetary hour with true Swiss Ephemeris accuracy
-        const hour = await getCurrentPlanetaryHour(
-          currentTime,
-          userLocation?.latitude ?? 0,
-          userLocation?.longitude ?? 0,
-          userLocation?.timezone ?? 0
-        );
+        if (hour) setPlanetaryHour(hour);
+
+        // Moon phase, retrogrades, and houses depend on skyData/location.
+        const [phase, retro, houses] = await Promise.all([
+          skyData.positions.sun && skyData.positions.moon
+            ? Promise.resolve(
+                calculatePreciseMoonPhase(skyData.positions.sun, skyData.positions.moon)
+              )
+            : Promise.resolve(null),
+          skyData.positions
+            ? Promise.resolve(calculateRetrogrades(skyData.positions))
+            : Promise.resolve([]),
+          userLocation
+            ? calculateLocalHouses(
+                currentTime,
+                userLocation.latitude,
+                userLocation.longitude,
+                'placidus'
+              )
+            : Promise.resolve(null),
+        ]);
         if (signal.aborted || !isMountedRef.current) return;
-        setPlanetaryHour(hour);
-        
-        // Calculate retrogrades
-        if (skyData.positions) {
-          const retro = calculateRetrogrades(skyData.positions);
-          if (signal.aborted || !isMountedRef.current) return;
-          setRetrogrades(retro.filter((r: any) => r.isRetrograde));
-        }
-        
-        // Calculate local houses (Ascendant, MC, etc.)
-        if (userLocation) {
-          const houses = await calculateLocalHouses(
-            currentTime,
-            userLocation.latitude,
-            userLocation.longitude,
-            'placidus'
-          );
-          if (signal.aborted || !isMountedRef.current) return;
-          setLocalHouses(houses);
-        }
+
+        if (phase) setMoonPhase(phase);
+        if (retro) setRetrogrades(retro.filter((r: any) => r.isRetrograde));
+        if (houses) setLocalHouses(houses);
       } catch (error) {
         if (!signal.aborted) {
           console.error('[StarsHub] Calculation error:', error);
@@ -373,8 +419,7 @@ export const StarsHub: React.FC = () => {
   
   // Schedule daily celestial tips when preference changes
   useEffect(() => {
-    const prefs = store.getState().calendar.notificationPreferences.stars;
-    if (prefs.dailyCelestialTips) {
+    if (dailyCelestialTips) {
       const now = new Date();
       const scheduleTime = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 7, 0, 0);
       if (scheduleTime <= now) scheduleTime.setDate(scheduleTime.getDate() + 1);
@@ -393,12 +438,18 @@ export const StarsHub: React.FC = () => {
     } else {
       void NotificationEngine.cancelByType('daily-celestial-tips');
     }
-  }, [notificationPreferences.stars.dailyCelestialTips]);
+  }, [dailyCelestialTips]);
   
+  // Stable signature so we don't cancel/reschedule alerts every minute when
+  // the retrograde data itself hasn't materially changed.
+  const retrogradeSignature = useMemo(
+    () => retrogrades.map((r) => r.planet).sort().join(','),
+    [retrogrades]
+  );
+
   // Schedule retrograde alerts when preference changes
   useEffect(() => {
-    const prefs = store.getState().calendar.notificationPreferences.stars;
-    if (prefs.retrogradeAlerts && retrogrades.length > 0) {
+    if (retrogradeAlerts && retrogrades.length > 0) {
       for (const retro of retrogrades) {
         // Schedule 3 days before each retrograde start
         // (This is a simplified placeholder — real implementation would use exact station dates)
@@ -419,7 +470,7 @@ export const StarsHub: React.FC = () => {
     } else {
       void NotificationEngine.cancelByType('retrograde-alert');
     }
-  }, [notificationPreferences.stars.retrogradeAlerts, retrogrades]);
+  }, [retrogradeAlerts, retrogradeSignature]);
   
   // Recalculate chart when zodiac system changes
   // Uses AbortController pattern to prevent race conditions on rapid toggles
@@ -439,6 +490,12 @@ export const StarsHub: React.FC = () => {
     
     // Set the zodiac system in the Swiss Ephemeris engine FIRST
     setZodiacSystem(zodiacSystem);
+    // Configure sidereal mode so WASM ayanamsa is applied correctly
+    if (zodiacFrame === 'sidereal') {
+      setSiderealMode('lahiri');
+    } else {
+      setSiderealMode(null);
+    }
     // Also set split fields for new engine API
     import('../../services/swiss-ephemeris/engine').then(({ setZodiacFrame: setEngineFrame, setSignCount: setEngineCount }) => {
       setEngineFrame(zodiacFrame);
@@ -511,43 +568,47 @@ export const StarsHub: React.FC = () => {
     };
   }, [zodiacSystem, zodiacFrame, signCount, dispatch, selectedProfileId]);
 
-  const tabs: { id: TabType; label: string; icon: string; badge?: number }[] = [
+  const tabs: { id: TabType; label: string; icon: string; badge?: number }[] = useMemo(() => [
     { id: 'overview', label: t('starsHub.overview'), icon: '◈' },
     { id: 'guidance', label: t('starsHub.guidance'), icon: '◐' },
     { id: 'void-moon', label: t('starsHub.voidMoon'), icon: '🌑' },
     { id: 'positions', label: t('starsHub.positions'), icon: '✧' },
     { id: 'chart', label: t('starsHub.chart'), icon: '◉' },
     { id: 'settings', label: t('starsHub.settings'), icon: '⚙' },
-  ];
+  ], [t]);
+
+  const themeStyle = useMemo(() => parseThemeCSS(currentTheme), [currentTheme]);
+
+  const handleBack = useCallback(() => navigate('/'), [navigate]);
+  const handleSetTropical = useCallback(() => {
+    dispatch(updateAstroPreferences({ zodiacSystem: '12-sign', zodiacFrame: 'tropical', signCount: 12 }));
+  }, [dispatch]);
+  const handleSetSidereal = useCallback(() => {
+    dispatch(updateAstroPreferences({ zodiacSystem: 'sidereal', zodiacFrame: 'sidereal', signCount }));
+  }, [dispatch, signCount]);
+  const handleSet12Signs = useCallback(() => {
+    dispatch(updateAstroPreferences({ zodiacSystem: 'sidereal', zodiacFrame: 'sidereal', signCount: 12 }));
+  }, [dispatch]);
+  const handleSet13Signs = useCallback(() => {
+    dispatch(updateAstroPreferences({ zodiacSystem: 'sidereal', zodiacFrame: 'sidereal', signCount: 13 }));
+  }, [dispatch]);
+  const handleOpenSettings = useCallback(() => setActiveTab('settings'), []);
+  const handleTabClick = useCallback((e: React.MouseEvent<HTMLButtonElement>) => {
+    const tab = e.currentTarget.dataset.tab as TabType;
+    if (tab) setActiveTab(tab);
+  }, []);
 
   return (
-    <div className={`stars-hub ci-font-${font}`} style={{ 
-      ...Object.fromEntries(
-        generateThemeCSS(currentTheme)
-          .split('\n')
-          .filter(line => line.includes(':'))
-          .map(line => {
-            const [key, value] = line.split(':').map(s => s.trim());
-            return [key?.replace('--ci-', '--ci-'), value?.replace(';', '')];
-          })
-          .filter(([k]) => k)
-      ) as React.CSSProperties
-    }}>
+    <div className={`stars-hub ci-font-${font}`} style={themeStyle}>
 
       {/* Two Selves Modal */}
-      {(() => {
-        const activeProfileWithChart = profileManager.getActiveProfileWithChart();
-        if (showTwoSelves && activeProfileWithChart?.chart?.birthData) {
-          return (
-            <TwoSelvesModal
-              isOpen={showTwoSelves}
-              onClose={() => setShowTwoSelves(false)}
-              birthData={activeProfileWithChart.chart.birthData}
-            />
-          );
-        }
-        return null;
-      })()}
+      {showTwoSelves && natalChart && normalizeTwoSelvesBirthData(natalChart) && (
+        <TwoSelvesModal
+          isOpen={showTwoSelves}
+          onClose={() => setShowTwoSelves(false)}
+          birthData={normalizeTwoSelvesBirthData(natalChart)!}
+        />
+      )}
 
       {/* Full-screen animated starfield — same quality as tutorial */}
       <div className="stars-hub__canvas">
@@ -563,9 +624,9 @@ export const StarsHub: React.FC = () => {
         
         {/* Header with Back and Live */}
         <header className="sh-header">
-          <button 
-            className="sh-back" 
-            onClick={() => navigate('/')}
+          <button
+            className="sh-back"
+            onClick={handleBack}
           >
             {t('starsHub.back')}
           </button>
@@ -596,7 +657,8 @@ export const StarsHub: React.FC = () => {
           <button
             key={tab.id}
             className={`sh-tab ${activeTab === tab.id ? 'active' : ''}`}
-            onClick={() => setActiveTab(tab.id)}
+            onClick={handleTabClick}
+            data-tab={tab.id}
           >
             <span>{tab.icon}</span>
             {tab.label}
@@ -682,7 +744,7 @@ export const StarsHub: React.FC = () => {
                   </div>
                 </div>
                 <div className="sh-section-content">
-                  <DailyBriefing />
+                  <DailyBriefing positions={positions} />
                 </div>
               </div>
             </>
@@ -695,11 +757,11 @@ export const StarsHub: React.FC = () => {
                 <CelestialGuidanceV2 
                   latitude={userLocation?.latitude ?? 0}
                   longitude={userLocation?.longitude ?? 0}
-                  voidMoonData={{ isVoid: false }}
+                  voidMoonData={VOID_MOON_DEFAULT}
                   natalChart={natalChart}
                   skyData={skyData}
                   planetaryHour={planetaryHour?.planet}
-                  onOpenSettings={() => setActiveTab('settings')}
+                  onOpenSettings={handleOpenSettings}
                 />
               </CelestialErrorBoundary>
             </div>
@@ -714,8 +776,9 @@ export const StarsHub: React.FC = () => {
               padding: 0,
               overflow: 'visible',
             }}>
-              <VoidMoonSanctuary 
-                userBirthData={getUnifiedUserBirthData()}
+              <VoidMoonSanctuary
+                userBirthData={unifiedBirthData}
+                skyData={skyData}
               />
             </div>
           )}
@@ -765,9 +828,7 @@ export const StarsHub: React.FC = () => {
                       marginTop: '16px'
                     }}>
                       <button
-                        onClick={() => {
-                          dispatch(updateAstroPreferences({ zodiacSystem: '12-sign', zodiacFrame: 'tropical', signCount: 12 }));
-                        }}
+                        onClick={handleSetTropical}
                         style={{
                           padding: '10px 8px',
                           borderRadius: '10px',
@@ -780,14 +841,12 @@ export const StarsHub: React.FC = () => {
                         }}
                       >
                         {zodiacFrame === 'tropical' && '✓ '}{t('starsHub.tropical')}
-                        <span style={{ display: 'block', fontSize: '10px', opacity: 0.6, marginTop: '3px' }}>
+                        <span style={{ display: 'block', fontSize: '12px', opacity: 0.6, marginTop: '3px' }}>
                           {t('starsHub.tropicalDesc')}
                         </span>
                       </button>
                       <button
-                        onClick={() => {
-                          dispatch(updateAstroPreferences({ zodiacSystem: 'sidereal', zodiacFrame: 'sidereal', signCount: signCount }));
-                        }}
+                        onClick={handleSetSidereal}
                         style={{
                           padding: '10px 8px',
                           borderRadius: '10px',
@@ -800,7 +859,7 @@ export const StarsHub: React.FC = () => {
                         }}
                       >
                         {zodiacFrame === 'sidereal' && '✓ '}{t('starsHub.sidereal')}
-                        <span style={{ display: 'block', fontSize: '10px', opacity: 0.6, marginTop: '3px' }}>
+                        <span style={{ display: 'block', fontSize: '12px', opacity: 0.6, marginTop: '3px' }}>
                           {t('starsHub.siderealDesc')}
                         </span>
                       </button>
@@ -814,7 +873,7 @@ export const StarsHub: React.FC = () => {
                         borderLeft: '2px solid rgba(201, 162, 39, 0.3)',
                       }}>
                         <div style={{
-                          fontSize: '11px',
+                          fontSize: '12px',
                           color: 'rgba(255,255,255,0.4)',
                           textTransform: 'uppercase',
                           letterSpacing: '0.05em',
@@ -828,9 +887,7 @@ export const StarsHub: React.FC = () => {
                           gap: '8px',
                         }}>
                           <button
-                            onClick={() => {
-                              dispatch(updateAstroPreferences({ zodiacSystem: 'sidereal', zodiacFrame: 'sidereal', signCount: 12 }));
-                            }}
+                            onClick={handleSet12Signs}
                             style={{
                               padding: '8px 8px',
                               borderRadius: '10px',
@@ -848,9 +905,7 @@ export const StarsHub: React.FC = () => {
                             </span>
                           </button>
                           <button
-                            onClick={() => {
-                              dispatch(updateAstroPreferences({ zodiacSystem: 'sidereal', zodiacFrame: 'sidereal', signCount: 13 }));
-                            }}
+                            onClick={handleSet13Signs}
                             style={{
                               padding: '8px 8px',
                               borderRadius: '10px',
@@ -887,8 +942,8 @@ export const StarsHub: React.FC = () => {
                       </span>
                     </p>
 
-                    {/* Two Selves comparison button — only in sidereal mode */}
-                    {zodiacFrame === 'sidereal' && (
+                    {/* Two Selves comparison button — only in sidereal mode when chart has birth data */}
+                    {zodiacFrame === 'sidereal' && natalChart?.birthData && (
                       <button
                         onClick={() => setShowTwoSelves(true)}
                         style={{
@@ -1008,7 +1063,9 @@ export const StarsHub: React.FC = () => {
                               <button
                                 onClick={async () => {
                                   const active = profileManager.getActiveProfile();
-                                  if (active && confirm(t('confirm.deleteProfile'))) {
+                                  if (!active) return;
+                                  const confirmed = await dialogService.showConfirm({ description: t('confirm.deleteProfile') });
+                                  if (confirmed) {
                                     // Delete from both OLD and NEW storage systems
                                     await profileManager.deleteProfile(active.id);
                                     deleteUnifiedChart(active.id);
@@ -1203,7 +1260,7 @@ const PlanetaryPositions: React.FC<PlanetaryPositionsProps> = ({ positions, loca
           >
             <div
               style={{
-                fontSize: '11px',
+                fontSize: '12px',
                 textTransform: 'uppercase',
                 letterSpacing: '0.15em',
                 color: 'rgba(255,255,255,0.4)',
@@ -1236,7 +1293,7 @@ const PlanetaryPositions: React.FC<PlanetaryPositionsProps> = ({ positions, loca
             >
               <div
                 style={{
-                  fontSize: '11px',
+                  fontSize: '12px',
                   textTransform: 'uppercase',
                   letterSpacing: '0.15em',
                   color: 'rgba(255,255,255,0.4)',

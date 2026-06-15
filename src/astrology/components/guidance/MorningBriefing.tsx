@@ -11,6 +11,7 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import type { MorningBriefing as MorningBriefingType } from '../../services/guidance/personalizedEngine';
+import { ParagraphText } from './ParagraphText';
 
 interface MorningBriefingProps {
   briefing: MorningBriefingType;
@@ -486,7 +487,7 @@ export const MorningBriefing: React.FC<MorningBriefingProps> = ({
             </span>
           )}
         </div>
-        <p style={styles.guidanceText}>{guidance.narrative}</p>
+        <ParagraphText text={guidance.narrative} paragraphStyle={styles.guidanceText} />
       </div>
       
       {/* Practical Steps */}

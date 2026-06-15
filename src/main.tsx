@@ -71,7 +71,8 @@ import { initI18n } from './i18n';
   });
 })();
 
-const APP_VERSION = '2.2.1';
+declare const __APP_VERSION__: string;
+const APP_VERSION = __APP_VERSION__;
 const BUILD_TIME = Date.now().toString();
 
 
@@ -154,23 +155,19 @@ function getUserLanguage(): string {
   return 'en';
 }
 
-// Initialize Swiss Ephemeris before rendering, then mount app
+// Mount the app as soon as i18n is ready; initialize heavy WASM in the background.
 const root = document.getElementById('root');
 if (root) {
   const userLanguage = getUserLanguage();
 
-  // Initialize WASM and i18n in parallel (with timeout to prevent blocking)
-  const initPromise = Promise.race([
-    Promise.all([
-      initializeSwissEphemeris(),
-      initI18n(userLanguage),
-    ]),
-    new Promise(resolve => setTimeout(resolve, 5000)) // Max 5 second wait
-  ]);
+  // Start Swiss Ephemeris WASM load in the background. Calendar/Oracle will use
+  // fallback calculations until it is ready; this avoids blocking first paint.
+  initializeSwissEphemeris().catch(() => {
+    console.warn('[HEKA] Swiss Ephemeris init failed, using fallbacks');
+  });
 
-  initPromise.then(() => {
-  }).catch(() => {
-    console.warn('[HEKA] Init failed, using fallbacks');
+  initI18n(userLanguage).catch(() => {
+    console.warn('[HEKA] i18n init failed, using fallbacks');
   }).finally(() => {
     // Render app regardless of init status (fallbacks will handle it)
     try {

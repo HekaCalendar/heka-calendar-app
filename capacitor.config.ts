@@ -3,7 +3,7 @@ import type { CapacitorConfig } from '@capacitor/cli';
 const config: CapacitorConfig = {
   appId: 'com.heka.calendar',
   appName: 'HEKA Calendar',
-  webDir: 'dist2',
+  webDir: 'dist',
   // Suppress console.log/info in native logs (prevents API key leakage & log spam)
   // Warnings and errors still forwarded. DevTools console unaffected.
   loggingBehavior: 'production',

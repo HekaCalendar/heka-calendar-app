@@ -8,8 +8,9 @@
 
 import { useState, useEffect, useCallback, useMemo, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import type { RootState, AppDispatch } from '../store';
+import { selectCalendarNoteEntries } from '../store';
 import { createDiaryEntry, updateDiaryEntry, selectAllEntries, setJournalTheme } from '../store/diarySlice';
 
 import i18n from '../i18n';
@@ -25,7 +26,7 @@ import { OracleModeTracker } from './oracle/modes/OracleModeTracker';
 import { civilToHeka, HEKA_MONTHS } from '../services/calendarService';
 import { aiConfigService } from '../services/aiConfigService';
 
-import type { JournalMode, EntryFilter, CalendarNoteEntry } from './oracle/types';
+import type { JournalMode, EntryFilter } from './oracle/types';
 import { MODULE_THEMES } from './oracle/config/themes';
 import { calculateStreak } from './oracle/utils';
 import { eventBus } from '../services/eventBus';
@@ -56,7 +57,7 @@ export const OracleJournal: React.FC<OracleJournalProps> = ({ isOpen, onClose })
   
   const entries = useSelector((state: RootState) => selectAllEntries(state));
   const preferences = useSelector((state: RootState) => state.diary.preferences);
-  const calendarNotes = useSelector((state: RootState) => state.calendar.notes);
+  const calendarNoteEntries = useSelector(selectCalendarNoteEntries, shallowEqual);
   const timeMode = useSelector((state: RootState) => state.calendar.timeMode);
   const displaySettings = useSelector((state: RootState) => state.calendar.display);
   
@@ -113,39 +114,6 @@ export const OracleJournal: React.FC<OracleJournalProps> = ({ isOpen, onClose })
       unsubPrompt();
     };
   }, [isOpen]);
-  
-  // ─────────────────────────────────────────────────────────────────────────
-  // CALENDAR NOTES CONVERSION (Optimized with stable references)
-  // ─────────────────────────────────────────────────────────────────────────
-  
-  const calendarNoteEntries: CalendarNoteEntry[] = useMemo(() => {
-    const noteCount = Object.values(calendarNotes).reduce((sum, notes) => sum + notes.length, 0);
-    if (noteCount === 0) return [];
-    
-    const result: CalendarNoteEntry[] = [];
-    
-    Object.entries(calendarNotes).forEach(([key, dayNotes]) => {
-      dayNotes.forEach((note, index) => {
-        if (!note || !note.createdAt) return;
-        
-        const civilDate = new Date(note.createdAt);
-        const hekaDate = civilToHeka(civilDate);
-        
-        result.push({
-          id: `calendar-${key}-${index}`,
-          date: note.createdAt,
-          hekaDate: hekaDate || { year: civilDate.getFullYear(), month: 0, day: 1 },
-          timestamp: note.createdAt,
-          content: note.content,
-          category: note.category || 'general',
-          mood: note.mood,
-          sourceKey: key,
-        });
-      });
-    });
-    
-    return result.sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime());
-  }, [calendarNotes]);
   
   // ─────────────────────────────────────────────────────────────────────────
   // STATS (Optimized - single pass calculations)
@@ -509,6 +477,14 @@ export const OracleJournal: React.FC<OracleJournalProps> = ({ isOpen, onClose })
           </main>
         </div>
         
+        {mode === 'community' && (
+          <div className="oracle-mode-tracker-wrapper" onClick={e => e.stopPropagation()}>
+            <OracleModeTracker
+              date={new Date().toISOString().split('T')[0]}
+              onClose={() => setMode('oracle')}
+            />
+          </div>
+        )}
 
       </div>
       
@@ -533,15 +509,6 @@ export const OracleJournal: React.FC<OracleJournalProps> = ({ isOpen, onClose })
         />
       )}
       
-      {mode === 'community' && (
-        <div className="oracle-mode-community-wrapper">
-          <OracleModeTracker
-            date={new Date().toISOString().split('T')[0]}
-            onClose={() => setMode('oracle')}
-          />
-        </div>
-      )}
-
       {isSettingsOpen && (
         <JournalSettings
           isOpen={true}

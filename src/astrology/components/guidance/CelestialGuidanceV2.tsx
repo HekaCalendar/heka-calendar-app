@@ -13,6 +13,7 @@
  */
 
 import React, { useState, useEffect, useCallback, useMemo, useRef } from 'react';
+import { ParagraphText } from './ParagraphText';
 import { useTranslation } from 'react-i18next';
 import i18n from '../../../i18n';
 import { 
@@ -843,14 +844,15 @@ const FullGuidanceContent: React.FC<{
         }}>
           {currentReading.title}
         </h2>
-        <p style={{
-          fontSize: 15,
-          lineHeight: 1.7,
-          color: 'rgba(255,255,255,0.85)',
-          margin: 0,
-        }}>
-          {currentReading.narrative}
-        </p>
+        <ParagraphText
+          text={currentReading.narrative}
+          paragraphStyle={{
+            fontSize: 15,
+            lineHeight: 1.7,
+            color: 'rgba(255,255,255,0.85)',
+            margin: 0,
+          }}
+        />
         
         {/* Transit Context */}
         {currentReading.transitContext && (

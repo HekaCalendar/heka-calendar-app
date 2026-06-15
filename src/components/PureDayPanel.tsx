@@ -383,7 +383,7 @@ export const PureDayPanel: React.FC<PureDayPanelProps> = ({
                       className="pure-day-panel__action-btn pure-day-panel__action-btn--edit"
                       onClick={() => startEdit(note)}
                       title="Edit note"
-                      aria-label={i18n.t('common.edit')}
+                      aria-label={i18n.t('edit')}
                     >
                       ✎
                     </button>
@@ -391,7 +391,7 @@ export const PureDayPanel: React.FC<PureDayPanelProps> = ({
                       className="pure-day-panel__action-btn pure-day-panel__action-btn--delete"
                       onClick={() => handleDelete(note.id)}
                       title="Delete note"
-                      aria-label={i18n.t('common.delete')}
+                      aria-label={i18n.t('delete')}
                     >
                       🗑
                     </button>

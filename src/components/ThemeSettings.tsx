@@ -2,7 +2,7 @@
  * Theme Settings Component - Expandable section with Colors and Fonts
  */
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import type { RootState } from '../store';
@@ -11,6 +11,26 @@ import { THEME_LIST, FONT_LIST, HEADER_GEOMETRIES, BACKGROUND_GEOMETRIES, type T
 import { SacredGeometry } from './sacred-geometry/SacredGeometry';
 import { useFeatureDiscovery, useSettingsTracking } from '../hooks/useGamification';
 import { tutorialService } from '../services/tutorialService';
+
+/* Defer heavy SVG preview mounts by one frame so the settings panel can paint
+   before all 15 preview geometries are initialised. */
+function DeferredGeometryPreview({
+  pattern,
+  variant,
+}: {
+  pattern: GeometryPattern | BackgroundGeometryPattern;
+  variant: 'header' | 'background';
+}) {
+  const [show, setShow] = useState(false);
+  useEffect(() => {
+    const raf = requestAnimationFrame(() => setShow(true));
+    return () => cancelAnimationFrame(raf);
+  }, []);
+  if (!show) {
+    return <div className="geometry-card__preview" aria-hidden="true" />;
+  }
+  return <SacredGeometry pattern={pattern} variant={variant} />;
+}
 
 const geometryKeyMap: Record<string, string> = {
   'flower-of-life': 'geometryFlowerOfLife',
@@ -77,7 +97,7 @@ export const ThemeSettings: React.FC = () => {
           onClick={() => setExpandedSection(expandedSection === 'colors' ? null : 'colors')}
         >
           <span className="theme-settings__icon">🎨</span>
-          <span className="theme-settings__title">Colours</span>
+          <span className="theme-settings__title">{t('colours')}</span>
           <span className="theme-settings__current">
             {currentTheme?.icon} {currentTheme?.name}
           </span>
@@ -132,7 +152,7 @@ export const ThemeSettings: React.FC = () => {
           onClick={() => setExpandedSection(expandedSection === 'fonts' ? null : 'fonts')}
         >
           <span className="theme-settings__icon">🔤</span>
-          <span className="theme-settings__title">Fonts</span>
+          <span className="theme-settings__title">{t('fonts')}</span>
           <span className="theme-settings__current">
             {currentFont?.icon} {currentFont?.name}
           </span>
@@ -196,7 +216,7 @@ export const ThemeSettings: React.FC = () => {
                   title={t(geometryKeyMap[geo.id])}
                 >
                   <div className="geometry-card__preview">
-                    <SacredGeometry pattern={geo.id} variant="header" />
+                    <DeferredGeometryPreview pattern={geo.id} variant="header" />
                   </div>
                   <span className="geometry-card__name">{t(geometryKeyMap[geo.id])}</span>
                   {currentHeaderGeometry === geo.id && <span className="geometry-card__check">✓</span>}
@@ -234,7 +254,7 @@ export const ThemeSettings: React.FC = () => {
                   title={geo.name}
                 >
                   <div className="geometry-card__preview">
-                    <SacredGeometry pattern={geo.id} variant="background" />
+                    <DeferredGeometryPreview pattern={geo.id} variant="background" />
                   </div>
                   <span className="geometry-card__name">{geo.name}</span>
                   {currentBackgroundGeometry === geo.id && <span className="geometry-card__check">✓</span>}

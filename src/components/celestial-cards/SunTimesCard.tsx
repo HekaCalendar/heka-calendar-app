@@ -4,6 +4,7 @@
  */
 
 import { useState, useEffect, useMemo, memo, useRef } from 'react';
+import { useGlobalTime } from '../../hooks/useGlobalTime';
 import { useTranslation } from 'react-i18next';
 import type { LocationData } from '../../types';
 import { getWeatherData, formatTemperature, usesFahrenheit, type WeatherData } from '../../services/weatherService';
@@ -57,7 +58,7 @@ const DaylightTimeline: React.FC<{ sunTimes: EliteSunData; location: LocationDat
         <span style={{ fontSize: '12px', fontWeight: 600, color: 'rgba(255,255,255,0.7)' }}>
           ☀️ Daylight: {dayLengthH}h {dayLengthM}m
         </span>
-        <span style={{ fontSize: '10px', padding: '3px 8px', borderRadius: '10px', background: sunTimes.source === 'swiss-ephemeris' ? 'rgba(34,197,94,0.15)' : 'rgba(245,158,11,0.15)', color: sunTimes.source === 'swiss-ephemeris' ? '#4ade80' : '#fbbf24' }}>
+        <span style={{ fontSize: '12px', padding: '3px 8px', borderRadius: '10px', background: sunTimes.source === 'swiss-ephemeris' ? 'rgba(34,197,94,0.15)' : 'rgba(245,158,11,0.15)', color: sunTimes.source === 'swiss-ephemeris' ? '#4ade80' : '#fbbf24' }}>
           {sunTimes.accuracy}
         </span>
       </div>
@@ -121,23 +122,9 @@ const SunTimesCardComponent: React.FC<Props> = ({ date, location }) => {
   const [weather, setWeather] = useState<WeatherData | null>(null);
   const [loading, setLoading] = useState(true);
   const [expanded, setExpanded] = useState(false);
-  const [now, setNow] = useState(new Date());
-  const tickRef = useRef<number>(0);
+  const now = useGlobalTime();
   const fetchingRef = useRef(false);
   const { t, i18n } = useTranslation('celestial');
-
-  // Live clock - every second
-  useEffect(() => {
-    const tick = () => {
-      const t = Date.now();
-      if (t - tickRef.current >= 1000) {
-        tickRef.current = t;
-        setNow(new Date());
-      }
-      requestAnimationFrame(tick);
-    };
-    requestAnimationFrame(tick);
-  }, []);
 
   // Fetch sun times and weather
   useEffect(() => {

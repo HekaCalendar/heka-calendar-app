@@ -42,6 +42,23 @@ function hexGrid(cx: number, cy: number, r: number, rows: number, cols: number, 
   return circles;
 }
 
+/* ─── Helper: pack many circles into a single <path> d attribute
+    Reduces DOM node count from N <circle> elements to 1 <path>.
+    All circles share the same stroke / stroke-width / stroke-opacity. ─── */
+function circlesToPath(circles: Array<{ cx: number; cy: number; r: number }>): string {
+  // Pre-size the array to avoid reallocation growth on large geometries.
+  const parts: string[] = new Array(circles.length);
+  for (let i = 0; i < circles.length; i++) {
+    const c = circles[i];
+    // Full circle as two 180° arcs starting/ending at the rightmost point.
+    parts[i] =
+      `M ${c.cx + c.r} ${c.cy} ` +
+      `A ${c.r} ${c.r} 0 1 0 ${c.cx - c.r} ${c.cy} ` +
+      `A ${c.r} ${c.r} 0 1 0 ${c.cx + c.r} ${c.cy}`;
+  }
+  return parts.join(' ');
+}
+
 /* ─── HEADER: Flower of Life ─── */
 function HeaderFlowerOfLife(): React.ReactElement {
   const c = flowerOfLifeCircles(150, 150, 30, 2);
@@ -251,13 +268,13 @@ function HeaderGoldenSpiral(): React.ReactElement {
 
 /* ─── BACKGROUND: Phyllotaxis Field ─── */
 function BackgroundPhyllotaxis(): React.ReactElement {
-  const { circles, spirals } = React.useMemo(() => {
+  const { dotPath, spirals } = React.useMemo(() => {
     const cx = 400, cy = 400;
     const PHI = 1.618033988749895;
     const goldenAngle = (2 * Math.PI) / (PHI * PHI); // ~137.5° in radians
-    const count = 1400;
+    const count = 800; // Reduced from 1400: still dense, far fewer DOM nodes
     const c = 12.5; // scaling factor
-    const circles: Array<{ cx: number; cy: number; r: number }> = [];
+    const circles: Array<{ cx: number; cy: number; r: number }> = new Array(count);
     for (let n = 0; n < count; n++) {
       const angle = n * goldenAngle;
       const radius = c * Math.sqrt(n);
@@ -265,7 +282,7 @@ function BackgroundPhyllotaxis(): React.ReactElement {
       const y = cy + radius * Math.sin(angle);
       // Vary dot size — tiny in centre, slightly larger outward
       const dotR = Math.max(1.8, Math.min(4.2, 1.8 + radius / 220));
-      circles.push({ cx: x, cy: y, r: dotR });
+      circles[n] = { cx: x, cy: y, r: dotR };
     }
     // Fibonacci spiral guides — connect every fibonacci-th point
     const fibs = [13, 21, 34, 55, 89];
@@ -281,13 +298,18 @@ function BackgroundPhyllotaxis(): React.ReactElement {
       }
       if (pts.length > 10) spirals.push(pts.join(' '));
     }
-    return { circles, spirals };
+    return { dotPath: circlesToPath(circles), spirals };
   }, []);
   return (
     <g>
-      {circles.map((c, i) => (
-        <circle key={i} cx={c.cx} cy={c.cy} r={c.r} fill="none" stroke="var(--sacred-primary)" strokeWidth="0.5" strokeOpacity="0.18" />
-      ))}
+      {/* Single path replaces 800 individual <circle> nodes */}
+      <path
+        d={dotPath}
+        fill="none"
+        stroke="var(--sacred-primary)"
+        strokeWidth="0.5"
+        strokeOpacity="0.18"
+      />
       {spirals.map((pts, i) => (
         <polyline key={`s-${i}`} points={pts} fill="none" stroke="var(--sacred-primary)" strokeWidth="0.6" strokeOpacity="0.12" strokeLinecap="round" />
       ))}
@@ -309,36 +331,41 @@ function BackgroundHexFlower(): React.ReactElement {
 
 /* ─── BACKGROUND: Metatron's Lattice ─── */
 function BackgroundMetatronLattice(): React.ReactElement {
-  const circles = React.useMemo(() => {
+  const dotPath = React.useMemo(() => {
     const r = 70;
     const spacing = r * 2.8;
     const rowH = spacing * 0.866;
     const offset = spacing / 2;
     const circles: Array<{ cx: number; cy: number; r: number }> = [];
 
-    // Expanded grid so pattern extends well past any visible viewport slice
-    for (let row = -4; row <= 4; row++) {
-      for (let col = -4; col <= 4; col++) {
+    // 5×5 grid still extends past the visible viewport slice while cutting
+    // DOM count ~70 % versus the previous 9×9 grid (325 vs 1 053 circles).
+    for (let row = -2; row <= 2; row++) {
+      for (let col = -2; col <= 2; col++) {
         const ux = 400 + col * spacing + (row % 2 !== 0 ? offset : 0);
         const uy = 400 + row * rowH;
         // Fruit of Life unit: 1 center + 6 inner + 6 outer
-        const unit = [{ cx: ux, cy: uy, r }];
+        circles.push({ cx: ux, cy: uy, r });
         for (let i = 0; i < 6; i++) {
           const a = (i * 60 - 90) * (Math.PI / 180);
-          unit.push({ cx: ux + r * Math.cos(a), cy: uy + r * Math.sin(a), r });
-          unit.push({ cx: ux + 2 * r * Math.cos(a), cy: uy + 2 * r * Math.sin(a), r });
+          circles.push({ cx: ux + r * Math.cos(a), cy: uy + r * Math.sin(a), r });
+          circles.push({ cx: ux + 2 * r * Math.cos(a), cy: uy + 2 * r * Math.sin(a), r });
         }
-        circles.push(...unit);
       }
     }
-    return circles;
+    return circlesToPath(circles);
   }, []);
 
   return (
     <g>
-      {circles.map((c, i) => (
-        <circle key={i} cx={c.cx} cy={c.cy} r={c.r} fill="none" stroke="var(--sacred-primary)" strokeWidth="0.5" strokeOpacity="0.22" />
-      ))}
+      {/* Single path replaces hundreds of individual <circle> nodes */}
+      <path
+        d={dotPath}
+        fill="none"
+        stroke="var(--sacred-primary)"
+        strokeWidth="0.5"
+        strokeOpacity="0.22"
+      />
     </g>
   );
 }

@@ -12,6 +12,7 @@ import {
   orderBy,
   serverTimestamp,
   runTransaction,
+  where,
   type Unsubscribe,
 } from 'firebase/firestore';
 import { db, getCurrentUser } from './firebase';
@@ -24,8 +25,9 @@ import {
   setCommunityFeatures,
   addCommunityFeature,
   updateCommunityFeature,
+  setCommunityResources,
 } from '../store';
-import type { CommunityHoliday, CommunityFeature } from '../types';
+import type { CommunityHoliday, CommunityFeature, RegionData } from '../types';
 import { getErrorMessage, getErrorCode } from '../utils/errorUtils';
 
 // ═══════════════════════════════════════════════════════════════════════════════
@@ -356,6 +358,45 @@ export async function voteFeature(featureId: string): Promise<void> {
 }
 
 // ═══════════════════════════════════════════════════════════════════════════════
+// COMMUNITY RESOURCES (curated directory)
+// ═══════════════════════════════════════════════════════════════════════════════
+
+let resourcesUnsub: Unsubscribe | null = null;
+
+export function attachCommunityResourcesListener(region?: string): Unsubscribe {
+  if (resourcesUnsub) resourcesUnsub();
+  if (!db) return () => {};
+
+  const constraints = region ? [where('region', '==', region), orderBy('country')] : [orderBy('country')];
+  const q = query(collection(db, 'communityResources'), ...constraints);
+  resourcesUnsub = onSnapshot(
+    q,
+    (snap) => {
+      const resources: Record<string, RegionData> = {};
+      snap.docs.forEach((d) => {
+        const data = d.data() as RegionData & { region?: string };
+        if (!data.country) return;
+        const key = (data.region || data.country.toLowerCase()).trim();
+        resources[key] = data;
+      });
+      store.dispatch(setCommunityResources(resources));
+    },
+    (err) => {
+      console.error('[CommunityService] Resources listener error:', err);
+    }
+  );
+
+  return resourcesUnsub;
+}
+
+export function detachCommunityResourcesListener(): void {
+  if (resourcesUnsub) {
+    resourcesUnsub();
+    resourcesUnsub = null;
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════════════════════
 // CLEANUP
 // ═══════════════════════════════════════════════════════════════════════════════
 
@@ -368,4 +409,5 @@ export function detachCommunityListeners(): void {
     featureUnsub();
     featureUnsub = null;
   }
+  detachCommunityResourcesListener();
 }

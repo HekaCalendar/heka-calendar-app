@@ -14,18 +14,25 @@
  * ═══════════════════════════════════════════════════════════════════════════════
  */
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { VoidMoonData } from '../../types';
+import type { CelestialBody } from '../../types';
 import SanctuaryAtmosphere from './visuals/SanctuaryAtmosphere';
 import PresentMoment from './sections/PresentMoment';
 import MoonsJourney from './sections/MoonsJourney';
 import VoidPractice from './sections/VoidPractice';
 import { calculateVoidMoonStatus } from '../../services/calculations/swissCalculations';
+import { useVisibility } from '../../../hooks/useVisibility';
 
 interface VoidMoonSanctuaryProps {
   userBirthData?: {
     moonSign: string;
     voidMoon: boolean;
+  } | null;
+  skyData?: {
+    positions: Record<string, CelestialBody>;
+    julianDay: number;
+    timestamp: number;
   } | null;
 }
 
@@ -56,31 +63,49 @@ const sections: Record<SanctuarySection, {
 
 export const VoidMoonSanctuary: React.FC<VoidMoonSanctuaryProps> = ({
   userBirthData,
+  skyData,
 }) => {
   const [activeSection, setActiveSection] = useState<SanctuarySection>('present');
   const [voidData, setVoidData] = useState<VoidMoonData | null>(null);
   const [loading, setLoading] = useState(true);
-  
-  // Fetch void moon data
+  const isVisible = useVisibility();
+  const isMountedRef = useRef(true);
+
+  // Re-use parent skyData when available to avoid recalculating current sky.
+  // Pause background updates when the page/app is not visible.
   useEffect(() => {
+    isMountedRef.current = true;
+    let intervalId: ReturnType<typeof setInterval> | undefined;
+
     const fetchData = async () => {
       try {
         setLoading(true);
-        const data = await calculateVoidMoonStatus();
-        setVoidData(data);
+        const data = skyData
+          ? await calculateVoidMoonStatus(new Date(), skyData.positions)
+          : await calculateVoidMoonStatus();
+        if (isMountedRef.current) {
+          setVoidData(data);
+        }
       } catch (error) {
         console.error('Error fetching void moon data:', error);
       } finally {
-        setLoading(false);
+        if (isMountedRef.current) {
+          setLoading(false);
+        }
       }
     };
-    
+
     fetchData();
-    
-    // Update every minute
-    const interval = setInterval(fetchData, 60000);
-    return () => clearInterval(interval);
-  }, []);
+
+    if (isVisible) {
+      intervalId = setInterval(fetchData, 60000);
+    }
+
+    return () => {
+      isMountedRef.current = false;
+      if (intervalId) clearInterval(intervalId);
+    };
+  }, [skyData, isVisible]);
   
   const isVoid = voidData?.isVoid ?? false;
   const moonSign = voidData?.moonSign || 'Cancer';

@@ -1,0 +1,322 @@
+{
+  "infoModal": {
+    "hero": {
+      "title": "HEKA — Egy az elmékre épített naptár",
+      "subtitleLine1": "Tizenharmad hónap.",
+      "subtitleLine2": "Minden hónap négy hét. Egyértelmű év."
+    },
+    "guideComplete": "Útmutató befejezve",
+    "spotlight": {
+      "title": "Tudtad-e?",
+      "facts": [
+        "A gregoriano naptár szabálytalan hónapjai többnyire a római politika és császári egok eredményei.",
+        "A HEKA tizenharmad hónapja húsznyolc napos, így tökéletes negyedeket és előrelátható fizetési időszakokat hoz létre.",
+        "A TRUE módban a HEKA 128 éves ugráló szabályt követ az астronómiai pontosság hosszú távú fenntartása érdekében.",
+        "A civil fedőterjesztés lehetővé teszi a gregoriano dátumok és a HEKA dátumok egyidejű megjelenítését, így sosem veszíted el a koordinációt.",
+        "A naplóbejegyzéseid alapértelmezés szerint helyiek és csak akkor szinkronizálnak, ha bejelentkezel."
+      ]
+    },
+    "home": "Kezdőlap",
+    "backToHome": "Vissza a Kezdőlapra",
+    "deeperQuestions": "Mélyebb kérdések",
+    "chapters": {
+      "home": {
+        "num": "0",
+        "chip": "Kezdés",
+        "title": "Üdvözöljük",
+        "hook": "Egy másik módja az év élvezetének.",
+        "teaser": "Itt kezdj."
+      },
+      "ch1": {
+        "num": "01",
+        "chip": "ALAP",
+        "title": "A Naptár",
+        "hook": "Tizenharmad hónap. Minden hónap négy hét. Egyértelmű év.",
+        "teaser": "Mi a HEKA és miért érzékelhető másként."
+      },
+      "ch2": {
+        "num": "02",
+        "chip": "STRUKTÚRA",
+        "title": "Az Év Ívének",
+        "hook": "Nyitó, mag, és záró: egy év, amelynek narratív alakja van.",
+        "teaser": "Hogyan folyik az hónapok áprilistól márciusig."
+      },
+      "ch3": {
+        "num": "03",
+        "chip": "ESZKÖZÖK",
+        "title": "A Napjainkbeli Társa",
+        "hook": "Napló, hold, csillagok, és civil fedőterjesztés — mind a tiéd.",
+        "teaser": "Az olyan funkciók, amelyek teszik a HEKA-t praktikusnak."
+      },
+      "ch4": {
+        "num": "04",
+        "chip": "MÓDOK",
+        "title": "SYNC vs IGAZOLÓDÁS",
+        "hook": "Két módon kezelheted az ugráló napot. Válassz a pontosságod.",
+        "teaser": "Ismert koordináció vagy астронómiai puhaság."
+      },
+      "ch5": {
+        "num": "05",
+        "chip": "TÖRTÉNET",
+        "title": "Miért szállnak el a naptárak",
+        "hook": "Örökött kaosz, politikai pótlások és az újratervezés lehetősége.",
+        "teaser": "Az Önt adott naptár története."
+      },
+      "ch6": {
+        "num": "06",
+        "chip": "BEKAPOCSOLÁS",
+        "title": "Kezdje bele élni benne",
+        "hook": "Három kis lépés HEKA alapértelmezett nézőpontjává tételéhez.",
+        "teaser": "Hogyan kezdjenek anélkül, hogy megzavarják az életét."
+      },
+      "ch7": {
+        "num": "07",
+        "chip": "ÉRTÉK",
+        "title": "Az idő ügynökségként",
+        "hook": "Tisztaság, ritmus és a jobb eszköz választása.",
+        "teaser": "Miért számít az idő struktúrája."
+      }
+    },
+    "chapterLeads": {
+      "home": "Ez az útmutató egy híd. Saját tempójában menjen át rajta.",
+      "ch1": "A HEKA nem a grégoriesi naptárhoz való igazítás. Egy alapoktól épült, helyettesítő.",
+      "ch2": "Az év alakja akkor van, ha struktúrája meg tükrözzük a cselekvés és pihenés ritmusát.",
+      "ch3": "A naptár csak akkor hasznos, ha integrálódik az Ön által játszott életbe.",
+      "ch4": "Az ugyanaz struktúra különböző szükségleteket is kielégítheti. A választott mód preferencia, nem dogma.",
+      "ch5": "A jelenlegi naptár kialakulásának megértése megkönnyíti a hiányosságainak megbocsátását — és könnyebben elhagyhatóvá teszi.",
+      "ch6": "Az elfogadás apró lépésekben történik. Nem szükséges engedélye vagy manifestum.",
+      "ch7": "Az idő konténera az élet tartalmát alakítja. Választassa ki szándékosan."
+    },
+    "cardsByChapter": {
+      "ch1": [
+        {
+          "h": "Az Ön által érezett probléma",
+          "b": "Nem szabályos hónapok. Szétszórt ünnepek. Az év januártól decemberig csúsz, kezdet, középpont vagy vég nélkül. Ezt a súrlódást érezte. A HEKA eltávolítja."
+        },
+        {
+          "h": "Az általunk épített megoldás",
+          "b": "Tizenharmad hónap. Tizenkétnek minden hónap 28 napot tartalmaz tökéletes szimmetriában. A március, a záró hónap, viseli a naptári napot. Minden hónapban négy tökéletes hét. Az év folyik: április megnyitja, májustól decemberig a stabil magot alkotják, januártól márciusig befejezik."
+        },
+        {
+          "h": "Az Ön által megőrzött világ",
+          "b": "A HEKA nem zavarja az életét. A civil dátumok láthatóak maradnak. Az időpontjai, kötelezettségei, jogi kötelezettségei pontosan ott vannak, ahol várják."
+        }
+      ],
+      "ch2": [
+        {
+          "h": "Az Első rés",
+          "b": "Április az átjáró. Az év nem a téli kimerültségben kezdődik, hanem a tavaszi életerőben. Új növekedés. Új projektek. Az Első jelenti: valami kezdődik."
+        },
+        {
+          "h": "A Mag",
+          "b": "Májustól decemberig a hosszú, stabil középső rész. Kilenc hónap tökéletesen szabályos és előre látható ritmus. Tervezze megbízva. Hozzon létre lendületet. Ez az, ahol a munka zajlik."
+        },
+        {
+          "h": "A Záró rés",
+          "b": "Január és márciusig hozza a évet a feloldáshoz. Fejezd be amit elkezdtél. Arasszuk amit megnöveled. A zárás helyet teremt a reflexiónak és felkészít a következő nyitásra."
+        }
+      ],
+      "ch3": [
+        {
+          "h": "A Civil Dátumok Maradnak",
+          "b": "Kapcsold be a civil réteget és lásd a gregorián dátumokat a HEKA mellett. A fogorvosi időpont, anyád születésnapja, az adóhatáridő - mind exact ugyanolyan helyen lesz amire számítottál."
+        },
+        {
+          "h": "A Naplód",
+          "b": "Napi bejegyzések frissítési előzményekkel - legfeljebb 50 verziót automatikusan megtartva. Teljes szöveges keresés mindenben. Alapértelmezetten helyi; felhő biztonsági mentés bejelentkezéskor."
+        },
+        {
+          "h": "A Hold & Csillagok",
+          "b": "Holdfázisok, bolygó pozíciók és átmérők egy pillantásra. Opcionális és pontos. Add hozzá a születési tárcadat személyre szabott olvasmányokért az Oracle-al."
+        }
+      ],
+      "ch4": [
+        {
+          "h": "SYNC Mód: A Familiar Út",
+          "b": "Az extra napot a grégorien naptár mondja, hogy kapjon. Ez a módja a mindennapi koordinációnak a civil világgal. Ugyanaz a szerkezet. Ismerős időzítés."
+        },
+        {
+          "h": "IGAZ Mód: Az Őszinte Út",
+          "b": "A HEKA saját javítási szabályt követ: minden negyedik évben 30 napos március van, kivéve minden 128. évet, amelynek nincs. Ez az astronomiai pontosság. Ez a hosszú távú integritás."
+        },
+        {
+          "h": "Bármikor Váltható",
+          "b": "A hónapok nem változnak. A hét nem változik. Csak a javítási indítót mozgatjuk. Kipróbálja. Lássuk, hogy melyik mód illeszkedik legjobban a szükségleteidre. Nincs bezárva."
+        }
+      ],
+      "ch5": [
+        {
+          "h": "Örökség, Nem Tervezés",
+          "b": "A jelenlegi naptárunk egy sor történelmi baleset révén alakult ki. Római politika. Vallási tanácsok. Századok apart astronautikai javításai. Soha nem tervezték rendszerként."
+        },
+        {
+          "h": "A Gregoriános Javítás",
+          "b": "1582: Pápa Gregorius kijavította az eltolódást. De megtartotta az irregularis hónapokat, a szétszórt szerkezetet, az örökölt kaoszt. Szükséges javítás, de nem teljes megoldás."
+        },
+        {
+          "h": "A HEKA Válasz",
+          "b": "Megtartottuk, amit működőnek találtunk: hét napos hetek, szezonális igazítás, naptári év követés. Újraterveztük, amit nem: hónap szerkezete, év áramlása, javítás elhelyezkedése. Azért épült, akiknek a gondolatai működnek."
+        }
+      ],
+      "ch6": [
+        {
+          "h": "Első Lépés: Engedélyezze a Fénnyalát",
+          "b": "Kapcsolja be a civil dátumokat. Most mindkét rendszert látja egyszerre. A HEKA dátuma és a grégorien dátuma. A híd építve. Akkor menjen át, amikor szüksége van."
+        },
+        {
+          "h": "Második Lépés: Válassza ki a Módját",
+          "b": "Kezdje a SYNC-kel, ha ismerősséget akar. Váltson az IGAZ-ra, ha tisztázást akar. Megváltoztathatja az érzéseit. A naptár hozzád alakul, nem fordítva."
+        },
+        {
+          "h": "Harmadik Lépés: Éljen benne",
+          "b": "Használja a HEKA-t elsődleges nézőpontként. Tervezze meg hónapját. Jegyezze fel napjait. Érzze a különbséget egy ténylegesen szerkezeti évben. A civil világnak nem kell tudnia. Te tudni fogod."
+        }
+      ],
+      "ch7": [
+        {
+          "h": "A Frikció Energiat Fektet",
+          "b": "Minden alkalommal, amikor megpróbálja meghatározni, hány nap van ebben a hónapban, kifizet egy kis adót. Minden irregularitás fókuszra szikrázik. A HEKA eltávolítja ezeket az adókat. Tiéd a fókuszadra fordított energia, amire számít."
+        },
+        {
+          "h": "A Rytmus Nyugalmat Teremt",
+          "b": "Ha a szerkezet előrelátható, az elmélet nyugodni látszik. Tudod, hol vagy az évben. Érzed a nyitót, a magot, a zárót. Az idő egy olyan tér, amelyben laksz, nem egy kao"
+        },
+        {
+          "h": "Az Idő Felett",
+          "b": "Nem te választottál a gregorián naptára. Adott neked. A HEKA egy választás. Használj egy eszközt, amely tisztátalan készül. Igényeld az idő szerkezetének a saját kezedben való irányítását. Ez a naptárod."
+        }
+      ]
+    },
+    "gatesByChapter": {
+      "ch1": [
+        {
+          "t": "Ez egy vallás vagy mozgalom?",
+          "tag": "Tisztaság",
+          "b": "Semmi. A HEKA egy eszköz. Mint egy jobb kalapács vagy egy tisztább térkép. Nincs szükség tagságra. Nincs szükség vallásra. Csak egy naptár, amely jobban működik, mint amit örököltél."
+        },
+        {
+          "t": "Miért tizenhárom hónap?",
+          "tag": "LOGIKA",
+          "b": "A tizenkét hónap nem egyenlő hosszúsága kényelmetlenségeket okoz. Tizenhárom hónap négy hetes egységgel tökéletes egyenletességet teremt. 13 × 28 = 364. Plusz egy különleges nap. A matematika tiszta. Az élmény is tiszta."
+        },
+        {
+          "t": "Ez megzavarja másokat?",
+          "tag": "VALÓSÁG",
+          "b": "Te látsz HEKA dátumokat. Mások látják a civil dátumokat. Amikor azt mondod \"Március 15.\", ugyanarra a napra gondolsz, mint ők is. A civil felettírás biztosítja, hogy sosem veszítsd el a koordinációt. Tisztságot nyerél. Neki semmit sem veszíthet."
+        }
+      ],
+      "ch2": [
+        {
+          "t": "Miért indul az év áprilisban?",
+          "tag": "SZIMBÓLUM",
+          "b": "A tavasz a világos kezdet. A növekedés kezdődött. Az energia emelkedik. Az év áprilisban való kezdete a naptárt a frissülés érezhető élményével igazítja. A január a télen fáradtságban kezdődik. Az április a tavaszi lehetőségben kezdődik."
+        },
+        {
+          "t": "Mik a hónapok nevei?",
+          "tag": "SORRENDIG",
+          "b": "Április, Május, Június, Július, Augusztus, Szeptember, Október, November, December, Január, Február, Március. A Szeptember - a hatodik hónap - tölti ki a réseket. A többi már tudtad. Csak a pozíciójuk változik."
+        },
+        {
+          "t": "Hogyan kezelik a javítást?",
+          "tag": "PONTOSAN",
+          "b": "Minden naptárt太阳能校正ra van szükség. A HEKA az összeset a márciusba helyezi, az év végén. A március 29 nap, vagy 30 a gyalázatos években. A többi tizenkét hónap tökéletesen,永久性 egyenletes. A javítást tartalmazza, nem szétszórva."
+        }
+      ],
+      "ch3": [
+        {
+          "t": "Nyomtathatok HEKA naptárakat?",
+          "tag": "TEST",
+          "b": "Igen. Havi nézeteket vagy teljes év nézeteket nyomtasz. Tiszta, zseni nélkül, papírra tervezve. Ragaszd őket a falakhoz. Hordjuk őket jegyzetfüzetekben. A digitális kényelem és a fizikai tárgy, mindkettő."
+        },
+        {
+          "t": "Hogyan vannak a szünnapok?",
+          "tag": "Egyéni",
+          "b": "Váltás a szünnapok csoportjai között a saját régiódban. Az HEKA nem diktálja saját szünnapjait — segít neked követni azokat, amelyek számodra fontosak, egyértelműbb szerkesztésen keresztül."
+        },
+        {
+          "t": "Hol élnek az adataid?",
+          "tag": "Bizalom",
+          "b": "Alapértelmezés szerint minden a készülékeden marad — jegyzetek, napló, beállítások. Ha létrehozol egy fiókot, az adatok titkosított felhőtárolóra mentődnek. Bármikor exportálhatsz mindent. Te maradsz a kontrollal."
+        },
+        {
+          "t": "Mit tud a napló?",
+          "tag": "Képesség",
+          "b": "Napi bejegyzések automatikus változattörténettel. Teljes szöveges keresés az egész archívumon keresztül. Alapértelmezetten helyi; a felhőbe szinkronizál, amikor bejelentkezel."
+        }
+      ],
+      "ch4": [
+        {
+          "t": "Melyik mód \"helyes\"?",
+          "tag": "Választék",
+          "b": "Mindkettő. A SYNC helyes a civil világgal való koordinációra. A TRUE helyes az astronomiai pontosságra. Az igényeid határozzák meg, hogy melyik helyesség számít számodra."
+        },
+        {
+          "t": "Száll el a TRUE mód a civil dátumoktól?",
+          "tag": "Eltérés",
+          "b": "Lassan, igen. A TRUE mód saját ugrálási szabályát követi, nem a grégorieusi. Századokon keresztül a különbség észrevehetővé válik. Naponta az életben észrevétlen a különbség. A hosszú távú gondolkodásban a tisztánság számít."
+        },
+        {
+          "t": "Választhatják az intézmények az HEKÁT?",
+          "tag": "Skála",
+          "b": "Végül, talán. De az intézményeknek nem kell megváltoztatkozniuk, hogy te hasznot nyerj. Az HEKA tökéletesen működik személyes rétegként. Kezdj ott. Hadd bizonyítsa magát az eszköz."
+        }
+      ],
+      "ch5": [
+        {
+          "t": "Miért vannak különböző hosszúságú hónapok?",
+          "tag": "TÖRTÉNET",
+          "b": "A római politika. Iulius Caesar és Augustausnak szeretnének hónapot a neveik után. Az naptárt úgy igazították, hogy kiegyezzen az öncentrikussal. Ezek az irregularitások a \"hagyományba\" foszlalták. A hagyomány nem mindig bölcsesség."
+        },
+        {
+          "t": "Elegendő volt a gregoriano reform?",
+          "tag": "ÉRTÉKELÉS",
+          "b": "Megoldotta az eltolódást. Nem oldotta meg a struktúrát. A hónapok maradtak irregulárisak, a negyedévek egyenetlenek, az év nincs narratív alakzatban. Szükséges javítás, de nem alapvető tervezés."
+        },
+        {
+          "t": "Próbálkoztak-e mások naptár reformmal?",
+          "tag": "Próbálkozások",
+          "b": "Sokan. A francia köztársasági naptár. A Világnaptár. Az Nemzetközi Rögzített Naptár. Egyesek csodálatosak, de mind politikailag megbuktak. A HEKA onnan tanul: a polgári idővel való kompatibilitás alapvető. Forradalom evolúción keresztül."
+        }
+      ],
+      "ch6": [
+        {
+          "t": "Hogyan magyarázhatom másoknak ezt?",
+          "tag": "BESZÉLGETÉS",
+          "b": "Nem kell. Használja. Ha kérdezik, mondja: \"Megtaláltam egy naptárat, amely segít jobban tervezni.\" Mutassa meg nekik. Hadd lássák a tisztázást. A meggyőzés bemutatással történik, nem nyilatkozatokkal."
+        },
+        {
+          "t": "Mi van, ha nem akarom tovább használni?",
+          "tag": "SZABADSÁG",
+          "b": "Álljon le. A polgári dátumai megmaradnak. A talalkozói ott vannak, ahol vannak. Nincs zárolás. Nincs befektetett költség. A HEKA minden nap meg kell keresnie a helyét az életében, vagy nem érdemli meg, hogy maradjon."
+        },
+        {
+          "t": "Honnan kezdjek most?",
+          "tag": "AKCIÓ",
+          "b": "Nyissa meg a beállításokat. Engedélyezze a polgári fedérletet. Nézze meg ma napot mindkét rendszerben. Ez az első lépés. Már megtetté az úton az útmutatón keresztül."
+        },
+        {
+          "t": "Mi az az Orakel?",
+          "tag": "INTELLIGENCE",
+          "b": "Egy himzőrös intelligencia, amely az Ön által választott dátumra行星位置olvasást végez és útmutatást nyújt. Opcionális. Adja hozzá születési naptárát személyre szabott átmenetek és mélyebb betekintés érdekében."
+        }
+      ],
+      "ch7": [
+        {
+          "t": "Valóban befolyásolja a naptár az elmét?",
+          "tag": "PSZIKOLÓGIA",
+          "b": "Profondusan. Azon szerkezetekben gondolkodunk, amelyekben lakunk. Az nemként hónapok alacsony szintű kognitív szelepet okoznak. A szabályos hónapok kognitív folyamot teremtenek. Nem észleli a szelepet, amíg el nem múlik. Akkor már nem lehet meg semlegesíteni."
+        },
+        {
+          "t": "Mi a helyzet a kulturális kötődéssel?",
+          "tag": "TISZTELET",
+          "b": "Tartsa meg őket. Születésnapja. Újévüntetései. Szezonális fesztiváljai. A HEKA nem törli a kultúrát — egyértelműbb edényt nyújt számára. A tartalom megmarad. A tároló javul."
+        },
+        {
+          "t": "Miért számít ez annyira sokat, hogy építsünk?",
+          "tag": "KÜLDETÉSE",
+          "b": "Mert az idő az élet alapja. Mert megérdemlik az eszközöket, amelyek az elmékre tervezték, nem származnak örökségből. Mert valaki meg kell próbálnia építeni valamit jobbat. Mi megtettük. Itt van."
+        }
+      ]
+    }
+  }
+}

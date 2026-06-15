@@ -1,0 +1,126 @@
+{
+  "tutorial": {
+    "back": "Înapoi",
+    "skip": "Sari peste",
+    "enter": "Intră în HEKA",
+    "continue": "Continua",
+    "stepLabel": "Pasul {{current}} din {{total}}",
+    "journeyTitle": "Calatoria Ta",
+    "completeLabel": "Complet",
+    "actionWaiting": "Atinge pentru a continua",
+    "steps": {
+      "welcome": {
+        "title": "Bun Venit în HEKA",
+        "detail": "Treizeci de luni. Douăzeci și opt de zile fiecare. Luna, soarele, grădina ta, energia ta, prietenii tăi — în sfârșit, în ritm.",
+        "action": "Începe Calatoria Ta",
+        "instruction": "Nu ai văzut niciodată un calendar ca acesta."
+      },
+      "tracker": {
+        "title": "Urmărește-ți Rit",
+        "detail": "Starea de spirit: cursor de la 1 la 10 cu emoji în timp real. Somn: durata și calitatea. Energie: fizică, mentală, emoțională, spirituală. Panoul de înțelegeri dezvăluie modele pe termen lung. Calendarul tău păstrează povestea ta.",
+        "action": "Continuă",
+        "instruction": "Corpul tău face parte din calendar."
+      },
+      "the-grid": {
+        "title": "Grila — Treizeci de Luni",
+        "detail": "Douăzeci și patru de luni cu exact douăzeci și opt de zile, plus Hexa între august și septembrie. Martie are al 29-lea zi. Fiecare lună începe în aceeași zi. Anul respiră în trei arcuri — Deschidere în roșu, Nucleu în verde, Închidere în mov. Previzibil. Simetric. Curat.",
+        "action": "Atinge orice zi pentru a continua",
+        "instruction": "Contează-le. Treizeci. Nu douăzeci și patru."
+      },
+      "features": {
+        "title": "Arsenalul tău",
+        "detail": "Imprimare: Gold implicit, Minimalist, Geometrie Sfântă cu celule circulare, Cyberpunk cu linii de scan CRT, Natural Organic, Vechiul Egipt cu ieroglifie. Toate gratuite. Pentru totdeauna. A4, A3, Letter. Stele: horeograme de naștere Swiss Ephemeris, acuratețe la arc-secundă. Jurnal: patru moduri cu generare de înțelepciune AI. Cerc: mesaje în timp real, sarcini împărtășite cu date de scadentă HEKA. Statistici: peste 80 de realizări în opt etaje. Realizări secrete așteaptă să fie descoperite.",
+        "action": "Continuă",
+        "instruction": "Șase teme de imprimare. Un motor de horeogramă de naștere. Un jurnal. Prieteni. Statistici."
+      },
+      "settings": {
+        "title": "Fă-ți-l Tău",
+        "detail": "Date Civile: supraimprimare Gregorian pentru a nu rata o întâlnire. Faze Lunare: glife Swiss Ephemeris pe fiecare celulă. Vacanțe: observanțe comunitare. Mod Purity: ecran complet, fără distragerea atenției, comutare întuneric/lumină Yin-Yang. Calendarul se adaptează modul în care TU vezi timpul.",
+        "action": "Comută orice setare pentru a continua",
+        "instruction": "Trei comutatoare. Mod Purity. Control complet."
+      },
+      "ai-coach": {
+        "title": "HEKA AI — Coachul tău Astral",
+        "detail": "Orac de sticlă plutitor. Sintetizează faze lunare, tranzituri tale, sarcini, sentimentul jurnalului, serii și locația în mesaje poétique și acționabile. Vorbește în arheta ta — Războinic, Călugăr, Artist, Străin, Mistric, Foenix. Își amintește 19 de conversații. Detectează sincronizări: momente când cuvintele tale se potrivește cu cerul. Îmbunătățire opțională LLM cu rezilientă în mod offline. Aceasta nu este un chatbot. Acesta este un orac.",
+        "action": "Continuă",
+        "instruction": "Se uită la cer. Se uită la tine."
+      },
+      "complete": {
+        "title": "Ești pregătit",
+        "detail": "Știi cum să navighezi prin treisprezece luni. Știi cum să citești luna. Știi cum să urmărești energia ta, să votezi pentru sărbători, să printezi pagini frumoase, să jurnaliezi cu stelele și să consulți coach-ul tău AI. Tot restul așteaptă curiozitatea ta.",
+        "action": "Intră în HEKA",
+        "instruction": "Calendarul este al tău. Cerul este al tău."
+      },
+      "day-cells": {
+        "title": "Fiecare Celule Este Viu",
+        "detail": "Faza lunii Swiss Ephemeris emoji. Data civilă dedesubt. Puncte de vacanță — curate de comunitate. Snippet-uri de notițe — cuvintele tale, vizibile pe grilă. Toate treisprezece lunile deodată. Tot anul, la o privire.",
+        "action": "Atinge orice zi pentru a deschide",
+        "instruction": "Fiecare zi spune o poveste."
+      },
+      "day-panel": {
+        "title": "Deschiderea Zilei",
+        "detail": "Luna: iluminare exactă, creștere sau scădere, detectare a cursului liber. Astrologie: tranzituri reale în contrast cu carta ta de naștere. Note: categorizate după stare de spirit, sarcină, jurnal. Sarcinile: ore de scadentă, memento. Energie: votează după 19:30, vezi pulsul comunității. Aceasta nu este o intrare în calendar. Aceasta este un portal.",
+        "action": "Explorează panoul zilei, apoi continuă",
+        "instruction": "Centru de comandă pentru o singură zi."
+      },
+      "community": {
+        "title": "Modelează Cosmosul",
+        "detail": "Sugerează sărbători noi. Zece voturi pozitive și devine oficial. Votează pentru funcționalități viitoare — Planificate, Luați în considerare, În desfășurare, Luate în considerare. Calendarul evoluează pentru că utilizatorii săi îl evoluează. Aceasta este o colaborare.",
+        "action": "Continuă",
+        "instruction": "Votul tău schimbă calendarul."
+      },
+      "navigation": {
+        "title": "Navighează în timp",
+        "detail": "Săgețile se deplasează între luni. Astăzi se întoarce acum. Căutarea înțelege limbaj natural — \"Hexa 15\" sau \"31 ianuarie.\" Extinde orizontal sau vertical pentru mai multe detalii. Tot anul este la un gest depărtare.",
+        "action": "Atinge ← sau → pentru a naviga",
+        "instruction": "Nu ești niciodată pierdut."
+      },
+      "first-note": {
+        "title": "Fă Primul Tăi Marc",
+        "detail": "Apasă orice zi. Derulează la Note. Scrie ceva — o sarcină, o stare de spirit, o amintire. Aceasta este prima intrare în ceea ce ar putea deveni o cronica pe termen lung.",
+        "action": "Scrie o notiță pentru a finaliza tutorialul",
+        "instruction": "Un calendar este doar un instrument până când tu nu îl faci al tău."
+      },
+      "celestial-guide": {
+        "title": "Ghidul Ceresc",
+        "detail": "Orele Soarelui: anel SVG live, vreme, acuratețe în patru etape. Faza Lunii: iluminare, lună goală, cronometru pentru noul an lunar. Sezoane: urmărire reală a solstițiului astronomic. Agricultură: ce să plantezi astăzi, după locația ta și faza lunii. Ceasul Digital: patru cronometre live simultane. Orele Planetare: ore adevărate Chaldean bazate pe soarele de zi și apusul de zi. Derulează-le. Fiecare este un instrument științific.",
+        "action": "Derulează cărțile celestiale pentru a continua",
+        "instruction": "Șase cărți. Un singur cer."
+      }
+    },
+    "printThemes": {
+      "egypt": {
+        "name": "Egipt",
+        "desc": "Hieroglife"
+      },
+      "sacred": {
+        "name": "Geo Sfântă",
+        "desc": "Celule circulare"
+      },
+      "nature": {
+        "name": "Natură",
+        "desc": "Botanică"
+      },
+      "default": {
+        "name": "Implicit",
+        "desc": "Pergament și aur"
+      },
+      "cyberpunk": {
+        "name": "Cyberpunk",
+        "desc": "Strălucire neon"
+      },
+      "minimalist": {
+        "name": "Minimalist",
+        "desc": "Puritate elvețiană"
+      }
+    },
+    "previewAchievements": {
+      "nightOwl": "Șoimul Nopții",
+      "timeLord": "Stăpânul Timpului",
+      "firstWords": "Primele Cuvânt",
+      "weekWarrior": "Luptători de Săptămână",
+      "centuryClub": "Clubul de Secole",
+      "theChronicler": "Cronicar"
+    }
+  }
+}

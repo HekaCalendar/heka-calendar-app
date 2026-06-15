@@ -3,14 +3,18 @@
  * Phase 1: Exact transit calculations using Swiss Ephemeris
  */
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { selectSelectedProfileChart } from '../../store/selectors';
 import { calculateCurrentSky } from '../../services/calculations/swissCalculations';
 import { calculateTransits } from '../../services/calculations/transits';
-import { PLANET_NAMES } from '../../types';
+import { PLANET_NAMES, type CelestialBody } from '../../types';
 import './DailyBriefing.css';
+
+interface DailyBriefingProps {
+  positions?: Record<string, CelestialBody> | null;
+}
 
 const PLANET_SYMBOLS: Record<string, string> = {
   sun: '☉', moon: '☽', mercury: '☿', venus: '♀', mars: '♂',
@@ -32,40 +36,53 @@ interface Transit {
   interpretation: string;
 }
 
-export const DailyBriefing: React.FC = () => {
+export const DailyBriefing: React.FC<DailyBriefingProps> = ({ positions: providedPositions }) => {
   const { t } = useTranslation('celestial');
   const natalChart = useSelector(selectSelectedProfileChart);
-  const [transits, setTransits] = useState<Transit[]>([]);
-  const [currentPositions, setCurrentPositions] = useState<any>(null);
-  const [loading, setLoading] = useState(true);
-  
+  const [internalPositions, setInternalPositions] = useState<Record<string, CelestialBody> | null>(null);
+  const [loading, setLoading] = useState(!providedPositions);
+
+  // Re-use parent sky data when available to avoid duplicate Swiss Ephemeris work.
+  const currentPositions = providedPositions ?? internalPositions;
+
+  const transits = useMemo<Transit[]>(() => {
+    if (!currentPositions || !natalChart) return [];
+    try {
+      return calculateTransits(currentPositions, natalChart.bodies) as Transit[];
+    } catch (e) {
+      console.error('Failed to calculate transits:', e);
+      return [];
+    }
+  }, [currentPositions, natalChart]);
+
   useEffect(() => {
+    if (providedPositions) {
+      setLoading(false);
+      return;
+    }
+
+    let isMounted = true;
     const calculateDaily = async () => {
       try {
         setLoading(true);
-        
-        // Get precise current sky positions
         const { positions } = await calculateCurrentSky();
-        setCurrentPositions(positions);
-        
-        // If we have a natal chart, calculate transits
-        if (natalChart) {
-          const todaysTransits = calculateTransits(positions, natalChart.bodies);
-          setTransits(todaysTransits as Transit[]);
-        }
+        if (isMounted) setInternalPositions(positions);
       } catch (e) {
         console.error('Failed to calculate daily briefing:', e);
       } finally {
-        setLoading(false);
+        if (isMounted) setLoading(false);
       }
     };
-    
+
     calculateDaily();
-    
-    // Recalculate every hour
+
+    // Recalculate every hour only when the parent is not already providing data.
     const interval = setInterval(calculateDaily, 3600000);
-    return () => clearInterval(interval);
-  }, [natalChart]);
+    return () => {
+      isMounted = false;
+      clearInterval(interval);
+    };
+  }, [providedPositions]);
   
   if (loading) {
     return (

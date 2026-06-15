@@ -1,0 +1,126 @@
+{
+  "tutorial": {
+    "back": "Terug",
+    "skip": "Overslaan",
+    "enter": "Ga naar HEKA",
+    "continue": "Doorgaan",
+    "stepLabel": "Stap {{current}} van {{total}}",
+    "journeyTitle": "Jouw Reis",
+    "completeLabel": "Voltooid",
+    "actionWaiting": "Tik om door te gaan",
+    "steps": {
+      "welcome": {
+        "title": "Welkom bij HEKA",
+        "detail": "Dertien maanden. Vijfentwintig dagen elke maand. De maan, de zon, je tuin, je energie, je vrienden — eindelijk in ritme.",
+        "action": "Begin Jouw Reis",
+        "instruction": "Je hebt nog nooit een kalender zoals deze gezien."
+      },
+      "tracker": {
+        "title": "Volg Jouw Rhythmus",
+        "detail": "Stemming: 1-10 schuif met echte tijd",
+        "action": "Verdergaan",
+        "instruction": "Jouw lichaam maakt deel uit van de kalender."
+      },
+      "the-grid": {
+        "title": "De Grid — Dertien Maanden",
+        "detail": "Twaalf maanden van exact 28 dagen, plus Hexa tussen augustus en september. Maart houdt de 29e dag. Elke maand begint op dezelfde dag. Het jaar ademt in drie bochten — Opening in rood, Kern in groen, Sluiting in paars. Voorspelbaar. Symmetrisch. Schoon.",
+        "action": "Tik op een dag om door te gaan",
+        "instruction": "Tel ze. Dertien. Niet twaalf."
+      },
+      "features": {
+        "title": "Jouw Arsenal",
+        "detail": "Print: Standaard Goud, Minimalistisch, Heilige Geometrie met cirkelcellen, Cyberpunk met CRT scanlijnen, Natuurlijk Organisch, Oud-Egyptisch met hiërogliefen. Alles gratis. Voor het leven. A4, A3, Brief. Sterren: Zwitserse Ephemeris geboorteplaten, arc- seconde nauwkeurigheid. Dagboek: vier modi met AI inzicht generatie. Cirkel: realtime berichtgeving, gedeelde taken met HEKA vervaldatums. Statistieken: 80+ prestatieën over acht niveaus. Geheime prestaties wachten om ontdekt te worden.",
+        "action": "Ga verder",
+        "instruction": "Zes printthema's. Een geboorteplaat engine. Een dagboek. Vrienden. Statistieken."
+      },
+      "settings": {
+        "title": "Maak Het Jouw",
+        "detail": "Burgerlijke Data: overlap Gregoriaanse zodat je nooit een afspraak mist. Maanfases: Zwitserse Ephemeris schilderingen op elke cel. Feesten: gemeenschapsvieringen. Puur Modus: volledig scherm, afleidingsvrij, Yin-Yang donker/licht schakelaar. De kalender past aan hoe JIJ tijd ziet.",
+        "action": "Schakel een instelling in om door te gaan",
+        "instruction": "Drie schakelaars. Puur Modus. Volledig controle."
+      },
+      "ai-coach": {
+        "title": "HEKA AI — Jouw Hemelse Coach",
+        "detail": "Zwevende glas orakel. Syntheseert maanfases, jouw transits, taken, dagboek sentiment, reeksen en locatie in poëzie, actiebare berichten. Praat in jouw archetyp — Krijger, Monnik, Kunstenaar, Strategist, Mysticus, Feniks. Onthoudt 19 gesprekken. Detecteert synchroniciteiten: momenten waarop jouw woorden zich aansluiten bij de lucht. Optionele LLM verbetering met gracieuze offline terugval. Dit is geen chatbot. Dit is een orakel.",
+        "action": "Ga verder",
+        "instruction": "Het kijkt naar de lucht. Het kijkt naar jou."
+      },
+      "complete": {
+        "title": "Je Bent Klaar",
+        "detail": "Je weet hoe je dertien maanden kunt navigeren. Je weet hoe je de maan kunt lezen. Je weet hoe je je energie kunt bijhouden, stemt op feestdagen, mooie pagina's kunt printen, dagboek kunt bijhouden met de sterren, en raad kunt vragen aan je AI-coach. Alles wat er nog meer is, wacht op je nieuwsgierigheid.",
+        "action": "Ga naar HEKA",
+        "instruction": "De kalender is van jou. De hemel is van jou."
+      },
+      "day-cells": {
+        "title": "Elke Cel Is Levend",
+        "detail": "Fase van de Zwitserse Ephemeris maanemoji. Burgerlijke datum eronder. Vakantiedots — gecureerd door de gemeenschap. Notities — jouw woorden, zichtbaar op het rooster. Al dertien maanden tegelijk. Het hele jaar in één oogopslag.",
+        "action": "Tik op een dag om deze te openen",
+        "instruction": "Elke dag vertelt een verhaal"
+      },
+      "day-panel": {
+        "title": "De Dag Opens",
+        "detail": "Maan: exacte belichting, toenemend of afnemend, detectie van leeg vaandel. Astrologie: echte tijd transits tegenover JOUW geboorteplaat. Notities: geclassificeerd naar stemming, taak, dagboek. Taken: vervaltijden, herinneringen. Energie: stem na 19:30 uur, zie het gemeenschapspols. Dit is geen kalenderitem. Dit is een portaal.",
+        "action": "Verkenn het dagpaneel, dan ga je verder",
+        "instruction": "Je commandocentrum voor een enkele dag."
+      },
+      "community": {
+        "title": "Bijpraten aan de Kosmos",
+        "detail": "Stel nieuwe feestdagen voor. Tien upvotes en het wordt officieel. Stem op toekomstige functies — Gepland, In overweging, In uitvoering, Uitgebracht. De kalender ontwikkelt zich omdat zijn gebruikers het doen. Dit is een samenwerking.",
+        "action": "Verdergaan",
+        "instruction": "Je stem verandert de kalender."
+      },
+      "navigation": {
+        "title": "Verplaats Door De Tijd",
+        "detail": "Pijlen verplaatsen tussen maanden. Vandaag springt terug naar nu. Zoek begrijpt natuurlijke taal — \"Hexa 15\" of \"31 januari.\" Uitvouwen horizontaal of verticaal voor meer details. Het hele jaar is één beweging verwijderd.",
+        "action": "Tik ← of → om te navigeren",
+        "instruction": "Je bent nooit verdwaald."
+      },
+      "first-note": {
+        "title": "Maak Je Eerste Mark",
+        "detail": "Tik op een dag. Schuif naar Notities. Schrijf iets — een taak, een stemming, een herinnering. Dit is de eerste ingang in wat zou kunnen worden een jarenlange kroniek.",
+        "action": "Schrijf een notitie om de handleiding te voltooien",
+        "instruction": "Een kalender is slechts een hulpmiddel totdat je het je eigen maakt."
+      },
+      "celestial-guide": {
+        "title": "De Hemelse Gids",
+        "detail": "Zontijden: live SVG ring, weer, vier niveaus nauwkeurigheid. Maanfase: belichting, maan leeg, maan nieuwjaar telling. Seizoenen: echte astronomische zonne-equinotisch volgen. Landbouw: wat te planten vandaag, op basis van je locatie en maanfase. Digitaal Klok: vier gelijktijdige live tellingen. Planeetuur: echte Chaldeeënse uren gebaseerd op werkelijke zonsopgang en zonsondergang. Schuif erdoorheen. Elke een is een wetenschappelijk instrument.",
+        "action": "Schuif de hemelse kaarten om door te gaan",
+        "instruction": "Zes kaarten. Een lucht."
+      }
+    },
+    "printThemes": {
+      "egypt": {
+        "name": "Egypte",
+        "desc": "Hiërogliefen"
+      },
+      "sacred": {
+        "name": "Heilig Geo",
+        "desc": "Cirkulaire cellen"
+      },
+      "nature": {
+        "name": "Natuur",
+        "desc": "Botanisch"
+      },
+      "default": {
+        "name": "Standaard",
+        "desc": "Perkament & goud"
+      },
+      "cyberpunk": {
+        "name": "Cyberpunk",
+        "desc": "Neon gloeien"
+      },
+      "minimalist": {
+        "name": "Minimalistisch",
+        "desc": "Zwitsers puur"
+      }
+    },
+    "previewAchievements": {
+      "nightOwl": "Nacht Uil",
+      "timeLord": "Tijd Heer",
+      "firstWords": "Eerste Woorden",
+      "weekWarrior": "Week Krijger",
+      "centuryClub": "Eeuw Club",
+      "theChronicler": "De Kroniekschrijver"
+    }
+  }
+}

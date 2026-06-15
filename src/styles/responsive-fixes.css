@@ -217,7 +217,7 @@
   
   .month-header__controls .btn {
     padding: 4px 6px;
-    font-size: 10px;
+    font-size: 12px;
     flex-shrink: 0;
   }
   
@@ -451,7 +451,7 @@
     text-overflow: ellipsis;
   }
   .day-cell__moon {
-    font-size: 10px;
+    font-size: 12px;
     line-height: 1;
   }
   .day-cell__arc {
@@ -516,6 +516,52 @@
     border-radius: 6px;
   }
   .toggle-text {
+    display: none;
+  }
+
+  /* ---- Search Modal ---- */
+  .search-modal.modal-overlay {
+    padding: 8px !important;
+    align-items: center !important;
+  }
+  .search-modal__content {
+    max-width: 100% !important;
+    width: 100%;
+    max-height: calc(100dvh - 16px) !important;
+    border-radius: 12px;
+  }
+  .search-modal__header {
+    padding: 14px 12px !important;
+  }
+  .search-modal__header input {
+    font-size: 1rem !important;
+  }
+  .search-modal__tabs {
+    gap: 4px !important;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    padding-bottom: 2px;
+  }
+  .search-modal__tabs::-webkit-scrollbar {
+    display: none;
+  }
+  .search-modal__tabs button {
+    padding: 3px 8px !important;
+    font-size: 0.7rem !important;
+    flex-shrink: 0;
+  }
+  .search-modal__results {
+    max-height: calc(100dvh - 200px) !important;
+    padding: 6px !important;
+  }
+  .search-modal__footer {
+    display: none !important;
+  }
+}
+
+@media (max-width: 360px) {
+  .search-modal__tabs button span:last-child {
     display: none;
   }
 }

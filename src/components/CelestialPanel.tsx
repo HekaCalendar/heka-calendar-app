@@ -381,7 +381,7 @@ const CelestialPanelComponent: React.FC = () => {
       
       {/* General Disclaimer */}
       <div style={{ 
-        fontSize: '11px', 
+        fontSize: '12px', 
         opacity: 0.6, 
         padding: '4px 16px 8px', 
         fontStyle: 'italic',
@@ -490,7 +490,7 @@ const CelestialPanelComponent: React.FC = () => {
             <InfoSection title={t('favorableActivities')}>
               <InfoList items={dayInfo.activities} />
             </InfoSection>
-            <div style={{ fontSize: '11px', opacity: 0.6, marginTop: '8px', fontStyle: 'italic' }}>
+            <div style={{ fontSize: '12px', opacity: 0.6, marginTop: '8px', fontStyle: 'italic' }}>
               ℹ️ {t('planetaryDayDisclaimer')}
             </div>
           </ExpandableCelestialCard>
@@ -522,7 +522,7 @@ const CelestialPanelComponent: React.FC = () => {
               t('lastQuarterToNew')
           ]} />
         </InfoSection>
-        <div style={{ fontSize: '11px', opacity: 0.6, marginTop: '8px', fontStyle: 'italic' }}>
+        <div style={{ fontSize: '12px', opacity: 0.6, marginTop: '8px', fontStyle: 'italic' }}>
           ℹ️ {t('moonPhaseDisclaimer')}
         </div>
       </ExpandableCelestialCard>
@@ -609,7 +609,7 @@ const CelestialPanelComponent: React.FC = () => {
           <InfoSection title={t('historicalSignificance')}>
             <p>{t('solarNoonHistoricalDescription')}</p>
           </InfoSection>
-          <div style={{ fontSize: '11px', opacity: 0.6, marginTop: '8px', fontStyle: 'italic' }}>
+          <div style={{ fontSize: '12px', opacity: 0.6, marginTop: '8px', fontStyle: 'italic' }}>
             ℹ️ {t('solarNoonDisclaimer')}
           </div>
         </ExpandableCelestialCard>

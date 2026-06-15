@@ -2,7 +2,7 @@ import json
 import glob
 import os
 
-files = glob.glob(r'public\locales\*\journal.json')
+files = glob.glob(r'src\i18n\locales\*\journal.json')
 
 daily_oracle = {
     "title": "Daily Oracle",

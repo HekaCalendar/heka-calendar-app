@@ -6,7 +6,7 @@
  * ╚═══════════════════════════════════════════════════════════════════════════╝
  */
 
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import type { RootState } from '../../../store';
@@ -39,10 +39,13 @@ export const OracleModeDailyDraw: React.FC<OracleModeDailyDrawProps> = ({
 
   // Read user's astrology preferences from Redux
   const astroPreferences = useSelector((state: RootState) => state.calendar.astroPreferences);
-  const zodiacOptions: ZodiacOptions = {
-    zodiacFrame: astroPreferences.zodiacFrame,
-    signCount: astroPreferences.signCount,
-  };
+  const zodiacOptions: ZodiacOptions = useMemo(
+    () => ({
+      zodiacFrame: astroPreferences.zodiacFrame,
+      signCount: astroPreferences.signCount,
+    }),
+    [astroPreferences.zodiacFrame, astroPreferences.signCount]
+  );
 
   const loadOrGenerateCard = useCallback(async () => {
     setIsLoading(true);
