@@ -4,7 +4,7 @@ import { skipOnboarding } from './setup';
 test.describe('Auth Modal', () => {
   test.beforeEach(async ({ page }) => {
     await skipOnboarding(page);
-    await page.goto('/');
+    await page.goto('/app/');
     await page.waitForSelector('.app-title', { state: 'visible', timeout: 15000 });
   });
 

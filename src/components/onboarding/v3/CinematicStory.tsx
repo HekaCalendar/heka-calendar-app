@@ -18,6 +18,7 @@ import { ThemeShowcase } from './ThemeShowcase';
 import { CircleShowcase } from './CircleShowcase';
 import { CommunityShowcase } from './CommunityShowcase';
 import { PureModeShowcase } from './PureModeShowcase';
+import { markTutorialV3Completed } from './tutorialStorage';
 
 interface CinematicStoryProps {
   strings: {
@@ -394,6 +395,15 @@ export const CinematicStory: React.FC<CinematicStoryProps> = ({ strings, onCompl
 
   const currentSlide = SLIDES[slideIndex];
   const isLastSlide = slideIndex === totalSlides - 1;
+
+  // Mark the v3 tutorial as completed once the user reaches the final slide.
+  // This protects against losing the completion flag if the tab is closed
+  // before the explicit "Enter HEKA" click.
+  useEffect(() => {
+    if (isLastSlide && phase === 'idle') {
+      markTutorialV3Completed();
+    }
+  }, [isLastSlide, phase]);
 
   return (
     <div onClick={() => phase === 'idle' && !isLastSlide && goNext()} style={{ position: 'fixed', inset: 0, zIndex: 9999 }}>

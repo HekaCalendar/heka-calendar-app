@@ -66,6 +66,7 @@ import { scheduleDailyTips } from '../astrology/services/notifications/astroNoti
 import { NotificationEngine } from '../services/notificationEngine';
 import { LocalNotifications } from '@capacitor/local-notifications';
 import { tutorialService } from '../services/tutorialService';
+import { markTutorialV3Completed, isTutorialV3Completed } from './onboarding/v3/tutorialStorage';
 import { initializeEngagementTracking, stopSessionTracking, markActivity } from '../services/engagementService';
 import { initializeDeepLinks, getPendingInviteCode, getPendingTaskCode } from '../services/deepLinkService';
 import { App as CapacitorApp } from '@capacitor/app';
@@ -235,28 +236,14 @@ const AppContentComponent: React.FC = () => {
 
   // Pending task share from deep links
   const [pendingTaskShare, setPendingTaskShare] = useState<string | null>(null);
-  const TUTORIAL_V3_KEY = 'heka-tutorial-v3';
-  const [showNewOnboarding, setShowNewOnboarding] = useState(() => {
-    try {
-      const raw = localStorage.getItem(TUTORIAL_V3_KEY);
-      if (!raw) return true;
-      const parsed = JSON.parse(raw);
-      const shouldShow = parsed.completed !== true;
-      return shouldShow;
-    } catch (e) {
-      return true;
-    }
-  });
+  const [showNewOnboarding, setShowNewOnboarding] = useState(() => !isTutorialV3Completed());
 
-  // Safety net: force tutorial if localStorage says it should show
+  // Safety net: force tutorial if storage says it should show
   useEffect(() => {
-    try {
-      const raw = localStorage.getItem(TUTORIAL_V3_KEY);
-      const shouldShow = !raw || JSON.parse(raw).completed !== true;
-      if (shouldShow && !showNewOnboarding) {
-        setShowNewOnboarding(true);
-      }
-    } catch {}
+    if (!isTutorialV3Completed() && !showNewOnboarding) {
+      setShowNewOnboarding(true);
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   const [showTaskPreview, setShowTaskPreview] = useState(false);
 
@@ -335,15 +322,9 @@ const AppContentComponent: React.FC = () => {
       // Connect tutorial service to Redux
       tutorialService.connectToDispatch(dispatch);
       
-      // Auto-start onboarding for first-time users (with slight delay to let UI settle)
-      // NEW: Use Immaculate Onboarding v2 for users who haven't seen it
-      const tutorialV3Raw = localStorage.getItem(TUTORIAL_V3_KEY);
-      const v3IsComplete = tutorialV3Raw ? JSON.parse(tutorialV3Raw).completed === true : false;
-      if (v3IsComplete) {
-        setTimeout(() => {
-          tutorialService.checkAutoTriggers();
-        }, 1500);
-      }
+      // The v3 cinematic onboarding is the canonical first-run experience.
+      // Legacy first-visit interactive tutorials are marked completed when v3
+      // finishes, so we do not auto-trigger them here.
       
       let unsubscribeVisibility: (() => void) | undefined;
       const engagementIdleId = scheduleIdle(() => {
@@ -615,8 +596,7 @@ const AppContentComponent: React.FC = () => {
       
       const legacyOnboardingCompleted = tutorialState.completedTutorials.includes('celestial-awakening-v1');
       const onboardingSkipped = tutorialState.preferences.skipOnboarding;
-      const tutorialV3Raw = localStorage.getItem(TUTORIAL_V3_KEY);
-      const v3IsComplete = tutorialV3Raw ? JSON.parse(tutorialV3Raw).completed === true : false;
+      const v3IsComplete = isTutorialV3Completed();
       if (!legacyOnboardingCompleted && !onboardingSkipped && !v3IsComplete) return;
       
       // Wait for auth
@@ -674,8 +654,7 @@ const AppContentComponent: React.FC = () => {
       if (hasPendingTask && !tutorialState.isActive) {
         const legacyOnboardingCompleted = tutorialState.completedTutorials.includes('celestial-awakening-v1');
         const onboardingSkipped = tutorialState.preferences.skipOnboarding;
-        const tutorialV3Raw = localStorage.getItem(TUTORIAL_V3_KEY);
-        const v3IsComplete = tutorialV3Raw ? JSON.parse(tutorialV3Raw).completed === true : false;
+        const v3IsComplete = isTutorialV3Completed();
         
         if ((legacyOnboardingCompleted || onboardingSkipped || v3IsComplete) && !friendRequestToast.show) {
           setFriendRequestToast({
@@ -1258,8 +1237,10 @@ const AppContentComponent: React.FC = () => {
           <InteractiveTutorial
             language={setupLanguage}
             onComplete={() => {
+              markTutorialV3Completed();
+              // The v3 cinematic onboarding supersedes the legacy first-visit tutorial.
               try {
-                localStorage.setItem(TUTORIAL_V3_KEY, JSON.stringify({ completed: true }));
+                tutorialService.markTutorialCompleted('celestial-awakening-v1');
               } catch {
                 // Non-fatal
               }

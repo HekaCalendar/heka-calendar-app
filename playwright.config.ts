@@ -20,7 +20,7 @@ export default defineConfig({
     },
   ],
   webServer: {
-    command: 'npm run preview',
+    command: 'npx --yes serve website -l 4173',
     url: 'http://localhost:4173',
     reuseExistingServer: !process.env.CI,
     timeout: 120 * 1000,
