@@ -22,7 +22,7 @@ export function getZodiacSystemPreference(): '12-sign' | '13-sign' {
         return sys === 'sidereal' ? '12-sign' : sys;
       }
     }
-  } catch (e) {
+  } catch {
     // encrypted or corrupt — fall through to engine globals
   }
   // Fallback: engine module-level globals are kept in sync by UI components
@@ -41,7 +41,7 @@ export function getZodiacFramePreference(): 'tropical' | 'sidereal' {
         return state.astroPreferences?.zodiacFrame || 'tropical';
       }
     }
-  } catch (e) {
+  } catch {
     // encrypted or corrupt — fall through to engine globals
   }
   return getEngineZodiacFrame();
@@ -57,7 +57,7 @@ export function getSignCountPreference(): 12 | 13 {
         return state.astroPreferences?.signCount || 12;
       }
     }
-  } catch (e) {
+  } catch {
     // encrypted or corrupt — fall through to engine globals
   }
   return getEngineSignCount();

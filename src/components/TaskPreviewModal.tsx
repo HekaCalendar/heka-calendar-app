@@ -68,7 +68,7 @@ export const TaskPreviewModal: React.FC<TaskPreviewModalProps> = ({
         } else {
           setError(t('taskPreview.notFound'));
         }
-      } catch (err) {
+      } catch {
         setError(t('taskPreview.failedToLoad'));
       } finally {
         setIsLoading(false);

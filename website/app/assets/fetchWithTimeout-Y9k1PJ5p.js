@@ -1,1 +1,0 @@
-async function t(t,r={}){const{timeout:e=15e3,...o}=r,n=new AbortController,a=setTimeout(()=>n.abort(),e);try{return await fetch(t,{...o,signal:n.signal})}catch(i){if(i instanceof Error&&"AbortError"===i.name)throw new Error(`Request timeout after ${e}ms`);throw i}finally{clearTimeout(a)}}export{t as fetchWithTimeout};

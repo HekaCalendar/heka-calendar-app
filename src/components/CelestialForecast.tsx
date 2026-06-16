@@ -626,7 +626,7 @@ function calculateTimingData(date: Date, moonPhase: any, _transits: PersonalTran
     const d = new Date(date);
     d.setDate(date.getDate() + i);
     const phaseProgress = ((daysSinceNew + i) % lunarCycle) / lunarCycle;
-    let phaseInfo = { name: 'Crescent', emoji: '🌒', meaning: 'Building energy' };
+    let phaseInfo: { name: string; emoji: string; meaning: string };
     
     if (phaseProgress < 0.03) phaseInfo = { name: 'New Moon', emoji: '🌑', meaning: 'New beginnings, set intentions' };
     else if (phaseProgress < 0.22) phaseInfo = { name: 'Waxing Crescent', emoji: '🌒', meaning: 'Build momentum, take first steps' };

@@ -135,7 +135,7 @@ export function getSolarNoon(date: Date, location: LocationData): SolarNoonData 
   const solarNoonMinutesUTC = 12 * 60 - solarNoonOffsetMinutes;
   
   // Create solar noon UTC Date object
-  let solarNoonUTC = new Date(calcDate);
+  const solarNoonUTC = new Date(calcDate);
   solarNoonUTC.setUTCMinutes(solarNoonMinutesUTC);
   
   // Now convert UTC to local timezone
@@ -594,7 +594,7 @@ export function getLunarNewYear(year: number): LunarNewYearData {
  */
 export function getNextLunarNewYear(fromDate: Date): LunarNewYearData {
   // Check current year's Lunar New Year
-  let currentYearLunarNewYear = getLunarNewYear(fromDate.getFullYear());
+  const currentYearLunarNewYear = getLunarNewYear(fromDate.getFullYear());
   
   // If it has passed, get next year's
   if (currentYearLunarNewYear.date < fromDate) {

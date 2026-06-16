@@ -155,7 +155,7 @@ const useModalState = () => {
   const debouncedCloseYear = useDebouncedCallback(() => setShowYearModal(false), 50);
   const debouncedCloseSearch = useDebouncedCallback(() => setShowSearchModal(false), 50);
   const debouncedCloseFriends = useDebouncedCallback(() => setShowFriendsModal(false), 50);
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+   
   void debouncedCloseFriends;
   const debouncedCloseStats = useDebouncedCallback(() => setShowStatsModal(false), 50);
   const debouncedCloseCommunity = useDebouncedCallback(() => setShowCommunityModal(false), 50);

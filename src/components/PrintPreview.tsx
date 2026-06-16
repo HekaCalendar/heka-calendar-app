@@ -174,7 +174,7 @@ export function PrintPreview() {
       dialogService.showAlert({ description: `✓ PDF saved to Downloads\n\nFile: ${filename}\n\nSelect an app below to open your PDF.` });
       try {
         await PrintManager.openPDF(result.filePath, `HEKA_Calendar_${new Date().getFullYear()}.pdf`);
-      } catch (e) {
+      } catch {
         await PrintManager.sharePDF(result.filePath, `HEKA_Calendar_${new Date().getFullYear()}.pdf`);
       }
     } catch (error) {

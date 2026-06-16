@@ -129,7 +129,7 @@ function saveVotes(votes: Record<string, EnergyVote[]>): boolean {
   try {
     localStorage.setItem(VOTE_KEY, JSON.stringify(votes));
     return true;
-  } catch (e) {
+  } catch {
     return false;
   }
 }

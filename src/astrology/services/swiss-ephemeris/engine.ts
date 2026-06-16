@@ -51,6 +51,19 @@ interface SwissModule {
   get_ayanamsa_ex_ut?: (jd: number, flags: number) => { ayanamsa: number } | undefined;
 }
 
+interface SwissEphemerisFunctions {
+  _swe_julday: (y: number, m: number, d: number, h: number, c: number) => number;
+  _swe_calc_ut: (jd: number, p: number, f: number, ptr: number) => void;
+  _swe_houses_ex: (jd: number, iflag: number, lat: number, lon: number, hsys: number, cuspsPtr: number, ascmcPtr: number) => number;
+  _swe_houses: (jd: number, lat: number, lon: number, hsys: number, cuspsPtr: number, ascmcPtr: number) => number;
+  _malloc: (size: number) => number;
+  _free: (ptr: number) => void;
+  _swe_rise_trans: (jd: number, p: number, starPtr: number, f: number, r: number, geoposPtr: number, pr: number, t: number, tretPtr: number, serrPtr: number) => number;
+  _swe_sidtime: (jd: number) => number;
+}
+
+type SwissFunctionName = keyof SwissEphemerisFunctions;
+
 interface PlanetCalculationResult {
   id: string;
   longitude: number;
@@ -326,7 +339,7 @@ async function loadWASM(): Promise<boolean> {
       return false;
     }
     
-    let moduleFactory = (swissephModule as Record<string, unknown>).default || swissephModule;
+    const moduleFactory = (swissephModule as Record<string, unknown>).default || swissephModule;
     if (typeof moduleFactory !== 'function') {
       console.warn('[SwissEphemeris] Module factory not a function, using fallback');
       return false;
@@ -345,10 +358,9 @@ async function loadWASM(): Promise<boolean> {
         onRuntimeInitialized: function(this: Record<string, unknown>) {
           if (!resolved) {
             resolved = true;
-            const mod = this;
-            if (mod && ((mod as Record<string, unknown>)['_swe_julday'] || ((mod as Record<string, unknown>)['asm'] && ((mod as Record<string, unknown>)['asm'] as Record<string, unknown>)['_swe_julday']))) {
+            if (this && ((this as Record<string, unknown>)['_swe_julday'] || ((this as Record<string, unknown>)['asm'] && ((this as Record<string, unknown>)['asm'] as Record<string, unknown>)['_swe_julday']))) {
               try {
-                swissModule = wrapModule(mod);
+                swissModule = wrapModule(this);
                 resolve(true);
               } catch (err: unknown) {
                 console.warn('[SwissEphemeris] wrapModule failed:', err);
@@ -415,16 +427,19 @@ async function loadWASM(): Promise<boolean> {
 
 function wrapModule(rawModule: unknown): SwissModule {
   const Module = rawModule as Record<string, unknown>;
-  const funcs: Record<string, Function> = {};
+  const funcs: Record<string, (...args: unknown[]) => unknown> = {};
   const names = ['_swe_julday', '_swe_calc_ut', '_swe_houses_ex', '_malloc', '_free', '_swe_rise_trans', '_swe_sidtime', '_swe_houses'];
 
   names.forEach(name => {
     if (typeof Module[name] === 'function') {
-      funcs[name] = (Module[name] as Function).bind(Module);
+      funcs[name] = (Module[name] as (...args: unknown[]) => unknown).bind(Module);
     } else if (Module.asm && typeof (Module.asm as Record<string, unknown>)[name] === 'function') {
-      funcs[name] = ((Module.asm as Record<string, unknown>)[name] as Function).bind(Module.asm);
+      funcs[name] = ((Module.asm as Record<string, unknown>)[name] as (...args: unknown[]) => unknown).bind(Module.asm);
     }
   });
+
+  const getFn = <K extends SwissFunctionName>(name: K): SwissEphemerisFunctions[K] | undefined =>
+    funcs[name] as SwissEphemerisFunctions[K] | undefined;
   
   // Mock implementations for missing functions (WASM failed to load)
   const mockJulday = (y: number, m: number, d: number, h: number) => {
@@ -443,14 +458,14 @@ function wrapModule(rawModule: unknown): SwissModule {
   
   return {
     julday: (y: number, m: number, d: number, h: number, c: number) => {
-      const fn = funcs['_swe_julday'];
+      const fn = getFn('_swe_julday');
       if (fn) return fn(y, m, d, h, c);
       return mockJulday(y, m, d, h);
     },
     calc_ut: (jd: number, p: number, f: number) => {
-      const mallocFn = funcs['_malloc'];
-      const calcFn = funcs['_swe_calc_ut'];
-      const freeFn = funcs['_free'];
+      const mallocFn = getFn('_malloc');
+      const calcFn = getFn('_swe_calc_ut');
+      const freeFn = getFn('_free');
       
       if (!mallocFn || !calcFn || !freeFn || !Module.HEAPF64) {
         return mockCalcUt();
@@ -468,10 +483,10 @@ function wrapModule(rawModule: unknown): SwissModule {
       }
     },
     houses_ex: (jd: number, iflag: number, lat: number, lon: number, hsys: number) => {
-      const mallocFn = funcs['_malloc'];
-      const freeFn = funcs['_free'];
-      const housesExFn = funcs['_swe_houses_ex'];
-      const housesFn = funcs['_swe_houses'];
+      const mallocFn = getFn('_malloc');
+      const freeFn = getFn('_free');
+      const housesExFn = getFn('_swe_houses_ex');
+      const housesFn = getFn('_swe_houses');
 
       if (!mallocFn || !freeFn || !Module.HEAPF64) {
         return mockHouses();
@@ -512,9 +527,9 @@ function wrapModule(rawModule: unknown): SwissModule {
       }
     },
     houses: (jd: number, lat: number, lon: number, hsys: number) => {
-      const mallocFn = funcs['_malloc'];
-      const freeFn = funcs['_free'];
-      const housesFn = funcs['_swe_houses'];
+      const mallocFn = getFn('_malloc');
+      const freeFn = getFn('_free');
+      const housesFn = getFn('_swe_houses');
 
       if (!mallocFn || !freeFn || !Module.HEAPF64 || !housesFn) {
         return mockHouses();
@@ -543,14 +558,14 @@ function wrapModule(rawModule: unknown): SwissModule {
       }
     },
     sidtime: (jd: number) => {
-      const fn = funcs['_swe_sidtime'];
+      const fn = getFn('_swe_sidtime');
       if (fn) return fn(jd);
       return mockSidtime(jd);
     },
     rise_trans: (jd: number, p: number, _st: string, f: number, r: number, lat: number, lon: number, a: number, pr: number, t: number) => {
-      const fn = funcs['_swe_rise_trans'];
-      const mallocFn = funcs['_malloc'];
-      const freeFn = funcs['_free'];
+      const fn = getFn('_swe_rise_trans');
+      const mallocFn = getFn('_malloc');
+      const freeFn = getFn('_free');
       if (!fn || !mallocFn || !freeFn || !Module.HEAPF64) {
         return mockRiseTrans();
       }
@@ -637,7 +652,7 @@ export function calculateAllPlanetPositions(jd: number): Map<number, CalcUtResul
   const pos = new Map();
   if (!swissModule) return pos;
   for (const p of [SE_SUN, SE_MOON, SE_MERCURY, SE_VENUS, SE_MARS, SE_JUPITER, SE_SATURN, SE_URANUS, SE_NEPTUNE, SE_PLUTO]) {
-    try { pos.set(p, calculatePlanetPosition(jd, p)); } catch {}
+    try { pos.set(p, calculatePlanetPosition(jd, p)); } catch { /* ignore */ }
   }
   return pos;
 }
@@ -702,7 +717,7 @@ export function calculateAllPlanets(jd: number, planets?: string[], opts?: CalcO
         sign: use13Signs ? getSignFromLongitude(toDegree(lon), true) : getSign(lon),
         degreeInSign: getDegreeInSign(toDegree(lon), use13Signs)
       };
-    } catch {}
+    } catch { /* ignore */ }
   }
   return res as unknown as Record<string, CelestialBody>;
 }
@@ -751,9 +766,9 @@ export function calculateSiderealTime(jd: number) {
 export function calculateRiseTransitSet(jd: number, p: number, lat: number, lon: number, alt: number = 0, pr: number = 1013.25, t: number = 10): RiseTransitSetResult {
   if (!swissModule) return { rise: null, transit: null, set: null };
   const r: RiseTransitSetResult = { rise: null, transit: null, set: null };
-  try { const x = swissModule.rise_trans(jd, p, '', DEFAULT_FLAGS, 1, lat, lon, alt, pr, t); if (x?.rise) r.rise = x.rise; } catch {}
-  try { const x = swissModule.rise_trans(jd, p, '', DEFAULT_FLAGS, 2, lat, lon, alt, pr, t); if (x?.transit) r.transit = x.transit; } catch {}
-  try { const x = swissModule.rise_trans(jd, p, '', DEFAULT_FLAGS, 3, lat, lon, alt, pr, t); if (x?.set) r.set = x.set; } catch {}
+  try { const x = swissModule.rise_trans(jd, p, '', DEFAULT_FLAGS, 1, lat, lon, alt, pr, t); if (x?.rise) r.rise = x.rise; } catch { /* ignore */ }
+  try { const x = swissModule.rise_trans(jd, p, '', DEFAULT_FLAGS, 2, lat, lon, alt, pr, t); if (x?.transit) r.transit = x.transit; } catch { /* ignore */ }
+  try { const x = swissModule.rise_trans(jd, p, '', DEFAULT_FLAGS, 3, lat, lon, alt, pr, t); if (x?.set) r.set = x.set; } catch { /* ignore */ }
   return r;
 }
 
@@ -765,7 +780,7 @@ export async function calculateSunrise(d: Date, lat: number, lon: number): Promi
       // Convert Julian Day directly to Unix timestamp (JD 2440587.5 = Unix epoch)
       return new Date((r.rise - 2440587.5) * 86400000);
     }
-  } catch {}
+  } catch { /* ignore */ }
   return null;
 }
 
@@ -777,7 +792,7 @@ export async function calculateSunset(d: Date, lat: number, lon: number): Promis
       // Convert Julian Day directly to Unix timestamp (JD 2440587.5 = Unix epoch)
       return new Date((r.set - 2440587.5) * 86400000);
     }
-  } catch {}
+  } catch { /* ignore */ }
   return null;
 }
 

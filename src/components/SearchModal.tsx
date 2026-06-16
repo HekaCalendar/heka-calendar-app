@@ -92,7 +92,7 @@ function parseCivilDate(query: string, currentYear: number): Date | null {
   }
 
   // Pattern: DD/MM/YYYY or DD-MM-YYYY
-  const slashPattern = /^(\d{1,2})[\/\-.](\d{1,2})[\/\-.](\d{4})$/;
+  const slashPattern = /^(\d{1,2})[/\-.](\d{1,2})[/\-.](\d{4})$/;
   const slashMatch = lower.match(slashPattern);
   if (slashMatch) {
     const day = parseInt(slashMatch[1]);

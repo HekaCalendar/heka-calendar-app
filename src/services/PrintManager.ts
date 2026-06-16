@@ -55,7 +55,7 @@ export class PrintManager {
     try {
       const result = await HekaPrint.checkNetworkStatus();
       return result.isOnline;
-    } catch (e) {
+    } catch {
       // Fallback: check via navigator
       return navigator.onLine;
     }
@@ -114,7 +114,7 @@ export class PrintManager {
       // Handle specific error codes
       if (getErrorMessage(error).includes('PRINT_NETWORK_REQUIRED') ||
           getErrorCode(error) === 'PRINT_NETWORK_REQUIRED') {
-        throw new Error('Network connection required for printing');
+        throw new Error('Network connection required for printing', { cause: error });
       }
       
       throw error;
@@ -171,7 +171,7 @@ export class PrintManager {
       if (isOnline) {
         try {
           await this.printPDF(pdfResult.filePath);
-        } catch (e) {
+        } catch {
           // If print fails, at least we have the PDF
           console.warn('[PrintManager] Auto-print failed, PDF saved:', pdfResult.filePath);
         }

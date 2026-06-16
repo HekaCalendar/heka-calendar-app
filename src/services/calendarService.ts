@@ -215,7 +215,7 @@ export function civilToHeka(civilDate: Date): HekaDate | null {
   
   // Find which HEKA year this date falls into
   // Start with an approximation based on the year
-  let hekaYear = target.getMonth() < 3 ? target.getFullYear() - 1 : target.getFullYear();
+  const hekaYear = target.getMonth() < 3 ? target.getFullYear() - 1 : target.getFullYear();
   
   // Search backwards and forwards to find the correct year
   for (let offset = -2; offset <= 2; offset++) {

@@ -343,7 +343,7 @@ export const BirthChartInput: React.FC<BirthChartInputProps> = ({
       skyData = await calculateCurrentSky(date);
     } catch (err) {
       console.error('[BirthChartInput] Swiss Ephemeris calculation error:', err);
-      throw new Error(t('birthInput.calcFailed'));
+      throw new Error(t('birthInput.calcFailed'), { cause: err });
     }
     
     if (!skyData || !skyData.positions) {
@@ -358,7 +358,7 @@ export const BirthChartInput: React.FC<BirthChartInputProps> = ({
       houses = await calculateLocalHouses(date, birthData.latitude, birthData.longitude);
     } catch (err) {
       console.error('[BirthChartInput] House calculation error:', err);
-      throw new Error(t('birthInput.houseCalcFailed'));
+      throw new Error(t('birthInput.houseCalcFailed'), { cause: err });
     }
     
     if (!houses || !houses.cusps) {
@@ -439,7 +439,7 @@ export const BirthChartInput: React.FC<BirthChartInputProps> = ({
         houseData = await calculateLocalHouses(date, birthData.latitude, birthData.longitude);
       } catch (houseErr) {
         console.error('[BirthChartInput] House calculation error:', houseErr);
-        throw new Error('Failed to calculate house positions. Please check your coordinates.');
+        throw new Error('Failed to calculate house positions. Please check your coordinates.', { cause: houseErr });
       }
       
       if (!houseData || !houseData.cusps) {

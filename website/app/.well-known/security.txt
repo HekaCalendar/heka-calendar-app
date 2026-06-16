@@ -1,0 +1,6 @@
+Contact: mailto:hekacalendar@gmail.com
+Expires: 2027-06-16T14:00:00.000Z
+Acknowledgments: https://hekacalendar.com/privacy.html
+Preferred-Languages: en
+Canonical: https://hekacalendar.com/.well-known/security.txt
+Policy: https://hekacalendar.com/privacy.html

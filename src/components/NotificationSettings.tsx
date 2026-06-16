@@ -83,7 +83,7 @@ export const NotificationSettings: React.FC = () => {
       await testNotification();
       setTestStatus('sent');
       setTimeout(() => setTestStatus('idle'), 3000);
-    } catch (err) {
+    } catch {
       setTestStatus('error');
       setTimeout(() => setTestStatus('idle'), 3000);
     }

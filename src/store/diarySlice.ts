@@ -72,6 +72,7 @@ const initDiary = createAsyncThunk(
     // Migrate legacy localStorage data once
     const migrated = await dbMigrateFromLocalStorage();
     if (migrated > 0) {
+      /* no-op */
     }
 
     const all = await dbGetAllEntries();

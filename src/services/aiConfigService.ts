@@ -389,6 +389,7 @@ class AIConfigService {
 
   isRealProviderConfigured(): boolean {
     const config = this.getConfig();
+    if (config.provider === 'proxy') return true;
     return config.provider !== 'template' && !!config.apiKey;
   }
 

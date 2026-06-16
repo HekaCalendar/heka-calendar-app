@@ -493,7 +493,7 @@ export const AIProviderSettings: React.FC<AIProviderSettingsProps> = ({ onConfig
       } else {
         setTestResult({ success: false, message: t('aiSettings.connectionInvalid') });
       }
-    } catch (error) {
+    } catch {
       setTestResult({ 
         success: false, 
         message: t('aiSettings.connectionFailed')

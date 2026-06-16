@@ -54,7 +54,7 @@ export function sanitizeLocationName(input: string): string {
       // Remove HTML
       .replace(/<[^>]*>/g, '')
       // Only allow safe characters for place names
-      .replace(/[^\w\s\-\.,']/g, '')
+      .replace(/[^\w\s\-.,']/g, '')
       // Normalize whitespace
       .trim()
       // Limit length
@@ -104,7 +104,7 @@ export function sanitizeBirthDate(input: string): string | null {
   }
 
   // Remove any non-numeric and non-dash characters
-  const cleaned = input.replace(/[^\d\-]/g, '');
+  const cleaned = input.replace(/[^\d-]/g, '');
 
   // Validate format with regex
   const dateRegex = /^\d{4}-\d{2}-\d{2}$/;

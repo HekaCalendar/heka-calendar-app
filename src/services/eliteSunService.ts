@@ -313,7 +313,7 @@ async function computeEliteSunTimes(
   // Calculate tomorrow's sunrise for accurate overnight rollover
   const tomorrow = new Date(date);
   tomorrow.setUTCDate(tomorrow.getUTCDate() + 1);
-  let tomorrowResult = await trySwissEphemeris(tomorrow, location)
+  const tomorrowResult = await trySwissEphemeris(tomorrow, location)
     || await tryNOAA_API(tomorrow, location)
     || tryAstronomical(tomorrow, location)
     || fallbackCalculation(tomorrow, location);

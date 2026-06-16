@@ -261,7 +261,7 @@ export class ProfileManager {
       throw new ProfileNotFoundError(`Profile ${id} not found`);
     }
 
-    let chart: NatalChart | null = null;
+    let chart: NatalChart | null;
 
     // If birth data changed, recalculate chart
     if (updates.birthData) {

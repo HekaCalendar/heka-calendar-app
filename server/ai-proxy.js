@@ -205,7 +205,7 @@ function sanitizeForAudit(messages) {
 }
 
 app.get('/health', (_req, res) => {
-  res.json({ ok: true, version: process.env.npm_package_version || '2.2.16' });
+  res.json({ ok: true, version: process.env.npm_package_version || '2.2.23' });
 });
 
 app.post('/api/v1/ai/chat', async (req, res) => {

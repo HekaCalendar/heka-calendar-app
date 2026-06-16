@@ -223,7 +223,7 @@ export const LocationSearch: React.FC<LocationSearchProps> = ({ onLocationSelect
       const data: LocationResult[] = await response.json();
       setResults(data);
       setShowDropdown(data.length > 0);
-    } catch (err) {
+    } catch {
       setError('Unable to search locations. Please enter coordinates manually.');
       setResults([]);
     } finally {

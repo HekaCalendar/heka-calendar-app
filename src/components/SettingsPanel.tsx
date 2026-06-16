@@ -123,14 +123,13 @@ const NotificationModeSelector: React.FC = () => {
 
 const NotificationSettingsBody: React.FC = () => {
   const mode = useSelector((state: RootState) => state.calendar.notificationPreferences.notificationMode);
+  const adaptiveCaps = useSelector((state: RootState) => state.calendar.notificationPreferences.adaptiveCaps);
+  const dispatch = useDispatch<AppDispatch>();
   const { t } = useTranslation('settings');
 
   if (mode === 'unified') {
     return <UnifiedNotificationSettings />;
   }
-
-  const adaptiveCaps = useSelector((state: RootState) => state.calendar.notificationPreferences.adaptiveCaps);
-  const dispatch = useDispatch<AppDispatch>();
 
   return (
     <div>

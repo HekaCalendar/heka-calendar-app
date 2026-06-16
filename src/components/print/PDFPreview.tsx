@@ -47,7 +47,7 @@ export const PDFPreview: React.FC<PDFPreviewProps> = ({
         setPdf(loadedPdf);
         setNumPages(loadedPdf.numPages);
         setIsLoading(false);
-      } catch (err) {
+      } catch {
         setError(t('failedToLoadPDF'));
         setIsLoading(false);
       }

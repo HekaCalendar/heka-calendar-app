@@ -61,7 +61,7 @@ android {
             } else {
                 def isReleaseBuild = gradle.startParameter.taskNames.any { it.toLowerCase().contains('release') }
                 if (isReleaseBuild) {
-                    throw new GradleException("Release keystore not configured. Create android/app/key.properties for Play Store builds.")
+                    throw new GradleException("Release keystore not configured. Create android/key.properties for Play Store builds.")
                 }
                 signingConfig signingConfigs.debug
                 println "Warning: Using debug signing for release build type. Create key.properties for Play Store."

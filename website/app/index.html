@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta id="heka-viewport" name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <meta name="description" content="HEKA Calendar v2.2.22 - The 13-month calendar aligned with celestial rhythms" />
+  <meta name="description" content="HEKA Calendar v2.2.23 - The 13-month calendar aligned with celestial rhythms" />
   <meta name="theme-color" content="#0c0c0f" />
   
   <!-- NO CACHE -->
@@ -11,13 +11,13 @@
   <meta http-equiv="Pragma" content="no-cache" />
   <meta http-equiv="Expires" content="0" />
   
-  <link rel="preload" as="script" href="/assets/translations-en-fVrv3Rbv.js" crossorigin="anonymous" />
-  <title>HEKA Calendar v2.2.22</title>
+  <link rel="preload" as="script" href="./assets/translations-en-fVrv3Rbv.js" crossorigin="anonymous" />
+  <title>HEKA Calendar v2.2.23</title>
   
   <!-- INLINE KILL SWITCH - Cannot be cached separately -->
   <script>
     (function() {
-      var VERSION = '2.2.22';
+      var VERSION = '2.2.23';
       var KEY = 'heka-v220-loaded';
       
       // Check if we already loaded this version
@@ -117,7 +117,13 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   
   <!-- Icons -->
-  <link rel="icon" type="image/png" href="/app/icon-192.png" />
+  <link rel="icon" type="image/png" href="/icon-192.png" />
+  
+  <!-- PWA manifest -->
+  <link rel="manifest" href="/manifest.json" />
+  
+  <!-- Apple touch icon -->
+  <link rel="apple-touch-icon" href="/icon-192.png" />
   
   <style>
     html, body { 
@@ -159,50 +165,50 @@
       border: 1px solid rgba(201, 162, 39, 0.3);
     }
   </style>
-  <script type="module" crossorigin src="/app/assets/index-DXkfG4Br.js"></script>
-  <link rel="modulepreload" crossorigin href="/app/assets/vendor-capacitor-Cw-hLpZc.js">
-  <link rel="modulepreload" crossorigin href="/app/assets/vendor-dates-1xAZDGzG.js">
-  <link rel="modulepreload" crossorigin href="/app/assets/vendor-firebase-BXTpPYSq.js">
-  <link rel="stylesheet" crossorigin href="/app/assets/index-DsYCpfhV.css">
+  <script type="module" crossorigin src="/assets/index-qNYB_2lw.js"></script>
+  <link rel="modulepreload" crossorigin href="/assets/vendor-capacitor-CV0-Oade.js">
+  <link rel="modulepreload" crossorigin href="/assets/vendor-dates-1xAZDGzG.js">
+  <link rel="modulepreload" crossorigin href="/assets/vendor-firebase-BXTpPYSq.js">
+  <link rel="stylesheet" crossorigin href="/assets/index-DsYCpfhV.css">
 </head>
 <body>
   <div id="root">
-    <div id="heka-loading" class="loading">HEKA v2.2.22</div>
+    <div id="heka-loading" class="loading">HEKA v2.2.23</div>
   </div>
 
   <script>
     (function() {
       var META = {
-        en: { title: 'HEKA Calendar v2.2.22', desc: 'HEKA Calendar v2.2.22 - The 13-month calendar aligned with celestial rhythms', loading: 'HEKA v2.2.22' },
-        es: { title: 'HEKA Calendar v2.2.22', desc: 'HEKA Calendar v2.2.22 - El calendario de 13 meses alineado con los ritmos celestiales', loading: 'HEKA v2.2.22' },
-        fr: { title: 'HEKA Calendrier v2.2.22', desc: 'HEKA Calendrier v2.2.22 - Le calendrier de 13 mois aligné avec les rythmes célestes', loading: 'HEKA v2.2.22' },
-        de: { title: 'HEKA Kalender v2.2.22', desc: 'HEKA Kalender v2.2.22 - Der 13-monatige Kalender, der den himmlischen Rhythmen entspricht.', loading: 'HEKA v2.2.22' },
-        it: { title: 'HEKA Calendar v2.2.22', desc: 'HEKA Calendar v2.2.22 - Il calendario di 13 mesi allineato ai ritmi celesti', loading: 'HEKA v2.2.22' },
-        pt: { title: 'Calendário HEKA v2.2.22', desc: 'HEKA Calendário v2.2.22 - O calendário de 13 meses alinhado com os ritmos celestiais', loading: 'HEKA v2.2.22' },
-        zh: { title: 'HEKA 日历 v2.2.22', desc: 'HEKA日历v2.2.22 - 与天体节奏对齐的13个月日历', loading: 'HEKA v2.2.22' },
-        ja: { title: 'HEKA カレンダー v2.2.22', desc: 'HEKA カレンダー v2.2.22 - 天体リズムに合った13ヶ月カレンダー', loading: 'HEKA v2.2.22' },
-        ko: { title: 'HEKA 캘린더 v2.2.22', desc: 'HEKA 캘린더 v2.2.22 - 천체 리듬과 맞춘 13개월 캘린더', loading: 'HEKA v2.2.22' },
-        ar: { title: 'HEKA التقويم v2.2.22', desc: 'HEKA التقويم v2.2.22 - التقويم الذي يحتوي على 13 شهرًا متناغمًا مع الإيقاع السماوي', loading: 'HEKA v2.2.22' },
-        hi: { title: 'HEKA कैलेंडर v2.2.22', desc: 'HEKA कैलेंडर v2.2.22 - स्वर्गीय लयों के साथ संरेखित 13 महीने का कैलेंडर', loading: 'HEKA v2.2.22' },
-        ru: { title: 'HEKA Календарь v2.2.22', desc: 'HEKA Календарь v2.2.22 - 13-месячный календарь, согласованный с небесными ритмами', loading: 'HEKA v2.2.22' },
-        tr: { title: 'HEKA Takvim v2.2.22', desc: 'HEKA Takvim v2.2.22 - Gök cisimleriyle uyumlu 13 aylık takvim', loading: 'HEKA v2.2.22' },
-        pl: { title: 'Kalendarz HEKA v2.2.22', desc: 'HEKA Kalendarz v2.2.22 - 13-miesięczny kalendarz dostosowany do rytmiów niebios', loading: 'HEKA v2.2.22' },
-        nl: { title: 'HEKA Agenda v2.2.22', desc: 'HEKA Kalender v2.2.22 - De 13-maanden kalender uitgelijnd met hemelse ritmpjes', loading: 'HEKA v2.2.22' },
-        sv: { title: 'HEKA Kalender v2.2.22', desc: 'HEKA Kalender v2.2.22 - Den 13-månaderskalender som är anpassad till himlakropars rytm', loading: 'HEKA v2.2.22' },
-        el: { title: 'Ημερολόγιο HEKA v2.2.22', desc: 'ΗKA Ημερολόγιο v2.2.22 - Το 13-μηνο ημερολόγιο που συντονίζεται με τους ουρανίους ρυθμούς', loading: 'HEKA v2.2.22' },
-        he: { title: 'לוח שנה HEKA v2.2.22', desc: 'לוח שנה HEKA v2.2.22 - לוח השנה ה-13 חולק עם ריטמים שמיים', loading: 'HEKA v2.2.22' },
-        th: { title: 'ปฏิทิน HEKA v2.2.22', desc: 'HEKA ปฏิทิน v2.2.22 - ปฏิทิน 13 เดือนที่จัดเต็มกับจังหวะของดาราจักร', loading: 'HEKA v2.2.22' },
-        vi: { title: 'Lịch HEKA phiên bản v2.2.22', desc: 'Lịch HEKA v2.2.22 - Lịch 13 tháng được canh lề với nhịp đập của các vì sao chưởng', loading: 'HEKA v2.2.22' },
-        id: { title: 'Kalender HEKA v2.2.22', desc: 'HEKA Kalender v2.2.22 - Kalender 13 bulan yang sejalan dengan ritme langit', loading: 'HEKA v2.2.22' },
-        uk: { title: 'КАлендар HEKA версії v2.2.22', desc: 'HEKA Календар v2.2.22 - 13-місячний календар, що вирівнюється з небесними ритмами', loading: 'HEKA v2.2.22' },
-        ro: { title: 'HEKA Calendar v2.2.22', desc: 'HEKA Calendar v2.2.22 - Calendarul de 13 luni aliniat cu ritmurile cereşti', loading: 'HEKA v2.2.22' },
-        cs: { title: 'HEKA Kalendář v2.2.22', desc: 'HEKA Kalendář v2.2.22 - 13měsíční kalendář zarovnaný s nebeskými rytmy', loading: 'HEKA v2.2.22' },
-        hu: { title: 'HEKA Naptár v2.2.22', desc: 'HEKA Naptár v2.2.22 - A 13 hónapos naptár, amely az égi ritmusokkal összhangban van', loading: 'HEKA v2.2.22' },
-        da: { title: 'HEKA Kalender v2.2.22', desc: 'HEKA Kalender v2.2.22 - Den 13-måneders kalender, der er afstemt efter himmelige rytmer', loading: 'HEKA v2.2.22' },
-        fi: { title: 'HEKA Kalenteri v2.2.22', desc: 'HEKA Kalenteri v2.2.22 - 13 kuukautta pitkä kalenteri, joka on suunniteltu tärmätahtiin mukautumaan', loading: 'HEKA v2.2.22' },
-        no: { title: 'HEKA Kalender v2.2.22', desc: 'HEKA Kalender v2.2.22 - Den 13-måneders kalender som er i samklang med himmelrytmer', loading: 'HEKA v2.2.22' },
-        sk: { title: 'HEKA Kalendár v2.2.22', desc: 'HEKA Kalendár v2.2.22 - 13-mesičný kalendár zarovnávaný s nebeskými rytmy', loading: 'HEKA v2.2.22' },
-        bg: { title: 'HEKA Календар v2.2.22', desc: 'HEKA Календар v2.2.22 - 13-месечен календар, подравнен с небесни ритми', loading: 'HEKA v2.2.22' }
+        en: { title: 'HEKA Calendar v2.2.23', desc: 'HEKA Calendar v2.2.23 - The 13-month calendar aligned with celestial rhythms', loading: 'HEKA v2.2.23' },
+        es: { title: 'HEKA Calendar v2.2.23', desc: 'HEKA Calendar v2.2.23 - El calendario de 13 meses alineado con los ritmos celestiales', loading: 'HEKA v2.2.23' },
+        fr: { title: 'HEKA Calendrier v2.2.23', desc: 'HEKA Calendrier v2.2.23 - Le calendrier de 13 mois aligné avec les rythmes célestes', loading: 'HEKA v2.2.23' },
+        de: { title: 'HEKA Kalender v2.2.23', desc: 'HEKA Kalender v2.2.23 - Der 13-monatige Kalender, der den himmlischen Rhythmen entspricht.', loading: 'HEKA v2.2.23' },
+        it: { title: 'HEKA Calendar v2.2.23', desc: 'HEKA Calendar v2.2.23 - Il calendario di 13 mesi allineato ai ritmi celesti', loading: 'HEKA v2.2.23' },
+        pt: { title: 'Calendário HEKA v2.2.23', desc: 'HEKA Calendário v2.2.23 - O calendário de 13 meses alinhado com os ritmos celestiais', loading: 'HEKA v2.2.23' },
+        zh: { title: 'HEKA 日历 v2.2.23', desc: 'HEKA日历v2.2.23 - 与天体节奏对齐的13个月日历', loading: 'HEKA v2.2.23' },
+        ja: { title: 'HEKA カレンダー v2.2.23', desc: 'HEKA カレンダー v2.2.23 - 天体リズムに合った13ヶ月カレンダー', loading: 'HEKA v2.2.23' },
+        ko: { title: 'HEKA 캘린더 v2.2.23', desc: 'HEKA 캘린더 v2.2.23 - 천체 리듬과 맞춘 13개월 캘린더', loading: 'HEKA v2.2.23' },
+        ar: { title: 'HEKA التقويم v2.2.23', desc: 'HEKA التقويم v2.2.23 - التقويم الذي يحتوي على 13 شهرًا متناغمًا مع الإيقاع السماوي', loading: 'HEKA v2.2.23' },
+        hi: { title: 'HEKA कैलेंडर v2.2.23', desc: 'HEKA कैलेंडर v2.2.23 - स्वर्गीय लयों के साथ संरेखित 13 महीने का कैलेंडर', loading: 'HEKA v2.2.23' },
+        ru: { title: 'HEKA Календарь v2.2.23', desc: 'HEKA Календарь v2.2.23 - 13-месячный календарь, согласованный с небесными ритмами', loading: 'HEKA v2.2.23' },
+        tr: { title: 'HEKA Takvim v2.2.23', desc: 'HEKA Takvim v2.2.23 - Gök cisimleriyle uyumlu 13 aylık takvim', loading: 'HEKA v2.2.23' },
+        pl: { title: 'Kalendarz HEKA v2.2.23', desc: 'HEKA Kalendarz v2.2.23 - 13-miesięczny kalendarz dostosowany do rytmiów niebios', loading: 'HEKA v2.2.23' },
+        nl: { title: 'HEKA Agenda v2.2.23', desc: 'HEKA Kalender v2.2.23 - De 13-maanden kalender uitgelijnd met hemelse ritmpjes', loading: 'HEKA v2.2.23' },
+        sv: { title: 'HEKA Kalender v2.2.23', desc: 'HEKA Kalender v2.2.23 - Den 13-månaderskalender som är anpassad till himlakropars rytm', loading: 'HEKA v2.2.23' },
+        el: { title: 'Ημερολόγιο HEKA v2.2.23', desc: 'ΗKA Ημερολόγιο v2.2.23 - Το 13-μηνο ημερολόγιο που συντονίζεται με τους ουρανίους ρυθμούς', loading: 'HEKA v2.2.23' },
+        he: { title: 'לוח שנה HEKA v2.2.23', desc: 'לוח שנה HEKA v2.2.23 - לוח השנה ה-13 חולק עם ריטמים שמיים', loading: 'HEKA v2.2.23' },
+        th: { title: 'ปฏิทิน HEKA v2.2.23', desc: 'HEKA ปฏิทิน v2.2.23 - ปฏิทิน 13 เดือนที่จัดเต็มกับจังหวะของดาราจักร', loading: 'HEKA v2.2.23' },
+        vi: { title: 'Lịch HEKA phiên bản v2.2.23', desc: 'Lịch HEKA v2.2.23 - Lịch 13 tháng được canh lề với nhịp đập của các vì sao chưởng', loading: 'HEKA v2.2.23' },
+        id: { title: 'Kalender HEKA v2.2.23', desc: 'HEKA Kalender v2.2.23 - Kalender 13 bulan yang sejalan dengan ritme langit', loading: 'HEKA v2.2.23' },
+        uk: { title: 'КАлендар HEKA версії v2.2.23', desc: 'HEKA Календар v2.2.23 - 13-місячний календар, що вирівнюється з небесними ритмами', loading: 'HEKA v2.2.23' },
+        ro: { title: 'HEKA Calendar v2.2.23', desc: 'HEKA Calendar v2.2.23 - Calendarul de 13 luni aliniat cu ritmurile cereşti', loading: 'HEKA v2.2.23' },
+        cs: { title: 'HEKA Kalendář v2.2.23', desc: 'HEKA Kalendář v2.2.23 - 13měsíční kalendář zarovnaný s nebeskými rytmy', loading: 'HEKA v2.2.23' },
+        hu: { title: 'HEKA Naptár v2.2.23', desc: 'HEKA Naptár v2.2.23 - A 13 hónapos naptár, amely az égi ritmusokkal összhangban van', loading: 'HEKA v2.2.23' },
+        da: { title: 'HEKA Kalender v2.2.23', desc: 'HEKA Kalender v2.2.23 - Den 13-måneders kalender, der er afstemt efter himmelige rytmer', loading: 'HEKA v2.2.23' },
+        fi: { title: 'HEKA Kalenteri v2.2.23', desc: 'HEKA Kalenteri v2.2.23 - 13 kuukautta pitkä kalenteri, joka on suunniteltu tärmätahtiin mukautumaan', loading: 'HEKA v2.2.23' },
+        no: { title: 'HEKA Kalender v2.2.23', desc: 'HEKA Kalender v2.2.23 - Den 13-måneders kalender som er i samklang med himmelrytmer', loading: 'HEKA v2.2.23' },
+        sk: { title: 'HEKA Kalendár v2.2.23', desc: 'HEKA Kalendár v2.2.23 - 13-mesičný kalendár zarovnávaný s nebeskými rytmy', loading: 'HEKA v2.2.23' },
+        bg: { title: 'HEKA Календар v2.2.23', desc: 'HEKA Календар v2.2.23 - 13-месечен календар, подравнен с небесни ритми', loading: 'HEKA v2.2.23' }
       };
       var lang = 'en';
       try {
@@ -224,7 +230,7 @@
   </script>
 
   <!-- Android Scroll Fix -->
-  <script src="/app/scroll-fix.js"></script>
+  <script src="/scroll-fix.js"></script>
 
   <!-- Main script -->
 </body>

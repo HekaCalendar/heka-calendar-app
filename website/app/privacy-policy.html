@@ -330,9 +330,19 @@
             insights, coaching, and analysis use on-device template-based generation — no data leaves your device.
         </p>
         
-        <p><strong>When AI is enabled,</strong> you provide your own API key for one of the following providers: 
-        Groq, OpenAI, Anthropic, or a self-hosted Ollama instance. The following contextual data may be sent 
-        to your chosen provider:</p>
+        <p>
+            <strong>When AI is enabled through the HEKA AI Proxy</strong> (hosted on Vercel), your request is sent to our backend,
+            which verifies your Firebase identity, applies per-user rate limits, and forwards the prompt to the selected provider
+            (Groq, OpenAI, Anthropic, or Moonshot) using server-side API keys. The proxy keeps sanitized audit logs for abuse monitoring
+            and rate-limiting; logs truncate message content and redact obvious email addresses.
+        </p>
+        
+        <p>
+            <strong>Advanced users</strong> may still connect their own provider API key; in that case, the request is sent directly
+            from the device to the chosen provider and is governed by that provider’s terms.
+        </p>
+        
+        <p>The following contextual data may be sent when AI is enabled:</p>
         
         <ul>
             <li>Celestial state and transit summary for the current date</li>
@@ -344,7 +354,7 @@
         </ul>
         
         <div class="highlight-box">
-            <p><strong>We do not store or log your API keys.</strong> They are saved in your device's secure storage. 
+            <p><strong>Server-side API keys are never exposed to the client.</strong> If you provide your own key it is saved in your device's secure storage. 
             LLM responses are cached in memory for up to 4 hours to reduce API calls. Sentiment analysis of journal 
             entries is performed entirely on-device using a local lexicon — no text is transmitted for this purpose.</p>
         </div>
@@ -421,7 +431,7 @@
         <p>Sun rise and set times are fetched from <code>sunrise-sunset.org</code> using your coordinates. No identifying information is transmitted.</p>
         
         <h3>LLM Providers (Opt-In Only)</h3>
-        <p>Groq, OpenAI, Anthropic, or Ollama — only when you enable AI and provide your own API key. Data is sent directly to your chosen provider. We are not an intermediary.</p>
+        <p>Groq, OpenAI, Anthropic, or Moonshot — only when you enable AI. By default requests are routed through the HEKA AI Proxy using server-side keys. Advanced users may connect their own key and send requests directly.</p>
         
         <h3>Firebase (Google)</h3>
         <p>If you enable cloud sync, encrypted data is stored in Firebase Firestore. Firebase Crashlytics is used for anonymous crash reporting. Encryption keys are generated and stored on your device.</p>

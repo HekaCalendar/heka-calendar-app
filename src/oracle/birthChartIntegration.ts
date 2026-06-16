@@ -287,7 +287,7 @@ export function calculateChartRulerStatus(
   const aspectStrength = aspects.reduce((sum, a) => sum + a.strength, 0) / Math.max(aspects.length, 1);
   const overallStrength = Math.min(100, (dignityScore + 5) * 10 + aspectStrength * 0.3);
   
-  let guidance = '';
+  let guidance: string;
   if (isInDomicile) {
     guidance = `Your chart ruler ${chartRuler} is in its home sign ${currentRuler.sign}. You radiate authenticity.`;
   } else if (isExalted) {

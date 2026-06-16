@@ -295,7 +295,7 @@ function analyzeHemisphere(bodies: Record<string, any>): { above: number; below:
   const below = vals.filter(b => b.latitude < 0).length;
   const east = vals.filter(b => (b.longitude % 360) < 180).length;
   const west = vals.filter(b => (b.longitude % 360) >= 180).length;
-  let text = '';
+  let text: string;
   if (above > below + 2) text = 'Your planets cluster above the horizon, indicating an extraverted, public, action-oriented life path.';
   else if (below > above + 2) text = 'Your planets cluster below the horizon, indicating an introverted, private, subjectively oriented life path.';
   else text = 'Your planets are balanced between above and below the horizon, suggesting integration of public and private life.';

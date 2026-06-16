@@ -331,6 +331,7 @@ class LocalStoragePersistence implements PersistenceLayer {
       }
 
       if (migratedCount > 0) {
+        /* no-op */
       }
 
       // Migrate selected profile id if new system doesn't have one
@@ -443,6 +444,7 @@ class LocalStoragePersistence implements PersistenceLayer {
       }
 
       if (migratedCount > 0) {
+        /* no-op */
       }
 
       // Migrate active profile selection
@@ -581,6 +583,7 @@ class LocalStoragePersistence implements PersistenceLayer {
       }
       
       if (syncedCount > 0) {
+        /* no-op */
       }
     } catch (error) {
       console.error('[Persistence] Chart sync failed:', error);

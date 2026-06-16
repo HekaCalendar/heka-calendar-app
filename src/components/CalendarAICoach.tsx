@@ -18,6 +18,7 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { aiConfigService } from '../services/aiConfigService';
+import { isAIProxyEnabled } from '../services/aiProxyClient';
 import { civilToHeka } from '../services/calendarService';
 import { buildOracleContext } from './CalendarAICoach/oracleContext';
 import type { HekaDate } from '../types';
@@ -60,7 +61,8 @@ export const CalendarAICoach: React.FC<CalendarAICoachProps> = ({ focusedDate })
   const signCount = useSelector((s: RootState) => s.calendar.astroPreferences.signCount);
 
   const [enabled, setEnabled] = useState(() =>
-    aiConfigService.isAreaEnabled('calendar') && aiConfigService.isRealProviderConfigured()
+    aiConfigService.isAreaEnabled('calendar') &&
+    (aiConfigService.isRealProviderConfigured() || isAIProxyEnabled())
   );
   const [minimized, setMinimizedState] = useState(() => {
     const until = aiConfigService.getConfig().userContext.coachMinimizedUntil || 0;
@@ -178,7 +180,7 @@ export const CalendarAICoach: React.FC<CalendarAICoachProps> = ({ focusedDate })
         config.globalEnabled &&
         config.areas.calendar &&
         config.provider !== 'template' &&
-        !!config.apiKey
+        (!!config.apiKey || config.provider === 'proxy' || isAIProxyEnabled())
       );
     });
     return unsubscribe;

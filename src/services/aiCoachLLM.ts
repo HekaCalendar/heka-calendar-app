@@ -9,6 +9,7 @@
  */
 
 import { aiConfigService } from './aiConfigService';
+import { chatViaProxy, isAIProxyEnabled, type AIProxyProvider } from './aiProxyClient';
 
 export interface LLMMessage {
   role: 'system' | 'user' | 'assistant';
@@ -169,6 +170,32 @@ async function callAnthropic(apiKey: string, model: string, messages: LLMMessage
   return data.content?.[0]?.text?.trim() || '';
 }
 
+// ── HEKA AI Proxy Integration ────────────────────────────────────────────────
+// Routes calls through the backend proxy so provider API keys never leave the
+// server. Prefer this path whenever VITE_AI_PROXY_URL is configured.
+
+async function callProxy(
+  provider: Exclude<AIProxyProvider, 'moonshot'>,
+  model: string,
+  messages: LLMMessage[],
+): Promise<string> {
+  const response = await chatViaProxy({
+    provider,
+    model,
+    messages,
+    temperature: 0.85,
+    max_tokens: 180,
+  });
+
+  const choice = response.choices?.[0];
+  const content =
+    typeof choice?.message?.content === 'string'
+      ? choice.message.content
+      : (choice?.message?.content as unknown as { text?: string })?.text;
+
+  return (content || '').trim();
+}
+
 // ── Public API ───────────────────────────────────────────────────────────────
 
 export async function generateOracleMessage(
@@ -206,8 +233,10 @@ export async function generateOracleMessage(
   const config = aiConfigService.getConfig();
   const provider = config.provider;
   const apiKey = config.apiKey;
+  const proxyEnabled = isAIProxyEnabled();
+  const useProxy = provider === 'proxy' || proxyEnabled;
 
-  if (!apiKey || provider === 'template') {
+  if (!useProxy && (!apiKey || provider === 'template')) {
     // ── Template Library Path ──────────────────────────────────────────────
     // Instead of returning raw fallback text, weave the celestial guidance
     // (already computed by personalizedEngine) with occasion-specific context
@@ -389,16 +418,23 @@ Generate the oracle message:`;
 
   try {
     let text = '';
-    const model = config.model || (provider === 'groq' ? 'llama-3.1-8b-instant' : provider === 'openai' ? 'gpt-4o-mini' : provider === 'ollama' ? 'llama3.2' : 'claude-3-haiku-20240307');
+    const model = config.model || (provider === 'groq' || provider === 'proxy' ? 'llama-3.1-8b-instant' : provider === 'openai' ? 'gpt-4o-mini' : provider === 'ollama' ? 'llama3.2' : 'claude-3-haiku-20240307');
 
-    if (provider === 'groq') {
-      text = await callGroq(apiKey, model, messages);
+    if (useProxy) {
+      // Route through the HEKA AI Proxy so provider keys never leave the server.
+      const proxyProvider: Exclude<AIProxyProvider, 'moonshot'> =
+        provider === 'groq' || provider === 'openai' || provider === 'anthropic'
+          ? provider
+          : 'groq';
+      text = await callProxy(proxyProvider, model, messages);
+    } else if (provider === 'groq') {
+      text = await callGroq(apiKey || '', model, messages);
     } else if (provider === 'openai') {
       const response = await fetchWithRetry('https://api.openai.com/v1/chat/completions', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${apiKey}`,
+          'Authorization': `Bearer ${apiKey || ''}`,
         },
         body: JSON.stringify({
           model,
@@ -411,7 +447,7 @@ Generate the oracle message:`;
       const data = await response.json();
       text = data.choices?.[0]?.message?.content?.trim() || '';
     } else if (provider === 'anthropic') {
-      text = await callAnthropic(apiKey, model, messages);
+      text = await callAnthropic(apiKey || '', model, messages);
     } else if (provider === 'ollama') {
       // apiKey for Ollama is actually the base URL (e.g., http://localhost:11434)
       const ollamaUrl = (apiKey || 'http://localhost:11434').replace(/\/$/, '');

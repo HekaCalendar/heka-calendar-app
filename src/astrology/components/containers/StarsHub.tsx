@@ -224,7 +224,7 @@ export const StarsHub: React.FC = () => {
             console.warn('[StarsHub] Geolocation permission denied');
             return;
           }
-        } catch (e) {
+        } catch {
           // Permissions API not fully supported, proceed anyway
         }
       }

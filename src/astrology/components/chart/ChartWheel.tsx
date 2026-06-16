@@ -327,7 +327,7 @@ export const ChartWheel: React.FC<ChartWheelProps> = ({
     
     if (!cusp1 || !cusp2) return '';
     
-    let startAngle = cusp1.longitude;
+    const startAngle = cusp1.longitude;
     let endAngle = cusp2.longitude;
     
     if (endAngle < startAngle) endAngle += 360;
@@ -373,7 +373,7 @@ export const ChartWheel: React.FC<ChartWheelProps> = ({
     const centerY = rect.top + center;
     const angle1 = Math.atan2(dragStart.y - centerY, dragStart.x - centerX);
     const angle2 = Math.atan2(e.clientY - centerY, e.clientX - centerX);
-    let deltaAngle = (angle2 - angle1) * (180 / Math.PI);
+    const deltaAngle = (angle2 - angle1) * (180 / Math.PI);
     
     setRotation(dragStart.rotation + deltaAngle);
   }, [isDragging, dragStart, center]);
@@ -404,7 +404,7 @@ export const ChartWheel: React.FC<ChartWheelProps> = ({
     const centerY = rect.top + center;
     const angle1 = Math.atan2(dragStart.y - centerY, dragStart.x - centerX);
     const angle2 = Math.atan2(touch.clientY - centerY, touch.clientX - centerX);
-    let deltaAngle = (angle2 - angle1) * (180 / Math.PI);
+    const deltaAngle = (angle2 - angle1) * (180 / Math.PI);
     
     setRotation(dragStart.rotation + deltaAngle);
   }, [isDragging, dragStart, center]);

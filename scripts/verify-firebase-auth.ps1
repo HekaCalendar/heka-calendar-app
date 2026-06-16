@@ -6,7 +6,11 @@
 $ErrorActionPreference = "Stop"
 $keystorePath = "android/heka-calendar.keystore"
 $keystoreAlias = "heka"
-$keystorePass = "#3areUnsto99abl3"
+$keystorePass = $env:HEKA_KEYSTORE_PASSWORD
+if (-not $keystorePass) {
+    Write-Host "ERROR: HEKA_KEYSTORE_PASSWORD environment variable is not set" -ForegroundColor Red
+    exit 1
+}
 $jsonPath = "android/app/google-services.json"
 
 Write-Host "========================================="

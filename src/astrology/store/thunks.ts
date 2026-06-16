@@ -492,7 +492,7 @@ export const generateChartForProfile = createAsyncThunk(
       
       dispatch(setCalculationProgress(20));
       
-      let chart = await generateNatalChart(params);
+      const chart = await generateNatalChart(params);
       
       dispatch(setCalculationProgress(60));
       

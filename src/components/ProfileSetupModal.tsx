@@ -50,7 +50,7 @@ export const ProfileSetupModal: React.FC<ProfileSetupModalProps> = ({
     if (name.length < 2) return false;
     if (name.length > 30) return false;
     // Only allow letters, numbers, spaces, and basic punctuation
-    if (!/^[\w\s\-\.]+$/.test(name)) return false;
+    if (!/^[\w\s.-]+$/.test(name)) return false;
     return true;
   };
 

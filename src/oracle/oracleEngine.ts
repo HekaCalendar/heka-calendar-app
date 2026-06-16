@@ -238,7 +238,7 @@ export async function getCurrentCelestialState(date: Date = new Date()): Promise
   const moon = positions.moon;
   const angle = ((moon.longitude - sun.longitude) % 360 + 360) % 360;
   
-  let moonPhaseName = '';
+  let moonPhaseName: string;
   if (angle < 45) moonPhaseName = 'new';
   else if (angle < 135) moonPhaseName = 'waxing';
   else if (angle < 225) moonPhaseName = 'full';

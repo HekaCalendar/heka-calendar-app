@@ -69,8 +69,8 @@ export async function checkHekaTransitions(
   const nextMonthName = HEKA_MONTHS[(hekaDate.month + 1) % 13]?.name || 'Unknown';
   const civilMonthName = now.toLocaleString('default', { month: 'long' });
 
-  let context = '';
-  let vars: Record<string, string> = {};
+  let context: string;
+  let vars: Record<string, string>;
 
   if (daysRemaining === 0) {
     context = 'last-day';

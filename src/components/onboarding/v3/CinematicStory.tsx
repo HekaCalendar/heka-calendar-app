@@ -402,7 +402,11 @@ export const CinematicStory: React.FC<CinematicStoryProps> = ({ strings, onCompl
       const dy = e.changedTouches[0].clientY - touchStartRef.current.y;
       touchStartRef.current = null;
       if (Math.abs(dx) < Math.abs(dy) || Math.abs(dx) < 50) return;
-      dx < 0 ? goNext() : goBack();
+      if (dx < 0) {
+        goNext();
+      } else {
+        goBack();
+      }
     };
     document.addEventListener('touchstart', onStart, { passive: true });
     document.addEventListener('touchend', onEnd, { passive: true });

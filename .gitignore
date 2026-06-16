@@ -20,9 +20,13 @@ test.png
 
 # Android Signing Keys (CRITICAL - Never commit these!)
 android/app/key.properties
+android/key.properties
 android/app/*.keystore
 android/app/*.jks
+android/*.keystore
+android/*.jks
 *.keystore
+*.keystore.backup.*
 *.jks
 
 # Environment variables
@@ -39,6 +43,7 @@ android/app/build/
 ios/App/build/
 src-tauri/target/
 _apk_check/
+output/
 
 # Node modules
 node_modules/

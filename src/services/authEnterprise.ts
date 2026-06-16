@@ -307,7 +307,7 @@ class EnterpriseAuthService {
         success: false,
         details: getErrorMessage(error)
       });
-      throw new Error('Incorrect password');
+      throw new Error('Incorrect password', { cause: error });
     }
   }
 

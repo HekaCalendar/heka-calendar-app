@@ -166,7 +166,7 @@ export async function exportAllUserData(): Promise<ExportData> {
     return exportData;
   } catch (error) {
     console.error('[DataExport] Failed to export data:', error);
-    throw new Error('Failed to export user data. Please try again.');
+    throw new Error('Failed to export user data. Please try again.', { cause: error });
   }
 }
 
@@ -329,7 +329,7 @@ export async function clearAllUserData(): Promise<void> {
     console.log('[DataExport] All user data cleared');
   } catch (error) {
     console.error('[DataExport] Failed to clear data:', error);
-    throw new Error('Failed to clear user data. Please try again.');
+    throw new Error('Failed to clear user data. Please try again.', { cause: error });
   }
 }
 

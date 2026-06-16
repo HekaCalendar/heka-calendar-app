@@ -161,7 +161,7 @@ export const TutorialSpotlight: React.FC = () => {
     if (!target && !selector.includes(':contains')) {
       try {
         target = document.querySelector(selector);
-      } catch (e) {
+      } catch {
         // Invalid selector
       }
     }
@@ -182,7 +182,7 @@ export const TutorialSpotlight: React.FC = () => {
             target = alt;
             break;
           }
-        } catch (e) {
+        } catch {
           // Continue
         }
       }
@@ -552,8 +552,8 @@ const TutorialTooltip: React.FC<TutorialTooltipProps> = ({
 
     const tooltipRect = tooltip.getBoundingClientRect();
     const padding = 20;
-    let top = 0;
-    let left = 0;
+    let top: number;
+    let left: number;
 
     switch (position) {
       case 'top':

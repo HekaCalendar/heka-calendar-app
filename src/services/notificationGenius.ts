@@ -106,9 +106,9 @@ export class NotificationGenius {
     }
     const date = new Date();
 
-    let sunrise: Date | null = null;
-    let sunset: Date | null = null;
-    let dayLengthMinutes = 0;
+    let sunrise: Date | null;
+    let sunset: Date | null;
+    let dayLengthMinutes: number;
     let planetaryHour: string | null = null;
     let planetaryHourSymbol: string | null = null;
     let moonPhase: string | null = null;
@@ -167,7 +167,7 @@ export class NotificationGenius {
 
     // Determine day segment
     const hour = date.getHours();
-    let daySegment: AstronomicalContext['daySegment'] = 'midday';
+    let daySegment: AstronomicalContext['daySegment'];
     if (sunrise && sunset) {
       const sr = sunrise.getHours() + sunrise.getMinutes() / 60;
       const ss = sunset.getHours() + sunset.getMinutes() / 60;

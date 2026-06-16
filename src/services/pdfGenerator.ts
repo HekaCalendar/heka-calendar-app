@@ -61,7 +61,7 @@ export async function generatePDF(
         logging: false,
         onclone: (clonedDoc) => {
           // Force all fonts to be ready before capture
-          clonedDoc.fonts.ready;
+          void clonedDoc.fonts.ready;
         }
       });
       
@@ -82,7 +82,7 @@ export async function generatePDF(
     
     return pdf.output('blob');
   } catch (error) {
-    throw new Error(`PDF generation failed: ${error instanceof Error ? error.message : String(error)}`);
+    throw new Error(`PDF generation failed: ${error instanceof Error ? error.message : String(error)}`, { cause: error });
   }
 }
 
@@ -115,7 +115,7 @@ export async function downloadPDF(
     document.body.removeChild(link);
     URL.revokeObjectURL(url);
   } catch (error) {
-    throw new Error(`PDF download failed: ${error instanceof Error ? error.message : String(error)}`);
+    throw new Error(`PDF download failed: ${error instanceof Error ? error.message : String(error)}`, { cause: error });
   }
 }
 
@@ -172,6 +172,6 @@ export async function generatePDFWithProgress(
     
     return pdf.output('blob');
   } catch (error) {
-    throw new Error(`PDF generation failed: ${error instanceof Error ? error.message : String(error)}`);
+    throw new Error(`PDF generation failed: ${error instanceof Error ? error.message : String(error)}`, { cause: error });
   }
 }

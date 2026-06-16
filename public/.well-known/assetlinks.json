@@ -3,6 +3,6 @@
   "target": {
     "namespace": "android_app",
     "package_name": "com.heka.calendar",
-    "sha256_cert_fingerprints": ["REPLACE_WITH_YOUR_SHA256_FINGERPRINT_NO_COLONS"]
+    "sha256_cert_fingerprints": ["F65A5220413CEDCA18CFB33FD6D793917DE8551EB2DA0CC56E473311F0906CC3"]
   }
 }]

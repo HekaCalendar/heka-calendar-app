@@ -448,6 +448,7 @@ class TutorialService {
       }
       // Element check done silently
       if (this.elementInitiallyExists) {
+        /* no-op */
       }
     }
     
@@ -507,6 +508,7 @@ class TutorialService {
         if (relevantMutations.length > 0) {
           // Reduced logging
           if (Math.random() < 0.3) {
+            /* no-op */
           }
           
           // Check if element that was initially there has now changed
@@ -539,6 +541,7 @@ class TutorialService {
             if (this.state.isWaitingForAction) {
               const isValid = this.validateInteractiveStep();
               if (isValid) {
+                /* no-op */
               }
             }
           }, 150);
@@ -586,6 +589,7 @@ class TutorialService {
       
       const isValid = this.validateInteractiveStep();
       if (isValid) {
+        /* no-op */
       }
     }, 1000);
   }
@@ -650,6 +654,7 @@ class TutorialService {
         // Element exists but was already there - don't validate yet
         // Reduced logging to avoid spam
         if (Math.random() < 0.05) {
+          /* no-op */
         }
       }
     }
@@ -779,14 +784,14 @@ class TutorialService {
     let target: Element | null = null;
     try {
       target = document.querySelector(step.targetSelector);
-    } catch (e) {
+    } catch {
       // Try alternative selectors
       if (step.alternativeSelectors) {
         for (const alt of step.alternativeSelectors) {
           try {
             target = document.querySelector(alt);
             if (target) break;
-          } catch (e) {
+          } catch {
             continue;
           }
         }
@@ -989,7 +994,7 @@ class TutorialService {
     try {
       const el = document.querySelector(selector);
       if (el) return el;
-    } catch (e) {
+    } catch {
       // Invalid selector, continue to fallbacks
     }
 
@@ -1028,7 +1033,7 @@ class TutorialService {
           try {
             const elements = document.querySelectorAll(part);
             if (elements.length > 0) return elements[0];
-          } catch (e) {
+          } catch {
             // Continue
           }
         }

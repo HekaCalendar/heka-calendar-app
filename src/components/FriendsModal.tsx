@@ -200,7 +200,7 @@ export const FriendsModal: React.FC<FriendsModalProps> = ({ isOpen, onClose }) =
         url: webLink,
         dialogTitle: t('invite.shareDialogTitle'),
       });
-    } catch (e) {
+    } catch {
       // User cancelled or native share unavailable — silently ignore
     }
   }, [inviteCode]);
@@ -264,7 +264,7 @@ export const FriendsModal: React.FC<FriendsModalProps> = ({ isOpen, onClose }) =
           text: shareText,
         });
         return;
-      } catch (e) {
+      } catch {
         // Fall back to clipboard
       }
     }

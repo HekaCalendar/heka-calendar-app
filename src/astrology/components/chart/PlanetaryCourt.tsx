@@ -108,8 +108,8 @@ export const PlanetaryCourt: React.FC<PlanetaryCourtProps> = ({
     Object.entries(chart.planets).forEach(([id, planet]) => {
       const content = getPlanetSignContent(id, planet.sign);
       let status: CourtPlanet['status'] = 'neutral';
-      let title = 'The Neutral';
-      let description = 'Neither strengthened nor weakened';
+      let title: string;
+      let description: string;
       
       switch (planet.dignity) {
         case 'domicile':

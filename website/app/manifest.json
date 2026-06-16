@@ -2,13 +2,13 @@
   "name": "HEKA Calendar - Professional Edition",
   "short_name": "HEKA",
   "description": "Modern 13-month calendar with celestial guidance",
-  "version": "2.2.1",
+  "version": "2.2.23",
   "theme_color": "#c9a227",
   "background_color": "#0a0a0f",
   "display": "standalone",
-  "orientation": "portrait-primary",
+  "orientation": "any",
   "scope": "/",
-  "start_url": "/?v=2.2.0",
+  "start_url": "/?v=2.2.23",
   "icons": [
     {
       "src": "/icon-192.png",

@@ -1,7 +1,7 @@
-// HEKA Calendar Service Worker - v2.2.22
+// HEKA Calendar Service Worker - v2.2.23
 // Manual update handling with skipWaiting on message
 
-const CACHE_VERSION = '2.2.22';
+const CACHE_VERSION = '2.2.23';
 const CACHE_NAME = 'heka-cache-v' + CACHE_VERSION;
 
 // Assets to cache
@@ -90,13 +90,18 @@ self.addEventListener('fetch', (event) => {
   event.respondWith(
     caches.match(request).then((cached) => {
       const fetchPromise = fetch(request).then((networkResponse) => {
-        if (networkResponse.ok) {
+        const contentType = networkResponse.headers.get('content-type') || '';
+        // Never cache an HTML error page as a JS/CSS/WASM asset. This happens
+        // when a hashed asset from an old build is requested but no longer exists.
+        if (networkResponse.ok && !contentType.includes('text/html')) {
           const clone = networkResponse.clone();
           caches.open(CACHE_NAME).then((cache) => {
             cache.put(request, clone);
           });
+          return networkResponse;
         }
-        return networkResponse;
+        // Fall back to the cached version if the server returned an HTML fallback.
+        return cached || networkResponse;
       }).catch(() => cached);
       
       return cached || fetchPromise;

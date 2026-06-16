@@ -27,7 +27,7 @@ function restorePendingCodes(): void {
       const storedTask = sessionStorage.getItem('pendingTaskCode');
       if (storedInvite && !pendingInviteCode) pendingInviteCode = storedInvite;
       if (storedTask && !pendingTaskCode) pendingTaskCode = storedTask;
-    } catch {}
+    } catch { /* ignore */ }
   }
 }
 
@@ -62,7 +62,7 @@ export function initializeDeepLinks(
     if (data?.type === 'invite' && data.code) {
       pendingInviteCode = data.code;
       if (typeof window !== 'undefined') {
-        try { sessionStorage.setItem('pendingInviteCode', data.code); } catch {}
+        try { sessionStorage.setItem('pendingInviteCode', data.code); } catch { /* ignore */ }
       }
       onInviteReceived(data.code);
     }
@@ -70,7 +70,7 @@ export function initializeDeepLinks(
     if (data?.type === 'task' && data.taskId) {
       pendingTaskCode = data.taskId;
       if (typeof window !== 'undefined') {
-        try { sessionStorage.setItem('pendingTaskCode', data.taskId); } catch {}
+        try { sessionStorage.setItem('pendingTaskCode', data.taskId); } catch { /* ignore */ }
       }
       if (onTaskReceivedCallback) {
         onTaskReceivedCallback(data.taskId);
@@ -169,7 +169,7 @@ export function parseDeepLink(url: string): DeepLinkData | null {
     
     // Handle https://heka.calendar/invite/CODE format
     if (url.includes('heka.calendar') || url.includes('hekacalendar')) {
-      const inviteMatch = url.match(/[\/invite\/]+([A-Z0-9-]+)/i);
+      const inviteMatch = url.match(/[/invite/]+([A-Z0-9-]+)/i);
       if (inviteMatch) {
         return { type: 'invite', code: inviteMatch[1] };
       }
@@ -209,7 +209,7 @@ export function getPendingInviteCode(): string | null {
   const code = pendingInviteCode;
   pendingInviteCode = null;
   if (typeof window !== 'undefined') {
-    try { sessionStorage.removeItem('pendingInviteCode'); } catch {}
+    try { sessionStorage.removeItem('pendingInviteCode'); } catch { /* ignore */ }
   }
   return code;
 }
@@ -227,7 +227,7 @@ export function hasPendingInvite(): boolean {
 export function clearPendingInvite(): void {
   pendingInviteCode = null;
   if (typeof window !== 'undefined') {
-    try { sessionStorage.removeItem('pendingInviteCode'); } catch {}
+    try { sessionStorage.removeItem('pendingInviteCode'); } catch { /* ignore */ }
   }
 }
 
@@ -238,7 +238,7 @@ export function getPendingTaskCode(): string | null {
   const code = pendingTaskCode;
   pendingTaskCode = null;
   if (typeof window !== 'undefined') {
-    try { sessionStorage.removeItem('pendingTaskCode'); } catch {}
+    try { sessionStorage.removeItem('pendingTaskCode'); } catch { /* ignore */ }
   }
   return code;
 }
@@ -256,6 +256,6 @@ export function hasPendingTaskShare(): boolean {
 export function clearPendingTaskShare(): void {
   pendingTaskCode = null;
   if (typeof window !== 'undefined') {
-    try { sessionStorage.removeItem('pendingTaskCode'); } catch {}
+    try { sessionStorage.removeItem('pendingTaskCode'); } catch { /* ignore */ }
   }
 }

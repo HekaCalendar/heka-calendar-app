@@ -261,7 +261,7 @@ export async function calculatePlanetaryHours(
   }
 
   const now = date.getTime();
-  let calcDate = new Date(date);
+  const calcDate = new Date(date);
 
   // Planetary day starts at sunrise. If before sunrise, we're still in yesterday's cycle.
   if (now < sunrise.getTime()) {
@@ -289,7 +289,6 @@ export async function calculatePlanetaryHours(
   const nextSunrise = await calculateSunrise(tomorrow, latitude, longitude);
 
   let nightLength: number;
-  let nightHourLength: number;
 
   if (nextSunrise) {
     nightLength = nextSunrise.getTime() - sunset.getTime();
@@ -297,7 +296,7 @@ export async function calculatePlanetaryHours(
     // Fallback: assume 24h - dayLength
     nightLength = Math.max(0, (24 * 60 * 60 * 1000) - dayLength);
   }
-  nightHourLength = nightLength / 12;
+  const nightHourLength = nightLength / 12;
 
   // First hour of day is ruled by the day's planet
   const firstHourRuler = dayPlanets[dayOfWeek];
@@ -1105,7 +1104,7 @@ export async function getUpcomingVoidMoonEvents(days: number = 7): Promise<VoidM
       const nextBoundary = getNextSignBoundary(currentLongitude, use13Signs);
       
       // Degrees from current position to next boundary
-      let degreesToIngress = (nextBoundary - currentLongitude + 360) % 360;
+      const degreesToIngress = (nextBoundary - currentLongitude + 360) % 360;
       if (degreesToIngress <= 0.001) {
         // Already at/past boundary — advance to next sign
         currentLongitude = ((currentLongitude as number) + 0.1) % 360 as Degree;

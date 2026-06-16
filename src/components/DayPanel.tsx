@@ -536,7 +536,7 @@ const DayPanelComponent: React.FC = () => {
       notesByDay.get(dayKey)!.push(note);
     });
     
-    let duplicateCount = 0;
+    const duplicateCount = 0;
     
     notesByDay.forEach((notes, sourceDayKey) => {
       const parts = sourceDayKey.split('-').map(Number);
@@ -563,7 +563,6 @@ const DayPanelComponent: React.FC = () => {
           mood: note.mood,
           duplicatedFrom: note.id,
         }));
-        duplicateCount++;
       });
     });
     
@@ -573,8 +572,6 @@ const DayPanelComponent: React.FC = () => {
   
   const handleDuplicateToSpecificDays = useCallback((targetDates: { year: number; month: number; day: number }[]) => {
     if (selectedNotes.length === 0 || targetDates.length === 0) return;
-    
-    let duplicateCount = 0;
     
     targetDates.forEach(targetDate => {
       const targetKey = getNoteKey(targetDate.year, targetDate.month, targetDate.day);
@@ -587,7 +584,6 @@ const DayPanelComponent: React.FC = () => {
           mood: note.mood,
           duplicatedFrom: note.id,
         }));
-        duplicateCount++;
       });
     });
     
