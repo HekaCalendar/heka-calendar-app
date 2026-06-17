@@ -1,0 +1,239 @@
+{
+  "celestialGuide": "Ghid Cerestral",
+  "journal": "Jurnal",
+  "notes": "Note",
+  "events": "Evenimente",
+  "tasks": "Sarcini",
+  "transits": "Tranzituri",
+  "mood": "Dispozitie",
+  "vibe": "Vibreea",
+  "energy": "Energie",
+  "hekaRune": "Rune Heka",
+  "celestialAffirmation": "Afirmare Cerestrală",
+  "moodTracker": "Tracker Dispozitie",
+  "vibeColor": "Culoare Vibrare",
+  "addNote": "Adauga o nota...",
+  "addEvent": "Adauga Eveniment",
+  "addTask": "Adauga Sarcina",
+  "eventTitle": "Titlul evenimentului",
+  "taskTitle": "Titlul sarcinii",
+  "taskCompleted": "Finalizata",
+  "taskPending": "In asteptare",
+  "editNote": "Editeaza Nota",
+  "deleteNote": "Sterge Nota",
+  "notePlaceholder": "Scrie-ti ideile aici...",
+  "journalPlaceholder": "Inregistreaza-ti ziua...",
+  "eventPlaceholder": "Ce se intampla?",
+  "taskPlaceholder": "Ce trebuie facut?",
+  "addNewNote": "+ Nota Noua",
+  "addNewEvent": "+ Eveniment Nou",
+  "addNewTask": "+ Sarcina Noua",
+  "noNotes": "Nicio nota pentru aceasta zi",
+  "noEvents": "Niciun eveniment pentru aceasta zi",
+  "noTasks": "Nicio sarcina pentru aceasta zi",
+  "noJournal": "Nicio intrare in jurnal pentru aceasta zi",
+  "transitProgress": "Progres Tranzitie",
+  "transitRemaining": "{{percent}}% ramas",
+  "currentMood": "Dispozitie Curenta",
+  "selectMood": "Selecteaza-ti dispozitia",
+  "moods": {
+    "joyful": "Veseli",
+    "happy": "Fericiti",
+    "content": "Concentrat",
+    "neutral": "Neutru",
+    "tired": "Obosit",
+    "sad": "Trist",
+    "anxious": "Îngrijorat",
+    "frustrated": "Frustrat",
+    "angry": "Maior",
+    "inspired": "Inspirat",
+    "focused": "Concentrat",
+    "peaceful": "Pacat"
+  },
+  "runeCast": "Lansare rune...",
+  "runeReveal": "Revelare Rune",
+  "runeBlessing": "Noi încuviințare a zilei",
+  "runeWisdom": "Înțelepciune Rune",
+  "runeEnergy": "Energie Rune",
+  "emptyState": "Selectează o zi pentru a vizualiza detaliile",
+  "closePanel": "Închide panoul",
+  "addTaskBtn": "+ Sarcină",
+  "header": {
+    "monthOf": "Luna {{month}} / 13",
+    "hekaYear": "HEKA Anul {{year}}"
+  },
+  "moon": {
+    "calculating": "Se calculează poziția lunară...",
+    "unavailable": "Datele despre fază lunară indisponibile",
+    "waxing": "Creștere",
+    "waning": "Scădere",
+    "illuminated": "{{percent}}% iluminat",
+    "age": "Vârsta: {{age}} zile",
+    "swissEphemeris": "Efemeride elvețiană",
+    "southernHemisphere": "Emisferă de Sud",
+    "northernHemisphere": "Emisferă de Nord"
+  },
+  "holidays": {
+    "inLocation": "Sărbători în {{location}}"
+  },
+  "astrology": {
+    "dailyCosmicGuidance": "Ghid cosmic zilnic",
+    "personalizedFor": "Personalizat pentru {{name}}",
+    "birthChartActive": "Graficul de nastere activ",
+    "calculatingTransits": "Se calculează tranzitele personale...",
+    "connectingCelestial": "Conectare la inteligența cerească...",
+    "unavailable": "Ghidul ceresc indisponibil. Verifică secțiunea Stele pentru astrologie detaliată.",
+    "sunrise": "Răsărit: {{time}}",
+    "sunset": "Apus: {{time}}",
+    "planetaryHour": "Oră planetară: {{planet}}",
+    "locationPin": "{{locație}}",
+    "activeTransits": "Tranzitele active pentru tine astăzi",
+    "moonIn": "Luna în {{sign}}",
+    "sunIn": "Soare în {{sign}}",
+    "todaysTheme": "Tema de azi:",
+    "cosmicGuidance": "Ghid cosmic",
+    "reflection": "Reflexie",
+    "affirmation": "Afirmare",
+    "birthChartCta": {
+      "title": "Dorești tranzituri personalizate?",
+      "description": "Adaugă diagrama ta de naștere în secțiunea Stele pentru a vedea cum afectează personal vremea cosmică de azi."
+    }
+  },
+  "lunarMansion": {
+    "title": "Casa Lunii",
+    "trueMode": "Mod ADEVĂRAT",
+    "calculating": "Se calculează poziția laterală a lunii...",
+    "totem": "Totem",
+    "gift": "Cadou",
+    "ruler": "Stăpân",
+    "quality": "Calitate",
+    "quarter": "Trimestru",
+    "sunTravelsThrough": "Soarele călătorește prin {{name}}",
+    "quarters": {
+      "initiation": "Inițiere — se plantează sâmântul",
+      "deepening": "Îmbunătățire — rădăcinile iau rădăcină",
+      "crisis": "Criză — sosește testul",
+      "completion": "Finalizare — fructele se coace"
+    }
+  },
+  "solarReturn": {
+    "title": "Revenirea Soarelui ADEVĂRATĂ",
+    "titleInDays": "Revenirea Soarelui ADEVĂRATĂ în {{count}} zi{{suffix}}",
+    "trueMode": "Mod ADEVĂRAT",
+    "today": "Astăzi, Soarele se întoarce la longitudinea nașterii tale laterale.",
+    "approaching": "Astfel, Soarele se va întoarce la poziția ta laterală {{sign}} la data de {{date}}.",
+    "description": "În modul TRUE HEKA, aniversarea ta este determinată de stele, nu de calendarul civil.",
+    "exactOrb": "Exact până în {{orb}} de minute arc."
+  },
+  "notesSection": {
+    "tasksAndNotes": "Sarcini ({{tasks}}) · Note ({{notes}})",
+    "tasksOnly": "Sarcini ({{count}})",
+    "notesAndTasks": "Note și Sarcini ({{count}})",
+    "addNote": "+ Notă",
+    "longHoldHint": "Țineți apăsat lung pentru opțiuni · Atingeți dublu o sarcină pentru a o edita",
+    "noNotesOrTasks": "Nicio notă sau sarcină pentru această zi.",
+    "createNoteHint": "Faceți clic <0>+ Notă</0> sau <1>⚡ Adaugă Sarcină</1> de mai sus pentru a crea una."
+  },
+  "noteEditor": {
+    "makeTask": "⚡ Fă asta o sarcină",
+    "dueTime": "Oră scadentă",
+    "remindMe": "Reamintește-mi",
+    "reminders": {
+      "atTime": "La ora sarcinii",
+      "5min": "5 minute înainte",
+      "10min": "10 minute înainte",
+      "15min": "15 minute înainte",
+      "30min": "30 minute înainte",
+      "1hour": "1 oră înainte"
+    },
+    "howAreYouFeeling": "Cum te simți?",
+    "taskPlaceholder": "Ce intenționezi să realizezi?",
+    "notePlaceholder": "Scrie nota ta...",
+    "saveTask": "Salvează Sarcina",
+    "saveNote": "Salvează Nota",
+    "cancel": "Anulează"
+  },
+  "noteItem": {
+    "markComplete": "Marchează ca finalizată",
+    "completed": "Finalizat",
+    "task": "Sarcină",
+    "delete": "Șterge"
+  },
+  "selection": {
+    "selectedFromDays": "{{count}} selectate din {{days}} zi{{suffix}}",
+    "done": "Gata",
+    "selectAll": "Selectează Toate",
+    "duplicate": "Duplică...",
+    "delete": "Șterge",
+    "manageDuplicates": "Gestionează Duplicatele:",
+    "duplicateTo": "Duplică în:",
+    "nextWeek": "Săptămâna Viitoare",
+    "nextMonth": "Luna Viitoare",
+    "everyDay": "În fiecare {{day}}",
+    "undoEveryDay": "Anulează În fiecare {{day}}",
+    "specificDay": "Zi specifică...",
+    "chooseDays": "Alege Zi(le)...",
+    "back": "Înapoi"
+  },
+  "dayPicker": {
+    "cancel": "Anulează"
+  },
+  "multiDayPicker": {
+    "selectedCount": "{{count}} zi{{suffix}} selectată",
+    "confirm": "Confirmă",
+    "cancel": "Anulează"
+  },
+  "confirmations": {
+    "deleteNote": "Șterge această notă?",
+    "deleteSelected": "Șterge {{count}} notă(selecte) selectate din {{days}} zi(zi) ?",
+    "duplicateEveryDay": "Duplică aceste {{count}} element(e) în fiecare {{day}} pentru restul anului?",
+    "undoDuplicates": "Elimină toate instanțele duplicate ale acestor {{count}} notă(țe)?"
+  },
+  "alerts": {
+    "couldNotCalculateDate": "Nu s-a putut calcula data țintă",
+    "duplicatedToNextWeek": "Duplicat {{items}} săptămâna viitoare ({{month}} {{day}})",
+    "duplicatedToNextMonth": "Duplicat {{items}} luna viitoare ({{month}} {{day}})",
+    "duplicatedToDays": "Duplicat în {{count}} {{day}}s",
+    "duplicatedNotes": "Dublează {{count}} notă/note",
+    "removedDuplicates": "Notele duplicate au fost eliminate",
+    "duplicatedToMonth": "Dublează {{count}} notă/note pentru luna următoare",
+    "duplicatedToDaysCount": "Dublează {{count}} notă/note pentru {{days}} zi/zile",
+    "duplicatedSelectedItems": "Elementele selectate au fost duplicate pentru {{count}} zi/zile",
+    "signInToSaveTasks": "Trebuie să fi conectat pentru a salva sarcini. Te rog deschide meniul Cont și conectează-te din nou.",
+    "unableToSaveTask": "Sarcina nu a putut fi salvată. Eroare: {{error}}"
+  },
+  "dow": {
+    "sunday": "Duminică",
+    "monday": "Luni",
+    "tuesday": "Marți",
+    "wednesday": "Miercuri",
+    "thursday": "Joi",
+    "friday": "Vineri",
+    "saturday": "Sâmbătă",
+    "short": {
+      "sun": "Dum",
+      "mon": "Lun",
+      "tue": "Mar",
+      "wed": "Mie",
+      "thu": "Joi",
+      "fri": "Vin",
+      "sat": "Sâm"
+    }
+  },
+  "noteCategories": {
+    "personal": "Personal",
+    "work": "Lucru",
+    "spiritual": "Spiritual",
+    "family": "Familie",
+    "health": "Sănătate",
+    "creative": "Creativ",
+    "general": "General"
+  },
+  "moodScale": {
+    "1": "Foarte Scăzut",
+    "2": "Scăzut",
+    "3": "Neutru",
+    "4": "Bun",
+    "5": "Excelent"
+  }
+}

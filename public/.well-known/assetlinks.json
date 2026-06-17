@@ -1,0 +1,8 @@
+[{
+  "relation": ["delegate_permission/common.handle_all_urls"],
+  "target": {
+    "namespace": "android_app",
+    "package_name": "com.heka.calendar",
+    "sha256_cert_fingerprints": ["F65A5220413CEDCA18CFB33FD6D793917DE8551EB2DA0CC56E473311F0906CC3"]
+  }
+}]

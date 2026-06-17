@@ -7,6 +7,7 @@
 import React from 'react';
 import type { CertificateData, CertificateOptions } from '../certificateData';
 import { formatHekaDate } from '../certificateData';
+import i18n from '../../../i18n';
 
 interface Props {
   data: CertificateData;
@@ -86,7 +87,7 @@ export const MinimalModernTemplate: React.FC<Props> = ({ data, options }) => {
           <div>
             <div style={{ fontSize: 9, letterSpacing: 2, color: 'rgba(26,26,46,0.25)', textTransform: 'uppercase' }}>HEKA Calendar Pro</div>
             <div style={{ fontSize: 9, color: 'rgba(26,26,46,0.2)', marginTop: 4 }}>
-              {new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
+              {new Intl.DateTimeFormat(i18n.language || 'en', { year: 'numeric', month: 'long', day: 'numeric' }).format(new Date())}
             </div>
           </div>
           <div style={{ fontSize: 24, opacity: 0.1 }}>✦</div>

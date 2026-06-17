@@ -62,7 +62,7 @@ export const StarsNotificationSettings: React.FC = () => {
           <span style={{ fontSize: '14px', fontWeight: 500, color: '#e0e0e0' }}>{label}</span>
           {tier && (
             <span style={{
-              fontSize: '10px',
+              fontSize: '12px',
               textTransform: 'uppercase',
               letterSpacing: '0.05em',
               padding: '2px 6px',
@@ -108,6 +108,13 @@ export const StarsNotificationSettings: React.FC = () => {
         label="Moon Degree Notifications"
         description="Exact degree, sign, and meaning each time the Moon changes degree"
         tier="ambient"
+      />
+      <Switch
+        checked={prefs.sunriseWakeUp}
+        onChange={() => toggle('sunriseWakeUp')}
+        label="Sunrise Wake-Up"
+        description="A gentle notification at sunrise with the planetary hour and moon sign"
+        tier="standard"
       />
     </div>
   );

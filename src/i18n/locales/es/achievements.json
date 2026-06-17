@@ -1,0 +1,99 @@
+{
+  "title": "Logros",
+  "streak": "Racha",
+  "days": "Días",
+  "totalAchievements": "{{count}} logros",
+  "earned": "Ganado",
+  "locked": "Bloqueado",
+  "newAchievement": "Nuevo Logro!",
+  "categories": {
+    "calendar": "Maestro del Calendario",
+    "journal": "Guardián del Diario",
+    "circle": "Constructor de Círculo",
+    "coach": "Observador Estelar",
+    "explorer": "Explorador"
+  },
+  "achievements": {
+    "firstStep": {
+      "name": "Primer Paso",
+      "description": "Abrir el calendario por primera vez"
+    },
+    "timeTraveler": {
+      "name": "Viaje en el Tiempo",
+      "description": "Ver una fecha más de 1 año en el futuro"
+    },
+    "streak7": {
+      "name": "Semana de Luz",
+      "description": "Usar el calendario durante 7 días consecutivos"
+    },
+    "streak30": {
+      "name": "Mes de Estrellas",
+      "description": "Usar el calendario durante 30 días consecutivos"
+    },
+    "streak100": {
+      "name": "Siglo de Sabiduría",
+      "description": "Usar el calendario durante 100 días consecutivos"
+    },
+    "journalFirst": {
+      "name": "Primeras Palabras",
+      "description": "Escribir tu primera entrada de diario"
+    },
+    "journal10": {
+      "name": "Escritor en Ciernes",
+      "description": "Escribir 10 entradas de diario"
+    },
+    "journal50": {
+      "name": "Escritor Experimentado",
+      "description": "Escribir 50 entradas de diario"
+    },
+    "friendAdded": {
+      "name": "Primera Amistad",
+      "description": "Agregar tu primera amistad"
+    },
+    "circle5": {
+      "name": "Círculo en Crecimiento",
+      "description": "Tener 5 amigos en tu círculo"
+    },
+    "aiAsked": {
+      "name": "Buscador de Sabiduría",
+      "description": "Hacer una pregunta a la entrenadora IA"
+    },
+    "aiStreak7": {
+      "name": "Guía Diaria",
+      "description": "Consultar a la entrenadora IA durante 7 días"
+    },
+    "allMoonPhases": {
+      "name": "Observador Lunar",
+      "description": "Ver todas las 8 fases de la luna"
+    },
+    "allZodiac": {
+      "name": "Explorador del Zodiaco",
+      "description": "Ver todos los 13 signos del zodíaco"
+    },
+    "printFirst": {
+      "name": "Primera impresión",
+      "description": "Imprime tu primera página de calendario"
+    }
+  },
+  "categoryLabels": {
+    "beginner": "Principiante",
+    "intermediate": "Intermedio",
+    "advanced": "Avanzado",
+    "master": "Maestro",
+    "special": "Especial",
+    "explorer": "Explorador",
+    "discoverer": "Descubridor",
+    "engager": "Participante"
+  },
+  "stats": {
+    "appOpens": "Abrir la aplicación",
+    "dayStreak": "Racha diaria",
+    "hoursSpent": "Horas invertidas",
+    "featuresFound": "Características encontradas"
+  },
+  "all": "Todo",
+  "showHidden": "Mostrar ocultos",
+  "noAchievements": "No se encontraron logros en esta categoría",
+  "hiddenAchievement": "Logro oculto",
+  "secret": "SECRETO"
+}

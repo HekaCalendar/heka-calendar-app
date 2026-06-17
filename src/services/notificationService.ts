@@ -3,14 +3,22 @@
  * Handles browser and native app notifications for calendar events and notes
  */
 
-import type { NoteData } from '../types';
+import type { NoteData, HekaMonthIndex } from '../types';
 import { NotificationEngine } from './notificationEngine';
+import { NOTIFICATION_ID_RANGES } from '../types/notifications';
+import { hekaToCivil } from './calendarService';
+
+interface CapacitorWindow {
+  Capacitor?: {
+    getPlatform?: () => string;
+  };
+}
 
 // Check if running in Capacitor native app
-const IS_NATIVE_APP = typeof (window as any).Capacitor !== 'undefined';
+const IS_NATIVE_APP = typeof (window as unknown as CapacitorWindow).Capacitor !== 'undefined';
 
 // Import the plugin directly
-import { LocalNotifications } from '@capacitor/local-notifications';
+import { LocalNotifications, type PendingLocalNotificationSchema } from '@capacitor/local-notifications';
 
 // Check if native plugin methods are available
 function isNativePluginAvailable(): boolean {
@@ -33,16 +41,13 @@ export type NotificationPermissionType = 'granted' | 'denied' | 'default';
  * Handles both browser and native app notification permissions
  */
 export async function requestNotificationPermission(): Promise<boolean> {
-  console.log('[NOTIFY] requestNotificationPermission called, IS_NATIVE_APP:', IS_NATIVE_APP);
   
   // Try native plugin first on Android
   if (IS_NATIVE_APP && isNativePluginAvailable()) {
     try {
-      console.log('[NOTIFY] Using native LocalNotifications plugin');
       
       // Check current permission
       const checkResult = await LocalNotifications.checkPermissions();
-      console.log('[NOTIFY] Current permission:', checkResult);
       
       if (checkResult.display === 'granted') {
         return true;
@@ -50,17 +55,21 @@ export async function requestNotificationPermission(): Promise<boolean> {
       
       // Request permission
       const result = await LocalNotifications.requestPermissions();
-      console.log('[NOTIFY] Permission result:', result);
       return result.display === 'granted';
     } catch (error) {
       console.error('[NOTIFY] Native plugin error:', error);
-      // Fall through to web
+      // Do NOT fall through to web API in native app — prevents duplicate prompt
+      return false;
     }
+  }
+  
+  // Native app but plugin not available — do not use web API
+  if (IS_NATIVE_APP) {
+    return false;
   }
   
   // Web / fallback path
   if (!('Notification' in window)) {
-    console.log('[NOTIFY] Web notifications not supported');
     return false;
   }
 
@@ -130,7 +139,6 @@ export async function getNotificationPermission(): Promise<NotificationPermissio
  */
 export function sendNotification(title: string, options?: NotificationOptions): Notification | null {
   if (IS_NATIVE_APP) {
-    console.log('Use scheduleNotification for native app notifications');
     return null;
   }
   
@@ -151,12 +159,13 @@ export function sendNotification(title: string, options?: NotificationOptions): 
 /**
  * Schedule a local notification for a specific date/time
  * Works in both native apps and browser (browser uses setTimeout)
+ * @deprecated Dead code — no callers in the entire codebase. Use NotificationEngine.schedule() instead.
  */
 export async function scheduleNotification(
   title: string,
   body: string,
   date: Date,
-  options?: { id?: number; extra?: any }
+  options?: { id?: number; extra?: Record<string, unknown> }
 ): Promise<string | null> {
   const notificationId = options?.id || Math.floor(Math.random() * 100000);
   
@@ -166,12 +175,11 @@ export async function scheduleNotification(
       // Check permission
       const { display } = await LocalNotifications.checkPermissions();
       if (display !== 'granted') {
-        console.log('Notification permission not granted');
         return null;
       }
       
       // Schedule the notification
-      const result = await LocalNotifications.schedule({
+      await LocalNotifications.schedule({
         notifications: [{
           id: notificationId,
           title,
@@ -183,7 +191,6 @@ export async function scheduleNotification(
         }]
       });
       
-      console.log('Native notification scheduled:', result);
       return String(notificationId);
     } catch (error) {
       console.error('Error scheduling native notification:', error);
@@ -229,6 +236,19 @@ export async function cancelNotification(id: string): Promise<boolean> {
 }
 
 /**
+ * Stable hash of a string into a notification ID within a given range.
+ * Prevents collisions from truncated UUIDs.
+ */
+function hashToNotificationId(str: string, min: number, max: number): number {
+  let hash = 0;
+  for (let i = 0; i < str.length; i++) {
+    hash = ((hash << 5) - hash) + str.charCodeAt(i);
+    hash |= 0;
+  }
+  return min + (Math.abs(hash) % (max - min));
+}
+
+/**
  * Schedule a notification for a note/reminder
  * Routes through the unified NotificationEngine for dedup, caps, and quiet hours.
  */
@@ -243,6 +263,9 @@ export async function scheduleNoteReminder(
   // If no reminder time specified, schedule for 9 AM on that day
   const targetTime = reminderTime || new Date(note.createdAt);
 
+  const range = NOTIFICATION_ID_RANGES.calendar;
+  const id = hashToNotificationId(note.id, range.min, range.max);
+
   return NotificationEngine.schedule({
     type: 'note-reminder',
     tier: 'standard',
@@ -250,7 +273,7 @@ export async function scheduleNoteReminder(
     body,
     scheduleAt: targetTime,
     section: 'calendar',
-    id: parseInt(note.id.replace(/\D/g, '').slice(0, 8)) || undefined,
+    id,
     extra: { noteId: note.id, dayKey },
   });
 }
@@ -277,13 +300,12 @@ export async function syncNoteNotifications(notes: Record<string, NoteData[]>): 
     const month = parseInt(parts[2]);
     const day = parseInt(parts[3]);
 
-    // Create a date object for the HEKA date (approximate to civil calendar)
-    // HEKA year starts in April
-    const hekaDate = new Date(year, 3 + month, day);
-    hekaDate.setHours(9, 0, 0, 0); // 9 AM reminder
+    // Convert HEKA date to civil calendar for accurate scheduling
+    const civilDate = hekaToCivil({ year, month: month as HekaMonthIndex, day });
+    civilDate.setHours(9, 0, 0, 0); // 9 AM reminder
     
     // Only schedule if date is in the future
-    if (hekaDate > now) {
+    if (civilDate > now) {
       const noteCount = dayNotes.length;
       const title = noteCount === 1 
         ? 'HEKA Calendar: 1 note today'
@@ -298,7 +320,7 @@ export async function syncNoteNotifications(notes: Record<string, NoteData[]>): 
         tier: 'standard',
         title,
         body,
-        scheduleAt: hekaDate,
+        scheduleAt: civilDate,
         section: 'calendar',
         id: parseInt(`${year}${month}${day}`),
         extra: { dayKey, noteCount }
@@ -310,7 +332,7 @@ export async function syncNoteNotifications(notes: Record<string, NoteData[]>): 
 /**
  * Get all pending notifications (native apps only)
  */
-export async function getPendingNotifications(): Promise<any[]> {
+export async function getPendingNotifications(): Promise<PendingLocalNotificationSchema[]> {
   if (!IS_NATIVE_APP || !isNativePluginAvailable()) return [];
   
   try {
@@ -400,6 +422,7 @@ export async function scheduleTaskReminder(task: PlannerTask): Promise<string | 
     scheduleAt: remindAt,
     section: 'planner',
     id: notificationId,
+    replaceExisting: true,
     extra: {
       type: 'task-reminder',
       taskId: task.id,
@@ -420,15 +443,26 @@ export async function cancelTaskReminder(notificationId: string): Promise<boolea
  * Ensures every future task has a scheduled reminder, and removes stale ones.
  */
 export async function reconcileTaskNotifications(tasksByDay: Record<string, PlannerTask[]>): Promise<void> {
-  if (!IS_NATIVE_APP || !isNativePluginAvailable()) return;
-
   try {
-    const pending = await getPendingNotifications();
-    const pendingTaskIds = new Set(
-      pending
-        .filter((n) => n.extra?.type === 'task-reminder')
-        .map((n) => n.extra?.taskId as string)
-    );
+    let pendingTaskIds: Set<string>;
+
+    if (IS_NATIVE_APP && isNativePluginAvailable()) {
+      const pending = await getPendingNotifications();
+      pendingTaskIds = new Set(
+        pending
+          .filter((n) => n.extra?.type === 'task-reminder')
+          .map((n) => n.extra?.taskId as string)
+      );
+    } else {
+      // Web: use engine's tracked web notifications
+      const webMeta = NotificationEngine.getWebScheduledMeta();
+      pendingTaskIds = new Set(
+        webMeta
+          .filter((m) => m.type === 'task-reminder')
+          .map((m) => m.taskId as string)
+          .filter(Boolean)
+      );
+    }
 
     for (const dayTasks of Object.values(tasksByDay)) {
       for (const task of dayTasks) {

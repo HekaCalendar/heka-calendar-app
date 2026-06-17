@@ -5,6 +5,7 @@
  */
 
 import React, { useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
 import type { TutorialStepId } from './TutorialEngine';
 
 interface JourneyConstellationProps {
@@ -47,6 +48,7 @@ export const JourneyConstellation: React.FC<JourneyConstellationProps> = ({
   currentStepIndex,
   completedSteps,
 }) => {
+  const { t } = useTranslation('tutorial');
   const steps = useMemo(() => Object.keys(STEP_NAMES), []);
   const total = steps.length;
 
@@ -88,7 +90,7 @@ export const JourneyConstellation: React.FC<JourneyConstellationProps> = ({
         marginBottom: 6,
         fontFamily: "'Cinzel', Georgia, serif",
       }}>
-        Your Journey
+        {t('tutorial:journeyTitle')}
       </div>
       <div style={{ position: 'relative', width: '100%', height: '100%' }}>
         {/* Connection lines */}

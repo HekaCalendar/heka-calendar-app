@@ -5,6 +5,7 @@
  */
 
 import React, { useState, useEffect, useCallback } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import type { RootState, AppDispatch } from '../store';
 import { setAuthenticated } from '../store';
@@ -14,6 +15,7 @@ import {
 } from '../services/taskShareService';
 import { getCurrentUser, signUp, logIn } from '../services/firebase';
 import { ProfileSetupModal } from './ProfileSetupModal';
+import { getErrorMessage } from '../utils/errorUtils';
 
 interface TaskPreviewModalProps {
   shareCode: string;
@@ -30,6 +32,7 @@ export const TaskPreviewModal: React.FC<TaskPreviewModalProps> = ({
   onClose,
   onAccepted,
 }) => {
+  const { t } = useTranslation('circle');
   const dispatch = useDispatch<AppDispatch>();
   const auth = useSelector((state: RootState) => state.calendar.auth);
   
@@ -58,15 +61,15 @@ export const TaskPreviewModal: React.FC<TaskPreviewModalProps> = ({
         if (preview) {
           setTask(preview);
           if (preview.isExpired) {
-            setError('This task has expired');
+            setError(t('taskPreview.expired'));
           } else if (preview.isAccepted) {
-            setError('This task has already been accepted');
+            setError(t('taskPreview.alreadyAccepted'));
           }
         } else {
-          setError('Task not found');
+          setError(t('taskPreview.notFound'));
         }
-      } catch (err) {
-        setError('Failed to load task');
+      } catch {
+        setError(t('taskPreview.failedToLoad'));
       } finally {
         setIsLoading(false);
       }
@@ -105,22 +108,22 @@ export const TaskPreviewModal: React.FC<TaskPreviewModalProps> = ({
           success: true,
           friendshipCreated: response.friendshipCreated,
           message: response.friendshipCreated 
-            ? 'Task accepted! You are now connected with the sender.'
-            : 'Task accepted! You can find it in your Cosmic Circle.',
+            ? t('taskPreview.acceptedWithFriend')
+            : t('taskPreview.acceptedInCircle'),
         });
         setViewState('result');
         onAccepted();
       } else {
         setResult({
           success: false,
-          message: response.error || 'Failed to accept task',
+          message: response.error || t('taskPreview.failedToAccept'),
         });
         setViewState('result');
       }
-    } catch (err: any) {
+    } catch (err) {
       setResult({
         success: false,
-        message: err.message || 'An error occurred',
+        message: getErrorMessage(err, t('taskPreview.genericError')),
       });
       setViewState('result');
     } finally {
@@ -137,13 +140,13 @@ export const TaskPreviewModal: React.FC<TaskPreviewModalProps> = ({
       await TaskShareService.declineSharedTask(shareCode);
       setResult({
         success: true,
-        message: 'Task declined',
+        message: t('taskPreview.declined'),
       });
       setViewState('result');
-    } catch (err: any) {
+    } catch (err) {
       setResult({
         success: false,
-        message: err.message || 'Failed to decline task',
+        message: getErrorMessage(err, t('taskPreview.failedToDecline')),
       });
       setViewState('result');
     } finally {
@@ -153,7 +156,7 @@ export const TaskPreviewModal: React.FC<TaskPreviewModalProps> = ({
 
   const handleSignup = useCallback(async () => {
     if (!email || !password || !displayName) {
-      setAuthError('Please fill in all fields');
+      setAuthError(t('taskPreview.fillAllFields'));
       return;
     }
     
@@ -172,8 +175,8 @@ export const TaskPreviewModal: React.FC<TaskPreviewModalProps> = ({
       
       // After signup, go to profile setup, then accept
       setViewState('setup');
-    } catch (err: any) {
-      setAuthError(err.message || 'Failed to create account');
+    } catch (err) {
+      setAuthError(getErrorMessage(err, t('taskPreview.failedToCreateAccount')));
     } finally {
       setIsLoading(false);
     }
@@ -181,7 +184,7 @@ export const TaskPreviewModal: React.FC<TaskPreviewModalProps> = ({
 
   const handleLogin = useCallback(async () => {
     if (!email || !password) {
-      setAuthError('Please enter email and password');
+      setAuthError(t('taskPreview.enterEmailPassword'));
       return;
     }
     
@@ -219,8 +222,8 @@ export const TaskPreviewModal: React.FC<TaskPreviewModalProps> = ({
         });
         setViewState('result');
       }
-    } catch (err: any) {
-      setAuthError(err.message || 'Failed to sign in');
+    } catch (err) {
+      setAuthError(getErrorMessage(err, t('taskPreview.failedToSignIn')));
     } finally {
       setIsLoading(false);
     }
@@ -251,10 +254,10 @@ export const TaskPreviewModal: React.FC<TaskPreviewModalProps> = ({
         });
         setViewState('result');
       }
-    } catch (err: any) {
+    } catch (err) {
       setResult({
         success: false,
-        message: err.message || 'An error occurred',
+        message: getErrorMessage(err, 'An error occurred'),
       });
       setViewState('result');
     } finally {
@@ -270,7 +273,7 @@ export const TaskPreviewModal: React.FC<TaskPreviewModalProps> = ({
       <div className="modal-overlay">
         <div className="modal" style={{ maxWidth: '400px', textAlign: 'center', padding: 'var(--space-6)' }}>
           <div className="spinner" style={{ marginBottom: 'var(--space-4)' }} />
-          <p>Loading task...</p>
+          <p>{t('taskPreview.loading')}</p>
         </div>
       </div>
     );
@@ -282,14 +285,14 @@ export const TaskPreviewModal: React.FC<TaskPreviewModalProps> = ({
       <div className="modal-overlay" onClick={onClose}>
         <div className="modal" style={{ maxWidth: '400px' }} onClick={(e) => e.stopPropagation()}>
           <div className="modal__header">
-            <h2 className="modal__title">⚠️ Task Unavailable</h2>
-            <button className="modal__close" onClick={onClose}>×</button>
+            <h2 className="modal__title">{t('taskPreview.unavailable')}</h2>
+            <button className="modal__close" onClick={onClose} aria-label={t('close')}>×</button>
           </div>
           <div style={{ padding: 'var(--space-6)', textAlign: 'center' }}>
             <div style={{ fontSize: '3rem', marginBottom: 'var(--space-3)' }}>😕</div>
             <p>{error}</p>
             <button className="btn btn--primary" onClick={onClose} style={{ marginTop: 'var(--space-4)' }}>
-              Close
+              {t('taskPreview.close')}
             </button>
           </div>
         </div>
@@ -315,8 +318,8 @@ export const TaskPreviewModal: React.FC<TaskPreviewModalProps> = ({
       <div className="modal-overlay" onClick={onClose}>
         <div className="modal" style={{ maxWidth: '420px' }} onClick={(e) => e.stopPropagation()}>
           <div className="modal__header">
-            <h2 className="modal__title">{isSignup ? '✨ Create Account' : '🔐 Sign In'}</h2>
-            <button className="modal__close" onClick={() => setViewState('preview')}>×</button>
+            <h2 className="modal__title">{isSignup ? t('taskPreview.createAccount') : t('taskPreview.signIn')}</h2>
+            <button className="modal__close" onClick={() => setViewState('preview')} aria-label={t('close')}>×</button>
           </div>
           
           <div style={{ padding: 'var(--space-5)' }}>
@@ -342,13 +345,13 @@ export const TaskPreviewModal: React.FC<TaskPreviewModalProps> = ({
             
             <div style={{ marginBottom: 'var(--space-3)' }}>
               <label style={{ display: 'block', fontSize: 'var(--text-sm)', marginBottom: 'var(--space-1)' }}>
-                Email
+                {t('taskPreview.email')}
               </label>
               <input
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                placeholder="your@email.com"
+                placeholder={t('taskPreview.placeholderEmail')}
                 style={{
                   width: '100%',
                   padding: 'var(--space-3)',
@@ -363,13 +366,13 @@ export const TaskPreviewModal: React.FC<TaskPreviewModalProps> = ({
             {isSignup && (
               <div style={{ marginBottom: 'var(--space-3)' }}>
                 <label style={{ display: 'block', fontSize: 'var(--text-sm)', marginBottom: 'var(--space-1)' }}>
-                  Your Name
+                  {t('taskPreview.yourName')}
                 </label>
                 <input
                   type="text"
                   value={displayName}
                   onChange={(e) => setDisplayName(e.target.value)}
-                  placeholder="How you'll appear to others"
+                  placeholder={t('taskPreview.placeholderName')}
                   style={{
                     width: '100%',
                     padding: 'var(--space-3)',
@@ -384,13 +387,13 @@ export const TaskPreviewModal: React.FC<TaskPreviewModalProps> = ({
             
             <div style={{ marginBottom: 'var(--space-4)' }}>
               <label style={{ display: 'block', fontSize: 'var(--text-sm)', marginBottom: 'var(--space-1)' }}>
-                Password
+                {t('taskPreview.password')}
               </label>
               <input
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                placeholder="••••••••"
+                placeholder={t('taskPreview.placeholderPassword')}
                 style={{
                   width: '100%',
                   padding: 'var(--space-3)',
@@ -408,7 +411,7 @@ export const TaskPreviewModal: React.FC<TaskPreviewModalProps> = ({
               disabled={isLoading}
               style={{ width: '100%', marginBottom: 'var(--space-3)' }}
             >
-              {isLoading ? 'Processing...' : (isSignup ? 'Create Account' : 'Sign In')}
+              {isLoading ? t('taskPreview.processing') : (isSignup ? t('taskPreview.createAccountBtn') : t('taskPreview.signInBtn'))}
             </button>
             
             <button
@@ -416,7 +419,7 @@ export const TaskPreviewModal: React.FC<TaskPreviewModalProps> = ({
               onClick={() => setViewState(isSignup ? 'login' : 'signup')}
               style={{ width: '100%' }}
             >
-              {isSignup ? 'Already have an account? Sign In' : 'Need an account? Sign Up'}
+              {isSignup ? t('taskPreview.alreadyHaveAccount') : t('taskPreview.needAccount')}
             </button>
           </div>
         </div>
@@ -430,7 +433,7 @@ export const TaskPreviewModal: React.FC<TaskPreviewModalProps> = ({
       <div className="modal-overlay">
         <div className="modal" style={{ maxWidth: '400px', textAlign: 'center', padding: 'var(--space-6)' }}>
           <div className="spinner" style={{ marginBottom: 'var(--space-4)' }} />
-          <p>Accepting task...</p>
+          <p>{t('taskPreview.accepting')}</p>
         </div>
       </div>
     );
@@ -442,8 +445,8 @@ export const TaskPreviewModal: React.FC<TaskPreviewModalProps> = ({
       <div className="modal-overlay" onClick={onClose}>
         <div className="modal" style={{ maxWidth: '400px' }} onClick={(e) => e.stopPropagation()}>
           <div className="modal__header">
-            <h2 className="modal__title">{result.success ? '✅ Success' : '❌ Error'}</h2>
-            <button className="modal__close" onClick={onClose}>×</button>
+            <h2 className="modal__title">{result.success ? t('taskPreview.success') : t('taskPreview.error')}</h2>
+            <button className="modal__close" onClick={onClose} aria-label={t('close')}>×</button>
           </div>
           <div style={{ padding: 'var(--space-6)', textAlign: 'center' }}>
             <div style={{ fontSize: '3rem', marginBottom: 'var(--space-3)' }}>
@@ -452,11 +455,11 @@ export const TaskPreviewModal: React.FC<TaskPreviewModalProps> = ({
             <p>{result.message}</p>
             {result.success && result.friendshipCreated && (
               <p style={{ fontSize: 'var(--text-sm)', color: 'var(--color-text-secondary)', marginTop: 'var(--space-2)' }}>
-                You can now message each other and collaborate on tasks!
+                {t('taskPreview.friendshipCreated')}
               </p>
             )}
             <button className="btn btn--primary" onClick={onClose} style={{ marginTop: 'var(--space-4)' }}>
-              {result.success ? 'Go to Cosmic Circle' : 'Close'}
+              {result.success ? t('taskPreview.goToCircle') : t('taskPreview.close')}
             </button>
           </div>
         </div>
@@ -469,8 +472,8 @@ export const TaskPreviewModal: React.FC<TaskPreviewModalProps> = ({
     <div className="modal-overlay" onClick={onClose}>
       <div className="modal task-preview-modal" style={{ maxWidth: '480px' }} onClick={(e) => e.stopPropagation()}>
         <div className="modal__header">
-          <h2 className="modal__title">📜 Task Invitation</h2>
-          <button className="modal__close" onClick={onClose}>×</button>
+          <h2 className="modal__title">{t('taskPreview.taskInvitation')}</h2>
+          <button className="modal__close" onClick={onClose} aria-label={t('common.close')}>×</button>
         </div>
         
         <div style={{ padding: 'var(--space-5)' }}>
@@ -514,7 +517,7 @@ export const TaskPreviewModal: React.FC<TaskPreviewModalProps> = ({
                 {task?.creatorName || 'Unknown Sender'}
               </div>
               <div style={{ fontSize: 'var(--text-sm)', color: 'var(--color-text-muted)' }}>
-                Sent you a task ritual
+                {t('taskPreview.sentTaskRitual')}
               </div>
             </div>
           </div>
@@ -556,7 +559,7 @@ export const TaskPreviewModal: React.FC<TaskPreviewModalProps> = ({
               }}>
                 <span>📅</span>
                 <span>
-                  Due: Arc {task.hekaDate.month + 1}, Day {task.hekaDate.day}, {task.hekaDate.year}
+                  {t('taskPreview.dueDate', { month: task.hekaDate.month + 1, day: task.hekaDate.day, year: task.hekaDate.year })}
                 </span>
               </div>
             )}
@@ -572,12 +575,12 @@ export const TaskPreviewModal: React.FC<TaskPreviewModalProps> = ({
             marginBottom: 'var(--space-4)',
           }}>
             <p style={{ margin: 0 }}>
-              💡 <strong>What happens when you accept:</strong>
+              💡 <strong>{t('taskPreview.whatHappens')}</strong>
             </p>
             <ul style={{ margin: 'var(--space-2) 0 0', paddingLeft: 'var(--space-4)' }}>
-              <li>The task will be added to your Cosmic Circle</li>
-              <li>You'll be connected with {task?.creatorName || 'the sender'}</li>
-              <li>You can message each other and collaborate</li>
+              <li>{t('taskPreview.addedToCircle')}</li>
+              <li>{t('taskPreview.connectedWith', { name: task?.creatorName || t('taskPreview.unknownSender') })}</li>
+              <li>{t('taskPreview.collaborate')}</li>
             </ul>
           </div>
 
@@ -589,14 +592,14 @@ export const TaskPreviewModal: React.FC<TaskPreviewModalProps> = ({
               disabled={isLoading}
               style={{ flex: 1 }}
             >
-              {isLoading ? 'Processing...' : '✨ Accept Task'}
+              {isLoading ? t('taskPreview.processing') : t('taskPreview.acceptTask')}
             </button>
             <button
               className="btn"
               onClick={handleDecline}
               disabled={isLoading}
             >
-              Decline
+              {t('taskPreview.decline')}
             </button>
           </div>
         </div>

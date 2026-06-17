@@ -20,12 +20,13 @@ export function toDegree(n: number): Degree {
 export function normalizeDegree(deg: number): Degree {
   let normalized = deg % 360;
   if (normalized < 0) normalized += 360;
-  return normalized as Degree;
+  return (normalized === 0 ? 0 : normalized) as Degree;
 }
 
 export function toZodiacDegree(longitude: Degree): ZodiacDegree {
   const deg = longitude % 30;
-  return (deg < 0 ? deg + 30 : deg) as ZodiacDegree;
+  const result = deg < 0 ? deg + 30 : deg;
+  return (result === 0 ? 0 : result) as ZodiacDegree;
 }
 
 /** Calculate degree within sign, respecting irregular 13-sign boundaries */
@@ -116,10 +117,10 @@ export const SIGN_ELEMENTS: Record<ZodiacSign, Element> = {
   cancer: 'water', scorpio: 'water', pisces: 'water',
 };
 
-// 13-Sign Elements (Ophiuchus is often considered a fire or water sign)
+// 13-Sign Elements (Ophiuchus as the 5th element — ether/quintessence)
 export const SIGN_ELEMENTS_13: Record<ZodiacSign13, Element> = {
   ...SIGN_ELEMENTS,
-  ophiuchus: 'water', // Associated with healing and transformation
+  ophiuchus: 'ether', // The transcendent, alchemical element
 };
 
 // 12-Sign Modalities
@@ -206,10 +207,10 @@ export function getSignFromLongitude(
   return ZODIAC_SIGNS_12[signIndex] ?? 'aries';
 }
 
-export type Element = 'fire' | 'earth' | 'air' | 'water';
+export type Element = 'fire' | 'earth' | 'air' | 'water' | 'ether';
 export type Modality = 'cardinal' | 'fixed' | 'mutable';
 
-export const ELEMENTS = ['fire', 'earth', 'air', 'water'] as const;
+export const ELEMENTS = ['fire', 'earth', 'air', 'water', 'ether'] as const;
 export const MODALITIES = ['cardinal', 'fixed', 'mutable'] as const;
 
 // House Systems

@@ -6,17 +6,19 @@
  * Embeddable in JournalSettings, Calendar SettingsPanel, StarsHub, etc.
  */
 
-import React, { useState, useEffect, useCallback, useRef } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
+import { useTranslation } from 'react-i18next';
 import { aiConfigService, type UnifiedAIConfig, type AIArea } from '../services/aiConfigService';
 import { secureKeyStore } from '../services/secureKeyStore';
 import { aiProviderManager, type AIProviderType } from '../astrology/services/ai/aiProvider';
 
 const PROVIDER_META: Record<AIProviderType, { name: string; icon: string; description: string; color: string }> = {
-  template: { name: 'Template Library', icon: '📚', description: '26,000+ pre-written interpretations. Free, instant, no API key.', color: '#fbbf24' },
+  template: { name: 'Template Library', icon: '📚', description: '169+ hand-crafted templates woven into thousands of unique readings. Free, instant, no API key.', color: '#fbbf24' },
   groq: { name: 'Groq', icon: '⚡', description: 'Llama 3 via Groq. Free tier: 1M tokens/day.', color: '#f43f5e' },
   openai: { name: 'OpenAI', icon: '🤖', description: 'GPT-4 / GPT-4o-mini. Requires API key.', color: '#10a37f' },
   anthropic: { name: 'Anthropic', icon: '🧠', description: 'Claude AI. Requires API key.', color: '#d97757' },
   ollama: { name: 'Ollama', icon: '🏠', description: 'Local models. Requires Ollama installation.', color: '#8b5cf6' },
+  proxy: { name: 'HEKA AI Proxy', icon: '🛡️', description: 'Server-managed AI with rate limiting and audit logging. No client key required.', color: '#c9a227' },
 };
 
 // ═══════════════════════════════════════════════════════════════════════════════
@@ -33,6 +35,17 @@ interface SetupGuide {
 }
 
 const PROVIDER_GUIDES: Record<Exclude<AIProviderType, 'template'>, SetupGuide> = {
+  proxy: {
+    keyFormat: 'No key required',
+    placeholder: '',
+    signupUrl: '',
+    keysUrl: '',
+    freeTier: 'Managed by your organization',
+    steps: [
+      { title: 'Enable AI Proxy', desc: 'Your admin configures the proxy server with provider keys.', tip: 'No API key is stored on this device' },
+      { title: 'Select Proxy Provider', desc: 'Choose HEKA AI Proxy to route all requests through the backend.', tip: 'Prompts are audited for compliance' },
+    ],
+  },
   groq: {
     keyFormat: 'Starts with "gsk_" followed by alphanumeric characters',
     placeholder: 'gsk_your_api_key_here',
@@ -104,6 +117,7 @@ interface AISettingsPanelProps {
 }
 
 export const AISettingsPanel: React.FC<AISettingsPanelProps> = ({ compact, highlightArea, showTemplateOption = false }) => {
+  const { t } = useTranslation('settings');
   const [config, setConfig] = useState<UnifiedAIConfig>(aiConfigService.getConfig());
   const [apiKeyInput, setApiKeyInput] = useState('');
   const [isTesting, setIsTesting] = useState(false);
@@ -112,44 +126,52 @@ export const AISettingsPanel: React.FC<AISettingsPanelProps> = ({ compact, highl
   const [isProviderSet, setIsProviderSet] = useState(false);
   const [isEditingProvider, setIsEditingProvider] = useState(false);
   const [showSetupGuide, setShowSetupGuide] = useState(false);
-  const mountedRef = useRef(true);
-
   // Hydrate apiKey input from secure storage whenever provider changes
   const hydrateKey = useCallback(async (provider: AIProviderType) => {
     if (provider === 'template') {
       setApiKeyInput('');
-      setIsProviderSet(false);
+      setIsProviderSet(true); // Template is always "configured"
+      return;
+    }
+    if (provider === 'proxy') {
+      setApiKeyInput('');
+      setIsProviderSet(true); // Proxy is configured server-side
       return;
     }
     const storageKey = provider === 'ollama' ? 'heka-ai-ollama' : `heka-ai-${provider}`;
-    const key = await secureKeyStore.get(storageKey);
-    setApiKeyInput(key || '');
-    setIsProviderSet(!!key);
+    try {
+      const key = await secureKeyStore.get(storageKey);
+      setApiKeyInput(key || '');
+      setIsProviderSet(!!key);
+    } catch (err) {
+      console.warn('[AISettingsPanel] Failed to hydrate key:', err);
+      setApiKeyInput('');
+      setIsProviderSet(false);
+    }
   }, []);
 
   useEffect(() => {
     const unsubscribe = aiConfigService.subscribe((next) => {
-      if (mountedRef.current) {
-        setConfig(next);
-        void hydrateKey(next.provider);
-      }
+      setConfig(next);
     });
-    // Initial hydration
+    // Hydrate whenever provider changes
     void hydrateKey(config.provider);
     return () => {
-      mountedRef.current = false;
       unsubscribe();
     };
   }, [config.provider, hydrateKey]);
 
   const handleProviderChange = useCallback((provider: AIProviderType) => {
     aiConfigService.setProvider(provider);
-    aiProviderManager.setActiveProvider(provider);
-    void hydrateKey(provider);
     setTestResult(null);
-  }, [hydrateKey]);
+  }, []);
 
   const handleApiKeySave = useCallback(async () => {
+    if (config.provider === 'proxy') {
+      setIsProviderSet(true);
+      setTestResult(null);
+      return;
+    }
     if (apiKeyInput.trim()) {
       await aiProviderManager.saveApiKey(config.provider, apiKeyInput.trim());
       setIsProviderSet(true);
@@ -161,6 +183,19 @@ export const AISettingsPanel: React.FC<AISettingsPanelProps> = ({ compact, highl
   }, [apiKeyInput, config.provider]);
 
   const handleTestConnection = useCallback(async () => {
+    if (config.provider === 'proxy') {
+      setIsTesting(true);
+      setTestResult(null);
+      try {
+        const ok = await aiProviderManager.validateApiKey('proxy', '');
+        setTestResult({ ok, message: ok ? t('connectionSuccess') : t('connectionFailed') });
+      } catch (err) {
+        setTestResult({ ok: false, message: err instanceof Error ? err.message : t('connectionFailed') });
+      } finally {
+        setIsTesting(false);
+      }
+      return;
+    }
     if (!apiKeyInput.trim()) return;
     setIsTesting(true);
     setTestResult(null);
@@ -170,7 +205,7 @@ export const AISettingsPanel: React.FC<AISettingsPanelProps> = ({ compact, highl
     setIsProviderSet(true);
 
     const ok = await aiProviderManager.validateApiKey(config.provider, apiKeyInput.trim());
-    setTestResult({ ok, message: ok ? 'Connection successful!' : 'Connection failed. Check your settings.' });
+    setTestResult({ ok, message: ok ? t('connectionSuccess') : t('connectionFailed') });
     setIsTesting(false);
   }, [apiKeyInput, config.provider]);
 
@@ -205,8 +240,8 @@ export const AISettingsPanel: React.FC<AISettingsPanelProps> = ({ compact, highl
             >
               <span style={{ fontSize: '1.25rem' }}>{PROVIDER_META[config.provider].icon}</span>
               <div style={{ flex: 1 }}>
-                <div style={{ fontWeight: 500, color: '#f8f7f5' }}>{PROVIDER_META[config.provider].name}</div>
-                <div style={{ fontSize: '0.75rem', color: '#22c55e' }}>Connected • API key stored on this device</div>
+                <div style={{ fontWeight: 500, color: '#f8f7f5' }}>{t(`provider${config.provider.charAt(0).toUpperCase() + config.provider.slice(1)}` as const)}</div>
+                <div style={{ fontSize: '0.75rem', color: '#22c55e' }}>{t('connected')} • {t('apiKeyStored')}</div>
               </div>
               <button
                 onClick={() => setIsEditingProvider(true)}
@@ -221,14 +256,14 @@ export const AISettingsPanel: React.FC<AISettingsPanelProps> = ({ compact, highl
                   cursor: 'pointer',
                 }}
               >
-                Change
+                {t('change')}
               </button>
             </div>
           ) : (
             <>
               <div className="ai-settings-section" style={{ marginBottom: '1.25rem' }}>
                 <label style={{ display: 'block', fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.05em', color: '#a1a1aa', marginBottom: '0.5rem' }}>
-                  AI Provider
+                  {t('aiProvider')}
                 </label>
                 <div style={{ display: 'grid', gap: '0.5rem' }}>
                   {availableProviders.map((type) => {
@@ -254,8 +289,8 @@ export const AISettingsPanel: React.FC<AISettingsPanelProps> = ({ compact, highl
                       >
                         <span style={{ fontSize: '1.25rem' }}>{meta.icon}</span>
                         <div style={{ flex: 1 }}>
-                          <div style={{ fontWeight: 500, color: active ? '#f8f7f5' : '#d4d4d8' }}>{meta.name}</div>
-                          <div style={{ fontSize: '0.75rem', color: '#71717a' }}>{meta.description}</div>
+                          <div style={{ fontWeight: 500, color: active ? '#f8f7f5' : '#d4d4d8' }}>{t(`provider${type.charAt(0).toUpperCase() + type.slice(1)}` as const)}</div>
+                          <div style={{ fontSize: '0.75rem', color: '#71717a' }}>{t(`${type}Desc` as const)}</div>
                         </div>
                         {active && <span style={{ color: meta.color, fontWeight: 600 }}>✓</span>}
                       </button>
@@ -267,7 +302,7 @@ export const AISettingsPanel: React.FC<AISettingsPanelProps> = ({ compact, highl
               {config.provider !== 'template' && (
                 <div className="ai-settings-section" style={{ marginBottom: '1.25rem' }}>
                   <label style={{ display: 'block', fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.05em', color: '#a1a1aa', marginBottom: '0.5rem' }}>
-                    {config.provider === 'ollama' ? 'Ollama URL' : 'API Key'}
+                    {config.provider === 'ollama' ? t('ollamaUrl') : t('aiApiKey')}
                   </label>
                   <div style={{ display: 'flex', gap: '0.5rem' }}>
                     <div style={{ position: 'relative', flex: 1 }}>
@@ -307,7 +342,7 @@ export const AISettingsPanel: React.FC<AISettingsPanelProps> = ({ compact, highl
                             fontSize: '12px',
                           }}
                         >
-                          {showKey ? 'Hide' : 'Show'}
+                          {showKey ? t('hide') : t('show')}
                         </button>
                       )}
                     </div>
@@ -326,7 +361,7 @@ export const AISettingsPanel: React.FC<AISettingsPanelProps> = ({ compact, highl
                         whiteSpace: 'nowrap',
                       }}
                     >
-                      {isTesting ? 'Testing…' : 'Test'}
+                      {isTesting ? t('testing') : t('test')}
                     </button>
                   </div>
                   {testResult && (
@@ -341,7 +376,7 @@ export const AISettingsPanel: React.FC<AISettingsPanelProps> = ({ compact, highl
                     </div>
                   )}
                   <>
-                    <p style={{ fontSize: '11px', color: '#71717a', marginTop: '0.5rem' }}>
+                    <p style={{ fontSize: '12px', color: '#71717a', marginTop: '0.5rem' }}>
                       {PROVIDER_GUIDES[config.provider]?.keyFormat || ''} • Stored only on this device.
                     </p>
                       <button
@@ -361,7 +396,7 @@ export const AISettingsPanel: React.FC<AISettingsPanelProps> = ({ compact, highl
                         }}
                       >
                         <span>{showSetupGuide ? '▾' : '▸'}</span>
-                        Setup Guide for {PROVIDER_META[config.provider].name}
+                        {t('setupGuideFor')} {t(`provider${config.provider.charAt(0).toUpperCase() + config.provider.slice(1)}` as const)}
                       </button>
                       {showSetupGuide && (
                         <div
@@ -385,7 +420,7 @@ export const AISettingsPanel: React.FC<AISettingsPanelProps> = ({ compact, highl
                                   borderRadius: '50%',
                                   background: 'rgba(212,175,55,0.15)',
                                   color: '#d4af37',
-                                  fontSize: '11px',
+                                  fontSize: '12px',
                                   fontWeight: 600,
                                   display: 'flex',
                                   alignItems: 'center',
@@ -400,7 +435,7 @@ export const AISettingsPanel: React.FC<AISettingsPanelProps> = ({ compact, highl
                                 <div style={{ fontSize: '13px', fontWeight: 500, color: '#f8f7f5' }}>{step.title}</div>
                                 <div style={{ fontSize: '12px', color: '#a1a1aa', marginTop: 2 }}>{step.desc}</div>
                                 {step.tip && (
-                                  <div style={{ fontSize: '11px', color: '#d4af37', marginTop: 4, fontStyle: 'italic' }}>
+                                  <div style={{ fontSize: '12px', color: '#d4af37', marginTop: 4, fontStyle: 'italic' }}>
                                     💡 {step.tip}
                                   </div>
                                 )}
@@ -417,7 +452,7 @@ export const AISettingsPanel: React.FC<AISettingsPanelProps> = ({ compact, highl
                                       border: '1px solid rgba(255,255,255,0.1)',
                                       borderRadius: '6px',
                                       color: '#f8f7f5',
-                                      fontSize: '11px',
+                                      fontSize: '12px',
                                       textDecoration: 'none',
                                     }}
                                   >
@@ -443,7 +478,7 @@ export const AISettingsPanel: React.FC<AISettingsPanelProps> = ({ compact, highl
                 onChange={(e) => aiConfigService.setGlobalEnabled(e.target.checked)}
                 style={{ width: 18, height: 18, accentColor: '#d4af37' }}
               />
-              <span style={{ fontWeight: 500 }}>Enable AI across HEKA</span>
+              <span style={{ fontWeight: 500 }}>{t('enableAI')}</span>
             </label>
           </div>
         </>
@@ -451,7 +486,7 @@ export const AISettingsPanel: React.FC<AISettingsPanelProps> = ({ compact, highl
 
       <div className="ai-settings-section">
         <label style={{ display: 'block', fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.05em', color: '#a1a1aa', marginBottom: '0.5rem' }}>
-          {compact ? 'AI Features' : 'Where would you like AI assistance?'}
+          {compact ? t('aiFeatures') : t('whereWouldYouLikeAI')}
         </label>
         <div style={{ display: 'grid', gap: '0.5rem' }}>
           {(Object.keys(AREA_META) as AIArea[]).map((area) => {
@@ -480,10 +515,10 @@ export const AISettingsPanel: React.FC<AISettingsPanelProps> = ({ compact, highl
                 <span style={{ fontSize: '1.1rem' }}>{meta.icon}</span>
                 <div style={{ flex: 1 }}>
                   <div style={{ fontWeight: 500, color: enabled ? '#f8f7f5' : '#d4d4d8' }}>
-                    {meta.label}
-                    {isHighlighted && <span style={{ marginLeft: 6, fontSize: 10, color: '#d4af37' }}>NEW</span>}
+                    {t(`area${area.charAt(0).toUpperCase() + area.slice(1)}` as const)}
+                    {isHighlighted && <span style={{ marginLeft: 6, fontSize: 10, color: '#d4af37' }}>{t('newBadge')}</span>}
                   </div>
-                  <div style={{ fontSize: '0.75rem', color: '#71717a' }}>{meta.description}</div>
+                  <div style={{ fontSize: '0.75rem', color: '#71717a' }}>{t(`area${area.charAt(0).toUpperCase() + area.slice(1)}Desc` as const)}</div>
                 </div>
                 <div
                   style={{
@@ -515,7 +550,7 @@ export const AISettingsPanel: React.FC<AISettingsPanelProps> = ({ compact, highl
         </div>
         {!providerConfigured && (
           <p style={{ fontSize: '12px', color: '#ef4444', marginTop: '0.5rem' }}>
-            Configure an AI provider and API key above to enable features.
+            {t('configureProviderFirst')}
           </p>
         )}
       </div>
@@ -534,15 +569,15 @@ export const AISettingsPanel: React.FC<AISettingsPanelProps> = ({ compact, highl
       >
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '12px', color: '#a1a1aa' }}>
           <span>🔒</span>
-          <span><strong style={{ color: '#f8f7f5' }}>Privacy-first:</strong> Your API key is stored only on this device using secure storage (Android Keystore / iOS Keychain). It never touches our servers.</span>
+          <span><strong style={{ color: '#f8f7f5' }}>{t('privacyFirst')}:</strong> {t('privacyNote')}</span>
         </div>
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '12px', color: '#a1a1aa' }}>
           <span>📚</span>
-          <span><strong style={{ color: '#f8f7f5' }}>Template Library:</strong> Works instantly with 26,000+ pre-written readings. No API key needed. Always free.</span>
+          <span><strong style={{ color: '#f8f7f5' }}>{t('templateLibrary')}:</strong> {t('templateNote')}</span>
         </div>
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '12px', color: '#a1a1aa' }}>
           <span>🤖</span>
-          <span><strong style={{ color: '#f8f7f5' }}>AI Enhancement:</strong> Optional. Brings real-time, personalized insights. You control which areas use AI.</span>
+          <span><strong style={{ color: '#f8f7f5' }}>{t('aiEnhancement')}:</strong> {t('aiEnhancementDesc')}</span>
         </div>
       </div>
     </div>

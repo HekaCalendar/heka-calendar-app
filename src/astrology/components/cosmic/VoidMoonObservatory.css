@@ -340,7 +340,7 @@
 }
 
 .vm-aspect-type {
-  font-size: 10px;
+  font-size: 12px;
   color: rgba(255, 255, 255, 0.4);
 }
 
@@ -477,4 +477,10 @@
   .vm-aspects-grid {
     grid-template-columns: repeat(2, 1fr);
   }
+}
+
+
+/* ── RTL Overrides ── */
+[dir="rtl"] .vm-hero-timer {
+    text-align: left
 }

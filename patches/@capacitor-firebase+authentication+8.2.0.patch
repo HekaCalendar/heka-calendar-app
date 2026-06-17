@@ -1,0 +1,15 @@
+diff --git a/node_modules/@capacitor-firebase/authentication/android/src/main/java/io/capawesome/capacitorjs/plugins/firebase/authentication/FirebaseAuthentication.java b/node_modules/@capacitor-firebase/authentication/android/src/main/java/io/capawesome/capacitorjs/plugins/firebase/authentication/FirebaseAuthentication.java
+index 3949a0d..225e25e 100644
+--- a/node_modules/@capacitor-firebase/authentication/android/src/main/java/io/capawesome/capacitorjs/plugins/firebase/authentication/FirebaseAuthentication.java
++++ b/node_modules/@capacitor-firebase/authentication/android/src/main/java/io/capawesome/capacitorjs/plugins/firebase/authentication/FirebaseAuthentication.java
+@@ -88,7 +88,9 @@ public class FirebaseAuthentication {
+         };
+         getFirebaseAuthInstance().addAuthStateListener(this.firebaseAuthStateListener);
+         this.firebaseIdTokenChangeListener = firebaseAuth -> {
+-            this.plugin.handleIdTokenChange();
++            if (firebaseAuth.getCurrentUser() != null) {
++                this.plugin.handleIdTokenChange();
++            }
+         };
+         getFirebaseAuthInstance().addIdTokenListener(this.firebaseIdTokenChangeListener);
+         if (config.getAuthDomain() != null && !config.getAuthDomain().isEmpty()) {

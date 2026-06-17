@@ -4,19 +4,11 @@
  */
 
 import { memo } from 'react';
+import { useTranslation } from 'react-i18next';
 import { tutorialService } from '../../services/tutorialService';
-import { MOOD_EMOJIS, MOOD_LABELS } from './constants';
+import { MOOD_EMOJIS } from './constants';
 import { NOTE_CATEGORIES } from '../../types';
 import type { NoteEditorProps } from './types';
-
-const REMINDER_OPTIONS = [
-  { value: 0, label: 'At time of task' },
-  { value: 5, label: '5 minutes before' },
-  { value: 10, label: '10 minutes before' },
-  { value: 15, label: '15 minutes before' },
-  { value: 30, label: '30 minutes before' },
-  { value: 60, label: '1 hour before' },
-];
 
 export const NoteEditor = memo(({
   selectedCategory,
@@ -34,6 +26,17 @@ export const NoteEditor = memo(({
   onSave,
   onCancel,
 }: NoteEditorProps) => {
+  const { t } = useTranslation('dayPanel');
+
+  const reminderOptions = [
+    { value: 0, label: t('noteEditor.reminders.atTime') },
+    { value: 5, label: t('noteEditor.reminders.5min') },
+    { value: 10, label: t('noteEditor.reminders.10min') },
+    { value: 15, label: t('noteEditor.reminders.15min') },
+    { value: 30, label: t('noteEditor.reminders.30min') },
+    { value: 60, label: t('noteEditor.reminders.1hour') },
+  ];
+
   return (
     <div className="note-edit-form">
       {/* Task Toggle */}
@@ -59,7 +62,7 @@ export const NoteEditor = memo(({
           style={{ width: 18, height: 18, accentColor: '#d4af37', cursor: 'pointer' }}
         />
         <span style={{ fontWeight: 500, color: isTaskMode ? '#f8f7f5' : '#d4d4d8' }}>
-          ⚡ Make this a task
+          {t('noteEditor.makeTask')}
         </span>
       </label>
 
@@ -84,7 +87,7 @@ export const NoteEditor = memo(({
                   marginBottom: '0.25rem',
                 }}
               >
-                Due time
+                {t('noteEditor.dueTime')}
               </label>
               <input
                 type="time"
@@ -113,7 +116,7 @@ export const NoteEditor = memo(({
                   marginBottom: '0.25rem',
                 }}
               >
-                Remind me
+                {t('noteEditor.remindMe')}
               </label>
               <select
                 value={reminderMinutesBefore}
@@ -129,7 +132,7 @@ export const NoteEditor = memo(({
                   boxSizing: 'border-box',
                 }}
               >
-                {REMINDER_OPTIONS.map((opt) => (
+                {reminderOptions.map((opt) => (
                   <option key={opt.value} value={opt.value}>
                     {opt.label}
                   </option>
@@ -150,21 +153,21 @@ export const NoteEditor = memo(({
             style={{ '--category-color': cat.color } as React.CSSProperties}
           >
             <span>{cat.icon}</span>
-            <span>{cat.name}</span>
+            <span>{t(`noteCategories.${cat.id}`)}</span>
           </button>
         ))}
       </div>
 
       {/* Mood Selection */}
       <div className="mood-selector">
-        <span className="mood-label-text">How are you feeling?</span>
+        <span className="mood-label-text">{t('noteEditor.howAreYouFeeling')}</span>
         <div className="mood-options">
           {[1, 2, 3, 4, 5].map(mood => (
             <button
               key={mood}
               className={`mood-btn ${selectedMood === mood ? 'active' : ''}`}
               onClick={() => onSetMood(selectedMood === mood ? undefined : mood as 1 | 2 | 3 | 4 | 5)}
-              title={MOOD_LABELS[mood]}
+              title={t(`moodScale.${mood}`)}
             >
               {MOOD_EMOJIS[mood]}
             </button>
@@ -182,7 +185,7 @@ export const NoteEditor = memo(({
             tutorialService.trackNoteTyping();
           }
         }}
-        placeholder={isTaskMode ? 'What do you intend to accomplish?' : 'Write your note...'}
+        placeholder={isTaskMode ? t('noteEditor.taskPlaceholder') : t('noteEditor.notePlaceholder')}
         autoFocus
       />
 
@@ -193,10 +196,10 @@ export const NoteEditor = memo(({
           onClick={onSave}
           disabled={!noteText.trim()}
         >
-          {isTaskMode ? 'Save Task' : 'Save Note'}
+          {isTaskMode ? t('noteEditor.saveTask') : t('noteEditor.saveNote')}
         </button>
         <button className="btn" onClick={onCancel}>
-          Cancel
+          {t('noteEditor.cancel')}
         </button>
       </div>
     </div>

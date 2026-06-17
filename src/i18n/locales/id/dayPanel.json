@@ -1,0 +1,239 @@
+{
+  "celestialGuide": "Panduan Langit",
+  "journal": "Jurnal",
+  "notes": "Catatan",
+  "events": "Kejadian",
+  "tasks": "Tugas",
+  "transits": "Transit",
+  "mood": "Sukacita",
+  "vibe": "Nada",
+  "energy": "Energi",
+  "hekaRune": "Heka Run",
+  "celestialAffirmation": "Konfirmasi Langit",
+  "moodTracker": "Pelacak Sukacita",
+  "vibeColor": "Warna Nada",
+  "addNote": "Tambahkan catatan...",
+  "addEvent": "Tambah Kejadian",
+  "addTask": "Tambah Tugas",
+  "eventTitle": "Judul Kejadian",
+  "taskTitle": "Judul Tugas",
+  "taskCompleted": "Selesai",
+  "taskPending": "Tertunda",
+  "editNote": "Edit Catatan",
+  "deleteNote": "Hapus Catatan",
+  "notePlaceholder": "Tulis pikiran Anda disini...",
+  "journalPlaceholder": "Catat hari Anda...",
+  "eventPlaceholder": "Apa yang terjadi?",
+  "taskPlaceholder": "Apa yang perlu dilakukan?",
+  "addNewNote": "+ Catatan Baru",
+  "addNewEvent": "+ Kejadian Baru",
+  "addNewTask": "+ Tugas Baru",
+  "noNotes": "Tidak ada catatan untuk hari ini",
+  "noEvents": "Tidak ada kejadian untuk hari ini",
+  "noTasks": "Tidak ada tugas untuk hari ini",
+  "noJournal": "Tidak ada entri jurnal untuk hari ini",
+  "transitProgress": "Kemajuan Transit",
+  "transitRemaining": "{{percent}}% tersisa",
+  "currentMood": "Sukacita Saat Ini",
+  "selectMood": "Pilih sukacita Anda",
+  "moods": {
+    "joyful": "Gembira",
+    "happy": "Bahagia",
+    "content": "Tenang",
+    "neutral": "Netral",
+    "tired": "Lelah",
+    "sad": "Sedih",
+    "anxious": "Anxiety",
+    "frustrated": "Frustasi",
+    "angry": "Marah",
+    "inspired": "Terinspirasi",
+    "focused": "Fokus",
+    "peaceful": "Damai"
+  },
+  "runeCast": "Melemparkan run",
+  "runeReveal": "Tunjukkan Rune",
+  "runeBlessing": "Berkat Hari Ini",
+  "runeWisdom": "Kebijakan Rune",
+  "runeEnergy": "Energi Rune",
+  "emptyState": "Pilih hari untuk melihat detail",
+  "closePanel": "Tutup panel",
+  "addTaskBtn": "+ Tugas",
+  "header": {
+    "monthOf": "Bulan {{month}} / 13",
+    "hekaYear": "Tahun HEKA {{year}}"
+  },
+  "moon": {
+    "calculating": "Menghitung posisi bulan...",
+    "unavailable": "Data fase bulan tidak tersedia",
+    "waxing": "Menguap",
+    "waning": "Suram",
+    "illuminated": "{{percent}}% tercahaya",
+    "age": "Umur: {{age}} hari",
+    "swissEphemeris": "Swiss Ephemeris",
+    "southernHemisphere": "Hemisfer Selatan",
+    "northernHemisphere": "Hemisfer Utara"
+  },
+  "holidays": {
+    "inLocation": "Libur di {{location}}"
+  },
+  "astrology": {
+    "dailyCosmicGuidance": "Panduan Kosmik Harian",
+    "personalizedFor": "Dipersonalkan untuk {{name}}",
+    "birthChartActive": "Grafik Kelahiran Aktif",
+    "calculatingTransits": "Menghitung transit pribadi Anda...",
+    "connectingCelestial": "Menghubungkan ke kecerdasan langit...",
+    "unavailable": "Panduan langit tidak tersedia. Periksa bagian Bintang untuk astrologi terperinci.",
+    "sunrise": "Matahari terbit: {{time}}",
+    "sunset": "Matahari terbenam: {{time}}",
+    "planetaryHour": "Jam Planet: {{planet}}",
+    "locationPin": "{{lokasi}}",
+    "activeTransits": "Transit Aktif untuk Anda Hari Ini",
+    "moonIn": "Bulan di {{sign}}",
+    "sunIn": "Matahari di {{sign}}",
+    "todaysTheme": "Tema Hari Ini:",
+    "cosmicGuidance": "Panduan Kosmik",
+    "reflection": "Refleksi",
+    "affirmation": "Konfirmasi",
+    "birthChartCta": {
+      "title": "Ingin transit personal?",
+      "description": "Tambahkan chart lahir Anda di bagian Stars untuk melihat bagaimana cuaca kosmik hari ini mempengaruhi Anda secara pribadi."
+    }
+  },
+  "lunarMansion": {
+    "title": "Rumah Bulan",
+    "trueMode": "MODE BENAR",
+    "calculating": "Menghitung posisi bulan sidera...",
+    "totem": "Totem",
+    "gift": "Hadiah",
+    "ruler": "Penguasa",
+    "quality": "Kualitas",
+    "quarter": "Kuartal",
+    "sunTravelsThrough": "Matahari berjalan melalui {{name}}",
+    "quarters": {
+      "initiation": "Inisiatif — benih ditanam",
+      "deepening": "Meningkat — akar mengambil pegangan",
+      "crisis": "Krisis — pengujian tiba",
+      "completion": "Pencapaian — buah matang"
+    }
+  },
+  "solarReturn": {
+    "title": "Pulang Matahari Benar",
+    "titleInDays": "Pulang Matahari Benar dalam {{count}} hari{{suffix}}",
+    "trueMode": "MODE BENAR",
+    "today": "Matahari kembali ke garis lahir sidera Anda hari ini.",
+    "approaching": "Matahari akan kembali ke posisi sidera {{sign}} Anda pada {{date}}.",
+    "description": "Dalam mode TRUE HEKA, ulang tahun Anda ditentukan oleh bintang, bukan kalender sipil.",
+    "exactOrb": "Tepat hingga {{orb}} menit."
+  },
+  "notesSection": {
+    "tasksAndNotes": "Tugas ({{tasks}}) · Catatan ({{notes}})",
+    "tasksOnly": "Tugas ({{count}})",
+    "notesAndTasks": "Catatan & Tugas ({{count}})",
+    "addNote": "+ Catatan",
+    "longHoldHint": "Tekan lama untuk opsi · Ketuk ganda tugas untuk mengedit",
+    "noNotesOrTasks": "Tidak ada catatan atau tugas untuk hari ini.",
+    "createNoteHint": "Klik <0>+ Catatan</0> atau <1>⚡ Tambah Tugas</1> di atas untuk membuat satu."
+  },
+  "noteEditor": {
+    "makeTask": "⚡ Buat ini tugas",
+    "dueTime": "Waktu jatuh tempo",
+    "remindMe": "Ingatkan saya",
+    "reminders": {
+      "atTime": "Pada waktu tugas",
+      "5min": "5 menit sebelum",
+      "10min": "10 menit sebelumnya",
+      "15min": "15 menit sebelumnya",
+      "30min": "30 menit sebelumnya",
+      "1hour": "1 jam sebelumnya"
+    },
+    "howAreYouFeeling": "Bagaimana perasaanmu hari ini?",
+    "taskPlaceholder": "Apakah yang ingin kamu capai hari ini?",
+    "notePlaceholder": "Tulis catatanmu...",
+    "saveTask": "Simpan Tugas",
+    "saveNote": "Simpan Catatan",
+    "cancel": "Batal"
+  },
+  "noteItem": {
+    "markComplete": "Tandai selesai",
+    "completed": "Selesai",
+    "task": "Tugas",
+    "delete": "Hapus"
+  },
+  "selection": {
+    "selectedFromDays": "{{count}} dipilih dari {{days}} hari{{suffix}}",
+    "done": "Selesai",
+    "selectAll": "Pilih Semua",
+    "duplicate": "Gandakan...",
+    "delete": "Hapus",
+    "manageDuplicates": "Kelola Duplikat:",
+    "duplicateTo": "Gandakan ke:",
+    "nextWeek": "Minggu Depan",
+    "nextMonth": "Bulan Depan",
+    "everyDay": "Setiap {{day}}",
+    "undoEveryDay": "Batal Setiap {{day}}",
+    "specificDay": "Hari Khusus...",
+    "chooseDays": "Pilih Hari...",
+    "back": "Kembali"
+  },
+  "dayPicker": {
+    "cancel": "Batal"
+  },
+  "multiDayPicker": {
+    "selectedCount": "{{count}} hari terpilih",
+    "confirm": "Konfirmasi",
+    "cancel": "Batal"
+  },
+  "confirmations": {
+    "deleteNote": "Hapus catatan ini?",
+    "deleteSelected": "Hapus {{count}} catatan terpilih dari {{days}} hari?",
+    "duplicateEveryDay": "Gandakan {{items}} ke SETIAP {{day}} untuk sisa tahun ini?",
+    "undoDuplicates": "Hapus semua instance duplikat dari {{count}} catatan ini?"
+  },
+  "alerts": {
+    "couldNotCalculateDate": "Tidak dapat menghitung tanggal target",
+    "duplicatedToNextWeek": "Digandakan {{items}} ke minggu depan ({{month}} {{day}})",
+    "duplicatedToNextMonth": "Digandakan {{items}} ke bulan depan ({{month}} {{day}})",
+    "duplicatedToDays": "Digandakan ke {{count}} {{day}}s",
+    "duplicatedNotes": "Duplikat {{count}} catatan",
+    "removedDuplicates": "Menghapus catatan duplikat",
+    "duplicatedToMonth": "Duplikat {{count}} catatan ke bulan berikutnya",
+    "duplicatedToDaysCount": "Duplikat {{count}} catatan ke {{days}} hari",
+    "duplicatedSelectedItems": "Duplikat item terpilih ke {{count}} hari",
+    "signInToSaveTasks": "Anda perlu masuk untuk menyimpan tugas. Silakan buka menu Akun dan masuk lagi.",
+    "unableToSaveTask": "Tidak dapat menyimpan tugas. Kesalahan: {{error}}"
+  },
+  "dow": {
+    "sunday": "Minggu",
+    "monday": "Senin",
+    "tuesday": "Selasa",
+    "wednesday": "Rabu",
+    "thursday": "Kamis",
+    "friday": "Jumat",
+    "saturday": "Sabtu",
+    "short": {
+      "sun": "Min",
+      "mon": "Sen",
+      "tue": "Sel",
+      "wed": "Rab",
+      "thu": "Kam",
+      "fri": "Jum",
+      "sat": "Sab"
+    }
+  },
+  "noteCategories": {
+    "personal": "Pribadi",
+    "work": "Kerja",
+    "spiritual": "Rohani",
+    "family": "Keluarga",
+    "health": "Kesehatan",
+    "creative": "Kreatif",
+    "general": "Umum"
+  },
+  "moodScale": {
+    "1": "Sangat Rendah",
+    "2": "Rendah",
+    "3": "Netral",
+    "4": "Baik",
+    "5": "Eksempler"
+  }
+}

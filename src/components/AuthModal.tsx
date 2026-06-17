@@ -4,6 +4,7 @@
  */
 
 import { useState, useEffect, useCallback } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import type { RootState } from '../store';
 import { setAuthenticated, setUnauthenticated, setSyncing, setSyncError, setLastSync } from '../store';
@@ -15,8 +16,14 @@ import {
   onAuthChange,
   syncToCloud,
   loadFromCloud,
+  loadAllAstroData,
+  syncAllAstroData,
   isFirebaseConfigured
 } from '../services/firebase';
+import { signInWithGoogleNative } from '../services/nativeAuth';
+import { persistence, DEFAULT_PROFILE_PREFERENCES } from '../astrology/services/persistence';
+import type { AstroProfile, NatalChart, ProfilePreferences } from '../astrology/types';
+import { getErrorMessage, getErrorCode } from '../utils/errorUtils';
 
 interface AuthModalProps {
   isOpen: boolean;
@@ -26,6 +33,7 @@ interface AuthModalProps {
 type AuthView = 'login' | 'signup' | 'forgot' | 'profile' | 'not-configured';
 
 export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
+  const { t } = useTranslation('auth');
   const dispatch = useDispatch();
   const auth = useSelector((state: RootState) => state.calendar.auth);
   const calendarState = useSelector((state: RootState) => state.calendar);
@@ -82,11 +90,10 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
     dispatch(setSyncError(null));
     
     try {
-      // First, try to load from cloud
+      // ── Calendar data sync ──────────────────────────────────────────────
       const cloudData = await loadFromCloud(userId);
       
       if (cloudData) {
-        // Cloud data exists - merge with local (local takes precedence for recent changes)
         await syncToCloud(userId, {
           notes: { ...cloudData.notes, ...calendarState.notes },
           statistics: calendarState.statistics,
@@ -100,7 +107,6 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
           }
         });
       } else {
-        // No cloud data - upload local data
         await syncToCloud(userId, {
           notes: calendarState.notes,
           statistics: calendarState.statistics,
@@ -114,10 +120,75 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
           }
         });
       }
+
+      // ── Astrology data sync ─────────────────────────────────────────────
+      try {
+        const cloudAstro = await loadAllAstroData(userId);
+        const localProfiles = await persistence.getAllProfiles();
+        const localCharts = await Promise.all(
+          localProfiles.map(p => persistence.getChartsForProfile(p.id))
+        ).then(arr => arr.flat());
+
+        if (cloudAstro.profiles.length > 0 || cloudAstro.charts.length > 0) {
+          // Merge: cloud wins if newer
+          const cloudProfiles = cloudAstro.profiles as unknown as AstroProfile[];
+          const cloudCharts = cloudAstro.charts as unknown as NatalChart[];
+          const localProfileMap = new Map(localProfiles.map(p => [p.id, p]));
+          for (const cp of cloudProfiles) {
+            const local = localProfileMap.get(cp.id);
+            const cloudTime = new Date((cp as unknown as { _syncedAt?: string })._syncedAt || cp.updatedAt || 0).getTime();
+            const localTime = local ? new Date((local as unknown as { updatedAt?: string }).updatedAt || 0).getTime() : 0;
+            if (!local || cloudTime > localTime) {
+              await persistence.saveProfile(cp as unknown as AstroProfile);
+              localProfileMap.set(cp.id, cp as unknown as AstroProfile);
+            }
+          }
+          const localChartMap = new Map(localCharts.map(c => [c.id, c]));
+          for (const cc of cloudCharts) {
+            const local = localChartMap.get(cc.id);
+            const cloudTime = new Date((cc as unknown as { _syncedAt?: string })._syncedAt || cc.calculatedAt || 0).getTime();
+            const localTime = local ? new Date((local as unknown as { calculatedAt?: string }).calculatedAt || 0).getTime() : 0;
+            if (!local || cloudTime > localTime) {
+              await persistence.saveChart(cc as unknown as NatalChart);
+              localChartMap.set(cc.id, cc as unknown as NatalChart);
+            }
+          }
+          if (cloudAstro.preferences) {
+            const localP = await persistence.getPreferences();
+            const cloudTime = new Date((cloudAstro.preferences as unknown as { _syncedAt?: string })._syncedAt || 0).getTime();
+            const localTime = localP ? new Date((localP as unknown as { _syncedAt?: string })._syncedAt || 0).getTime() : 0;
+            if (!localP || cloudTime > localTime) {
+              await persistence.savePreferences(cloudAstro.preferences as unknown as ProfilePreferences);
+            }
+          }
+          if (cloudAstro.selectedProfileId) {
+            const localSel = await persistence.getSelectedProfile();
+            if (!localSel) await persistence.setSelectedProfile(cloudAstro.selectedProfileId as import('../astrology/types').ProfileId);
+          }
+        }
+
+        // Push merged local state to cloud
+        const finalProfiles = await persistence.getAllProfiles();
+        const finalCharts = await Promise.all(
+          finalProfiles.map(p => persistence.getChartsForProfile(p.id))
+        ).then(arr => arr.flat());
+        const finalPrefs = await persistence.getPreferences();
+        const finalSelected = await persistence.getSelectedProfile();
+        if (finalProfiles.length > 0) {
+          await syncAllAstroData(userId, {
+            profiles: finalProfiles,
+            charts: finalCharts,
+            preferences: finalPrefs || DEFAULT_PROFILE_PREFERENCES,
+            selectedProfileId: finalSelected,
+          });
+        }
+      } catch (astroErr) {
+        console.warn('[AuthModal] Astrology sync failed:', astroErr);
+      }
       
       dispatch(setLastSync(new Date().toISOString()));
-    } catch (err: any) {
-      dispatch(setSyncError(err.message || 'Sync failed'));
+    } catch (err) {
+      dispatch(setSyncError(getErrorMessage(err, 'Sync failed')));
     } finally {
       dispatch(setSyncing(false));
     }
@@ -135,8 +206,29 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
         setView('profile');
         setSuccess(null);
       }, 1000);
-    } catch (err: any) {
-      setError(err.message);
+    } catch (err) {
+      setError(getErrorMessage(err));
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleGoogleSignIn = async () => {
+    setError(null);
+    setIsLoading(true);
+    try {
+      await signInWithGoogleNative();
+      setSuccess('Welcome!');
+      setTimeout(() => {
+        setView('profile');
+        setSuccess(null);
+      }, 1000);
+    } catch (err) {
+      if (getErrorCode(err) === 'auth/cancelled') {
+        // User cancelled — no error message needed
+      } else {
+        setError(getErrorMessage(err, 'Google Sign-In failed'));
+      }
     } finally {
       setIsLoading(false);
     }
@@ -154,8 +246,8 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
         setView('profile');
         setSuccess(null);
       }, 1000);
-    } catch (err: any) {
-      setError(err.message);
+    } catch (err) {
+      setError(getErrorMessage(err));
     } finally {
       setIsLoading(false);
     }
@@ -169,8 +261,8 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
     try {
       await resetPassword(email);
       setSuccess('Password reset email sent!');
-    } catch (err: any) {
-      setError(err.message);
+    } catch (err) {
+      setError(getErrorMessage(err));
     } finally {
       setIsLoading(false);
     }
@@ -181,8 +273,8 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
     try {
       await logOut();
       setView('login');
-    } catch (err: any) {
-      setError(err.message);
+    } catch (err) {
+      setError(getErrorMessage(err));
     } finally {
       setIsLoading(false);
     }
@@ -217,7 +309,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
               {view === 'not-configured' && 'Cloud Sync Setup'}
             </h2>
           </div>
-          <button className="auth-modal__close" onClick={onClose}>×</button>
+          <button className="auth-modal__close" onClick={onClose} aria-label={t('close')}>×</button>
         </div>
 
         {/* Content */}
@@ -238,24 +330,24 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
           {view === 'login' && (
             <form onSubmit={handleLogin} className="auth-form">
               <div className="auth-form__group">
-                <label className="auth-form__label">Email</label>
+                <label className="auth-form__label">{t('email')}</label>
                 <input
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   className="auth-form__input"
-                  placeholder="your@email.com"
+                  placeholder={t('emailPlaceholder', 'Enter your email')}
                   required
                 />
               </div>
               <div className="auth-form__group">
-                <label className="auth-form__label">Password</label>
+                <label className="auth-form__label">{t('password')}</label>
                 <input
                   type="password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   className="auth-form__input"
-                  placeholder="••••••••"
+                  placeholder={t('passwordPlaceholder', 'Enter your password')}
                   required
                 />
               </div>
@@ -264,7 +356,19 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
                 className="auth-form__submit"
                 disabled={isLoading}
               >
-                {isLoading ? 'Signing in...' : 'Sign In'}
+                {isLoading ? t('signingIn') : t('signIn')}
+              </button>
+
+              <div className="auth-divider">or</div>
+
+              <button
+                type="button"
+                className="auth-social-btn auth-social-btn--google"
+                onClick={handleGoogleSignIn}
+                disabled={isLoading}
+              >
+                <span className="auth-social-btn__icon">🔍</span>
+                Continue with Google
               </button>
               
               <div className="auth-form__links">
@@ -290,13 +394,13 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
           {view === 'signup' && (
             <form onSubmit={handleSignUp} className="auth-form">
               <div className="auth-form__group">
-                <label className="auth-form__label">Display Name</label>
+                <label className="auth-form__label">{t('displayName')}</label>
                 <input
                   type="text"
                   value={displayName}
                   onChange={(e) => setDisplayName(e.target.value)}
                   className="auth-form__input"
-                  placeholder="Your name"
+                  placeholder={t('displayNamePlaceholder', 'Enter your display name')}
                   required
                 />
               </div>
@@ -307,7 +411,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   className="auth-form__input"
-                  placeholder="your@email.com"
+                  placeholder={t('emailPlaceholder', 'Enter your email')}
                   required
                 />
               </div>
@@ -318,7 +422,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   className="auth-form__input"
-                  placeholder="••••••••"
+                  placeholder={t('passwordPlaceholder', 'Enter your password')}
                   required
                   minLength={6}
                 />
@@ -329,9 +433,21 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
                 className="auth-form__submit"
                 disabled={isLoading}
               >
-                {isLoading ? 'Creating...' : 'Create Account'}
+                {isLoading ? t('creatingAccount') : t('signUp')}
               </button>
               
+              <div className="auth-divider">or</div>
+
+              <button
+                type="button"
+                className="auth-social-btn auth-social-btn--google"
+                onClick={handleGoogleSignIn}
+                disabled={isLoading}
+              >
+                <span className="auth-social-btn__icon">🔍</span>
+                Continue with Google
+              </button>
+
               <div className="auth-form__links">
                 <button 
                   type="button" 
@@ -357,7 +473,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   className="auth-form__input"
-                  placeholder="your@email.com"
+                  placeholder={t('emailPlaceholder', 'Enter your email')}
                   required
                 />
               </div>
@@ -366,7 +482,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
                 className="auth-form__submit"
                 disabled={isLoading}
               >
-                {isLoading ? 'Sending...' : 'Send Reset Link'}
+                {isLoading ? t('sending') : t('sendResetLink')}
               </button>
               
               <div className="auth-form__links">
@@ -408,7 +524,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
                       ✓ Last synced: {new Date(auth.lastSync).toLocaleString()}
                     </span>
                   ) : (
-                    <span className="sync-indicator">Not synced yet</span>
+                    <span className="sync-indicator">{t('notSyncedYet')}</span>
                   )}
                 </div>
                 
@@ -426,7 +542,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
               </div>
 
               <div className="auth-profile__data">
-                <h4 className="auth-profile__section-title">Synced Data</h4>
+                <h4 className="auth-profile__section-title">{t('syncedData')}</h4>
                 <ul className="auth-profile__data-list">
                   <li>📔 Journal Notes</li>
                   <li>📊 Statistics</li>
@@ -442,7 +558,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
                 onClick={handleLogout}
                 disabled={isLoading}
               >
-                {isLoading ? 'Signing out...' : 'Sign Out'}
+                {isLoading ? t('signingOut') : t('signOut')}
               </button>
             </div>
           )}
@@ -451,18 +567,18 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
           {view === 'not-configured' && (
             <div className="auth-not-configured">
               <div className="auth-not-configured__icon">☁️</div>
-              <h3 className="auth-not-configured__title">Cloud Sync Not Configured</h3>
+              <h3 className="auth-not-configured__title">{t('cloudSyncNotConfigured')}</h3>
               <p className="auth-not-configured__text">
                 Firebase authentication is not set up yet. The app works fully offline, 
                 but to enable cloud backup and sync across devices, Firebase needs to be configured.
               </p>
               <div className="auth-not-configured__steps">
-                <p>To enable cloud sync:</p>
+                <p>{t('toEnableCloudSync')}</p>
                 <ol>
-                  <li>Create a Firebase project at <a href="https://console.firebase.google.com" target="_blank" rel="noopener">console.firebase.google.com</a></li>
-                  <li>Add a web app to your project</li>
-                  <li>Copy the Firebase config values</li>
-                  <li>Create a <code>.env</code> file in the project root</li>
+                  <li>{t('firebaseProjectStep')}</li>
+                  <li>{t('addWebAppStep')}</li>
+                  <li>{t('copyConfigStep')}</li>
+                  <li>{t('envFileStep')}</li>
                 </ol>
               </div>
               <div className="auth-not-configured__hint">

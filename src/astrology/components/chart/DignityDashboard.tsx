@@ -203,7 +203,7 @@ export const DignityDashboard: React.FC<DignityDashboardProps> = ({
               {planet.signSymbol} {planet.sign}
             </span>
             <span style={{
-              fontSize: '11px',
+              fontSize: '12px',
               padding: '2px 6px',
               background: `${dignityConfig.color}20`,
               color: dignityConfig.color,
@@ -220,7 +220,7 @@ export const DignityDashboard: React.FC<DignityDashboardProps> = ({
             gap: '12px',
           }}>
             <span style={{
-              fontSize: '11px',
+              fontSize: '12px',
               color: 'rgba(255, 255, 255, 0.4)',
             }}>
               House {planet.house} • {HOUSE_MEANINGS[planet.house]}
@@ -269,7 +269,7 @@ export const DignityDashboard: React.FC<DignityDashboardProps> = ({
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            fontSize: '11px',
+            fontSize: '12px',
             color: 'rgba(255, 255, 255, 0.5)',
             cursor: 'help',
             flexShrink: 0,
@@ -319,7 +319,7 @@ export const DignityDashboard: React.FC<DignityDashboardProps> = ({
         <div style={{
           display: 'flex',
           gap: '12px',
-          fontSize: '11px',
+          fontSize: '12px',
         }}>
           <span style={{ color: '#22c55e' }}>🏠 Strong</span>
           <span style={{ color: '#94a3b8' }}>◆ Neutral</span>
@@ -345,7 +345,7 @@ export const DignityDashboard: React.FC<DignityDashboardProps> = ({
             border: '1px solid rgba(34, 197, 94, 0.2)',
           }}>
             <div style={{
-              fontSize: '11px',
+              fontSize: '12px',
               textTransform: 'uppercase',
               letterSpacing: '1px',
               color: '#4ade80',
@@ -381,7 +381,7 @@ export const DignityDashboard: React.FC<DignityDashboardProps> = ({
             border: '1px solid rgba(239, 68, 68, 0.2)',
           }}>
             <div style={{
-              fontSize: '11px',
+              fontSize: '12px',
               textTransform: 'uppercase',
               letterSpacing: '1px',
               color: '#f87171',

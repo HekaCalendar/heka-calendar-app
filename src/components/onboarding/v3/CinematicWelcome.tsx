@@ -5,10 +5,18 @@
  */
 
 import React, { useEffect, useState, useMemo, useRef } from 'react';
+import { useTranslation } from 'react-i18next';
+import { useVisibility } from '../../../hooks/useVisibility';
 
 interface CinematicWelcomeProps {
   onBegin: () => void;
   onSkip: () => void;
+  strings: {
+    tutorialWelcomeSubtitle: string;
+    tutorialWelcomeTagline: string;
+    tutorialBegin: string;
+    tutorialSkip: string;
+  };
 }
 
 interface Star {
@@ -32,12 +40,23 @@ interface ShootingStar {
   maxLife: number;
 }
 
-export const CinematicWelcome: React.FC<CinematicWelcomeProps> = ({ onBegin, onSkip }) => {
+const LOW_POWER_MEMORY = 4;
+
+function getStarCount() {
+  const memory = (navigator as any).deviceMemory;
+  const cores = navigator.hardwareConcurrency || 4;
+  if ((memory && memory <= LOW_POWER_MEMORY) || cores <= 4) return 80;
+  return 200;
+}
+
+export const CinematicWelcome: React.FC<CinematicWelcomeProps> = ({ onBegin, onSkip, strings }) => {
   const [phase, setPhase] = useState<'stars' | 'logo' | 'tagline' | 'grid' | 'ready'>('stars');
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const { t } = useTranslation('common');
   const starsRef = useRef<Star[]>([]);
   const shootingStarsRef = useRef<ShootingStar[]>([]);
   const mouseRef = useRef({ x: 0, y: 0 });
+  const isVisible = useVisibility();
 
   // Phase transitions
   useEffect(() => {
@@ -69,7 +88,7 @@ export const CinematicWelcome: React.FC<CinematicWelcomeProps> = ({ onBegin, onS
     window.addEventListener('resize', resize);
 
     // Initialize stars with depth layers
-    starsRef.current = Array.from({ length: 200 }, () => ({
+    starsRef.current = Array.from({ length: getStarCount() }, () => ({
       x: Math.random() * window.innerWidth,
       y: Math.random() * window.innerHeight,
       size: Math.random() * 2.5 + 0.3,
@@ -219,22 +238,22 @@ export const CinematicWelcome: React.FC<CinematicWelcomeProps> = ({ onBegin, onS
       window.removeEventListener('resize', resize);
       window.removeEventListener('mousemove', handleMouseMove);
     };
-  }, []);
+  }, [isVisible]);
 
   const months = useMemo(() => [
-    { name: 'Apr', arc: 'opening' as const },
-    { name: 'May', arc: 'core' as const },
-    { name: 'Jun', arc: 'core' as const },
-    { name: 'Jul', arc: 'core' as const },
-    { name: 'Aug', arc: 'core' as const },
-    { name: 'Hex', arc: 'core' as const },
-    { name: 'Sep', arc: 'core' as const },
-    { name: 'Oct', arc: 'core' as const },
-    { name: 'Nov', arc: 'core' as const },
-    { name: 'Dec', arc: 'core' as const },
-    { name: 'Jan', arc: 'closing' as const },
-    { name: 'Feb', arc: 'closing' as const },
-    { name: 'Mar', arc: 'closing' as const },
+    { key: 'apr', arc: 'opening' as const },
+    { key: 'may', arc: 'core' as const },
+    { key: 'jun', arc: 'core' as const },
+    { key: 'jul', arc: 'core' as const },
+    { key: 'aug', arc: 'core' as const },
+    { key: 'hex', arc: 'core' as const },
+    { key: 'sep', arc: 'core' as const },
+    { key: 'oct', arc: 'core' as const },
+    { key: 'nov', arc: 'core' as const },
+    { key: 'dec', arc: 'core' as const },
+    { key: 'jan', arc: 'closing' as const },
+    { key: 'feb', arc: 'closing' as const },
+    { key: 'mar', arc: 'closing' as const },
   ], []);
 
   return (
@@ -272,7 +291,7 @@ export const CinematicWelcome: React.FC<CinematicWelcomeProps> = ({ onBegin, onS
             transition: 'opacity 1s cubic-bezier(0.22, 1, 0.36, 1) 0.3s, transform 1s cubic-bezier(0.22, 1, 0.36, 1) 0.3s',
           }}
         >
-          The Thirteen-Month Calendar
+          {strings.tutorialWelcomeSubtitle}
         </p>
 
         {/* Tagline */}
@@ -283,7 +302,7 @@ export const CinematicWelcome: React.FC<CinematicWelcomeProps> = ({ onBegin, onS
             transition: 'opacity 1.2s cubic-bezier(0.22, 1, 0.36, 1) 0.6s',
           }}
         >
-          You have never seen a calendar like this.
+          {strings.tutorialWelcomeTagline}
         </p>
 
         {/* Grid preview */}
@@ -297,7 +316,7 @@ export const CinematicWelcome: React.FC<CinematicWelcomeProps> = ({ onBegin, onS
         >
           {months.map((month, i) => (
             <div
-              key={month.name}
+              key={month.key}
               className={`tt-welcome__grid-cell tt-welcome__grid-cell--${month.arc}`}
               style={{
                 opacity: phase === 'grid' || phase === 'ready' ? 1 : 0,
@@ -305,7 +324,7 @@ export const CinematicWelcome: React.FC<CinematicWelcomeProps> = ({ onBegin, onS
                 transition: `opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1) ${i * 80}ms, transform 0.6s cubic-bezier(0.22, 1, 0.36, 1) ${i * 80}ms`,
               }}
             >
-              {month.name}
+              {t(`months.${month.key}`)}
             </div>
           ))}
         </div>
@@ -321,10 +340,10 @@ export const CinematicWelcome: React.FC<CinematicWelcomeProps> = ({ onBegin, onS
         }}
       >
         <button className="tt-welcome__btn" onClick={onBegin}>
-          Begin Your Journey
+          {strings.tutorialBegin}
         </button>
         <button className="tt-welcome__skip" onClick={onSkip}>
-          Skip Tutorial →
+          {strings.tutorialSkip}
         </button>
       </div>
     </div>

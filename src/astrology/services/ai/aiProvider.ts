@@ -17,6 +17,7 @@ import type { PersonalizedReading } from '../guidance/templates/templateLibrary'
 import { sanitizeForPrompt } from '../../utils/sanitization';
 import { aiConfigService } from '../../../services/aiConfigService';
 import { secureKeyStore } from '../../../services/secureKeyStore';
+import { chatViaProxy, isAIProxyEnabled } from '../../../services/aiProxyClient';
 
 // ═══════════════════════════════════════════════════════════════════════════════
 // UTILITY: Fetch with timeout using AbortController
@@ -41,7 +42,7 @@ async function fetchWithTimeout(
     return response;
   } catch (error) {
     if (error instanceof Error && error.name === 'AbortError') {
-      throw new Error(`Request timeout after ${timeout}ms`);
+      throw new Error(`Request timeout after ${timeout}ms`, { cause: error });
     }
     throw error;
   } finally {
@@ -53,7 +54,7 @@ async function fetchWithTimeout(
 // TYPES & INTERFACES
 // ═══════════════════════════════════════════════════════════════════════════════
 
-export type AIProviderType = 'groq' | 'openai' | 'anthropic' | 'ollama' | 'template';
+export type AIProviderType = 'groq' | 'openai' | 'anthropic' | 'ollama' | 'template' | 'proxy';
 
 export interface AIProviderConfig {
   type: AIProviderType;
@@ -86,6 +87,7 @@ export interface AIResponse {
   latency: number;
   cached: boolean;
   cachedAt?: number;
+  fallbackReason?: string;
 }
 
 export interface AIProviderStatus {
@@ -121,7 +123,7 @@ export interface AIProvider {
 class TemplateProvider implements AIProvider {
   readonly type: AIProviderType = 'template';
   readonly name = 'Template Library';
-  readonly description = '26,000+ pre-written templates (free, instant, no API key)';
+  readonly description = '169+ hand-crafted planet-sign templates, woven into thousands of unique readings (free, instant, no API key)';
   
   private config: AIProviderConfig = { type: 'template' };
   
@@ -199,7 +201,19 @@ class GroqProvider implements AIProvider {
   };
   
   private cache = new Map<string, AIResponse>();
+  private readonly MAX_CACHE_SIZE = 100;
   private lastError?: string;
+
+  private enforceCacheLimit(): void {
+    while (this.cache.size > this.MAX_CACHE_SIZE) {
+      const firstKey = this.cache.keys().next().value;
+      if (firstKey) {
+        this.cache.delete(firstKey);
+      } else {
+        break;
+      }
+    }
+  }
   
   configure(config: AIProviderConfig): void {
     this.config = { ...this.config, ...config };
@@ -275,6 +289,7 @@ class GroqProvider implements AIProvider {
       
       // Cache result
       this.cache.set(cacheKey, { ...result, cachedAt: Date.now() });
+      this.enforceCacheLimit();
       
       return result;
     } catch (error) {
@@ -560,6 +575,175 @@ Create personalized astrological guidance that expands on this template with spe
 }
 
 // ═══════════════════════════════════════════════════════════════════════════════
+// ANTHROPIC PROVIDER (Claude)
+// ═══════════════════════════════════════════════════════════════════════════════
+
+class AnthropicProvider implements AIProvider {
+  readonly type: AIProviderType = 'anthropic';
+  readonly name = 'Anthropic';
+  readonly description = 'Claude 3 Haiku / Sonnet (requires API key)';
+
+  private config: AIProviderConfig = {
+    type: 'anthropic',
+    baseUrl: 'https://api.anthropic.com/v1',
+    model: 'claude-3-haiku-20240307',
+    maxTokens: 500,
+    temperature: 0.7,
+  };
+
+  private lastError?: string;
+
+  configure(config: AIProviderConfig): void {
+    this.config = { ...this.config, ...config };
+  }
+
+  isConfigured(): boolean {
+    return !!this.config.apiKey;
+  }
+
+  getStatus(): AIProviderStatus {
+    return {
+      available: this.isConfigured(),
+      configured: this.isConfigured(),
+      lastError: this.lastError,
+    };
+  }
+
+  async generateReading(request: AIRequest): Promise<AIResponse> {
+    const startTime = performance.now();
+
+    if (!this.config.apiKey) {
+      throw new Error('Anthropic API key not configured');
+    }
+
+    try {
+      const response = await fetchWithTimeout(`${this.config.baseUrl}/messages`, {
+        method: 'POST',
+        headers: {
+          'x-api-key': this.config.apiKey,
+          'anthropic-version': '2023-06-01',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          model: this.config.model,
+          max_tokens: this.config.maxTokens,
+          temperature: this.config.temperature,
+          messages: [
+            {
+              role: 'user',
+              content: this.buildPrompt(request),
+            },
+          ],
+        }),
+      });
+
+      if (!response.ok) {
+        const error = await response.text();
+        this.lastError = error;
+        throw new Error(`Anthropic API error: ${error}`);
+      }
+
+      const data = await response.json();
+      const content = data.content?.[0]?.text || '';
+
+      let aiContent;
+      try {
+        aiContent = JSON.parse(content);
+      } catch {
+        aiContent = {
+          narrative: content,
+          poeticSummary: 'The cosmos whispers its wisdom today.',
+          affirmations: ['I align with the celestial flow.'],
+          rituals: ['Take a moment to observe the sky.'],
+          journalPrompts: ['What is the universe revealing to me?'],
+        };
+      }
+
+      return {
+        reading: {
+          title: request.templateReading.title,
+          summary: request.templateReading.summary,
+          narrative: aiContent.narrative || content,
+          advice: request.templateReading.advice,
+          affirmation: request.templateReading.affirmation,
+          confidence: 91,
+          poeticSummary: aiContent.poeticSummary,
+          affirmations: aiContent.affirmations,
+          rituals: aiContent.rituals,
+          journalPrompts: aiContent.journalPrompts,
+          aiGenerated: true,
+          aiProvider: 'anthropic',
+          aiModel: this.config.model,
+        },
+        provider: 'anthropic',
+        model: this.config.model,
+        tokensUsed: data.usage?.input_tokens + data.usage?.output_tokens,
+        latency: performance.now() - startTime,
+        cached: false,
+      };
+    } catch (error) {
+      this.lastError = error instanceof Error ? error.message : 'Unknown error';
+      throw error;
+    }
+  }
+
+  private buildPrompt(request: AIRequest): string {
+    const { context, templateReading } = request;
+
+    const planet = sanitizeForPrompt(context.planet);
+    const sign = sanitizeForPrompt(context.sign);
+    const moonPhase = sanitizeForPrompt(context.moonPhase);
+    const category = sanitizeForPrompt(context.category || 'general guidance');
+    const userElement = context.userElement ? sanitizeForPrompt(context.userElement) : null;
+    const title = sanitizeForPrompt(templateReading.title);
+    const summary = sanitizeForPrompt(templateReading.summary);
+
+    const transitInfo = context.transits.length > 0
+      ? `Active transit: ${sanitizeForPrompt(context.transits[0].transitingPlanet)} ${sanitizeForPrompt(context.transits[0].aspect)} your natal ${sanitizeForPrompt(context.transits[0].natalPlanet)}`
+      : 'No major transits active';
+
+    return `You are a wise astrological guide. Provide warm, insightful, practical guidance.
+
+Respond ONLY in JSON format with this structure:
+{
+  "narrative": "2-3 paragraph personalized astrological guidance (200-300 words)",
+  "poeticSummary": "A poetic 2-sentence summary of the day's energy",
+  "affirmations": ["3 powerful affirmations for this celestial energy"],
+  "rituals": ["2-3 simple rituals aligned with the cosmic weather"],
+  "journalPrompts": ["3 introspective questions for reflection"]
+}
+
+CELESTIAL SNAPSHOT:
+- Current focus: ${planet} in ${sign}
+- Moon phase: ${moonPhase}
+- ${transitInfo}
+- Life area: ${category}
+${userElement ? `- Your dominant element: ${userElement}` : ''}
+
+TEMPLATE GUIDANCE (for context):
+Title: ${title}
+Summary: ${summary}
+
+Create personalized astrological guidance that expands on this template with specific references to the celestial positions.`;
+  }
+
+  async validateApiKey(apiKey: string): Promise<boolean> {
+    try {
+      const response = await fetchWithTimeout(`${this.config.baseUrl}/models`, {
+        headers: {
+          'x-api-key': apiKey,
+          'anthropic-version': '2023-06-01',
+        },
+        timeout: 10000,
+      });
+      return response.ok;
+    } catch {
+      return false;
+    }
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════════════════════
 // OLLAMA PROVIDER (Local AI)
 // ═══════════════════════════════════════════════════════════════════════════════
 
@@ -703,6 +887,179 @@ Base guidance: ${summary}`;
 }
 
 // ═══════════════════════════════════════════════════════════════════════════════
+// BACKEND PROXY PROVIDER
+// Routes AI calls through the HEKA AI proxy so keys never reach the client.
+// ═══════════════════════════════════════════════════════════════════════════════
+
+class ProxyProvider implements AIProvider {
+  readonly type: AIProviderType = 'proxy';
+  readonly name = 'HEKA AI Proxy';
+  readonly description = 'Server-managed AI provider with rate limiting and audit logging';
+
+  private config: AIProviderConfig = {
+    type: 'proxy',
+    model: 'llama-3.1-70b-versatile',
+    maxTokens: 500,
+    temperature: 0.7,
+  };
+
+  private lastError?: string;
+  private cache = new Map<string, AIResponse>();
+  private readonly MAX_CACHE_SIZE = 100;
+
+  configure(config: AIProviderConfig): void {
+    this.config = { ...this.config, ...config };
+  }
+
+  isConfigured(): boolean {
+    return isAIProxyEnabled();
+  }
+
+  getStatus(): AIProviderStatus {
+    return {
+      available: this.isConfigured(),
+      configured: this.isConfigured(),
+      lastError: this.lastError,
+    };
+  }
+
+  private enforceCacheLimit(): void {
+    while (this.cache.size > this.MAX_CACHE_SIZE) {
+      const firstKey = this.cache.keys().next().value;
+      if (firstKey) this.cache.delete(firstKey);
+      else break;
+    }
+  }
+
+  private generateCacheKey(request: AIRequest): string {
+    const { context } = request;
+    return `proxy-${context.planet}-${context.sign}-${context.moonPhase}-${context.category || 'general'}`;
+  }
+
+  private getSystemPrompt(): string {
+    return `You are a wise astrological guide combining ancient wisdom with modern psychology.
+Your guidance is compassionate, empowering, and practical.
+You write in a warm, conversational tone while maintaining depth and insight.
+
+Respond ONLY in JSON format with this structure:
+{
+  "narrative": "2-3 paragraph personalized astrological guidance (200-300 words)",
+  "poeticSummary": "A poetic 2-sentence summary of the day's energy",
+  "affirmations": ["3 powerful affirmations for this celestial energy"],
+  "rituals": ["2-3 simple rituals aligned with the cosmic weather"],
+  "journalPrompts": ["3 introspective questions for reflection"]
+}`;
+  }
+
+  private buildPrompt(request: AIRequest): string {
+    const { context, templateReading } = request;
+    const planet = sanitizeForPrompt(context.planet);
+    const sign = sanitizeForPrompt(context.sign);
+    const moonPhase = sanitizeForPrompt(context.moonPhase);
+    const category = sanitizeForPrompt(context.category || 'general');
+    const summary = sanitizeForPrompt(templateReading.summary);
+
+    return `You are an astrological guide.
+
+Celestial positions: ${planet} in ${sign}, Moon phase: ${moonPhase}
+Focus: ${category}
+
+Respond ONLY in JSON format:
+{
+  "narrative": "Personalized astrological guidance (2-3 paragraphs)",
+  "poeticSummary": "A poetic 2-sentence summary",
+  "affirmations": ["3 affirmations"],
+  "rituals": ["2-3 simple rituals"],
+  "journalPrompts": ["3 reflection questions"]
+}
+
+Base guidance: ${summary}`;
+  }
+
+  private parseResponse(content: string, request: AIRequest): PersonalizedReading {
+    try {
+      const json = JSON.parse(content);
+      return {
+        ...request.templateReading,
+        narrative: json.narrative || request.templateReading.narrative,
+        poeticSummary: json.poeticSummary || request.templateReading.poeticSummary,
+        affirmations: json.affirmations || request.templateReading.affirmations,
+        rituals: json.rituals || request.templateReading.rituals,
+        journalPrompts: json.journalPrompts || request.templateReading.journalPrompts,
+        aiGenerated: true,
+        aiProvider: 'proxy',
+        aiModel: this.config.model,
+      };
+    } catch {
+      return {
+        ...request.templateReading,
+        narrative: content,
+        aiGenerated: true,
+        aiProvider: 'proxy',
+        aiModel: this.config.model,
+      };
+    }
+  }
+
+  async generateReading(request: AIRequest): Promise<AIResponse> {
+    const startTime = performance.now();
+    const cacheKey = this.generateCacheKey(request);
+    const cached = this.cache.get(cacheKey);
+    if (cached && Date.now() - (cached.cachedAt || 0) < 3600000) {
+      return { ...cached, cached: true, latency: performance.now() - startTime };
+    }
+
+    if (!this.isConfigured()) {
+      throw new Error('AI proxy not configured');
+    }
+
+    try {
+      const data = await chatViaProxy({
+        provider: 'groq',
+        model: this.config.model,
+        messages: [
+          { role: 'system', content: this.getSystemPrompt() },
+          { role: 'user', content: this.buildPrompt(request) },
+        ],
+        max_tokens: this.config.maxTokens,
+        temperature: this.config.temperature,
+      });
+
+      const content = data.choices?.[0]?.message?.content || '';
+      const aiReading = this.parseResponse(content, request);
+
+      const result: AIResponse = {
+        reading: aiReading,
+        provider: 'proxy',
+        model: this.config.model,
+        latency: performance.now() - startTime,
+        cached: false,
+      };
+
+      this.cache.set(cacheKey, { ...result, cachedAt: Date.now() });
+      this.enforceCacheLimit();
+      return result;
+    } catch (error) {
+      this.lastError = error instanceof Error ? error.message : 'Unknown error';
+      throw error;
+    }
+  }
+
+  async validateApiKey(): Promise<boolean> {
+    try {
+      await chatViaProxy({
+        provider: 'groq',
+        messages: [{ role: 'user', content: 'ping' }],
+        max_tokens: 1,
+      });
+      return true;
+    } catch {
+      return false;
+    }
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════════════════════
 // AI PROVIDER MANAGER
 // ═══════════════════════════════════════════════════════════════════════════════
 
@@ -716,7 +1073,9 @@ export class AIProviderManager {
     this.registerProvider(new TemplateProvider());
     this.registerProvider(new GroqProvider());
     this.registerProvider(new OpenAIProvider());
+    this.registerProvider(new AnthropicProvider());
     this.registerProvider(new OllamaProvider());
+    this.registerProvider(new ProxyProvider());
     
     // Load saved configuration asynchronously
     void this.loadConfiguration();
@@ -789,6 +1148,7 @@ export class AIProviderManager {
    */
   async generateReading(request: AIRequest): Promise<AIResponse> {
     const providersToTry = [this.activeProvider, ...this.fallbackChain];
+    const errors: string[] = [];
     
     for (const providerType of providersToTry) {
       const provider = this.providers.get(providerType);
@@ -797,14 +1157,17 @@ export class AIProviderManager {
       try {
         return await provider.generateReading(request);
       } catch (error) {
+        const msg = error instanceof Error ? error.message : String(error);
         console.warn(`Provider ${providerType} failed:`, error);
+        errors.push(`${providerType}: ${msg}`);
         // Continue to next provider
       }
     }
     
     // Ultimate fallback: template provider (always works)
     const templateProvider = this.providers.get('template')!;
-    return templateProvider.generateReading(request);
+    const result = await templateProvider.generateReading(request);
+    return { ...result, fallbackReason: errors.join('; ') || 'All providers failed' };
   }
   
   /**
@@ -858,27 +1221,29 @@ export class AIProviderManager {
         }
       }
       
-      // Load API keys from secure storage (fallback to legacy localStorage)
-      const groqKey = await secureKeyStore.get('heka-ai-groq') 
-        ?? localStorage.getItem('celestial-groq-key');
+      // Auto-enable backend proxy when VITE_AI_PROXY_URL is present
+      if (isAIProxyEnabled()) {
+        this.activeProvider = 'proxy';
+        this.configureProvider('proxy', { type: 'proxy' });
+      }
+
+      // Load API keys from secure storage
+      const groqKey = await secureKeyStore.get('heka-ai-groq');
       if (groqKey) {
         this.configureProvider('groq', { apiKey: groqKey });
       }
       
-      const openaiKey = await secureKeyStore.get('heka-ai-openai')
-        ?? localStorage.getItem('celestial-openai-key');
+      const openaiKey = await secureKeyStore.get('heka-ai-openai');
       if (openaiKey) {
         this.configureProvider('openai', { apiKey: openaiKey });
       }
       
-      const anthropicKey = await secureKeyStore.get('heka-ai-anthropic')
-        ?? localStorage.getItem('celestial-anthropic-key');
+      const anthropicKey = await secureKeyStore.get('heka-ai-anthropic');
       if (anthropicKey) {
         this.configureProvider('anthropic', { apiKey: anthropicKey });
       }
       
-      const ollamaUrl = await secureKeyStore.get('heka-ai-ollama')
-        ?? localStorage.getItem('celestial-ollama-url');
+      const ollamaUrl = await secureKeyStore.get('heka-ai-ollama');
       if (ollamaUrl) {
         this.configureProvider('ollama', { baseUrl: ollamaUrl });
       }

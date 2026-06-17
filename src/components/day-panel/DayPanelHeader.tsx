@@ -4,6 +4,7 @@
  */
 
 import { memo } from 'react';
+import { useTranslation } from 'react-i18next';
 import { formatCivilDate } from '../../services/calendarService';
 import type { DayPanelHeaderProps } from './types';
 
@@ -17,6 +18,8 @@ export const DayPanelHeader = memo(({
   onClose,
   onAddTask,
 }: DayPanelHeaderProps) => {
+  const { t } = useTranslation('dayPanel');
+
   return (
     <div className="day-panel__header">
       <div>
@@ -24,7 +27,7 @@ export const DayPanelHeader = memo(({
           {monthName} {selectedDate.day}
         </div>
         <div className="day-panel__meta">
-          Month {selectedDate.month + 1} / 13 • HEKA Year {yearLabel}
+          {t('header.monthOf', { month: selectedDate.month + 1 })} • {t('header.hekaYear', { year: yearLabel })}
         </div>
         {showCivil && civilDate && (
           <div className="day-panel__civil">
@@ -37,7 +40,7 @@ export const DayPanelHeader = memo(({
           <button
             className="btn"
             onClick={onAddTask}
-            aria-label="Add task"
+            aria-label={t('addTask')}
             style={{
               padding: '6px 12px',
               fontSize: '13px',
@@ -48,13 +51,13 @@ export const DayPanelHeader = memo(({
               boxShadow: '0 2px 8px rgba(212,175,55,0.15)',
             }}
           >
-            + Task
+            {t('addTaskBtn')}
           </button>
         )}
         <button
           className="btn btn--icon day-panel-close-btn"
           onClick={onClose}
-          aria-label="Close panel"
+          aria-label={t('closePanel')}
         >
           ×
         </button>

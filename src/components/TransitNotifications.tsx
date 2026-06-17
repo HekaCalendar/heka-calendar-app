@@ -134,10 +134,10 @@ const TransitNotificationCard: React.FC<{
         >
           {notification.transit.strength}%
         </span>
-        <button className="transit-notification-expand" onClick={() => setIsExpanded(!isExpanded)}>
+        <button className="transit-notification-expand" onClick={() => setIsExpanded(!isExpanded)} aria-label={isExpanded ? 'Collapse details' : 'Expand details'}>
           {isExpanded ? '▼' : '▶'}
         </button>
-        <button className="transit-notification-dismiss" onClick={onDismiss}>×</button>
+        <button className="transit-notification-dismiss" onClick={onDismiss} aria-label="Dismiss transit notification">×</button>
       </div>
 
       <div className="transit-notification-content">

@@ -4,6 +4,7 @@
  */
 
 import { useState, useEffect, useMemo, memo } from 'react';
+import { useGlobalTime } from '../../hooks/useGlobalTime';
 import { getSeasonData, getDaysInSeason } from '../../services/seasonService';
 import { getNextSeasonalEvent } from '../../services/astronomyService';
 import type { LocationData } from '../../types';
@@ -19,12 +20,7 @@ const SeasonCardComponent: React.FC<Props> = ({ date, location }) => {
   const [info, setInfo] = useState<ReturnType<typeof getDaysInSeason> | null>(null);
   const [expanded, setExpanded] = useState(false);
   const [nextEvent, setNextEvent] = useState<ReturnType<typeof getNextSeasonalEvent>>(null);
-  const [now, setNow] = useState(new Date());
-
-  useEffect(() => {
-    const i = setInterval(() => setNow(new Date()), 1000);
-    return () => clearInterval(i);
-  }, []);
+  const now = useGlobalTime();
 
   useEffect(() => {
     setSeason(getSeasonData(date, location.latitude));
@@ -58,7 +54,7 @@ const SeasonCardComponent: React.FC<Props> = ({ date, location }) => {
 
   return (
     <div className={`heka-card ${expanded ? 'expanded' : ''}`}>
-      <div className="heka-card__header heka-card__header--enterprise" onClick={() => setExpanded(!expanded)}>
+      <div className="heka-card__header heka-card__header--enterprise" onClick={() => setExpanded(!expanded)} role="button" tabIndex={0} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setExpanded(!expanded); } }}>
         <span className="heka-card__icon">{season.emoji}</span>
         <div className="heka-card__title-group">
           <span className="heka-card__title">{season.name}</span>
@@ -109,7 +105,7 @@ const SeasonCardComponent: React.FC<Props> = ({ date, location }) => {
               <span className="heka-epic-counter__title" style={{ color: season.colors[0] }}>
                 Until {nextEvent?.name}
               </span>
-              <span style={{ fontSize: '10px', color: 'rgba(255,255,255,0.35)', marginTop: '6px' }}>
+              <span style={{ fontSize: '12px', color: 'rgba(255,255,255,0.35)', marginTop: '6px' }}>
                 {nextEvent?.date.toLocaleDateString(undefined, { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' })}
               </span>
             </div>
@@ -124,13 +120,13 @@ const SeasonCardComponent: React.FC<Props> = ({ date, location }) => {
             <div className="heka-progress__track">
               <div className="heka-progress__fill" style={{ width: `${info.percentComplete}%`, background: season.colors[0] }} />
             </div>
-            <div style={{ fontSize: '10px', color: 'rgba(255,255,255,0.4)', marginTop: '4px', textAlign: 'right' }}>
+            <div style={{ fontSize: '12px', color: 'rgba(255,255,255,0.4)', marginTop: '4px', textAlign: 'right' }}>
               {info.daysRemaining} days remaining in {season.name}
             </div>
           </div>
 
           {/* Element & Energy */}
-          <div className="heka-section" style={{ marginTop: '16px' }}>
+          <div className="heka-section" style={{ marginTop: '12px' }}>
             <div className="heka-section__title">⚡ {season.element} Element</div>
             <div className="heka-data-grid heka-data-grid--2">
               <div className="heka-data-cell">

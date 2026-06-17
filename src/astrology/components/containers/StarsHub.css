@@ -99,85 +99,33 @@
   to { transform: rotate(360deg) translateX(50px) rotate(-360deg); }
 }
 
-/* Main Container */
+/* Main Container — full-screen, breaks out of .app constraints */
 .stars-hub {
-  min-height: 100vh;
+  position: fixed;
+  inset: 0;
+  z-index: 50;
   background: var(--ci-bg-base);
   color: var(--ci-text-primary);
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
   -webkit-font-smoothing: antialiased;
-  position: relative;
-  /* Allow page-level scrolling for sticky header */
+  overflow-y: auto;
   overflow-x: hidden;
-  overflow-y: visible;
+  /* Safe-area padding for notches */
+  padding-top: env(safe-area-inset-top);
+  padding-bottom: env(safe-area-inset-bottom);
 }
 
-/* Nebula Background Layers */
-.stars-hub::before,
-.stars-hub::after {
-  content: '';
+/* Canvas starfield backdrop — same quality as tutorial */
+.stars-hub__canvas {
   position: fixed;
   inset: 0;
-  pointer-events: none;
   z-index: 0;
-}
-
-/* Nebula blob 1 */
-.stars-hub::before {
-  background: 
-    radial-gradient(ellipse 80vw 60vh at 20% 30%, var(--ci-bg-nebula-1) 0%, transparent 70%),
-    radial-gradient(ellipse 60vw 50vh at 80% 70%, var(--ci-bg-nebula-2) 0%, transparent 60%),
-    radial-gradient(ellipse 40vw 40vh at 50% 50%, var(--ci-bg-nebula-3) 0%, transparent 50%);
-  animation: nebula-drift var(--ci-nebula-speed) ease-in-out infinite;
-}
-
-/* Starfield */
-.stars-hub::after {
-  background-image: 
-    radial-gradient(2px 2px at 20px 30px, var(--ci-text-secondary), transparent),
-    radial-gradient(2px 2px at 40px 70px, var(--ci-primary-light), transparent),
-    radial-gradient(1px 1px at 90px 40px, var(--ci-secondary), transparent),
-    radial-gradient(2px 2px at 130px 80px, var(--ci-text-secondary), transparent),
-    radial-gradient(1px 1px at 160px 20px, var(--ci-primary), transparent),
-    radial-gradient(2px 2px at 200px 60px, var(--ci-secondary-light), transparent),
-    radial-gradient(1px 1px at 250px 30px, var(--ci-text-secondary), transparent),
-    radial-gradient(2px 2px at 300px 90px, var(--ci-primary-light), transparent),
-    radial-gradient(1px 1px at 350px 50px, var(--ci-secondary), transparent);
-  background-size: 350px 100px;
-  opacity: 0.6;
-}
-
-/* Shooting Star Container */
-.ci-shooting-stars {
-  position: fixed;
-  inset: 0;
   pointer-events: none;
-  z-index: 1;
-  overflow: hidden;
 }
 
-.ci-shooting-stars::before,
-.ci-shooting-stars::after {
-  content: '';
-  position: absolute;
-  width: 100px;
-  height: 2px;
-  background: linear-gradient(90deg, transparent, var(--ci-secondary), transparent);
-  border-radius: 50%;
-  opacity: 0;
-  animation: shooting-star var(--ci-shooting-star-freq) linear infinite;
-}
-
-.ci-shooting-stars::before {
-  top: 20%;
-  left: -100px;
-  animation-delay: 0s;
-}
-
-.ci-shooting-stars::after {
-  top: 60%;
-  left: -100px;
-  animation-delay: calc(var(--ci-shooting-star-freq) / 2);
+/* Override StarfieldCanvas's inline z-index:10000 */
+.stars-hub__canvas canvas {
+  z-index: 0 !important;
 }
 
 /* Header Container */
@@ -1056,4 +1004,30 @@
   .sh-positions-grid {
     grid-template-columns: repeat(2, 1fr);
   }
+}
+
+
+/* ── RTL Overrides ── */
+[dir="rtl"] .sh-pos-card.retro {
+    border-right: 3px solid var(--ci-danger)
+}
+
+[dir="rtl"] .sh-pos-retro {
+    margin-right: auto
+}
+
+[dir="rtl"] .sh-insight-card {
+    border-right: 3px solid
+}
+
+[dir="rtl"] .sh-insight-card.hour {
+    border-right-color: var(--ci-primary)
+}
+
+[dir="rtl"] .sh-insight-card.moon {
+    border-right-color: var(--ci-info)
+}
+
+[dir="rtl"] .sh-insight-card.retro {
+    border-right-color: var(--ci-danger)
 }

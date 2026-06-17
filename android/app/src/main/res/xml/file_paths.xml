@@ -1,15 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <paths xmlns:android="http://schemas.android.com/apk/res/android">
-    <!-- External storage (Downloads) -->
-    <external-path name="downloads" path="Download/" />
-    <external-path name="external_files" path="." />
+    <!-- App-specific external files dir (Android 10+ compatible) -->
+    <external-files-path name="external_files" path="Downloads/HEKA/" />
+    <external-files-path name="external_pdfs" path="pdfs/" />
     
     <!-- Internal cache -->
-    <cache-path name="cache" path="." />
+    <cache-path name="cache" path="print/" />
+    <cache-path name="cache_temp" path="temp/" />
     
     <!-- App files -->
-    <files-path name="files" path="." />
+    <files-path name="files" path="documents/" />
+    <files-path name="files_pdfs" path="pdfs/" />
     
     <!-- External cache -->
-    <external-cache-path name="external_cache" path="." />
+    <external-cache-path name="external_cache" path="print/" />
 </paths>

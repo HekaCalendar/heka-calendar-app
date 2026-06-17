@@ -1,0 +1,239 @@
+{
+  "celestialGuide": "Taivaan opas",
+  "journal": "Päiväkirja",
+  "notes": "Muistiinpanot",
+  "events": "Tapahtumat",
+  "tasks": "Tehtävät",
+  "transits": "Kääntöajankohdat",
+  "mood": "Tunnelma",
+  "vibe": "Vibe",
+  "energy": "Energia",
+  "hekaRune": "HEKA Rune",
+  "celestialAffirmation": "Taivaallinen vahvistus",
+  "moodTracker": "Tunnelman seuranta",
+  "vibeColor": "Vibe-väri",
+  "addNote": "Lisää muistiinpano...",
+  "addEvent": "Lisää tapahtuma",
+  "addTask": "Lisää tehtävä",
+  "eventTitle": "Tapahtuman otsikko",
+  "taskTitle": "Tehtävän otsikko",
+  "taskCompleted": "Valmis",
+  "taskPending": "Odottaa",
+  "editNote": "Muokkaa muistiinpanoa",
+  "deleteNote": "Poista muistiinpano",
+  "notePlaceholder": "Kirjoita ajatuksiasi tähän...",
+  "journalPlaceholder": "Kirjaa päiväsi...",
+  "eventPlaceholder": "Mikä tapahtuu?",
+  "taskPlaceholder": "Mikä pitää tehdä?",
+  "addNewNote": "+ Uusi muistiinpano",
+  "addNewEvent": "+ Uusi tapahtuma",
+  "addNewTask": "+ Uusi tehtävä",
+  "noNotes": "Ei muistiinpanoja tälle päivälle",
+  "noEvents": "Ei tapahtumia tälle päivälle",
+  "noTasks": "Ei tehtäviä tälle päivälle",
+  "noJournal": "Ei päiväkirjamerkintöjä tälle päivälle",
+  "transitProgress": "Kääntöajankohdan edistyminen",
+  "transitRemaining": "{{percent}}% jäljellä",
+  "currentMood": "Nykyinen tunnelma",
+  "selectMood": "Valitse tunnelmasi",
+  "moods": {
+    "joyful": "Iloinen",
+    "happy": "Onnellinen",
+    "content": "Tyytyväinen",
+    "neutral": "Neutraali",
+    "tired": "Väsynyt",
+    "sad": "Surullinen",
+    "anxious": "Hervottoma",
+    "frustrated": "Frustroitunut",
+    "angry": "Vihainen",
+    "inspired": "Innostunut",
+    "focused": "Keskittyvä",
+    "peaceful": "Rauhallinen"
+  },
+  "runeCast": "Luo runoja...",
+  "runeReveal": "Paljasta runo",
+  "runeBlessing": "Tämän päivän siunaus",
+  "runeWisdom": "Runikokemus",
+  "runeEnergy": "Rune-energia",
+  "emptyState": "Valitse päivä nähdäksesi tiedot",
+  "closePanel": "Sulje paneeli",
+  "addTaskBtn": "+ Tehtävä",
+  "header": {
+    "monthOf": "Kuukausi {{month}} / 13",
+    "hekaYear": "HEKA Vuosi {{year}}"
+  },
+  "moon": {
+    "calculating": "Lasketaan kuuasentoa...",
+    "unavailable": "Kuun vaiheen tiedot eivät ole saatavilla",
+    "waxing": "Kasvava",
+    "waning": "Vähenevässä",
+    "illuminated": "{{percent}}% valaistu",
+    "age": "Ikä: {{age}} päivää",
+    "swissEphemeris": "Sveitsin ephemeris",
+    "southernHemisphere": "Etelä半球",
+    "northernHemisphere": "Pohjois半球"
+  },
+  "holidays": {
+    "inLocation": "Juhlapäivät kohteessa {{location}}"
+  },
+  "astrology": {
+    "dailyCosmicGuidance": "Arkinen kosminen opastus",
+    "personalizedFor": "Henkilöity nimelle {{name}}",
+    "birthChartActive": "Syntymäaikakaavio aktiivinen",
+    "calculatingTransits": "Lasketaan henkilökohtaisia liikkeitä...",
+    "connectingCelestial": "Yhdistetään taivaalliseen älykkyyteen...",
+    "unavailable": "Taivaallista opastusta ei ole saatavilla. Tarkista tähtitiedot osalta yksityiskohtainen astrologia.",
+    "sunrise": "Auringonnousu: {{time}}",
+    "sunset": "Auringonlasku: {{time}}",
+    "planetaryHour": "Planeettatunti: {{planet}}",
+    "locationPin": "{{location}}",
+    "activeTransits": "Aktiiviset liikkeet sinulle tänään",
+    "moonIn": "Kuu on {{sign}}",
+    "sunIn": "Aurinko on {{sign}}",
+    "todaysTheme": "Tänä päivänä teema:",
+    "cosmicGuidance": "Kosminen opastus",
+    "reflection": "Heijastelu",
+    "affirmation": "Vahvistus",
+    "birthChartCta": {
+      "title": "Haluatko henkilökohtaisia liikkeiden?",
+      "description": "Lisää syntymäkarttasi Tähtitapahtumat-osiossa nähdäksesi, miten tänään kosminen sää vaikuttaa sinua henkilökohtaisesti."
+    }
+  },
+  "lunarMansion": {
+    "title": "Kuun talot",
+    "trueMode": "TODELLISUUS-tila",
+    "calculating": "Lasketaan sivukertaista kuuasijaa...",
+    "totem": "Totemi",
+    "gift": "Lahja",
+    "ruler": "Hallitsija",
+    "quality": "Laatu",
+    "quarter": "Neliö",
+    "sunTravelsThrough": "Aurinko kulkee {{name}} läpi",
+    "quarters": {
+      "initiation": "Alku — siemen sijoitetaan",
+      "deepening": "Syventäminen — juuret kietoutuvat",
+      "crisis": "Kriisi — koe koittaa",
+      "completion": "Viimeistely — hedelmä kypsyy"
+    }
+  },
+  "solarReturn": {
+    "title": "Todellinen aurinko",
+    "titleInDays": "Todellinen aurinko {{count}} päivässä{{suffix}}",
+    "trueMode": "TODELLISUUS-tila",
+    "today": "Aurinko palaa sivukertaistuun syntymäpitkäksesi tänään.",
+    "approaching": "Aurinko palaa sivukertaistuun {{sign}} asemalle {{date}}.",
+    "description": "TRUE HEKA-tilassa syntymäpäiväsi määräytyy tähtien, ei siviilien kalenterin mukaan.",
+    "exactOrb": "Tarkka {{orb}} arkiminuutissa."
+  },
+  "notesSection": {
+    "tasksAndNotes": "Tehtävät ({{tasks}}) · Muistiinpanot ({{notes}})",
+    "tasksOnly": "Tehtävät ({{count}})",
+    "notesAndTasks": "Muistiinpanot & Tehtävät ({{count}})",
+    "addNote": "+ Muistiinpano",
+    "longHoldHint": "Pitkä painallus valikoiman saamiseen · Kaksoisnapauta tehtävää muokataksesi",
+    "noNotesOrTasks": "Ei muistiinpanoja tai tehtäviä tälle päivälle.",
+    "createNoteHint": "Klikkaa <0>+ Muistiinpano</0> tai <1>⚡ Lisää tehtävä</1> yläpuolella luodaksesi yhden."
+  },
+  "noteEditor": {
+    "makeTask": "⚡ Tee tästä tehtävä",
+    "dueTime": "Eräpäivä",
+    "remindMe": "Muistuta minua",
+    "reminders": {
+      "atTime": "Tehtävän aikaan",
+      "5min": "5 minuuttia ennen",
+      "10min": "10 minuuttia ennen",
+      "15min": "15 minuuttia ennen",
+      "30min": "30 minuuttia ennen",
+      "1hour": "1 tunti ennen"
+    },
+    "howAreYouFeeling": "Miten voitte tuntea?",
+    "taskPlaceholder": "Mitä aiot saavuttaa?",
+    "notePlaceholder": "Kirjoita muistiosi...",
+    "saveTask": "Tallenna Tehtävä",
+    "saveNote": "Tallenna Muistio",
+    "cancel": "Peruuta"
+  },
+  "noteItem": {
+    "markComplete": "Merkitse valmistetuksi",
+    "completed": "Valmis",
+    "task": "Tehtävä",
+    "delete": "Poista"
+  },
+  "selection": {
+    "selectedFromDays": "{{count}} valittu {{days}} päivästä{{suffix}}",
+    "done": "Valmis",
+    "selectAll": "Valitse Kaikki",
+    "duplicate": "Kopioi...",
+    "delete": "Poista",
+    "manageDuplicates": "Hallitse Kaksoiskappaleita:",
+    "duplicateTo": "Kopioi kohteeseen:",
+    "nextWeek": "Ensi Viikko",
+    "nextMonth": "Ensi Kuukausi",
+    "everyDay": "Joka {{day}}",
+    "undoEveryDay": "Kumoa Joka {{day}}",
+    "specificDay": "Tietoinen Päivä...",
+    "chooseDays": "Valitse Päivä(t)...",
+    "back": "Takaisin"
+  },
+  "dayPicker": {
+    "cancel": "Peruuta"
+  },
+  "multiDayPicker": {
+    "selectedCount": "{{count}} päivää valittu",
+    "confirm": "Vahvista",
+    "cancel": "Peruuta"
+  },
+  "confirmations": {
+    "deleteNote": "Poista tämä muistio?",
+    "deleteSelected": "Poista {{count}} valittu muistio(ta) {{days}} päivästä?",
+    "duplicateEveryDay": "Kopioi nämä {{count}} kohtaa JOKA {{day}} loput vuodesta?",
+    "undoDuplicates": "Poista kaikki näiden {{count}} muistiinpanon kaksoiskappaleet?"
+  },
+  "alerts": {
+    "couldNotCalculateDate": "Kohdepäivämäärää ei voitu laskea",
+    "duplicatedToNextWeek": "Kopioi {{items}} ensi viikolle ({{month}} {{day}})",
+    "duplicatedToNextMonth": "Kopioi {{items}} ensi kuukaudelle ({{month}} {{day}})",
+    "duplicatedToDays": "Kopioi {{count}} {{day}}lle",
+    "duplicatedNotes": "Kopioitiin {{count}} muistiinpanoa",
+    "removedDuplicates": "Poistamo kopion muistiinpanot",
+    "duplicatedToMonth": "Kopioitiin {{count}} muistiinpanoa ensi kuukauteen",
+    "duplicatedToDaysCount": "Kopioitiin {{count}} muistiinpanoa {{days}} päivään",
+    "duplicatedSelectedItems": "Kopioitiin valitut kohteet {{count}} päivään",
+    "signInToSaveTasks": "Sinun täytyy olla kirjautunut sisään tallentaaksesi tehtäviä. Avaa tili-valikko ja kirjaudu uudelleen.",
+    "unableToSaveTask": "Tehtävän tallentamisessa epäonnistui. Virhe: {{error}}"
+  },
+  "dow": {
+    "sunday": "Sunnuntai",
+    "monday": "Maanantai",
+    "tuesday": "Tiistai",
+    "wednesday": "Keskiviikko",
+    "thursday": "Torstai",
+    "friday": "Perjantai",
+    "saturday": "Lauantai",
+    "short": {
+      "sun": "Su",
+      "mon": "Ma",
+      "tue": "Ti",
+      "wed": "Ke",
+      "thu": "To",
+      "fri": "Pe",
+      "sat": "La"
+    }
+  },
+  "noteCategories": {
+    "personal": "Henkilökohtainen",
+    "work": "Työ",
+    "spiritual": "Henkinen",
+    "family": "Perhe",
+    "health": "Terveys",
+    "creative": "Luova",
+    "general": "Yleinen"
+  },
+  "moodScale": {
+    "1": "Erittäin alhainen",
+    "2": "Alhainen",
+    "3": "Neutraali",
+    "4": "Hyvä",
+    "5": "Erinomainen"
+  }
+}

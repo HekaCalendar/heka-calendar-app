@@ -1,0 +1,99 @@
+{
+  "title": "الإنجازات",
+  "streak": "السلسلة",
+  "days": "الأيام",
+  "totalAchievements": "{{count}} إنجازات",
+  "earned": "تم الكسب",
+  "locked": "مقفول",
+  "newAchievement": "إنجاز جديدة!",
+  "categories": {
+    "calendar": "مستعمر التقويم",
+    "journal": "حافظ السجل",
+    "circle": "منشئ الدائرة",
+    "coach": "مراقب النجوم",
+    "explorer": "المستكشف"
+  },
+  "achievements": {
+    "firstStep": {
+      "name": "الخطوة الأولى",
+      "description": "فتح التقويم لأول مرة"
+    },
+    "timeTraveler": {
+      "name": "مسافر الزمن",
+      "description": "عرض تاريخ أكثر من سنة بعيدًا"
+    },
+    "streak7": {
+      "name": "أسبوع الضوء",
+      "description": "استخدام التقويم لـ 7 أيام على التوالي"
+    },
+    "streak30": {
+      "name": "شهر النجوم",
+      "description": "استخدام التقويم لـ 30 يومًا على التوالي"
+    },
+    "streak100": {
+      "name": "قرن الحكمة",
+      "description": "استخدام التقويم لـ 100 يومًا على التوالي"
+    },
+    "journalFirst": {
+      "name": "الكلمات الأولى",
+      "description": "كتابة مدخلة السجل الأولى"
+    },
+    "journal10": {
+      "name": "الكاتب النباتي",
+      "description": "كتابة 10 مدخلات في السجل"
+    },
+    "journal50": {
+      "name": "الكاتب المهني",
+      "description": "كتابة 50 مدخلة في السجل"
+    },
+    "friendAdded": {
+      "name": "الرابط الأول",
+      "description": "إضافة أول صديق"
+    },
+    "circle5": {
+      "name": "الدائرة النامية",
+      "description": "لديك 5 أصدقاء في الدائرة"
+    },
+    "aiAsked": {
+      "name": "باحث الحكمة",
+      "description": "سؤال مرشد الذكاء الاصطناعي"
+    },
+    "aiStreak7": {
+      "name": "التوجيه اليومي",
+      "description": "استشارة مرشد الذكاء الاصطناعي لـ 7 أيام"
+    },
+    "allMoonPhases": {
+      "name": "مراقب القمر",
+      "description": "عرض كل 8 فاز القمر"
+    },
+    "allZodiac": {
+      "name": "مستكشف البرو$/,",
+      "description": "عرض كل 13 علامة البرو"
+    },
+    "printFirst": {
+      "name": "اطبع أول صفحة تقويم",
+      "description": "اطبع أول صفحة تقويم من قبلك"
+    }
+  },
+  "categoryLabels": {
+    "beginner": "مبتدئ",
+    "intermediate": "متوسط",
+    "advanced": "متقدم",
+    "master": "ماهر",
+    "special": "خاص",
+    "explorer": "مستكشف",
+    "discoverer": "اكتشف",
+    "engager": "مشارك"
+  },
+  "stats": {
+    "appOpens": "فتحات التطبيق",
+    "dayStreak": "سلسلة أيام",
+    "hoursSpent": "ساعات مفقودة",
+    "featuresFound": "الميزات الموجودة"
+  },
+  "all": "الكل",
+  "showHidden": "إظهار المخفي",
+  "noAchievements": "لم يتم العثور على أي إنجازات في هذه الفئة",
+  "hiddenAchievement": "إنجاز مخفي",
+  "secret": "سر"
+}

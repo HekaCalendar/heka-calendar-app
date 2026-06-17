@@ -1,0 +1,166 @@
+{
+  "months": {
+    "0": "Duben",
+    "1": "Květen",
+    "2": "Červen",
+    "3": "Červenec",
+    "4": "Srpen",
+    "5": "Srpen",
+    "6": "Září",
+    "7": "Říjen",
+    "8": "Listopad",
+    "9": "Prosinec",
+    "10": "Leden",
+    "11": "Únor",
+    "12": "Březen"
+  },
+  "monthShort": {
+    "0": "Dub",
+    "1": "Kvě",
+    "2": "Čer",
+    "3": "Čvc",
+    "4": "Srp",
+    "5": "Zář",
+    "6": "Zář",
+    "7": "Říj",
+    "8": "Lis",
+    "9": "Pro",
+    "10": "Led",
+    "11": "Úno",
+    "12": "Bře"
+  },
+  "civilMonths": {
+    "0": "Leden",
+    "1": "Únor",
+    "2": "Březen",
+    "3": "Duben",
+    "4": "Květen",
+    "5": "Červen",
+    "6": "Červenec",
+    "7": "Srpen",
+    "8": "Září",
+    "9": "Říjen",
+    "10": "Listopad",
+    "11": "Prosinec"
+  },
+  "days": {
+    "0": "Neděle",
+    "1": "Pondělí",
+    "2": "Úterý",
+    "3": "Středa",
+    "4": "Čtvrtek",
+    "5": "Pátek",
+    "6": "Sobota"
+  },
+  "daysShort": {
+    "0": "Ne",
+    "1": "Po",
+    "2": "Út",
+    "3": "St",
+    "4": "Čt",
+    "5": "Pá",
+    "6": "So"
+  },
+  "daysMin": {
+    "0": "Ne",
+    "1": "Po",
+    "2": "Út",
+    "3": "St",
+    "4": "Čt",
+    "5": "Pá",
+    "6": "So"
+  },
+  "arcs": {
+    "opening": "Otevírání",
+    "core": "Jádro",
+    "closing": "Uzavírání"
+  },
+  "arcSuffix": "Obloha",
+  "arcDescriptions": {
+    "opening": "Rok se probouzí",
+    "core": "Rok kvete",
+    "closing": "Rok se dokončuje"
+  },
+  "monthLabel": "Měsíc {{month}}/13",
+  "hekaYear": "HEKA Rok {{year}}",
+  "civilYear": "Občanský Rok {{year}}",
+  "dayOfYear": "Den {{day}} z {{total}}",
+  "week": "Týden",
+  "quarter": "Čtvrtletí",
+  "leapDay": "Přeskakovací den",
+  "leapDayDescription": "Další den v březnu každých 4 let",
+  "switchDarkMode": "Přepnout na tmavý režim",
+  "switchLightMode": "Přepnout na světlý režim",
+  "moreNotes": "+{{count}} více",
+  "holiday": "Svátek",
+  "note": "Poznámka",
+  "task": "Úkol",
+  "moonPhase": "Fáze měsíce",
+  "selectDay": "Vyberte den pro zobrazení podrobností",
+  "navigation": {
+    "previousMonth": "Předchozí měsíc",
+    "nextMonth": "Další měsíc",
+    "goToToday": "Přejít na dnes",
+    "today": "Dnes"
+  },
+  "print": {
+    "title": "Tisk kalendáře",
+    "label": "Tisk"
+  },
+  "expand": {
+    "shrinkHorizontal": "Stiskni pro svislé zobrazení",
+    "expandHorizontal": "Rozbalit na šířku",
+    "shrinkVertical": "Stiskni pro vodorovné zobrazení",
+    "expandVertical": "Rozbalit na výšku"
+  },
+  "year": {
+    "viewEntireYear": "Zobrazit celý rok",
+    "label": "Rok"
+  },
+  "search": {
+    "title": "Hledat data",
+    "label": "Hledat"
+  },
+  "features": {
+    "astrologyHub": "Astrologický portál",
+    "stars": "Hvězdy",
+    "cosmicCircle": "Kosmický kruh",
+    "circle": "Kruh",
+    "oracleJournal": "Orakulní deník",
+    "journal": "Deník",
+    "aboutHeka": "O kalendáři HEKA",
+    "about": "O aplikaci",
+    "yourStatistics": "Vaše statistiky",
+    "stats": "Statistiky",
+    "communityHolidays": "Společenské svátky",
+    "community": "Komunita"
+  },
+  "toggles": {
+    "civilDates": "Přepnout obecná data",
+    "civil": "Obecné",
+    "moonPhases": "Přepnout fáze měsíce",
+    "moon": "Měsíc",
+    "holidays": "Přepnout svátky",
+    "holidayLabel": "Svátky"
+  },
+  "prev": "Předchozí",
+  "next": "Další",
+  "printYear": "Rok tisku",
+  "close": "Zavřít",
+  "quickNote": "Rychlá poznámka",
+  "quickNoteTag": "rychlá poznámka",
+  "addingTo": "Přidávání do",
+  "typeYourNote": "Napište svou poznámku...",
+  "saveNote": "Uložit poznámku",
+  "ctrlEnterToSave": "Ctrl + Enter pro uložení • Esc pro zrušení",
+  "hekaPrefix": "HEKA:",
+  "civilPrefix": "Civil:",
+  "moodPrefix": "Nálada:",
+  "searchTips": {
+    "tip1": "\"31. ledna\" nebo \"dnes\"",
+    "tip2": "\"hexy 15\" nebo \"duben 5\"",
+    "tip3": "Obsah poznámky nebo kategorie",
+    "tip4": "\"Vánoce\" nebo \"Australský den\"",
+    "tip5": "\"2026-01-31\" (ISO formát)"
+  }
+}

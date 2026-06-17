@@ -1,0 +1,167 @@
+{
+  "months": {
+    "0": "April",
+    "1": "May",
+    "2": "June",
+    "3": "July",
+    "4": "August",
+    "5": "Hexa",
+    "6": "September",
+    "7": "October",
+    "8": "November",
+    "9": "December",
+    "10": "January",
+    "11": "February",
+    "12": "March"
+  },
+  "monthShort": {
+    "0": "Apr",
+    "1": "May",
+    "2": "Jun",
+    "3": "Jul",
+    "4": "Aug",
+    "5": "Hex",
+    "6": "Sep",
+    "7": "Oct",
+    "8": "Nov",
+    "9": "Dec",
+    "10": "Jan",
+    "11": "Feb",
+    "12": "Mar"
+  },
+  "civilMonths": {
+    "0": "Jan",
+    "1": "Feb",
+    "2": "Mar",
+    "3": "Apr",
+    "4": "May",
+    "5": "Jun",
+    "6": "Jul",
+    "7": "Aug",
+    "8": "Sep",
+    "9": "Oct",
+    "10": "Nov",
+    "11": "Dec"
+  },
+  "days": {
+    "0": "Sunday",
+    "1": "Monday",
+    "2": "Tuesday",
+    "3": "Wednesday",
+    "4": "Thursday",
+    "5": "Friday",
+    "6": "Saturday"
+  },
+  "daysShort": {
+    "0": "Sun",
+    "1": "Mon",
+    "2": "Tue",
+    "3": "Wed",
+    "4": "Thu",
+    "5": "Fri",
+    "6": "Sat"
+  },
+  "daysMin": {
+    "0": "Su",
+    "1": "Mo",
+    "2": "Tu",
+    "3": "We",
+    "4": "Th",
+    "5": "Fr",
+    "6": "Sa"
+  },
+  "arcs": {
+    "opening": "Opening",
+    "core": "Core",
+    "closing": "Closing"
+  },
+  "arcDescriptions": {
+    "opening": "The year awakens",
+    "core": "The year flourishes",
+    "closing": "The year completes"
+  },
+  "monthLabel": "Month {{month}}/13",
+  "hekaYear": "HEKA Year {{year}}",
+  "civilYear": "Civil Year {{year}}",
+  "dayOfYear": "Day {{day}} of {{total}}",
+  "week": "Week",
+  "quarter": "Quarter",
+  "leapDay": "Leap Day",
+  "leapDayDescription": "An extra day in March, every 4 years",
+  "switchDarkMode": "Switch to dark mode",
+  "switchLightMode": "Switch to light mode",
+  "moreNotes": "+{{count}} more",
+  "holiday": "Holiday",
+  "note": "Note",
+  "task": "Task",
+  "moonPhase": "Moon Phase",
+  "selectDay": "Select a day to view details",
+  "arcSuffix": "Arc",
+  "navigation": {
+    "previousMonth": "Previous month",
+    "nextMonth": "Next month",
+    "goToToday": "Go to today",
+    "today": "Today"
+  },
+  "print": {
+    "title": "Print calendar",
+    "label": "Print"
+  },
+  "expand": {
+    "shrinkHorizontal": "Shrink horizontally",
+    "expandHorizontal": "Expand horizontally",
+    "shrinkVertical": "Shrink vertically",
+    "expandVertical": "Expand vertically"
+  },
+  "year": {
+    "viewEntireYear": "View entire year",
+    "label": "Year"
+  },
+  "search": {
+    "title": "Search dates",
+    "label": "Search"
+  },
+  "features": {
+    "astrologyHub": "Astrology Hub",
+    "stars": "Stars",
+    "cosmicCircle": "Cosmic Circle",
+    "circle": "Circle",
+    "oracleJournal": "Oracle Journal",
+    "journal": "Journal",
+    "aboutHeka": "About HEKA Calendar",
+    "about": "About",
+    "yourStatistics": "Your statistics",
+    "stats": "Stats",
+    "communityHolidays": "Community holidays",
+    "vote": "Vote",
+    "community": "Community"
+  },
+  "toggles": {
+    "civilDates": "Toggle civil dates",
+    "civil": "Civil",
+    "moonPhases": "Toggle moon phases",
+    "moon": "Moon",
+    "holidays": "Toggle holidays",
+    "holidayLabel": "Holidays"
+  },
+  "prev": "Prev",
+  "next": "Next",
+  "printYear": "Print Year",
+  "close": "Close",
+  "quickNote": "Quick Note",
+  "quickNoteTag": "quick note",
+  "addingTo": "Adding to",
+  "typeYourNote": "Type your note...",
+  "saveNote": "Save Note",
+  "ctrlEnterToSave": "Ctrl + Enter to save • Esc to cancel",
+  "hekaPrefix": "HEKA:",
+  "civilPrefix": "Civil:",
+  "moodPrefix": "Mood:",
+  "searchTips": {
+    "tip1": "\"31st of january\" or \"today\"",
+    "tip2": "\"hexa 15\" or \"april 5\"",
+    "tip3": "Note content or category",
+    "tip4": "\"Christmas\" or \"Australia Day\"",
+    "tip5": "\"2026-01-31\" (ISO format)"
+  }
+}

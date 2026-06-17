@@ -1,1 +1,332 @@
-/* TEMPORARILY DISABLED to verify Pixel behavior */
+/**
+ * ═══════════════════════════════════════════════════════════════════════════════
+ * FOLDABLE PHONE OPTIMISATIONS — Samsung Galaxy Z Fold 7 & peers
+ *
+ * Problem: Foldable inner screens (~773×900 CSS px) are wide enough to trigger
+ * tablet/desktop breakpoints (min-width: 768px/769px) but are actually touch
+ * devices with a near-square form factor. This causes:
+ *   – Scrollbars visible on celestial cards (Samsung reports hover: hover)
+ *   – Month header buttons overflow in row layout
+ *   – Calendar cells balloon to 90px, eating the ~900px viewport
+ *   – App header padding consumes 140px+ vertically
+ *   – Tutorial content unconstrained at ~773px width
+ *
+ * Detection: (pointer: coarse) AND near-square aspect ratio AND medium width.
+ * This catches Z Fold 7, Pixel Fold, Mate X5, OnePlus Open inner screens.
+ * It EXCLUDES: regular phones (width < 600px), iPads (aspect too narrow or
+ * width > 1100px), desktops (pointer: fine), landscape phones (aspect > 2.0).
+ * ═══════════════════════════════════════════════════════════════════════════════
+ */
+
+@media (pointer: coarse) and (min-width: 600px) and (max-width: 1100px)
+       and (min-aspect-ratio: 4/5) and (max-aspect-ratio: 5/4) {
+
+  /* ========================================================================
+     1. CELESTIAL PANEL — kill scrollbars (redundant safety net for Samsung)
+     ======================================================================== */
+  .celestial-panel::-webkit-scrollbar {
+    display: none !important;
+  }
+  .celestial-panel {
+    scrollbar-width: none !important;
+    -ms-overflow-style: none !important;
+  }
+  .celestial-panel-top-scroll {
+    display: none !important;
+  }
+  .celestial-panel-container.has-top-scroll {
+    padding-top: 0 !important;
+  }
+  /* Keep padding-bottom for card breathing room, just hide scrollbar */
+  .celestial-panel {
+    padding-bottom: 16px !important;
+  }
+
+  /* ========================================================================
+     2. APP HEADER — reclaim vertical space on ~900px tall viewport
+     ======================================================================== */
+  /* Give the title and top bar a little more breathing room below the
+     front-camera / safe-area area without making them feel dwarfed. */
+  .app {
+    padding-top: max(var(--space-5), calc(env(safe-area-inset-top, 0px) + 8px)) !important;
+    padding-right: max(var(--space-5), env(safe-area-inset-right, 0px)) !important;
+    padding-left: max(var(--space-5), env(safe-area-inset-left, 0px)) !important;
+  }
+  .app-header {
+    margin-top: 32px !important;
+    padding-top: 32px !important;
+    padding-bottom: 20px !important;
+  }
+  .app-top-bar {
+    margin-top: calc(env(safe-area-inset-top, 0px) + 18px) !important;
+  }
+  .app-title {
+    font-size: 1.6rem !important;
+    margin-bottom: 6px !important;
+    letter-spacing: 0.08em !important;
+  }
+  .app-subtitle {
+    font-size: 0.7rem !important;
+  }
+  .mode-indicator {
+    font-size: 0.65rem !important;
+    padding: 3px 8px !important;
+  }
+
+  /* ========================================================================
+     3. MONTH HEADER — force phone-like stacked layout
+     ======================================================================== */
+  .month-header {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 8px !important;
+    padding: 10px 12px !important;
+  }
+  .month-header__controls {
+    justify-content: center !important;
+    flex-wrap: wrap !important;
+    gap: 6px !important;
+  }
+  .month-header__column {
+    gap: 6px !important;
+  }
+  .month-header__row {
+    justify-content: center !important;
+    flex-wrap: wrap !important;
+    gap: 6px !important;
+  }
+  .month-header__divider {
+    display: none !important;
+  }
+  .month-header__row .btn {
+    min-height: 36px !important;
+    padding: 5px 8px !important;
+    font-size: 0.7rem !important;
+  }
+  .month-header__row .btn:not(.btn-today):not(.btn-year):not(.btn--icon) {
+    /* Show emoji + minimal text, not full labels */
+    max-width: none !important;
+    min-width: 36px !important;
+  }
+  .month-header__name {
+    font-size: 1.1rem !important;
+    text-align: center !important;
+  }
+  .month-header__heka-year,
+  .month-header__civil-year {
+    font-size: 0.65rem !important;
+  }
+
+  /* ========================================================================
+     4. CALENDAR GRID — cap cells to medium-phone size
+     ======================================================================== */
+  .calendar-grid {
+    padding: 10px 18px 10px 10px !important;
+    gap: 6px !important;
+  }
+  .calendar-grid__dow,
+  .calendar-grid__week {
+    gap: 3px !important;
+  }
+  .calendar-grid__dow-cell {
+    font-size: 0.65rem !important;
+    letter-spacing: 0.05em !important;
+    padding: 4px 1px !important;
+  }
+  .day-cell {
+    min-height: 55px !important;
+    aspect-ratio: auto !important;
+    padding: 3px !important;
+    border-radius: 8px !important;
+  }
+  .day-cell__heka-num {
+    font-size: 0.8rem !important;
+  }
+  .day-cell__civil {
+    font-size: 0.55rem !important;
+  }
+  .day-cell__moon-phase {
+    font-size: 10px !important;
+  }
+  .day-cell__note-preview {
+    -webkit-line-clamp: 1 !important;
+    font-size: 0.5rem !important;
+    line-height: 1.1 !important;
+  }
+  .day-cell__holiday-dot {
+    width: 5px !important;
+    height: 5px !important;
+  }
+
+  /* ========================================================================
+     5. CELESTIAL CARDS — wider on the opened inner screen so countdowns and
+        dropdown content are not cropped.
+     ======================================================================== */
+  .celestial-panel > * {
+    width: 360px !important;
+    min-width: 360px !important;
+  }
+  .celestial-panel > .heka-card,
+  .celestial-panel .celestial-expandable-card {
+    width: 360px !important;
+    min-width: 360px !important;
+    max-width: 380px !important;
+    flex: 0 0 360px !important;
+  }
+
+  /* ========================================================================
+     6. TUTORIAL V3 — keep text sizing consistent with regular phones so it
+        looks the same on the Z Fold 7 as on a Pixel. The slides themselves
+        are made scrollable in the component/CSS so content can be taller.
+     ======================================================================== */
+  /* (Logo/subtitle/tagline keep their default clamp sizing for consistency.) */
+  .tt-welcome__grid {
+    max-width: 460px !important;
+    padding: 0 16px !important;
+    gap: 6px !important;
+  }
+  .tt-welcome__grid-cell {
+    font-size: 0.65rem !important;
+    padding: 6px 4px !important;
+  }
+  .tt-welcome__controls {
+    bottom: 20px !important;
+    gap: 12px !important;
+  }
+  .tt-welcome__btn {
+    padding: 10px 28px !important;
+    font-size: 0.85rem !important;
+  }
+  .tt-welcome__skip {
+    font-size: 0.75rem !important;
+  }
+  /* Story/tutorial slides */
+  .tt-tooltip {
+    width: 92vw !important;
+    max-width: 600px !important;
+  }
+  .tt-tooltip__content {
+    padding: 18px 16px 16px !important;
+  }
+  .tt-tooltip__title {
+    font-size: 1.1rem !important;
+  }
+  .tt-tooltip__text {
+    font-size: 0.8rem !important;
+  }
+
+  /* ========================================================================
+     7. DAY PANEL — keep in page flow (not a fixed overlay) so it never covers
+        calendar cells on the large inner screen
+     ======================================================================== */
+  .day-panel {
+    position: relative !important;
+    inset: auto !important;
+    width: 100% !important;
+    max-width: 600px !important;
+    max-height: none !important;
+    margin: 0 auto !important;
+    border-radius: 20px 20px 0 0 !important;
+    border-left: none !important;
+    border-top: 1px solid var(--color-border) !important;
+  }
+
+  /* ========================================================================
+     8. SETTINGS PANEL — constrain to viewport
+     ======================================================================== */
+  .settings-panel {
+    max-width: 100% !important;
+    padding: 10px 12px !important;
+  }
+  .settings-toggle-wrapper {
+    height: 36px !important;
+    margin-bottom: 8px !important;
+  }
+  .settings-toggle-btn {
+    font-size: 0.7rem !important;
+    padding: 6px 8px !important;
+  }
+
+  /* ========================================================================
+     9. CALENDAR WRAPPER — prevent overflow
+     ======================================================================== */
+  .calendar-wrapper {
+    max-width: 100% !important;
+    overflow-x: hidden !important;
+  }
+  .calendar-grid-wrapper {
+    max-width: 100% !important;
+  }
+
+  /* ========================================================================
+     10. MODALS — smaller padding for near-square screen
+     ======================================================================== */
+  .modal-overlay .modal-content,
+  .year-modal__content,
+  .search-modal__content,
+  .modal.stats-modal {
+    max-width: 95vw !important;
+    padding: 16px !important;
+  }
+
+  /* ========================================================================
+     11. WIZARD — scale inner content for ~773px overlay
+     ======================================================================== */
+  .setup-wizard {
+    max-width: 520px !important;
+    padding: 16px !important;
+  }
+  .setup-wizard__progress-track {
+    margin-bottom: 12px !important;
+  }
+  .setup-step__title {
+    font-size: 1.4rem !important;
+  }
+  .setup-step__subtitle {
+    font-size: 0.8rem !important;
+  }
+  .setup-btn {
+    padding: 10px 20px !important;
+    font-size: 0.8rem !important;
+  }
+
+  /* ========================================================================
+     12. PURE CALENDAR — tighter spacing
+     ======================================================================== */
+  .pure-calendar-view .calendar-grid__week .day-cell {
+    min-height: 55px !important;
+  }
+
+  /* ========================================================================
+     13. STARSHUB / OBSERVATORY SETTINGS — prevent right-hand overflow on the
+         large inner screen
+     ======================================================================== */
+  .sh-settings-grid {
+    max-width: 100% !important;
+    grid-template-columns: 1fr !important;
+    gap: 16px !important;
+  }
+
+  .sh-setting-card {
+    padding: 16px !important;
+  }
+
+  .sh-setting-header {
+    gap: 12px !important;
+  }
+
+  .sh-font-selector {
+    grid-template-columns: 1fr !important;
+  }
+
+  .sh-section-content:has(.sh-settings-grid) {
+    padding: 16px !important;
+  }
+
+}
+
+
+/* ── RTL Overrides ── */
+[dir="rtl"] .day-panel {
+    border-right: none
+}

@@ -178,6 +178,8 @@ export interface UsageStatistics {
   longestStreak: number;
   lastNoteDate?: string;
   moodAverage: number;
+  moodEntryCount: number; // Notes that have a mood (for correct averaging)
+  moodEntriesByMonth: Record<string, number>; // Count of mood entries per month
   moodByMonth: Record<string, number>;
   mostActiveMonth: { month: string; count: number };
   totalWords: number;
@@ -292,11 +294,6 @@ export interface UnlockedAchievement {
 // Gamification
 // ============================================================================
 
-export interface UnlockedAchievement {
-  id: string;
-  unlockedAt: string;
-}
-
 export interface UserProgress {
   level: number;
   experience: number;
@@ -325,6 +322,8 @@ export interface CommunityHoliday {
   profanityChecked: boolean;
   createdAt: string;
   voterUids?: string[];
+  /** Map of uid -> vote direction. Replaces flat voterUids for direction-aware voting. */
+  voterDirections?: Record<string, 'up' | 'down'>;
 }
 
 export interface CommunityFeature {
@@ -382,6 +381,31 @@ export interface SubscriptionState {
   purchasedProductIds: string[]; // one-time purchases (physical items, etc.)
 }
 
+export type CommunityResourceType = 'local' | 'circle' | 'online' | 'space';
+
+export interface CommunityResource {
+  id: string;
+  name: string;
+  description: string;
+  type: CommunityResourceType;
+  location?: string;
+  timezone?: string;
+  languages?: string[];
+  contact?: string;
+  website?: string;
+  schedule?: string;
+  region?: string; // e.g. 'au', 'us', 'global'
+  isCurated?: boolean;
+  approvedAt?: string; // ISO timestamp
+}
+
+export interface RegionData {
+  country: string;
+  flag: string;
+  timezone: string;
+  resources: CommunityResource[];
+}
+
 export interface CalendarState {
   currentView: 'month' | 'year' | 'print-preview' | 'astrology-hub' | 'stars' | 'store' | 'certificate-builder' | 'routine-builder' | 'natal-report';
   viewDate: HekaDate;
@@ -391,6 +415,8 @@ export interface CalendarState {
   subRegion: string | null; // Selected state/province code
   theme: import('./themes').ThemeId;
   font: import('./themes').FontId;
+  headerGeometry: import('./themes').GeometryPattern;
+  backgroundGeometry: import('./themes').BackgroundGeometryPattern;
   auth: UserAuthState;
   display: {
     showCivilDates: boolean;
@@ -415,6 +441,8 @@ export interface CalendarState {
   // Social features
   communityHolidays: CommunityHoliday[];
   communityFeatures: CommunityFeature[];
+  communityResources: Record<string, RegionData>;
+  selectedCommunityRegion: string | null;
   subscribedCalendars: string[];
   pendingInvites: CalendarInvite[];
   // Gamification

@@ -4,7 +4,7 @@
  */
 
 import { useState, useRef, useEffect, useCallback } from 'react';
-import { HEKA_MONTHS } from '../services/calendarService';
+import { useTranslation } from 'react-i18next';
 import type { CalendarDay } from '../types';
 
 interface QuickNoteModalProps {
@@ -15,6 +15,7 @@ interface QuickNoteModalProps {
 }
 
 export const QuickNoteModal: React.FC<QuickNoteModalProps> = ({ isOpen, day, onClose, onSave }) => {
+  const { t } = useTranslation(['calendar', 'dayPanel']);
   const [content, setContent] = useState('');
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
@@ -49,8 +50,7 @@ export const QuickNoteModal: React.FC<QuickNoteModalProps> = ({ isOpen, day, onC
 
   if (!isOpen || !day) return null;
 
-  const monthName = HEKA_MONTHS[day.hekaDate.month].name;
-  const dateLabel = `${monthName} ${day.hekaDate.day}`;
+  const dateLabel = `${t('calendar:months.' + day.hekaDate.month)} ${day.hekaDate.day}`;
 
   return (
     <div
@@ -61,9 +61,9 @@ export const QuickNoteModal: React.FC<QuickNoteModalProps> = ({ isOpen, day, onC
         <div className="modal__header">
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
             <h2 className="modal__title" style={{ fontSize: '1.1rem' }}>
-              Quick Note
+              {t('calendar:quickNote')}
             </h2>
-            <span className="quick-note-tag">quick note</span>
+            <span className="quick-note-tag">{t('calendar:quickNoteTag')}</span>
           </div>
           <button className="btn btn--icon" onClick={onClose} aria-label="Close">
             ×
@@ -71,7 +71,7 @@ export const QuickNoteModal: React.FC<QuickNoteModalProps> = ({ isOpen, day, onC
         </div>
 
         <div style={{ marginBottom: '0.75rem', color: 'var(--color-text-muted)', fontSize: '0.85rem' }}>
-          Adding to <strong style={{ color: 'var(--color-text)' }}>{dateLabel}</strong>
+          {t('calendar:addingTo')} <strong style={{ color: 'var(--color-text)' }}>{dateLabel}</strong>
         </div>
 
         <textarea
@@ -80,7 +80,7 @@ export const QuickNoteModal: React.FC<QuickNoteModalProps> = ({ isOpen, day, onC
           value={content}
           onChange={(e) => setContent(e.target.value)}
           onKeyDown={handleKeyDown}
-          placeholder="Type your note..."
+          placeholder={t('dayPanel:notePlaceholder')}
           rows={4}
           style={{
             width: '100%',
@@ -99,7 +99,7 @@ export const QuickNoteModal: React.FC<QuickNoteModalProps> = ({ isOpen, day, onC
 
         <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '0.5rem' }}>
           <button className="btn btn--secondary" onClick={onClose}>
-            Cancel
+            {t('dayPanel:noteEditor.cancel')}
           </button>
           <button
             className="btn btn--primary"
@@ -107,12 +107,12 @@ export const QuickNoteModal: React.FC<QuickNoteModalProps> = ({ isOpen, day, onC
             disabled={!content.trim()}
             style={{ opacity: content.trim() ? 1 : 0.5 }}
           >
-            Save Note
+            {t('dayPanel:noteEditor.saveNote')}
           </button>
         </div>
 
         <div style={{ marginTop: '0.75rem', fontSize: '0.75rem', color: 'var(--color-text-muted)', textAlign: 'right' }}>
-          Ctrl + Enter to save • Esc to cancel
+          {t('calendar:ctrlEnterToSave')}
         </div>
       </div>
     </div>

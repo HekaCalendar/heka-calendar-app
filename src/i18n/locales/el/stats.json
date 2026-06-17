@@ -1,0 +1,49 @@
+{
+  "best": "Καλύτερο: {{count}}",
+  "title": "Η Διαδρομή σου",
+  "close": "Κλείσιμο",
+  "reset": "Επαναφορά Στατιστικών",
+  "avgMood": "Μέση Διαθεση",
+  "dayStreak": "Ημερήσια Σειρά",
+  "totalNotes": "Συνολικές Σημειώσεις",
+  "wordsWritten": "Γραμμένα Λόγια",
+  "achievements": "Επιτεύγματα ({{earned}}/{{total}})",
+  "resetConfirm": "Επαναφορά",
+  "progressRatio": "{{current}} / {{target}}",
+  "monthlyTooltip": "{{month}} {{year}}: {{count}} σημειώσεις",
+  "notesByCategory": "Σημειώσεις κατά Κατηγορία",
+  "monthlyActivity": "Μηνιαία Δραστηριότητα",
+  "mostActiveMonth": "Ο πιο ενεργός σου μήνας ήταν \u003cstrong\u003e{{month}}\u003c/strong\u003e με \u003cstrong\u003e{{count}}\u003c/strong\u003e σημειώσεις",
+  "categories": {
+    "work": "Εργασία",
+    "family": "Οικογένεια",
+    "health": "Υγεία",
+    "general": "Γενικά",
+    "personal": "Προσωπικά",
+    "creative": "Δημιουργικά",
+    "spiritual": "Πνευματικά"
+  },
+  "progressToCentury": "Πρόοδος προς το Century Club",
+  "resetConfirmTitle": "Επαναφορά Στατιστικών",
+  "badges": {
+    "century": {
+      "name": "Κοινότητα του Αιώνα"
+    },
+    "explorer": {
+      "name": "Εξερευνητής"
+    },
+    "archivist": {
+      "name": "Αρχειοφύλακας"
+    },
+    "first-note": {
+      "name": "Πρώτες Λέξεις"
+    },
+    "week-streak": {
+      "name": "Εβδομαδιαία Σειρά"
+    },
+    "month-streak": {
+      "name": "Μηνιαία Κυρίαρχη"
+    }
+  },
+  "resetConfirmDescription": "Είσαι σίγουρος ότι θέλεις να επαναφέρεις όλες τις στατιστικές; Αυτό δεν μπορεί να ανακληθεί."
+}

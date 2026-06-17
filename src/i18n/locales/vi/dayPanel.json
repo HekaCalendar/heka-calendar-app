@@ -1,0 +1,239 @@
+{
+  "celestialGuide": "Hướng Dẫn Thiên Văn",
+  "journal": "Nhật Ký",
+  "notes": "Ghi Chú",
+  "events": "Sự Kiện",
+  "tasks": "Nhiệm Vụ",
+  "transits": "Qua Trình",
+  "mood": "Tâm Trạng",
+  "vibe": "Không Gian",
+  "energy": "Năng Lượng",
+  "hekaRune": "Biếnalth HEKA",
+  "celestialAffirmation": "Xác Nhận Thiên Văn",
+  "moodTracker": "Theo Dõi Tâm Trạng",
+  "vibeColor": "Màu Không Gian",
+  "addNote": "Thêm ghi chú...",
+  "addEvent": "Thêm Sự Kiện",
+  "addTask": "Thêm Nhiệm Vụ",
+  "eventTitle": "Tiêu Đề Sự Kiện",
+  "taskTitle": "Tiêu Đề Nhiệm Vụ",
+  "taskCompleted": "Đã Hoàn Thành",
+  "taskPending": "Đang Chờ",
+  "editNote": "Sửa Ghi Chú",
+  "deleteNote": "Xóa Ghi Chú",
+  "notePlaceholder": "Viết những suy nghĩ của bạn ở đây...",
+  "journalPlaceholder": "Ghi lại ngày của bạn...",
+  "eventPlaceholder": "Có chuyện gì đang xảy ra?",
+  "taskPlaceholder": "Có gì cần làm?",
+  "addNewNote": "+ Ghi Chú Mới",
+  "addNewEvent": "+ Sự Kiện Mới",
+  "addNewTask": "+ Nhiệm Vụ Mới",
+  "noNotes": "Không có ghi chú cho ngày hôm nay",
+  "noEvents": "Không có sự kiện cho ngày hôm nay",
+  "noTasks": "Không có nhiệm vụ cho ngày hôm nay",
+  "noJournal": "Không có nhật ký cho ngày hôm nay",
+  "transitProgress": "Tiến Trình Qua Trình",
+  "transitRemaining": "{{percent}}% còn lại",
+  "currentMood": "Tâm Trạng Hiện Tại",
+  "selectMood": "Chọn tâm trạng của bạn",
+  "moods": {
+    "joyful": "Vui Sướng",
+    "happy": "Hạnh Phúc",
+    "content": "Đầy Đủ",
+    "neutral": "Trung lập",
+    "tired": "Mệt mỏi",
+    "sad": "Buồn",
+    "anxious": "Lo lắng",
+    "frustrated": "Tức giận",
+    "angry": "Bực mình",
+    "inspired": "Làm cảm hứng",
+    "focused": "Tập trung",
+    "peaceful": "Hòa bình"
+  },
+  "runeCast": "Đang né runes...",
+  "runeReveal": "Bày tỏ Rune",
+  "runeBlessing": "Phước lành của ngày hôm nay",
+  "runeWisdom": "Tri thức Rune",
+  "runeEnergy": "Năng lượng Rune",
+  "emptyState": "Chọn một ngày để xem chi tiết",
+  "closePanel": "Đóng bảng",
+  "addTaskBtn": "+ Nhiệm vụ",
+  "header": {
+    "monthOf": "Tháng {{month}} / 13",
+    "hekaYear": "Năm HEKA {{year}}"
+  },
+  "moon": {
+    "calculating": "Đang tính toán vị trí mặt trăng...",
+    "unavailable": "Dữ liệu giai đoạn mặt trăng không khả dụng",
+    "waxing": "Đang đầy",
+    "waning": "Đang suy giảm",
+    "illuminated": "{{percent}}% sáng",
+    "age": "Tuổi: {{age}} ngày",
+    "swissEphemeris": "Sử Ký Thụy Sĩ",
+    "southernHemisphere": "Bán cầu Nam",
+    "northernHemisphere": "Bán cầu Bắc"
+  },
+  "holidays": {
+    "inLocation": "Lễ hội tại {{location}}"
+  },
+  "astrology": {
+    "dailyCosmicGuidance": "Hướng dẫn vũ trụ hàng ngày",
+    "personalizedFor": "Tùy chỉnh cho {{name}}",
+    "birthChartActive": "Bản đồ sinh hoạt đang hoạt động",
+    "calculatingTransits": "Đang tính toán các chuyển động cá nhân của bạn...",
+    "connectingCelestial": "Kết nối với trí tuệ thiên thể...",
+    "unavailable": "Hướng dẫn thiên thể không khả dụng. Kiểm tra phần Sao để biết chi tiết về phong thủy.",
+    "sunrise": "Mặt trời mọc: {{time}}",
+    "sunset": "Mặt trời lặn: {{time}}",
+    "planetaryHour": "Giờ hành tinh: {{planet}}",
+    "locationPin": "{{location}}",
+    "activeTransits": "Chuyển động đang hoạt động cho bạn hôm nay",
+    "moonIn": "Mặt Trăng trong {{sign}}",
+    "sunIn": "Mặt Trời trong {{sign}}",
+    "todaysTheme": "Chủ đề hôm nay:",
+    "cosmicGuidance": "Hướng dẫn vũ trụ",
+    "reflection": "Sự phản chiếu",
+    "affirmation": "Lời khẳng định",
+    "birthChartCta": {
+      "title": "Muốn thông tin truyền cảm cá nhân?",
+      "description": "Thêm bản đồ sinh nhật của bạn trong phần Stars để xem thời tiết vũ trụ hôm nay ảnh hưởng đến bạn cá nhân như thế nào."
+    }
+  },
+  "lunarMansion": {
+    "title": "Lâu đài Mặt Trăng",
+    "trueMode": "Chế độ TRUE",
+    "calculating": "Đang tính toán vị trí mặt trăng sideral...",
+    "totem": "Thần Thú",
+    "gift": "Quà tặng",
+    "ruler": "Chúa trị",
+    "quality": "Chất lượng",
+    "quarter": "Phần tư",
+    "sunTravelsThrough": "Mặt Trời đi qua {{name}}",
+    "quarters": {
+      "initiation": "Khởi đầu — hạt giống được trồng",
+      "deepening": "Sâu hơn — rễ cây bắt đầu lớn",
+      "crisis": "Khủng hoảng — thử nghiệm đến",
+      "completion": "Hoàn thành — quả ngọt chín muồi"
+    }
+  },
+  "solarReturn": {
+    "title": "Trả Lại Mặt Trời Thực",
+    "titleInDays": "True Solar Return trong {{count}} ngày{{suffix}}",
+    "trueMode": "Chế Độ Thực",
+    "today": "Mặt Trời quay trở lại độ dài sinh nhật sideral của bạn hôm nay.",
+    "approaching": "Mặt Trời sẽ quay trở lại vị trí {{sign}} sideral của bạn vào {{date}}.",
+    "description": "Trong chế độ TRUE HEKA, sinh nhật của bạn được xác định bởi các vì sao, không phải lịch dân sự.",
+    "exactOrb": "Xác xuất đến trong {{orb}} phút hình."
+  },
+  "notesSection": {
+    "tasksAndNotes": "Nhiệm vụ ({{tasks}}) · Ghi chú ({{notes}})",
+    "tasksOnly": "Nhiệm vụ ({{count}})",
+    "notesAndTasks": "Ghi chú & Nhiệm vụ ({{count}})",
+    "addNote": "+ Ghi chú",
+    "longHoldHint": "Nhấn và giữ lâu để chọn lựa · Chạm hai lần vào nhiệm vụ để chỉnh sửa",
+    "noNotesOrTasks": "Không có ghi chú hoặc nhiệm vụ cho ngày này.",
+    "createNoteHint": "Bấm <0>+ Ghi chú</0> hoặc <1>⚡ Thêm Nhiệm vụ</1> ở trên để tạo một cái."
+  },
+  "noteEditor": {
+    "makeTask": "⚡ Làm nhiệm vụ này",
+    "dueTime": "Thời gian đến hạn",
+    "remindMe": "Nhắc tôi",
+    "reminders": {
+      "atTime": "Khi nhiệm vụ",
+      "5min": "5 phút trước",
+      "10min": "10 phút trước",
+      "15min": "15 phút trước",
+      "30min": "30 phút trước",
+      "1hour": "1 giờ trước"
+    },
+    "howAreYouFeeling": "Bạn cảm thấy thế nào?",
+    "taskPlaceholder": "Bạn định làm gì?",
+    "notePlaceholder": "Viết ghi chú của bạn...",
+    "saveTask": "Lưu Nhiệm vụ",
+    "saveNote": "Lưu Ghi chú",
+    "cancel": "Hủy"
+  },
+  "noteItem": {
+    "markComplete": "Đánh dấu hoàn thành",
+    "completed": "Đã hoàn thành",
+    "task": "Nhiệm vụ",
+    "delete": "Xóa"
+  },
+  "selection": {
+    "selectedFromDays": "{{count}} đã chọn trong {{days}} ngày{{suffix}}",
+    "done": "Xong",
+    "selectAll": "Chọn Tất cả",
+    "duplicate": "Bản sao...",
+    "delete": "Xóa",
+    "manageDuplicates": "Quản lý Bản sao:",
+    "duplicateTo": "Bản sao tới:",
+    "nextWeek": "Tuần sau",
+    "nextMonth": "Tháng sau",
+    "everyDay": "Mỗi {{day}}",
+    "undoEveryDay": "Hủy Mỗi {{day}}",
+    "specificDay": "Ngày cụ thể...",
+    "chooseDays": "Chọn Ngày...",
+    "back": "Quay lại"
+  },
+  "dayPicker": {
+    "cancel": "Hủy"
+  },
+  "multiDayPicker": {
+    "selectedCount": "{{count}} ngày{{suffix}} đã chọn",
+    "confirm": "Xác nhận",
+    "cancel": "Hủy"
+  },
+  "confirmations": {
+    "deleteNote": "Xóa ghi chú này?",
+    "deleteSelected": "Xóa {{count}} ghi chú đã chọn từ {{days}} ngày?",
+    "duplicateEveryDay": "Bản sao {{items}} tới MỌI {{day}} trong năm còn lại?",
+    "undoDuplicates": "Xóa tất cả các phiên bản trùng lặp của {{count}} ghi chú này?"
+  },
+  "alerts": {
+    "couldNotCalculateDate": "Không thể tính toán ngày mục tiêu",
+    "duplicatedToNextWeek": "Đã bản sao {{items}} tới tuần sau ({{month}} {{day}})",
+    "duplicatedToNextMonth": "Đã bản sao {{items}} tới tháng sau ({{month}} {{day}})",
+    "duplicatedToDays": "Đã bản sao vào {{count}} {{day}}s",
+    "duplicatedNotes": "Đã trùng lặp {{count}} ghi chú",
+    "removedDuplicates": "Đã xoá các ghi chú trùng lặp",
+    "duplicatedToMonth": "Đã sao chép {{count}} ghi chú vào tháng tiếp theo",
+    "duplicatedToDaysCount": "Đã sao chép {{count}} ghi chú vào {{days}} ngày",
+    "duplicatedSelectedItems": "Đã sao chép các mục đã chọn vào {{count}} ngày",
+    "signInToSaveTasks": "Bạn cần đăng nhập để lưu nhiệm vụ. Vui lòng mở menu Tài khoản và đăng nhập lại.",
+    "unableToSaveTask": "Không thể lưu nhiệm vụ. Lỗi: {{error}}"
+  },
+  "dow": {
+    "sunday": "Chủ Nhật",
+    "monday": "Thứ Hai",
+    "tuesday": "Thứ Ba",
+    "wednesday": "Thứ Tư",
+    "thursday": "Thứ Năm",
+    "friday": "Thứ Sáu",
+    "saturday": "Thứ Bảy",
+    "short": {
+      "sun": "CN",
+      "mon": "Th2",
+      "tue": "Th3",
+      "wed": "Th4",
+      "thu": "Th5",
+      "fri": "Th6",
+      "sat": "Th7"
+    }
+  },
+  "noteCategories": {
+    "personal": "Cá Nhân",
+    "work": "Làm Việc",
+    "spiritual": "Tinh Thần",
+    "family": "Gia Đình",
+    "health": "Sức Khỏe",
+    "creative": "Sáng Tạo",
+    "general": "Chung"
+  },
+  "moodScale": {
+    "1": "Rất Thấp",
+    "2": "Thấp",
+    "3": "Trung Trung",
+    "4": "Tốt",
+    "5": "Tuyệt Vời"
+  }
+}

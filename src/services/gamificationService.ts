@@ -899,26 +899,29 @@ export function checkAchievements(
         isUnlocked = stats.longestStreak >= achievement.requirement.value;
         break;
         
-      case 'categories':
+      case 'categories': {
         const usedCategories = Object.entries(stats.notesByCategory)
           .filter(([, count]) => count > 0).length;
         isUnlocked = usedCategories >= achievement.requirement.value;
         break;
+      }
         
       case 'words':
         isUnlocked = stats.totalWords >= achievement.requirement.value;
         break;
         
-      case 'months':
+      case 'months': {
         const uniqueMonths = Object.keys(stats.notesByMonth).length;
         isUnlocked = uniqueMonths >= achievement.requirement.value;
         break;
+      }
         
-      case 'mood':
+      case 'mood': {
         const allNotes = Object.values(notes).flat();
         const moodEntries = allNotes.filter(n => n.mood).length;
         isUnlocked = moodEntries >= achievement.requirement.value;
         break;
+      }
         
       case 'special':
         isUnlocked = checkSpecialAchievement(achievement.id, notes, stats);
@@ -950,10 +953,11 @@ export function checkAchievements(
         break;
         
       // Phase 1: General Exploration achievements
-      case 'exploration':
+      case 'exploration': {
         const discoveredFeaturesCount = Object.values(discovery).filter(v => v === true).length;
         isUnlocked = discoveredFeaturesCount >= achievement.requirement.value;
         break;
+      }
     }
     
     if (isUnlocked) {
@@ -992,10 +996,11 @@ function checkSpecialAchievement(
       // Would need moon phase calculation - placeholder
       return false;
       
-    case 'work-life-balance':
+    case 'work-life-balance': {
       const workCount = stats.notesByCategory['work'] || 0;
       const personalCount = stats.notesByCategory['personal'] || 0;
       return workCount >= 25 && personalCount >= 25;
+    }
       
     default:
       return false;
@@ -1020,7 +1025,7 @@ function checkSettingsAchievement(
     case 'fonts':
       return engagement.fontsTried.length >= value;
       
-    case 'display':
+    case 'display': {
       // Count display options that have been toggled
       const displayOptions = [
         discovery.enabledMoonPhases,
@@ -1031,6 +1036,7 @@ function checkSettingsAchievement(
         discovery.enabledBirthChart,
       ];
       return displayOptions.filter(Boolean).length >= value;
+    }
       
     case 'customizations':
       return engagement.customizationsMade >= value;

@@ -1,0 +1,1411 @@
+{
+  "ends": "ينتهي",
+  "title": "دليل السماء لهذا اليوم",
+  "civil": "مدني",
+  "speed": "السرعة",
+  "avoid": "تجنب",
+  "natal": "الولادة",
+  "house": "المنزل",
+  "exact": "دقيق",
+  "began": "بدأ",
+  "status": "الحالة",
+  "traits": "الصفات",
+  "element": "العنصر",
+  "forDate": "For {{month}} {{day}}",
+  "bestFor": "أفضل ل",
+  "fromDate": "From {{month}} {{day}}",
+  "whatIsIt": "What is it?",
+  "guidance": {
+    "today": "اليوم",
+    "mixed": "مختلط",
+    "career": "الوظائف",
+    "health": "الصحة",
+    "timing": "التوقيت",
+    "thisWeek": "هذا الأسبوع",
+    "thisYear": "هذا العام",
+    "finances": "المال",
+    "bestDays": "✦ أحسن أيام",
+    "keyThemes": "الموضوعات الرئيسية",
+    "lifeAreas": "مناطق الحياة",
+    "excellent": "ممتاز",
+    "favorable": "مفيد",
+    "difficult": "صعب",
+    "calculating": "正在计算天体指导...",
+    "challenging": "مallenging",
+    "overallScore": "النتيجة العامة",
+    "todaySubtitle": "الجو السماوي الحالي",
+    "relationships": "العلاقات",
+    "lunarGuidance": "☽ توجيه القمر",
+    "personalGrowth": "النمو الشخصي",
+    "thisWeekSubtitle": "توقعات سماوية لـ 7 أيام",
+    "thisYearSubtitle": "نظرة عامة على {{year}}",
+    "unableToGenerate": "لا يمكن إنشاء التوجيه في الوقت الحالي.",
+    "yourCelestialRegion": "منطقة سماويتك",
+    "planetaryHighlights": "أبرز الكواكب"
+  },
+  "duration": "المدة",
+  "titlePast": "دليل السماء لـ {{days}} أيام مضت",
+  "civilDate": "التاريخ المدني",
+  "dayOfYear": "يوم من العام",
+  "solarNoon": "Solar Noon",
+  "localTime": "Local Time:",
+  "lowEnergy": "طاقة منخفضة: الراحة، التفكير، التخطيط",
+  "nextCheck": "الفحص التالي",
+  "yearOfThe": "سنة",
+  "planet": {
+    "in": "{{planet}} في {{sign}}",
+    "copy": "📋 نسخ",
+    "shadow": "🌑 ظلال",
+    "growth": "🌱 نمو",
+    "famous": "⭐ مشهور",
+    "copied": "✓ نسخ!",
+    "tagline": "\"{{tagline}}\"",
+    "essence": "💫 جوهر",
+    "atDegree": "{{planet}} عند {{degree}}° {{sign}}",
+    "archetype": "النموذج الأصلي",
+    "dailyLife": "في الحياة اليومية",
+    "shadowSide": "🌑 الجانب الظلام",
+    "deepWisdom": "🌙 يتم تمرير الحكمة العميقة لـ {{planet}} في {{sign}}...",
+    "famousIntro": "يربطك {{planet}} في {{sign}} بهؤلاء الشخصيات ال有影响力的:",
+    "houseDignity": "{{symbol}} منزل {{house}} • {{dignity}}",
+    "shareThisWith": "⭐ تقاسم هذا مع",
+    "deepWisdomSub": "{{planet}} في {{sign}}, منزل {{house}}",
+    "coreExpression": "تعبيرك الجوهري",
+    "commonTriggers": "ال扳机 المشتركة",
+    "yourGrowthPath": "🌱 مسار نموك",
+    "alignedCareers": "المسارات الوظيفية الملائمة",
+    "dailyAffirmation": "🙏 تأكيد يومي",
+    "reflectionPrompts": "💭 استفسارات التفكير",
+    "practicalExercises": "التمارين العملية"
+  },
+  "daily": {
+    "orb": "{{orb}}° حوض",
+    "good": "✓ طاقة جيدة اليوم. مناسبة لمعظم الأنشطة.",
+    "mixed": "◆ طاقات مختلطة. اتبع بوعي.",
+    "loading": "正在计算精确位置...",
+    "watchOut": "⚠ احذر ({{count}})",
+    "quietDay": "يوم سكون. لا تؤثر انتقالات كبيرة على خريطة الميلاد الخاصة بك.",
+    "excellent": "يوم جيد للأنشطة الهامة. دعم كوني قوي.",
+    "background": "◆ خلفية ({{count}})",
+    "universalSky": "السماء العالمية اليوم",
+    "addBirthChart": "أضف خريطة ميلادية لمعلومات انتقال شخصية.",
+    "todayForecast": "توقعات اليوم",
+    "opportunities": "✓ فرص ({{count}})",
+    "activeTransits": "{{count}} انتقال نشط",
+    "swissPrecision": "دقة الإسفيمر السويسري",
+    "challengingDay": "⚠ يوم صعب. اركز على العناية بنفسك وتجنب اتخاذ قرارات كبيرة.",
+    "goodForRoutine": "جيد للمهام الrutin والصيانة.",
+    "activeTransits_plural": "{{count}} انتقالات نشطة"
+  },
+  "futureView": "عرض مستقبلي",
+  "scrollHint": "(اسحب →)",
+  "beganCivil": "بدأت (مدني): {{date}}",
+  "traditions": "Traditions",
+  "lunarCycle": "Lunar Cycle",
+  "confidence": "Confidence:",
+  "whyThisDay": "لماذا هذا اليوم؟",
+  "highEnergy": "طاقة عالية: بدء المشاريع، اتخاذ الإجراءات، التفاعل الاجتماعي",
+  "focusAreas": "مناطق التركيز",
+  "compatible": "متوافق",
+  "luckyHours": "ساعات الحظ",
+  "titleFuture": "دليل السماء في غضون {{days}} أيام",
+  "lookingBack": "نظرة للخلف",
+  "dayOfPlanet": "{{day}}: يوم من {{planet}}",
+  "planets": {
+    "sun": "شمس",
+    "moon": "قمر",
+    "mars": "مارس",
+    "venus": "زهرة",
+    "saturn": "زحل الأكبر",
+    "mercury": "عطار",
+    "jupiter": "زحل"
+  },
+  "calculating": "حساب الموقع القمري...",
+  "luckyColors": "الألوان الحظيرة",
+  "selectedDate": "التاريخ المختار HEKA",
+  "dragToScroll": "اسحب لتحريك النص",
+  "yourLocation": "موقعك",
+  "significance": "Significance",
+  "howToObserve": "How to Observe",
+  "sunElevation": "Sun elevation: {{elevation}}°",
+  "newMoonCivil": "القمر الجديد (مدني)",
+  "cosmicEnergy": "Cosmic Energy",
+  "howToUseThis": "كيف تستخدم هذا",
+  "todaysEnergy": "طاقة اليوم",
+  "elements": {
+    "air": "هواء",
+    "fire": "نار",
+    "water": "ماء",
+    "earth": "أرض"
+  },
+  "luckyNumbers": "الأرقام الحظيرة",
+  "export": {
+    "close": "إغلاق",
+    "failed": "فشل في التصدير",
+    "guidance": "التوجيه",
+    "creating": "正在创建...",
+    "saveImage": "حفظ الصورة",
+    "affirmation": "التأكيد",
+    "generatedBy": "تم توليده بواسطة Heka Calendar ✦",
+    "overallGuidance": "التوجيه العام",
+    "celestialGuidance": "التوجيه السماوي"
+  },
+  "timezones": {
+    "ET": "التوقيت الشرقي (ET)",
+    "CT": "التوقيت المركزي (CT)",
+    "MT": "التوقيت الجبلي (MT)",
+    "PT": "التوقيت المحيطي الهادي (PT)",
+    "UTC": "UTC (العام)",
+    "Paris": "باريس (CET)",
+    "Tokyo": "توكيو (JST)",
+    "Dubai": "دبي (GST)",
+    "London": "لندن (GMT)",
+    "Berlin": "برلين (CET)",
+    "Sydney": "سيدني (AEST)",
+    "Shanghai": "شانغهاي (CST)",
+    "Auckland": "أوكلاند (NZST)",
+    "Melbourne": "ملبورن (AEST)"
+  },
+  "startingCivil": "البدء (مدني): {{date}}",
+  "hekaYearLabel": "عام HEKA {{year}}",
+  "daysRemaining": "الأيام المتبقية",
+  "fullMoonCivil": "القمر الكامل (مدني)",
+  "thisMoonCycle": "هذه الدورة القمرية",
+  "waxingQuality": "النمو: النمو، بناء الزخامة",
+  "waningQuality": "الانحدار: الإطلاق، التفكير، الانتهاء",
+  "forecastTitle": "توقعات السماء",
+  "whatThisMeans": "ماذا يعني هذا الآن",
+  "planetsActive": "الكواكب النشطة الآن",
+  "exactPosition": "الموقع الدقيق",
+  "moonVoidLabel": "القمر الفارغ",
+  "starsHub": {
+    "back": "← الرجوع",
+    "live": "مباشر",
+    "chart": "المخطط",
+    "active": "نشط",
+    "sunSign": "الرمز الشمسي",
+    "12signs": "12 علامة",
+    "13signs": "13 علامة ⛎",
+    "version": "الإصدار 2.2.0 • محرك الهكا للفلسفة",
+    "overview": "نظرة عامة",
+    "guidance": "التوجيه",
+    "voidMoon": "القمر الفارغ",
+    "settings": "الإعدادات",
+    "tropical": "البروزك التقليدي",
+    "sidereal": "البروزك الثابتة",
+    "positions": "المواضع",
+    "moonPhase": "فاز القمر",
+    "hourRuler": "الحاكم الساعة",
+    "aboutText": "مدعوم من حاسبة الإسفيريس السويسرية لتوفير بيانات فلك دقيقة. ا调理 إجراءاتك مع إيقاع الكون.",
+    "tapPlanet": "اضغط على أي كوكب لاستكشاف معنىه التفصيلي",
+    "viewStars": "View Stars →",
+    "goToStars": "Go to Stars to see your personalized astrological guidance.",
+    "13signDesc": "⛎ 13-رمز ثابت: يشمل أوفيوشوس. الإطار الأكثر دقة في الفيزياء.",
+    "retrograde": "℞ عكسي",
+    "welcomeBack": "مرحبًا بعودتك، {{name}}",
+    "retrogrades": "الترجيد",
+    "12signsDesc": "البروزك الثابتة التقليدية",
+    "13signsDesc": "يشمل أوفيوشوس",
+    "birthCharts": "Birth Charts",
+    "universalSky": "السماء العالمية",
+    "zodiacSystem": "نظام البروزك",
+    "tropicalDesc": "12 علامة · المواسم",
+    "siderealDesc": "النجوم الثابتة · النجوم الهندسية",
+    "dailyBriefing": "تقرير يومي",
+    "tropicalDesc2": "البروزك التقليدي للعلامة ال13 المتعلقة بالمواسم.",
+    "celestialFont": "خط سماوي",
+    "profilesSaved": "{{count}} ملف شخصي تم الحفظ",
+    "corruptedDate": "⚠️ تم اكتشاف تاريخ مولد معطوب!",
+    "deleteProfile": "🗑️ حذف الملف الشخصي",
+    "addNewProfile": "➕ إضافة ملف شخصي جديد",
+    "tapForDetails": "اضغط لتفاصيل →",
+    "housePosition": "موضع البيت",
+    "celestialTheme": "موضوع سماوي",
+    "selectTypeface": "اختر الخط الذي سيتم استخدامه في هذا المجال",
+    "manageProfiles": "إدارة ملفات البروزك الnatal الخاصة بك",
+    "aboutCelestial": "عن الذكاء السماوي",
+    "chooseFramework": "اختر إطار السماء الذي تفضله",
+    "trueModeWarning": "⚠️ أنت في الوضع الحقيقي ولكنك لا تستخدم البروزك الثابتة. انتقل إلى البروزك الثابتة لتحقيق تطابق كامل.",
+    "syncModeWarning": "⚠️ أنت في الوضع المتزامن ولكنك تستخدم البروزك الثابتة. هذا هو تجاوز متقدم.",
+    "receiveGuidance": "استلم التوجيه من الكون",
+    "retrogradeCount": "Navigate {{count}} retrograde",
+    "allPlanetsDirect": "جميع الكواكب مباشرة — وقت للتقدم.",
+    "exploreCelestial": "استكشاف المناظر السماوية الحالية. أنشئ ملفًا لتلقي التوجيه الفلكية الشخصي.",
+    "compareTwoSelves": "قارن نفسك الاثنان",
+    "chooseAtmosphere": "اختر جوًا كونيًا",
+    "siderealSignCount": "عدد الرموز الثابتة",
+    "profileManagement": "إدارة الملفات الشخصية",
+    "currentExpression": "تعبير الحالي",
+    "housePositionText": "ينشط هذا الكوكب منطقة الحياة التي تمثلها موقع البيت الحالي، وتلوين تجاربك بالطاقة {{energy}}.",
+    "12signSiderealDesc": "☀️ 12-رمز ثابت: حدود الallaxes التقليدية مع تصحيح ayanamsa.",
+    "personalizedWeather": "الجو السماوي اليومي مخصص لمخططك الnatal. {{retrogrades}}",
+    "observatorySettings": "إعدادات المرصد",
+    "planetInSignDefault": "{{planet}} in {{sign}} brings unique energy.",
+    "profilesSaved_plural": "{{count}} ملفات شخصية تم الحفظ",
+    "birthChartManagement": "Birth Chart Management",
+    "celestialIntelligence": "الذكاء السماوي",
+    "celestialNotifications": "إشعارات سماوية",
+    "retrogradeCount_plural": "Navigate {{count}} retrogrades",
+    "currentPlanetaryPositions": "المواضع الكوكبية الحالية",
+    "openCelestialIntelligence": "Open Celestial Intelligence ✦"
+  },
+  "twoSelves": {
+    "air": "الفكر، الموصل",
+    "none": "لا شيء",
+    "fire": "المبدئ، الاشعة",
+    "title": "نفوسك الاثنتان",
+    "error": "فشل في حساب أحد أو كلا من أنظمة البرو$/,",
+    "earth": "المنشئ، الجبل",
+    "water": "المشعر، العمق",
+    "changed": "غير",
+    "subtitle": "علمك التقويم قصة واحدة. والنجوم تخبر بأخرى.",
+    "tropical": "البرو البرو",
+    "trueSelf": "الذات الحقيقية",
+    "sidereal": "البرو النجومي",
+    "sunMoved": "انتحرت الشمس من {{tropical}} إلى {{sidereal}}.",
+    "ayanamsa": "الأيانامسا، الفراغ بين البرو البرو والنجوم الفعلية، هو {{degrees}} درجات لسنة ميلادك.",
+    "civilSelf": "الذات المدنية",
+    "whoYouAre": "من أنت تحت النجوم",
+    "ascendant": "المرتفع",
+    "midheaven": "السماء الوسطى",
+    "shiftedBy": "تم تحريكه ب {{degrees}}°",
+    "moonMoved": "القمر، جوهر العاطفة، انتحر من {{tropical}} إلى {{sidereal}}.",
+    "notAnError": "هذه ليست خطأ. هذه هي الفرق بين من تعلمت أن تكون跟她說你是星星们说你是谁。",
+    "calculating": "جارى حساب المخططات البروropic والsiderreal...",
+    "revisitHint": "يمكنك إعادة النظر في هذا المقارنة في أي وقت من إعدادات المخطط.",
+    "totalChanged": "بشكل إجمالي، غير {{count}} من {{total}} أجسام سماوية رئيسية من علامات البرو.",
+    "whoYouLearned": "من تعلمت أن تكون",
+    "rareAlignment": "مخططك البرو والبرو النجومي متطابقان تقريبًا - ترتيب نادر يحدث عندما يكون الأيانامسا بالقرب من حدود العلامة الكاملة. أنت واحد من القليلين الذين يتحدث الذات المدنية والذات الحقيقية بنفس اللغة.",
+    "identityShift": "الهوية التي تعلمت أنها {{tropicalElement}} تتحول إلى {{siderealElement}}.",
+    "ascendantShift": "المرتفع، القناع الذي ترتديه، انتحر من {{tropical}} إلى {{sidereal}}.",
+    "midheavenShift": "السماء الوسطى، دعوتك العامة، انتحرت من {{tropical}} إلى {{sidereal}}.",
+    "defaultElement": "الذات",
+    "dominantElement": "العنصر الهيمنة",
+    "continueTrueMode": "استمر في الوضع الحقيقي"
+  },
+  "historicalView": "عرض تاريخي",
+  "dayOfYearValue": "يوم {{day}}",
+  "lookingForward": "نظرة للمستقبل",
+  "hekaYearBegins": "بداية عام HEKA {{year}}",
+  "countdown": {
+    "days": "أيام",
+    "hours": "ساعات",
+    "minutes": "دقائق",
+    "seconds": "ثوان"
+  },
+  "aboutSolarNoon": "About Solar Noon",
+  "newMoonQuality": "القمر الجديد: البدء، إعداد النوايا",
+  "moderateEnergy": "طاقة معتدلة: العمل الروتيني، التقدم المنتظم",
+  "swissEphemeris": "إسفيمريس السويسري",
+  "retrogradeNote": "الرجوع: فترة إعادة النظر",
+  "moonPhaseLabel": "فاز القمر",
+  "hourlyMoonMood": "مزاج القمر كل ساعة",
+  "upcomingEvents": "الأحداث السماوية القادمة",
+  "profile": {
+    "addNew": "إضافة جديد",
+    "default": "افتراضي",
+    "noCharts": "لا توجد خرائط بعد",
+    "yourCharts": "مخططاتك",
+    "createFirst": "إنشاء خريطة ميلادك الأولى",
+    "selectProfile": "اختر الملف الشخصي"
+  },
+  "briefing": {
+    "focus": "تركيز: {{area}}",
+    "setUpAi": "إعداد الإي →",
+    "dismiss": "تجاهل",
+    "enableAi": "تفعيل التوجيه بالإي",
+    "aiEnhanced": "✨ معزز بالإي",
+    "todaysTheme": "موضوع اليوم",
+    "todaysFocus": "التركيز اليومي",
+    "voidMoonDesc": "القمر فراغًا حاليًا - مثاليًا للتفكير الذاتي والاستراحة والعمل الداخلي بدلاً من بدء مشاريع جديدة.",
+    "unlockDeeper": "فتح أعمق ال洞悉",
+    "aiConfigured": "لديك مزود الذكاء الاصطناعي محدد. افتح التوجيه بالإي لتلقي قراءات مخصصة وشخصية وشعرية.",
+    "yourGuidance": "التوجيه الخاص بك",
+    "aiUnavailable": "غير متوفر تعزيز الذكاء الاصطناعي. يظهر التوجيه القائم على القالب.",
+    "aiAddProvider": "أضف مزودًا للذكاء الاصطناعي لتلقي تفسيرات معززة بـ LLM مخصصة لمخططك الشخصي الوحيد.",
+    "voidMoonActive": "🌙 فراغ القمر نشط",
+    "turnOnSettings": "تشغيل في الإعدادات",
+    "templatePowered": "📚 قابِل بالقالب",
+    "templateFallback": "⚠️ استرداد القالب",
+    "dailyAffirmation": "التأكيد اليومي",
+    "viewFullGuidance": "عرض التوجيه الكامل",
+    "patternRecognized": "🔮 تم التعرف على النمط"
+  },
+  "aboutThisSeason": "عن هذا الفصل",
+  "characteristics": "الخصائص",
+  "fullMoonQuality": "القمر الكامل: الطاقة الذروة، الظهور",
+  "activities": {
+    "rest": "استراحة",
+    "plant": "زرع",
+    "prune": "قص",
+    "harvest": "حصاد",
+    "prepare": "تحضير",
+    "fertilize": "تغذية",
+    "transplant": "نقل"
+  },
+  "numerologyTitle": "الرياضيات العددية: اليوم {{day}}",
+  "zodiacSigns": {
+    "leo": "أسد",
+    "aries": "أرس",
+    "virgo": "عذراء",
+    "libra": "ميزان",
+    "taurus": "ثور",
+    "gemini": "إكليل",
+    "cancer": "سرطان",
+    "pisces": "الحوت",
+    "scorpio": "orpion",
+    "aquarius": "الماء",
+    "capricorn": "جدري",
+    "ophiuchus": "أفيوخوس",
+    "sagittarius": "ساجيت"
+  },
+  "dataUnavailable": "لا تتوفر بيانات السماء",
+  "thisWeeksThemes": "موضوعات هذا الأسبوع",
+  "noMajorTransits": "لا تIMAL الانتقالات الشخصية الرئيسية",
+  "guidanceV2": {
+    "edit": "تحرير",
+    "hour": "{{planet}} ساعة",
+    "copy": "نسخ",
+    "card": "بطاقة",
+    "share": "مشاركة",
+    "close": "إغلاق",
+    "today": "اليوم",
+    "copied": "نسخ",
+    "cancel": "إلغاء",
+    "history": "التاريخ",
+    "refresh": "تحديث",
+    "setUpAi": "إعداد AI →",
+    "strength": "القوة",
+    "yesClear": "نعم، مسح",
+    "yourChart": "خريطةك ✓",
+    "signature": "التوقيع",
+    "consulting": "استشارة المدار السماوية...",
+    "aiEnhanced": "✨ معزز بـ AI",
+    "natalChart": "✓ خريطة الولادة",
+    "refreshing": "جار التحديث...",
+    "focusAreas": "المناطق التركيز",
+    "confidence": "الثقة",
+    "selectDate": "اختر تاريخ",
+    "areYouSure": "هل أنت متأكد؟",
+    "affirmation": "التأكيد",
+    "yourPatterns": "نماذجك",
+    "unlockDeeper": "فتح ال洞悉 العميقة",
+    "aiConfigured": "لديك مزود AI محدد. افتح التوجيه بـ AI لقراءة شعرية ومخصصة من خريطة الولادة الخاصة بك وسماء العيش.",
+    "clearHistory": "مسح السجل",
+    "addBirthChart": "إضافة خريطة الولادة",
+    "aiEnhancedVia": "✨ معزز بـ AI عبر {{provider}} ({{model}})",
+    "aiAddProvider": "أضف مزود AI (Groq, OpenAI, أو Ollama محلي) لتلقي تفسيرات معززة بـ LLM مخصصة لخريطةك الفريدة.",
+    "sacredRituals": "ال儀式 القدسية",
+    "aiUnavailable": "التحسينات الذكاءية غير متاحة: {{reason}}. إظهار التوجيه النموذجي.",
+    "turnOnSettings": "تشغيل في الإعدادات",
+    "morningBriefing": "ملخص صباحي",
+    "loadingGuidance": "جار تحميل التوجيه الشخصي الخاص بك...",
+    "templatePowered": "📚 قوائم قوية",
+    "guidanceHistory": "📜 تاريخ التوجيه",
+    "noSavedGuidance": "لا توجد إرشادات محفوظة حتى الآن",
+    "enableAiGuidance": "تفعيل التوجيه بـ AI",
+    "celestialEssence": "جوهر سماوي",
+    "aiEnhancedSuffix": "(معزز بـ AI)",
+    "dailyAffirmation": "التأكيد اليومي",
+    "selectDateToView": "اختر تاريخًا لعرض التوجيه الشخصي الذي تم حفظه.",
+    "practicalGuidance": "التوجيه العملي",
+    "dailyAffirmations": "التأكيدات اليوم",
+    "reflectionPrompts": "إشارات التفكير",
+    "aiUnavailableDate": "⚠️ لم تكن التحسينات الذكاءي متاحة في هذا التاريخ. تم إظهار التوجيه النموذجي.",
+    "personalizedForYou": "✨ مخصص لك",
+    "guidanceConfidence": "ثقة التوجيه",
+    "readingsAppearHere": "سيظهر قراءاتك اليومية هنا تلقائيًا.",
+    "yourCelestialRegion": "منطقة السماء الخاصة بك",
+    "practicalGuidanceTitle": "التوجيه العملي"
+  },
+  "birthChart": {
+    "born": "ولد",
+    "edit": "✏️ تعديل",
+    "loading": "جار تحميل المخطط الفلكي الأصلي...",
+    "promise": "الوعد",
+    "sunSign": "☉ الرمز الشمسي • أنت {{sign}}",
+    "elements": "العناصر",
+    "newChart": "+ خريطة جديدة",
+    "dignities": "الشرفات",
+    "chartWheel": "الدائرة الفلكية",
+    "natalChart": "◉ الخريطة الولادة",
+    "dragRotate": "اسحب لتدوير • انقر على الكواكب لتفاصيل",
+    "lifeThemes": "🌟 موضوعات الحياة",
+    "createFirst": "أنشئ خريطة تولدك الأولى لفتح التوجيه الشخصي الفلكي",
+    "soulPromise": "وعد الروح",
+    "growthEdges": "🌱 حواف النمو",
+    "noBirthChart": "لم يتم العثور على خريطة تولد",
+    "profileChart": "{{name}}'s Chart",
+    "naturalGifts": "🎁 الهدايا الطبيعية",
+    "majorAspects": "⚡ الجوانب الرئيسية",
+    "recreateChart": "إعادة إنشاء خريطةك",
+    "createYourChart": "✨ أنشئ خريطةك",
+    "unknownLocation": "موقع غير معروف",
+    "elementalTemple": "🔥 الهيكل العنصري",
+    "chartIncomplete": "⚠️ بيانات الخريطة غير كاملة.",
+    "planetPositions": "🪐 مواضع الكواكب",
+    "yourSoulsPromise": "✨ وعد روحك"
+  },
+  "lastQuarterToNew": "ربع آخر إلى جديد: إطلاق واستراحة",
+  "cosmicConditions": "الظروف الكونية",
+  "birthInput": {
+    "house": "البيت {{house}}",
+    "cancel": "إلغاء",
+    "dignity": "{{dignity}}",
+    "yourName": "اسمك",
+    "latitude": "خط الطول",
+    "timezone": "المنطقة الزمنية",
+    "enterName": "أدخل اسمك",
+    "birthDate": "تاريخ الميلاد",
+    "birthTime": "وقت الميلاد",
+    "longitude": "خط الطول",
+    "calcFailed": "فشل في حساب مواضع الكواكب. يرجى المحاولة مرة أخرى.",
+    "invalidDate": "تاريخ ميلاد غير صالح أو وقت",
+    "calculating": "جارى حساب المخطط السماوي الفريد من السماء...",
+    "privacyNote": "🔒 يتم تخزين بيانات ميلادك على جهازك و동기تها مع حسابك عندما تكون مسجل الدخول.",
+    "enterDetails": "أدخل تفاصيل ميلادك لفتح التوجيهات المخصصة بناءً على المخطط السماوي الفريد من السماء.",
+    "locationHint": "ابدأ بكتابة حي أو مدينة (على سبيل المثال \"Bankstown\", \"Sydney\")",
+    "birthLocation": "مكان الميلاد *",
+    "yourBirthChart": "خريطة ميلادك",
+    "calculateChart": "✨ حساب المخطط الخاص بي",
+    "pleaseEnterName": "يرجى إدخال اسمك",
+    "pleaseEnterDate": "يرجى إدخال تاريخ ميلادك",
+    "pleaseEnterTime": "يرجى إدخال وقت ميلادك",
+    "noPlanetaryData": "لم يتم استرداد بيانات الكواكب من الحساب",
+    "houseCalcFailed": "فشل في حساب مواضع البيوت. يرجى التحقق من إحداثياتك.",
+    "chartCalcFailed": "فشل في حساب المخطط. يرجى التحقق من بياناتك المدخلة.",
+    "invalidHouseData": "بيانات البيت غير صالحة تم استرجاعها",
+    "pleaseEnterCoords": "يرجى إدخال إحداثيات مكان ميلادك",
+    "invalidHouseData2": "بيانات البيت غير صالحة تم استرجاعها من الحساب",
+    "celestialBlueprint": "المخطط السماوي الفريد من السماء",
+    "latitudePlaceholder": "على سبيل المثال، 40.7128",
+    "longitudePlaceholder": "على سبيل المثال، -74.0060"
+  },
+  "premiumCards": {
+    "sun": "شمس",
+    "moon": "القمر",
+    "copy": "نسخ",
+    "weak": "⚠ ضعيف",
+    "expand": "توسيع",
+    "inDays": "في حوالي {{days}} أيام",
+    "sunset": "غروب الشمس",
+    "whyNow": "لماذا {{planet}} الآن؟",
+    "stormy": "عاصفة",
+    "direct": "→ مباشرة",
+    "strong": "✪ قوي",
+    "sunrise": "شروق الشمس",
+    "neutral": "○ متعادل",
+    "hekaDate": "تاريخ هيكا",
+    "aeonGate": "بوابة العصر",
+    "monthOf13": "شهر {{month}} من 13",
+    "dayOfYear": "يوم {{day}} من {{total}}",
+    "civilTime": "الوقت المدني 🌍",
+    "julianDay": "يوم يولي",
+    "beMindful": "كن حذرًا من",
+    "nextPhase": "الطور التالي",
+    "hourRuler": "حاكم الساعة",
+    "readOracle": "اقرأ ال.oracle",
+    "clearSkies": "سماء صافية",
+    "retrograde": "← معاكسة",
+    "daysElapsed": "{{days}} أيام مضت",
+    "calculating": "جار الحساب...",
+    "lunarTemple": "الهيكل القمري",
+    "waxingTrend": "تزايد → تنمو",
+    "waningTrend": "انخفاض → تناقص",
+    "bestToAvoid": "✗ الأفضل تجنب",
+    "retroReview": "مع {{count}} كوكب{{plural}} معاكسة، هذا الوقت للمراجعة الهامة والانتباه الذاتي.",
+    "hekaCalendar": "◈ تقويم هيكا",
+    "yearProgress": "تقدم العام",
+    "partlyCloudy": "多云",
+    "heavyWeather": "الطقس الثقيل",
+    "retroCaution": "يجب ال際حاز بحذر عند بدء البدء الجديد الكبرى.",
+    "modalBalance": "توازن النماذج",
+    "luminariesNow": "المصابيح الآن",
+    "chaldeanOrder": "الترتيب الخلدائي",
+    "retroPossible": "من الممكن بدء مشاريع جديدة بعناية إضافية في المناطق المتأثرة.",
+    "viewPlanetary": "عرض المدار الكوكبي",
+    "thisPhaseFavors": "يفضل هذا الطور",
+    "localSolarTimes": "أوقات الشمس المحلية",
+    "calculatingLunar": "جار حساب بيانات القمر...",
+    "minutesRemaining": "{{minutes}} دقائق متبقية",
+    "allPlanetsDirect": "جميع الكواكب مباشرة",
+    "celestialWeather": "الطقس السماوي",
+    "directRetrograde": "{{direct}} مباشرة، {{retrograde}} معاكسة",
+    "planetarySpheres": "المدار الكوكبي",
+    "elementalBalance": "توازن العناصر",
+    "currentPositions": "المواضع الحالية",
+    "chaldeanHourglass": "الساعة الخلدائية",
+    "favoredActivities": "✓ الأنشطة المفضلة",
+    "planetaryStations": "محطات الكواكب",
+    "currentAlignments": "الم是对准 الحالية",
+    "nextCelestialEvent": "الحدث السماوي التالي",
+    "moonsCurrentThrone": "القمر الحالي على العرش",
+    "retrogradeGuidance": "توجيه المعاكسة",
+    "calculatingPlanetary": "جار حساب ساعة الكوكبية...",
+    "celestialBodiesTracked": "{{count}} كائن سماوي متتبع"
+  },
+  "aiSettings": {
+    "title": "القراءة المعززة بIA",
+    "expand": "توسيع",
+    "active": "نشط",
+    "apiKey": "مفتاح API",
+    "format": "تنسيق",
+    "pricing": "التسعير",
+    "testing": "جار الفحص...",
+    "collapse": "طي",
+    "hideGuide": "إخفاء الدليل",
+    "showGuide": "إظهار الدليل",
+    "serverUrl": "عنوان الخادم URL",
+    "setupGuide": "دليل الإعداد: {{provider}}",
+    "disconnect": "انقطع الاتصال",
+    "connectedTo": "متصل بـ {{provider}}",
+    "useTemplate": "استخدام مكتبة القوالب",
+    "dataPrivate": "بياناتك تظل خاصة",
+    "updateConfig": "تحديث التكوين",
+    "templateDesc": "أكثر من 169 قالب يغطي جميع الكواكب في جميع الأنماط 13، ويتداخل في قراءات فريدة من نوعها بناءً على الطور والوجه والفئة. دائمًا مجانيًا، دائمًا سريعًا.",
+    "failedToSave": "فشل في الحفظ",
+    "usingTemplate": "استخدام مكتبة القوالب (مجاني)",
+    "storedLocally": "يتم تخزين {{type}} فقط على هذا الجهاز بشكل محلي مشفر. لا ننقله أبدًا إلى خوادمنا.",
+    "aiEnhancement": "تعزيز IA",
+    "changeSettings": "تغيير الإعدادات",
+    "testConnection": "اختبار الاتصال",
+    "pleaseEnterKey": "يرجى إدخال مفتاح API",
+    "connectedShort": "✓ متصل بـ {{provider}}",
+    "connectProvider": "اتصل بمقدم الخدمة الذكاء الاصطناعي لتحسين التفسيرات الفلكية",
+    "templateLibrary": "مكتبة القوالب",
+    "dataPrivateDesc": "تخزن مفاتيح API محليًا. لا نراها أو بياناتك الفلكية أبدًا.",
+    "readingsEnhanced": "qed تعزز القراءة بIA.",
+    "connectionFailed": "✗ فشلت الاتصال. يرجى التحقق من الإنترنت ومفتاح API.",
+    "aiEnhancementDesc": "القراءة المنشأة من IA للتفسيرات الأكثر تنوعًا وشخصية.",
+    "connectionSuccess": "✓ تم الاتصال بنجاح! مفتاح API صالح.",
+    "connectionInvalid": "✗ مفتاح API غير صالح. يرجى التحقق وإعادة المحاولة.",
+    "templateAvailable": "✓ دائمًا متاحة مكتبة القوالب",
+    "connectProviderBtn": "اتصل بمقدم الخدمة",
+    "usingTemplateShort": "✓ باستخدام مكتبة القوالب",
+    "pleaseEnterKeyFirst": "يرجى إدخال مفتاح API أولاً"
+  },
+  "lifeAreas": {
+    "career": "الوظائف والمهنة",
+    "health": "الصحة و الحيوية",
+    "timing": "التوقيت و الإنتاجية",
+    "finances": "الثروة و الموارد",
+    "relationships": "الحب والعلاقات",
+    "personalGrowth": "النمو الشخصي"
+  },
+  "aboutThisHekaYear": "حول هذا العام HEKA",
+  "universalCalendar": "التقويم العالمي",
+  "waxingDescription": "تزايد: بناء الطاقة، النمو، التراكم",
+  "waningDescription": "انخفاض: إطلاق، الاستسلام، الانتهاء",
+  "newToFirstQuarter": "جديد إلى ربع أول: بدء مشاريع جديدة",
+  "fullToLastQuarter": "كامل إلى ربع آخر: حصاد النتائج",
+  "solarNoonSubtitle": "Sun at highest point on this day",
+  "planetaryQualities": "صفات الكواكب",
+  "firstQuarterToFull": "ربع أول إلى كامل: بناء السرعة",
+  "seasonalActivities": "Seasonal Activities",
+  "energeticQualities": "Energetic Qualities",
+  "energeticInfluence": "التأثير الحيوي",
+  "moonPhases": {
+    "newMoon": "القمر الجديد",
+    "fullMoon": "Full Moon",
+    "lastQuarter": "Last Quarter",
+    "firstQuarter": "First Quarter",
+    "waxingGibbous": "Waxing Gibbous",
+    "waningGibbous": "Waning Gibbous",
+    "waxingCrescent": "القمر ال {",
+    "waningCrescent": "Waning Crescent"
+  },
+  "planetDomains": {
+    "mars": "الإجراءات والرغبات",
+    "venus": "العلاقات و القيم",
+    "pluto": "التحول و القوة",
+    "saturn": "الهيكليات و الالتزامات",
+    "uranus": "التغيير و التحرر",
+    "mercury": "التواصل و الخطط",
+    "jupiter": "التوسع و الاعتقاد",
+    "neptune": "الآحلام و الروحانية",
+    "default": "مناطق الحياة"
+  },
+  "favorableActivities": "الأنشطة المفضلة",
+  "moonPhaseDisclaimer": "تحسب فázes القمر بطريقة رياضية وقد تختلف قليلاً عن الملاحظات الفلكية.",
+  "daysUntilNextSeason": "أيام حتى الفصل التالي",
+  "solarNoonDisclaimer": "الأوقات هي تقريب رياضي (±10-15 دقائق). يختلف الظهر الشمسي الدقيق بناءً على موقعك الدقيق وتاريخك.",
+  "biodynamicPrinciple": "Biodynamic Principle",
+  "cards": {
+    "moonPhase": {
+      "age": "العمر",
+      "title": "فاز القمر",
+      "phase": "الفترة",
+      "waxing": "تضخم",
+      "waning": "انحدار",
+      "daysUntil": "{{days}} أيام حتى",
+      "dayOfCycle": "يوم {{day}} من 29.5",
+      "illuminated": "مضاء",
+      "illumination": "الإضاءة",
+      "voidOfCourse": "فراغ المسار",
+      "lunarNewYear": "السنة القمرية الجديدة"
+    },
+    "seasons": {
+      "title": "المواسم",
+      "spring": "ربيع",
+      "summer": "صيف",
+      "autumn": "خريف",
+      "winter": "شتاء",
+      "daysUntil": "{{days}} أيام حتى",
+      "nextSolstice": "التل極 القادم",
+      "currentSeason": "الموسم الحالي",
+      "springEquinox": "إق티صاد الربيع",
+      "autumnEquinox": "إقтиصاد الخريف",
+      "summerSolstice": "إق티صاد الصيف",
+      "winterSolstice": "إقتيساد الشتاء"
+    },
+    "sunTimes": {
+      "title": "أوقات الشمس",
+      "sunset": "الغروب",
+      "sunrise": "الشروق",
+      "weather": "الطقس",
+      "accuracy": "الدقة",
+      "dayLength": "طول اليوم",
+      "accuracyLevels": {
+        "high": "عالي",
+        "exact": "دقيق",
+        "estimated": "مقدر",
+        "approximate": "تقريبي"
+      }
+    },
+    "dayOfWeek": {
+      "title": "يوم من الأسبوع",
+      "planet": "كوكب حاكم",
+      "energy": "الطاقة",
+      "favorableActivities": "الأنشطة المفضلة"
+    },
+    "agriculture": {
+      "title": "الزراعة",
+      "neutral": "متعادل",
+      "favorable": "مفضل",
+      "plantToday": "ماذا تزرع اليوم",
+      "byLocation": "حسب موقعك وفصول القمر",
+      "unfavorable": "غير مفضل"
+    },
+    "digitalClock": {
+      "days": "أيام",
+      "title": "ساعة رقمية",
+      "hours": "ساعات",
+      "minutes": "دقائق",
+      "seconds": "ثوان",
+      "countdowns": "أربعة عقود متطابقة حية"
+    },
+    "planetaryHours": {
+      "title": "ساعات الكواكب",
+      "favors": "يفضل",
+      "hourOf": "ساعة {{planet}}",
+      "currentHour": "الساعة الحالية",
+      "chaldeanOrder": "الترتيب الخلدائي"
+    }
+  },
+  "psychologicalImpact": "تأثير نفسي",
+  "practicalExpression": "تعبير عملي",
+  "agriculturalGuidance": "Agricultural guidance",
+  "energyForecastPrefix": "توقعات الطاقة ل",
+  "energyForecastSuffix": "{{date}} تجمع بين فاز القمر ومواقع الكواكب والرhythms الموسمية.",
+  "hemispheres": {
+    "northern": "نصف الكرة الشمالي",
+    "southern": "نصف الكرة الجنوبي"
+  },
+  "yourPersonalTransits": "الانتقالات الشخصية الخاصة بك",
+  "universalCalendarNote": "مثل التقويم الغريگوري، تواريخ HEKA هي نفسها في جميع أنحاء العالم. شهر HEKA {{month}}, اليوم {{day}} هو نفس اللحظة بغض النظر عمن كنت في سيدني أو نيويورك أو لندن - تختلف فقط التوقيت المدني محليًا.",
+  "whyThisDayDescription": "اشار فاز القمر وعوامل الموسمية إلى ظروف مثالية لأنشطة {{activity}}.",
+  "calculatingSolarTimes": "حساب أوقات الشمس...",
+  "confirm": {
+    "deleteProfile": "حذف هذا المل份؟ لا يمكن التراجع عن هذا."
+  },
+  "lookingBackDescription": "هذا التاريخ مضى. اراجع ما كانت عليه الenergies السماوية في هذا اليوم.",
+  "planetaryDayDisclaimer": "تعتمد ترابط أيام الكواكب على ال占星 التقليدي والرمزيات الثقافية.",
+  "historicalSignificance": "Historical Significance",
+  "todaysCelestialWeather": "الجو السماوي اليومي",
+  "hekaCalendarIsUniversal": "التقويم HEKA هو عالمي:",
+  "hekaYearBegunDescription": "بدأ هذا العام HEKA. يبدأ下一个 cycle في الأول من أبريل، {{nextYear}}.",
+  "planetaryDays": {
+    "sunday": {
+      "day": "الأحد",
+      "qualities": {
+        "0": "الحيوية",
+        "1": "القيادة",
+        "2": "النجاح",
+        "3": "الظهور"
+      },
+      "description": "يجلب يوم الشمس الحيوية والثقة والطاقة الإبداعية. مثالي للبدء الجديد والسعي لتحقيق الظهور.",
+      "activities": {
+        "0": "بدء مشاريع جديدة",
+        "1": "طلب الاعتراف",
+        "2": "المشاريع الإبداعية",
+        "3": "التمارين الجسدية"
+      }
+    },
+    "monday": {
+      "day": "الاثنين",
+      "qualities": {
+        "0": "ال trựcية",
+        "1": "المشاعر",
+        "2": "الرعاية",
+        "3": "التفكير الذاتي"
+      },
+      "description": "يوم القمر يشدد على المشاعر وال trựcية والعمل الداخلي. مثالي للاستراحة ومعالجة المشاعر.",
+      "activities": {
+        "0": "العناية بذاتك",
+        "1": "الأنشطة المنزلية",
+        "2": "الintrospection",
+        "3": "وقت العائلة"
+      }
+    },
+    "friday": {
+      "day": "الجمعة",
+      "qualities": {
+        "0": "الحب",
+        "1": "الجمال",
+        "2": "الانسجام",
+        "3": "الإبداع"
+      },
+      "description": "يوم الفينوس يشدد على الحب والجمال والانسجام. مثالي لأنشطة اجتماعية وتعبير فني.",
+      "activities": {
+        "0": "التجمعات الاجتماعية",
+        "1": "السعي الفنّي",
+        "2": "الرومانسية",
+        "3": "العناية بذاتك"
+      }
+    },
+    "tuesday": {
+      "day": "الخميس",
+      "qualities": {
+        "0": "العمل",
+        "1": "الشجاعة",
+        "2": "الدافع",
+        "3": "ال열اء"
+      },
+      "description": "يوم المريخ يجلب الطاقة والشجاعة والدافع. أفضل لاتخاذ الإجراء و客服 العقبات.",
+      "activities": {
+        "0": "مواجهة التحديات",
+        "1": "العمل الجسدي",
+        "2": "الدفاع عن الذات",
+        "3": "المنافسة"
+      }
+    },
+    "thursday": {
+      "day": "الخميس",
+      "qualities": {
+        "0": "التوسع",
+        "1": "الحظ",
+        "2": "الحكمة",
+        "3": "ال 幅"
+      },
+      "description": "يوم خวطر يجلب ال 幅 والحكمة والتوسع. مفضل لنمو وازدهار.",
+      "activities": {
+        "0": "القرارات الكبيرة",
+        "1": "الشؤون المالية",
+        "2": "التدريس",
+        "3": "تخطيط الرحلات"
+      }
+    },
+    "saturday": {
+      "day": "السبت",
+      "qualities": {
+        "0": "الانضباط",
+        "1": "الهيكلة",
+        "2": "المسؤولية",
+        "3": "الحكمة"
+      },
+      "description": "يوم الزحل يتطلب الانضباط والهيكلة. أفضل لتنظيم وتخطيط والمسؤولية.",
+      "activities": {
+        "0": "التنظيم",
+        "1": "التخطيط",
+        "2": "مراجعة العمل",
+        "3": "تعيين الحدود"
+      }
+    },
+    "wednesday": {
+      "day": "الأربعاء",
+      "qualities": {
+        "0": "التواصل",
+        "1": "العقل",
+        "2": "التعلم",
+        "3": "السفر"
+      },
+      "description": "يوم مريخ يفضل التواصل والتعلم والمرونة العقلية. مثالي للمفاوضات والكتابة.",
+      "activities": {
+        "0": "الكتابة",
+        "1": "المفاوضات",
+        "2": "الدراسة",
+        "3": "الرحلات القصيرة"
+      }
+    }
+  },
+  "illuminationMoreThanHalf": "أكثر من النصف: قوة الظهور القصوى",
+  "illuminationLessThanHalf": "أقل من النصف: الintrospection والتخطيط",
+  "thisMoonCycleDescription": "كان القمر في دورة {{name}}.",
+  "lookingForwardDescription": "هذا التاريخ في المستقبل. اخطط بelőا باستخدام هذه الenergies السماوية القادمة.",
+  "moonPhaseMeanings": {
+    "newMoon": "البدايات",
+    "fullMoon": "اكتمال",
+    "lastQuarter": "إطلاق",
+    "firstQuarter": "العمل",
+    "waxingGibbous": "تحسين",
+    "waningGibbous": "شكر",
+    "waxingCrescent": "النمو",
+    "waningCrescent": "استراحة"
+  },
+  "universalCalendarDescription": "التواريخ هي نفسها في جميع أنحاء العالم (مثل التقويم الغريگوري). تختلف التواريخ المدنية/الأوقات حسب التوقيت. الحسابات السماوية (الظهر الشمسي، فصول القمر) هي تقديرات رياضية ±30 دقيقة للأغراض التعليمية.",
+  "aboutThisHekaYearDescription": "يبدأ عام HEKA {{year}} في الأول من أبريل، {{civilYear}}. يحتوي كل عام HEKA على 12 شهرًا من 28 يومًا، بالإضافة إلى شهر مارس بـ 29 يومًا (30 في السنوات الناجمة/الcorrrection).",
+  "solarNoonLocalTimeDescription": "الشمس تصل إلى أعلى نقطة في الساعة {{time}} ({{timezone}})",
+  "solarNoonHistoricalDescription": "استخدم الثقافات القديمة الظهر الشمسي لتتبع الوقت. تم تمحيص حلقات الحجارة والساعة الشمسية لتحديد هذه اللحظة.",
+  "biodynamicPrincipleDescription": "يتبع هذا التوجيه الhythms الكونية التي تؤثر على الحيوية النباتية وظروف التراب.",
+  "dictionaries": {
+    "planetInSign": {
+      "sun": {
+        "leo": "الشمس في ليو تشرق بثقة إبداعية. اعبر عن نفسك بصدق وقيادة بقلب.",
+        "aries": "الشمس في أريز تجلب طاقة جريئة ورائدة. وقت لبدء الأمور و展示 القادة والعمل الشجاع.",
+        "virgo": "الشمس في فيرغو تدعو إلى التحسين وخدمة. تنظيم وتحسين النظم وعناية بالتفاصيل.",
+        "libra": "الشمس في\tlibra يسعى إلى الانسجام وشراكة. توازن العلاقات وتقدير الجمال ال.artistic.",
+        "taurus": "الشمس في تاوروس تجعلنا م근ين في الاستقرار ومتعة الحواس. التركيز على بناء وتربية وتقدير الجمال.",
+        "gemini": "الشمس في جم تثير الcuriosity والتواصل. تبادل الأفكار وتعلم وربط بمجتمعك.",
+        "cancer": "الشمس في سرطان تعمق العلاقات العاطفية. شغوف العلاقات واحترام المشاعر وإنشاء مأوى.",
+        "pisces": "الشمس في بISCES ي融 الحدود. الاتصال باللانهاية، ممارسة الرحمة، وثق ال trực觉.",
+        "scorpio": "الشمس في سكورPIO يغوص عمقًا في التحول. الامتناع من الكثافة واستكشاف الألغاز وإطلاق ما لم يخدم بعد.",
+        "aquarius": "الشمس في آباروس يبتكر لصالح المجموعة. الامتناع من ال珍奇 وتفكير ب-progressively وخدمة البشرية.",
+        "ophiuchus": "الشمس في أوفيوشوس تضاءل الحكمة الtherapeutic. وقت لمعرفة تحولية ودواء ثعبان واستعادة مقدسة.",
+        "capricorn": "الشمس في قبرس تبني لفترة طويلة. اتحمل المسؤولية وتعيين أهداف طموحة وastered الحرف.",
+        "sagittarius": "الشمس في ساجتاريوس توسع الأفق. ابحث عن الحكمة واستكشاف أماكن جديدة و欣然 الإيجابية."
+      },
+      "moon": {
+        "leo": "القمر في ليو يعبر المشاعر بشكل درامي. الدفء، الإبداع، وحاجة للاعتراف في العلاقات.",
+        "aries": "القمر في أريز يجلب ردود الفعل عاطفية سريعة. المشاعر الimpulsive والreactions الpassionate والحاجات المستقلة.",
+        "virgo": "القمر في فيرغو يسعى إلى الترتيب والفائدة. الرضا العاطفي من خلال الخدمة، الصحة، والتحسين.",
+        "libra": "القمر في\tlibra ي調and المشاعر. الحاجات إلى شراكة، توازن الجمال، وعلاقات ديبلوماسية.",
+        "taurus": "القمر في تاوروس يسعى إلى الراحة والاستقرار. الرعاية من خلال الsensuality الصبر والأمان المادي.",
+        "gemini": "القمر في جم يتقلب مع الأفكار ومحادثات. الcuriosity العاطفة وحاجات ال刺激性 العقلية.",
+        "cancer": "القمر في سرطان. الرعاية العميقة، الشهوات الحميمية، وحساسية المشاعر العميقة.",
+        "pisces": "القمر في ال pisces ي融解 حدود المشاعر. التعاطف، التصور، وحساسية الروحية.",
+        "scorpio": "The Moon in Scorpio feels intensely. Emotional depth, transformative experiences, and powerful intuition.",
+        "aquarius": "القمر في الحمل يعزل ليرى. ال客体ivity العاطفية، القلق الإنسانية، واحتياجات فريدة.",
+        "ophiuchus": "القمر في أوفيوشوس يشفي من خلال المشاعر. الطب ال直觉ي، الشعور التحولي، وحكمة ال蟒蛇。",
+        "capricorn": "القمر في الجد يقيد المشاعر. التعامل النضج بمشاعر، المسؤولية، والأمن على المدى الطويل.",
+        "sagittarius": "القمر في القوس يستكشف من الناحية العاطفية. احتياجات الحرية، المشاعر الفلسفية، وروح ال历险。"
+      },
+      "mars": {
+        "leo": "Mars in Leo performs boldly. Dramatic action, creative drive, and confident leadership.",
+        "aries": "Mars is at home in Aries. Direct action, courageous initiative, and passionate drive.",
+        "virgo": "Mars in Virgo works precisely. Methodical effort, service-oriented action, and health focus.",
+        "libra": "Mars in Libra acts diplomatically. Indirect confrontation, partnership drive, and aesthetic action.",
+        "taurus": "Mars in Taurus persists steadily. Determined effort, sensual energy, and stubborn resistance.",
+        "gemini": "Mars in Gemini acts mentally. Quick movements, verbal combat, and scattered initiatives.",
+        "cancer": "Mars in Cancer defends protectively. Emotional action, defensive aggression, and nurturing drive.",
+        "pisces": "يطفو المريخ في ال pisces بطريقة بديهية. إجراء روحاني، حوافز تعاطفية، ومبادرة مفتوحة.",
+        "scorpio": "Mars is at home in Scorpio. Intense action, strategic power, and transformative drive.",
+        "aquarius": "يثور المريخ في الحمل على الإجراء. حوافز الإصلاح، مبادرة جماعية، وأساليب غير تقليدية.",
+        "ophiuchus": "Mars in Ophiuchus acts as healer. Surgical precision, restorative force, and transformative intervention.",
+        "capricorn": "يحقق المريخ في الجد Hrby. جهدة منتظمة، تسلق استراتيجي، وإجراء سلطة.",
+        "sagittarius": "يكتشف المريخ في القوس الغامض بطريقة مغامرة. مبادرة توسعية، إجراء فلسفي، واتخاذ المخاطر."
+      },
+      "venus": {
+        "leo": "الزهرة في ليو تحب بطريقة dramatic. الgestes الromantiques، التعبير الإبداعي،跟affection忠诚。",
+        "aries": "الزهرة في أرس تحب ب方式 passionate. الجذب الجريئة، الرومانسية العشوائية، والعلاقات المستقلة.",
+        "virgo": "الزهرة في العذراء تخدم بطريقة practical. الحب المفيدة، الجذب الmodes،跟attention对細節。",
+        "libra": "الزهرة في الميزان استقر. العلاقات ال調和، تقدير الجمال،跟风关系。",
+        "taurus": "الزهرة في تاوروس استقر. المتعة الحسيّة، العلاقات الثابتة، وتقدير الجمال.",
+        "gemini": "الزهرة في جم تسحر باللغة. الاتصالات الflirtatious، الجذب الفكري،跟社會多樣性。",
+        "cancer": "الزهرة في سرطان ت육 ب方式 loving. الربط العاطفي، الانسجام المنزلي،跟关怀的关怀。",
+        "pisces": "Venus in Pisces loves unconditionally. Romantic idealism, spiritual connection, and compassionate relating.",
+        "scorpio": "Venus in Scorpio loves intensely. Deep transformation through relationships and magnetic attraction.",
+        "aquarius": "Venus in Aquarius connects uniquely. Unconventional relationships, friendship-based love, and freedom.",
+        "ophiuchus": "Venus in Ophiuchus loves as medicine. Healing relationships, transformative devotion, and heart-centered restoration.",
+        "capricorn": "Venus in Capricorn commits seriously. Mature relationships, status considerations, and lasting bonds.",
+        "sagittarius": "Venus in Sagittarius explores freely. Adventurous love, philosophical connection, and open relationships."
+      },
+      "saturn": {
+        "leo": "يخفض زحل الإبداع. دروس في التواضع، التعبير الهيكلي، وقيادة المسؤولة.",
+        "aries": "يختبر زحل المبادرة. دروس في الصبر، الإجراء المهدئ، وقيادة الناضجة.",
+        "virgo": "يperfect زحل الخدمة. دروس في الدقة، الانضباط الصحّي، والmastery التطبيقي.",
+        "libra": "يتعهد زحل في التوازن. دروس في المسؤولية الشراكة، الهيكل العادل، والعلاقات النضجة.",
+        "taurus": "يثابت زحل الموارد. دروس في التحمل، المسؤولية المادية، وقيم التحمل.",
+        "gemini": "ينظم زحل العقل. دروس في التركيز، الاتصال الجاد، ونضج العقل.",
+        "cancer": "يحمي زحل الحدود. دروس في المسؤولية العاطفة، الواجب الأسرة، وحدود الرعاية.",
+        "pisces": "Saturn in Pisces dissolves boundaries carefully. Lessons in compassion, spiritual discipline, and mystical responsibility.",
+        "scorpio": "يتحول زحل بعمق. دروس في القوة، المسؤولية ال",
+        "aquarius": "Saturn is at home in Aquarius. Social responsibility, innovative structures, and humanitarian duty.",
+        "ophiuchus": "Saturn in Ophiuchus masters healing. Lessons in medical discipline, structured transformation, and responsible restoration.",
+        "capricorn": "Saturn is at home in Capricorn. Mastery through discipline, authority earned, and lasting achievement.",
+        "sagittarius": "Saturn in Sagittarius structures beliefs. Lessons in wisdom, disciplined expansion, and responsible freedom."
+      },
+      "mercury": {
+        "leo": "عطارد في ليو يعبر بطريقة إبداعية. التحدث الدرامائي، الأفكار الثقة، والتفكير القلبي.",
+        "aries": "عطارد في أرس يفكر بسرعة ومباشرة. التحدث الحاد، الأفكار ال莽撞ة، والأفكار الرائدة.",
+        "virgo": "عطارد في العذراء استقر. الدقة التحليلية، الذكاء ال实际، والتحليل التفصيلي.",
+        "libra": "عطارد في الميزان يسعى للتفكير المتوازن. التحدث الدبلوماسي والنظر في جميع الperspectives.",
+        "taurus": "عطارد في تاوروس يفكر بطريقة عملية. التعلم ال ثابت، الإدراك الحسّي، والتحدث بطريقة منهجية.",
+        "gemini": "عطارد في جم استقر. ال机智، التفكير المتنوعة، والتحدث بمهارة.",
+        "cancer": "عطارد في سرطان يفكر بطريقة 直觉ية. الذاكرة التركيز، الذكاء العاطفي، وكلمات تغذي.",
+        "pisces": "عطارد في pisces يتصور بطريقة 直觉ية. التعبير الشاعري، الاستماع الواسع، والفهم الروحي.",
+        "scorpio": "عطارد في ال Scorpio ي琛 بعمق. التفكير التحقيقي، ال洞悉 النفسية، وكلمات ت penetrate.",
+        "aquarius": "عطارد في الحمل يبتكر الفكر. الأفكار الأصلية، الفصل الفكري، والمفاهيم التقدمية.",
+        "ophiuchus": "عطارد في أوفيوشوس يفكر بطريقة طبية. التحدث الtherapeutic، المعرفة الطبية، وال洞悉 التحولية.",
+        "capricorn": "عطارد في الجد يبني الفكر. التخطيط الاستراتيجي، التحدث الauthoritative، والحكمة ال实际.",
+        "sagittarius": "عطارد في القوس يوسع الفهم. التفكير الفلسفي والتحدث الواسع."
+      },
+      "jupiter": {
+        "leo": "يخلق كوكب المشتري في الاسد بطريقة ضخمة. النمو من خلال التعبير الذاتي، الabbondance الإبداعية، ولقيادة السخية.",
+        "aries": "يتوسع كوكب المشتري في الحمل بطريقة جريئة. النمو من خلال المبادرة، البدايات السعيدة، والتفاؤل الثقة.",
+        "virgo": "يحسن كوكب المشتري في العذراء بطريقة مهنية. النمو من خلال الخدمة، الحكمة العملية، والabbondance الصحية.",
+        "libra": "يتناغم كوكب المشتري في الميزان بطريقة عادلة. النمو من خلال الشراكة، تقدير الجمال، وحكمة الدبلوماسية.",
+        "taurus": "يظهر كوكب المشتري في الثور بطريقة مفرطة. النمو من خلال الصبر، النعم المادية، وحكمة الحواس.",
+        "gemini": "يتعلم كوكب المشتري في الجوزاء بطريقة متنوعة. النمو من خلال الاتصال، التوسع الفكري، واهتمامات متنوعة.",
+        "cancer": "يغذي كوكب المشتري في السرطان بطريقة جهرية. النمو من خلال الرعاية، الabbondance العاطفة، وحكمة الحماية.",
+        "pisces": "ي融 المشتري في pisces إلى اللانهاية. النمو من خلال الرحمة، الabbondance الروحية، و الحب العالمي.",
+        "scorpio": "يتحول كوكب المشتري في ال Scorpio بعمق. النمو من خلال الكثافة، الموارد المشتركة، وحكمة النفس.",
+        "aquarius": "يبتكر المشتري في الحمل بتقدم. النمو من خلال المجتمع، الهيكل الابتكاري، وواجب الإنسانية.",
+        "ophiuchus": "يتوسع كوكب المشتري في Ofiuchus في الطب. النمو من خلال الحكمة الطبية، الحكمة ال蟒蛇، والمعرفة المتغيرة.",
+        "capricorn": "يبني المشتري في الجد بحكمة. النمو من خلال الانضباط، النجاح الاستراتيجي، وحكمة السلطة.",
+        "sagittarius": "المشتري في القوس الغامض. التوسع اللامحدود، الحكمة الفلسفية، ورحلات الحظ."
+      }
+    },
+    "providerSetup": {
+      "groq": {
+        "type": "groq",
+        "name": "Groq",
+        "logo": "⚡",
+        "color": "#f43f5e",
+        "website": "https://groq.com",
+        "signupUrl": "https://console.groq.com/login",
+        "keyFormat": "تبدأ بـ \"gsk_\" متبوعة بحروف وأرقام",
+        "apiKeysUrl": "https://console.groq.com/keys",
+        "description": "استنتاج ذكاء صناعي بسرعة الضوء مع Llama 3. يشمل الطبقة الحرة 1M مفاتيح كل يوم.",
+        "pricingNote": "الطبقة الحرة: 1M الرموز يومياً. خطط مدفوعة متاحة لاستخدامات أعلى.",
+        "freeTierInfo": "1,000,000 مفاتيح يوميًا مجانية",
+        "keyPlaceholder": "gsk_your_api_key_here",
+        "setupSteps": {
+          "0": {
+            "tip": "استخدم بريدك الإلكتروني أو حسابك جوجل لتسجيل الدخول بسرعة",
+            "link": "https://console.groq.com/login",
+            "title": "إنشاء حساب Groq",
+            "action": "اذهب إلى وحدة التحكم Groq →",
+            "description": "زور وحدة التحكم Groq والتسجيل لحساب مجاني."
+          },
+          "1": {
+            "tip": "ابحث عن أيقونة المفتاح في قائمة التنقل",
+            "link": "https://console.groq.com/keys",
+            "title": "انتقل إلى مفاتيح API",
+            "action": "افتح صفحة مفاتيح API →",
+            "description": "بمجرد تسجيل الدخول، انقر على \"مفاتيح API\" في الشريط الجانبي الأيسر."
+          },
+          "2": {
+            "tip": "اختر اسمًا توضيحيًا حتى تتذكر ما هو لأجله",
+            "title": "إنشاء مفتاح API جديد",
+            "description": "انقر على زر \"إنشاء مفتاح API\". أعطيه اسمًا مثل \"HEKA Calendar\"."
+          },
+          "3": {
+            "tip": "⚠️ لأسباب أمنية، يظهر Groq المفتاح الكامل مرة واحدة فقط. إذا فقدته، أنشئ واحدًا جديدًا.",
+            "title": "نسخ مفتاحك الAPI",
+            "description": "انسخ المفتاح الذي تم إنشاؤه (يبدأ بـ \"gsk_\"). اخزنه بأمان - لن تراه مرة أخرى."
+          },
+          "4": {
+            "tip": "يتم تخزين مفتاحك فقط على هذا الجهاز",
+            "title": "لصق المفتاح في HEKA",
+            "description": "ارجع إلى هذا الشاشة ولصق مفتاحك أدناه. انقر على \"اختبار الاتصال\" للتحقق."
+          }
+        }
+      },
+      "openai": {
+        "type": "openai",
+        "name": "OpenAI",
+        "logo": "🤖",
+        "color": "#10a37f",
+        "website": "https://openai.com",
+        "signupUrl": "https://platform.openai.com/signup",
+        "keyFormat": "يبدأ بـ \"sk-\" متبوعًا بحروف وأرقام",
+        "apiKeysUrl": "https://platform.openai.com/api-keys",
+        "description": "GPT-4 و GPT-3.5 Turbo لتفسيرات الفلكية المفصلة. الجودة الرائدة في الصناعة.",
+        "pricingNote": "الدفع مدفوع بعد الائتمانات المجانية. GPT-3.5: حوالي 0.002 دولار لكل 1K من الرموز.",
+        "freeTierInfo": "5 دولارًا في الائتمانات المجانية لمستخدمي الجدد",
+        "keyPlaceholder": "sk-your_api_key_here",
+        "setupSteps": {
+          "0": {
+            "tip": "أعد هاتفك جاهزًا للتحقق عبر الرسائل القصيرة",
+            "link": "https://platform.openai.com/signup",
+            "title": "إنشاء حساب OpenAI",
+            "action": "التسجيل في OpenAI →",
+            "description": "سجل في منصة OpenAI. ستحتاج إلى التحقق من البريد الإلكتروني ورقم الهاتف."
+          },
+          "1": {
+            "tip": "يمكنك ضبط حدود الاستخدام لتحكم في التكاليف في إعدادات الفوترة",
+            "title": "إضافة طريقة الدفع (اختياري)",
+            "description": "بينما تحصل على 5 دولارًا في الائتمانات المجانية، إضافة طريقة الدفع تضمن خدمة متواصلة."
+          },
+          "2": {
+            "tip": "لا تخلط هذا مع \"مفاتيح API المشروع\" - نحن بحاجة إلى مفاتيح API للمستخدم",
+            "link": "https://platform.openai.com/api-keys",
+            "title": "انتقل إلى قسم مفاتيح API",
+            "action": "افتح مفاتيح API →",
+            "description": "انقر على صورتك الشخصية → \"ملفك الشخصي\" → \"مفاتيح API للمستخدم\" أو زور الرابط المباشر."
+          },
+          "3": {
+            "tip": "⚠️ OpenAI يظهر المفتاح الكامل مرة واحدة فقط. انسخه على الفور!",
+            "title": "إنشاء مفتاح سري جديد",
+            "description": "انقر \"إنشاء مفتاح سري جديد\". أسميه \"HEKA Calendar\" للتعرف السهل."
+          },
+          "4": {
+            "tip": "اضبط تنبيهات الفوترة على platform.openai.com/settings/organization/billing/limits",
+            "title": "تكوين في HEKA",
+            "description": "الصق المفتاح أدناه واختبار الاتصال. راقب الاستخدام على لوحة تحكم OpenAI."
+          }
+        }
+      },
+      "ollama": {
+        "type": "ollama",
+        "name": "Ollama (Local)",
+        "logo": "💻",
+        "color": "#ffffff",
+        "website": "https://ollama.com",
+        "signupUrl": "https://ollama.com/download",
+        "keyFormat": "URL format: http://localhost:11434",
+        "apiKeysUrl": "",
+        "description": "Run AI models entirely on your own device. Complete privacy, no internet needed after setup.",
+        "pricingNote": "No costs. Requires capable hardware (8GB+ RAM recommended).",
+        "freeTierInfo": "100% free - runs locally",
+        "keyPlaceholder": "http://localhost:11434",
+        "setupSteps": {
+          "0": {
+            "tip": "Windows version is available via Windows Subsystem for Linux (WSL2)",
+            "link": "https://ollama.com/download",
+            "title": "Download Ollama",
+            "action": "Download Ollama →",
+            "description": "Download and install Ollama for your operating system (Mac, Linux, or Windows)."
+          },
+          "1": {
+            "tip": "Llama 3 is recommended for best results. Models are several GB to download.",
+            "title": "Install a Model",
+            "description": "Open terminal and run: ollama pull llama3 or ollama pull mistral"
+          },
+          "2": {
+            "tip": "The server runs on http://localhost:11434 by default",
+            "title": "Start Ollama Server",
+            "description": "Run: ollama serve to start the local API server. Keep this terminal open."
+          },
+          "3": {
+            "tip": "First run downloads the model. Subsequent runs are instant.",
+            "title": "Verify Installation",
+            "description": "Test by running: ollama run llama3 in another terminal. Type a test message."
+          },
+          "4": {
+            "tip": "Ollama must be running whenever you want AI-enhanced readings",
+            "title": "Connect HEKA",
+            "description": "Enter the server URL (usually http://localhost:11434) below and test connection."
+          }
+        }
+      },
+      "template": {
+        "type": "قالب",
+        "name": "مكتبة القوالب",
+        "logo": "📚",
+        "color": "#fbbf24",
+        "website": "",
+        "signupUrl": "",
+        "keyFormat": "",
+        "apiKeysUrl": "",
+        "description": "أكثر من 169 قالب مخصصًا لكوكب-العلامة، م kneaved في قراءات فريدة من نوعها بواسطة فاز القمر، الجانب، والفئة الحياتية. دائمًا مجانًا، دائمًا فوريًا، لا تتطلب إعداد.",
+        "pricingNote": "لا تكاليف أبدًا. مدعوم من قبل نظام القوالب المحدد.",
+        "freeTierInfo": "مجانًا تمامًا",
+        "keyPlaceholder": "",
+        "setupSteps": {
+          "0": {
+            "tip": "تغطي القوالب جميع الأحداث السماوية الرئيسية والمواقع الكوكبية",
+            "title": "حدد مكتبة القوالب",
+            "description": "هذه هي الخيار الافتراضي. لا تحتاج إلى تكوين."
+          },
+          "1": {
+            "tip": "يمكنك التبديل إلى مزودين الذكاء الاصطناعي في أي وقت في المستقبل",
+            "title": "البدء في استخدامه على الفور",
+            "description": "ستستخدم قراءات علم النجوم جميعًا مكتبتنا النصية المقدمة مسبقًا."
+          }
+        }
+      },
+      "anthropic": {
+        "type": "anthropic",
+        "name": "Anthropic",
+        "logo": "🧠",
+        "color": "#d97757",
+        "website": "https://anthropic.com",
+        "signupUrl": "https://console.anthropic.com/login",
+        "keyFormat": "تبدأ بـ \"sk-ant-\" متبوعة بحروف وأرقام",
+        "apiKeysUrl": "https://console.anthropic.com/settings/keys",
+        "description": "Claude AI لتوجيه الفلك العقلاني الدقيق مع سياق موسع.",
+        "pricingNote": "أسعار منافسية. Claude 3 Haiku: حوالي 0.25 دولار لكل 1K من الرموز.",
+        "freeTierInfo": "5 دولار في إئتمانات مجانية لمستخدمي الجدد",
+        "keyPlaceholder": "sk-ant-your_api_key_here",
+        "setupSteps": {
+          "0": {
+            "tip": "قد يكون لدى Anthropic قائمة انتظار - الموافقة عادة سريعة",
+            "link": "https://console.anthropic.com/login",
+            "title": "التسجيل في Anthropic",
+            "action": "انتقل إلى وحدة Anthropic →",
+            "description": "انشئ حسابًا في وحدة Anthropic باستخدام بريدك الإلكتروني للعمل."
+          },
+          "1": {
+            "tip": "تحقق في مجلد البريد العشوائي إذا لم ترى البريد الإلكتروني في غضون بضع دقائق",
+            "title": "تحقق من حسابك",
+            "description": "ابحث في بريدك الإلكتروني رابط التحقق. اكمل أي خطوات التحقق المطلوبة."
+          },
+          "2": {
+            "tip": "رمز الإعدادات هو الرمز الدوار في الزاوية العلوية اليسرى",
+            "link": "https://console.anthropic.com/settings/keys",
+            "title": "الدخول إلى مفاتيح API",
+            "action": "افتح مفاتيح API →",
+            "description": "في وحدة التحكم، انتقل إلى الإعدادات → مفاتيح API أو استخدم الرابط المباشر أدناه."
+          },
+          "3": {
+            "tip": "يمكنك إنشاء مفاتيح متعددة لتطبيقات مختلفة",
+            "title": "إنشاء مفتاح API",
+            "description": "انقر \"إنشاء مفتاح\". أسميه بوصف مثل \"HEKA Astrology\"."
+          },
+          "4": {
+            "tip": "Keys never expire unless you revoke them manually",
+            "title": "Copy and Configure",
+            "description": "Copy the key (starts with \"sk-ant-\") and paste it below in HEKA."
+          }
+        }
+      }
+    },
+    "moonOracle": {
+      "New Moon": {
+        "poem": "In the void between breaths, all potential dwells. The seed waits in darkness, gathering courage to split its shell. Plant intentions now—they will grow with the light.",
+        "title": "THE DARK MYSTERY",
+        "favors": {
+          "0": "Setting intentions",
+          "1": "Planting seeds",
+          "2": "Beginning new ventures",
+          "3": "Inner vision work"
+        },
+        "warnings": {
+          "0": "Don't push for immediate results",
+          "1": "Avoid major launches"
+        }
+      },
+      "Full Moon": {
+        "poem": "كل ما كان مخفي في الظلام الآن مظهر في الضوء. البذرة التي زُرعت في القمر الجديد تكسر الأرض. ت culminates your work. يشهد العالم بكمالك.",
+        "title": "الكشف الكبير",
+        "favors": {
+          "0": "احتفال",
+          "1": "إطلاق ما لم يبق له أي فائدة",
+          "2": "الظهور العام",
+          "3": "ممارسات الامتنان"
+        },
+        "warnings": {
+          "0": "المشاعر ترتفع",
+          "1": "قد يتم تعطيل النوم"
+        }
+      },
+      "Last Quarter": {
+        "poem": "يظل نصف، يجب أن يذهب النصف الآخر. ماذا ستحمل إلى الامام؟ ماذا ستترك وراءك؟ القرار هو لك، ولك فقط.",
+        "title": "الإطلاق",
+        "favors": {
+          "0": "التخلص",
+          "1": "التخلص من ال依恋",
+          "2": "التخلص من الفراغ",
+          "3": "العفو"
+        },
+        "warnings": {
+          "0": "لا تبدأ مشاريع جديدة",
+          "1": "اكمال ما يمكنك"
+        }
+      },
+      "First Quarter": {
+        "poem": "نصف الضوء، نصف الظلال - القرار يعلق في التوازن. يتطلب المسار الامامي العمل. اختر، وسوف تتعاون الكون معك.",
+        "title": "ال叉路口",
+        "favors": {
+          "0": "اتخاذ القرارات",
+          "1": "اتخاذ الإجراءات",
+          "2": "دفع من خلال العقبات",
+          "3": "الالتزام"
+        },
+        "warnings": {
+          "0": "تجنب التردد",
+          "1": "لا تنظر للخلف"
+        }
+      },
+      "Waxing Gibbous": {
+        "poem": "เกือบ كامل،เกือบ مكتمل. الزخامة تبني مثل الموجة المتطرفة. تحسين، تصحيح، إعداد للكشف.",
+        "title": "التجمع",
+        "favors": {
+          "0": "تحسين المشاريع",
+          "1": "تعديل الخطط",
+          "2": "التحضير لإطلاق",
+          "3": "جمع الموارد"
+        },
+        "warnings": {
+          "0": "لا تسرع إلى الاكتمال",
+          "1": "الصبر يؤجر"
+        }
+      },
+      "Waning Gibbous": {
+        "poem": "يبدأ الضوء في التراجع اللطيف، لكن الحكمة تظل. شارك ما تعلمته. علم الآخرين ما علمك بكماله.",
+        "title": "المشاركة",
+        "favors": {
+          "0": "مشاركة المعرفة",
+          "1": "التدريس",
+          "2": "إعطاء zpět",
+          "3": "الامتنان"
+        },
+        "warnings": {
+          "0": "لا تمسك بالذروة",
+          "1": "اترك الدورة得以完成"
+        }
+      },
+      "Waxing Crescent": {
+        "poem": "A sliver of silver pierces the night. The dream begins to breathe, taking its first steps into form. Trust the unfolding.",
+        "title": "THE FIRST BREATH",
+        "favors": {
+          "0": "اتخاذ الخطوات الأولى",
+          "1": "بناء الزخامة",
+          "2": "تعلم المهارات الجديدة",
+          "3": "البناء علاقات"
+        },
+        "warnings": {
+          "0": "لا تتعهد بأكثر من ما تستطيع",
+          "1": "ابق مرنة"
+        }
+      },
+      "Waning Crescent": {
+        "poem": "ساب فضية تختفي إلى الأسود. استرخ الآن. الงาน مكتملة. استسلم للظلام، مع المعرفة أن الضوء سيعود.",
+        "title": "الاستسلام",
+        "favors": {
+          "0": "الاسترخاء العميق",
+          "1": "الاستسلام",
+          "2": "ال冥思",
+          "3": "التحضير",
+          "4": "العمل على الحلم"
+        },
+        "warnings": {
+          "0": "تجنب القرارات الرئيسية",
+          "1": "المحافظة على الطاقة"
+        }
+      }
+    },
+    "planetaryGuidance": {
+      "sun": {
+        "do": {
+          "0": "الأخذ بالقيادة",
+          "1": "القيام بطلبات مهمة",
+          "2": "التركيز على الظهور",
+          "3": "التعبير عن نفسك",
+          "4": "اطلب الاعتراف"
+        },
+        "title": "الساعة الشمسية",
+        "dont": {
+          "0": "الاختباء في الظلال",
+          "1": "تجنب المسؤولية",
+          "2": "خفض ضوءك"
+        },
+        "quality": "الحيوية والاعتراف",
+        "description": "الشمس تضاءل كل ما تلمسه. هذه الساعة تفضل الظهور والقيادة وشؤون القلب والأنا."
+      },
+      "moon": {
+        "do": {
+          "0": "تعزيز العلاقات",
+          "1": "الثقة ب ال trựcية",
+          "2": "الشؤون المنزلية والعائلة",
+          "3": "معالجة المشاعر",
+          "4": "العمل على الحلم"
+        },
+        "title": "الساعة القمرية",
+        "dont": {
+          "0": "فرض القرارات العقلية",
+          "1": "تجاهل المشاعر",
+          "2": "دفع بقوة كبيرة"
+        },
+        "quality": "المشاعر وال trựcية",
+        "description": "القمر يحكم موجات المشاعر وال trựcية. وقت لتعزيز العلاقات و البيت و استقبال ال心灵."
+      },
+      "mars": {
+        "do": {
+          "0": "النشاط الجسدي",
+          "1": "تعامل مع الصراعات مباشرة",
+          "2": "ممارسة الرياضة",
+          "3": "السعي المتنافس",
+          "4": "اتخاذ إجراءات جريئة"
+        },
+        "title": "الساعة المريخية",
+        "dont": {
+          "0": "تجنب المواجهة اللازمة",
+          "1": "억제 الغضب",
+          "2": "بدء الجدالات"
+        },
+        "quality": "العمل و الدافع",
+        "description": "يجلب المريخ النار و الدافع والطاقة التنافسية. يفضل الفعل الجسدي و المواجهة."
+      },
+      "venus": {
+        "do": {
+          "0": "الرومانسية والcourtship",
+          "1": "الإبداع الفن",
+          "2": "الاجتماع الاجتماعي",
+          "3": "خلق الجمال",
+          "4": "حل النزاعات بطريقة سلمية"
+        },
+        "title": "ساعة الزهرة",
+        "dont": {
+          "0": "فرض النتائج",
+          "1": "تجاهل الجمال",
+          "2": "تسريع ال親密度"
+        },
+        "quality": "الحب والجمال",
+        "description": "تغمس الزهرة العالم بالجمال والحنين. الحب، الفن، والانسجام يحكمون الأعلى."
+      },
+      "saturn": {
+        "do": {
+          "0": "التركيز على المسؤوليات",
+          "1": "الدراسة وتنظيم",
+          "2": "التخطيط للمستقبل",
+          "3": "بناء الأساس",
+          "4": "قبول الحدود"
+        },
+        "title": "ساعة الزحل",
+        "dont": {
+          "0": "التجسس على الجوانب",
+          "1": "تجنب المهام",
+          "2": "لا تتوقع النتائج الفورية"
+        },
+        "quality": "الانضباط والهيكلة",
+        "description": "يتطلب زحل الانضباط والهيكلة. العمل الجاد الآن يثمر بنتائج دائمة."
+      },
+      "mercury": {
+        "do": {
+          "0": "إرسال رسائل مهمة",
+          "1": "توقيع ال屿تRACTS (إذا كانت مباشرة)",
+          "2": "الكتابة و الدراسة",
+          "3": "ال商议",
+          "4": "السفر على مسافات قصيرة"
+        },
+        "title": "ساعة العطارد",
+        "dont": {
+          "0": "التورط في ال欺瞒",
+          "1": "نشر ال流言",
+          "2": "توقيع إذا كانت العطارد تراجع"
+        },
+        "quality": "العقل و الABCDEFG",
+        "description": "يسرع العطارد العقل واللسان. يتدفق الABCDEFG، والتجارة بسهولة الآن."
+      },
+      "jupiter": {
+        "do": {
+          "0": "المعاملات التجارية",
+          "1": "طلب الحكمة",
+          "2": "توسيع الأفق",
+          "3": "تعليم وتعلم",
+          "4": "أعمال السخاء"
+        },
+        "title": "ساعة المشتري",
+        "dont": {
+          "0": "الavarice",
+          "1": "التفكير الصغير",
+          "2": "حد نفسك"
+        },
+        "quality": "التوسع و الحظ",
+        "description": "يوسع المشتري كل ما يلمسه. الحظ، الحكمة، والنمو مبارك في هذه الساعة."
+      }
+    }
+  }
+}

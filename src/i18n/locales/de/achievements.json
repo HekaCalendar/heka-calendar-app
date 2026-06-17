@@ -1,0 +1,99 @@
+{
+  "title": "Erfahrungen",
+  "streak": "Serien",
+  "days": "Tage",
+  "totalAchievements": "{{count}} Erfolge",
+  "earned": "Verdient",
+  "locked": "Gesperrt",
+  "newAchievement": "Neuer Erfolg!",
+  "categories": {
+    "calendar": "Kalendermeister",
+    "journal": "Tagebuchhüter",
+    "circle": "Kreisbauer",
+    "coach": "Sternenbeobachter",
+    "explorer": "Entdecker"
+  },
+  "achievements": {
+    "firstStep": {
+      "name": "Erster Schritt",
+      "description": "Öffne das Kalender das erste Mal"
+    },
+    "timeTraveler": {
+      "name": "Zeitreisender",
+      "description": "Schau auf ein Datum, das mehr als 1 Jahr entfernt ist"
+    },
+    "streak7": {
+      "name": "Woche des Lichts",
+      "description": "Benutze den Kalender 7 Tage hintereinander"
+    },
+    "streak30": {
+      "name": "Monat der Sterne",
+      "description": "Benutze den Kalender 30 Tage hintereinander"
+    },
+    "streak100": {
+      "name": "Jahrhundert der Weisheit",
+      "description": "Benutze den Kalender 100 Tage hintereinander"
+    },
+    "journalFirst": {
+      "name": "Erster Satz",
+      "description": "Schreibe deinen ersten Tagebucheintrag"
+    },
+    "journal10": {
+      "name": "Angehende Schriftstellerin",
+      "description": "Schreibe 10 Tagebucheinträge"
+    },
+    "journal50": {
+      "name": "Erfahrene Schreiberin",
+      "description": "Schreibe 50 Tagebucheinträge"
+    },
+    "friendAdded": {
+      "name": "Erstes Band",
+      "description": "Füge dein erstes Freundesband hinzu"
+    },
+    "circle5": {
+      "name": "Wachsende Runde",
+      "description": "Habe 5 Freunde in deinem Kreis"
+    },
+    "aiAsked": {
+      "name": "Sucher der Weisheit",
+      "description": "Stelle der KI-Coach eine Frage"
+    },
+    "aiStreak7": {
+      "name": "Tägliche Anleitung",
+      "description": "Beratung der KI-Coach für 7 Tage"
+    },
+    "allMoonPhases": {
+      "name": "Mondbeobachter",
+      "description": "Schau dir alle 8 Mondphasen an"
+    },
+    "allZodiac": {
+      "name": "Zodiakusforscher",
+      "description": "Schau dir alle 13 Sternzeichen an"
+    },
+    "printFirst": {
+      "name": "Erster Druck",
+      "description": "Drucken Sie Ihre erste Kalenderseite"
+    }
+  },
+  "categoryLabels": {
+    "beginner": "Anfänger",
+    "intermediate": "Fortgeschritten",
+    "advanced": "Fortgeschrittener",
+    "master": "Meister",
+    "special": "Besondere",
+    "explorer": "Entdecker",
+    "discoverer": "Entdecker",
+    "engager": "Mitwirkender"
+  },
+  "stats": {
+    "appOpens": "App-Öffnungen",
+    "dayStreak": "Tage in Folge",
+    "hoursSpent": "Verbrachte Stunden",
+    "featuresFound": "Gefundene Merkmale"
+  },
+  "all": "Alle",
+  "showHidden": "Versteckte anzeigen",
+  "noAchievements": "Keine Erfolge in dieser Kategorie gefunden",
+  "hiddenAchievement": "Verstecktes Erfolgsstück",
+  "secret": "GEHEIMNIS"
+}

@@ -1,741 +1,285 @@
 /**
- * Community Hub
- * Epic social center for Holidays & Features voting.
+ * ╔═══════════════════════════════════════════════════════════════════════════╗
+ * ║                    COMMUNITY HUB — SANCTUARY OF CONNECTION                ║
+ * ║                                                                           ║
+ * ║  Find kindred spirits, local circles, and community spaces aligned with   ║
+ * ║  celestial rhythms and natural timekeeping.                               ║
+ * ╚═══════════════════════════════════════════════════════════════════════════╝
  */
 
-import { useEffect, useMemo, useState } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import i18n from '../i18n';
+import '../styles/tracker-panel.css';
 import type { RootState, AppDispatch } from '../store';
-import { trackFeatureDiscovery } from '../services/engagementService';
-import { containsProfanity } from '../services/profanityFilter';
-import {
-  attachCommunityHolidaysListener,
-  attachCommunityFeaturesListener,
-  seedCommunityFeaturesIfNeeded,
-  submitCommunityHoliday,
-  voteHoliday,
-  voteFeature,
-  detachCommunityListeners,
-  DEFAULT_FEATURES,
-} from '../services/communityService';
-import type { CommunityFeature } from '../types';
+import { setSelectedCommunityRegion } from '../store';
+import { attachCommunityResourcesListener, detachCommunityResourcesListener } from '../services/communityService';
+import { DEFAULT_COMMUNITY_RESOURCES } from '../data/communityResources';
+import type { RegionData } from '../types';
+
+// ═════════════════════════════════════════════════════════════════════════════
+// COMMUNITY RESOURCE DATA
+// Bundled offline fallback. Live Firestore data merges with / overrides this.
+// ═════════════════════════════════════════════════════════════════════════════
+
+const COMMUNITY_DATA: Record<string, RegionData> = DEFAULT_COMMUNITY_RESOURCES;
+
+// Map supported languages to regions for intelligent defaults
+const LOCALE_TO_REGION: Record<string, string> = {
+  en: 'us', es: 'us', fr: 'us', de: 'de', it: 'us', pt: 'us',
+  zh: 'global', ja: 'jp', ko: 'global', ar: 'global', hi: 'global', ru: 'global',
+  tr: 'global', pl: 'global', nl: 'global', sv: 'global', el: 'global', he: 'global',
+  th: 'global', vi: 'global', id: 'global', uk: 'global', ro: 'global', cs: 'global',
+  hu: 'global', da: 'global', fi: 'global', no: 'global', sk: 'global', bg: 'global',
+};
+
+// ═════════════════════════════════════════════════════════════════════════════
+// COMPONENT
+// ═════════════════════════════════════════════════════════════════════════════
 
 interface CommunityHubProps {
   isOpen: boolean;
   onClose: () => void;
 }
 
-type TabKey = 'holidays' | 'features';
+type HubTab = 'nearby' | 'circles' | 'online' | 'all';
 
-const CATEGORY_COLORS: Record<CommunityFeature['category'], string> = {
-  social: '#a78bfa',
-  astrology: '#f472b6',
-  productivity: '#34d399',
-  premium: '#fbbf24',
-  integrations: '#60a5fa',
-};
-
-const STATUS_LABELS: Record<CommunityFeature['status'], string> = {
-  planned: 'Planned',
-  considering: 'Considering',
-  released: 'Released',
-  'in-progress': 'In Progress',
-};
-
-const STATUS_BADGE_BG: Record<CommunityFeature['status'], string> = {
-  planned: 'rgba(167,139,250,0.15)',
-  considering: 'rgba(96,165,250,0.15)',
-  released: 'rgba(52,211,153,0.2)',
-  'in-progress': 'rgba(251,191,36,0.2)',
-};
+function mergeCommunityData(
+  fallback: Record<string, RegionData>,
+  live: Record<string, RegionData>
+): Record<string, RegionData> {
+  const merged: Record<string, RegionData> = { ...fallback };
+  for (const [region, data] of Object.entries(live)) {
+    if (!data?.resources) continue;
+    const existing = merged[region];
+    if (existing) {
+      const resourceMap = new Map(existing.resources.map((r) => [r.id, r]));
+      for (const r of data.resources) resourceMap.set(r.id, r);
+      merged[region] = { ...existing, ...data, resources: Array.from(resourceMap.values()) };
+    } else {
+      merged[region] = data;
+    }
+  }
+  return merged;
+}
 
 export const CommunityHub: React.FC<CommunityHubProps> = ({ isOpen, onClose }) => {
   const dispatch = useDispatch<AppDispatch>();
-  const holidays = useSelector((state: RootState) => state.calendar.communityHolidays);
-  const features = useSelector((state: RootState) => state.calendar.communityFeatures);
-  const auth = useSelector((state: RootState) => state.calendar.auth);
-  const [activeTab, setActiveTab] = useState<TabKey>('holidays');
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [toast, setToast] = useState<string | null>(null);
-  const [userVotes, setUserVotes] = useState<{
-    holidays: Record<string, 'up' | 'down'>;
-    features: Record<string, boolean>;
-  }>({ holidays: {}, features: {} });
+  const liveResources = useSelector((state: RootState) => state.calendar.communityResources);
+  const persistedRegion = useSelector((state: RootState) => state.calendar.selectedCommunityRegion);
 
-  // Form state
-  const [showHolidayForm, setShowHolidayForm] = useState(false);
-  const [holidayForm, setHolidayForm] = useState({ name: '', date: '', description: '' });
+  const communityData = useMemo(() => mergeCommunityData(COMMUNITY_DATA, liveResources), [liveResources]);
 
-  // Fallback to default features if Firestore hasn't synced yet
-  const displayFeatures = useMemo<CommunityFeature[]>(() => {
-    if (features.length > 0) return features;
-    return DEFAULT_FEATURES.map((f) => ({ ...f, createdAt: new Date().toISOString() }));
-  }, [features]);
-
-
-  const currentUser = auth.isAuthenticated ? { uid: auth.userId, displayName: auth.displayName } : null;
+  const [activeTab, setActiveTab] = useState<HubTab>('nearby');
+  const [selectedRegion, setSelectedRegion] = useState<string>(() => {
+    if (persistedRegion && communityData[persistedRegion]) return persistedRegion;
+    const lang = (i18n.language || 'en').split('-')[0].toLowerCase();
+    return LOCALE_TO_REGION[lang] || 'global';
+  });
 
   useEffect(() => {
-    if (!isOpen) return;
-    attachCommunityHolidaysListener();
-    attachCommunityFeaturesListener();
-    seedCommunityFeaturesIfNeeded().catch(() => {});
+    attachCommunityResourcesListener();
+    return () => detachCommunityResourcesListener();
+  }, []);
 
-    // Track discovery
-    trackFeatureDiscovery(dispatch, () => ({ calendar: { progress: { featureDiscovery: {} } } } as any), 'viewedCommunityHolidays');
-
-    return () => {
-      detachCommunityListeners();
-    };
-  }, [isOpen, dispatch]);
-
-  // Derive user votes from global state + local memory
   useEffect(() => {
-    const uid = currentUser?.uid;
-    if (!uid) return;
-    const hv: Record<string, 'up' | 'down'> = {};
-    holidays.forEach((h) => {
-      if (h.voterUids?.includes(uid)) {
-        hv[h.id] = 'up'; // we don't store direction per uid in this schema, assume up for prior votes
-      }
-    });
-    const fv: Record<string, boolean> = {};
-    features.forEach((f) => {
-      if (f.voterUids?.includes(uid)) fv[f.id] = true;
-    });
-    setUserVotes((prev) => ({
-      holidays: { ...hv, ...prev.holidays },
-      features: { ...fv, ...prev.features },
-    }));
-  }, [holidays, features, currentUser?.uid]);
+    dispatch(setSelectedCommunityRegion(selectedRegion));
+  }, [selectedRegion, dispatch]);
 
-  const approvedHolidays = useMemo(
-    () => holidays.filter((h) => h.status === 'approved').sort((a, b) => b.votesUp - a.votesUp),
-    [holidays]
-  );
-  const pendingHolidays = useMemo(
-    () => holidays.filter((h) => h.status === 'pending').sort((a, b) => b.votesUp - a.votesUp),
-    [holidays]
-  );
+  const currentRegion = communityData[selectedRegion] || communityData.global;
 
-  const showToast = (message: string) => {
-    setToast(message);
-    setTimeout(() => setToast(null), 3000);
-  };
+  const filteredResources = useMemo(() => {
+    const all = [
+      ...currentRegion.resources,
+      ...(selectedRegion !== 'global' ? communityData.global.resources : []),
+    ];
+    if (activeTab === 'all') return all;
+    return all.filter(r => r.type === activeTab);
+  }, [activeTab, selectedRegion, currentRegion, communityData.global.resources]);
 
-  const handleHolidaySubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!holidayForm.name || !holidayForm.date) {
-      showToast('Please fill in the holiday name and date.');
-      return;
-    }
-    // Validate MM-DD format loosely
-    const dateClean = holidayForm.date.trim();
-    if (!/^\d{1,2}-\d{1,2}$/.test(dateClean)) {
-      showToast('Date should be in MM-DD format (e.g., 04-22).');
-      return;
-    }
-    if (!currentUser) {
-      showToast('Please sign in to suggest a holiday.');
-      return;
-    }
-    if (containsProfanity(holidayForm.name) || containsProfanity(holidayForm.description)) {
-      showToast('❌ Please keep submissions respectful.');
-      return;
-    }
-    setIsSubmitting(true);
-    try {
-      await submitCommunityHoliday({
-        name: holidayForm.name.trim(),
-        date: dateClean,
-        description: holidayForm.description.trim(),
-        suggestedBy: currentUser?.displayName || 'Anonymous Star',
-      });
-      trackFeatureDiscovery(dispatch, () => ({ calendar: { progress: { featureDiscovery: {} } } } as any), 'suggestedHoliday');
-      setHolidayForm({ name: '', date: '', description: '' });
-      setShowHolidayForm(false);
-      showToast('✅ Holiday submitted for community review!');
-    } catch (err: any) {
-      showToast(err?.message || 'Failed to submit holiday.');
-    } finally {
-      setIsSubmitting(false);
+  const regions = useMemo(() => Object.entries(communityData), [communityData]);
+
+  const getTypeIcon = (type: string) => {
+    switch (type) {
+      case 'local': return '🏛️';
+      case 'circle': return '🌙';
+      case 'online': return '🌐';
+      case 'space': return '⛺';
+      default: return '📍';
     }
   };
 
-  const handleHolidayVote = async (id: string, dir: 'up' | 'down') => {
-    if (!currentUser) {
-      showToast('Please sign in to vote.');
-      return;
+  const getTypeLabel = (type: string) => {
+    switch (type) {
+      case 'local': return 'Local';
+      case 'circle': return 'Circle';
+      case 'online': return 'Online';
+      case 'space': return 'Space';
+      default: return 'Resource';
     }
-    if (userVotes.holidays[id]) return;
-    try {
-      await voteHoliday(id, dir);
-      setUserVotes((prev) => ({ ...prev, holidays: { ...prev.holidays, [id]: dir } }));
-    } catch (err: any) {
-      console.error('[CommunityHub] Holiday vote error:', err);
-      showToast(err?.message || 'Vote failed. Try again.');
-    }
-  };
-
-  const handleFeatureVote = async (id: string) => {
-    if (!currentUser) {
-      showToast('Please sign in to vote.');
-      return;
-    }
-    if (userVotes.features[id]) return;
-    try {
-      await voteFeature(id);
-      setUserVotes((prev) => ({ ...prev, features: { ...prev.features, [id]: true } }));
-    } catch (err: any) {
-      console.error('[CommunityHub] Feature vote error:', err);
-      showToast(err?.message || 'Vote failed. Try again.');
-    }
-  };
-
-  const formatDate = (mmdd: string) => {
-    const [m, d] = mmdd.split('-');
-    const date = new Date(2024, parseInt(m) - 1, parseInt(d));
-    return date.toLocaleDateString('en-US', { month: 'long', day: 'numeric' });
   };
 
   if (!isOpen) return null;
 
+  const tabs: { id: HubTab; icon: string; label: string }[] = [
+    { id: 'nearby', icon: '📍', label: 'Nearby' },
+    { id: 'circles', icon: '🌙', label: 'Circles' },
+    { id: 'online', icon: '🌐', label: 'Online' },
+    { id: 'all', icon: '📋', label: 'All' },
+  ];
+
   return (
-    <div className="modal-overlay" onClick={(e) => e.target === e.currentTarget && onClose()}>
-      <div className="modal" style={{ maxWidth: '720px', padding: 0, overflow: 'hidden', border: '1px solid rgba(201,162,74,0.25)' }}>
-        {/* Header */}
-        <div style={styles.header}>
-          <div>
-            <h2 style={styles.title}>🌌 Community Hub</h2>
-            <p style={styles.subtitle}>Shape the future of HEKA. Vote on holidays and upcoming features.</p>
-          </div>
-          <button className="btn btn--icon" onClick={onClose} aria-label="Close" style={{ color: '#e5e5e5' }}>
-            ×
+    <div className="tracker-panel">
+      {/* HEADER */}
+      <header className="tracker-header">
+        <div className="tracker-header__brand">
+          <div className="tracker-header__icon">🤝</div>
+          <h1 className="tracker-header__title">
+            Community <span>Hub</span>
+          </h1>
+        </div>
+        <div className="tracker-header__actions">
+          <button className="tracker-header__btn tracker-header__btn--primary" onClick={onClose}>
+            <span>✕</span>
+            <span>Close</span>
           </button>
         </div>
+      </header>
 
-        {/* Tabs */}
-        <div style={styles.tabBar}>
-          <button
-            onClick={() => setActiveTab('holidays')}
-            style={{ ...styles.tab, ...(activeTab === 'holidays' ? styles.tabActive : {}) }}
-          >
-            🌍 Holidays
-          </button>
-          <button
-            onClick={() => setActiveTab('features')}
-            style={{ ...styles.tab, ...(activeTab === 'features' ? styles.tabActive : {}) }}
-          >
-            ✨ Features
-          </button>
+      {/* REGION SELECTOR */}
+      <div className="tracker-date-nav">
+        <button
+          className="tracker-date-nav__btn"
+          onClick={() => {
+            const keys = regions.map(([k]) => k);
+            const idx = keys.indexOf(selectedRegion);
+            setSelectedRegion(keys[(idx - 1 + keys.length) % keys.length]);
+          }}
+          aria-label={i18n.t('common.previous')}
+        >
+          ‹
+        </button>
+        <div className="tracker-date-nav__current">
+          <div className="tracker-date-nav__day">{currentRegion.flag}</div>
+          <div className="tracker-date-nav__full">{currentRegion.country}</div>
         </div>
-
-        {/* Content */}
-        <div style={styles.content}>
-          {activeTab === 'holidays' ? (
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
-              {/* Submit Button */}
-              <button
-                className="btn btn--primary"
-                onClick={() => setShowHolidayForm((s) => !s)}
-                style={{ width: '100%' }}
-              >
-                {showHolidayForm ? 'Cancel' : '+ Suggest New Holiday'}
-              </button>
-
-              {/* Holiday Form */}
-              {showHolidayForm && (
-                <form onSubmit={handleHolidaySubmit} style={styles.glassPanel}>
-                  <div style={styles.formGrid}>
-                    <div style={styles.field}>
-                      <label style={styles.label}>Holiday Name</label>
-                      <input
-                        type="text"
-                        value={holidayForm.name}
-                        onChange={(e) => setHolidayForm({ ...holidayForm, name: e.target.value })}
-                        placeholder="e.g., Global Meditation Day"
-                        required
-                        style={styles.input}
-                      />
-                    </div>
-                    <div style={styles.field}>
-                      <label style={styles.label}>Date (MM-DD)</label>
-                      <input
-                        type="text"
-                        value={holidayForm.date}
-                        onChange={(e) => setHolidayForm({ ...holidayForm, date: e.target.value })}
-                        placeholder="04-22"
-                        required
-                        style={styles.input}
-                      />
-                    </div>
-                  </div>
-                  <div style={styles.field}>
-                    <label style={styles.label}>Description</label>
-                    <textarea
-                      value={holidayForm.description}
-                      onChange={(e) => setHolidayForm({ ...holidayForm, description: e.target.value })}
-                      placeholder="Why should this be a HEKA holiday?"
-                      rows={3}
-                      style={styles.textarea}
-                    />
-                  </div>
-                  <button type="submit" className="btn btn--primary" disabled={isSubmitting}>
-                    {isSubmitting ? 'Submitting…' : 'Submit Suggestion'}
-                  </button>
-                </form>
-              )}
-
-              {/* Approved Holidays */}
-              {approvedHolidays.length > 0 && (
-                <div>
-                  <h3 style={styles.sectionTitle}>✓ Official Community Holidays</h3>
-                  <div style={styles.list}>
-                    {approvedHolidays.map((h) => (
-                      <div key={h.id} style={{ ...styles.card, borderLeft: '4px solid #22c55e' }}>
-                        <div style={styles.cardContent}>
-                          <div style={styles.cardMeta}>{formatDate(h.date)}</div>
-                          <div style={styles.cardTitle}>{h.name}</div>
-                          <div style={styles.cardDesc}>{h.description}</div>
-                        </div>
-                        <div style={styles.voteCol}>
-                          <button
-                            className="vote-btn"
-                            onClick={() => handleHolidayVote(h.id, 'up')}
-                            disabled={!!userVotes.holidays[h.id]}
-                            style={styles.voteBtn}
-                          >
-                            ▲
-                          </button>
-                          <span style={styles.voteCount}>{h.votesUp}</span>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )}
-
-              {/* Pending Holidays */}
-              {pendingHolidays.length > 0 && (
-                <div>
-                  <h3 style={styles.sectionTitle}>🗳️ Pending Suggestions</h3>
-                  <div style={styles.list}>
-                    {pendingHolidays.map((h) => {
-                      const score = h.votesUp - h.votesDown;
-                      return (
-                        <div key={h.id} style={{ ...styles.card, borderLeft: '4px solid #eab308' }}>
-                          <div style={styles.cardContent}>
-                            <div style={styles.cardMeta}>{formatDate(h.date)}</div>
-                            <div style={styles.cardTitle}>{h.name}</div>
-                            <div style={styles.cardDesc}>{h.description}</div>
-                            <div style={styles.cardMeta}>Suggested by {h.suggestedBy}</div>
-                            <div style={styles.progressWrap}>
-                              <div style={styles.progressTrack}>
-                                <div
-                                  style={{
-                                    ...styles.progressBar,
-                                    width: `${Math.min(100, Math.max(0, (h.votesUp / 10) * 100))}%`,
-                                    background: '#eab308',
-                                  }}
-                                />
-                              </div>
-                              <span style={styles.progressLabel}>{score}/10 to approve</span>
-                            </div>
-                          </div>
-                          <div style={styles.voteCol}>
-                            <button
-                              className="vote-btn"
-                              onClick={() => handleHolidayVote(h.id, 'up')}
-                              disabled={!!userVotes.holidays[h.id]}
-                              style={{ ...styles.voteBtn, color: '#22c55e' }}
-                            >
-                              ▲
-                            </button>
-                            <span style={styles.voteCount}>{h.votesUp}</span>
-                            <button
-                              className="vote-btn"
-                              onClick={() => handleHolidayVote(h.id, 'down')}
-                              disabled={!!userVotes.holidays[h.id]}
-                              style={{ ...styles.voteBtn, color: '#ef4444' }}
-                            >
-                              ▼
-                            </button>
-                            <span style={{ ...styles.voteCount, color: '#ef4444' }}>{h.votesDown}</span>
-                          </div>
-                        </div>
-                      );
-                    })}
-                  </div>
-                </div>
-              )}
-
-              {approvedHolidays.length === 0 && pendingHolidays.length === 0 && (
-                <div style={styles.empty}>
-                  <div style={styles.emptyIcon}>🌱</div>
-                  <p>No community holidays yet. Be the first to suggest one!</p>
-                </div>
-              )}
-            </div>
-          ) : (
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
-              {/* Intro */}
-              <div style={styles.heroBanner}>
-                <div style={styles.heroTitle}>Your voice shapes the cosmos</div>
-                <div style={styles.heroSub}>Vote for the features you want us to build next. Top-voted ideas move to the front of the stellar queue.</div>
-              </div>
-
-              {/* Features Grid */}
-              <div style={styles.featuresGrid}>
-                {displayFeatures.map((f) => {
-                  const hasVoted = !!userVotes.features[f.id];
-                  return (
-                    <div key={f.id} style={styles.featureCard}>
-                      <div style={styles.featureHeader}>
-                        <span style={styles.featureIcon}>{f.icon}</span>
-                        <span
-                          style={{
-                            ...styles.badge,
-                            background: STATUS_BADGE_BG[f.status],
-                            color: CATEGORY_COLORS[f.category],
-                          }}
-                        >
-                          {STATUS_LABELS[f.status]}
-                        </span>
-                      </div>
-                      <div style={styles.featureTitle}>{f.title}</div>
-                      <div style={styles.featureDesc}>{f.description}</div>
-                      <div style={styles.featureFooter}>
-                        <span style={{ ...styles.categoryPill, color: CATEGORY_COLORS[f.category], borderColor: CATEGORY_COLORS[f.category] }}>
-                          {f.category}
-                        </span>
-                        <button
-                          className="btn btn--primary"
-                          onClick={() => handleFeatureVote(f.id)}
-                          disabled={hasVoted}
-                          style={{
-                            background: hasVoted ? 'rgba(255,255,255,0.08)' : 'linear-gradient(135deg, #c9a227 0%, #a67c00 100%)',
-                            color: hasVoted ? '#9ca3af' : '#0a0a0c',
-                            border: 'none',
-                            padding: '0.45rem 0.9rem',
-                            borderRadius: '999px',
-                            fontSize: '0.85rem',
-                            fontWeight: 600,
-                            cursor: hasVoted ? 'default' : 'pointer',
-                            display: 'flex',
-                            alignItems: 'center',
-                            gap: '0.35rem',
-                          }}
-                        >
-                          {hasVoted ? '✓ Voted' : '▲ Vote'}
-                          <span style={{ opacity: 0.9 }}>{f.votes}</span>
-                        </button>
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
-
-              {features.length === 0 && (
-                <div style={styles.empty}>
-                  <div style={styles.emptyIcon}>✨</div>
-                  <p>Showing local feature constellation. Vote counts will sync when connected.</p>
-                </div>
-              )}
-            </div>
-          )}
-        </div>
+        <button
+          className="tracker-date-nav__btn"
+          onClick={() => {
+            const keys = regions.map(([k]) => k);
+            const idx = keys.indexOf(selectedRegion);
+            setSelectedRegion(keys[(idx + 1) % keys.length]);
+          }}
+          aria-label={i18n.t('common.nextItem')}
+        >
+          ›
+        </button>
       </div>
 
-      {/* Toast */}
-      {toast && (
-        <div style={styles.toast}>
-          {toast}
-        </div>
-      )}
+      {/* MAIN CONTENT */}
+      <div className="tracker-content" style={{ gridTemplateColumns: '1fr' }}>
+        <main className="tracker-main" style={{ maxWidth: '100%' }}>
+          {/* TABS */}
+          <nav className="tracker-tabs">
+            {tabs.map(tab => (
+              <button
+                key={tab.id}
+                className={`tracker-tab ${activeTab === tab.id ? 'active' : ''}`}
+                onClick={() => setActiveTab(tab.id)}
+              >
+                <span className="tracker-tab__icon">{tab.icon}</span>
+                <span className="tracker-tab__label">{tab.label}</span>
+              </button>
+            ))}
+          </nav>
+
+          {/* TAB CONTENT */}
+          <div className="tracker-tab-content">
+            {filteredResources.length === 0 ? (
+              <div className="tracker-empty">
+                <div className="tracker-empty__icon">🌑</div>
+                <h3 className="tracker-empty__title">No listings yet</h3>
+                <p className="tracker-empty__text">
+                  Community resources for this region are being curated. Check the "Global" tab for worldwide connections.
+                </p>
+              </div>
+            ) : (
+              <div className="tracker-section">
+                <div className="tracker-section__header">
+                  <h2 className="tracker-section__title">
+                    <span className="tracker-section__title-icon">🤝</span>
+                    {activeTab === 'nearby' && 'Nearby Connections'}
+                    {activeTab === 'circles' && 'Moon Circles & Gatherings'}
+                    {activeTab === 'online' && 'Online Communities'}
+                    {activeTab === 'all' && 'All Resources'}
+                  </h2>
+                  <span style={{ color: 'var(--t-text-secondary)', fontSize: '14px' }}>
+                    {filteredResources.length} listing{filteredResources.length !== 1 ? 's' : ''}
+                  </span>
+                </div>
+
+                {filteredResources.map(resource => (
+                  <div key={resource.id} className="tracker-entry">
+                    <div className="tracker-entry__header">
+                      <div className="tracker-entry__type">
+                        <span className="tracker-entry__type-icon">{getTypeIcon(resource.type)}</span>
+                        <span className="tracker-entry__type-label">{resource.name}</span>
+                      </div>
+                      <span
+                        className="tracker-entry-card__badge"
+                        style={{
+                          background: resource.type === 'circle' ? 'var(--t-accent-primary)20' :
+                            resource.type === 'online' ? 'var(--t-accent-secondary)20' :
+                            'var(--t-accent-primary)20',
+                          color: resource.type === 'circle' ? 'var(--t-accent-primary)' :
+                            resource.type === 'online' ? 'var(--t-accent-secondary)' :
+                            'var(--t-accent-primary)',
+                        }}
+                      >
+                        {getTypeLabel(resource.type)}
+                      </span>
+                    </div>
+                    <div className="tracker-entry__content">
+                      <p style={{ color: 'var(--t-text-secondary)', fontSize: '14px', lineHeight: 1.6, marginBottom: '12px' }}>
+                        {resource.description}
+                      </p>
+                      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', fontSize: '13px' }}>
+                        {resource.location && (
+                          <span style={{ color: 'var(--t-text-muted)', display: 'flex', alignItems: 'center', gap: '4px' }}>
+                            📍 {resource.location}
+                          </span>
+                        )}
+                        {resource.schedule && (
+                          <span style={{ color: 'var(--t-text-muted)', display: 'flex', alignItems: 'center', gap: '4px' }}>
+                            📅 {resource.schedule}
+                          </span>
+                        )}
+                        {resource.contact && (
+                          <span style={{ color: 'var(--t-text-muted)', display: 'flex', alignItems: 'center', gap: '4px' }}>
+                            ✉️ {resource.contact}
+                          </span>
+                        )}
+                        {resource.website && (
+                          <a
+                            href={resource.website}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            style={{ color: 'var(--t-accent-secondary)', textDecoration: 'none' }}
+                          >
+                            🌐 Visit website
+                          </a>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        </main>
+      </div>
     </div>
   );
-};
-
-const styles: Record<string, React.CSSProperties> = {
-  header: {
-    padding: '1.25rem 1.5rem',
-    background: 'linear-gradient(135deg, rgba(201,162,74,0.15) 0%, rgba(0,0,0,0) 60%)',
-    borderBottom: '1px solid rgba(201,162,74,0.2)',
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'flex-start',
-  },
-  title: {
-    margin: 0,
-    fontSize: '1.35rem',
-    fontWeight: 700,
-    background: 'linear-gradient(90deg, #f5d78e 0%, #c9a227 100%)',
-    WebkitBackgroundClip: 'text',
-    WebkitTextFillColor: 'transparent',
-  },
-  subtitle: {
-    margin: '0.25rem 0 0',
-    fontSize: '0.85rem',
-    opacity: 0.85,
-    color: '#d4d4d8',
-  },
-  tabBar: {
-    display: 'flex',
-    gap: '0.5rem',
-    padding: '0.75rem 1.5rem 0',
-    borderBottom: '1px solid rgba(255,255,255,0.06)',
-    background: 'rgba(0,0,0,0.2)',
-  },
-  tab: {
-    padding: '0.6rem 1rem',
-    borderRadius: '0.5rem 0.5rem 0 0',
-    border: 'none',
-    background: 'transparent',
-    color: '#a1a1aa',
-    fontWeight: 600,
-    cursor: 'pointer',
-    fontSize: '0.9rem',
-    transition: 'all .2s ease',
-  },
-  tabActive: {
-    color: '#f5d78e',
-    background: 'rgba(201,162,74,0.12)',
-    boxShadow: '0 -2px 0 #c9a227 inset',
-  },
-  content: {
-    padding: '1.25rem 1.5rem 1.75rem',
-    maxHeight: '70vh',
-    overflowY: 'auto',
-  },
-  glassPanel: {
-    background: 'rgba(255,255,255,0.03)',
-    border: '1px solid rgba(255,255,255,0.06)',
-    borderRadius: '0.75rem',
-    padding: '1rem',
-    display: 'flex',
-    flexDirection: 'column',
-    gap: '0.75rem',
-  },
-  formGrid: {
-    display: 'grid',
-    gridTemplateColumns: '1fr 1fr',
-    gap: '0.75rem',
-  },
-  field: {
-    display: 'flex',
-    flexDirection: 'column',
-    gap: '0.35rem',
-  },
-  label: {
-    fontSize: '0.8rem',
-    fontWeight: 600,
-    color: '#d4d4d8',
-  },
-  input: {
-    background: 'rgba(0,0,0,0.25)',
-    border: '1px solid rgba(255,255,255,0.08)',
-    borderRadius: '0.5rem',
-    padding: '0.55rem 0.7rem',
-    color: '#f4f4f5',
-    fontSize: '0.9rem',
-    outline: 'none',
-  },
-  textarea: {
-    background: 'rgba(0,0,0,0.25)',
-    border: '1px solid rgba(255,255,255,0.08)',
-    borderRadius: '0.5rem',
-    padding: '0.55rem 0.7rem',
-    color: '#f4f4f5',
-    fontSize: '0.9rem',
-    outline: 'none',
-    resize: 'vertical',
-    minHeight: '4.5rem',
-  },
-  sectionTitle: {
-    fontSize: '0.95rem',
-    fontWeight: 700,
-    color: '#e4e4e7',
-    margin: '0.25rem 0 0.5rem',
-  },
-  list: {
-    display: 'flex',
-    flexDirection: 'column',
-    gap: '0.75rem',
-  },
-  card: {
-    background: 'rgba(255,255,255,0.03)',
-    border: '1px solid rgba(255,255,255,0.06)',
-    borderRadius: '0.75rem',
-    padding: '0.9rem 1rem',
-    display: 'flex',
-    alignItems: 'flex-start',
-    gap: '0.75rem',
-    transition: 'transform .15s ease, box-shadow .15s ease',
-  },
-  cardContent: {
-    flex: 1,
-    minWidth: 0,
-    display: 'flex',
-    flexDirection: 'column',
-    gap: '0.25rem',
-  },
-  cardMeta: {
-    fontSize: '0.75rem',
-    color: '#a1a1aa',
-  },
-  cardTitle: {
-    fontSize: '1rem',
-    fontWeight: 700,
-    color: '#f4f4f5',
-  },
-  cardDesc: {
-    fontSize: '0.85rem',
-    color: '#d4d4d8',
-    lineHeight: 1.35,
-  },
-  voteCol: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    gap: '0.15rem',
-    minWidth: '2.5rem',
-  },
-  voteBtn: {
-    background: 'transparent',
-    border: 'none',
-    fontSize: '1rem',
-    cursor: 'pointer',
-    padding: '0.2rem',
-    color: '#c9a227',
-    opacity: 0.9,
-  },
-  voteCount: {
-    fontSize: '0.85rem',
-    fontWeight: 700,
-    color: '#f4f4f5',
-  },
-  progressWrap: {
-    marginTop: '0.35rem',
-    display: 'flex',
-    alignItems: 'center',
-    gap: '0.5rem',
-  },
-  progressTrack: {
-    flex: 1,
-    height: '6px',
-    background: 'rgba(255,255,255,0.08)',
-    borderRadius: '999px',
-    overflow: 'hidden',
-  },
-  progressBar: {
-    height: '100%',
-    borderRadius: '999px',
-    transition: 'width .4s ease',
-  },
-  progressLabel: {
-    fontSize: '0.7rem',
-    color: '#a1a1aa',
-    whiteSpace: 'nowrap',
-  },
-  empty: {
-    textAlign: 'center',
-    padding: '2rem 1rem',
-    color: '#a1a1aa',
-  },
-  emptyIcon: {
-    fontSize: '2.5rem',
-    marginBottom: '0.5rem',
-  },
-  heroBanner: {
-    background: 'linear-gradient(135deg, rgba(201,162,74,0.12) 0%, rgba(139,92,246,0.08) 100%)',
-    border: '1px solid rgba(201,162,74,0.18)',
-    borderRadius: '0.75rem',
-    padding: '1rem 1.25rem',
-    textAlign: 'center',
-  },
-  heroTitle: {
-    fontSize: '1.1rem',
-    fontWeight: 700,
-    color: '#f5d78e',
-    marginBottom: '0.25rem',
-  },
-  heroSub: {
-    fontSize: '0.85rem',
-    color: '#d4d4d8',
-  },
-  featuresGrid: {
-    display: 'grid',
-    gridTemplateColumns: 'repeat(auto-fill, minmax(260px, 1fr))',
-    gap: '0.9rem',
-  },
-  featureCard: {
-    background: 'rgba(255,255,255,0.03)',
-    border: '1px solid rgba(255,255,255,0.06)',
-    borderRadius: '0.85rem',
-    padding: '1rem',
-    display: 'flex',
-    flexDirection: 'column',
-    gap: '0.5rem',
-    transition: 'transform .15s ease, box-shadow .15s ease',
-  },
-  featureHeader: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-  },
-  featureIcon: {
-    fontSize: '1.6rem',
-  },
-  badge: {
-    fontSize: '0.7rem',
-    fontWeight: 700,
-    padding: '0.2rem 0.5rem',
-    borderRadius: '999px',
-    textTransform: 'uppercase',
-    letterSpacing: '0.03em',
-  },
-  featureTitle: {
-    fontSize: '0.95rem',
-    fontWeight: 700,
-    color: '#f4f4f5',
-  },
-  featureDesc: {
-    fontSize: '0.8rem',
-    color: '#d4d4d8',
-    lineHeight: 1.4,
-    flex: 1,
-  },
-  featureFooter: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginTop: '0.25rem',
-  },
-  categoryPill: {
-    fontSize: '0.7rem',
-    fontWeight: 600,
-    textTransform: 'capitalize',
-    padding: '0.15rem 0.5rem',
-    borderRadius: '999px',
-    border: '1px solid',
-    opacity: 0.9,
-  },
-  toast: {
-    position: 'fixed',
-    bottom: '1.5rem',
-    left: '50%',
-    transform: 'translateX(-50%)',
-    background: 'rgba(10,10,12,0.95)',
-    color: '#f4f4f5',
-    padding: '0.7rem 1.25rem',
-    borderRadius: '999px',
-    border: '1px solid rgba(201,162,74,0.4)',
-    fontSize: '0.9rem',
-    fontWeight: 600,
-    zIndex: 9999,
-    boxShadow: '0 10px 30px rgba(0,0,0,0.4)',
-    pointerEvents: 'none',
-  },
 };
 
 export default CommunityHub;

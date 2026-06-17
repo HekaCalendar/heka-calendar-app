@@ -131,7 +131,7 @@
 }
 
 .chaos-bar-days {
-  font-size: 8px;
+  font-size: 11px;
   font-weight: 700;
   color: rgba(0, 0, 0, 0.7);
 }
@@ -146,7 +146,7 @@
 .chaos-label {
   width: 20px;
   text-align: center;
-  font-size: 8px;
+  font-size: 11px;
   color: rgba(255, 255, 255, 0.5);
   opacity: 0;
   animation: labelFade 0.3s ease forwards;
@@ -264,7 +264,7 @@
 }
 
 .perfect-block-num {
-  font-size: 8px;
+  font-size: 11px;
   color: rgba(255, 255, 255, 0.5);
 }
 
@@ -277,7 +277,7 @@
 }
 
 .perfect-block-days {
-  font-size: 9px;
+  font-size: 11px;
   font-weight: 700;
   color: #c9a227;
 }
@@ -467,15 +467,26 @@
   }
   
   .hemi-name {
-    font-size: 10px;
+    font-size: 12px;
   }
   
   .hemi-desc {
-    font-size: 9px;
+    font-size: 11px;
     max-width: 110px;
   }
   
   .hemisphere.northern {
     padding-right: 12px;
   }
+}
+
+
+/* ── RTL Overrides ── */
+[dir="rtl"] .hemisphere.northern {
+    border-left: 1px solid rgba(255, 255, 255, 0.1);
+    padding-left: 16px
+}
+
+[dir="rtl"] .hemisphere.northern {
+    padding-left: 12px
 }

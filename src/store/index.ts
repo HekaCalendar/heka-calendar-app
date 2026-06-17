@@ -3,7 +3,9 @@
  * Centralized, immutable state with persistence
  */
 
-import { configureStore, createSlice, createSelector } from '@reduxjs/toolkit';
+import { configureStore, createSlice, createSelector, type PayloadAction } from '@reduxjs/toolkit';
+import { setupReducer } from './setupSlice';
+import { changeLanguage } from '../i18n';
 
 // ─── Extracted Reducer Modules ───
 import * as navReducers from './slices/reducers/navigationReducers';
@@ -21,7 +23,8 @@ import type {
   FeatureDiscoveryProgress,
 } from '../types';
 import { DEFAULT_NOTIFICATION_PREFERENCES } from '../types/notifications';
-import { getTodayHekaDate } from '../services/calendarService';
+import { getTodayHekaDate, civilToHeka } from '../services/calendarService';
+import { encryptState, decryptState, isEncryptedState } from '../utils/stateCrypto';
 
 // ============================================================================
 // Admin / Pro Access
@@ -40,6 +43,8 @@ const initialStatistics: UsageStatistics = {
   currentStreak: 0,
   longestStreak: 0,
   moodAverage: 0,
+  moodEntryCount: 0,
+  moodEntriesByMonth: {},
   moodByMonth: {},
   mostActiveMonth: { month: '', count: 0 },
   totalWords: 0,
@@ -142,6 +147,8 @@ const initialState: CalendarState = {
   subRegion: null,
   theme: 'egyptian-gold',
   font: 'elegant',
+  headerGeometry: 'none',
+  backgroundGeometry: 'none',
   auth: {
     isAuthenticated: false,
     userId: null,
@@ -156,7 +163,7 @@ const initialState: CalendarState = {
     showCivilDates: true,
     showMoonPhases: true,
     showHolidays: true,
-    showCelestialCards: false,  // OFF by default
+    showCelestialCards: true,
     pureModeLight: false,
   },
   ui: {
@@ -172,16 +179,18 @@ const initialState: CalendarState = {
   statistics: initialStatistics,
   communityHolidays: [],
   communityFeatures: [],
+  communityResources: {},
+  selectedCommunityRegion: null,
   subscribedCalendars: [],
   pendingInvites: [],
   progress: initialProgress,
   astroProfiles: [],
   selectedAstroProfileId: null,
   astroPreferences: {
-    enableDailyTips: false,
-    enableRetrogradeAlerts: false,
-    enableMoonPhaseAlerts: false,
-    showTransitsOnCalendar: false,
+    enableDailyTips: true,
+    enableRetrogradeAlerts: true,
+    enableMoonPhaseAlerts: true,
+    showTransitsOnCalendar: true,
     zodiacSystem: '12-sign',
     zodiacFrame: 'tropical',
     signCount: 12,
@@ -271,6 +280,9 @@ const calendarSlice = createSlice({
     ...authReducers,
     ...contentReducers,
     ...progressReducers,
+    rehydrateState(state, action: PayloadAction<Partial<CalendarState>>) {
+      return { ...state, ...action.payload };
+    },
   },
 });
 
@@ -310,7 +322,10 @@ export const {
   voteForHoliday,
   setCommunityFeatures,
   addCommunityFeature,
+  updateCommunityFeature,
   voteForFeature,
+  setCommunityResources,
+  setSelectedCommunityRegion,
   addInvite,
   respondToInvite,
   subscribeToCalendar,
@@ -329,8 +344,11 @@ export const {
   toggleNotificationPreference,
   setGlobalNotificationsEnabled,
   resetNotificationPreferences,
+  setNotificationMode,
   setTheme,
   setFont,
+  setHeaderGeometry,
+  setBackgroundGeometry,
   setAuthState,
   setAuthenticated,
   setUnauthenticated,
@@ -350,6 +368,7 @@ export const {
   trackLocationChange,
   setProSubscription,
   addPurchasedProduct,
+  rehydrateState,
 } = calendarSlice.actions;
 
 // ============================================================================
@@ -363,6 +382,8 @@ interface PersistedState {
   timeMode?: CalendarState['timeMode'];
   theme?: CalendarState['theme'];
   font?: CalendarState['font'];
+  headerGeometry?: CalendarState['headerGeometry'];
+  backgroundGeometry?: CalendarState['backgroundGeometry'];
   auth?: CalendarState['auth'];
   notes?: CalendarState['notes'];
   statistics?: CalendarState['statistics'];
@@ -381,12 +402,69 @@ interface PersistedState {
   plannerPreferences?: { enableTaskNotifications?: boolean; };
 }
 
+/**
+ * Lightweight schema validation for persisted Redux state.
+ * Rejects corrupted or malformed data before it poisons the store.
+ */
+function validatePersistedState(state: unknown): state is PersistedState {
+  if (!state || typeof state !== 'object') return false;
+  const s = state as Record<string, unknown>;
+
+  // Validate notes shape
+  if (s.notes !== undefined) {
+    if (typeof s.notes !== 'object' || s.notes === null) {
+      console.warn('[Persistence] Invalid notes shape — rejecting persisted state');
+      return false;
+    }
+  }
+
+  // Validate notificationPreferences shape
+  if (s.notificationPreferences !== undefined) {
+    const np = s.notificationPreferences as Record<string, unknown>;
+    if (typeof np !== 'object' || np === null) {
+      console.warn('[Persistence] Invalid notificationPreferences shape');
+      return false;
+    }
+    // Must have at least globalEnabled boolean
+    if (typeof np.globalEnabled !== 'boolean') {
+      console.warn('[Persistence] notificationPreferences missing globalEnabled');
+      return false;
+    }
+  }
+
+  // Validate statistics
+  if (s.statistics !== undefined && (typeof s.statistics !== 'object' || s.statistics === null)) {
+    console.warn('[Persistence] Invalid statistics shape');
+    return false;
+  }
+
+  // Validate progress
+  if (s.progress !== undefined && (typeof s.progress !== 'object' || s.progress === null)) {
+    console.warn('[Persistence] Invalid progress shape');
+    return false;
+  }
+
+  return true;
+}
+
 function loadPersistedStateRaw(): PersistedState | undefined {
   try {
     const serialized = localStorage.getItem('heka-calendar-state');
-    if (serialized) {
-      return JSON.parse(serialized);
+    if (!serialized) return undefined;
+
+    // If encrypted, we can't decrypt synchronously — return undefined
+    // and let the async rehydration handle it after store creation.
+    if (isEncryptedState(serialized)) {
+      return undefined;
     }
+
+    // Legacy plaintext — parse and validate before using
+    const parsed = JSON.parse(serialized);
+    if (!validatePersistedState(parsed)) {
+      console.warn('[Persistence] Persisted state failed validation — starting fresh');
+      return undefined;
+    }
+    return parsed;
   } catch (err) {
     console.error('Failed to load persisted state:', err);
   }
@@ -419,6 +497,8 @@ const preloadedState: { calendar: CalendarState; diary?: any } | undefined = per
         progress: persistedState.progress || initialState.progress,
         theme: persistedState.theme || initialState.theme,
         font: persistedState.font || initialState.font,
+        headerGeometry: persistedState.headerGeometry || initialState.headerGeometry,
+        backgroundGeometry: persistedState.backgroundGeometry || initialState.backgroundGeometry,
         auth: initialState.auth, // Reset auth - Firebase will restore actual state
         // Preserve persisted notes!
         notes: persistedState.notes || {},
@@ -435,14 +515,31 @@ const preloadedState: { calendar: CalendarState; diary?: any } | undefined = per
           stars: {
             ...DEFAULT_NOTIFICATION_PREFERENCES.stars,
             ...(persistedState.notificationPreferences?.stars || {}),
-            dailyCelestialTips: persistedState.astroPreferences?.enableDailyTips ?? DEFAULT_NOTIFICATION_PREFERENCES.stars.dailyCelestialTips,
-            retrogradeAlerts: persistedState.astroPreferences?.enableRetrogradeAlerts ?? DEFAULT_NOTIFICATION_PREFERENCES.stars.retrogradeAlerts,
+            dailyCelestialTips: persistedState.notificationPreferences?.stars?.dailyCelestialTips ?? persistedState.astroPreferences?.enableDailyTips ?? DEFAULT_NOTIFICATION_PREFERENCES.stars.dailyCelestialTips,
+            retrogradeAlerts: persistedState.notificationPreferences?.stars?.retrogradeAlerts ?? persistedState.astroPreferences?.enableRetrogradeAlerts ?? DEFAULT_NOTIFICATION_PREFERENCES.stars.retrogradeAlerts,
           },
           // Migration: map old planner preferences
           planner: {
             ...DEFAULT_NOTIFICATION_PREFERENCES.planner,
             ...(persistedState.notificationPreferences?.planner || {}),
-            taskReminders: persistedState.plannerPreferences?.enableTaskNotifications ?? DEFAULT_NOTIFICATION_PREFERENCES.planner.taskReminders,
+            taskReminders: persistedState.notificationPreferences?.planner?.taskReminders ?? persistedState.plannerPreferences?.enableTaskNotifications ?? DEFAULT_NOTIFICATION_PREFERENCES.planner.taskReminders,
+          },
+          // Ensure all sections get deep-merged defaults
+          calendar: {
+            ...DEFAULT_NOTIFICATION_PREFERENCES.calendar,
+            ...(persistedState.notificationPreferences?.calendar || {}),
+          },
+          circle: {
+            ...DEFAULT_NOTIFICATION_PREFERENCES.circle,
+            ...(persistedState.notificationPreferences?.circle || {}),
+          },
+          journal: {
+            ...DEFAULT_NOTIFICATION_PREFERENCES.journal,
+            ...(persistedState.notificationPreferences?.journal || {}),
+          },
+          quietHours: {
+            ...DEFAULT_NOTIFICATION_PREFERENCES.quietHours,
+            ...(persistedState.notificationPreferences?.quietHours || {}),
           },
         },
       },
@@ -471,8 +568,30 @@ const preloadedState: { calendar: CalendarState; diary?: any } | undefined = per
 import { default as astrologyReducer } from '../astrology/store/slice';
 import diaryReducer from './diarySlice';
 import tutorialReducer from './tutorialSlice';
+import { persistSetupState } from './setupSlice';
 import friendsReducer from './friendsSlice';
 import plannerReducer from './plannerSlice';
+
+// Inject deterministic timestamp into all plain actions to keep reducers pure
+const timestampMiddleware = (_storeAPI: any) => (next: any) => (action: any) => {
+  if (
+    typeof action === 'object' &&
+    action !== null &&
+    typeof action.type === 'string' &&
+    !action.meta?.timestamp
+  ) {
+    return next({
+      ...action,
+      meta: {
+        ...action.meta,
+        timestamp: Date.now(),
+      },
+    });
+  }
+  return next(action);
+};
+
+export { calendarSlice };
 
 export const store = configureStore({
   reducer: {
@@ -482,6 +601,7 @@ export const store = configureStore({
     tutorial: tutorialReducer,
     friends: friendsReducer,
     planner: plannerReducer,
+    setup: setupReducer,
   },
   preloadedState,
   middleware: (getDefaultMiddleware) =>
@@ -491,7 +611,7 @@ export const store = configureStore({
         ignoredPaths: ['calendar.auth.lastSync', 'calendar.notes'],
       },
       immutableCheck: true,
-    }),
+    }).concat(timestampMiddleware),
   devTools: false,
 });
 
@@ -502,16 +622,22 @@ let syncTimeout: ReturnType<typeof setTimeout> | null = null;
 
 store.subscribe(() => {
   const state = store.getState();
-  // Hash includes note count, IDs, moods, categories, and content lengths
-  // so edits, deletes, and mood changes all trigger sync
+  // Fast O(n) hash: no sorting, just count + sum of content lengths + edge IDs
   const notes = state.calendar.notes;
   const allNotes = Object.values(notes).flat();
-  const notesHash = allNotes
-    .map((n) => `${n.id}:${n.mood ?? ''}:${n.category}:${n.content.length}:${n.updatedAt ?? n.createdAt}`)
-    .sort()
-    .join('|');
-  if (notesHash !== lastNotesHash) {
-    lastNotesHash = notesHash;
+  let hash = allNotes.length.toString();
+  let totalContentLen = 0;
+  for (let i = 0; i < allNotes.length; i++) {
+    const n = allNotes[i];
+    totalContentLen += n.content?.length ?? 0;
+    if (i === 0 || i === allNotes.length - 1) {
+      hash += `|${n.id}:${n.mood ?? ''}:${n.category}:${n.updatedAt ?? n.createdAt}`;
+    }
+  }
+  hash += `|len:${totalContentLen}`;
+
+  if (hash !== lastNotesHash) {
+    lastNotesHash = hash;
     pendingSyncState = state;
     if (syncTimeout) clearTimeout(syncTimeout);
     syncTimeout = setTimeout(() => {
@@ -546,36 +672,139 @@ export function loadPersistedState(): any {
   return loadPersistedStateRaw();
 }
 
-export function persistState(state: RootState): void {
+function buildPersistedPayload(state: RootState): PersistedState {
+  return {
+    display: state.calendar.display,
+    location: state.calendar.location,
+    subRegion: state.calendar.subRegion,
+    timeMode: state.calendar.timeMode,
+    theme: state.calendar.theme,
+    font: state.calendar.font,
+    headerGeometry: state.calendar.headerGeometry,
+    backgroundGeometry: state.calendar.backgroundGeometry,
+    auth: state.calendar.auth,
+    notes: state.calendar.notes,
+    statistics: state.calendar.statistics,
+    subscribedCalendars: state.calendar.subscribedCalendars,
+    progress: state.calendar.progress,
+    astroProfiles: state.calendar.astroProfiles,
+    selectedAstroProfileId: state.calendar.selectedAstroProfileId,
+    astroPreferences: state.calendar.astroPreferences,
+    notificationPreferences: state.calendar.notificationPreferences,
+    // Persist diary preferences
+    diaryPreferences: state.diary?.preferences,
+    // Phase 1: App Engagement persistence
+    appEngagement: state.calendar.progress.appEngagement,
+    featureDiscovery: state.calendar.progress.featureDiscovery,
+    subscription: state.calendar.subscription,
+  };
+}
+
+type IdleHandle = ReturnType<typeof requestIdleCallback>;
+
+let latestStateToPersist: RootState | null = null;
+let pendingPersistHandle: IdleHandle | null = null;
+
+function scheduleIdleTask(callback: () => void, timeout = 2000): IdleHandle {
+  if (typeof requestIdleCallback !== 'undefined') {
+    return requestIdleCallback(callback, { timeout });
+  }
+  return setTimeout(callback, 1) as unknown as IdleHandle;
+}
+
+function cancelIdleTask(handle: IdleHandle): void {
+  if (typeof cancelIdleCallback !== 'undefined') {
+    cancelIdleCallback(handle);
+  } else {
+    clearTimeout(handle as unknown as ReturnType<typeof setTimeout>);
+  }
+}
+
+async function executePersist(state: RootState): Promise<void> {
   try {
-    const serialized = JSON.stringify({
-      display: state.calendar.display,
-      location: state.calendar.location,
-      subRegion: state.calendar.subRegion,
-      timeMode: state.calendar.timeMode,
-      theme: state.calendar.theme,
-      font: state.calendar.font,
-      auth: state.calendar.auth,
-      notes: state.calendar.notes,
-      statistics: state.calendar.statistics,
-      subscribedCalendars: state.calendar.subscribedCalendars,
-      progress: state.calendar.progress,
-      astroProfiles: state.calendar.astroProfiles,
-      selectedAstroProfileId: state.calendar.selectedAstroProfileId,
-      astroPreferences: state.calendar.astroPreferences,
-      notificationPreferences: state.calendar.notificationPreferences,
-      // Persist diary preferences
-      diaryPreferences: state.diary?.preferences,
-      // Phase 1: App Engagement persistence
-      appEngagement: state.calendar.progress.appEngagement,
-      featureDiscovery: state.calendar.progress.featureDiscovery,
-      subscription: state.calendar.subscription,
-    });
-    localStorage.setItem('heka-calendar-state', serialized);
+    const serialized = JSON.stringify(buildPersistedPayload(state));
+    const encrypted = await encryptState(serialized);
+    localStorage.setItem('heka-calendar-state', encrypted);
   } catch (err) {
     console.error('Failed to persist state:', err);
   }
 }
+
+export async function persistState(state: RootState): Promise<void> {
+  latestStateToPersist = state;
+
+  if (pendingPersistHandle) {
+    cancelIdleTask(pendingPersistHandle);
+    pendingPersistHandle = null;
+  }
+
+  return new Promise((resolve) => {
+    pendingPersistHandle = scheduleIdleTask(async () => {
+      pendingPersistHandle = null;
+      const captured = latestStateToPersist;
+      latestStateToPersist = null;
+      if (captured) {
+        await executePersist(captured);
+      }
+      resolve();
+    }, 2000);
+  });
+}
+
+/** Flush any queued persistence immediately (e.g. before the app backgrounds). */
+export function flushPendingPersistence(): void {
+  if (pendingPersistHandle) {
+    cancelIdleTask(pendingPersistHandle);
+    pendingPersistHandle = null;
+  }
+  const captured = latestStateToPersist;
+  latestStateToPersist = null;
+  if (captured) {
+    executePersist(captured).catch((err) => {
+      console.error('[Persistence] Flush failed:', err);
+    });
+  }
+}
+
+// Async rehydration: decrypt encrypted state after store creation
+(async function rehydrateFromEncryptedState() {
+  try {
+    const serialized = localStorage.getItem('heka-calendar-state');
+    if (serialized && isEncryptedState(serialized)) {
+      const decrypted = await decryptState(serialized);
+      if (decrypted) {
+        const parsed: PersistedState = JSON.parse(decrypted);
+        if (!validatePersistedState(parsed)) {
+          console.warn('[Persistence] Decrypted state failed validation — starting fresh');
+          return;
+        }
+        const rehydrated: Partial<CalendarState> = {
+          ...parsed,
+          display: { ...initialState.display, ...(parsed.display || {}) },
+          ui: { ...initialState.ui },
+          statistics: parsed.statistics || initialState.statistics,
+          progress: parsed.progress || initialState.progress,
+          auth: initialState.auth,
+          notes: parsed.notes || {},
+          astroProfiles: parsed.astroProfiles || [],
+          selectedAstroProfileId: parsed.selectedAstroProfileId || null,
+          astroPreferences: parsed.astroPreferences || initialState.astroPreferences,
+          subscription: parsed.subscription || initialState.subscription,
+          notificationPreferences: {
+            ...DEFAULT_NOTIFICATION_PREFERENCES,
+            ...(parsed.notificationPreferences || {}),
+          },
+        };
+        store.dispatch(rehydrateState(rehydrated));
+        console.log('[Persistence] State rehydrated from encrypted storage');
+      } else {
+        console.warn('[Persistence] Failed to decrypt state — starting fresh');
+      }
+    }
+  } catch (err) {
+    console.error('[Persistence] Rehydration failed:', err);
+  }
+})();
 
 // Subscribe to store changes for persistence
 let previousState = store.getState();
@@ -592,22 +821,46 @@ store.subscribe(() => {
     return;
   }
   
-  // Only persist if calendar state actually changed
+  // Persist calendar state when it changes
   if (currentState.calendar !== previousState.calendar) {
     // Debounce persistence to prevent excessive writes
     if (persistTimeout) {
       clearTimeout(persistTimeout);
     }
     persistTimeout = setTimeout(() => {
-      persistState(currentState);
+      persistState(currentState).catch((err) => {
+        console.error('[Persistence] Encrypted save failed:', err);
+      });
       // Only log occasionally to reduce console spam
       if (Math.random() < 0.1) {
-        console.log('[Persistence] State saved to localStorage');
+        console.log('[Persistence] Calendar state saved');
       }
     }, 500);
   }
+
+  // Persist setup state when it changes (safety net — also persisted by SetupWizard)
+  if (currentState.setup !== previousState.setup) {
+    persistSetupState(currentState.setup);
+  }
+
+  // Sync i18n when language changes
+  if (currentState.setup.language !== previousState.setup.language) {
+    changeLanguage(currentState.setup.language).catch(() => {});
+  }
+
   previousState = currentState;
 });
+
+// Flush pending persistence when the app is hidden to reduce data loss risk.
+// requestIdleCallback may not fire once the page is in the background, so we
+// force an immediate save in that case.
+if (typeof document !== 'undefined') {
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) {
+      flushPendingPersistence();
+    }
+  });
+}
 
 // ============================================================================
 // Memoized Selectors for Performance
@@ -666,4 +919,135 @@ export const selectSelectedAstroProfile = createSelector(
 export const selectAllAstroProfiles = createSelector(
   [selectCalendar],
   (calendar) => calendar.astroProfiles
+);
+
+// ============================================================================
+// Performance-Optimized Selectors (Phase 1)
+// These selectors return stable references and only recompute when the
+// specific data they depend on actually changes.
+// ============================================================================
+
+const selectPlannerTasks = (state: RootState) => state.planner.tasks;
+const selectAuth = (state: RootState) => state.calendar.auth;
+const selectSetupState = (state: RootState) => state.setup;
+
+/** Primitive auth fields — use instead of selecting the whole auth object */
+export const selectAuthStatus = createSelector(
+  [selectAuth],
+  (auth) => ({
+    isAuthenticated: auth.isAuthenticated,
+    userId: auth.userId,
+    email: auth.email,
+    displayName: auth.displayName,
+    photoURL: auth.photoURL,
+  })
+);
+
+/** Primitive setup fields — use instead of selecting the whole setup slice */
+export const selectSetupStatus = createSelector(
+  [selectSetupState],
+  (setup) => ({
+    isComplete: setup.isComplete,
+    language: setup.language,
+    timeMode: setup.timeMode,
+    notificationsEnabled: setup.notificationsEnabled,
+  })
+);
+
+/** Notes for the visible month only. Combined with shallowEqual in components,
+ *  this prevents re-renders when notes change in other months. */
+export const selectMonthNotes = createSelector(
+  [selectViewDate, selectNotes],
+  (viewDate, notes) => {
+    const result: Record<string, NoteData[]> = {};
+    const prefix = `${viewDate.year}-${viewDate.month}-`;
+    Object.keys(notes).forEach((key) => {
+      if (key.startsWith(prefix)) {
+        result[key] = notes[key];
+      }
+    });
+    return result;
+  }
+);
+
+/** Planner tasks for the visible month only. */
+export const selectMonthPlannerTasks = createSelector(
+  [selectViewDate, selectPlannerTasks],
+  (viewDate, tasks) => {
+    const result: Record<string, any[]> = {};
+    const prefix = `${viewDate.year}-${viewDate.month}-`;
+    Object.keys(tasks).forEach((key) => {
+      if (key.startsWith(prefix)) {
+        result[key] = tasks[key];
+      }
+    });
+    return result;
+  }
+);
+
+/** Calendar note entries formatted for the journal. Memoized so the journal only
+ *  recomputes when the notes object reference changes. */
+export const selectCalendarNoteEntries = createSelector(
+  [selectNotes],
+  (notes) => {
+    const result: {
+      id: string;
+      date: string;
+      hekaDate: any;
+      timestamp: string;
+      content: string;
+      category: string;
+      mood?: number;
+      sourceKey: string;
+    }[] = [];
+
+    Object.entries(notes).forEach(([key, dayNotes]) => {
+      dayNotes.forEach((note, index) => {
+        if (!note || !note.createdAt) return;
+
+        const civilDate = new Date(note.createdAt);
+        const hekaDate = civilToHeka(civilDate);
+
+        result.push({
+          id: `calendar-${key}-${index}`,
+          date: note.createdAt,
+          hekaDate: hekaDate || { year: civilDate.getFullYear(), month: 0, day: 1 },
+          timestamp: note.createdAt,
+          content: note.content,
+          category: note.category || 'general',
+          mood: note.mood,
+          sourceKey: key,
+        });
+      });
+    });
+
+    return result.sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime());
+  }
+);
+
+/** Lightweight selector: does the selected day have any notes or tasks? */
+export const selectDayHasItems = (dayKey: string) =>
+  createSelector(
+    [selectNotes, selectPlannerTasks],
+    (notes, tasks) => {
+      const dayNotes = notes[dayKey];
+      const dayTasks = tasks[dayKey];
+      return (dayNotes && dayNotes.length > 0) || (dayTasks && dayTasks.length > 0);
+    }
+  );
+
+/** Set of note IDs that have duplicate copies somewhere in the calendar */
+export const selectNoteIdsWithDuplicates = createSelector(
+  [selectNotes],
+  (notes) => {
+    const duplicatedFrom = new Set<string>();
+    Object.values(notes).forEach((dayNotes) => {
+      dayNotes.forEach((note) => {
+        if (note.duplicatedFrom) {
+          duplicatedFrom.add(note.duplicatedFrom);
+        }
+      });
+    });
+    return duplicatedFrom;
+  }
 );

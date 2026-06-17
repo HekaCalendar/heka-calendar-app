@@ -1,0 +1,126 @@
+{
+  "tutorial": {
+    "back": "Retour",
+    "skip": "Passer",
+    "enter": "Entrer HEKA",
+    "continue": "Continuer",
+    "stepLabel": "Étape {{current}} sur {{total}}",
+    "journeyTitle": "Votre Voyage",
+    "completeLabel": "Terminé",
+    "actionWaiting": "Appuyez pour continuer",
+    "steps": {
+      "welcome": {
+        "title": "Bienvenue dans HEKA",
+        "detail": "Treize mois. Vingt-huit jours chacun. La lune, le soleil, votre jardin, votre énergie, vos amis — enfin en rythme.",
+        "action": "Commencez votre voyage",
+        "instruction": "Vous n'avez jamais vu un calendrier comme celui-ci."
+      },
+      "tracker": {
+        "title": "Suivez votre rythme",
+        "detail": "Humeur : curseur 1-10 avec émoji en temps réel. Sommeil : durée et qualité. Énergie : physique, mentale, émotionnelle, spirituelle. Le tableau de bord des insights révèle les motifs au fil du temps. Votre calendrier contient votre histoire.",
+        "action": "Continuer",
+        "instruction": "Votre corps fait partie du"
+      },
+      "the-grid": {
+        "title": "La Grille — Treize Mois",
+        "detail": "Douze mois de 28 jours exactement, plus Hexa entre août et septembre. Mars contient le 29ème jour. Chaque mois commence le même jour. L'année respire en trois arcs — Ouverture en rouge, Coeur en vert, Fermeture en violet. Prévisible. Symétrique. Propre.",
+        "action": "Appuyez sur n'importe quel jour pour continuer",
+        "instruction": "Comptez-les. Treize. Pas douze."
+      },
+      "features": {
+        "title": "Votre Arsenal",
+        "detail": "Impression : Or par défaut, Minimaliste, Géométrie sacrée avec des cellules circulaires, Cyberpunk avec des lignes de balayage CRT, Nature Organique, Égypte Ancienne avec des hiéroglyphes. Tous gratuits. Pour la vie. A4, A3, Lettre. Étoiles : cartes de naissance Swiss Ephemeris, précision à l'arc-seconde. Journal : quatre modes avec génération d'insight IA. Cercle : messagerie en temps réel, tâches partagées avec des dates d'échéance HEKA. Stats : plus de 80 réalisations sur huit niveaux. Des réalisations secrètes attendent d'être découvertes.",
+        "action": "Continuer",
+        "instruction": "Six thèmes d'impression. Un moteur de carte de naissance. Un journal. Amis. Stats."
+      },
+      "settings": {
+        "title": "Faites-le le vôtre",
+        "detail": "Dates civiles : superposition du calendrier grégorien pour ne manquer aucune réunion. Phases de lune : glyphes Swiss Ephemeris sur chaque cellule. Vacances : observations communautaires. Mode Pur : en plein écran, sans distraction, commutateur sombre/clair Yin-Yang. Le calendrier s'adapte à la manière dont VOUS voyez le temps.",
+        "action": "Basculez un paramètre pour continuer",
+        "instruction": "Troisinterrupteurs. Mode Pur. Contrôle total."
+      },
+      "ai-coach": {
+        "title": "HEKA IA — Votre entraîneur céleste",
+        "detail": "Oracle en verre flottant. Synthétise les phases de lune, vos transits, tâches, sentiment du journal, séries, et emplacement en messages poétiques et actionnables. Parle dans votre archétype — Guerrier, Moine, Artiste, Stratège, Mystique, Phénix. Se souvient de 19 conversations. Détecte les synchronicités : moments où vos mots se alignent avec le ciel. Amélioration facultative LLM avec basculement en ligne gracieux. Ce n'est pas un chatbot. C'est un oracle.",
+        "action": "Continuer",
+        "instruction": "Il surveille le ciel. Il vous surveille."
+      },
+      "complete": {
+        "title": "Vous êtes prêt",
+        "detail": "Vous savez comment naviguer dans treize mois. Vous savez comment lire la lune. Vous savez comment suivre votre énergie, voter pour les fêtes, imprimer de belles pages, tenir un journal avec les étoiles et consulter votre entraîneur IA. Tout le reste attend votre curiosité.",
+        "action": "Entrer dans HEKA",
+        "instruction": "Le calendrier est à vous. Le ciel est à vous."
+      },
+      "day-cells": {
+        "title": "Chaque Cellule est Vivante",
+        "detail": "Émoji de phase de lune Swiss Ephemeris. Date civile en dessous. Points de vacances — curés par la communauté. Extraits de notes — vos mots, visibles sur la grille. Toutes les treize mois à la fois. L'ensemble de l'année, d'un coup d'œil.",
+        "action": "Appuyez sur n'importe quel jour pour l'ouvrir",
+        "instruction": "Chaque jour raconte une histoire"
+      },
+      "day-panel": {
+        "title": "La journée s'ouvre",
+        "detail": "Lune : éclairage exact, croissante ou décroissante, détection de l'absence de cours. Astrologie : transits en temps réel par rapport à votre carte de naissance. Notes : catégorisées par humeur, tâche, journal. Tâches : heures d'échéance, rappels. Énergie : vote après 19h30, voyez le pouls de la communauté. Ce n'est pas une entrée de calendrier. C'est un portail.",
+        "action": "Explorer le panneau de la journée, puis continuer",
+        "instruction": "Votre centre de commandement pour une seule journée."
+      },
+      "community": {
+        "title": "Façonnez le Cosmos",
+        "detail": "Suggérez de nouvelles fêtes. Dix votes positifs et c'est officiel. Votez sur les fonctionnalités à venir — Planifié, En considération, En cours, Publié. Le calendrier évolue car ses utilisateurs l'évoluent. C'est une collaboration.",
+        "action": "Continuer",
+        "instruction": "Votre vote change le calendrier."
+      },
+      "navigation": {
+        "title": "Se déplacer dans le temps",
+        "detail": "Les flèches se déplacent entre les mois. Aujourd'hui revient à présent. La recherche comprend le langage naturel — \"Hexa 15\" ou \"31 janvier.\" Développez horizontalement ou verticalement pour plus de détails. L'ensemble de l'année est à portée d'un geste.",
+        "action": "Appuyez sur ← ou → pour naviguer",
+        "instruction": "Vous n'êtes jamais perdu."
+      },
+      "first-note": {
+        "title": "Faites votre première marque",
+        "detail": "Appuyez sur n'importe quel jour. Faites défiler vers Notes. Écrivez quelque chose — une tâche, un état d'esprit, un souvenir. C'est la première entrée de ce qui pourrait devenir une chronique sur plusieurs années.",
+        "action": "Écrivez une note pour terminer le tutoriel",
+        "instruction": "Un calendrier n'est qu'un outil jusqu'à ce que vous le rendiez à vous."
+      },
+      "celestial-guide": {
+        "title": "Le Guide Céleste",
+        "detail": "Heures du soleil : anneau SVG en direct, météo, précision à quatre niveaux. Phase de la lune : éclairage, lune vide, compte à rebours du nouvel an lunaire. Saisons : suivi du solstice astronomique vrai. Agriculture : quoi planter aujourd'hui, par votre emplacement et phase de lune. Horloge numérique : quatre comptes à rebours en direct simultanés. Heures planétaires : vraies heures chaldéennes basées sur le lever et le coucher du soleil réels. Faites-les défiler. Chacune est un instrument scientifique.",
+        "action": "Faites défiler les cartes célestes pour continuer",
+        "instruction": "Six cartes. Un ciel."
+      }
+    },
+    "printThemes": {
+      "egypt": {
+        "name": "Égypte",
+        "desc": "Hiéroglyphes"
+      },
+      "sacred": {
+        "name": "Géo sacrée",
+        "desc": "Cellules circulaires"
+      },
+      "nature": {
+        "name": "Nature",
+        "desc": "Botanique"
+      },
+      "default": {
+        "name": "Par défaut",
+        "desc": "Parchemin & or"
+      },
+      "cyberpunk": {
+        "name": "Cyberpunk",
+        "desc": "Lueur néon"
+      },
+      "minimalist": {
+        "name": "Minimaliste",
+        "desc": "Pureté suisse"
+      }
+    },
+    "previewAchievements": {
+      "nightOwl": "Chouette de nuit",
+      "timeLord": "Seigneur du temps",
+      "firstWords": "Premiers mots",
+      "weekWarrior": "Guerrier de la semaine",
+      "centuryClub": "Club du siècle",
+      "theChronicler": "Le Chroniqueur"
+    }
+  }
+}

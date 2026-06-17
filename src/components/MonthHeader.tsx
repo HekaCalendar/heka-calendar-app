@@ -4,12 +4,14 @@
  */
 
 import { useSelector, useDispatch } from 'react-redux';
+import { memo } from 'react';
 import type { RootState } from '../store';
 import { prevMonth, nextMonth, navigateToToday, toggleDisplay, setView } from '../store';
 
 import { useFeatureDiscovery, useSettingsTracking } from '../hooks/useGamification';
 import { trackMonthNavigation } from '../services/engagementService';
 import { tutorialService } from '../services/tutorialService';
+import { useTranslation } from 'react-i18next';
 
 interface MonthHeaderProps {
   onPrintClick: () => void;
@@ -28,7 +30,7 @@ interface MonthHeaderProps {
   onToggleExpandHorizontal?: () => void;
 }
 
-export const MonthHeader: React.FC<MonthHeaderProps> = ({ 
+export const MonthHeader: React.FC<MonthHeaderProps> = memo(({ 
   onPrintClick, 
   onAstrologyClick,
   onYearClick,
@@ -48,6 +50,8 @@ export const MonthHeader: React.FC<MonthHeaderProps> = ({
   const display = useSelector((state: RootState) => state.calendar.display);
   const { discover } = useFeatureDiscovery();
   const { trackDisplay } = useSettingsTracking();
+  const { t, i18n } = useTranslation('calendar');
+  const isEnglish = i18n.language === 'en';
   
   const { showCivilDates, showMoonPhases, showHolidays } = display;
 
@@ -74,7 +78,7 @@ export const MonthHeader: React.FC<MonthHeaderProps> = ({
   };
   
   return (
-    <div className="month-header">
+    <div className={`month-header ${!isEnglish ? 'month-header--compact' : ''}`}>
       <div className="month-header__controls">
         {/* === LEFT COLUMN: Calendar Controls === */}
         <div className="month-header__column month-header__column--controls">
@@ -89,8 +93,8 @@ export const MonthHeader: React.FC<MonthHeaderProps> = ({
                 trackMonthNavigation(dispatch, viewDate.year, viewDate.month);
                 tutorialService.trackMonthNavigation('prev');
               }}
-              aria-label="Previous month"
-              title="Previous month"
+              aria-label={t('navigation.previousMonth')}
+              title={t('navigation.previousMonth')}
             >
               ←
             </button>
@@ -103,9 +107,9 @@ export const MonthHeader: React.FC<MonthHeaderProps> = ({
                 discover('usedTodayButton');
                 tutorialService.trackTodayButton();
               }}
-              title="Go to today"
+              title={t('navigation.goToToday')}
             >
-              Today
+              {t('navigation.today')}
             </button>
             
             <button
@@ -117,8 +121,8 @@ export const MonthHeader: React.FC<MonthHeaderProps> = ({
                 trackMonthNavigation(dispatch, viewDate.year, viewDate.month);
                 tutorialService.trackMonthNavigation('next');
               }}
-              aria-label="Next month"
-              title="Next month"
+              aria-label={t('navigation.nextMonth')}
+              title={t('navigation.nextMonth')}
             >
               →
             </button>
@@ -129,9 +133,10 @@ export const MonthHeader: React.FC<MonthHeaderProps> = ({
                 discover('printedCalendar');
                 onPrintClick();
               }}
-              title="Print calendar"
+              title={t('print.title')}
             >
-              🖨️ Print
+              <span className="pill-emoji">🖨️</span>
+              {isEnglish && <span className="pill-text"> {t('print.label')}</span>}
             </button>
           </div>
           
@@ -143,8 +148,8 @@ export const MonthHeader: React.FC<MonthHeaderProps> = ({
                 onToggleExpandHorizontal?.();
                 tutorialService.trackCalendarExpand('horizontal');
               }}
-              title={isCalendarExpandedHorizontal ? 'Shrink horizontally' : 'Expand horizontally'}
-              aria-label={isCalendarExpandedHorizontal ? 'Shrink horizontally' : 'Expand horizontally'}
+              title={isCalendarExpandedHorizontal ? t('expand.shrinkHorizontal') : t('expand.expandHorizontal')}
+              aria-label={isCalendarExpandedHorizontal ? t('expand.shrinkHorizontal') : t('expand.expandHorizontal')}
             >
               {isCalendarExpandedHorizontal ? '⤡' : '⤢'}
             </button>
@@ -156,9 +161,9 @@ export const MonthHeader: React.FC<MonthHeaderProps> = ({
                 onYearClick();
                 tutorialService.trackYearView();
               }}
-              title="View entire year"
+              title={t('year.viewEntireYear')}
             >
-              Year
+              {t('year.label')}
             </button>
             
             <button
@@ -167,8 +172,8 @@ export const MonthHeader: React.FC<MonthHeaderProps> = ({
                 onToggleExpand?.();
                 tutorialService.trackCalendarExpand('vertical');
               }}
-              title={isCalendarExpanded ? 'Shrink vertically' : 'Expand vertically'}
-              aria-label={isCalendarExpanded ? 'Shrink vertically' : 'Expand vertically'}
+              title={isCalendarExpanded ? t('expand.shrinkVertical') : t('expand.expandVertical')}
+              aria-label={isCalendarExpanded ? t('expand.shrinkVertical') : t('expand.expandVertical')}
             >
               {isCalendarExpanded ? '⤓' : '⤢'}
             </button>
@@ -179,9 +184,10 @@ export const MonthHeader: React.FC<MonthHeaderProps> = ({
                 discover('usedMonthNavigator');
                 onSearchClick();
               }}
-              title="Search dates"
+              title={t('search.title')}
             >
-              🔍 Search
+              <span className="pill-emoji">🔍</span>
+              {isEnglish && <span className="pill-text"> {t('search.label')}</span>}
             </button>
           </div>
         </div>
@@ -199,9 +205,10 @@ export const MonthHeader: React.FC<MonthHeaderProps> = ({
                 discover('openedProfileManager');
                 onAstrologyClick();
               }}
-              title="Astrology Hub"
+              title={t('features.astrologyHub')}
             >
-              ✨ Stars
+              <span className="pill-emoji">✨</span>
+              {isEnglish && <span className="pill-text"> {t('features.stars')}</span>}
             </button>
             
             <button
@@ -210,10 +217,11 @@ export const MonthHeader: React.FC<MonthHeaderProps> = ({
                 discover('openedFriends');
                 onFriendsClick();
               }}
-              title="Cosmic Circle"
+              title={t('features.cosmicCircle')}
               style={{ background: 'rgba(167, 139, 250, 0.15)', borderColor: 'rgba(167, 139, 250, 0.4)' }}
             >
-              ⭕ Circle
+              <span className="pill-emoji">⭕</span>
+              {isEnglish && <span className="pill-text"> {t('features.circle')}</span>}
             </button>
             
             <button
@@ -223,10 +231,11 @@ export const MonthHeader: React.FC<MonthHeaderProps> = ({
                 onJournalClick();
                 tutorialService.trackJournal();
               }}
-              title="Oracle Journal"
+              title={t('features.oracleJournal')}
               style={{ background: 'rgba(202, 162, 74, 0.2)', borderColor: 'rgba(202, 162, 74, 0.4)' }}
             >
-              📓 Journal
+              <span className="pill-emoji">📓</span>
+              {isEnglish && <span className="pill-text"> {t('features.journal')}</span>}
             </button>
           </div>
           
@@ -237,9 +246,10 @@ export const MonthHeader: React.FC<MonthHeaderProps> = ({
               onClick={() => {
                 onInfoClick();
               }}
-              title="About HEKA Calendar"
+              title={t('features.aboutHeka')}
             >
-              ℹ️ About
+              <span className="pill-emoji">ℹ️</span>
+              {isEnglish && <span className="pill-text"> {t('features.about')}</span>}
             </button>
 
             <button
@@ -247,20 +257,29 @@ export const MonthHeader: React.FC<MonthHeaderProps> = ({
               onClick={() => {
                 onStatsClick();
               }}
-              title="Your statistics"
+              title={t('features.yourStatistics')}
             >
-              📊 Stats
+              <span className="pill-emoji">📊</span>
+              {isEnglish && <span className="pill-text"> {t('features.stats')}</span>}
             </button>
 
             <button
-              className="btn"
+              className="btn btn--vote"
               onClick={() => {
                 discover('viewedCommunityHolidays');
                 onCommunityClick();
               }}
-              title="Community holidays"
+              title={t('features.voteOnHolidays')}
             >
-              🌍 Community
+              <span className="pill-emoji vote-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <rect x="3" y="8" width="18" height="13" rx="2"/>
+                  <path d="M12 3v5"/>
+                  <path d="M8 8l4-4 4 4"/>
+                </svg>
+              </span>
+              {isEnglish && <span className="pill-text">Vote</span>}
+              <span className="vote-pulse" aria-hidden="true" />
             </button>
 
           </div>
@@ -273,31 +292,33 @@ export const MonthHeader: React.FC<MonthHeaderProps> = ({
         <button 
           className={`btn ${showCivilDates ? 'btn--active' : ''}`}
           onClick={handleToggleCivil}
-          title="Toggle civil dates"
+          title={t('toggles.civilDates')}
           data-toggle="civil"
         >
-          {showCivilDates ? '✓ ' : ''}📅 Civil
+          {showCivilDates ? '✓ ' : ''}📅 {t('toggles.civil')}
         </button>
         <button 
           className={`btn ${showMoonPhases ? 'btn--active' : ''}`}
           onClick={handleToggleMoon}
-          title="Toggle moon phases"
+          title={t('toggles.moonPhases')}
           data-toggle="moon"
         >
-          {showMoonPhases ? '✓ ' : ''}🌙 Moon
+          {showMoonPhases ? '✓ ' : ''}🌙 {t('toggles.moon')}
         </button>
         <button 
           className={`btn ${showHolidays ? 'btn--active' : ''}`}
           onClick={handleToggleHolidays}
-          title="Toggle holidays"
+          title={t('toggles.holidays')}
           data-toggle="holidays"
         >
-          {showHolidays ? '✓ ' : ''}🎉 Holidays
+          {showHolidays ? '✓ ' : ''}🎉 {t('toggles.holidayLabel')}
         </button>
       </div>
 
     </div>
   );
-};
+});
+
+MonthHeader.displayName = 'MonthHeader';
 
 export default MonthHeader;

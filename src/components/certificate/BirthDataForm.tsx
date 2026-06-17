@@ -5,6 +5,7 @@
  */
 
 import React, { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import type { RootState } from '../../store';
 import type { CertificateData } from './certificateData';
@@ -28,6 +29,7 @@ const TIMEZONES = [
 ];
 
 export const BirthDataForm: React.FC<Props> = ({ data, onChange }) => {
+  const { t } = useTranslation('certificate');
   const astroProfiles = useSelector((state: RootState) => state.calendar.astroProfiles);
   const selectedProfileId = useSelector((state: RootState) => state.calendar.selectedAstroProfileId);
 
@@ -76,7 +78,7 @@ export const BirthDataForm: React.FC<Props> = ({ data, onChange }) => {
       {/* Profile Selector */}
       {hasProfiles && (
         <div className="cert-form-section" style={{ background: 'linear-gradient(135deg, rgba(212,175,55,0.06), rgba(212,175,55,0.02))', borderColor: 'rgba(212,175,55,0.15)' }}>
-          <div className="cert-form-section-title">📋 Select a Saved Profile</div>
+          <div className="cert-form-section-title">{t('selectSavedProfile')}</div>
           <div className="cert-form-field cert-form-field--full">
             <select
               className="cert-profile-select"
@@ -90,15 +92,15 @@ export const BirthDataForm: React.FC<Props> = ({ data, onChange }) => {
                 }
               }}
             >
-              <option value="">— Choose from your birth charts —</option>
+              <option value="">{t('chooseFromBirthCharts')}</option>
               {astroProfiles.map(p => (
                 <option key={p.id} value={p.id}>
-                  {p.name} · {p.birthDate} · {p.location?.name || 'Unknown location'}
+                  {p.name} · {p.birthDate} · {p.location?.name || t('unknownLocation')}
                 </option>
               ))}
             </select>
             <div style={{ fontSize: 11, color: '#71717a', marginTop: 6 }}>
-              Or fill in the details manually below.
+              {t('orFillManually')}
             </div>
           </div>
         </div>
@@ -106,19 +108,19 @@ export const BirthDataForm: React.FC<Props> = ({ data, onChange }) => {
 
       {/* Personal Details */}
       <div className="cert-form-section">
-        <div className="cert-form-section-title">Personal Details</div>
+        <div className="cert-form-section-title">{t('personalDetails')}</div>
         <div className="cert-form-row">
           <div className="cert-form-field cert-form-field--full">
-            <label>Full Name *</label>
+            <label>{t('fullName')}</label>
             <input
               type="text"
               value={data.name}
               onChange={e => update('name', e.target.value)}
               onBlur={() => setTouched({ ...touched, name: true })}
-              placeholder="Enter your full name"
+              placeholder={t('enterFullName')}
             />
             {touched.name && !data.name.trim() && (
-              <span className="cert-form-error">Name is required</span>
+              <span className="cert-form-error">{t('nameIsRequired')}</span>
             )}
           </div>
         </div>
@@ -126,10 +128,10 @@ export const BirthDataForm: React.FC<Props> = ({ data, onChange }) => {
 
       {/* Birth Details */}
       <div className="cert-form-section">
-        <div className="cert-form-section-title">Birth Details</div>
+        <div className="cert-form-section-title">{t('birthDetails')}</div>
         <div className="cert-form-row">
           <div className="cert-form-field">
-            <label>Birth Date *</label>
+            <label>{t('birthDate')}</label>
             <input
               type="date"
               value={data.birthDate}
@@ -138,7 +140,7 @@ export const BirthDataForm: React.FC<Props> = ({ data, onChange }) => {
             />
           </div>
           <div className="cert-form-field">
-            <label>Birth Time *</label>
+            <label>{t('birthTime')}</label>
             <input
               type="time"
               value={data.birthTime}
@@ -149,7 +151,7 @@ export const BirthDataForm: React.FC<Props> = ({ data, onChange }) => {
         </div>
         <div className="cert-form-row">
           <div className="cert-form-field cert-form-field--full">
-            <label>Timezone</label>
+            <label>{t('timezone')}</label>
             <select
               value={data.timezone}
               onChange={e => update('timezone', e.target.value)}
@@ -164,10 +166,10 @@ export const BirthDataForm: React.FC<Props> = ({ data, onChange }) => {
 
       {/* Location with Autocomplete */}
       <div className="cert-form-section">
-        <div className="cert-form-section-title">Birth Location</div>
+        <div className="cert-form-section-title">{t('birthLocation')}</div>
 
         <div className="cert-form-field cert-form-field--full">
-          <label>Search for your birthplace</label>
+          <label>{t('searchForBirthplace')}</label>
           <LocationSearch
             defaultValue={locationQuery}
             onLocationSelect={loc => {
@@ -183,7 +185,7 @@ export const BirthDataForm: React.FC<Props> = ({ data, onChange }) => {
         {/* Manual coordinates — always editable as override */}
         <div className="cert-form-row" style={{ marginTop: 12 }}>
           <div className="cert-form-field">
-            <label>Latitude <span className="cert-form-hint">(manual override)</span></label>
+            <label>{t('latitude')} <span className="cert-form-hint">{t('manualOverride')}</span></label>
             <input
               type="number"
               step="0.0001"
@@ -195,7 +197,7 @@ export const BirthDataForm: React.FC<Props> = ({ data, onChange }) => {
             />
           </div>
           <div className="cert-form-field">
-            <label>Longitude <span className="cert-form-hint">(manual override)</span></label>
+            <label>{t('longitude')} <span className="cert-form-hint">{t('manualOverride')}</span></label>
             <input
               type="number"
               step="0.0001"
@@ -220,7 +222,7 @@ export const BirthDataForm: React.FC<Props> = ({ data, onChange }) => {
       {/* Validation hint */}
       {!isValid && (
         <div style={{ fontSize: 12, color: '#71717a', textAlign: 'center' }}>
-          Please fill in all required fields to continue.
+          {t('fillRequiredFields')}
         </div>
       )}
     </div>

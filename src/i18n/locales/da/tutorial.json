@@ -1,0 +1,126 @@
+{
+  "tutorial": {
+    "back": "Tilbage",
+    "skip": "Spring over",
+    "enter": "Gå ind i HEKA",
+    "continue": "Fortsæt",
+    "stepLabel": "Trin {{current}} af {{total}}",
+    "journeyTitle": "Din Rejse",
+    "completeLabel": "Færdig",
+    "actionWaiting": "Tryk for at fortsætte",
+    "steps": {
+      "welcome": {
+        "title": "Velkommen til HEKA",
+        "detail": "Tredje måneder. Fjortende dage hver. Månen, solen, dit have, din energi, dine venner — endelig i rytme.",
+        "action": "Begynd Din Rejse",
+        "instruction": "Du har aldrig set en kalender som denne."
+      },
+      "tracker": {
+        "title": "Sporing Din Rytme",
+        "detail": "Humør: 1-10 skyder med real-time emoji. Søvn: varighed og",
+        "action": "Fortsæt",
+        "instruction": "Din krop er en del af kalenderen."
+      },
+      "the-grid": {
+        "title": "Rasteret — Tredje Måneder",
+        "detail": "Tolv måneder med nøjagtigt 28 dage, plus Hexa mellem august og september. Marts holder den 29. dag. Hver måned begynder på samme dag. Året ånder i tre bue — Åbning i rødt, Kerne i grønt, Lukning i lilla. Prædictabel. Symmetrisk. Rent.",
+        "action": "Tryk på en hvilken som helst dag for at fortsætte",
+        "instruction": "Tæl dem. Tredje. Ikke tolv."
+      },
+      "features": {
+        "title": "Dit Arsenal",
+        "detail": "Udskrift: Standard Guld, Minimalist, Hellige Geometri med cirkulære celler, Cyberpunk med CRT skærmlinjer, Natur Organisk, Oldtidens Egypten med hieroglyffer. Alle gratis. Livstid. A4, A3, Brev. Stjerner: Faser Ephemeris fødselskort, bue sekund nøjagtighed. Journal: fire tilstande med AI indsigt generering. Cirkel: real-time besked, delte opgaver med HEKA forfaldsdatoer. Statistikker: 80+ præstationer på otte niveauer. Hemmelighedspræstationer venter på at blive opdaget.",
+        "action": "Fortsæt",
+        "instruction": "Seks printtemner. En fødselskortmotor. En journal. Venner. Statistikker."
+      },
+      "settings": {
+        "title": "Gør Det Dit",
+        "detail": "Borgerlige Datoer: overlejring Gregorian, så du aldrig mister et møde. Månefaser: Faser Ephemeris symboler på hver celle. Højtider: fællesskabs observancer. Rent Tilstand: fuld skærm, aflastningsfrit, Yin-Yang mørk/lys kontakt. Kalenderen tilpasses, hvordan DU ser tiden.",
+        "action": "Skift enhver indstilling for at fortsætte",
+        "instruction": "Tre kontakter. Rent Tilstand. Fuld kontrol."
+      },
+      "ai-coach": {
+        "title": "HEKA AI - Din Himmelske Træner",
+        "detail": "Flydende glas orakel. Syntetiserer månefaserne, dine transiter, opgaver, journal humør, rækker og placering i poetiske, handlekraftige beskeder. Taler i din arkitype - Krigsherre, Munke, Kunstner, Strateg, Mystiker, Føniks. Husker 19 samtaler. Detekterer synkroniteter: øjeblikke, hvor dine ord stemmer overens med himlen. Valgfri LLM forøgelse med elegant offline tilbagefald. Dette er ikke en chatbot. Dette er en orakel.",
+        "action": "Fortsæt",
+        "instruction": "Det overvåger himlen. Det overvåger dig."
+      },
+      "complete": {
+        "title": "Du Er Klar",
+        "detail": "Du ved, hvordan man navigerer tolv måneder. Du ved, hvordan man læser månen. Du ved, hvordan man sporer din energi, stemmer på helligdage, printer smukke sider, journalfører med stjernerne og rådgiver med din AI-coach. Alt andet venter på din nysgerrighed.",
+        "action": "Gå ind i HEKA",
+        "instruction": "Kalenderen er din. Himlen er din."
+      },
+      "day-cells": {
+        "title": "Hver Celle Er I Live",
+        "detail": "Faser Ephemeris månefasemeemoji. Borgerligt dato under. Højtidspunkter - fællesskabscurerede. Note snippets - dine ord, synlige på gitteret. Alle tretten måneder på én gang. Hele året på et kig.",
+        "action": "Tryk på en hvilken som helst dag for at åbne den",
+        "instruction": "Hver dag fortæller en historie."
+      },
+      "day-panel": {
+        "title": "Dagen Åbnes",
+        "detail": "Måne: nøjagtig belysning, voksende eller aftagende, tom kurs deTECTION. Astrologi: real-time transiter imod dit fødselskort. Noter: kategoriseret efter humør, opgave, journal. Opgaver: forfaldstider, påmindelser. Energi: afstemning efter 19:30, se fællesskabets puls. Dette er ikke en kalenderpost. Dette er et portal.",
+        "action": "Udforsk dagens panel, og fortsæt derefter",
+        "instruction": "Dit kommandocenter for en enkelt dag."
+      },
+      "community": {
+        "title": "Dan Formør Kosmos",
+        "detail": "Foreslå nye helligdage. Ti opstigninger og det bliver officielt. Afstem på kommende funktioner — Planlagt, Overvejes, Igangværende, Udgivet. Kalenderen udvikler sig, fordi dets brugere udvikler den. Dette er en samarbejde.",
+        "action": "Fortsæt",
+        "instruction": "Dit stemmesprog ændrer kalenderen."
+      },
+      "navigation": {
+        "title": "Flyt gennem Tid",
+        "detail": "Pile flytter mellem måneder. I dag snapper tilbage til nu. Søg forstår naturlig sprog — \"Hexa 15\" eller \"januar 31.\" Udvid vandret eller lodret for mere detaljer. Det hele år er et手势 væk.",
+        "action": "Tryk på ← eller → for at navigere",
+        "instruction": "Du er aldrig væk."
+      },
+      "first-note": {
+        "title": "Lav Dit Fyrste Mærke",
+        "detail": "Tryk på en hvilken som helst dag. Rul til Noter. Skriv noget — en opgave, en humør, et minde. Dette er den første post i, hvad der kunne blive et årelangt kronik.",
+        "action": "Skriv en note for at fuldføre tutorialen",
+        "instruction": "En kalender er kun et værktøj, indtil du gør den til din egen."
+      },
+      "celestial-guide": {
+        "title": "Den Himmelske Guide",
+        "detail": "Sol Tider: live SVG ring, vejr, firetrins nøjagtighed. Månefase: belysning, tom måne, måneåret nedtælling. Væsener: sande astronomiske solstiksisporing. Landbrug: Hvad skal plantes i dag, efter din placering og månefasen. Digitalt ur: fire samtidige live nedtællinger. Planetære timer: sande Chaldæiske timer baseret på faktisk solopgang og solnedgang. Rul igennem dem. Hver eneste er et videnskabeligt instrument.",
+        "action": "Rul himmelskortene for at fortsætte",
+        "instruction": "Seks kort. Et sky."
+      }
+    },
+    "printThemes": {
+      "egypt": {
+        "name": "Egypten",
+        "desc": "Hieroglyffer"
+      },
+      "sacred": {
+        "name": "Hellige Geo",
+        "desc": "Cirkulære celler"
+      },
+      "nature": {
+        "name": "Natur",
+        "desc": "Botanisk"
+      },
+      "default": {
+        "name": "Standard",
+        "desc": "Pergament & guld"
+      },
+      "cyberpunk": {
+        "name": "Cyberpunk",
+        "desc": "Neon-glød"
+      },
+      "minimalist": {
+        "name": "Minimalistisk",
+        "desc": "Schweizisk renhed"
+      }
+    },
+    "previewAchievements": {
+      "nightOwl": "Nat Ugle",
+      "timeLord": "Tids Herre",
+      "firstWords": "Første Ord",
+      "weekWarrior": "Uge Krieger",
+      "centuryClub": "Århundre Klub",
+      "theChronicler": "Den Krønikeskriver"
+    }
+  }
+}

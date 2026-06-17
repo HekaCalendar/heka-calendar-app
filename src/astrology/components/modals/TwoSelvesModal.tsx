@@ -4,6 +4,7 @@
  */
 
 import React, { useState, useEffect, useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
 import {
   calculateAllPlanets,
   calculateHouses,
@@ -190,12 +191,12 @@ function buildComparison(
   };
 }
 
-function generateNarrative(data: ComparisonData): string {
+function generateNarrative(data: ComparisonData, t: (key: string, options?: Record<string, any>) => string): string {
   const changedPlanets = data.planets.filter((p) => p.changed);
   const changedCount = changedPlanets.length;
 
   if (changedCount === 0) {
-    return "Your tropical and sidereal charts are nearly identical — a rare alignment that happens when the ayanamsa is close to a whole-sign boundary. You're one of the few whose civil self and true self speak the same language.";
+    return t('twoSelves.rareAlignment');
   }
 
   const sunChanged = changedPlanets.find((p) => p.id === 'sun');
@@ -206,25 +207,25 @@ function generateNarrative(data: ComparisonData): string {
   let narrative = '';
 
   if (sunChanged) {
-    narrative += `Your Sun moved from ${capitalize(sunChanged.tropical.sign)} to ${capitalize(sunChanged.sidereal.sign)}. `;
-    narrative += `The identity you were taught as ${elementPhrase(sunChanged.tropical.sign)} shifts to ${elementPhrase(sunChanged.sidereal.sign)}. `;
+    narrative += t('twoSelves.sunMoved', { tropical: capitalize(sunChanged.tropical.sign), sidereal: capitalize(sunChanged.sidereal.sign) }) + ' ';
+    narrative += t('twoSelves.identityShift', { tropicalElement: elementPhrase(sunChanged.tropical.sign, t), siderealElement: elementPhrase(sunChanged.sidereal.sign, t) }) + ' ';
   }
 
   if (moonChanged) {
-    narrative += `Your Moon, your emotional core, moved from ${capitalize(moonChanged.tropical.sign)} to ${capitalize(moonChanged.sidereal.sign)}. `;
+    narrative += t('twoSelves.moonMoved', { tropical: capitalize(moonChanged.tropical.sign), sidereal: capitalize(moonChanged.sidereal.sign) }) + ' ';
   }
 
   if (ascChanged) {
-    narrative += `Your Ascendant, the mask you wear, shifted from ${capitalize(data.ascendant.tropical)} to ${capitalize(data.ascendant.sidereal)}. `;
+    narrative += t('twoSelves.ascendantShift', { tropical: capitalize(data.ascendant.tropical), sidereal: capitalize(data.ascendant.sidereal) }) + ' ';
   }
 
   if (mcChanged) {
-    narrative += `Your Midheaven, your public calling, shifted from ${capitalize(data.midheaven.tropical)} to ${capitalize(data.midheaven.sidereal)}. `;
+    narrative += t('twoSelves.midheavenShift', { tropical: capitalize(data.midheaven.tropical), sidereal: capitalize(data.midheaven.sidereal) }) + ' ';
   }
 
-  narrative += `\n\nIn total, ${changedCount} of your ${data.planets.length} major celestial bodies changed signs. `;
-  narrative += `The ayanamsa, the gap between the tropical zodiac and the actual stars, is ${data.ayanamsa.toFixed(1)} degrees for your birth year. `;
-  narrative += `This is not an error. This is the difference between who you learned to be and who the stars say you are.`;
+  narrative += '\n\n' + t('twoSelves.totalChanged', { count: changedCount, total: data.planets.length }) + ' ';
+  narrative += t('twoSelves.ayanamsa', { degrees: data.ayanamsa.toFixed(1) }) + ' ';
+  narrative += t('twoSelves.notAnError');
 
   return narrative;
 }
@@ -233,20 +234,14 @@ function capitalize(s: string): string {
   return s ? s.charAt(0).toUpperCase() + s.slice(1) : '';
 }
 
-function elementPhrase(sign: string): string {
+function elementPhrase(sign: string, t: (key: string, options?: Record<string, any>) => string): string {
   const el = SIGN_ELEMENTS[sign];
-  const phrases: Record<string, string> = {
-    fire: 'the initiator, the spark',
-    earth: 'the builder, the mountain',
-    air: 'the thinker, the connector',
-    water: 'the feeler, the depth',
-  };
-  return phrases[el] || 'the self';
+  return t(`twoSelves.${el}`, { defaultValue: t('twoSelves.defaultElement') });
 }
 
-function getChangedPlanetList(planets: PlanetRow[]): string {
+function getChangedPlanetList(planets: PlanetRow[], t: (key: string, options?: Record<string, any>) => string): string {
   const changed = planets.filter(p => p.changed);
-  if (changed.length === 0) return 'None';
+  if (changed.length === 0) return t('twoSelves.none');
   return changed.map(p => `${capitalize(p.name)} → ${capitalize(p.sidereal.sign)}`).join(', ');
 }
 
@@ -261,6 +256,7 @@ export const TwoSelvesModal: React.FC<TwoSelvesModalProps> = ({
   onClose,
   birthData,
 }) => {
+  const { t } = useTranslation('celestial');
   const [comparison, setComparison] = useState<ComparisonData | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -293,8 +289,8 @@ export const TwoSelvesModal: React.FC<TwoSelvesModalProps> = ({
 
   const narrative = useMemo(() => {
     if (!comparison) return '';
-    return generateNarrative(comparison);
-  }, [comparison]);
+    return generateNarrative(comparison, t);
+  }, [comparison, t]);
 
   if (!isOpen) return null;
 
@@ -304,9 +300,9 @@ export const TwoSelvesModal: React.FC<TwoSelvesModalProps> = ({
         {/* Header */}
         <div className="tsm-header">
           <div>
-            <h2 className="tsm-title">Your Two Selves</h2>
+            <h2 className="tsm-title">{t('twoSelves.title')}</h2>
             <p className="tsm-subtitle">
-              The calendar taught you one story. The stars tell another.
+              {t('twoSelves.subtitle')}
             </p>
           </div>
           <button className="tsm-close" onClick={onClose} aria-label="Close">
@@ -317,12 +313,12 @@ export const TwoSelvesModal: React.FC<TwoSelvesModalProps> = ({
         {isLoading ? (
           <div className="tsm-loading">
             <div className="tsm-loading-icon">✦</div>
-            <p>Calculating tropical & sidereal charts...</p>
+            <p>{t('twoSelves.calculating')}</p>
           </div>
         ) : error ? (
           <div className="tsm-error">
             <div className="tsm-error-icon">⚠️</div>
-            <p>{error}</p>
+            <p>{t('twoSelves.error')}</p>
           </div>
         ) : comparison ? (
           <>
@@ -332,10 +328,10 @@ export const TwoSelvesModal: React.FC<TwoSelvesModalProps> = ({
               <div className="tsm-side tropical">
                 <div className="tsm-side-header">
                   <span className="tsm-side-icon">🔄</span>
-                  <span className="tsm-side-title">Civil Self</span>
-                  <span className="tsm-side-badge">Tropical</span>
+                  <span className="tsm-side-title">{t('twoSelves.civilSelf')}</span>
+                  <span className="tsm-side-badge">{t('twoSelves.tropical')}</span>
                 </div>
-                <div className="tsm-side-sub">Who you learned to be</div>
+                <div className="tsm-side-sub">{t('twoSelves.whoYouLearned')}</div>
 
                 <div className="tsm-planets">
                   {comparison.planets.map((p) => (
@@ -353,7 +349,7 @@ export const TwoSelvesModal: React.FC<TwoSelvesModalProps> = ({
                   ))}
                   <div className="tsm-planet-row accent">
                     <span className="tsm-planet-symbol">ASC</span>
-                    <span className="tsm-planet-name">Ascendant</span>
+                    <span className="tsm-planet-name">{t('twoSelves.ascendant')}</span>
                     <span className="tsm-planet-sign">
                       {SIGN_SYMBOLS[comparison.ascendant.tropical as keyof typeof SIGN_SYMBOLS] || '●'}{' '}
                       {capitalize(comparison.ascendant.tropical.slice(0, 3))}
@@ -361,7 +357,7 @@ export const TwoSelvesModal: React.FC<TwoSelvesModalProps> = ({
                   </div>
                   <div className="tsm-planet-row accent">
                     <span className="tsm-planet-symbol">MC</span>
-                    <span className="tsm-planet-name">Midheaven</span>
+                    <span className="tsm-planet-name">{t('twoSelves.midheaven')}</span>
                     <span className="tsm-planet-sign">
                       {SIGN_SYMBOLS[comparison.midheaven.tropical as keyof typeof SIGN_SYMBOLS] || '●'}{' '}
                       {capitalize(comparison.midheaven.tropical.slice(0, 3))}
@@ -370,7 +366,7 @@ export const TwoSelvesModal: React.FC<TwoSelvesModalProps> = ({
                 </div>
 
                 <div className="tsm-summary">
-                  <span className="tsm-summary-label">Dominant Element</span>
+                  <span className="tsm-summary-label">{t('twoSelves.dominantElement')}</span>
                   <span className="tsm-summary-value">
                     {capitalize(comparison.dominantElement.tropical)}
                   </span>
@@ -382,14 +378,14 @@ export const TwoSelvesModal: React.FC<TwoSelvesModalProps> = ({
                 <div className="tsm-divider-top">
                   <span className="tsm-divider-vs">VS</span>
                   <span className="tsm-divider-shift">
-                    Shifted by {comparison.ayanamsa.toFixed(1)}°
+                    {t('twoSelves.shiftedBy', { degrees: comparison.ayanamsa.toFixed(1) })}
                   </span>
                 </div>
                 <div className="tsm-divider-line" />
                 <div className="tsm-divider-changed">
-                  <div className="tsm-divider-changed-label">Changed</div>
+                  <div className="tsm-divider-changed-label">{t('twoSelves.changed')}</div>
                   <div className="tsm-divider-changed-list">
-                    {getChangedPlanetList(comparison.planets)}
+                    {getChangedPlanetList(comparison.planets, t)}
                   </div>
                 </div>
               </div>
@@ -398,10 +394,10 @@ export const TwoSelvesModal: React.FC<TwoSelvesModalProps> = ({
               <div className="tsm-side sidereal">
                 <div className="tsm-side-header">
                   <span className="tsm-side-icon">☀️</span>
-                  <span className="tsm-side-title">True Self</span>
-                  <span className="tsm-side-badge">Sidereal</span>
+                  <span className="tsm-side-title">{t('twoSelves.trueSelf')}</span>
+                  <span className="tsm-side-badge">{t('twoSelves.sidereal')}</span>
                 </div>
-                <div className="tsm-side-sub">Who you are under the stars</div>
+                <div className="tsm-side-sub">{t('twoSelves.whoYouAre')}</div>
 
                 <div className="tsm-planets">
                   {comparison.planets.map((p) => (

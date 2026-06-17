@@ -1,0 +1,32 @@
+.sso-login {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  width: 100%;
+  max-width: 320px;
+}
+
+.sso-login__input {
+  padding: var(--space-3);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  color: var(--color-text);
+  font-size: 0.95rem;
+}
+
+.sso-login__btn {
+  padding: var(--space-3);
+  border-radius: var(--radius-md);
+  border: none;
+  background: var(--color-gold);
+  color: #0a0910;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.sso-login__btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}

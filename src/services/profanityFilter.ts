@@ -57,7 +57,7 @@ function escapeRegexChar(c: string): string {
 
 export function containsProfanity(text: string): boolean {
   if (!text || typeof text !== 'string') return false;
-  const normalized = text.toLowerCase().replace(/[\-_\.]+/g, '');
+  const normalized = text.toLowerCase().replace(/[-_.]+/g, '');
   return PROFANITY_PATTERNS.some(p => p.test(normalized));
 }
 

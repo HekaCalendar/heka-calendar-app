@@ -4,14 +4,13 @@
  */
 
 import { memo, useState, useMemo, useCallback } from 'react';
+import { useTranslation } from 'react-i18next';
 import { HEKA_MONTHS, getDaysInMonth, getCivilStartOfHekaMonth } from '../../services/calendarService';
 import type { MultiDayPickerProps } from './types';
 import type { HekaMonthIndex } from '../../types';
 
-// Day of week headers - HEKA calendar starts on Saturday
-const DOW_HEADERS = ['Sat', 'Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri'];
-
 export const MultiDayPicker = memo(({ currentViewDate, onSelectDays, onCancel }: MultiDayPickerProps) => {
+  const { t } = useTranslation('dayPanel');
   const [pickerYear, setPickerYear] = useState(currentViewDate.year);
   const [pickerMonth, setPickerMonth] = useState(currentViewDate.month);
   const [selectedDays, setSelectedDays] = useState<Set<number>>(new Set());
@@ -73,6 +72,16 @@ export const MultiDayPicker = memo(({ currentViewDate, onSelectDays, onCancel }:
     return cells;
   }, [firstDayOffset, daysInMonth]);
 
+  const dowHeaders = [
+    t('dow.short.sat'),
+    t('dow.short.sun'),
+    t('dow.short.mon'),
+    t('dow.short.tue'),
+    t('dow.short.wed'),
+    t('dow.short.thu'),
+    t('dow.short.fri'),
+  ];
+
   return (
     <div className="day-picker day-picker--calendar">
       <div className="day-picker__header">
@@ -84,7 +93,7 @@ export const MultiDayPicker = memo(({ currentViewDate, onSelectDays, onCancel }:
             setPickerMonth(m => m - 1);
           }
           setSelectedDays(new Set());
-        }}>←</button>
+        }} aria-label={t('previous')}>←</button>
         <span className="day-picker__month">{monthName} {pickerYear}</span>
         <button className="btn btn--icon" onClick={() => {
           if (pickerMonth === 12) {
@@ -94,12 +103,12 @@ export const MultiDayPicker = memo(({ currentViewDate, onSelectDays, onCancel }:
             setPickerMonth(m => m + 1);
           }
           setSelectedDays(new Set());
-        }}>→</button>
+        }} aria-label={t('nextItem')}>→</button>
       </div>
 
       {/* Day of week headers - rendered as first row inside the grid */}
       <div className="day-picker__grid" style={{ marginBottom: '4px' }}>
-        {DOW_HEADERS.map(dow => (
+        {dowHeaders.map(dow => (
           <div key={dow} className="day-picker__dow-cell" style={{
             textAlign: 'center',
             fontSize: '0.7rem',
@@ -133,17 +142,17 @@ export const MultiDayPicker = memo(({ currentViewDate, onSelectDays, onCancel }:
       </div>
 
       <div className="day-picker__footer">
-        <span className="selected-count">{selectedDays.size} day(s) selected</span>
+        <span className="selected-count">{t('multiDayPicker.selectedCount', { count: selectedDays.size, suffix: selectedDays.size !== 1 ? 's' : '' })}</span>
         <div className="day-picker__actions">
           <button
             className="btn btn--sm btn--primary"
             onClick={handleConfirm}
             disabled={selectedDays.size === 0}
           >
-            Confirm
+            {t('multiDayPicker.confirm')}
           </button>
           <button className="btn btn--sm btn--secondary" onClick={onCancel}>
-            Cancel
+            {t('multiDayPicker.cancel')}
           </button>
         </div>
       </div>

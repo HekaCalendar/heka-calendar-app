@@ -3,7 +3,7 @@
  * ║                    CELESTIAL BODY TRACKER - TYPE DEFINITIONS              ║
  * ║                                                                           ║
  * ║  Comprehensive biometrics & lifestyle tracking integrated with celestial  ║
- * ║  cycles. Track menstrual cycles, mood, sleep, medications, and more.     ║
+ * ║  cycles. Track mood, sleep, energy, medications, and more.               ║
  * ╚═══════════════════════════════════════════════════════════════════════════╝
  */
 
@@ -42,74 +42,16 @@ export interface TrackerEntry {
 }
 
 export type TrackerType = 
-  | 'menstrual'
   | 'mood'
   | 'sleep'
   | 'energy'
-  | 'medication'
-  | 'symptom'
-  | 'exercise'
-  | 'nutrition'
   | 'custom';
 
 export type TrackerData = 
-  | MenstrualData
   | MoodData
   | SleepData
   | EnergyData
-  | MedicationData
-  | SymptomData
-  | ExerciseData
-  | NutritionData
   | CustomData;
-
-// ═════════════════════════════════════════════════════════════════════════════
-// MENSTRUAL CYCLE TRACKING
-// ═════════════════════════════════════════════════════════════════════════════
-
-export interface MenstrualData {
-  /** Flow intensity */
-  flow: 'none' | 'spotting' | 'light' | 'medium' | 'heavy';
-  
-  /** Cervical mucus quality */
-  cervicalMucus?: 'dry' | 'sticky' | 'creamy' | 'watery' | 'eggwhite';
-  
-  /** Basal body temperature in Celsius */
-  temperature?: number;
-  
-  /** Ovulation test result */
-  ovulationTest?: 'negative' | 'low' | 'peak' | 'positive';
-  
-  /** Pregnancy test result */
-  pregnancyTest?: 'negative' | 'positive';
-  
-  /** Physical symptoms */
-  symptoms: MenstrualSymptom[];
-  
-  /** Cycle day (calculated from previous period start) */
-  cycleDay?: number;
-  
-  /** Whether this marks the start of a new cycle */
-  isPeriodStart: boolean;
-  
-  /** Estimated period end date */
-  estimatedEndDate?: string;
-}
-
-export type MenstrualSymptom = 
-  | 'cramps'
-  | 'bloating'
-  | 'breast-tenderness'
-  | 'headache'
-  | 'backache'
-  | 'acne'
-  | 'fatigue'
-  | 'mood-swings'
-  | 'food-cravings'
-  | 'insomnia'
-  | 'nausea'
-  | 'constipation'
-  | 'diarrhea';
 
 // ═════════════════════════════════════════════════════════════════════════════
 // MOOD TRACKING
@@ -397,9 +339,6 @@ export interface TrackerState {
   /** Currently viewing date */
   selectedDate: string;
   
-  /** Menstrual cycle configuration */
-  menstrualConfig?: MenstrualConfig;
-  
   /** Enabled trackers */
   enabledTrackers: TrackerType[];
   
@@ -409,24 +348,9 @@ export interface TrackerState {
   /** UI state */
   ui: {
     isLoading: boolean;
-    viewMode: 'day' | 'week' | 'month' | 'cycle';
+    viewMode: 'day' | 'week' | 'month';
     showPredictions: boolean;
   };
-}
-
-export interface MenstrualConfig {
-  /** Average cycle length in days */
-  averageCycleLength: number;
-  /** Average period length in days */
-  averagePeriodLength: number;
-  /** First day of last period (YYYY-MM-DD) */
-  lastPeriodStart: string;
-  /** Whether user is tracking fertility */
-  trackFertility: boolean;
-  /** Whether user is trying to conceive */
-  tryingToConceive: boolean;
-  /** Birth control method if any */
-  birthControl?: string;
 }
 
 export interface CustomTrackerDefinition {
@@ -442,76 +366,12 @@ export interface CustomTrackerDefinition {
 }
 
 // ═════════════════════════════════════════════════════════════════════════════
-// CYCLE PREDICTIONS & INSIGHTS
+// TRACKER INSIGHTS
 // ═════════════════════════════════════════════════════════════════════════════
-
-export interface CyclePrediction {
-  /** Next period start date */
-  nextPeriodStart: string;
-  
-  /** Next period end date */
-  nextPeriodEnd: string;
-  
-  /** Fertile window start */
-  fertileWindowStart?: string;
-  
-  /** Fertile window end */
-  fertileWindowEnd?: string;
-  
-  /** Estimated ovulation date */
-  estimatedOvulation?: string;
-  
-  /** PMS window start */
-  pmsWindowStart?: string;
-  
-  /** Confidence level based on data history */
-  confidence: 'high' | 'medium' | 'low';
-  
-  /** Days of data used for prediction */
-  cyclesAnalyzed: number;
-}
-
-export interface CycleInsight {
-  /** Type of insight */
-  type: 'pattern' | 'correlation' | 'prediction' | 'suggestion';
-  
-  /** Insight title */
-  title: string;
-  
-  /** Insight description */
-  description: string;
-  
-  /** Related celestial event if any */
-  celestialCorrelation?: {
-    event: string;
-    strength: number; // 0-1
-  };
-  
-  /** Actionable suggestion */
-  suggestion?: string;
-}
 
 // ═════════════════════════════════════════════════════════════════════════════
 // CONSTANTS
 // ═════════════════════════════════════════════════════════════════════════════
-
-export const TRACKER_CONFIG = {
-  // Default cycle length if not enough data
-  DEFAULT_CYCLE_LENGTH: 28,
-  DEFAULT_PERIOD_LENGTH: 5,
-  
-  // Luteal phase is typically 14 days
-  LUTEAL_PHASE_DAYS: 14,
-  
-  // Fertile window is typically 6 days (5 days before + day of ovulation)
-  FERTILE_WINDOW_DAYS: 6,
-  
-  // PMS window is typically 7-14 days before period
-  PMS_WINDOW_DAYS: 7,
-  
-  // Minimum cycles for reliable predictions
-  MIN_CYCLES_FOR_PREDICTION: 3,
-} as const;
 
 export const MOOD_SCALE: { value: number; label: string; emoji: string }[] = [
   { value: 1, label: 'Very Low', emoji: '😢' },
@@ -537,14 +397,6 @@ export const ENERGY_SCALE: { value: number; label: string; emoji: string }[] = [
   { value: 8, label: 'High', emoji: '🔥' },
   { value: 9, label: 'Very High', emoji: '🚀' },
   { value: 10, label: 'Peak', emoji: '⚡️' },
-];
-
-export const FLOW_OPTIONS: { value: MenstrualData['flow']; label: string; emoji: string }[] = [
-  { value: 'none', label: 'None', emoji: '◯' },
-  { value: 'spotting', label: 'Spotting', emoji: '•' },
-  { value: 'light', label: 'Light', emoji: '◐' },
-  { value: 'medium', label: 'Medium', emoji: '◑' },
-  { value: 'heavy', label: 'Heavy', emoji: '◉' },
 ];
 
 export const SLEEP_QUALITY_OPTIONS: { value: number; label: string; emoji: string }[] = [

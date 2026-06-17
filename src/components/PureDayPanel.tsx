@@ -14,7 +14,8 @@ import { useState, useMemo, useCallback, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { addNote, deleteNote, updateNote, type RootState } from '../store';
 import { HEKA_MONTHS, getNoteKey } from '../services/calendarService';
-import { getHolidaysForDateWithSubRegion, type SubRegionCode, type NoteCategory, type RecurringConfig } from '../types';
+import i18n from '../i18n';
+import { getHolidaysForDateWithSubRegion, type SubRegionCode, type NoteCategory, type RecurringConfig, type CountryCode } from '../types';
 import type { CalendarDay } from '../types';
 
 // ============================================================================
@@ -121,7 +122,7 @@ export const PureDayPanel: React.FC<PureDayPanelProps> = ({
   // Get holidays
   const holidays = useMemo(() => {
     if (!showHolidays || location === 'NONE') return [];
-    return getHolidaysForDateWithSubRegion(civilDate, location as any, subRegion || undefined);
+    return getHolidaysForDateWithSubRegion(civilDate, location as CountryCode, subRegion || undefined);
   }, [showHolidays, location, subRegion, civilDate]);
   
   // Close on escape key
@@ -253,15 +254,15 @@ export const PureDayPanel: React.FC<PureDayPanelProps> = ({
           <div className="pure-day-panel__meta">
             {showCivil && (
               <span className="pure-day-panel__civil">
-                {civilDate.toLocaleDateString('en-US', { 
+                {new Intl.DateTimeFormat(i18n.language || 'en', { 
                   weekday: 'short', 
                   month: 'short', 
                   day: 'numeric' 
-                })}
+                }).format(civilDate)}
               </span>
             )}
             {showMoon && day.moonPhase && (
-              <span className="pure-day-panel__moon" title={(day as any).moonPhaseName}>
+              <span className="pure-day-panel__moon" title={day.moonPhaseName}>
                 {day.moonPhase}
               </span>
             )}
@@ -378,17 +379,19 @@ export const PureDayPanel: React.FC<PureDayPanelProps> = ({
                   </div>
                   
                   <div className="pure-day-panel__note-actions">
-                    <button 
+                    <button
                       className="pure-day-panel__action-btn pure-day-panel__action-btn--edit"
                       onClick={() => startEdit(note)}
                       title="Edit note"
+                      aria-label={i18n.t('edit')}
                     >
                       ✎
                     </button>
-                    <button 
+                    <button
                       className="pure-day-panel__action-btn pure-day-panel__action-btn--delete"
                       onClick={() => handleDelete(note.id)}
                       title="Delete note"
+                      aria-label={i18n.t('delete')}
                     >
                       🗑
                     </button>

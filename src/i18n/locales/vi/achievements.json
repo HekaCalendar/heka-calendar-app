@@ -1,0 +1,99 @@
+{
+  "title": "Thành tích",
+  "streak": "Mối liên tục",
+  "days": "Ngày",
+  "totalAchievements": "{{count}} thành tích",
+  "earned": "Đã giành được",
+  "locked": "Đã khóa",
+  "newAchievement": "Thành tích mới!",
+  "categories": {
+    "calendar": "Chuyên gia lịch",
+    "journal": "Nhà giữ nhật ký",
+    "circle": "Người xây dựng vòng tròn",
+    "coach": "Người theo dõi sao",
+    "explorer": "Nhà thám hiểm"
+  },
+  "achievements": {
+    "firstStep": {
+      "name": "Bước đầu tiên",
+      "description": "Mở lịch lần đầu tiên"
+    },
+    "timeTraveler": {
+      "name": "Người du hành thời gian",
+      "description": "Xem một ngày cách đây hơn 1 năm"
+    },
+    "streak7": {
+      "name": "Tuần ánh sáng",
+      "description": "Sử dụng lịch liên tục trong 7 ngày"
+    },
+    "streak30": {
+      "name": "Tháng sao",
+      "description": "Sử dụng lịch liên tục trong 30 ngày"
+    },
+    "streak100": {
+      "name": "Thế kỷ trí tuệ",
+      "description": "Sử dụng lịch liên tục trong 100 ngày"
+    },
+    "journalFirst": {
+      "name": "Lời đầu tiên",
+      "description": "Viết nhật ký đầu tiên của bạn"
+    },
+    "journal10": {
+      "name": "Tác giả non nớt",
+      "description": "Viết 10 bài nhật ký"
+    },
+    "journal50": {
+      "name": "Nhà văn lão luyện",
+      "description": "Viết 50 bài nhật ký"
+    },
+    "friendAdded": {
+      "name": "Liên kết đầu tiên",
+      "description": "Thêm bạn đầu tiên của bạn"
+    },
+    "circle5": {
+      "name": "Vòng tròn đang phát triển",
+      "description": "Có 5 bạn trong vòng tròn của bạn"
+    },
+    "aiAsked": {
+      "name": "Người tìm kiếm trí tuệ",
+      "description": "Hỏi câu hỏi cho huấn luyện viên AI"
+    },
+    "aiStreak7": {
+      "name": "Hướng dẫn hàng ngày",
+      "description": "Tư vấn huấn luyện viên AI trong 7 ngày"
+    },
+    "allMoonPhases": {
+      "name": "Người quan sát mặt trăng",
+      "description": "Xem tất cả 8 giai đoạn mặt trăng"
+    },
+    "allZodiac": {
+      "name": "Nhà thám hiểm hoàng đạo",
+      "description": "Xem tất cả 13 dấu hoàng đạo"
+    },
+    "printFirst": {
+      "name": "In ấn đầu tiên",
+      "description": "In ấn trang lịch đầu tiên của bạn"
+    }
+  },
+  "categoryLabels": {
+    "beginner": "Nhập môn",
+    "intermediate": "Trung gian",
+    "advanced": "Nâng cao",
+    "master": "Chuyên gia",
+    "special": "Đặc biệt",
+    "explorer": "Nhà thám hiểm",
+    "discoverer": "Nhà phát hiện",
+    "engager": "Nhà tham gia"
+  },
+  "stats": {
+    "appOpens": "Lần mở ứng dụng",
+    "dayStreak": "Chuỗi ngày liên tiếp",
+    "hoursSpent": "Giờ đã dành",
+    "featuresFound": "Tính năng đã tìm thấy"
+  },
+  "all": "Tất cả",
+  "showHidden": "Hiện mục ẩn",
+  "noAchievements": "Không có thành tựu nào trong danh mục này",
+  "hiddenAchievement": "Thành tựu ẩn",
+  "secret": "MẶC"
+}

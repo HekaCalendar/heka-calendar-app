@@ -11,6 +11,7 @@ import {
   calculateHouses,
   getZodiacFrame,
   getSignCount,
+  calculateAyanamsa,
 } from '../swiss-ephemeris/engine';
 import type { CelestialBody, VoidMoonData, VoidMoonEvent } from '../../types';
 import { toDegree, getSignFromLongitude, SIGN_BOUNDARIES_13, getDegreeInSign } from '../../types/core';
@@ -67,9 +68,10 @@ export async function calculateCurrentSky(date: Date = new Date()): Promise<{
 
     // Ensure we have valid positions (fallback if WASM not ready)
     const use13Signs = count === 13;
+    const isSidereal = frame === 'sidereal';
     const validPositions = positions && Object.keys(positions).length > 0
       ? positions
-      : getFallbackPositions(jd, use13Signs);
+      : getFallbackPositions(jd, use13Signs, isSidereal);
     
     const result = {
       positions: validPositions,
@@ -98,8 +100,9 @@ export async function calculateCurrentSky(date: Date = new Date()): Promise<{
       date.getUTCSeconds()
     );
     const use13Signs = getSignCount() === 13;
+    const isSidereal = getZodiacFrame() === 'sidereal';
     return {
-      positions: getFallbackPositions(jd, use13Signs),
+      positions: getFallbackPositions(jd, use13Signs, isSidereal),
       julianDay: jd,
       timestamp: date.getTime(),
     };
@@ -110,7 +113,7 @@ export async function calculateCurrentSky(date: Date = new Date()): Promise<{
  * Fallback planet positions when WASM is not available
  * Uses mean orbital elements for approximate positions
  */
-function getFallbackPositions(jd: number, use13Signs?: boolean): Record<string, CelestialBody> {
+export function getFallbackPositions(jd: number, use13Signs?: boolean, isSidereal?: boolean): Record<string, CelestialBody> {
   const elements: Record<string, { meanLong: number; dailyMotion: number; distance: number }> = {
     sun: { meanLong: 280.46646, dailyMotion: 0.98564736, distance: 1.0 },
     moon: { meanLong: 218.316, dailyMotion: 13.176396, distance: 0.00257 },
@@ -123,15 +126,21 @@ function getFallbackPositions(jd: number, use13Signs?: boolean): Record<string, 
     neptune: { meanLong: 304.349, dailyMotion: 0.005965, distance: 30.1 },
     pluto: { meanLong: 238.929, dailyMotion: 0.003964, distance: 39.5 },
   };
-  
+
   const jd2000 = 2451545.0;
   const daysSince2000 = jd - jd2000;
+  const ayanamsa = isSidereal ? calculateAyanamsa(jd) : 0;
   const result: Record<string, CelestialBody> = {};
-  
+
   for (const [name, el] of Object.entries(elements)) {
     let longitude = (el.meanLong + el.dailyMotion * daysSince2000) % 360;
     if (longitude < 0) longitude += 360;
-    
+
+    // Apply ayanamsa subtraction for sidereal mode
+    if (isSidereal) {
+      longitude = (longitude - ayanamsa + 360) % 360;
+    }
+
     result[name] = {
       id: name as any,
       longitude: toDegree(longitude),
@@ -143,7 +152,7 @@ function getFallbackPositions(jd: number, use13Signs?: boolean): Record<string, 
       degreeInSign: getDegreeInSign(toDegree(longitude), use13Signs),
     };
   }
-  
+
   return result;
 }
 
@@ -224,7 +233,6 @@ export async function calculatePlanetaryHours(
   activities: string[];
   isDay: boolean;
 }>> {
-  const dayOfWeek = date.getDay(); // 0=Sunday
   const dayPlanets = ['sun', 'moon', 'mars', 'mercury', 'jupiter', 'venus', 'saturn'];
   const chaldean = ['saturn', 'jupiter', 'mars', 'sun', 'venus', 'mercury', 'moon'];
   const symbols: Record<string, string> = {
@@ -239,43 +247,61 @@ export async function calculatePlanetaryHours(
     mercury: ['Communication', 'Writing', 'Study', 'Commerce'],
     moon: ['Home', 'Family', 'Intuition', 'Nurturing'],
   };
-  
-  // Get actual sunrise and sunset times
-  const [sunrise, sunset] = await Promise.all([
+
+  // Get actual sunrise and sunset times for the requested calendar day
+  let [sunrise, sunset] = await Promise.all([
     calculateSunrise(date, latitude, longitude),
     calculateSunset(date, latitude, longitude)
   ]);
-  
+
   // If we can't get rise/set times, fall back to standard hours
   if (!sunrise || !sunset) {
     console.warn('[PlanetaryHours] Using fallback - no rise/set data');
     return calculateFallbackHours(date);
   }
-  
+
+  const now = date.getTime();
+  const calcDate = new Date(date);
+
+  // Planetary day starts at sunrise. If before sunrise, we're still in yesterday's cycle.
+  if (now < sunrise.getTime()) {
+    calcDate.setDate(calcDate.getDate() - 1);
+    const prev = await Promise.all([
+      calculateSunrise(calcDate, latitude, longitude),
+      calculateSunset(calcDate, latitude, longitude)
+    ]);
+    if (prev[0] && prev[1]) {
+      sunrise = prev[0];
+      sunset = prev[1];
+    }
+    // If prev calc fails, we keep today's sunrise/sunset — better than nothing
+  }
+
+  const dayOfWeek = calcDate.getDay(); // 0=Sunday — of the planetary day containing the time
+
   // Calculate day length and night length
   const dayLength = sunset.getTime() - sunrise.getTime();
   const dayHourLength = dayLength / 12;
-  
+
   // Night starts at sunset, ends at next day's sunrise
-  const tomorrow = new Date(date);
+  const tomorrow = new Date(calcDate);
   tomorrow.setDate(tomorrow.getDate() + 1);
   const nextSunrise = await calculateSunrise(tomorrow, latitude, longitude);
-  
+
   let nightLength: number;
-  let nightHourLength: number;
-  
+
   if (nextSunrise) {
     nightLength = nextSunrise.getTime() - sunset.getTime();
   } else {
     // Fallback: assume 24h - dayLength
-    nightLength = (24 * 60 * 60 * 1000) - dayLength;
+    nightLength = Math.max(0, (24 * 60 * 60 * 1000) - dayLength);
   }
-  nightHourLength = nightLength / 12;
-  
+  const nightHourLength = nightLength / 12;
+
   // First hour of day is ruled by the day's planet
   const firstHourRuler = dayPlanets[dayOfWeek];
   const firstHourIndex = chaldean.indexOf(firstHourRuler);
-  
+
   const hours: Array<{
     hour: number;
     planet: string;
@@ -285,15 +311,15 @@ export async function calculatePlanetaryHours(
     activities: string[];
     isDay: boolean;
   }> = [];
-  
+
   // Generate 12 day hours
   for (let h = 0; h < 12; h++) {
     const planetIndex = (firstHourIndex + h) % 7;
     const planet = chaldean[planetIndex];
-    
+
     const startTime = new Date(sunrise.getTime() + (h * dayHourLength));
     const endTime = new Date(sunrise.getTime() + ((h + 1) * dayHourLength));
-    
+
     hours.push({
       hour: h,
       planet,
@@ -304,15 +330,15 @@ export async function calculatePlanetaryHours(
       isDay: true,
     });
   }
-  
+
   // Generate 12 night hours (continue Chaldean order)
   for (let h = 0; h < 12; h++) {
     const planetIndex = (firstHourIndex + 12 + h) % 7;
     const planet = chaldean[planetIndex];
-    
+
     const startTime = new Date(sunset.getTime() + (h * nightHourLength));
     const endTime = new Date(sunset.getTime() + ((h + 1) * nightHourLength));
-    
+
     hours.push({
       hour: h + 12,
       planet,
@@ -323,7 +349,7 @@ export async function calculatePlanetaryHours(
       isDay: false,
     });
   }
-  
+
   return hours;
 }
 
@@ -386,12 +412,14 @@ function calculateFallbackHours(date: Date): Array<{
 
 /**
  * Get current planetary hour with Swiss Ephemeris accuracy
+ * Handles pre-sunrise (still in yesterday's night cycle), daytime, and post-sunset.
+ * Returns today's sunrise/sunset for display regardless of which planetary hour is active.
  */
 export async function getCurrentPlanetaryHour(
   date: Date = new Date(),
   latitude: number = 0,
   longitude: number = 0,
-  timezone: number = 0
+  _timezone: number = 0
 ): Promise<{
   planet: string;
   symbol: string;
@@ -404,44 +432,119 @@ export async function getCurrentPlanetaryHour(
   sunset?: Date;
   progress: number; // 0-100% through current hour
 }> {
-  const hours = await calculatePlanetaryHours(date, latitude, longitude, timezone);
-  
-  // Find which planetary hour we're currently in
+  const chaldean = ['saturn', 'jupiter', 'mars', 'sun', 'venus', 'mercury', 'moon'];
+  const dayPlanets = ['sun', 'moon', 'mars', 'mercury', 'jupiter', 'venus', 'saturn'];
+  const symbols: Record<string, string> = {
+    saturn: '♄', jupiter: '♃', mars: '♂', sun: '☉', venus: '♀', mercury: '☿', moon: '☽'
+  };
+  const activities: Record<string, string[]> = {
+    saturn: ['Study', 'Research', 'Planning', 'Organization'],
+    jupiter: ['Business', 'Legal', 'Travel', 'Teaching'],
+    mars: ['Exercise', 'Competition', 'Surgery', 'Action'],
+    sun: ['Leadership', 'Health', 'Visibility', 'Requests'],
+    venus: ['Romance', 'Art', 'Socializing', 'Beauty'],
+    mercury: ['Communication', 'Writing', 'Study', 'Commerce'],
+    moon: ['Home', 'Family', 'Intuition', 'Nurturing'],
+  };
+
   const now = date.getTime();
-  let current = hours[0];
-  let currentIndex = 0;
-  
-  for (let i = 0; i < hours.length; i++) {
-    if (now >= hours[i].startTime.getTime() && now < hours[i].endTime.getTime()) {
-      current = hours[i];
-      currentIndex = i;
-      break;
-    }
+
+  // Get calendar day's sunrise/sunset for display and period detection
+  const [todaySunrise, todaySunset] = await Promise.all([
+    calculateSunrise(date, latitude, longitude),
+    calculateSunset(date, latitude, longitude)
+  ]);
+
+  // Fallback when no rise/set (polar regions, calculation failure)
+  if (!todaySunrise || !todaySunset) {
+    console.warn('[PlanetaryHours] Using fallback - no rise/set data');
+    const dayOfWeek = date.getDay();
+    const firstHourIndex = chaldean.indexOf(dayPlanets[dayOfWeek]);
+    const civilHour = date.getHours();
+    // Approximate: 6 AM–6 PM = daytime hours 0–11, 6 PM–6 AM = night hours 12–23
+    const isDay = civilHour >= 6 && civilHour < 18;
+    const approxSegment = isDay ? civilHour - 6 : (civilHour >= 18 ? civilHour - 18 : civilHour + 6);
+    const hourIndex = (firstHourIndex + approxSegment + (isDay ? 0 : 12)) % 7;
+    const nextIndex = (hourIndex + 1) % 7;
+    const approxHour = isDay ? approxSegment : approxSegment + 12;
+    return {
+      planet: chaldean[hourIndex],
+      symbol: symbols[chaldean[hourIndex]],
+      hour: approxHour,
+      activities: activities[chaldean[hourIndex]],
+      nextHour: chaldean[nextIndex],
+      isDay,
+      progress: ((date.getMinutes() * 60 + date.getSeconds()) / 3600) * 100,
+    };
   }
-  
-  const next = hours[(currentIndex + 1) % 24];
-  
-  // Calculate progress through current hour
-  const hourStart = current.startTime.getTime();
-  const hourEnd = current.endTime.getTime();
-  const hourDuration = hourEnd - hourStart;
-  const elapsed = now - hourStart;
-  const progress = Math.min(100, Math.max(0, (elapsed / hourDuration) * 100));
-  
-  // Find sunrise/sunset from hours array
-  const sunrise = hours.find(h => h.isDay)?.startTime;
-  const sunset = hours.find(h => !h.isDay)?.startTime;
-  
+
+  // Determine which solar period we're in
+  let periodStart: Date;
+  let periodEnd: Date;
+  let calcDayOfWeek: number;
+  let isDaytime: boolean;
+
+  if (now >= todaySunrise.getTime() && now <= todaySunset.getTime()) {
+    // Daytime — today's cycle
+    periodStart = todaySunrise;
+    periodEnd = todaySunset;
+    calcDayOfWeek = date.getDay();
+    isDaytime = true;
+  } else if (now > todaySunset.getTime()) {
+    // After sunset — tonight's cycle, need tomorrow's sunrise
+    const tomorrow = new Date(date);
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    const nextSunrise = await calculateSunrise(tomorrow, latitude, longitude);
+    if (nextSunrise) {
+      periodStart = todaySunset;
+      periodEnd = nextSunrise;
+    } else {
+      // Fallback: assume 12-hour night
+      periodStart = todaySunset;
+      periodEnd = new Date(todaySunset.getTime() + 12 * 60 * 60 * 1000);
+    }
+    calcDayOfWeek = date.getDay();
+    isDaytime = false;
+  } else {
+    // Before sunrise — still in last night's cycle, need yesterday's sunset
+    const yesterday = new Date(date);
+    yesterday.setDate(yesterday.getDate() - 1);
+    const prevSunset = await calculateSunset(yesterday, latitude, longitude);
+    if (prevSunset) {
+      periodStart = prevSunset;
+      periodEnd = todaySunrise;
+      calcDayOfWeek = yesterday.getDay();
+    } else {
+      // Fallback: assume 12-hour night
+      periodStart = new Date(todaySunrise.getTime() - 12 * 60 * 60 * 1000);
+      periodEnd = todaySunrise;
+      calcDayOfWeek = yesterday.getDay();
+    }
+    isDaytime = false;
+  }
+
+  const hourLength = (periodEnd.getTime() - periodStart.getTime()) / 12;
+  const msSinceStart = now - periodStart.getTime();
+  const segmentIndex = Math.min(11, Math.floor(msSinceStart / hourLength));
+  const progress = Math.min(100, Math.max(0, (msSinceStart % hourLength) / hourLength * 100));
+
+  const firstHourIndex = chaldean.indexOf(dayPlanets[calcDayOfWeek]);
+  const hourOffset = isDaytime ? 0 : 12;
+  const hourIndex = segmentIndex + hourOffset;
+  const planetIndex = (firstHourIndex + hourIndex) % 7;
+  const planet = chaldean[planetIndex];
+  const nextPlanetIndex = (firstHourIndex + hourIndex + 1) % 7;
+
   return {
-    planet: current.planet,
-    symbol: current.symbol,
-    hour: current.hour,
-    activities: current.activities,
-    nextHour: next.planet,
+    planet,
+    symbol: symbols[planet],
+    hour: hourIndex,
+    activities: activities[planet],
+    nextHour: chaldean[nextPlanetIndex],
     location: latitude !== 0 || longitude !== 0 ? `${latitude.toFixed(1)}°, ${longitude.toFixed(1)}°` : undefined,
-    isDay: current.isDay,
-    sunrise,
-    sunset,
+    isDay: isDaytime,
+    sunrise: todaySunrise,
+    sunset: todaySunset,
     progress,
   };
 }
@@ -504,12 +607,25 @@ export async function calculateLocalHouses(
     altitude: 0,
   } as any, houseSystem);
   
+  // Defensive: ensure houses data is valid
+  if (!houses || !Array.isArray(houses.cusps)) {
+    console.warn('[LocalHouses] Invalid houses data, using fallback:', houses);
+    return {
+      ascendant: 0,
+      mc: 0,
+      ic: 180,
+      descendant: 180,
+      cusps: Array(12).fill(0),
+      houseSystem,
+    };
+  }
+  
   return {
-    ascendant: houses.ascendant,
-    mc: houses.mc,
-    ic: houses.ic,
-    descendant: houses.dsc,
-    cusps: houses.cusps.map((c: any) => c.longitude),
+    ascendant: houses.ascendant ?? 0,
+    mc: houses.mc ?? 0,
+    ic: houses.ic ?? 180,
+    descendant: houses.dsc ?? 180,
+    cusps: houses.cusps.map((c: any) => c?.longitude ?? 0),
     houseSystem,
   };
 }
@@ -834,7 +950,10 @@ function analyzeVoidQuality(
  * Enhanced Void of Course Moon calculation
  * Uses exact aspect timing to determine void entry/exit
  */
-export async function calculateVoidMoonStatus(): Promise<VoidMoonData & {
+export async function calculateVoidMoonStatus(
+  date: Date = new Date(),
+  providedPositions?: Record<string, CelestialBody>
+): Promise<VoidMoonData & {
   quality: 'favorable' | 'challenging' | 'neutral';
   qualityDescription: string;
   currentAspects: Array<{
@@ -846,9 +965,9 @@ export async function calculateVoidMoonStatus(): Promise<VoidMoonData & {
   }>;
 }> {
   try {
-    const { positions } = await calculateCurrentSky();
+    const positions = providedPositions || (await calculateCurrentSky(date)).positions;
     const moon = positions.moon;
-    const now = new Date();
+    const now = date;
     
     if (!moon) {
       throw new Error('Moon position not available');
@@ -985,7 +1104,7 @@ export async function getUpcomingVoidMoonEvents(days: number = 7): Promise<VoidM
       const nextBoundary = getNextSignBoundary(currentLongitude, use13Signs);
       
       // Degrees from current position to next boundary
-      let degreesToIngress = (nextBoundary - currentLongitude + 360) % 360;
+      const degreesToIngress = (nextBoundary - currentLongitude + 360) % 360;
       if (degreesToIngress <= 0.001) {
         // Already at/past boundary — advance to next sign
         currentLongitude = ((currentLongitude as number) + 0.1) % 360 as Degree;
@@ -1054,6 +1173,20 @@ export async function calculateMoonPhaseSwiss(
   );
   
   const positions = calculateAllPlanets(jd, ['sun', 'moon'], { zodiacFrame: frame, signCount: count });
+  
+  // Fallback when WASM not yet initialized
+  if (!positions?.sun || !positions?.moon) {
+    return {
+      phase: 'Full Moon',
+      glyph: '🌕',
+      illumination: 100,
+      age: 14.77,
+      waxing: false,
+      angle: 180,
+      name: 'Full Moon',
+    };
+  }
+  
   const moonPhase = calculatePreciseMoonPhase(positions.sun, positions.moon);
 
   // Calculate approximate moon age from phase (0-29.53 days)
@@ -1100,9 +1233,18 @@ export async function calculateMoonPhaseBatch(
   angle: number;
   name: string;
 }>> {
-  const results = new Map();
   const frame = getZodiacFrame();
   const count = getSignCount();
+
+  // Cache key covers the inputs that affect the result.
+  const cacheKey = `moonPhaseBatch:${hemisphere}:${frame}:${count}:${dates
+    .map((d) => d.toISOString().split('T')[0])
+    .sort()
+    .join(',')}`;
+  const cached = calculationCache.get(cacheKey);
+  if (cached) return cached;
+
+  const results = new Map();
 
   // Process in parallel for performance
   const calculations = dates.map(async (date) => {
@@ -1119,6 +1261,20 @@ export async function calculateMoonPhaseBatch(
       );
       
       const positions = calculateAllPlanets(jd, ['sun', 'moon'], { zodiacFrame: frame, signCount: count });
+      
+      // Fallback when WASM not yet initialized
+      if (!positions?.sun || !positions?.moon) {
+        return {
+          phase: 'Full Moon',
+          name: 'Full Moon',
+          glyph: '🌕',
+          illumination: 100,
+          age: 14.77,
+          waxing: false,
+          angle: 180,
+        };
+      }
+      
       const moonPhase = calculatePreciseMoonPhase(positions.sun, positions.moon);
       
       const synodicMonth = 29.53059;
@@ -1169,7 +1325,8 @@ export async function calculateMoonPhaseBatch(
   settled.forEach(({ dateKey, data }) => {
     results.set(dateKey, data);
   });
-  
+
+  calculationCache.set(cacheKey, results);
   return results;
 }
 

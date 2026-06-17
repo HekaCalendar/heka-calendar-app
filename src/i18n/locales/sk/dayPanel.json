@@ -1,0 +1,239 @@
+{
+  "celestialGuide": "Galaktický príručka",
+  "journal": "Žurnál",
+  "notes": "Poznámky",
+  "events": "Udalosti",
+  "tasks": "Úlohy",
+  "transits": "Přechody",
+  "mood": "Nálada",
+  "vibe": "Výraz",
+  "energy": "Energie",
+  "hekaRune": "HEKA Runa",
+  "celestialAffirmation": "Nebeská potvrdenie",
+  "moodTracker": "Sledovanie nálad",
+  "vibeColor": "Farba výrazu",
+  "addNote": "Pridať poznámku...",
+  "addEvent": "Pridať udalosť",
+  "addTask": "Pridať úlohu",
+  "eventTitle": "Názov udalosti",
+  "taskTitle": "Názov úlohy",
+  "taskCompleted": "Dokončené",
+  "taskPending": "Čakajúce",
+  "editNote": "Upraviť poznámku",
+  "deleteNote": "Zmazať poznámku",
+  "notePlaceholder": "Zapíšte si svoje myšlienky tu...",
+  "journalPlaceholder": "Zaznamenať svoj deň...",
+  "eventPlaceholder": "Čo sa deje?",
+  "taskPlaceholder": "Čo treba urobiť?",
+  "addNewNote": "+ Nová poznámka",
+  "addNewEvent": "+ Nová udalosť",
+  "addNewTask": "+ Nová úloha",
+  "noNotes": "Pre tento deň žiadne poznámky",
+  "noEvents": "Pre tento deň žiadne udalosti",
+  "noTasks": "Pre tento deň žiadne úlohy",
+  "noJournal": "Pre tento deň žiadny záznam v žurnáli",
+  "transitProgress": "Pokrok v priechode",
+  "transitRemaining": "{{percent}}% zostáva",
+  "currentMood": "Aktuálna nálada",
+  "selectMood": "Vyberte si svoju náladu",
+  "moods": {
+    "joyful": "Roztomilý",
+    "happy": "Šťastný",
+    "content": "Spokojný",
+    "neutral": "Neutrálny",
+    "tired": "Unavený",
+    "sad": "Smutný",
+    "anxious": "Úzkostlivý",
+    "frustrated": "Frustrovaný",
+    "angry": "Nahnevaný",
+    "inspired": "Inspirovaný",
+    "focused": "Zameraný",
+    "peaceful": "Mierumilovný"
+  },
+  "runeCast": "Kazanie run",
+  "runeReveal": "Odkryť runu",
+  "runeBlessing": "Dnešné požehnanie",
+  "runeWisdom": "Moudrost run",
+  "runeEnergy": "Energia run",
+  "emptyState": "Vyberte deň pre zobrazenie podrobností",
+  "closePanel": "Zatvoriť panel",
+  "addTaskBtn": "+ Úloha",
+  "header": {
+    "monthOf": "Mesiac {{month}} / 13",
+    "hekaYear": "HEKA Rok {{year}}"
+  },
+  "moon": {
+    "calculating": "Výpočet pozície Mesca...",
+    "unavailable": "Údaje o fáze Mesca nedostupné",
+    "waxing": "Zväčšavanie",
+    "waning": "Zmenšavanie",
+    "illuminated": "{{percent}}% osvetlené",
+    "age": "Vek: {{age}} dní",
+    "swissEphemeris": "Švajčiarsky ephemeris",
+    "southernHemisphere": "Južná polokola",
+    "northernHemisphere": "Severná polokola"
+  },
+  "holidays": {
+    "inLocation": "Sviatky v {{location}}"
+  },
+  "astrology": {
+    "dailyCosmicGuidance": "Denné kosmické vedení",
+    "personalizedFor": "Prispôsobené pre {{name}}",
+    "birthChartActive": "Narodenie aktívne",
+    "calculatingTransits": "Výpočet vašich osobitných prechodu...",
+    "connectingCelestial": "Pripájanie k nebeskej inteligencii...",
+    "unavailable": "Nebeské vedení nedostupné. Skontrolujte sekciu Hviezdy pre detailnejšiu astrológiu.",
+    "sunrise": "Slniečko: {{time}}",
+    "sunset": "Západ slnka: {{time}}",
+    "planetaryHour": "Hviezdičkový hodin: {{planet}}",
+    "locationPin": "{{location}}",
+    "activeTransits": "Aktívne prechody pre vás dnes",
+    "moonIn": "Mesiac v {{sign}}",
+    "sunIn": "Slnko v {{sign}}",
+    "todaysTheme": "Dnešná téma:",
+    "cosmicGuidance": "Kozmické vedení",
+    "reflection": "Zrážka",
+    "affirmation": "Potvrdenie",
+    "birthChartCta": {
+      "title": "Chcete personalizované prechodové doby?",
+      "description": "Pridajte svojho narodenia v sekcii Hviezdy a zobrazte si, ako vás dnes影响uje kozmická počasie osobne."
+    }
+  },
+  "lunarMansion": {
+    "title": "Lunárne prístupy",
+    "trueMode": "PRAVÁ mód",
+    "calculating": "Prepočítavanie siderického položiska mesiaca...",
+    "totem": "Totem",
+    "gift": "Dar",
+    "ruler": "Vládc",
+    "quality": "Kvalita",
+    "quarter": "Štvorc",
+    "sunTravelsThrough": "Slnko prechádza {{name}}",
+    "quarters": {
+      "initiation": "Iniciatíva — zasadzuje sa semeno",
+      "deepening": "Hlbšie — korene sa uchopujú",
+      "crisis": "Kríz — príde test",
+      "completion": "Dokončenie — plod zreje"
+    }
+  },
+  "solarReturn": {
+    "title": "Pravý solstícium",
+    "titleInDays": "Pravý solstícium o {{count}} deň{{suffix}}",
+    "trueMode": "PRAVÁ mód",
+    "today": "Dnes sa Slnko vráti na vašu siderickú narodenia dĺžku.",
+    "approaching": "Slnko sa vráti na vašu siderickú polohu {{sign}} dňa {{date}}.",
+    "description": "V TRUE HEKA móde je vašim narodením hviezdy, nie občiansky kalendár.",
+    "exactOrb": "Presné do {{orb}} arcminút."
+  },
+  "notesSection": {
+    "tasksAndNotes": "Úlohy ({{tasks}}) · Poznámky ({{notes}})",
+    "tasksOnly": "Úlohy ({{count}})",
+    "notesAndTasks": "Poznámky a úlohy ({{count}})",
+    "addNote": "+ Poznámka",
+    "longHoldHint": "Podržte dlhšie pre možnosti · Dvojklikom úlohu upravíte",
+    "noNotesOrTasks": "Pre tento deň žiadne poznámky alebo úlohy.",
+    "createNoteHint": "Kliknite <0>+ Poznámka</0> alebo <1>⚡ Pridať úlohu</1> vyššie pre vytvorenie jednej."
+  },
+  "noteEditor": {
+    "makeTask": "⚡ Spraviť to úlohou",
+    "dueTime": "Čas splnenia",
+    "remindMe": "Pripomenúť mi",
+    "reminders": {
+      "atTime": "V čase úlohy",
+      "5min": "5 minút pred",
+      "10min": "10 minút pred",
+      "15min": "15 minút pred",
+      "30min": "30 minút pred",
+      "1hour": "1 hodinou pred"
+    },
+    "howAreYouFeeling": "Ako sa cítiš?",
+    "taskPlaceholder": "Čo plánuješ dokončiť?",
+    "notePlaceholder": "Napíš svoju poznámku...",
+    "saveTask": "Ulož úlohu",
+    "saveNote": "Ulož poznámku",
+    "cancel": "Zrušiť"
+  },
+  "noteItem": {
+    "markComplete": "Označiť ako dokončené",
+    "completed": "Dokončené",
+    "task": "Úloha",
+    "delete": "Zmazať"
+  },
+  "selection": {
+    "selectedFromDays": "{{count}} vybraných z {{days}} deň{{suffix}}",
+    "done": "Hotovo",
+    "selectAll": "Vybrať všetko",
+    "duplicate": "Duplikovať...",
+    "delete": "Zmazať",
+    "manageDuplicates": "Spravovať duplikáty:",
+    "duplicateTo": "Duplikovať do:",
+    "nextWeek": "Budúca týždeň",
+    "nextMonth": "Budúcy mesiac",
+    "everyDay": "Každý {{day}}",
+    "undoEveryDay": "Zrušiť Každý {{day}}",
+    "specificDay": "Špecifický deň...",
+    "chooseDays": "Vybrať deň/dni...",
+    "back": "Späť"
+  },
+  "dayPicker": {
+    "cancel": "Zrušiť"
+  },
+  "multiDayPicker": {
+    "selectedCount": "{{count}} deň{{suffix}} vybraných",
+    "confirm": "Potvrdiť",
+    "cancel": "Zrušiť"
+  },
+  "confirmations": {
+    "deleteNote": "Zmazať túto poznámku?",
+    "deleteSelected": "Zmazať {{count}} vybraných poznámok z {{days}} dní?",
+    "duplicateEveryDay": "Duplikovať tieto {{count}} položiek každému {{day}} na zbytok roka?",
+    "undoDuplicates": "Odstrániť všetky zduplikované inštancie týchto {{count}} poznámok?"
+  },
+  "alerts": {
+    "couldNotCalculateDate": "Nepodarilo sa vypočítať cieľový dátum",
+    "duplicatedToNextWeek": "Duplikované {{items}} na budúcu týždeň ({{month}} {{day}})",
+    "duplicatedToNextMonth": "Duplikované {{items}} na budúci mesiac ({{month}} {{day}})",
+    "duplicatedToDays": "Duplikované do {{count}} {{day}}ov",
+    "duplicatedNotes": "Duplikované {{count}} poznámka(y)",
+    "removedDuplicates": "Odstránené duplicitné poznámky",
+    "duplicatedToMonth": "Duplikované {{count}} poznámka(y) na ďalší mesiac",
+    "duplicatedToDaysCount": "Duplikované {{count}} poznámka(y) na {{days}} deň(dni)",
+    "duplicatedSelectedItems": "Duplikované vybraté položky na {{count}} deň(dni)",
+    "signInToSaveTasks": "Na uloženie úloh musíte byť prihlásený. Prosím, otvorte ponuku Účtu a znova sa prihláste.",
+    "unableToSaveTask": "Nepodarilo sa uložiť úlohu. Chyba: {{error}}"
+  },
+  "dow": {
+    "sunday": "Nedeľa",
+    "monday": "Pondelok",
+    "tuesday": "Utorok",
+    "wednesday": "Streda",
+    "thursday": "Štvrtok",
+    "friday": "Piatok",
+    "saturday": "Sobota",
+    "short": {
+      "sun": "Ne",
+      "mon": "Po",
+      "tue": "Ut",
+      "wed": "St",
+      "thu": "Št",
+      "fri": "Pi",
+      "sat": "So"
+    }
+  },
+  "noteCategories": {
+    "personal": "Osobné",
+    "work": "Práca",
+    "spiritual": "Duchovné",
+    "family": "Rodiak",
+    "health": "Zdravie",
+    "creative": "Tvorivé",
+    "general": "Všeobecné"
+  },
+  "moodScale": {
+    "1": "Veľmi nízka",
+    "2": "Nízka",
+    "3": "Neutrálna",
+    "4": "Dobrý",
+    "5": "Výborný"
+  }
+}

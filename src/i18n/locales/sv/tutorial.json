@@ -1,0 +1,126 @@
+{
+  "tutorial": {
+    "back": "Tillbaka",
+    "skip": "Hoppa över",
+    "enter": "Gå in i HEKA",
+    "continue": "Fortsätt",
+    "stepLabel": "Steg {{current}} av {{total}}",
+    "journeyTitle": "Din resa",
+    "completeLabel": "Slutför",
+    "actionWaiting": "Tryck för att fortsätta",
+    "steps": {
+      "welcome": {
+        "title": "Välkommen till HEKA",
+        "detail": "Trettonde månader. Tjugåtta dagar varje. Månen, solen, din trädgård, din energi, dina vänner — äntligen i takt.",
+        "action": "Börja din resa",
+        "instruction": "Du har aldrig sett en kalender som denna."
+      },
+      "tracker": {
+        "title": "Spåra ditt rytm",
+        "detail": "Humör: 1-10 reglage med realtidsemoji. Sömn: varaktighet och kvalitet. Energi: fysisk, mental, emotionell, andlig. Insiktspanel",
+        "action": "Fortsätt",
+        "instruction": "Din kropp är en del av kalendern."
+      },
+      "the-grid": {
+        "title": "Rutan — Trettonde månader",
+        "detail": "Tolv månader med exakt 28 dagar, plus Hexa mellan augusti och september. Mars har den 29:e dagen. Varje månad börjar samma dag. Året andas i tre bågar — Öppning i rött, kärna i grönt, stängning i lila. Förutsägbart. Symmetriskt. Rent.",
+        "action": "Tryck på vilken dag som helst för att fortsätta",
+        "instruction": "Räkna dem. Trettonde. Inte tolv."
+      },
+      "features": {
+        "title": "Ditt arsenal",
+        "detail": "Utskrift: Standardguld, Minimalist, Sakral geometri med cirkulära celler, Cyberpunk med CRT-linjer, Naturligt organiskt, Förgammalt Egypten med hieroglyfer. Alla gratis. Livstid. A4, A3, Brev. Stjärnor: Schweizisk ephemeris födelsediagram, bågedelsprecision. Dagbok: fyra lägen med AI-insiktsgenerering. Cirkel: realtidsmeddelanden, delade uppgifter med HEKA förfallodatum. Statistik: 80+ prestationer över åtta nivåer. Hemliga prestationer väntar på att upptäckas.",
+        "action": "Fortsätt",
+        "instruction": "Sex utskriftsteman. En födelsediagrammotor. En dagbok. Vänner. Statistik."
+      },
+      "settings": {
+        "title": "Gör det till ditt",
+        "detail": "Civila datum: överlägg Gregorian så att du aldrig missar ett möte. Månfas: schweiziska ephemeris-ikoner på varje cell. Helger: community-observanser. Rent läge: helskärm, distrahieringsfritt, Yin-Yang mörkt/ljust växel. Kalendern anpassas till hur DU ser tiden.",
+        "action": "Växla någon inställning för att fortsätta",
+        "instruction": "Tre växlar. Rent läge. Full kontroll."
+      },
+      "ai-coach": {
+        "title": "HEKA AI - Din celestiska coach",
+        "detail": "Flytande glasoracle. Synteserar månfas, dina transitter, uppgifter, dagboksinlägg, streaks och plats till poetiska, handlingsbara meddelanden. Talar i din arketyp - Krigare, Munke, Artist, Strateg, Mystiker, Fenix. Kom ihåg 19 konversationer. Upptäcker synkroniteter: ögonblick när dina ord är i linje med himlen. Valfri LLM-förbättring med graciös offlineåterfall. Detta är inte en chattrobot. Detta är en oracle.",
+        "action": "Fortsätt",
+        "instruction": "Den tittar på himlen. Den tittar på dig."
+      },
+      "complete": {
+        "title": "Du är redo",
+        "detail": "Du vet hur man navigerar tolv månader. Du vet hur man läser månen. Du vet hur man spårar din energi, röstar på helgdagar, skriver vackra sidor, skriver dagbok med stjärnorna och konsulterar din AI-tränare. Allt annat väntar på din nyfikenhet.",
+        "action": "Gå in i HEKA",
+        "instruction": "Kalendern är din. Himlen är din."
+      },
+      "day-cells": {
+        "title": "Varje cell är levande",
+        "detail": "Fyrirormyndemoji för schweizisk ephemeris. Civilt datum nedanför. Helgedotter - community-curat. Anteckningssnippets - dina ord, synliga på rutnätet. Alla tretton månader på en gång. Hela året, på en blick.",
+        "action": "Tryck på vilken dag som helst för att öppna den",
+        "instruction": "Varje dag berättar en historia"
+      },
+      "day-panel": {
+        "title": "Dagen öppnas",
+        "detail": "Måne: exakt upplysning, växande eller avtagande, Det är tomt kurs spårning. Astrologi: realtidstransitter mot ditt födelsediagram. Anteckningar: kategoriserade efter humör, uppgift, dagbok. Uppgift: förfallo tider, påminnelser. Energi: rösta efter 19:30, se communitypulsen. Detta är inte en kalenderpost. Detta är en portal.",
+        "action": "Utforska dagenpanel, fortsätt sedan",
+        "instruction": "Ditt kommandocenter för en enda dag."
+      },
+      "community": {
+        "title": "Forma kosmos",
+        "detail": "Föreslå nya helgdagar. Tiotalet uppröster och den blir officiell. Rösta på kommande funktioner — Planerade, Överväger, Pågående, Släppt. Kalendern utvecklas eftersom dess användare utvecklar den. Detta är en samarbete.",
+        "action": "Fortsätt",
+        "instruction": "Ditt röst ändrar kalendern."
+      },
+      "navigation": {
+        "title": "Flytta genom tiden",
+        "detail": "Pilar flyttar mellan månader. Idag snappar tillbaka till nu. Sök förstår naturligt språk — \"Hexa 15\" eller \"januari 31:e.\" Expandera horisontellt eller vertikalt för mer detaljer. Hela året är ett handtag bort.",
+        "action": "Tryck på ← eller → för att navigera",
+        "instruction": "Du är aldrig förlorad."
+      },
+      "first-note": {
+        "title": "Gör ditt första märke",
+        "detail": "Tryck på vilken dag som helst. Bläddra till Anteckningar. Skriv något — en uppgift, en humör, ett minne. Detta är den första posten i vad som kan bli en åratal lång kronik.",
+        "action": "Skriv en anteckning för att slutföra handledningen",
+        "instruction": "En kalender är bara ett verktyg tills du gör den till din egen."
+      },
+      "celestial-guide": {
+        "title": "Den celestiska guiden",
+        "detail": "Sol tider: live SVG-ring, väder, fyra nivåers precision. Månfas: upplysning, tom måne, månårets nyttårsräkning. Våson: sanna astronomiska sol- och vintertidsspårning. Jordbruk: vad ska planteras idag, efter din plats och månfas. Digitalt ur: fyra samtidiga livenedgångar. Planetära timmar: riktiga kaldeiska timmar baserat på faktisk soluppgång och solnedgång. Bläddra igenom dem. Var och en är en vetenskaplig instrument.",
+        "action": "Bläddra igenom himlakorten för att fortsätta",
+        "instruction": "Sex kort. Ett sky."
+      }
+    },
+    "printThemes": {
+      "egypt": {
+        "name": "Egypten",
+        "desc": "Hieroglyfer"
+      },
+      "sacred": {
+        "name": "Heligt Geo",
+        "desc": "Cirkulära celler"
+      },
+      "nature": {
+        "name": "Natur",
+        "desc": "Botanisk"
+      },
+      "default": {
+        "name": "Standard",
+        "desc": "Pergament & guld"
+      },
+      "cyberpunk": {
+        "name": "Cyberpunk",
+        "desc": "Neon-glöd"
+      },
+      "minimalist": {
+        "name": "Minimalistisk",
+        "desc": "Schweizisk renhet"
+      }
+    },
+    "previewAchievements": {
+      "nightOwl": "Nattuggla",
+      "timeLord": "Tidens herre",
+      "firstWords": "Första ord",
+      "weekWarrior": "Vecka krigare",
+      "centuryClub": "Århundradet klubb",
+      "theChronicler": "Krönikan"
+    }
+  }
+}

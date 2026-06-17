@@ -3,7 +3,8 @@
  * Enterprise-grade: every theme returns string[] of self-contained HTML pages.
  */
 
-import type { PrintOptions } from '../types';
+import type { PrintOptions, CountryCode } from '../types';
+import type { HekaMonthIndex } from '../types';
 import {
   HEKA_MONTHS,
   getArcType,
@@ -13,8 +14,17 @@ import {
   hekaToCivil,
 } from '../services/calendarService';
 import { getMoonPhase } from '../services/astronomyService';
-import { getHolidaysForDate, ARC_NAMES, NOTE_CATEGORIES } from '../types';
+import { getHolidaysForDate, NOTE_CATEGORIES } from '../types';
 import { wrapPage, getPrintDimensions } from '../services/printEngine';
+import i18n from '../i18n';
+
+function getMonthName(index: number): string {
+  return i18n.t(`calendar:months.${index}`, { lng: i18n.language || 'en' });
+}
+
+function getDayShortName(index: number): string {
+  return i18n.t(`calendar:daysShort.${index}`, { lng: i18n.language || 'en' });
+}
 
 // ============================================================================
 // DATA PREPARATION
@@ -52,21 +62,21 @@ export function prepareYearData(
   const months: MonthData[] = [];
   for (let i = 0; i < 13; i++) {
     const month = HEKA_MONTHS[i];
-    const arc = getArcType(i as any);
-    const daysInMonth = getDaysInMonth(year, i as any);
-    const firstDayCivil = getCivilStartOfHekaMonth(year, i as any);
+    const arc = getArcType(i as HekaMonthIndex);
+    const daysInMonth = getDaysInMonth(year, i as HekaMonthIndex);
+    const firstDayCivil = getCivilStartOfHekaMonth(year, i as HekaMonthIndex);
     const startDayOffset = (firstDayCivil.getDay() + 1) % 7;
 
     const days: DayData[] = [];
     for (let day = 1; day <= daysInMonth; day++) {
-      const civilDate = hekaToCivil({ year, month: i as any, day });
+      const civilDate = hekaToCivil({ year, month: i as HekaMonthIndex, day });
       const noteKey = getNoteKey(year, i, day);
       days.push({
         day,
         civilDate,
         moonPhase: options.includeMoonPhases ? getMoonPhase(civilDate, 'N') : null,
         holidays: options.includeHolidays && location !== 'NONE'
-          ? getHolidaysForDate(civilDate, location as any)
+          ? getHolidaysForDate(civilDate, location as CountryCode)
           : [],
         notes: options.includeNotes ? (notes[noteKey] || []) : [],
       });
@@ -77,7 +87,7 @@ export function prepareYearData(
       monthIndex: i,
       monthNumber: i + 1,
       arc,
-      arcLabel: ARC_NAMES[arc],
+      arcLabel: i18n.t('calendar:arcs.' + arc.toLowerCase(), { lng: i18n.language || 'en' }),
       days,
       startDayOffset,
     });
@@ -208,36 +218,36 @@ function defaultCoverPage(year: number, timeMode: string): string {
             <span class="year-cover__year-number">${year}</span>
           </div>
           <div class="year-cover__year-span">
-            <span class="year-cover__year-start">April ${year}</span>
+            <span class="year-cover__year-start">${getMonthName(0)} ${year}</span>
             <span class="year-cover__year-arrow">→</span>
-            <span class="year-cover__year-end">March ${year + 1}</span>
+            <span class="year-cover__year-end">${getMonthName(12)} ${year + 1}</span>
           </div>
         </div>
         <div class="year-cover__arcs-grid">
           <div class="year-cover__arc-card year-cover__arc-card--opening">
             <div class="year-cover__arc-name">OPENING</div>
-            <div class="year-cover__arc-months">April</div>
+            <div class="year-cover__arc-months">${getMonthName(0)}</div>
           </div>
           <div class="year-cover__arc-card year-cover__arc-card--core">
             <div class="year-cover__arc-name">CORE</div>
-            <div class="year-cover__arc-months">May – December</div>
+            <div class="year-cover__arc-months">${getMonthName(1)} – ${getMonthName(9)}</div>
           </div>
           <div class="year-cover__arc-card year-cover__arc-card--closing">
             <div class="year-cover__arc-name">CLOSING</div>
-            <div class="year-cover__arc-months">January – March</div>
+            <div class="year-cover__arc-months">${getMonthName(10)} – ${getMonthName(12)}</div>
           </div>
         </div>
         <div class="year-cover__week-grid">
-          <div class="year-cover__week-day year-cover__week-day--weekend"><span class="year-cover__week-name">Sat</span></div>
-          <div class="year-cover__week-day year-cover__week-day--weekend"><span class="year-cover__week-name">Sun</span></div>
-          <div class="year-cover__week-day"><span class="year-cover__week-name">Mon</span></div>
-          <div class="year-cover__week-day"><span class="year-cover__week-name">Tue</span></div>
-          <div class="year-cover__week-day"><span class="year-cover__week-name">Wed</span></div>
-          <div class="year-cover__week-day"><span class="year-cover__week-name">Thu</span></div>
-          <div class="year-cover__week-day year-cover__week-day--weekend"><span class="year-cover__week-name">Fri</span></div>
+          <div class="year-cover__week-day year-cover__week-day--weekend"><span class="year-cover__week-name">${getDayShortName(6)}</span></div>
+          <div class="year-cover__week-day year-cover__week-day--weekend"><span class="year-cover__week-name">${getDayShortName(0)}</span></div>
+          <div class="year-cover__week-day"><span class="year-cover__week-name">${getDayShortName(1)}</span></div>
+          <div class="year-cover__week-day"><span class="year-cover__week-name">${getDayShortName(2)}</span></div>
+          <div class="year-cover__week-day"><span class="year-cover__week-name">${getDayShortName(3)}</span></div>
+          <div class="year-cover__week-day"><span class="year-cover__week-name">${getDayShortName(4)}</span></div>
+          <div class="year-cover__week-day year-cover__week-day--weekend"><span class="year-cover__week-name">${getDayShortName(5)}</span></div>
         </div>
         <div class="year-cover__footer-meta">
-          <span>13 Months</span><span>◆</span><span>28 Days + March 29/30</span><span>◆</span><span>Mode: ${timeMode}</span>
+          <span>13 Months</span><span>◆</span><span>28 Days + ${getMonthName(12)} 29/30</span><span>◆</span><span>Mode: ${timeMode}</span>
         </div>
       </div>
     </div>
@@ -330,13 +340,13 @@ function generateDefaultMonth(m: MonthData, options: PrintOptions): string {
       <div class="month-header">
         <div class="month-header-content">
           <div>
-            <h2 class="month-title">${m.month.name}</h2>
+            <h2 class="month-title">${getMonthName(m.monthIndex)}</h2>
             <div class="month-subtitle">Month ${m.monthNumber} of 13 · ${m.arcLabel} Arc</div>
           </div>
         </div>
       </div>
       <div class="dow-row">
-        <span>Sat</span><span>Sun</span><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span>
+        <span>${getDayShortName(6)}</span><span>${getDayShortName(0)}</span><span>${getDayShortName(1)}</span><span>${getDayShortName(2)}</span><span>${getDayShortName(3)}</span><span>${getDayShortName(4)}</span><span>${getDayShortName(5)}</span>
       </div>
       <div class="calendar-grid">${daysHTML}</div>
     </div>
@@ -360,10 +370,10 @@ function generateDefault(data: YearData, options: PrintOptions, mode: 'month' | 
   if (mode === 'year') {
     pages.push(wrap(defaultCoverPage(data.year, timeMode), `HEKA Calendar ${data.year}`));
     for (const m of data.months) {
-      pages.push(wrap(generateDefaultMonth(m, options), m.month.name));
+      pages.push(wrap(generateDefaultMonth(m, options), getMonthName(m.monthIndex)));
     }
   } else {
-    pages.push(wrap(generateDefaultMonth(data.months[0], options), data.months[0].month.name));
+    pages.push(wrap(generateDefaultMonth(data.months[0], options), getMonthName(data.months[0].monthIndex)));
   }
   return pages;
 }
@@ -408,12 +418,12 @@ function generateMinimalist(data: YearData, options: PrintOptions, mode: 'month'
             <span class="min-arc">${m.arcLabel} Arc</span>
           </div>
           <div class="min-header-main">
-            <h2 class="min-month-name">${m.month.name}</h2>
+            <h2 class="min-month-name">${getMonthName(m.monthIndex)}</h2>
             <span class="min-month-num">Month ${m.monthNumber} of 13</span>
           </div>
         </div>
         <div class="min-dow">
-          <span>Sat</span><span>Sun</span><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span>
+          <span>${getDayShortName(6)}</span><span>${getDayShortName(0)}</span><span>${getDayShortName(1)}</span><span>${getDayShortName(2)}</span><span>${getDayShortName(3)}</span><span>${getDayShortName(4)}</span><span>${getDayShortName(5)}</span>
         </div>
         <div class="min-grid">${daysHTML}</div>
       </div>
@@ -475,12 +485,12 @@ function generateMinimalist(data: YearData, options: PrintOptions, mode: 'month'
         <div class="min-cover-line"></div>
         <span class="min-cover-brand">The Modern HEKA Calendar</span>
         <h1 class="min-cover-year">${data.year}</h1>
-        <div class="min-cover-subtitle">April ${data.year} - March ${data.year + 1}</div>
-        <div class="min-cover-subtitle">13 Months · 28 Days + March 29/30</div>
+        <div class="min-cover-subtitle">${getMonthName(0)} ${data.year} - ${getMonthName(12)} ${data.year + 1}</div>
+        <div class="min-cover-subtitle">13 Months · 28 Days + ${getMonthName(12)} 29/30</div>
         <div class="min-cover-arcs">
-          <div class="min-arc-item"><span class="min-arc-dot" style="background:#dc2626"></span>Opening Arc · April</div>
-          <div class="min-arc-item"><span class="min-arc-dot" style="background:#16a34a"></span>Core Arc · May-Dec</div>
-          <div class="min-arc-item"><span class="min-arc-dot" style="background:#7c3aed"></span>Closing Arc · Jan-March</div>
+          <div class="min-arc-item"><span class="min-arc-dot" style="background:#dc2626"></span>Opening Arc · ${getMonthName(0)}</div>
+          <div class="min-arc-item"><span class="min-arc-dot" style="background:#16a34a"></span>Core Arc · ${getMonthName(1)}-${getMonthName(9)}</div>
+          <div class="min-arc-item"><span class="min-arc-dot" style="background:#7c3aed"></span>Closing Arc · ${getMonthName(10)}-${getMonthName(12)}</div>
         </div>
         <div class="min-cover-line"></div>
       </div>
@@ -488,7 +498,7 @@ function generateMinimalist(data: YearData, options: PrintOptions, mode: 'month'
   }
 
   for (const m of data.months) {
-    pages.push(wrap(generateMonth(m), m.month.name));
+    pages.push(wrap(generateMonth(m), getMonthName(m.monthIndex)));
   }
 
   return pages;
@@ -502,7 +512,7 @@ function generateMinimalist(data: YearData, options: PrintOptions, mode: 'month'
 function generateSacredGeometry(data: YearData, options: PrintOptions, mode: 'month' | 'year' = 'year'): string[] {
   const isMonthMode = mode === 'month' || data.months.length === 1;
   const arcColors = { OPENING: '#dc2626', CORE: '#16a34a', CLOSING: '#7c3aed' };
-  const formatDate = (d: Date) => `${d.getDate()} ${['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][d.getMonth()]}`;
+  const formatDate = (d: Date) => new Intl.DateTimeFormat(i18n.language || 'en', { day: 'numeric', month: 'short' }).format(d);
 
   const generateMonth = (m: MonthData): string => {
     const color = arcColors[m.arc];
@@ -545,7 +555,7 @@ function generateSacredGeometry(data: YearData, options: PrintOptions, mode: 'mo
           <span class="sg-hex">⬡</span>
           <div class="sg-mid">
             <div class="sg-small">THE MODERN HEKA CALENDAR</div>
-            <h2 class="sg-name" style="color:${color}">${m.month.name}</h2>
+            <h2 class="sg-name" style="color:${color}">${getMonthName(m.monthIndex)}</h2>
             <div class="sg-tag" style="border-color:${color};color:${color}">${m.arcLabel.toUpperCase()} ARC — MONTH ${m.monthNumber}/13</div>
             ${civilRange ? `<div class="sg-civil-range">${civilRange}</div>` : ''}
           </div>
@@ -614,7 +624,7 @@ function generateSacredGeometry(data: YearData, options: PrintOptions, mode: 'mo
         <div class="sg-cover-icon">◈</div>
         <div class="sg-cover-brand">THE MODERN HEKA CALENDAR</div>
         <h1 class="sg-cover-year">${data.year}</h1>
-        <div class="sg-cover-info">APRIL ${data.year} — MARCH ${data.year + 1}</div>
+        <div class="sg-cover-info">${getMonthName(0).toUpperCase()} ${data.year} — ${getMonthName(12).toUpperCase()} ${data.year + 1}</div>
         <div class="sg-arcs">
           <div class="sg-arc-item"><span class="sg-arc-dot" style="background:#dc2626"></span>OPENING ARC</div>
           <div class="sg-arc-item"><span class="sg-arc-dot" style="background:#16a34a"></span>CORE ARC</div>
@@ -625,7 +635,7 @@ function generateSacredGeometry(data: YearData, options: PrintOptions, mode: 'mo
   }
 
   for (const m of data.months) {
-    pages.push(wrap(generateMonth(m), m.month.name));
+    pages.push(wrap(generateMonth(m), getMonthName(m.monthIndex)));
   }
 
   return pages;
@@ -671,7 +681,7 @@ function generateCyberpunk(data: YearData, options: PrintOptions, mode: 'month' 
             <span class="cb-arc">${m.arcLabel.toUpperCase()} ARC</span>
           </div>
           <div class="cb-header-main">
-            <h2 class="cb-month-name">${m.month.name}</h2>
+            <h2 class="cb-month-name">${getMonthName(m.monthIndex)}</h2>
             <span class="cb-month-num">MONTH ${m.monthNumber}/13</span>
           </div>
         </div>
@@ -745,7 +755,7 @@ function generateCyberpunk(data: YearData, options: PrintOptions, mode: 'month' 
         <div class="cb-cover-icon">⚡</div>
         <div class="cb-cover-brand">◈ THE MODERN HEKA CALENDAR ◈</div>
         <h1 class="cb-cover-year">${data.year}</h1>
-        <div class="cb-cover-sub">APRIL ${data.year} — MARCH ${data.year + 1}</div>
+        <div class="cb-cover-sub">${getMonthName(0).toUpperCase()} ${data.year} — ${getMonthName(12).toUpperCase()} ${data.year + 1}</div>
         <div class="cb-cover-sub">13 MONTHS · 28 DAYS · CYBERPUNK EDITION</div>
         <div class="cb-cover-arcs">
           <div class="cb-arc-item"><span class="cb-arc-dot" style="background:#ff0055;box-shadow:0 0 8px #ff0055"></span>OPENING ARC · APRIL</div>
@@ -757,7 +767,7 @@ function generateCyberpunk(data: YearData, options: PrintOptions, mode: 'month' 
   }
 
   for (const m of data.months) {
-    pages.push(wrap(generateMonth(m), m.month.name));
+    pages.push(wrap(generateMonth(m), getMonthName(m.monthIndex)));
   }
 
   return pages;
@@ -803,12 +813,12 @@ function generateNatureOrganic(data: YearData, options: PrintOptions, mode: 'mon
             <span class="nt-arc">${m.arcLabel} Arc</span>
           </div>
           <div class="nt-header-main">
-            <h2 class="nt-month-name">${m.month.name}</h2>
+            <h2 class="nt-month-name">${getMonthName(m.monthIndex)}</h2>
             <span class="nt-month-num">Month ${m.monthNumber} of 13</span>
           </div>
         </div>
         <div class="nt-dow">
-          <span>Sat</span><span>Sun</span><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span>
+          <span>${getDayShortName(6)}</span><span>${getDayShortName(0)}</span><span>${getDayShortName(1)}</span><span>${getDayShortName(2)}</span><span>${getDayShortName(3)}</span><span>${getDayShortName(4)}</span><span>${getDayShortName(5)}</span>
         </div>
         <div class="nt-grid">${daysHTML}</div>
       </div>
@@ -876,19 +886,19 @@ function generateNatureOrganic(data: YearData, options: PrintOptions, mode: 'mon
         <div class="nt-cover-icon">🌿</div>
         <div class="nt-cover-brand">THE MODERN HEKA CALENDAR</div>
         <h1 class="nt-cover-year">${data.year}</h1>
-        <div class="nt-cover-sub">April ${data.year} — March ${data.year + 1}</div>
-        <div class="nt-cover-sub">13 Months · 28 Days + March 29/30 · Nature Edition</div>
+        <div class="nt-cover-sub">${getMonthName(0)} ${data.year} — ${getMonthName(12)} ${data.year + 1}</div>
+        <div class="nt-cover-sub">13 Months · 28 Days + ${getMonthName(12)} 29/30 · Nature Edition</div>
         <div class="nt-cover-arcs">
-          <div class="nt-arc-item"><span class="nt-arc-dot" style="background:#d32f2f"></span>Opening Arc · April</div>
-          <div class="nt-arc-item"><span class="nt-arc-dot" style="background:#388e3c"></span>Core Arc · May-Dec</div>
-          <div class="nt-arc-item"><span class="nt-arc-dot" style="background:#7b1fa2"></span>Closing Arc · Jan-March</div>
+          <div class="nt-arc-item"><span class="nt-arc-dot" style="background:#d32f2f"></span>Opening Arc · ${getMonthName(0)}</div>
+          <div class="nt-arc-item"><span class="nt-arc-dot" style="background:#388e3c"></span>Core Arc · ${getMonthName(1)}-${getMonthName(9)}</div>
+          <div class="nt-arc-item"><span class="nt-arc-dot" style="background:#7b1fa2"></span>Closing Arc · ${getMonthName(10)}-${getMonthName(12)}</div>
         </div>
       </div>
     `, `HEKA Calendar ${data.year}`));
   }
 
   for (const m of data.months) {
-    pages.push(wrap(generateMonth(m), m.month.name));
+    pages.push(wrap(generateMonth(m), getMonthName(m.monthIndex)));
   }
 
   return pages;
@@ -934,7 +944,7 @@ function generateAncientEgypt(data: YearData, options: PrintOptions, mode: 'mont
             <span class="ae-arc">${m.arcLabel.toUpperCase()} ARC</span>
           </div>
           <div class="ae-header-main">
-            <h2 class="ae-month-name">${m.month.name}</h2>
+            <h2 class="ae-month-name">${getMonthName(m.monthIndex)}</h2>
             <span class="ae-month-num">MONTH ${m.monthNumber} / 13</span>
           </div>
         </div>
@@ -1009,19 +1019,19 @@ function generateAncientEgypt(data: YearData, options: PrintOptions, mode: 'mont
         <div class="ae-cover-icon">𓂀</div>
         <div class="ae-cover-brand">THE MODERN HEKA CALENDAR</div>
         <h1 class="ae-cover-year">${data.year}</h1>
-        <div class="ae-cover-sub">April ${data.year} — March ${data.year + 1}</div>
-        <div class="ae-cover-sub">13 Months · 28 Days + March 29/30 · Egyptian Edition</div>
+        <div class="ae-cover-sub">${getMonthName(0)} ${data.year} — ${getMonthName(12)} ${data.year + 1}</div>
+        <div class="ae-cover-sub">13 Months · 28 Days + ${getMonthName(12)} 29/30 · Egyptian Edition</div>
         <div class="ae-cover-arcs">
-          <div class="ae-arc-item"><span class="ae-arc-dot" style="background:#c62828;border-color:#c62828"></span>Opening Arc · April</div>
-          <div class="ae-arc-item"><span class="ae-arc-dot" style="background:#2e7d32;border-color:#2e7d32"></span>Core Arc · May-Dec</div>
-          <div class="ae-arc-item"><span class="ae-arc-dot" style="background:#6a1b9a;border-color:#6a1b9a"></span>Closing Arc · Jan-March</div>
+          <div class="ae-arc-item"><span class="ae-arc-dot" style="background:#c62828;border-color:#c62828"></span>Opening Arc · ${getMonthName(0)}</div>
+          <div class="ae-arc-item"><span class="ae-arc-dot" style="background:#2e7d32;border-color:#2e7d32"></span>Core Arc · ${getMonthName(1)}-${getMonthName(9)}</div>
+          <div class="ae-arc-item"><span class="ae-arc-dot" style="background:#6a1b9a;border-color:#6a1b9a"></span>Closing Arc · ${getMonthName(10)}-${getMonthName(12)}</div>
         </div>
       </div>
     `, `HEKA Calendar ${data.year}`));
   }
 
   for (const m of data.months) {
-    pages.push(wrap(generateMonth(m), m.month.name));
+    pages.push(wrap(generateMonth(m), getMonthName(m.monthIndex)));
   }
 
   return pages;

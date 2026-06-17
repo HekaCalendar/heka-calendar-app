@@ -1,0 +1,126 @@
+{
+  "tutorial": {
+    "back": "Quay Lại",
+    "skip": "Bỏ Qua",
+    "enter": "Nhập HEKA",
+    "continue": "Tiếp Tục",
+    "stepLabel": "Bước {{current}} của {{total}}",
+    "journeyTitle": "Hành Trình Của Bạn",
+    "completeLabel": "Hoàn Thành",
+    "actionWaiting": "Chạm để tiếp tục",
+    "steps": {
+      "welcome": {
+        "title": "Chào Mừng Đến Với HEKA",
+        "detail": "Mười ba tháng. Mỗi tháng 28 ngày. Mặt trăng, mặt trời, vườn rau, năng lượng, bạn bè — cuối cùng cũng đồng bộ.",
+        "action": "Bắt Đầu Hành Trình Của Bạn",
+        "instruction": "Bạn chưa bao giờ nhìn thấy lịch như thế này."
+      },
+      "tracker": {
+        "title": "Theo Dõi Rhythm Của Bạn",
+        "detail": "Tâm trạng: thanh trượt 1-10 với emoji sống",
+        "action": "Tiếp tục",
+        "instruction": "Thân thể của bạn là một phần của lịch."
+      },
+      "the-grid": {
+        "title": "Lưới Lưới — Mười Ba Tháng",
+        "detail": "Mười hai tháng mỗi tháng chính xác 28 ngày, cộng với Hexa giữa tháng Tám và tháng Chín. Tháng Ba có ngày 29. Mỗi tháng đều bắt đầu vào cùng một ngày. Năm phát triển trong ba cung弧 — Mở đầu bằng màu đỏ, lõi bằng màu xanh lá cây, kết thúc bằng màu tím. Dự kiến. Chẵn đều. Sạch sẽ.",
+        "action": "Chạm vào bất kỳ ngày nào để tiếp tục",
+        "instruction": "Đếm chúng. Mười ba. Không phải mười hai."
+      },
+      "features": {
+        "title": "Binh Phục Của Bạn",
+        "detail": "In: Mặc định Gold, Minimalist, Sacred Geometry với ô tròn, Cyberpunk với đường quét CRT, Nature Organic, Ancient Egypt với hình tượng hình. Tất cả miễn phí. Toàn thời gian. A4, A3, Letter. Sao: biểu đồ sinh họ Swiss Ephemeris, độ chính xác giây kề. Nhật ký: bốn chế độ với việc tạo ra hiểu biết IA. Vòng: tin nhắn thời gian thực, nhiệm vụ chia sẻ với HEKA đến hạn. Thống kê: hơn 80 thành tựu trên tám cấp độ. Các thành tựu bí mật chờ được khám phá.",
+        "action": "Tiếp tục",
+        "instruction": "Sáu chủ đề in. Động cơ biểu đồ sinh họ. Một nhật ký. Bạn bè. Thống kê."
+      },
+      "settings": {
+        "title": "Làm Nó Có Thể",
+        "detail": "Ngày dân sự: lớp phủ Gregorian để bạn không bao giờ bỏ lỡ cuộc họp. Giai đoạn mặt trăng: biểu tượng Swiss Ephemeris trên mỗi ô. Lễ hội: quan niệm của cộng đồng. Chế độ Pure: toàn màn hình, không phân tâm, chuyển đổi giữa sáng và tối Yin-Yang. Lịch thay đổi theo cách BẠN nhìn thời gian.",
+        "action": "Chuyển đổi bất kỳ cài đặt nào để tiếp tục",
+        "instruction": "Ba công tắc. Chế độ Pure. Kiểm soát hoàn toàn."
+      },
+      "ai-coach": {
+        "title": "HEKA AI — Trợ Lí Thiên Văn Của Bạn",
+        "detail": "Bình tiên tri bằng glass nổi. Tích hợp giai đoạn mặt trăng, chuyển động của bạn, nhiệm vụ, cảm xúc nhật ký, streaks, và vị trí thành những thông điệp thơ và có thể thực hiện. Nói bằng hình ảnh đại diện của bạn — Warrior, Monk, Artist, Strategist, Mystic, Phoenix. Nhớ 19 cuộc trò chuyện. Phát hiện sự đồng bộ: những khoảnh khắc khi lời của bạn đối齐 với bầu trời. Tùy chọn LLM được nâng cao với fallback offline tế nhị. Đây không phải là một chatbot. Đây là một tiên tri.",
+        "action": "Tiếp tục",
+        "instruction": "Nó quan sát bầu trời. Nó quan sát bạn."
+      },
+      "complete": {
+        "title": "Bạn đã sẵn sàng",
+        "detail": "Bạn biết cách điều hướng mười三个月. Bạn biết cách đọc mặt trăng. Bạn biết cách theo dõi năng lượng của mình, bình chọn về các ngày lễ, in các trang đẹp, nhật ký cùng sao, và tham vấn huấn luyện viên AI. Mọi thứ khác chờ đợi sự tò mò của bạn.",
+        "action": "Vào HEKA",
+        "instruction": "Lịch là của bạn. Bầu trời là của bạn."
+      },
+      "day-cells": {
+        "title": "Mỗi Ông Lưới Sống Động",
+        "detail": "Emoji của giai đoạn mặt trăng Swiss Ephemeris. Ngày dân sự bên dưới. Dấu chấm ngày lễ - do cộng đồng biên soạn. Mẩu tin - lời của bạn, hiển thị trên lưới. Tất cả mười ba tháng cùng một lúc. Toàn bộ năm trong một cái nhìn.",
+        "action": "Chạm vào bất kỳ ngày nào để mở nó",
+        "instruction": "Mỗi ngày kể một câu chuyện."
+      },
+      "day-panel": {
+        "title": "Ngày Mở Rộng",
+        "detail": "Mặt trăng:照明 chính xác, măng hoặc suy giảm, phát hiện Void of Course. Astrology: chuyển động thực tế đối với BẢN Đồ Sinh Hồi CỦA BẠN. Ghi chú: được phân loại theo tâm trạng, nhiệm vụ, nhật ký. Nhiệm vụ: thời gian đến hạn, lời nhắc nhở. Năng lượng: bình chọn sau 7:30 tối, xem nhịp đập cộng đồng. Đây không phải là mục lịch. Đây là một cổng thông.",
+        "action": "Khám phá bảng ngày, sau đó tiếp tục",
+        "instruction": "Trung tâm lệnh của bạn cho một ngày đơn lẻ."
+      },
+      "community": {
+        "title": "Thiết lập Vũ trụ",
+        "detail": "Đề xuất ngày lễ mới. Mười phiếu ủng hộ và nó sẽ chính thức. Bình chọn về các tính năng sắp tới — Đã lên kế hoạch, Đang xem xét, Đang thực hiện, Đã phát hành. Lịch trình phát triển vì người dùng của nó phát triển nó. Đây là sự hợp tác.",
+        "action": "Tiếp tục",
+        "instruction": "Phiếu bầu của bạn thay đổi lịch trình."
+      },
+      "navigation": {
+        "title": "Di Chuyển Qua Kỳ Thời",
+        "detail": "Mũi tên chuyển giữa các tháng. Hôm nay quay trở lại hiện tại. Tìm kiếm hiểu biết ngôn ngữ tự nhiên — \"Hexa 15\" hoặc \"Ngày 31 tháng Giêng\". Mở rộng ngang hay dọc để biết thêm chi tiết. Cả năm chỉ cách một động tác.",
+        "action": "Chạm ← hoặc → để điều hướng",
+        "instruction": "Bạn không bao giờ lạc lối."
+      },
+      "first-note": {
+        "title": "Để lại dấu ấn đầu tiên của bạn",
+        "detail": "Chạm vào bất kỳ ngày nào. Cuộn xuống Notes. Viết cái gì đó — một nhiệm vụ, một cảm xúc, một ký ức. Đây là mục nhập đầu tiên trong những gì có thể trở thành một sự ghi chép dài hàng năm.",
+        "action": "Viết một ghi chú để hoàn thành hướng dẫn",
+        "instruction": "Một lịch chỉ là một công cụ cho đến khi bạn làm cho nó trở nên thuộc về bạn."
+      },
+      "celestial-guide": {
+        "title": "Hướng Dẫn Thiên Văn",
+        "detail": "Thời gian Mặt trời: vòng hình SVG sống, thời tiết, độ chính xác bốn tầng. Giai đoạn Mặt trăng:照明, mặt trăng rỗng, đếm ngược năm mới mặt trăng. Mùa: theo dõi thực sự của sự thay đổi mùa. Nông nghiệp: nên trồng gì hôm nay, theo vị trí và giai đoạn mặt trăng của bạn. Đồng hồ kỹ thuật số: bốn bộ đếm ngược đồng thời sống. Giờ hành tinh: giờ Chaldean thực tế dựa trên mặt trời mọc và mặt trời xuống. Cuộn qua chúng. Mỗi cái là một công cụ khoa học.",
+        "action": "Cuộn các thẻ thiên văn để tiếp tục",
+        "instruction": "Sáu thẻ. Một bầu trời."
+      }
+    },
+    "printThemes": {
+      "egypt": {
+        "name": "Ai Cập",
+        "desc": "Ký Hiệu Thần Chữ"
+      },
+      "sacred": {
+        "name": "Thiên Thần Địa Lý",
+        "desc": "Ô Cực Trọng"
+      },
+      "nature": {
+        "name": "Thiên Nhiên",
+        "desc": "Thực vật Học"
+      },
+      "default": {
+        "name": "Mặc Định",
+        "desc": "Giấy Da Vàng"
+      },
+      "cyberpunk": {
+        "name": "Cyberpunk",
+        "desc": "Ánh Sáng Neon"
+      },
+      "minimalist": {
+        "name": "Triết Lý",
+        "desc": "Simplicity Thụy Sĩ"
+      }
+    },
+    "previewAchievements": {
+      "nightOwl": "Người Ủ Cuối",
+      "timeLord": "Chúa Tể Thời Gian",
+      "firstWords": "Lời Nói Đầu Tiên",
+      "weekWarrior": "Người Anh Hùng Tuần",
+      "centuryClub": "Câu Lạc Bộ Kỉ Nguyên",
+      "theChronicler": "Nhà Soạn Sách"
+    }
+  }
+}

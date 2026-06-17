@@ -3,7 +3,8 @@
  * Precise epic counters to HEKA and Gregorian milestones
  */
 
-import { useState, useEffect, useMemo, memo } from 'react';
+import { useState, useEffect, useMemo, memo, useRef } from 'react';
+import { useGlobalTime } from '../../hooks/useGlobalTime';
 import { getHekaYearStart, civilToHeka, getDaysInMonth } from '../../services/calendarService';
 import type { LocationData } from '../../types';
 import './UnifiedCards.css';
@@ -13,14 +14,20 @@ interface Props {
   location: LocationData;
 }
 
-const DigitalClockCardComponent: React.FC<Props> = ({ date: _date, location }) => {
-  const [now, setNow] = useState(new Date());
+const DigitalClockCardComponent: React.FC<Props> = ({ date, location }) => {
   const [expanded, setExpanded] = useState(false);
+  // Live ticking time shared across all cards.
+  const liveNow = useGlobalTime();
+  const baseTimeRef = useRef(Date.now());
 
   useEffect(() => {
-    const i = setInterval(() => setNow(new Date()), 1000);
-    return () => clearInterval(i);
-  }, []);
+    baseTimeRef.current = Date.now();
+  }, [date]);
+
+  const now = useMemo(() => {
+    const elapsed = liveNow.getTime() - baseTimeRef.current;
+    return new Date(date.getTime() + elapsed);
+  }, [date, liveNow]);
 
   const counters = useMemo(() => {
     const year = now.getFullYear();
@@ -69,7 +76,7 @@ const DigitalClockCardComponent: React.FC<Props> = ({ date: _date, location }) =
 
   return (
     <div className={`heka-card ${expanded ? 'expanded' : ''}`}>
-      <div className="heka-card__header heka-card__header--enterprise" onClick={() => setExpanded(!expanded)}>
+      <div className="heka-card__header heka-card__header--enterprise" onClick={() => setExpanded(!expanded)} role="button" tabIndex={0} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setExpanded(!expanded); } }}>
         <span className="heka-card__icon">{urgent.icon}</span>
         <div className="heka-card__title-group">
           <span className="heka-card__title">{urgent.name}</span>
@@ -94,7 +101,7 @@ const DigitalClockCardComponent: React.FC<Props> = ({ date: _date, location }) =
       {expanded && (
         <div className="heka-card__content">
           {counters.map((c, i) => (
-            <div key={c.key} className="heka-epic-counter" style={{ borderColor: `${c.color}20`, marginBottom: i === counters.length - 1 ? 0 : '16px' }}>
+            <div key={c.key} className="heka-epic-counter" style={{ borderColor: `${c.color}20`, marginBottom: i === counters.length - 1 ? 0 : '12px' }}>
               <div className="heka-epic-counter__digits">
                 <div className="heka-epic-counter__segment">
                   <span className="heka-epic-counter__number" style={{ color: c.color }}>{String(c.d).padStart(2,'0')}</span>
@@ -117,7 +124,7 @@ const DigitalClockCardComponent: React.FC<Props> = ({ date: _date, location }) =
                 </div>
               </div>
               <span className="heka-epic-counter__title" style={{ color: c.color }}>{c.icon} {c.name}</span>
-              <span style={{ fontSize: '10px', color: 'rgba(255,255,255,0.35)', marginTop: '6px' }}>
+              <span style={{ fontSize: '12px', color: 'rgba(255,255,255,0.35)', marginTop: '6px' }}>
                 Ends {c.target.toLocaleDateString(undefined, { weekday: 'short', month: 'short', day: 'numeric', year: c.target.getFullYear() !== now.getFullYear() ? 'numeric' : undefined })}
                 {' • '}{c.target.toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit' })}
               </span>

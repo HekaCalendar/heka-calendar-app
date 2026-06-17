@@ -2,7 +2,7 @@
  * ╔═══════════════════════════════════════════════════════════════════════════╗
  * ║                    CELESTIAL BODY TRACKER - ENTERPRISE EDITION            ║
  * ║                                                                           ║
- * ║  Premium menstrual & wellness tracking with institutional-grade design   ║
+ * ║  Premium wellness tracking with institutional-grade design               ║
  * ╚═══════════════════════════════════════════════════════════════════════════╝
  */
 
@@ -39,10 +39,7 @@
   --t-accent-secondary: #a78bfa;
   --t-accent-tertiary: #c4b5fd;
   
-  --t-semantic-menstrual: #f43f5e;
-  --t-semantic-fertile: #10b981;
-  --t-semantic-ovulation: #8b5cf6;
-  --t-semantic-luteal: #f59e0b;
+  --t-semantic-danger: #ef4444;
   
   --t-text-primary: #fafafa;
   --t-text-secondary: #a1a1aa;
@@ -301,36 +298,6 @@
   margin-top: 2px;
 }
 
-.tracker-date-nav__cycle {
-  display: flex;
-  align-items: center;
-  gap: var(--t-space-2);
-  margin-left: var(--t-space-4);
-  padding: var(--t-space-2) var(--t-space-3);
-  background: var(--t-bg-elevated);
-  border: 1px solid var(--t-border-default);
-  border-radius: var(--t-radius-md);
-}
-
-.tracker-date-nav__cycle-dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: var(--t-semantic-menstrual);
-  animation: pulse-dot 2s ease-in-out infinite;
-}
-
-@keyframes pulse-dot {
-  0%, 100% { opacity: 1; transform: scale(1); }
-  50% { opacity: 0.6; transform: scale(0.9); }
-}
-
-.tracker-date-nav__cycle-text {
-  font-size: var(--t-text-xs);
-  color: var(--t-text-secondary);
-  font-weight: 500;
-}
-
 /* ═══════════════════════════════════════════════════════════════════════════
    MAIN CONTENT - Dashboard Layout
    ═══════════════════════════════════════════════════════════════════════════ */
@@ -381,59 +348,6 @@
   text-transform: uppercase;
   letter-spacing: 0.15em;
   font-weight: 600;
-}
-
-/* Cycle Status Card */
-.tracker-cycle-card {
-  background: var(--t-bg-elevated);
-  border: 1px solid var(--t-border-default);
-  border-radius: var(--t-radius-lg);
-  padding: var(--t-space-5);
-  text-align: center;
-  position: relative;
-  overflow: hidden;
-}
-
-.tracker-cycle-card::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 2px;
-  background: linear-gradient(90deg, var(--t-semantic-menstrual), var(--t-semantic-fertile));
-}
-
-.tracker-cycle-card__day {
-  font-size: var(--t-text-4xl);
-  font-weight: 800;
-  color: var(--t-text-primary);
-  line-height: 1;
-  margin-bottom: var(--t-space-2);
-  background: linear-gradient(135deg, var(--t-text-primary), var(--t-accent-secondary));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-.tracker-cycle-card__label {
-  font-size: var(--t-text-sm);
-  color: var(--t-text-secondary);
-  margin-bottom: var(--t-space-4);
-}
-
-.tracker-cycle-card__phase {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--t-space-2);
-  padding: var(--t-space-2) var(--t-space-4);
-  background: rgba(244, 63, 94, 0.15);
-  border: 1px solid rgba(244, 63, 94, 0.3);
-  border-radius: var(--t-radius-md);
-  font-size: var(--t-text-xs);
-  font-weight: 600;
-  color: var(--t-semantic-menstrual);
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
 }
 
 /* Quick Stats Grid */
@@ -614,12 +528,6 @@
   text-transform: capitalize;
 }
 
-.tracker-entry-card__badge--flow {
-  background: rgba(244, 63, 94, 0.1);
-  border-color: rgba(244, 63, 94, 0.3);
-  color: var(--t-semantic-menstrual);
-}
-
 .tracker-entry-card__delete {
   width: 32px;
   height: 32px;
@@ -641,9 +549,9 @@
 }
 
 .tracker-entry-card__delete:hover {
-  background: rgba(244, 63, 94, 0.1);
-  border-color: rgba(244, 63, 94, 0.3);
-  color: var(--t-semantic-menstrual);
+  background: rgba(239, 68, 68, 0.1);
+  border-color: rgba(239, 68, 68, 0.3);
+  color: var(--t-semantic-danger);
 }
 
 /* Entry Cards */
@@ -739,9 +647,9 @@
 }
 
 .tracker-entry__btn--danger:hover {
-  background: rgba(244, 63, 94, 0.1);
-  border-color: var(--t-semantic-menstrual);
-  color: var(--t-semantic-menstrual);
+  background: rgba(239, 68, 68, 0.1);
+  border-color: var(--t-semantic-danger);
+  color: var(--t-semantic-danger);
 }
 
 /* Empty State */
@@ -811,60 +719,6 @@
   font-size: var(--t-text-xs);
   color: var(--t-text-tertiary);
   font-weight: 400;
-}
-
-/* Flow Selector */
-.tracker-flow {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: var(--t-space-3);
-}
-
-.tracker-flow__option {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: var(--t-space-2);
-  padding: var(--t-space-4) var(--t-space-2);
-  background: var(--t-bg-secondary);
-  border: 1px solid var(--t-border-default);
-  border-radius: var(--t-radius-md);
-  cursor: pointer;
-  transition: all var(--t-duration-base);
-}
-
-.tracker-flow__option:hover {
-  background: var(--t-bg-elevated);
-  border-color: var(--t-border-strong);
-}
-
-.tracker-flow__option.selected {
-  background: rgba(244, 63, 94, 0.1);
-  border-color: var(--t-semantic-menstrual);
-  box-shadow: 0 0 20px rgba(244, 63, 94, 0.2);
-}
-
-.tracker-flow__icon {
-  font-size: 24px;
-  opacity: 0.7;
-  transition: all var(--t-duration-fast);
-}
-
-.tracker-flow__option.selected .tracker-flow__icon {
-  opacity: 1;
-  transform: scale(1.1);
-}
-
-.tracker-flow__label {
-  font-size: var(--t-text-xs);
-  color: var(--t-text-tertiary);
-  font-weight: 500;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-}
-
-.tracker-flow__option.selected .tracker-flow__label {
-  color: var(--t-semantic-menstrual);
 }
 
 /* Symptom Grid */
@@ -1025,14 +879,14 @@
 }
 
 .tracker-btn--danger {
-  background: rgba(244, 63, 94, 0.1);
-  border-color: rgba(244, 63, 94, 0.3);
-  color: var(--t-semantic-menstrual);
+  background: rgba(239, 68, 68, 0.1);
+  border-color: rgba(239, 68, 68, 0.3);
+  color: var(--t-semantic-danger);
 }
 
 .tracker-btn--danger:hover {
-  background: rgba(244, 63, 94, 0.2);
-  border-color: var(--t-semantic-menstrual);
+  background: rgba(239, 68, 68, 0.2);
+  border-color: var(--t-semantic-danger);
 }
 
 .tracker-btn:disabled {
@@ -1112,10 +966,6 @@
     padding: var(--t-space-3) var(--t-space-4);
   }
   
-  .tracker-date-nav__cycle {
-    display: none;
-  }
-  
   .tracker-tabs {
     padding: var(--t-space-3) var(--t-space-4);
     overflow-x: auto;
@@ -1132,14 +982,6 @@
   
   .tracker-tab-content {
     padding: var(--t-space-4);
-  }
-  
-  .tracker-flow {
-    grid-template-columns: repeat(3, 1fr);
-  }
-  
-  .tracker-flow__option:last-child {
-    grid-column: span 2;
   }
   
   .tracker-symptoms {
@@ -1162,3 +1004,7 @@
     transition: none !important;
   }
 }
+
+
+/* ── RTL Overrides ── */
+

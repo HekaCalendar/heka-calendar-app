@@ -1,0 +1,49 @@
+{
+  "best": "הכי טוב: {{count}}",
+  "title": "המסע שלך",
+  "close": "סגור",
+  "reset": "אפס סטטיסטיקה",
+  "avgMood": "רגש ממוצע",
+  "dayStreak": "דרך יום",
+  "totalNotes": "הערות הכולל",
+  "wordsWritten": "מילים שנכתבו",
+  "achievements": "הישגים ({{earned}}/{{total}})",
+  "resetConfirm": "אפס",
+  "progressRatio": "{{current}} / {{target}}",
+  "monthlyTooltip": "{{month}} {{year}}: {{count}} הערות",
+  "notesByCategory": "הערות לפי קטגוריה",
+  "monthlyActivity": "פעילות מensual",
+  "mostActiveMonth": "החודש הפעיל ביותר שלך היה \u003cstrong\u003e{{month}}\u003c/strong\u003e עם \u003cstrong\u003e{{count}}\u003c/strong\u003e הערות",
+  "categories": {
+    "work": "עבודה",
+    "family": "משפחה",
+    "health": "בריאות",
+    "general": "כללי",
+    "personal": "אישי",
+    "creative": "יצירתי",
+    "spiritual": "רוחני"
+  },
+  "progressToCentury": "התקדמות לקרב המאה",
+  "resetConfirmTitle": "אפס סטטיסטיקה",
+  "badges": {
+    "century": {
+      "name": "קרב המאה"
+    },
+    "explorer": {
+      "name": "מגלה"
+    },
+    "archivist": {
+      "name": "ארכיב"
+    },
+    "first-note": {
+      "name": "מילים ראשונות"
+    },
+    "week-streak": {
+      "name": "מלחם שבוע"
+    },
+    "month-streak": {
+      "name": "מלחם חודש"
+    }
+  },
+  "resetConfirmDescription": "האם אתה בטוח שברצונך לאפס את כל הסטטיסטיקה? לא ניתן לבטל פעולה זו."
+}

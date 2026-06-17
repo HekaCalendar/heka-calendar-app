@@ -79,6 +79,7 @@
   border-radius: 24px;
   overflow-y: auto;
   overscroll-behavior: contain;
+  touch-action: pan-y;
   background: var(--ca-glass);
   backdrop-filter: blur(24px) saturate(140%);
   -webkit-backdrop-filter: blur(24px) saturate(140%);
@@ -398,4 +399,10 @@
   .ca-celebration__title {
     font-size: 22px;
   }
+}
+
+
+/* ── RTL Overrides ── */
+[dir="rtl"] .ca-progress__text {
+    margin-right: 6px
 }

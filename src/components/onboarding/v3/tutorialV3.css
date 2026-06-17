@@ -4,6 +4,9 @@
  * ═══════════════════════════════════════════════════════════════════════════════
  */
 
+/* ─── Font imports for theme showcase ─── */
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700&family=Rajdhani:wght@400;500;600;700&family=EB+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Nunito:wght@400;500;600;700&family=Cousine:wght@400;700&family=Share+Tech+Mono&display=swap');
+
 /* ─── CSS Variables ─── */
 :root {
   --tt-bg-primary: linear-gradient(145deg, rgba(22, 22, 32, 0.97) 0%, rgba(14, 14, 22, 0.99) 100%);
@@ -155,7 +158,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 9px;
+  font-size: 11px;
   font-weight: 700;
   color: var(--tt-gold);
 }
@@ -247,14 +250,14 @@
 }
 
 .tt-gallery__name {
-  font-size: 10px;
+  font-size: 12px;
   font-weight: 600;
   color: var(--tt-text-primary);
   margin-bottom: 2px;
 }
 
 .tt-gallery__desc {
-  font-size: 8px;
+  font-size: 11px;
   color: var(--tt-text-tertiary);
 }
 
@@ -286,7 +289,7 @@
 }
 
 .tt-gallery__achievement-name {
-  font-size: 9px;
+  font-size: 11px;
   font-weight: 600;
   color: #c0c0d0;
   margin-bottom: 4px;
@@ -300,7 +303,7 @@
 
 .tt-gallery__achievement-star {
   color: var(--tt-gold);
-  font-size: 8px;
+  font-size: 11px;
 }
 
 /* ─── Action Hint ─── */
@@ -448,6 +451,9 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
 }
 
 .tt-welcome__canvas {
@@ -460,8 +466,18 @@
   inset: 0;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  align-items: safe center;
+  justify-content: safe center;
+  /* Allow the welcome content to scroll if the viewport is short, and leave
+     room for the absolute-positioned bottom controls. */
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
+  padding:
+    calc(24px + env(safe-area-inset-top))
+    24px
+    calc(140px + env(safe-area-inset-bottom))
+    24px;
 }
 
 .tt-welcome__ornament {
@@ -503,7 +519,7 @@
 
 .tt-welcome__grid {
   display: grid;
-  grid-template-columns: repeat(13, 1fr);
+  grid-template-columns: repeat(13, minmax(0, 1fr));
   gap: 4px;
   margin-top: 40px;
   max-width: 600px;
@@ -516,8 +532,15 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 9px;
+  font-size: 11px;
   font-weight: 600;
+  font-family: var(--tt-font-label);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
   transition: opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1), transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
@@ -586,6 +609,16 @@
   color: #a89bc8;
 }
 
+@keyframes sg-showcase-breathe {
+  0%, 100% { transform: translate(-50%, -50%) scale(1); box-shadow: 0 0 30px rgba(201, 162, 39, 0.08); }
+  50% { transform: translate(-50%, -50%) scale(1.05); box-shadow: 0 0 45px rgba(201, 162, 39, 0.18); }
+}
+
+@keyframes cc-shimmer-sweep {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
 /* ─── Reduced Motion ─── */
 @media (prefers-reduced-motion: reduce) {
   .tt-tooltip--entering,
@@ -611,6 +644,107 @@
   }
   .tt-gallery__grid {
     grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* ─── Narrow cover screens (e.g. Samsung Z Fold 7 closed) ─── */
+@media (max-width: 420px) {
+  .tt-welcome__grid {
+    width: 100%;
+    gap: 3px;
+    margin-top: 28px;
+  }
+
+  .tt-welcome__grid-cell {
+    font-size: 9px;
+    border-radius: 4px;
+  }
+
+  .tt-welcome__logo {
+    font-size: clamp(40px, 14vw, 64px);
+    letter-spacing: 0.2em;
+  }
+
+  .tt-welcome__subtitle {
+    font-size: clamp(13px, 3.5vw, 16px);
+    letter-spacing: 0.15em;
+  }
+
+  .tt-welcome__tagline {
+    font-size: clamp(15px, 4vw, 18px);
+    padding: 0 8px;
+  }
+}
+
+/* ─── Circle Showcase Animations ─── */
+@keyframes circle-online-pulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.4); opacity: 0.6; }
+}
+
+/* ─── Assembly Showcase Animations ─── */
+@keyframes assembly-orb-breathe {
+  0%, 100% { transform: scale(1); opacity: 0.6; }
+  50% { transform: scale(1.15); opacity: 1; }
+}
+
+@keyframes assembly-orb-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes assembly-pulse-dot {
+  0%, 100% { box-shadow: 0 0 4px currentColor; opacity: 0.8; }
+  50% { box-shadow: 0 0 10px currentColor; opacity: 1; }
+}
+
+@keyframes assembly-particle-orbit {
+  from { transform: rotate(0deg) translateX(46px) rotate(0deg); }
+  to { transform: rotate(360deg) translateX(46px) rotate(-360deg); }
+}
+
+/* ─── Pure Mode Showcase Animations ─── */
+@keyframes pure-yinyang-rotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes pure-cell-breathe {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 1; }
+}
+
+/* ─── Tutorial Visual Keyframes ─── */
+@keyframes constellation-draw {
+  from { stroke-dashoffset: 1000; }
+  to { stroke-dashoffset: 0; }
+}
+
+@keyframes card-orbit {
+  from { transform: rotate(0deg) translateX(120px) rotate(0deg); }
+  to { transform: rotate(360deg) translateX(120px) rotate(-360deg); }
+}
+
+@keyframes im-glow-pulse {
+  0%, 100% { box-shadow: 0 0 20px rgba(201, 162, 39, 0.3); }
+  50% { box-shadow: 0 0 40px rgba(201, 162, 39, 0.6); }
+}
+
+@keyframes im-shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+@keyframes im-breathe {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.06); }
+}
+
+/* ─── Reduced Motion ─── */
+@media (prefers-reduced-motion: reduce) {
+  @keyframes card-orbit {
+    from { transform: none; }
+    to { transform: none; }
   }
 }
 

@@ -5,6 +5,7 @@
 
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { initializeSwissEphemeris, isSwissReady, isUsingFallback, setZodiacSystem, getZodiacSystem, setZodiacFrame, getZodiacFrame, setSignCount, getSignCount } from '../services/swiss-ephemeris/engine';
+import { getErrorMessage } from '../../utils/errorUtils';
 
 import { VoidMoonData, VoidMoonEvent } from '../types';
 
@@ -53,9 +54,9 @@ export function useSwiss(): UseSwissReturn {
       setReady(true);
       setFallback(isUsingFallback());
       console.log('[useSwiss] Initialization complete, fallback:', isUsingFallback());
-    } catch (err: any) {
+    } catch (err) {
       // Check if this is a WASM-related error
-      const errorMsg = err?.message || '';
+      const errorMsg = getErrorMessage(err);
       if (errorMsg.includes('is not a function') || 
           errorMsg.includes('WASM') || 
           errorMsg.includes('swisseph')) {
@@ -139,7 +140,7 @@ export function useVoidMoon() {
           setData(status);
           setError(null);
         }
-      } catch (err: any) {
+      } catch (err) {
         console.error('[useVoidMoon] Failed to load void moon data:', err);
         if (mounted) {
           setError(err instanceof Error ? err : new Error('Failed to load void moon data'));
@@ -181,7 +182,7 @@ export function useVoidMoonEvents(days: number = 30) {
           setData(events);
           setError(null);
         }
-      } catch (err: any) {
+      } catch (err) {
         console.error('[useVoidMoonEvents] Failed to load void moon events:', err);
         if (mounted) {
           setError(err instanceof Error ? err : new Error('Failed to load void moon events'));

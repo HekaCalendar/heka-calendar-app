@@ -1,0 +1,99 @@
+{
+  "title": "업적",
+  "streak": "연속",
+  "days": "일",
+  "totalAchievements": "{{count}} 업적",
+  "earned": "획득됨",
+  "locked": "잠금",
+  "newAchievement": "새로운 업적!",
+  "categories": {
+    "calendar": "달력 마스터",
+    "journal": "일기 보관가",
+    "circle": "서클 빌더",
+    "coach": "별 바라기",
+    "explorer": "탐험가"
+  },
+  "achievements": {
+    "firstStep": {
+      "name": "첫 걸음",
+      "description": "처음으로 달력을 열어보세요"
+    },
+    "timeTraveler": {
+      "name": "타임 트래블러",
+      "description": "1년 이상 떨어진 날짜를 보세요"
+    },
+    "streak7": {
+      "name": "주 광",
+      "description": "7일 연속으로 달력을 사용하세요"
+    },
+    "streak30": {
+      "name": "별의 달",
+      "description": "30일 연속으로 달력을 사용하세요"
+    },
+    "streak100": {
+      "name": "지혜의 세기",
+      "description": "100일 연속으로 달력을 사용하세요"
+    },
+    "journalFirst": {
+      "name": "첫 글",
+      "description": "첫 일기 글을 쓴다"
+    },
+    "journal10": {
+      "name": "꽃다운 작가",
+      "description": "10개의 일기 글을 쓴다"
+    },
+    "journal50": {
+      "name": "경험 많은 서기관",
+      "description": "50개의 일기 글을 쓴다"
+    },
+    "friendAdded": {
+      "name": "첫 번째 인연",
+      "description": "첫 친구를 추가하세요"
+    },
+    "circle5": {
+      "name": "성장하는 서클",
+      "description": "서클에 5명의 친구가 있다"
+    },
+    "aiAsked": {
+      "name": "지혜를 찾는 자",
+      "description": "AI 코치에게 질문하세요"
+    },
+    "aiStreak7": {
+      "name": "일일 지도",
+      "description": "7일 동안 AI 코치를 상담하세요"
+    },
+    "allMoonPhases": {
+      "name": "달빛 관찰가",
+      "description": "모든 8개의 달의 변화를 보세요"
+    },
+    "allZodiac": {
+      "name": "자외경 탐험가",
+      "description": "모든 13개의 별자리를 보세요"
+    },
+    "printFirst": {
+      "name": "첫 인쇄",
+      "description": "첫 달력 페이지를 인쇄하세요"
+    }
+  },
+  "categoryLabels": {
+    "beginner": "초보자",
+    "intermediate": "중급",
+    "advanced": "고급",
+    "master": "마스터",
+    "special": "특별",
+    "explorer": "탐험가",
+    "discoverer": "발견자",
+    "engager": "참여자"
+  },
+  "stats": {
+    "appOpens": "앱 열기",
+    "dayStreak": "연속일수",
+    "hoursSpent": "소요 시간",
+    "featuresFound": "발견된 특징"
+  },
+  "all": "전체",
+  "showHidden": "숨겨진 항목 보기",
+  "noAchievements": "이 카테고리에 아무런 업적도 없습니다",
+  "hiddenAchievement": "숨겨진 업적",
+  "secret": "비밀"
+}

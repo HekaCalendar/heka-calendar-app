@@ -13,6 +13,7 @@ import { OracleEngine, type BirthChart } from '../oracle/oracleEngine';
 import { calculateCurrentSky } from '../astrology/services/calculations/swissCalculations';
 import type { AstroProfile, NatalChart } from '../types/astrology';
 import { toDegree } from '../astrology/types/core';
+import type { PlanetId, CelestialBody } from '../astrology/types';
 
 export interface CoachTransit {
   transitingPlanet: string;
@@ -202,8 +203,8 @@ function convertNatalChartToOracleFormat(natalChart: NatalChart): BirthChart | n
     if (!pos) return undefined;
     const longitude = toDegree(pos.exactLongitude);
     return {
-      id: pos.planet as any,
-      sign: pos.sign as any,
+      id: pos.planet as PlanetId,
+      sign: pos.sign as CelestialBody['sign'],
       longitude,
       degreeInSign: pos.degree ?? 0,
       degree: pos.degree,
@@ -211,7 +212,7 @@ function convertNatalChartToOracleFormat(natalChart: NatalChart): BirthChart | n
       latitude: 0,
       distance: 1,
       speed: 0,
-    } as any; // Cast to BirthChart's CelestialBody to bridge 12-sign / 13-sign differences
+    } as unknown as CelestialBody; // Bridge 12-sign / 13-sign differences
   };
 
   const chart: BirthChart = {
@@ -227,8 +228,8 @@ function convertNatalChartToOracleFormat(natalChart: NatalChart): BirthChart | n
   if (natalChart.ascendant) {
     const ascLongitude = toDegree(natalChart.ascendant.exactLongitude);
     chart.rising = {
-      id: 'sun' as any,
-      sign: natalChart.ascendant.sign as any,
+      id: 'sun' as PlanetId,
+      sign: natalChart.ascendant.sign as CelestialBody['sign'],
       longitude: ascLongitude,
       degreeInSign: natalChart.ascendant?.degree ?? 0,
       degree: natalChart.ascendant.degree,
@@ -236,7 +237,7 @@ function convertNatalChartToOracleFormat(natalChart: NatalChart): BirthChart | n
       latitude: 0,
       distance: 1,
       speed: 0,
-    } as any;
+    } as unknown as CelestialBody;
   }
 
   // Validate that all required planets exist

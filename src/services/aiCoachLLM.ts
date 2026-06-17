@@ -9,6 +9,7 @@
  */
 
 import { aiConfigService } from './aiConfigService';
+import { chatViaProxy, isAIProxyEnabled, type AIProxyProvider } from './aiProxyClient';
 
 export interface LLMMessage {
   role: 'system' | 'user' | 'assistant';
@@ -19,6 +20,7 @@ export interface LLMResponse {
   text: string;
   model: string;
   cached: boolean;
+  fallbackReason?: string;
 }
 
 interface CacheEntry {
@@ -168,6 +170,32 @@ async function callAnthropic(apiKey: string, model: string, messages: LLMMessage
   return data.content?.[0]?.text?.trim() || '';
 }
 
+// ── HEKA AI Proxy Integration ────────────────────────────────────────────────
+// Routes calls through the backend proxy so provider API keys never leave the
+// server. Prefer this path whenever VITE_AI_PROXY_URL is configured.
+
+async function callProxy(
+  provider: Exclude<AIProxyProvider, 'moonshot'>,
+  model: string,
+  messages: LLMMessage[],
+): Promise<string> {
+  const response = await chatViaProxy({
+    provider,
+    model,
+    messages,
+    temperature: 0.85,
+    max_tokens: 180,
+  });
+
+  const choice = response.choices?.[0];
+  const content =
+    typeof choice?.message?.content === 'string'
+      ? choice.message.content
+      : (choice?.message?.content as unknown as { text?: string })?.text;
+
+  return (content || '').trim();
+}
+
 // ── Public API ───────────────────────────────────────────────────────────────
 
 export async function generateOracleMessage(
@@ -205,9 +233,74 @@ export async function generateOracleMessage(
   const config = aiConfigService.getConfig();
   const provider = config.provider;
   const apiKey = config.apiKey;
+  const proxyEnabled = isAIProxyEnabled();
+  const useProxy = provider === 'proxy' || proxyEnabled;
 
-  if (!apiKey || provider === 'template') {
-    return { text: fallbackText, model: 'fallback', cached: false };
+  if (!useProxy && (!apiKey || provider === 'template')) {
+    // ── Template Library Path ──────────────────────────────────────────────
+    // Instead of returning raw fallback text, weave the celestial guidance
+    // (already computed by personalizedEngine) with occasion-specific context
+    // to produce a rich, astrologically-informed coach message.
+    const parts: string[] = [];
+
+    // Base: celestial guidance already contains template-based reading
+    if (context.celestialGuidance) {
+      parts.push(context.celestialGuidance);
+    }
+
+    // Occasion-specific enhancement
+    switch (context.occasion) {
+      case 'daily-briefing':
+        if (context.planetaryHour) {
+          parts.push(`The ${context.planetaryHour}.`);
+        }
+        if (context.season) {
+          parts.push(`${context.season}.`);
+        }
+        break;
+      case 'mood-support':
+        if (context.moodTone) {
+          parts.push(`Your current mood — ${context.moodTone} — is held within this celestial field. The sky does not judge; it simply mirrors.`);
+        }
+        if (context.moonDetails) {
+          parts.push(`${context.moonDetails}.`);
+        }
+        break;
+      case 'transit-alert':
+        if (context.transitSummary) {
+          parts.push(`Active transit: ${context.transitSummary}.`);
+        }
+        break;
+      case 'celebration':
+        if (context.streak > 0) {
+          parts.push(`${context.streak}-day streak — momentum is real. The cosmos rewards consistency.`);
+        }
+        break;
+      case 'task-suggestion':
+        if (context.pendingTasks > 0) {
+          parts.push(`${context.pendingTasks} task${context.pendingTasks > 1 ? 's' : ''} waiting — align your next action with the prevailing energy.`);
+        }
+        break;
+      case 'synchronicity':
+        parts.push(`A pattern in the sky mirrors a pattern in your life. Pay attention to what repeats.`);
+        break;
+    }
+
+    // User context weaving
+    if (context.userArchetype) {
+      parts.push(`As a ${context.userArchetype}, you navigate these currents with your own distinct rhythm.`);
+    }
+    if (context.lastJournalSnippet) {
+      parts.push(`Your recent reflections echo here: "${context.lastJournalSnippet.slice(0, 120)}${context.lastJournalSnippet.length > 120 ? '...' : ''}"`);
+    }
+
+    // Fallback: if no celestial guidance, use the fallback text
+    if (parts.length === 0) {
+      parts.push(fallbackText);
+    }
+
+    const text = parts.filter(Boolean).join(' ');
+    return { text, model: 'template', cached: false, fallbackReason: 'No API key configured' };
   }
 
   // ── Provider-specific system prompt tuning ───────────────────────────────
@@ -325,16 +418,23 @@ Generate the oracle message:`;
 
   try {
     let text = '';
-    const model = config.model || (provider === 'groq' ? 'llama-3.1-8b-instant' : provider === 'openai' ? 'gpt-4o-mini' : provider === 'ollama' ? 'llama3.2' : 'claude-3-haiku-20240307');
+    const model = config.model || (provider === 'groq' || provider === 'proxy' ? 'llama-3.1-8b-instant' : provider === 'openai' ? 'gpt-4o-mini' : provider === 'ollama' ? 'llama3.2' : 'claude-3-haiku-20240307');
 
-    if (provider === 'groq') {
-      text = await callGroq(apiKey, model, messages);
+    if (useProxy) {
+      // Route through the HEKA AI Proxy so provider keys never leave the server.
+      const proxyProvider: Exclude<AIProxyProvider, 'moonshot'> =
+        provider === 'groq' || provider === 'openai' || provider === 'anthropic'
+          ? provider
+          : 'groq';
+      text = await callProxy(proxyProvider, model, messages);
+    } else if (provider === 'groq') {
+      text = await callGroq(apiKey || '', model, messages);
     } else if (provider === 'openai') {
       const response = await fetchWithRetry('https://api.openai.com/v1/chat/completions', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${apiKey}`,
+          'Authorization': `Bearer ${apiKey || ''}`,
         },
         body: JSON.stringify({
           model,
@@ -347,7 +447,7 @@ Generate the oracle message:`;
       const data = await response.json();
       text = data.choices?.[0]?.message?.content?.trim() || '';
     } else if (provider === 'anthropic') {
-      text = await callAnthropic(apiKey, model, messages);
+      text = await callAnthropic(apiKey || '', model, messages);
     } else if (provider === 'ollama') {
       // apiKey for Ollama is actually the base URL (e.g., http://localhost:11434)
       const ollamaUrl = (apiKey || 'http://localhost:11434').replace(/\/$/, '');
@@ -366,14 +466,15 @@ Generate the oracle message:`;
     }
 
     if (!text || text.length < 10) {
-      return { text: fallbackText, model, cached: false };
+      return { text: fallbackText, model, cached: false, fallbackReason: 'Response too short or empty' };
     }
 
     setCached(cacheKey, text);
     return { text, model, cached: false };
   } catch (error) {
     console.error('[AICoachLLM] Generation failed:', error);
-    return { text: fallbackText, model: 'fallback', cached: false };
+    const reason = error instanceof Error ? error.message : 'Provider unavailable';
+    return { text: fallbackText, model: 'fallback', cached: false, fallbackReason: reason };
   }
 }
 

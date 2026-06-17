@@ -1,0 +1,239 @@
+{
+  "celestialGuide": "Небесний przewodnik",
+  "journal": "Журнал",
+  "notes": "Нотатки",
+  "events": "Події",
+  "tasks": "Завдання",
+  "transits": "Трансити",
+  "mood": "Настрій",
+  "vibe": "Віб",
+  "energy": "Енергія",
+  "hekaRune": "Руна ХЕКА",
+  "celestialAffirmation": "Небесне підтвердження",
+  "moodTracker": "Трекер настрою",
+  "vibeColor": "Колір вібу",
+  "addNote": "Додати нотатку...",
+  "addEvent": "Додати подію",
+  "addTask": "Додати завдання",
+  "eventTitle": "Назва події",
+  "taskTitle": "Назва завдання",
+  "taskCompleted": "Виконано",
+  "taskPending": "Очікується",
+  "editNote": "Редагувати нотатку",
+  "deleteNote": "Видалити нотатку",
+  "notePlaceholder": "Записуйте свої думки тут...",
+  "journalPlaceholder": "Записуйте свій день...",
+  "eventPlaceholder": "Що відбувається?",
+  "taskPlaceholder": "Що потрібно зробити?",
+  "addNewNote": "+ Новата нотатка",
+  "addNewEvent": "+ Нова подія",
+  "addNewTask": "+ Нове завдання",
+  "noNotes": "Немає нотаток на цей день",
+  "noEvents": "Немає подій на цей день",
+  "noTasks": "Немає завдань на цей день",
+  "noJournal": "Немає запису журналу на цей день",
+  "transitProgress": "Прогрес транзиту",
+  "transitRemaining": "{{percent}}% залишилось",
+  "currentMood": "Поточний настрій",
+  "selectMood": "Оберіть свій настрій",
+  "moods": {
+    "joyful": "Радісний",
+    "happy": "Щасливий",
+    "content": "Задоволений",
+    "neutral": "Нейтральний",
+    "tired": "Виморожений",
+    "sad": "Смутний",
+    "anxious": "Неспокійний",
+    "frustrated": "Фрустрований",
+    "angry": "Злий",
+    "inspired": "Інспірований",
+    "focused": "Сконцентрований",
+    "peaceful": "Спокійний"
+  },
+  "runeCast": "Видаємо руни...",
+  "runeReveal": "Розкрити руну",
+  "runeBlessing": "Благословення на сьогодні",
+  "runeWisdom": "Мудрість рун",
+  "runeEnergy": "Енергія рун",
+  "emptyState": "Оберіть день для перегляду деталей",
+  "closePanel": "Закрити панель",
+  "addTaskBtn": "+ Завдання",
+  "header": {
+    "monthOf": "Місяць {{month}} / 13",
+    "hekaYear": "РОК ГЕКА {{year}}"
+  },
+  "moon": {
+    "calculating": "Обчислення позиції Місяця...",
+    "unavailable": "Дані про фазу Місяця недоступні",
+    "waxing": "Набивається",
+    "waning": "Зменшується",
+    "illuminated": "{{percent}}% освітлений",
+    "age": "Вік: {{age}} днів",
+    "swissEphemeris": "Швейцарський ефемерід",
+    "southernHemisphere": "Південна півкуля",
+    "northernHemisphere": "Північна півкуля"
+  },
+  "holidays": {
+    "inLocation": "Святкування в {{location}}"
+  },
+  "astrology": {
+    "dailyCosmicGuidance": "Щодняне космічне напрямування",
+    "personalizedFor": "Персоналізовано для {{name}}",
+    "birthChartActive": "Астрологічна діаграма активна",
+    "calculatingTransits": "Обчислення ваших особистих транситів...",
+    "connectingCelestial": "Підключення до небесної інтелігенції...",
+    "unavailable": "Небесне напрямування недоступне. Перегляньте розділ Зірки для детальної астрології.",
+    "sunrise": "Схід сонця: {{time}}",
+    "sunset": "Захід сонця: {{time}}",
+    "planetaryHour": "Планетна година: {{planet}}",
+    "locationPin": "{{location}}",
+    "activeTransits": "Активні трансити для вас сьогодні",
+    "moonIn": "Місяць в {{sign}}",
+    "sunIn": "Сонце в {{sign}}",
+    "todaysTheme": "Головна Тема Сьогодні:",
+    "cosmicGuidance": "Космічна Напрямка",
+    "reflection": "Внутрішній Аналіз",
+    "affirmation": "Підтвердження",
+    "birthChartCta": {
+      "title": "Хочете персоналізовані транзити?",
+      "description": "Додайте свій нараджній діаграми в розділі Зірки, щоб побачити, як сьогодніня космічна погода впливає на вас особисто."
+    }
+  },
+  "lunarMansion": {
+    "title": "Лунне Помешкання",
+    "trueMode": "Правильний Режим",
+    "calculating": "Обчислення бічного положення місяця...",
+    "totem": "Тотем",
+    "gift": "Подарунок",
+    "ruler": "Пан",
+    "quality": "Якість",
+    "quarter": "Квартал",
+    "sunTravelsThrough": "Сонце проходить через {{name}}",
+    "quarters": {
+      "initiation": "Ініціація — сіє насіння",
+      "deepening": "Глибина — коріння заходять",
+      "crisis": "Край — приходить тест",
+      "completion": "Завершення — плод сипає"
+    }
+  },
+  "solarReturn": {
+    "title": "Правильне Сонячне Повернення",
+    "titleInDays": "Правильне Сонячне Повернення через {{count}} день{{suffix}}",
+    "trueMode": "Правильний Режим",
+    "today": "Сонце повертається до вашої бічної нараджної довжини сьогодні.",
+    "approaching": "Сонце повернеться до вашої бічної позиції {{sign}} {{date}}.",
+    "description": "У режимі TRUE HEKA ваш днем народження визначають зірки, а не цивільний календар.",
+    "exactOrb": "Точно на {{orb}} аркмінут."
+  },
+  "notesSection": {
+    "tasksAndNotes": "Завдання ({{tasks}}) · Нотатки ({{notes}})",
+    "tasksOnly": "Завдання ({{count}})",
+    "notesAndTasks": "Нотатки і Завдання ({{count}})",
+    "addNote": "+ Нотатка",
+    "longHoldHint": "Тримайте довго для опцій · Подвійний дотик завдання для редагування",
+    "noNotesOrTasks": "Немає нотаток чи завдань на цей день.",
+    "createNoteHint": "Клацніть <0>+ Нотатка</0> або <1>⚡ Додати Завдання</1> вгорі, щоб створити."
+  },
+  "noteEditor": {
+    "makeTask": "⚡ Зробити цим завданням",
+    "dueTime": "Час виконання",
+    "remindMe": "Нагадати мені",
+    "reminders": {
+      "atTime": "У час завдання",
+      "5min": "5 хвилин до",
+      "10min": "10 хвилин до",
+      "15min": "15 хвилин до",
+      "30min": "30 хвилин до",
+      "1hour": "1 година до"
+    },
+    "howAreYouFeeling": "Як ви відчуваєтеся?",
+    "taskPlaceholder": "Що ви маєте намір виконати?",
+    "notePlaceholder": "Напишіть ваше примітку...",
+    "saveTask": "Зберегти Завдання",
+    "saveNote": "Зберегти Примітку",
+    "cancel": "Скасувати"
+  },
+  "noteItem": {
+    "markComplete": "Позначити як завершене",
+    "completed": "Завершено",
+    "task": "Завдання",
+    "delete": "Видалити"
+  },
+  "selection": {
+    "selectedFromDays": "{{count}} вибрано з {{days}} днів{{suffix}}",
+    "done": "Готово",
+    "selectAll": "Вибрати Все",
+    "duplicate": "Дублювати...",
+    "delete": "Видалити",
+    "manageDuplicates": "Керування дублікатами:",
+    "duplicateTo": "Дублювати до:",
+    "nextWeek": "Наступне тиждень",
+    "nextMonth": "Наступний місяць",
+    "everyDay": "Що {{day}}",
+    "undoEveryDay": "Скасувати Що {{day}}",
+    "specificDay": "Спеціальний День...",
+    "chooseDays": "Обрати Дні...",
+    "back": "Назад"
+  },
+  "dayPicker": {
+    "cancel": "Скасувати"
+  },
+  "multiDayPicker": {
+    "selectedCount": "{{count}} днів{{suffix}} вибрано",
+    "confirm": "Підтвердити",
+    "cancel": "Скасувати"
+  },
+  "confirmations": {
+    "deleteNote": "Видалити цю примітку?",
+    "deleteSelected": "Видалити {{count}} вибрані примітки з {{days}} днів?",
+    "duplicateEveryDay": "Дублювати ці {{count}} елемент(и) ВСЕГО {{day}} на решту року?",
+    "undoDuplicates": "Видалити всі дубліковані випадки цих {{count}} приміток?"
+  },
+  "alerts": {
+    "couldNotCalculateDate": "Не вдалося обчислити цільову дату",
+    "duplicatedToNextWeek": "Дубльовано {{items}} на наступне тиждень ({{month}} {{day}})",
+    "duplicatedToNextMonth": "Дубльовано {{items}} на наступний місяць ({{month}} {{day}})",
+    "duplicatedToDays": "Дубльовано до {{count}} {{day}}s",
+    "duplicatedNotes": "Дублікат {{count}} нотатк(и)",
+    "removedDuplicates": "Видалено дублікатні нотатки",
+    "duplicatedToMonth": "Дублікат {{count}} нотатк(и) на наступний місяць",
+    "duplicatedToDaysCount": "Дублікат {{count}} нотатк(и) на {{days}} день(і)",
+    "duplicatedSelectedItems": "Дублікат вибраних елементів на {{count}} день(і)",
+    "signInToSaveTasks": "Для збереження завдань потрібно бути увійшовим. Будь ласка, відкрийте меню Обліковий запис та зайдіть ще раз.",
+    "unableToSaveTask": "Неможливо зберегти завдання. Помилка: {{error}}"
+  },
+  "dow": {
+    "sunday": "Неділя",
+    "monday": "Понеділок",
+    "tuesday": "Вівторок",
+    "wednesday": "Середа",
+    "thursday": "Четвер",
+    "friday": "П'ятниця",
+    "saturday": "Субота",
+    "short": {
+      "sun": "Нд",
+      "mon": "Пн",
+      "tue": "Вт",
+      "wed": "Ср",
+      "thu": "Чт",
+      "fri": "Пт",
+      "sat": "Сб"
+    }
+  },
+  "noteCategories": {
+    "personal": "Особисте",
+    "work": "Робота",
+    "spiritual": "Духовне",
+    "family": "Сім'я",
+    "health": "Здоров'я",
+    "creative": "Творче",
+    "general": "Загальне"
+  },
+  "moodScale": {
+    "1": "Дуже низький",
+    "2": "Низький",
+    "3": "Нейтральний",
+    "4": "Добрий",
+    "5": "Відмінний"
+  }
+}

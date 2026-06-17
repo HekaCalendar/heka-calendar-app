@@ -166,3 +166,9 @@
     height: 300px;
   }
 }
+
+
+/* ── RTL Overrides ── */
+[dir="rtl"] .sv-retro {
+    margin-right: 2px
+}

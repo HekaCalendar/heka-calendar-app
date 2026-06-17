@@ -1,0 +1,49 @@
+{
+  "best": "Bedste: {{count}}",
+  "title": "Din Rejse",
+  "close": "Luk",
+  "reset": "Nulstil Statistikker",
+  "avgMood": "Gennemsnitlige Humør",
+  "dayStreak": "Daglige Rækkefølge",
+  "totalNotes": "Total Antallet af Noter",
+  "wordsWritten": "Skrivne Ord",
+  "achievements": "Præstationer ({{earned}}/{{total}})",
+  "resetConfirm": "Nulstil",
+  "progressRatio": "{{current}} / {{mål}}",
+  "monthlyTooltip": "{{month}} {{year}}: {{count}} noter",
+  "notesByCategory": "Noter efter Kategori",
+  "monthlyActivity": "Månedlig Aktivitet",
+  "mostActiveMonth": "Din mest aktive måned var \u003cstrong\u003e{{month}}\u003c/strong\u003e med \u003cstrong\u003e{{count}}\u003c/strong\u003e noter",
+  "categories": {
+    "work": "Arbejde",
+    "family": "Familie",
+    "health": "Sundhed",
+    "general": "Generelle",
+    "personal": "Personlige",
+    "creative": "Kreative",
+    "spiritual": "Åndelige"
+  },
+  "progressToCentury": "Fremskridt mod Ærkehulen",
+  "resetConfirmTitle": "Nulstil Statistikker",
+  "badges": {
+    "century": {
+      "name": "Ærkehulen"
+    },
+    "explorer": {
+      "name": "Udforsker"
+    },
+    "archivist": {
+      "name": "Arkivar"
+    },
+    "first-note": {
+      "name": "Første Ord"
+    },
+    "week-streak": {
+      "name": "Uges Krieger"
+    },
+    "month-streak": {
+      "name": "Månedsmester"
+    }
+  },
+  "resetConfirmDescription": "Er du sikker på, at du vil nulstille alle statistikker? Dette kan ikke fortrydes."
+}

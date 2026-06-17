@@ -288,7 +288,6 @@ function generateDayBlocks(
       for (let t = band.start; t <= band.end - duration; t += 15) {
         if (canPlace(blocks, t, t + duration)) {
           blocks.push({ start: t, end: t + duration, name: task.name, type: 'task', sourceId: task.id, category: task.category, tags: task.tags });
-          placed = true;
           break;
         }
       }
@@ -299,7 +298,6 @@ function generateDayBlocks(
       for (let t = sleepEnd; t <= 1440 - duration; t += 15) {
         if (canPlace(blocks, t, t + duration)) {
           blocks.push({ start: t, end: t + duration, name: task.name, type: 'task', sourceId: task.id, category: task.category, tags: task.tags });
-          placed = true;
           break;
         }
       }

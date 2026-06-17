@@ -13,6 +13,9 @@ import {
   type LunarMansion,
 } from '../../data/nakshatras';
 
+// Cache true solar return calculations — they are deterministic for a given birth longitude + year.
+const solarReturnCache = new Map<string, TrueSolarReturn | null>();
+
 export interface PlanetMansion {
   planet: string;
   mansion: LunarMansion;
@@ -233,6 +236,10 @@ export function calculateTrueSolarReturn(
   birthMonth: number = 1, // 0-11, for initial search guess
   birthDay: number = 1
 ): TrueSolarReturn | null {
+  const cacheKey = `${birthSiderealSunLongitude.toFixed(6)}:${targetYear}:${birthMonth}:${birthDay}`;
+  const cached = solarReturnCache.get(cacheKey);
+  if (cached !== undefined) return cached;
+
   try {
     // Search window: ±7 days around the birth date in the target year
     const startDate = new Date(targetYear, birthMonth, birthDay - 7, 12, 0, 0);
@@ -263,21 +270,25 @@ export function calculateTrueSolarReturn(
     }
 
     if (!bestDate || bestOrb > 5) {
+      solarReturnCache.set(cacheKey, null);
       return null;
     }
 
     // Refine with interpolation around the best 6-hour bracket
     const refined = refineSolarReturn(birthSiderealSunLongitude, bestDate, stepMs);
 
-    return {
+    const result: TrueSolarReturn = {
       year: targetYear,
       date: refined.date,
       siderealSunLongitude: refined.longitude,
       birthSiderealLongitude: birthSiderealSunLongitude,
       orb: refined.orb,
     };
+    solarReturnCache.set(cacheKey, result);
+    return result;
   } catch (e) {
     console.error('[TrueSolarReturn] Calculation failed:', e);
+    solarReturnCache.set(cacheKey, null);
     return null;
   }
 }

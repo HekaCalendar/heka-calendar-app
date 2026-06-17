@@ -1,0 +1,1632 @@
+{
+  "title": "Today's Celestial Guide",
+  "titlePast": "Celestial Guide for {{days}} days ago",
+  "titleFuture": "Celestial Guide in {{days}} days",
+  "historicalView": "Historical View",
+  "futureView": "Future View",
+  "selectedDate": "Selected HEKA Date",
+  "civilDate": "Civil Date",
+  "dayOfYear": "Day of Year",
+  "lookingBack": "Looking Back",
+  "lookingForward": "Looking Forward",
+  "dragToScroll": "Drag to scroll",
+  "cards": {
+    "sunTimes": {
+      "title": "Sun Times",
+      "sunrise": "Sunrise",
+      "sunset": "Sunset",
+      "dayLength": "Day Length",
+      "weather": "Weather",
+      "accuracy": "Accuracy",
+      "accuracyLevels": {
+        "exact": "Exact",
+        "high": "High",
+        "estimated": "Estimated",
+        "approximate": "Approximate"
+      }
+    },
+    "moonPhase": {
+      "title": "Moon Phase",
+      "phase": "Phase",
+      "illumination": "Illumination",
+      "age": "Age",
+      "waxing": "Waxing",
+      "waning": "Waning",
+      "voidOfCourse": "Void of Course",
+      "lunarNewYear": "Lunar New Year",
+      "daysUntil": "{{days}} days until",
+      "illuminated": "illuminated",
+      "dayOfCycle": "Day {{day}} of 29.5"
+    },
+    "seasons": {
+      "title": "Seasons",
+      "currentSeason": "Current Season",
+      "nextSolstice": "Next Solstice",
+      "daysUntil": "{{days}} days until",
+      "spring": "Spring",
+      "summer": "Summer",
+      "autumn": "Autumn",
+      "winter": "Winter",
+      "springEquinox": "Spring Equinox",
+      "summerSolstice": "Summer Solstice",
+      "autumnEquinox": "Autumn Equinox",
+      "winterSolstice": "Winter Solstice"
+    },
+    "agriculture": {
+      "title": "Agriculture",
+      "plantToday": "What to plant today",
+      "byLocation": "By your location and moon phase",
+      "favorable": "Favorable",
+      "unfavorable": "Unfavorable",
+      "neutral": "Neutral"
+    },
+    "digitalClock": {
+      "title": "Digital Clock",
+      "countdowns": "Four simultaneous live countdowns",
+      "days": "Days",
+      "hours": "Hours",
+      "minutes": "Minutes",
+      "seconds": "Seconds"
+    },
+    "planetaryHours": {
+      "title": "Planetary Hours",
+      "currentHour": "Current Hour",
+      "favors": "Favors",
+      "chaldeanOrder": "Chaldean Order",
+      "hourOf": "Hour of {{planet}}"
+    },
+    "dayOfWeek": {
+      "title": "Day of Week",
+      "planet": "Ruling Planet",
+      "energy": "Energy",
+      "favorableActivities": "Favorable Activities"
+    }
+  },
+  "moonPhases": {
+    "newMoon": "New Moon",
+    "waxingCrescent": "Waxing Crescent",
+    "firstQuarter": "First Quarter",
+    "waxingGibbous": "Waxing Gibbous",
+    "fullMoon": "Full Moon",
+    "waningGibbous": "Waning Gibbous",
+    "lastQuarter": "Last Quarter",
+    "waningCrescent": "Waning Crescent"
+  },
+  "moonPhaseMeanings": {
+    "newMoon": "Beginnings",
+    "waxingCrescent": "Growth",
+    "firstQuarter": "Action",
+    "waxingGibbous": "Refinement",
+    "fullMoon": "Completion",
+    "waningGibbous": "Gratitude",
+    "lastQuarter": "Release",
+    "waningCrescent": "Rest"
+  },
+  "zodiacSigns": {
+    "aries": "Aries",
+    "taurus": "Taurus",
+    "gemini": "Gemini",
+    "cancer": "Cancer",
+    "leo": "Leo",
+    "virgo": "Virgo",
+    "libra": "Libra",
+    "scorpio": "Scorpio",
+    "sagittarius": "Sagittarius",
+    "capricorn": "Capricorn",
+    "aquarius": "Aquarius",
+    "pisces": "Pisces",
+    "ophiuchus": "Ophiuchus"
+  },
+  "planets": {
+    "sun": "Sun",
+    "moon": "Moon",
+    "mercury": "Mercury",
+    "venus": "Venus",
+    "mars": "Mars",
+    "jupiter": "Jupiter",
+    "saturn": "Saturn"
+  },
+  "elements": {
+    "fire": "Fire",
+    "water": "Water",
+    "earth": "Earth",
+    "air": "Air"
+  },
+  "hemispheres": {
+    "northern": "Northern Hemisphere",
+    "southern": "Southern Hemisphere"
+  },
+  "swissEphemeris": "Swiss Ephemeris",
+  "calculating": "Calculating lunar position...",
+  "dataUnavailable": "Celestial data unavailable",
+  "dayOfYearValue": "Day {{day}}",
+  "lookingBackDescription": "This date has passed. Review what celestial energies were present on this day.",
+  "lookingForwardDescription": "This date is in the future. Plan ahead using these upcoming celestial energies.",
+  "yourLocation": "Your Location",
+  "scrollHint": "(scroll →)",
+  "hekaCalendarIsUniversal": "HEKA Calendar is Universal:",
+  "universalCalendarDescription": "Dates are the same worldwide (like Gregorian calendar). Civil date/times vary by timezone. Celestial calculations (solar noon, moon phases) are mathematical approximations ±30 min for educational purposes.",
+  "hekaYearBegins": "HEKA Year {{year}} Begins",
+  "startingCivil": "Starting (Civil): {{date}}",
+  "beganCivil": "Began (Civil): {{date}}",
+  "hekaYearLabel": "HEKA Year {{year}}",
+  "aboutThisHekaYear": "About This HEKA Year",
+  "aboutThisHekaYearDescription": "The HEKA year {{year}} begins on April 1st, {{civilYear}}. Each HEKA year contains 12 months of 28 days, plus March with 29 days (30 in leap/correction years).",
+  "universalCalendar": "Universal Calendar",
+  "universalCalendarNote": "Like the Gregorian calendar, HEKA dates are the same worldwide. HEKA Month {{month}}, Day {{day}} is the same moment whether you're in Sydney, New York, or London - only the local civil time differs.",
+  "status": "Status",
+  "hekaYearBegunDescription": "This HEKA year has begun. The next cycle begins April 1st, {{nextYear}}.",
+  "dayOfPlanet": "{{day}}: Day of {{planet}}",
+  "planetaryDays": {
+    "sunday": {
+      "day": "Sunday",
+      "qualities": {
+        "0": "Vitality",
+        "1": "Leadership",
+        "2": "Success",
+        "3": "Visibility"
+      },
+      "activities": {
+        "0": "Start new ventures",
+        "1": "Seek recognition",
+        "2": "Creative projects",
+        "3": "Physical exercise"
+      },
+      "description": "The day of the Sun brings vitality, confidence, and creative energy. Ideal for new beginnings and seeking visibility."
+    },
+    "monday": {
+      "day": "Monday",
+      "qualities": {
+        "0": "Intuition",
+        "1": "Emotions",
+        "2": "Nurturing",
+        "3": "Reflection"
+      },
+      "activities": {
+        "0": "Self-care",
+        "1": "Home activities",
+        "2": "Introspection",
+        "3": "Family time"
+      },
+      "description": "The day of the Moon emphasizes emotions, intuition, and inner work. Perfect for rest and emotional processing."
+    },
+    "tuesday": {
+      "day": "Tuesday",
+      "qualities": {
+        "0": "Action",
+        "1": "Courage",
+        "2": "Drive",
+        "3": "Passion"
+      },
+      "activities": {
+        "0": "Face challenges",
+        "1": "Physical work",
+        "2": "Assertiveness",
+        "3": "Competition"
+      },
+      "description": "The day of Mars brings energy, courage, and drive. Best for taking action and overcoming obstacles."
+    },
+    "wednesday": {
+      "day": "Wednesday",
+      "qualities": {
+        "0": "Communication",
+        "1": "Intellect",
+        "2": "Learning",
+        "3": "Travel"
+      },
+      "activities": {
+        "0": "Writing",
+        "1": "Negotiations",
+        "2": "Study",
+        "3": "Short trips"
+      },
+      "description": "The day of Mercury favors communication, learning, and mental agility. Ideal for negotiations and writing."
+    },
+    "thursday": {
+      "day": "Thursday",
+      "qualities": {
+        "0": "Expansion",
+        "1": "Luck",
+        "2": "Wisdom",
+        "3": "Abundance"
+      },
+      "activities": {
+        "0": "Big decisions",
+        "1": "Financial matters",
+        "2": "Teaching",
+        "3": "Travel planning"
+      },
+      "description": "The day of Jupiter brings abundance, wisdom, and expansion. Favorable for growth and prosperity."
+    },
+    "friday": {
+      "day": "Friday",
+      "qualities": {
+        "0": "Love",
+        "1": "Beauty",
+        "2": "Harmony",
+        "3": "Creativity"
+      },
+      "activities": {
+        "0": "Social gatherings",
+        "1": "Artistic activities",
+        "2": "Romance",
+        "3": "Self-care"
+      },
+      "description": "The day of Venus emphasizes love, beauty, and harmony. Perfect for social activities and artistic expression."
+    },
+    "saturday": {
+      "day": "Saturday",
+      "qualities": {
+        "0": "Discipline",
+        "1": "Structure",
+        "2": "Responsibility",
+        "3": "Wisdom"
+      },
+      "activities": {
+        "0": "Organization",
+        "1": "Planning",
+        "2": "Review work",
+        "3": "Set boundaries"
+      },
+      "description": "The day of Saturn calls for discipline and structure. Best for organization, planning, and responsibility."
+    }
+  },
+  "planetaryQualities": "Planetary Qualities",
+  "favorableActivities": "Favorable Activities",
+  "planetaryDayDisclaimer": "Planetary day associations draw from traditional astrology and cultural symbolism.",
+  "countdown": {
+    "days": "days",
+    "hours": "hrs",
+    "minutes": "min",
+    "seconds": "sec"
+  },
+  "waxingDescription": "Waxing: Building energy, growth, accumulation",
+  "waningDescription": "Waning: Releasing, letting go, completion",
+  "illuminationMoreThanHalf": "More than half: Peak manifestation power",
+  "illuminationLessThanHalf": "Less than half: Introspection and planning",
+  "newToFirstQuarter": "New to First Quarter: Begin new projects",
+  "firstQuarterToFull": "First Quarter to Full: Build momentum",
+  "fullToLastQuarter": "Full to Last Quarter: Harvest results",
+  "lastQuarterToNew": "Last Quarter to New: Release and rest",
+  "moonPhaseDisclaimer": "Moon phases are calculated mathematically and may vary slightly from astronomical observations.",
+  "element": "Element",
+  "daysUntilNextSeason": "days until next season",
+  "daysRemaining": "Days Remaining",
+  "aboutThisSeason": "About This Season",
+  "characteristics": "Characteristics",
+  "seasonalActivities": "Seasonal Activities",
+  "fromDate": "From {{month}} {{day}}",
+  "whatIsIt": "What is it?",
+  "significance": "Significance",
+  "howToObserve": "How to Observe",
+  "traditions": "Traditions",
+  "solarNoon": "Solar Noon",
+  "solarNoonSubtitle": "Sun at highest point on this day",
+  "sunElevation": "Sun elevation: {{elevation}}°",
+  "aboutSolarNoon": "About Solar Noon",
+  "localTime": "Local Time:",
+  "solarNoonLocalTimeDescription": "The Sun reaches its highest point at {{time}} ({{timezone}})",
+  "historicalSignificance": "Historical Significance",
+  "solarNoonHistoricalDescription": "Ancient cultures used solar noon for timekeeping. Stone circles and sundials were aligned to mark this moment.",
+  "solarNoonDisclaimer": "Times are mathematical approximations (±10-15 min). Precise solar noon varies by your exact location and date.",
+  "lunarCycle": "Lunar Cycle",
+  "newMoonCivil": "New Moon (Civil)",
+  "fullMoonCivil": "Full Moon (Civil)",
+  "thisMoonCycle": "This Moon Cycle",
+  "thisMoonCycleDescription": "The Moon was in the {{name}} cycle.",
+  "energeticQualities": "Energetic Qualities",
+  "newMoonQuality": "New Moon: Beginnings, setting intentions",
+  "waxingQuality": "Waxing: Growth, building momentum",
+  "fullMoonQuality": "Full Moon: Peak energy, manifestation",
+  "waningQuality": "Waning: Release, reflection, completion",
+  "agriculturalGuidance": "Agricultural guidance",
+  "forDate": "For {{month}} {{day}}",
+  "confidence": "Confidence:",
+  "whyThisDay": "Why This Day?",
+  "whyThisDayDescription": "The moon phase and seasonal factors indicated optimal conditions for {{activity}} activities.",
+  "activities": {
+    "plant": "plant",
+    "transplant": "transplant",
+    "harvest": "harvest",
+    "prune": "prune",
+    "fertilize": "fertilize",
+    "rest": "rest",
+    "prepare": "prepare"
+  },
+  "biodynamicPrinciple": "Biodynamic Principle",
+  "biodynamicPrincipleDescription": "This guidance follows the cosmic rhythms affecting plant vitality and soil conditions.",
+  "cosmicEnergy": "Cosmic Energy",
+  "civil": "Civil",
+  "energyForecastPrefix": "The energy forecast for",
+  "energyForecastSuffix": "{{date}} combines lunar phase, planetary positions, and seasonal rhythms.",
+  "cosmicConditions": "Cosmic Conditions",
+  "howToUseThis": "How to Use This",
+  "highEnergy": "High energy: Start projects, take action, be social",
+  "moderateEnergy": "Moderate energy: Routine work, steady progress",
+  "lowEnergy": "Low energy: Rest, reflection, planning",
+  "numerologyTitle": "Numerology: Day {{day}}",
+  "todaysEnergy": "Today's Energy",
+  "focusAreas": "Focus Areas",
+  "guidance": {
+    "today": "Today",
+    "mixed": "Mixed",
+    "career": "Career",
+    "health": "Health",
+    "timing": "Timing",
+    "thisWeek": "This Week",
+    "thisYear": "This Year",
+    "finances": "Finances",
+    "bestDays": "Best Days",
+    "keyThemes": "Key Themes",
+    "lifeAreas": "Life Areas",
+    "excellent": "Excellent",
+    "favorable": "Favorable",
+    "difficult": "Difficult",
+    "calculating": "Calculating celestial guidance...",
+    "challenging": "Challenging",
+    "overallScore": "Overall Score",
+    "todaySubtitle": "Current celestial climate",
+    "relationships": "Relationships",
+    "lunarGuidance": "Lunar Guidance",
+    "personalGrowth": "Personal Growth",
+    "thisWeekSubtitle": "7-day cosmic forecast",
+    "thisYearSubtitle": "{{year}} overview",
+    "unableToGenerate": "Unable to generate guidance at this time.",
+    "yourCelestialRegion": "Your Celestial Region",
+    "planetaryHighlights": "Planetary Highlights"
+  },
+  "compatible": "Compatible",
+  "luckyHours": "Lucky Hours",
+  "energeticInfluence": "Energetic Influence",
+  "calculatingSolarTimes": "Calculating solar times...",
+  "forecastTitle": "Celestial Forecast",
+  "whatThisMeans": "What This Means Right Now",
+  "planetsActive": "Planets Active Right Now",
+  "psychologicalImpact": "Psychological Impact",
+  "practicalExpression": "Practical Expression",
+  "exactPosition": "Exact Position",
+  "speed": "Speed",
+  "retrogradeNote": "Retrograde: Reconsideration period",
+  "todaysCelestialWeather": "Today's Celestial Weather",
+  "moonPhaseLabel": "Moon Phase",
+  "moonVoidLabel": "Moon Void",
+  "bestFor": "Best For",
+  "avoid": "Avoid",
+  "hourlyMoonMood": "Hourly Moon Mood",
+  "upcomingEvents": "Upcoming Celestial Events",
+  "thisWeeksThemes": "This Week's Themes",
+  "noMajorTransits": "No Major Personal Transits",
+  "nextCheck": "Next check",
+  "yourPersonalTransits": "Your Personal Transits",
+  "natal": "Natal",
+  "house": "House",
+  "exact": "Exact",
+  "began": "Began",
+  "ends": "Ends",
+  "duration": "Duration",
+  "traits": "Traits",
+  "yearOfThe": "Year of the",
+  "luckyNumbers": "Lucky numbers",
+  "luckyColors": "Lucky colors",
+  "planet": {
+    "in": "{{planet}} in {{sign}}",
+    "copy": "Copy",
+    "shadow": "Shadow",
+    "growth": "Growth",
+    "famous": "Famous",
+    "copied": "Copied!",
+    "tagline": "{{tagline}}",
+    "essence": "Essence",
+    "atDegree": "{{planet}} at {{degree}} deg {{sign}}",
+    "archetype": "The Archetype",
+    "dailyLife": "In Daily Life",
+    "shadowSide": "The Shadow Side",
+    "deepWisdom": "Deep wisdom for {{planet}} in {{sign}} is being channeled...",
+    "famousIntro": "Your {{planet}} in {{sign}} connects you to these influential figures:",
+    "houseDignity": "{{symbol}} House {{house}} - {{dignity}}",
+    "shareThisWith": "Share This With",
+    "deepWisdomSub": "{{planet}} in {{sign}}, House {{house}}",
+    "coreExpression": "Your Core Expression",
+    "commonTriggers": "Common Triggers",
+    "yourGrowthPath": "Your Growth Path",
+    "alignedCareers": "Aligned Career Paths",
+    "dailyAffirmation": "Daily Affirmation",
+    "reflectionPrompts": "Reflection Prompts",
+    "practicalExercises": "Practical Exercises"
+  },
+  "daily": {
+    "orb": "{{orb}} deg orb",
+    "good": "Good energy today. Favorable for most activities.",
+    "mixed": "Mixed energies. Proceed with awareness.",
+    "loading": "Calculating precise positions...",
+    "watchOut": "Watch Out ({{count}})",
+    "quietDay": "Quiet day. No major transitions affecting your chart.",
+    "excellent": "Excellent day for important activities. Strong cosmic support.",
+    "background": "Background ({{count}})",
+    "universalSky": "Today's Universal Sky",
+    "addBirthChart": "Add a birth chart for personalized transit insights.",
+    "todayForecast": "Today's Forecast",
+    "opportunities": "Opportunities ({{count}})",
+    "activeTransits": "{{count}} active transit",
+    "swissPrecision": "Swiss Precision",
+    "challengingDay": "Challenging day. Focus on self-care and avoid major decisions.",
+    "goodForRoutine": "Good for routine tasks and maintenance.",
+    "activeTransits_plural": "{{count}} active transits"
+  },
+  "export": {
+    "close": "Close",
+    "failed": "Failed to export",
+    "guidance": "Guidance",
+    "creating": "Creating...",
+    "saveImage": "Save Image",
+    "affirmation": "Affirmation",
+    "generatedBy": "Generated by HEKA Calendar",
+    "overallGuidance": "Overall Guidance",
+    "celestialGuidance": "Celestial Guidance"
+  },
+  "timezones": {
+    "ET": "Eastern Time (ET)",
+    "CT": "Central Time (CT)",
+    "MT": "Mountain Time (MT)",
+    "PT": "Pacific Time (PT)",
+    "UTC": "UTC (Universal)",
+    "Paris": "Paris (CET)",
+    "Tokyo": "Tokyo (JST)",
+    "Dubai": "Dubai (GST)",
+    "London": "London (GMT)",
+    "Berlin": "Berlin (CET)",
+    "Sydney": "Sydney (AEST)",
+    "Shanghai": "Shanghai (CST)",
+    "Auckland": "Auckland (NZST)",
+    "Melbourne": "Melbourne (AEST)"
+  },
+  "starsHub": {
+    "back": "Back",
+    "live": "Live",
+    "chart": "Chart",
+    "active": "Active",
+    "sunSign": "Sun Sign",
+    "12signs": "12 Signs",
+    "13signs": "13 Signs",
+    "version": "Version 2.2.0 - HEKA Astrology Engine",
+    "overview": "Overview",
+    "guidance": "Guidance",
+    "voidMoon": "Void Moon",
+    "settings": "Settings",
+    "tropical": "Tropical",
+    "sidereal": "Sidereal",
+    "positions": "Positions",
+    "moonPhase": "Moon Phase",
+    "hourRuler": "Hour Ruler",
+    "aboutText": "Powered by Swiss Ephemeris calculations for precise astronomical data. Align your actions with the cosmic rhythm.",
+    "tapPlanet": "Tap any planet to explore its detailed meaning",
+    "viewStars": "View Stars",
+    "goToStars": "Go to Stars to see your personalized astrological guidance.",
+    "13signDesc": "13-sign sidereal: Includes Ophiuchus. The most astronomically precise framework.",
+    "retrograde": "Retrograde",
+    "welcomeBack": "Welcome back, {{name}}",
+    "retrogrades": "Retrogrades",
+    "12signsDesc": "Traditional sidereal",
+    "13signsDesc": "Includes Ophiuchus",
+    "birthCharts": "Birth Charts",
+    "universalSky": "Universal Sky",
+    "zodiacSystem": "Zodiac System",
+    "tropicalDesc": "12 Signs - Seasons",
+    "siderealDesc": "Fixed Stars - Nakshatras",
+    "dailyBriefing": "Daily Briefing",
+    "tropicalDesc2": "Classic 12-sign tropical zodiac tied to the seasons.",
+    "celestialFont": "Celestial Font",
+    "profilesSaved": "Profile saved",
+    "corruptedDate": "Corrupted birth date detected!",
+    "deleteProfile": "Delete Profile",
+    "addNewProfile": "Add New Profile",
+    "tapForDetails": "Tap for details",
+    "housePosition": "House Position",
+    "celestialTheme": "Celestial Theme",
+    "selectTypeface": "Select the typeface for this realm",
+    "manageProfiles": "Manage your natal chart profiles",
+    "aboutCelestial": "About Celestial Intelligence",
+    "chooseFramework": "Choose your celestial framework",
+    "trueModeWarning": "You are in TRUE mode but not using sidereal. Switch to Sidereal for full alignment.",
+    "syncModeWarning": "You are in SYNC mode but using sidereal. This is an advanced override.",
+    "receiveGuidance": "Receive guidance from the cosmos",
+    "retrogradeCount": "Navigate {{count}} retrograde",
+    "allPlanetsDirect": "All planets direct - a time for forward momentum.",
+    "exploreCelestial": "Explore the current celestial landscape. Create a profile for personalized astrological guidance.",
+    "compareTwoSelves": "Compare Your Two Selves",
+    "chooseAtmosphere": "Choose your cosmic atmosphere",
+    "siderealSignCount": "Sidereal Sign Count",
+    "profileManagement": "Profile Management",
+    "currentExpression": "Current expression",
+    "housePositionText": "This planet activates the life area represented by its current house position, tinting your experiences with {{energy}} energy.",
+    "12signSiderealDesc": "12-sign sidereal: Traditional constellation boundaries with ayanamsa correction.",
+    "personalizedWeather": "Personalized celestial weather for your natal chart. {{retrogrades}}",
+    "observatorySettings": "Observatory Settings",
+    "planetInSignDefault": "{{planet}} in {{sign}} brings unique energy.",
+    "profilesSaved_plural": "{{count}} profiles saved",
+    "birthChartManagement": "Birth Chart Management",
+    "celestialIntelligence": "Celestial Intelligence",
+    "celestialNotifications": "Celestial Notifications",
+    "retrogradeCount_plural": "Navigate {{count}} retrogrades",
+    "currentPlanetaryPositions": "Current Planetary Positions",
+    "openCelestialIntelligence": "Open Celestial Intelligence"
+  },
+  "twoSelves": {
+    "air": "the thinker, the connector",
+    "none": "None",
+    "fire": "the initiator, the spark",
+    "title": "Your Two Selves",
+    "error": "Could not calculate one or both zodiac systems. Please check your birth data.",
+    "earth": "the builder, the mountain",
+    "water": "the feeler, the depths",
+    "changed": "Changed",
+    "subtitle": "The calendar taught you one story. The stars tell another.",
+    "tropical": "Tropical",
+    "trueSelf": "True Self",
+    "sidereal": "Sidereal",
+    "sunMoved": "Your Sun moved from {{tropical}} to {{sidereal}}.",
+    "ayanamsa": "The ayanamsa, the gap between tropical zodiac and current stars, is {{degrees}} degrees for your birth year.",
+    "civilSelf": "Civil Self",
+    "whoYouAre": "Who you are under the stars",
+    "ascendant": "Ascendant",
+    "midheaven": "Midheaven",
+    "shiftedBy": "Shifted by {{degrees}} deg",
+    "moonMoved": "Your Moon, your emotional core, moved from {{tropical}} to {{sidereal}}.",
+    "notAnError": "This is not an error. This is the difference between who you learned to be and who the stars say you are.",
+    "calculating": "Calculating tropical and sidereal charts...",
+    "revisitHint": "You can revisit this comparison anytime from chart settings.",
+    "totalChanged": "In total, {{count}} of your {{total}} major celestial bodies changed sign.",
+    "whoYouLearned": "Who you learned to be",
+    "rareAlignment": "Your tropical and sidereal charts are nearly identical, a rare alignment that happens when the ayanamsa is close to a whole sign boundary. You are one of the few whose civil self and true self speak the same language.",
+    "identityShift": "The identity you learned as {{tropicalElement}} shifted to {{siderealElement}}.",
+    "ascendantShift": "Your Ascendant, the mask you wear, shifted from {{tropical}} to {{sidereal}}.",
+    "midheavenShift": "Your Midheaven, your public calling, shifted from {{tropical}} to {{sidereal}}.",
+    "defaultElement": "the self",
+    "dominantElement": "Dominant Element",
+    "continueTrueMode": "Continue in True Mode"
+  },
+  "profile": {
+    "addNew": "Add New",
+    "default": "Default",
+    "noCharts": "No charts yet",
+    "yourCharts": "Your Charts",
+    "createFirst": "Create your first birth chart",
+    "selectProfile": "Select Profile"
+  },
+  "briefing": {
+    "focus": "Focus: {{area}}",
+    "setUpAi": "Set Up AI",
+    "dismiss": "Dismiss",
+    "enableAi": "Enable AI Guidance",
+    "aiEnhanced": "AI Enhanced",
+    "todaysTheme": "Today's Theme",
+    "todaysFocus": "Today's Focus",
+    "voidMoonDesc": "The Moon is currently void of course, perfect for reflection, rest, and inner work rather than starting new ventures.",
+    "unlockDeeper": "Unlock Deeper Insight",
+    "aiConfigured": "You have an AI provider configured. Activate AI guidance for poetic, personalized readings.",
+    "yourGuidance": "Your Guidance",
+    "aiUnavailable": "AI enhancement unavailable. Showing template guidance.",
+    "aiAddProvider": "Add an AI provider to receive LLM-enhanced interpretations tailored to your unique chart.",
+    "voidMoonActive": "Void Moon Active",
+    "turnOnSettings": "Turn On in Settings",
+    "templatePowered": "Template Powered",
+    "templateFallback": "Template Fallback",
+    "dailyAffirmation": "Daily Affirmation",
+    "viewFullGuidance": "View Full Guidance",
+    "patternRecognized": "Pattern Recognized"
+  },
+  "guidanceV2": {
+    "edit": "Edit",
+    "hour": "Hour of {{planet}}",
+    "copy": "Copy",
+    "card": "Card",
+    "share": "Share",
+    "close": "Close",
+    "today": "Today",
+    "copied": "Copied",
+    "cancel": "Cancel",
+    "history": "History",
+    "refresh": "Refresh",
+    "setUpAi": "Set Up AI",
+    "strength": "Strength",
+    "yesClear": "Yes, Clear",
+    "yourChart": "Your Chart",
+    "signature": "Signature",
+    "consulting": "Consulting the celestial spheres...",
+    "aiEnhanced": "AI Enhanced",
+    "natalChart": "Natal Chart",
+    "refreshing": "Refreshing...",
+    "focusAreas": "Focus Areas",
+    "confidence": "Confidence",
+    "selectDate": "Select a date",
+    "areYouSure": "Are you sure?",
+    "affirmation": "Affirmation",
+    "yourPatterns": "Your Patterns",
+    "unlockDeeper": "Unlock Deeper Insights",
+    "aiConfigured": "You have configured an AI provider. Activate AI guidance for poetic, personalized readings woven from your natal chart and real-time sky.",
+    "clearHistory": "Clear History",
+    "addBirthChart": "Add Birth Chart",
+    "aiEnhancedVia": "AI Enhanced via {{provider}} ({{model}})",
+    "aiAddProvider": "Add an AI provider (Groq, OpenAI, or local Ollama) to receive LLM-enhanced interpretations tailored to your unique chart.",
+    "sacredRituals": "Sacred Rituals",
+    "aiUnavailable": "AI enhancement unavailable: {{reason}}. Showing template guidance.",
+    "turnOnSettings": "Turn On in Settings",
+    "morningBriefing": "Morning Briefing",
+    "loadingGuidance": "Loading your personalized guidance...",
+    "templatePowered": "Template Powered",
+    "guidanceHistory": "Guidance History",
+    "noSavedGuidance": "No saved guidance yet",
+    "enableAiGuidance": "Enable AI Guidance",
+    "celestialEssence": "Celestial Essence",
+    "aiEnhancedSuffix": "(AI Enhanced)",
+    "dailyAffirmation": "Daily Affirmation",
+    "selectDateToView": "Select a date to view your saved guidance.",
+    "practicalGuidance": "Practical Guidance",
+    "dailyAffirmations": "Daily Affirmations",
+    "reflectionPrompts": "Reflection Prompts",
+    "aiUnavailableDate": "AI enhancement was not available on this date. Template guidance is shown.",
+    "personalizedForYou": "Personalized for You",
+    "guidanceConfidence": "Guidance Confidence",
+    "readingsAppearHere": "Your daily readings will appear here automatically.",
+    "yourCelestialRegion": "Your Celestial Region",
+    "practicalGuidanceTitle": "Practical Guidance"
+  },
+  "birthChart": {
+    "born": "Born",
+    "edit": "Edit",
+    "loading": "Loading celestial blueprint...",
+    "promise": "Promise",
+    "sunSign": "Sun Sign - You are a {{sign}}",
+    "elements": "Elements",
+    "newChart": "New Chart",
+    "dignities": "Dignities",
+    "chartWheel": "Chart Wheel",
+    "natalChart": "Natal Chart",
+    "dragRotate": "Drag to rotate - Click planets for details",
+    "lifeThemes": "Life Themes",
+    "createFirst": "Create your first natal chart to unlock personalized celestial guidance",
+    "soulPromise": "Soul Promise",
+    "growthEdges": "Growth Edges",
+    "noBirthChart": "No birth chart found",
+    "profileChart": "{{name}}'s Chart",
+    "naturalGifts": "Natural Gifts",
+    "majorAspects": "Major Aspects",
+    "recreateChart": "Recreate your chart",
+    "createYourChart": "Create Your Chart",
+    "unknownLocation": "Unknown location",
+    "elementalTemple": "Elemental Temple",
+    "chartIncomplete": "Chart data incomplete.",
+    "planetPositions": "Planet Positions",
+    "yourSoulsPromise": "Your Soul's Promise"
+  },
+  "birthInput": {
+    "house": "House {{house}}",
+    "cancel": "Cancel",
+    "dignity": "{{dignity}}",
+    "yourName": "Your Name",
+    "latitude": "Latitude",
+    "timezone": "Timezone",
+    "enterName": "Enter your name",
+    "birthDate": "Birth Date",
+    "birthTime": "Birth Time",
+    "longitude": "Longitude",
+    "calcFailed": "Could not calculate planetary positions. Please try again.",
+    "invalidDate": "Invalid birth date or time",
+    "calculating": "Calculating your celestial blueprint...",
+    "privacyNote": "Your birth data is stored on your device and synced with your account when you're online.",
+    "enterDetails": "Enter your birth details to unlock personalized guidance based on your unique celestial blueprint.",
+    "locationHint": "Start typing a location or city (e.g. 'Bankstown', 'Sydney')",
+    "birthLocation": "Birth Location *",
+    "yourBirthChart": "Your Birth Chart",
+    "calculateChart": "Calculate My Chart",
+    "pleaseEnterName": "Please enter your name",
+    "pleaseEnterDate": "Please enter your birth date",
+    "pleaseEnterTime": "Please enter your birth time",
+    "noPlanetaryData": "No planetary data returned from calculations",
+    "houseCalcFailed": "Could not calculate house positions. Please verify your coordinates.",
+    "chartCalcFailed": "Could not calculate chart. Please verify your input data.",
+    "invalidHouseData": "Invalid house data returned",
+    "pleaseEnterCoords": "Please enter your birth location coordinates",
+    "invalidHouseData2": "Invalid house data returned from calculation",
+    "celestialBlueprint": "Your Celestial Blueprint",
+    "latitudePlaceholder": "e.g., 40.7128",
+    "longitudePlaceholder": "e.g., -74.0060"
+  },
+  "premiumCards": {
+    "sun": "Sun",
+    "moon": "Moon",
+    "copy": "Copy",
+    "weak": "Weak",
+    "expand": "Expand",
+    "inDays": "in ~{{days}} days",
+    "sunset": "Sunset",
+    "whyNow": "WHY {{planet}} NOW?",
+    "stormy": "Stormy",
+    "direct": "Direct",
+    "strong": "Strong",
+    "sunrise": "Sunrise",
+    "neutral": "Neutral",
+    "hekaDate": "HEKA DATE",
+    "aeonGate": "THE AEON GATE",
+    "monthOf13": "Month {{month}} of 13",
+    "dayOfYear": "Day {{day}} of {{total}}",
+    "civilTime": "CIVIL TIME",
+    "julianDay": "JULIAN DAY",
+    "beMindful": "BE MINDFUL",
+    "nextPhase": "NEXT PHASE",
+    "hourRuler": "Hour Ruler",
+    "readOracle": "Read the Oracle",
+    "clearSkies": "Clear Skies",
+    "retrograde": "Retrograde",
+    "daysElapsed": "{{days}} days elapsed",
+    "calculating": "Calculating...",
+    "lunarTemple": "THE LUNAR TEMPLE",
+    "waxingTrend": "Waxing - Growth",
+    "waningTrend": "Waning - Decline",
+    "bestToAvoid": "BEST TO AVOID",
+    "retroReview": "With {{count}} retrograde planet{{plural}}, it's a time of {{significant}} review and introspection.",
+    "hekaCalendar": "HEKA CALENDAR",
+    "yearProgress": "YEAR PROGRESS",
+    "partlyCloudy": "Partly Cloudy",
+    "heavyWeather": "Heavy Weather",
+    "retroCaution": "Important beginnings should be approached with caution.",
+    "modalBalance": "MODAL BALANCE",
+    "luminariesNow": "LUMINARIES NOW",
+    "chaldeanOrder": "The Chaldean Order",
+    "retroPossible": "New projects possible with extra care in affected areas.",
+    "viewPlanetary": "View Planetary Spheres",
+    "thisPhaseFavors": "THIS PHASE FAVORS",
+    "localSolarTimes": "LOCAL SOLAR TIMES",
+    "calculatingLunar": "Calculating lunar data...",
+    "minutesRemaining": "{{minutes}} minutes remaining",
+    "allPlanetsDirect": "All planets direct",
+    "celestialWeather": "THE CELESTIAL WEATHER",
+    "directRetrograde": "{{direct}} direct, {{retrograde}} retrograde",
+    "planetarySpheres": "THE PLANETARY SPHERES",
+    "elementalBalance": "ELEMENTAL BALANCE",
+    "currentPositions": "CURRENT POSITIONS",
+    "chaldeanHourglass": "THE CHALDEAN HOURGLASS",
+    "favoredActivities": "FAVORED ACTIVITIES",
+    "planetaryStations": "PLANETARY STATIONS",
+    "currentAlignments": "CURRENT ALIGNMENTS",
+    "nextCelestialEvent": "NEXT CELESTIAL EVENT",
+    "moonsCurrentThrone": "MOON'S CURRENT THRONE",
+    "retrogradeGuidance": "RETROGRADE GUIDANCE",
+    "calculatingPlanetary": "Calculating planetary hour...",
+    "celestialBodiesTracked": "{{count}} celestial bodies tracked"
+  },
+  "aiSettings": {
+    "title": "AI-Enhanced Readings",
+    "expand": "Expand",
+    "active": "Active",
+    "apiKey": "API Key",
+    "format": "Format",
+    "pricing": "Pricing",
+    "testing": "Testing...",
+    "collapse": "Collapse",
+    "hideGuide": "Hide Guide",
+    "showGuide": "Show Guide",
+    "serverUrl": "Server URL",
+    "setupGuide": "Setup Guide: {{provider}}",
+    "disconnect": "Disconnect",
+    "connectedTo": "Connected to {{provider}}",
+    "useTemplate": "Use Template Library",
+    "dataPrivate": "Your Data Stays Private",
+    "updateConfig": "Update Configuration",
+    "templateDesc": "169+ handcrafted templates covering all planets in 13 signs, woven into unique readings by phase, aspect, and category. Always free, always instant.",
+    "failedToSave": "Failed to save",
+    "usingTemplate": "Using Template Library (Free)",
+    "storedLocally": "Your {{type}} is stored only on this device in encrypted local storage. We never transmit it to our servers.",
+    "aiEnhancement": "AI Enhancement",
+    "changeSettings": "Change settings",
+    "testConnection": "Test Connection",
+    "pleaseEnterKey": "Please enter an API key",
+    "connectedShort": "{{provider}} connected",
+    "connectProvider": "Connect your AI provider for enhanced astrological interpretations",
+    "templateLibrary": "Template Library",
+    "dataPrivateDesc": "API keys are stored locally. We never see them or your astrological data.",
+    "readingsEnhanced": "Your readings are being enhanced with AI.",
+    "connectionFailed": "Connection failed. Check your internet and API key.",
+    "aiEnhancementDesc": "Optional AI-generated readings for more nuanced and personalized interpretations.",
+    "connectionSuccess": "Connection successful! API key is valid.",
+    "connectionInvalid": "Invalid API key. Please check and try again.",
+    "templateAvailable": "Template library always available",
+    "connectProviderBtn": "Connect Provider",
+    "usingTemplateShort": "Using Template Library",
+    "pleaseEnterKeyFirst": "Please enter an API key first"
+  },
+  "lifeAreas": {
+    "career": "Career",
+    "health": "Health",
+    "timing": "Timing",
+    "finances": "Finances",
+    "relationships": "Relationships",
+    "personalGrowth": "Personal growth"
+  },
+  "planetDomains": {
+    "mars": "Mars",
+    "venus": "Venus",
+    "pluto": "Pluto",
+    "saturn": "Saturn",
+    "uranus": "Uranus",
+    "mercury": "Mercury",
+    "jupiter": "Jupiter",
+    "neptune": "Neptune",
+    "default": "Default"
+  },
+  "confirm": {
+    "deleteProfile": "Delete this profile? This cannot be undone."
+  },
+  "dictionaries": {
+    "planetInSign": {
+      "sun": {
+        "leo": "The Sun in Leo shines with creative confidence. Express authentically and lead from the heart.",
+        "aries": "The Sun in Aries brings bold, pioneering energy. A time for initiation, leadership, and courageous action.",
+        "virgo": "The Sun in Virgo calls for refinement and service. Organize, improve systems, and attend to the details.",
+        "libra": "The Sun in Libra seeks harmony and partnership. Balance relationships and appreciate aesthetic beauty.",
+        "taurus": "The Sun in Taurus connects us to stability and sensory pleasure. Focus on building, nurturing, and appreciating beauty.",
+        "gemini": "The Sun in Gemini awakens curiosity and communication. Exchange ideas, learn, and connect with your community.",
+        "cancer": "The Sun in Cancer deepens emotional connections. Nurture relationships, honor feelings, and create sanctuary.",
+        "pisces": "The Sun in Pisces dissolves boundaries. Connect with the infinite, practice compassion, and trust intuition.",
+        "scorpio": "The Sun in Scorpio dives into transformation. Embrace intensity, investigate mysteries, and release what no longer serves.",
+        "aquarius": "The Sun in Aquarius innovates for the collective. Embrace uniqueness, think progressively, and serve humanity.",
+        "ophiuchus": "The Sun in Ophiuchus illuminates healing knowledge. A time for transformative wisdom, serpent medicine, and sacred restoration.",
+        "capricorn": "The Sun in Capricorn builds for the long term. Assume responsibility, set ambitious goals, and master your craft.",
+        "sagittarius": "The Sun in Sagittarius expands horizons. Seek wisdom, explore new territories, and embrace optimism."
+      },
+      "moon": {
+        "leo": "The Moon in Leo expresses feelings dramatically. Warmth, creativity, and a need for recognition in relationships.",
+        "aries": "The Moon in Aries brings quick emotional responses. Impulsive feelings, passionate reactions, and emotional independence.",
+        "virgo": "The Moon in Virgo seeks order and utility. Emotional satisfaction through service, health, and improvement.",
+        "libra": "The Moon in Libra harmonizes feelings. Emotional needs met through partnership, beauty, and balanced connection.",
+        "taurus": "The Moon in Taurus seeks comfort and stability. Nurturing through sensuality, patience, and material security.",
+        "gemini": "The Moon in Gemini fluctuates with thoughts and conversations. Emotional curiosity and needs for mental stimulation.",
+        "cancer": "The Moon is at home in Cancer. Deep nurturing, protective instincts, and profound emotional sensitivity.",
+        "pisces": "The Moon in Pisces dissolves emotional boundaries. Empathy, imagination, and spiritual sensitivity.",
+        "scorpio": "The Moon in Scorpio feels intensely. Emotional depth, transformative experiences, and powerful intuition.",
+        "aquarius": "The Moon in Aquarius detaches to observe. Emotional objectivity, humanitarian concerns, and unique needs.",
+        "ophiuchus": "The Moon in Ophiuchus heals through emotion. Intuitive medicine, transformative feelings, and serpent wisdom.",
+        "capricorn": "The Moon in Capricorn restrains emotions. Mature feeling management, responsibility, and long-term security.",
+        "sagittarius": "The Moon in Sagittarius explores emotionally. Needs for freedom, philosophical feelings, and adventurous spirit."
+      },
+      "mars": {
+        "leo": "Mars in Leo performs boldly. Dramatic action, creative drive, and confident leadership.",
+        "aries": "Mars is at home in Aries. Direct action, courageous initiative, and passionate drive.",
+        "virgo": "Mars in Virgo works precisely. Methodical effort, service-oriented action, and health focus.",
+        "libra": "Mars in Libra acts diplomatically. Indirect confrontation, partnership drive, and aesthetic action.",
+        "taurus": "Mars in Taurus persists steadily. Determined effort, sensual energy, and stubborn resistance.",
+        "gemini": "Mars in Gemini acts mentally. Quick movements, verbal combat, and scattered initiatives.",
+        "cancer": "Mars in Cancer defends protectively. Emotional action, defensive aggression, and nurturing drive.",
+        "pisces": "Mars in Pisces flows intuitively. Spiritual action, compassionate drive, and elusive initiative.",
+        "scorpio": "Mars is at home in Scorpio. Intense action, strategic power, and transformative drive.",
+        "aquarius": "Mars in Aquarius revolutionizes action. Reformist drive, group initiatives, and unconventional methods.",
+        "ophiuchus": "Mars in Ophiuchus acts as healer. Surgical precision, restorative force, and transformative intervention.",
+        "capricorn": "Mars in Capricorn achieves ambitiously. Disciplined effort, strategic ascent, and authoritative action.",
+        "sagittarius": "Mars in Sagittarius explores adventurously. Expansive initiative, philosophical action, and risk-taking."
+      },
+      "venus": {
+        "leo": "Venus in Leo loves dramatically. Grand romantic gestures, creative expression, and loyal affection.",
+        "aries": "Venus in Aries loves passionately. Bold attraction, spontaneous romance, and independent relationships.",
+        "virgo": "Venus in Virgo serves practically. Useful love, modest attraction, and attention to relationship details.",
+        "libra": "Venus is at home in Libra. Harmonious partnerships, aesthetic appreciation, and diplomatic relating.",
+        "taurus": "Venus is at home in Taurus. Sensual pleasure, stable relationships, and appreciation of beauty.",
+        "gemini": "Venus in Gemini charms verbally. Flirtatious connections, intellectual attraction, and social variety.",
+        "cancer": "Venus in Cancer nurtures lovingly. Emotional bonding, domestic harmony, and protective care.",
+        "pisces": "Venus in Pisces loves unconditionally. Romantic idealism, spiritual connection, and compassionate relating.",
+        "scorpio": "Venus in Scorpio loves intensely. Deep transformation through relationships and magnetic attraction.",
+        "aquarius": "Venus in Aquarius connects uniquely. Unconventional relationships, friendship-based love, and freedom.",
+        "ophiuchus": "Venus in Ophiuchus loves as medicine. Healing relationships, transformative devotion, and heart-centered restoration.",
+        "capricorn": "Venus in Capricorn commits seriously. Mature relationships, status considerations, and lasting bonds.",
+        "sagittarius": "Venus in Sagittarius explores freely. Adventurous love, philosophical connection, and open relationships."
+      },
+      "saturn": {
+        "leo": "Saturn in Leo tempers creativity. Lessons in humility, structured self-expression, and responsible leadership.",
+        "aries": "Saturn in Aries tests initiative. Lessons in patience, restrained action, and mature leadership.",
+        "virgo": "Saturn in Virgo perfects service. Lessons in precision, health discipline, and practical mastery.",
+        "libra": "Saturn in Libra commits to balance. Lessons in partnership responsibility, fair structures, and mature relating.",
+        "taurus": "Saturn in Taurus stabilizes resources. Lessons in persistence, material responsibility, and enduring values.",
+        "gemini": "Saturn in Gemini disciplines the mind. Lessons in focus, serious communication, and mental maturity.",
+        "cancer": "Saturn in Cancer protects boundaries. Lessons in emotional responsibility, family duty, and parenting limits.",
+        "pisces": "Saturn in Pisces dissolves boundaries carefully. Lessons in compassion, spiritual discipline, and mystical responsibility.",
+        "scorpio": "Saturn in Scorpio transforms deeply. Lessons in power, shared resource responsibility, and psychological maturity.",
+        "aquarius": "Saturn is at home in Aquarius. Social responsibility, innovative structures, and humanitarian duty.",
+        "ophiuchus": "Saturn in Ophiuchus masters healing. Lessons in medical discipline, structured transformation, and responsible restoration.",
+        "capricorn": "Saturn is at home in Capricorn. Mastery through discipline, authority earned, and lasting achievement.",
+        "sagittarius": "Saturn in Sagittarius structures beliefs. Lessons in wisdom, disciplined expansion, and responsible freedom."
+      },
+      "mercury": {
+        "leo": "Mercury in Leo expresses creatively. Dramatic speech, confident ideas, and heart-centered thinking.",
+        "aries": "Mercury in Aries thinks quickly and directly. Agile communication, impulsive ideas, and pioneering thought.",
+        "virgo": "Mercury is at home in Virgo. Analytical precision, practical intelligence, and detailed analysis.",
+        "libra": "Mercury in Libra seeks balanced thought. Diplomatic communication and consideration of all perspectives.",
+        "taurus": "Mercury in Taurus thinks practically. Steady learning, sensual perception, and methodical communication.",
+        "gemini": "Mercury is at home in Gemini. Quick wit, versatile thinking, and skillful communication.",
+        "cancer": "Mercury in Cancer thinks intuitively. Focus on memory, emotional intelligence, and nurturing words.",
+        "pisces": "Mercury in Pisces imagines intuitively. Poetic expression, receptive listening, and spiritual understanding.",
+        "scorpio": "Mercury in Scorpio explores in depth. Investigative thought, psychological perception, and penetrating words.",
+        "aquarius": "Mercury in Aquarius innovates thought. Original ideas, intellectual detachment, and progressive concepts.",
+        "ophiuchus": "Mercury in Ophiuchus thinks medicinally. Healing communication, medical knowledge, and transformative perception.",
+        "capricorn": "Mercury in Capricorn structures thought. Strategic planning, authoritative speech, and practical wisdom.",
+        "sagittarius": "Mercury in Sagittarius expands understanding. Philosophical thought and broad communication."
+      },
+      "jupiter": {
+        "leo": "Jupiter in Leo creates grandly. Growth through self-expression, creative abundance, and generous leadership.",
+        "aries": "Jupiter in Aries expands boldly. Growth through initiative, fortunate beginnings, and confident optimism.",
+        "virgo": "Jupiter in Virgo improves skillfully. Growth through service, practical wisdom, and health abundance.",
+        "libra": "Jupiter in Libra harmonizes justly. Growth through partnership, aesthetic appreciation, and diplomatic wisdom.",
+        "taurus": "Jupiter in Taurus manifests abundantly. Growth through patience, material blessings, and sensual wisdom.",
+        "gemini": "Jupiter in Gemini learns diversely. Growth through communication, intellectual expansion, and varied interests.",
+        "cancer": "Jupiter in Cancer nurtures generously. Growth through nurturing, emotional abundance, and protective wisdom.",
+        "pisces": "Jupiter in Pisces dissolves into immensity. Growth through compassion, spiritual abundance, and universal love.",
+        "scorpio": "Jupiter in Scorpio transforms deeply. Growth through intensity, shared resources, and psychological wisdom.",
+        "aquarius": "Jupiter in Aquarius innovates progressively. Growth through community, humanitarian wisdom, and unique vision.",
+        "ophiuchus": "Jupiter in Ophiuchus expands in healing. Growth through medicine, serpent wisdom, and transformative knowledge.",
+        "capricorn": "Jupiter in Capricorn structures wisely. Growth through discipline, strategic success, and authoritative wisdom.",
+        "sagittarius": "Jupiter is at home in Sagittarius. Unlimited expansion, philosophical wisdom, and fortunate journeys."
+      }
+    },
+    "providerSetup": {
+      "groq": {
+        "type": "groq",
+        "name": "Groq",
+        "logo": "⚡",
+        "color": "#f43f5e",
+        "website": "https://groq.com",
+        "signupUrl": "https://console.groq.com/login",
+        "keyFormat": "Starts with \"gsk_\" followed by alphanumeric characters",
+        "apiKeysUrl": "https://console.groq.com/keys",
+        "description": "Ultra-fast AI inference with Llama 3. Free tier includes 1M tokens per day.",
+        "pricingNote": "Free tier: 1M tokens/day. Paid plans available for higher usage.",
+        "freeTierInfo": "1,000,000 free tokens/day",
+        "keyPlaceholder": "gsk_your_api_key_here",
+        "setupSteps": {
+          "0": {
+            "tip": "Use your email or Google account for quick registration",
+            "link": "https://console.groq.com/login",
+            "title": "Create a Groq Account",
+            "action": "Go to Groq Console →",
+            "description": "Visit the Groq Console and sign up for a free account."
+          },
+          "1": {
+            "tip": "Look for the key icon in the navigation menu",
+            "link": "https://console.groq.com/keys",
+            "title": "Navigate to API Keys",
+            "action": "Open API Keys Page →",
+            "description": "Once logged in, click \"API Keys\" in the left sidebar."
+          },
+          "2": {
+            "tip": "Choose a descriptive name so you remember what it's for",
+            "title": "Create New API Key",
+            "description": "Click the \"Create API Key\" button. Give it a name like \"HEKA Calendar\"."
+          },
+          "3": {
+            "tip": "⚠️ For security, Groq only shows the full key once. If you lose it, create a new one.",
+            "title": "Copy Your API Key",
+            "description": "Copy the generated key (starts with \"gsk_\"). Save it securely — you won't see it again."
+          },
+          "4": {
+            "tip": "Your key is stored only on this device",
+            "title": "Paste Key in HEKA",
+            "description": "Return to this screen and paste your key below. Click \"Test Connection\" to verify."
+          }
+        }
+      },
+      "openai": {
+        "type": "openai",
+        "name": "OpenAI",
+        "logo": "🤖",
+        "color": "#10a37f",
+        "website": "https://openai.com",
+        "signupUrl": "https://platform.openai.com/signup",
+        "keyFormat": "Starts with \"sk-\" followed by alphanumeric characters",
+        "apiKeysUrl": "https://platform.openai.com/api-keys",
+        "description": "GPT-4 and GPT-3.5 Turbo for nuanced astrological interpretations. Industry-leading quality.",
+        "pricingNote": "Pay-per-use after free credits. GPT-3.5: ~$0.002 per 1K tokens.",
+        "freeTierInfo": "$5 in free credits for new users",
+        "keyPlaceholder": "sk-your_api_key_here",
+        "setupSteps": {
+          "0": {
+            "tip": "Have your phone ready for SMS verification",
+            "link": "https://platform.openai.com/signup",
+            "title": "Create OpenAI Account",
+            "action": "Sign up at OpenAI →",
+            "description": "Sign up on the OpenAI Platform. You'll need email verification and a phone number."
+          },
+          "1": {
+            "tip": "You can set usage limits to control costs in Billing Settings",
+            "title": "Add Payment Method (Optional)",
+            "description": "While you get $5 in free credits, adding a payment method ensures uninterrupted service."
+          },
+          "2": {
+            "tip": "Don't confuse this with \"Project API Keys\" — we need User API Keys",
+            "link": "https://platform.openai.com/api-keys",
+            "title": "Go to API Keys Section",
+            "action": "Open API Keys →",
+            "description": "Click your profile picture → \"Your Profile\" → \"User API Keys\" or visit the direct link."
+          },
+          "3": {
+            "tip": "⚠️ OpenAI only shows the full key once. Copy it immediately!",
+            "title": "Create New Secret Key",
+            "description": "Click \"Create new secret key\". Name it \"HEKA Calendar\" for easy identification."
+          },
+          "4": {
+            "tip": "Set up billing alerts at platform.openai.com/settings/organization/billing/limits",
+            "title": "Configure in HEKA",
+            "description": "Paste your key here and test the connection. Monitor usage on the OpenAI dashboard."
+          }
+        }
+      },
+      "ollama": {
+        "type": "ollama",
+        "name": "Ollama (Local)",
+        "logo": "💻",
+        "color": "#ffffff",
+        "website": "https://ollama.com",
+        "signupUrl": "https://ollama.com/download",
+        "keyFormat": "URL format: http://localhost:11434",
+        "apiKeysUrl": "",
+        "description": "Run AI models entirely on your own device. Complete privacy, no internet needed after setup.",
+        "pricingNote": "No costs. Requires capable hardware (8GB+ RAM recommended).",
+        "freeTierInfo": "100% free — runs locally",
+        "keyPlaceholder": "http://localhost:11434",
+        "setupSteps": {
+          "0": {
+            "tip": "Windows version is available through Windows Subsystem for Linux (WSL2)",
+            "link": "https://ollama.com/download",
+            "title": "Download Ollama",
+            "action": "Download Ollama →",
+            "description": "Download and install Ollama for your operating system (Mac, Linux, or Windows)."
+          },
+          "1": {
+            "tip": "Llama 3 is recommended for best results. Models are several GB to download.",
+            "title": "Install a Model",
+            "description": "Open your terminal and run: ollama pull llama3 or ollama pull mistral"
+          },
+          "2": {
+            "tip": "The server runs by default on http://localhost:11434",
+            "title": "Start Ollama Server",
+            "description": "Run: ollama serve to start the local API server. Keep this terminal open."
+          },
+          "3": {
+            "tip": "First run downloads the model. Subsequent runs are instant.",
+            "title": "Verify Installation",
+            "description": "Test by running: ollama run llama3 in another terminal. Type a test message."
+          },
+          "4": {
+            "tip": "Ollama must be running whenever you want AI-enhanced readings",
+            "title": "Connect HEKA",
+            "description": "Enter the server URL (usually http://localhost:11434) below and test the connection."
+          }
+        }
+      },
+      "template": {
+        "type": "template",
+        "name": "Template Library",
+        "logo": "📚",
+        "color": "#fbbf24",
+        "website": "",
+        "signupUrl": "",
+        "keyFormat": "",
+        "apiKeysUrl": "",
+        "description": "169+ handcrafted planet-firmament templates, woven into unique readings by lunar phase, aspect, and life category. Always free, always instant, no setup required.",
+        "pricingNote": "No cost ever. Powered by our curated template system.",
+        "freeTierInfo": "Completely free",
+        "keyPlaceholder": "",
+        "setupSteps": {
+          "0": {
+            "tip": "Templates cover all major celestial events and planetary positions",
+            "title": "Select Template Library",
+            "description": "This is the default option. No setup required."
+          },
+          "1": {
+            "tip": "You can switch to AI providers at any time in the future",
+            "title": "Start Using Immediately",
+            "description": "All astrological readings will use our pre-written template library."
+          }
+        }
+      },
+      "anthropic": {
+        "type": "anthropic",
+        "name": "Anthropic",
+        "logo": "🧠",
+        "color": "#d97757",
+        "website": "https://anthropic.com",
+        "signupUrl": "https://console.anthropic.com/login",
+        "keyFormat": "Starts with \"sk-ant-\" followed by alphanumeric characters",
+        "apiKeysUrl": "https://console.anthropic.com/settings/keys",
+        "description": "Claude AI for reflective, nuanced astrological guidance with extended context.",
+        "pricingNote": "Competitive rates. Claude 3 Haiku: ~$0.25 per 1K tokens.",
+        "freeTierInfo": "$5 in free credits for new users",
+        "keyPlaceholder": "sk-ant-your_api_key_here",
+        "setupSteps": {
+          "0": {
+            "tip": "Anthropic may have a waitlist — approval is usually quick",
+            "link": "https://console.anthropic.com/login",
+            "title": "Sign Up at Anthropic",
+            "action": "Go to Anthropic Console →",
+            "description": "Create an account on the Anthropic Console using your work email."
+          },
+          "1": {
+            "tip": "Check your spam folder if you don't see the email within a few minutes",
+            "title": "Verify Your Account",
+            "description": "Check your email for the verification link. Complete any required verification steps."
+          },
+          "2": {
+            "tip": "The settings gear icon is in the top-right corner",
+            "link": "https://console.anthropic.com/settings/keys",
+            "title": "Access API Keys",
+            "action": "Open API Keys →",
+            "description": "In the console, go to Settings → API Keys or use the direct link below."
+          },
+          "3": {
+            "tip": "You can create multiple keys for different applications",
+            "title": "Generate API Key",
+            "description": "Click \"Create Key\". Give it a descriptive name like \"HEKA Astrology\"."
+          },
+          "4": {
+            "tip": "Keys never expire unless you manually revoke them",
+            "title": "Copy and Configure",
+            "description": "Copy the key (starts with \"sk-ant-\") and paste it below in HEKA."
+          }
+        }
+      }
+    },
+    "moonOracle": {
+      "New Moon": {
+        "poem": "In the void between breaths, all potential dwells. The seed waits in darkness, gathering courage to split its shell. Plant intentions now—they will grow with the light.",
+        "title": "THE DARK MYSTERY",
+        "favors": {
+          "0": "Setting intentions",
+          "1": "Planting seeds",
+          "2": "Beginning new ventures",
+          "3": "Inner vision work"
+        },
+        "warnings": {
+          "0": "Don't push for immediate results",
+          "1": "Avoid major launches"
+        }
+      },
+      "Full Moon": {
+        "poem": "All that was hidden in darkness now reveals itself to light. The seed planted at New Moon breaks through the earth. Your work culminates. The world witnesses your fullness.",
+        "title": "THE GREAT REVELATION",
+        "favors": {
+          "0": "Celebration",
+          "1": "Releasing what no longer serves",
+          "2": "Public visibility",
+          "3": "Gratitude practices"
+        },
+        "warnings": {
+          "0": "Emotions run high",
+          "1": "Sleep may be disturbed"
+        }
+      },
+      "Last Quarter": {
+        "poem": "Half remains, half must go. What will you carry forward? What will you leave behind? The choice is yours, and yours alone.",
+        "title": "THE RELEASE",
+        "favors": {
+          "0": "Letting go",
+          "1": "Releasing attachment",
+          "2": "Clearing space",
+          "3": "Forgiveness"
+        },
+        "warnings": {
+          "0": "Don't start new projects",
+          "1": "Complete what you can"
+        }
+      },
+      "First Quarter": {
+        "poem": "Half light, half shadow—the decision hanging in balance. The path ahead requires action. Choose, and the universe conspires.",
+        "title": "THE CROSSROADS",
+        "favors": {
+          "0": "Making decisions",
+          "1": "Taking action",
+          "2": "Overcoming obstacles",
+          "3": "Committing"
+        },
+        "warnings": {
+          "0": "Avoid hesitation",
+          "1": "Don't look back"
+        }
+      },
+      "Waxing Gibbous": {
+        "poem": "Almost full, almost complete. Momentum builds like a wave reaching its crest. Refine, adjust, prepare for the revelation.",
+        "title": "THE GATHERING",
+        "favors": {
+          "0": "Refining projects",
+          "1": "Adjusting plans",
+          "2": "Preparing for launch",
+          "3": "Gathering resources"
+        },
+        "warnings": {
+          "0": "Don't rush to completion",
+          "1": "Patience rewards"
+        }
+      },
+      "Waning Gibbous": {
+        "poem": "The light begins its gentle retreat, but wisdom remains. Share what you have learned. Teach others what fullness taught you.",
+        "title": "THE SHARING",
+        "favors": {
+          "0": "Sharing knowledge",
+          "1": "Teaching",
+          "2": "Giving back",
+          "3": "Gratitude"
+        },
+        "warnings": {
+          "0": "Don't cling to the peak",
+          "1": "Let the cycle complete"
+        }
+      },
+      "Waxing Crescent": {
+        "poem": "A sliver of silver pierces the night. The dream begins to breathe, taking its first steps into form. Trust the unfolding.",
+        "title": "THE FIRST BREATH",
+        "favors": {
+          "0": "Taking first steps",
+          "1": "Building momentum",
+          "2": "Learning new skills",
+          "3": "Making connections"
+        },
+        "warnings": {
+          "0": "Don't overcommit",
+          "1": "Stay flexible"
+        }
+      },
+      "Waning Crescent": {
+        "poem": "A silver whisper fading into blackness. Rest now. The work is done. Surrender to the darkness, knowing the light will return.",
+        "title": "THE SURRENDER",
+        "favors": {
+          "0": "Deep rest",
+          "1": "Surrender",
+          "2": "Meditation",
+          "3": "Preparation",
+          "4": "Dream work"
+        },
+        "warnings": {
+          "0": "Avoid major decisions",
+          "1": "Conserve energy"
+        }
+      }
+    },
+    "planetaryGuidance": {
+      "sun": {
+        "do": {
+          "0": "Take leadership",
+          "1": "Make important requests",
+          "2": "Focus on visibility",
+          "3": "Express yourself",
+          "4": "Seek recognition"
+        },
+        "title": "THE SOLAR HOUR",
+        "dont": {
+          "0": "Hide in the shadows",
+          "1": "Avoid responsibilities",
+          "2": "Dim your light"
+        },
+        "quality": "Vitality & Recognition",
+        "description": "The Sun illuminates everything it touches. This hour favors visibility, leadership, and matters of the heart and ego."
+      },
+      "moon": {
+        "do": {
+          "0": "Tend to relationships",
+          "1": "Trust intuition",
+          "2": "Home and family matters",
+          "3": "Emotional processing",
+          "4": "Dream work"
+        },
+        "title": "THE LUNAR HOUR",
+        "dont": {
+          "0": "Force rational decisions",
+          "1": "Ignore feelings",
+          "2": "Push too hard"
+        },
+        "quality": "Emotion & Intuition",
+        "description": "The Moon governs the tides of emotion and intuition. A time for care, home, and psychic receptivity."
+      },
+      "mars": {
+        "do": {
+          "0": "Physical activity",
+          "1": "Handle conflicts directly",
+          "2": "Exercise",
+          "3": "Competitive pursuits",
+          "4": "Take bold action"
+        },
+        "title": "THE MARTIAN HOUR",
+        "dont": {
+          "0": "Avoid necessary confrontation",
+          "1": "Repress anger",
+          "2": "Start arguments"
+        },
+        "quality": "Action & Drive",
+        "description": "Mars brings fire, impulse, and competitive energy. Physical action and confrontation are favored."
+      },
+      "venus": {
+        "do": {
+          "0": "Romance and courtship",
+          "1": "Artistic creation",
+          "2": "Socialize",
+          "3": "Create beauty",
+          "4": "Resolve conflicts peacefully"
+        },
+        "title": "THE HOUR OF VENUS",
+        "dont": {
+          "0": "Force outcomes",
+          "1": "Ignore aesthetics",
+          "2": "Rush intimacy"
+        },
+        "quality": "Love & Beauty",
+        "description": "Venus bathes the world in beauty and desire. Love, art, and harmony reign supreme."
+      },
+      "saturn": {
+        "do": {
+          "0": "Focus on responsibilities",
+          "1": "Study and organize",
+          "2": "Plan ahead",
+          "3": "Build foundations",
+          "4": "Accept limitations"
+        },
+        "title": "THE HOUR OF SATURN",
+        "dont": {
+          "0": "Cut corners",
+          "1": "Avoid duties",
+          "2": "Expect immediate results"
+        },
+        "quality": "Discipline & Structure",
+        "description": "Saturn demands discipline and structure. Hard work now leads to lasting results."
+      },
+      "mercury": {
+        "do": {
+          "0": "Send important messages",
+          "1": "Sign contracts (if direct)",
+          "2": "Write and study",
+          "3": "Negotiate",
+          "4": "Travel short distances"
+        },
+        "title": "THE HOUR OF MERCURY",
+        "dont": {
+          "0": "Deceive",
+          "1": "Spread gossip",
+          "2": "Sign if Mercury is retrograde"
+        },
+        "quality": "Mind & Communication",
+        "description": "Mercury quickens the mind and tongue. Communication, learning, and commerce flow with ease now."
+      },
+      "jupiter": {
+        "do": {
+          "0": "Business operations",
+          "1": "Seek wisdom",
+          "2": "Expand horizons",
+          "3": "Teach and learn",
+          "4": "Acts of generosity"
+        },
+        "title": "THE HOUR OF JUPITER",
+        "dont": {
+          "0": "Be greedy",
+          "1": "Think small",
+          "2": "Limit yourself"
+        },
+        "quality": "Expansion & Fortune",
+        "description": "Jupiter expands everything it touches. Fortune, wisdom, and growth are blessed in this hour."
+      }
+    }
+  },
+  "moonOracle": {
+    "New Moon": {
+      "title": "The Seed",
+      "poem": "In darkness, potential stirs. What will you begin?",
+      "favors": {
+        "0": "Setting intentions",
+        "1": "Starting new projects",
+        "2": "Planting seeds literal and metaphorical",
+        "3": "Rest and renewal"
+      },
+      "warnings": {
+        "0": "Avoid major decisions without reflection",
+        "1": "Energy is low — pace yourself"
+      }
+    },
+    "Waxing Crescent": {
+      "title": "The Sprout",
+      "poem": "First light breaks. Nourish what you have planted.",
+      "favors": {
+        "0": "Taking first steps",
+        "1": "Learning and research",
+        "2": "Building momentum",
+        "3": "Sharing ideas"
+      },
+      "warnings": {
+        "0": "Do not rush the process",
+        "1": "Patience is required"
+      }
+    },
+    "First Quarter": {
+      "title": "The Crossroads",
+      "poem": "Half-illuminated, half in shadow. Choose your path with courage.",
+      "favors": {
+        "0": "Making decisions",
+        "1": "Overcoming obstacles",
+        "2": "Taking action",
+        "3": "Asserting yourself"
+      },
+      "warnings": {
+        "0": "Conflict may arise",
+        "1": "Balance action with reflection"
+      }
+    },
+    "Waxing Gibbous": {
+      "title": "The Blossom",
+      "poem": "Almost full. Refine and prepare for the harvest to come.",
+      "favors": {
+        "0": "Refinement and polish",
+        "1": "Analysis and review",
+        "2": "Gathering resources",
+        "3": "Strengthening commitments"
+      },
+      "warnings": {
+        "0": "Avoid perfectionism",
+        "1": "Do not overextend"
+      }
+    },
+    "Full Moon": {
+      "title": "The Mirror",
+      "poem": "Illumination complete. What was hidden is now revealed.",
+      "favors": {
+        "0": "Celebration and gratitude",
+        "1": "Releasing what no longer serves",
+        "2": "Heightened intuition",
+        "3": "Culmination and completion"
+      },
+      "warnings": {
+        "0": "Emotions run high",
+        "1": "Restlessness may disrupt sleep"
+      }
+    },
+    "Waning Gibbous": {
+      "title": "The Gratitude",
+      "poem": "Light begins to recede. Give thanks for what you have received.",
+      "favors": {
+        "0": "Sharing wisdom",
+        "1": "Teaching others",
+        "2": "Reflecting on achievements",
+        "3": "Giving back"
+      },
+      "warnings": {
+        "0": "Do not cling to the past",
+        "1": "Let go of expectations"
+      }
+    },
+    "Last Quarter": {
+      "title": "The Reckoning",
+      "poem": "Half-light, half-shadow. Release and forgive what must end.",
+      "favors": {
+        "0": "Letting go",
+        "1": "Forgiveness",
+        "2": "Clearing space",
+        "3": "Inner reflection"
+      },
+      "warnings": {
+        "0": "Resisting change prolongs suffering",
+        "1": "Avoid blame — look within"
+      }
+    },
+    "Waning Crescent": {
+      "title": "The Surrender",
+      "poem": "Darkness returns. Surrender to the cycle. Rest and restore.",
+      "favors": {
+        "0": "Rest and sleep",
+        "1": "Meditation",
+        "2": "Dream work",
+        "3": "Self-care"
+      },
+      "warnings": {
+        "0": "Energy is lowest now",
+        "1": "Avoid demanding tasks"
+      }
+    }
+  },
+  "planetaryGuidance": {
+    "sun": {
+      "description": "The Sun hour radiates vitality, confidence, and leadership. It is the time to shine, take charge, and express your authentic self.",
+      "do": {
+        "0": "Take leadership roles",
+        "1": "Express creativity",
+        "2": "Seek recognition",
+        "3": "Make important decisions",
+        "4": "Exercise and build strength"
+      },
+      "dont": {
+        "0": "Hide in the background",
+        "1": "Avoid responsibility",
+        "2": "Doubt yourself"
+      }
+    },
+    "moon": {
+      "description": "The Moon hour flows with emotion, intuition, and nurturing energy. Listen to your inner voice and care for yourself and others.",
+      "do": {
+        "0": "Meditate and reflect",
+        "1": "Nurture relationships",
+        "2": "Engage in creative arts",
+        "3": "Trust your intuition",
+        "4": "Rest and restore"
+      },
+      "dont": {
+        "0": "Make rash decisions",
+        "1": "Ignore your feelings",
+        "2": "Overexert yourself"
+      }
+    },
+    "mercury": {
+      "description": "The Mercury hour buzzes with mental clarity, communication, and swift movement. Write, speak, negotiate, and solve problems.",
+      "do": {
+        "0": "Write and communicate",
+        "1": "Study and learn",
+        "2": "Negotiate deals",
+        "3": "Travel short distances",
+        "4": "Solve puzzles"
+      },
+      "dont": {
+        "0": "Sign contracts without review",
+        "1": "Gossip or spread rumors",
+        "2": "Rush important messages"
+      }
+    },
+    "venus": {
+      "description": "The Venus hour glows with beauty, harmony, and connection. Create art, enjoy pleasure, and strengthen bonds.",
+      "do": {
+        "0": "Create art or music",
+        "1": "Socialize and flirt",
+        "2": "Decorate your space",
+        "3": "Indulge in beauty",
+        "4": "Reconcile differences"
+      },
+      "dont": {
+        "0": "Start conflicts",
+        "1": "Neglect self-care",
+        "2": "Make financial gambles"
+      }
+    },
+    "mars": {
+      "description": "The Mars hour burns with passion, courage, and drive. Attack challenges head-on and assert your will.",
+      "do": {
+        "0": "Start physical workouts",
+        "1": "Tackle difficult tasks",
+        "2": "Stand up for yourself",
+        "3": "Begin competitive ventures",
+        "4": "Take bold action"
+      },
+      "dont": {
+        "0": "Start unnecessary arguments",
+        "1": "Act recklessly",
+        "2": "Suppress righteous anger"
+      }
+    },
+    "jupiter": {
+      "description": "The Jupiter hour expands with wisdom, luck, and generosity. Teach, learn, give, and grow. Fortune favors the bold.",
+      "do": {
+        "0": "Teach or mentor others",
+        "1": "Seek wisdom and truth",
+        "2": "Make long-term plans",
+        "3": "Give generously",
+        "4": "Explore new horizons"
+      },
+      "dont": {
+        "0": "Be miserly or cynical",
+        "1": "Ignore opportunities",
+        "2": "Overindulge"
+      }
+    },
+    "saturn": {
+      "description": "The Saturn hour demands discipline, structure, and responsibility. Build foundations, honor commitments, and endure.",
+      "do": {
+        "0": "Organize and plan",
+        "1": "Complete tedious tasks",
+        "2": "Set boundaries",
+        "3": "Honor commitments",
+        "4": "Build lasting structures"
+      },
+      "dont": {
+        "0": "Cut corners",
+        "1": "Avoid duty",
+        "2": "Break promises"
+      }
+    }
+  }
+}

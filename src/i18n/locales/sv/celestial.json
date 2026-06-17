@@ -1,0 +1,1411 @@
+{
+  "ends": "Slutar",
+  "title": "Dagens Himlakalender",
+  "civil": "Civil",
+  "speed": "Hastighet",
+  "avoid": "Undvik",
+  "natal": "Natal",
+  "house": "Hus",
+  "exact": "Exakt",
+  "began": "Började",
+  "status": "Status",
+  "traits": "Egenskaper",
+  "element": "Element",
+  "forDate": "För {{month}} {{day}}",
+  "bestFor": "Bäst För",
+  "fromDate": "Från {{month}} {{day}}",
+  "whatIsIt": "Vad är det?",
+  "guidance": {
+    "today": "Idag",
+    "mixed": "Blandat",
+    "career": "Karriär",
+    "health": "Hälsa",
+    "timing": "Tider",
+    "thisWeek": "Denna Vecka",
+    "thisYear": "Detta År",
+    "finances": "Finanser",
+    "bestDays": "✦ Bästa Dagar",
+    "keyThemes": "Huvudteman",
+    "lifeAreas": "Livsområden",
+    "excellent": "Utmärkt",
+    "favorable": "Gunstig",
+    "difficult": "Svår",
+    "calculating": "Beräknar himlakunskap...",
+    "challenging": "Utmanande",
+    "overallScore": "Totalpoäng",
+    "todaySubtitle": "Nuvarande himlaklimat",
+    "relationships": "Relationer",
+    "lunarGuidance": "☽ Mångivning",
+    "personalGrowth": "Personlig Tillväxt",
+    "thisWeekSubtitle": "7-dagars kosmisk prognos",
+    "thisYearSubtitle": "Översikt för {{year}}",
+    "unableToGenerate": "Kan inte generera vägledning just nu.",
+    "yourCelestialRegion": "Din Himlakropp",
+    "planetaryHighlights": "Planetära Högpunkter"
+  },
+  "duration": "Varaktighet",
+  "titlePast": "Himlakalender för {{days}} dagar sedan",
+  "civilDate": "Civil Datum",
+  "dayOfYear": "Dag i Året",
+  "solarNoon": "Solmiddag",
+  "localTime": "Lokal tid:",
+  "lowEnergy": "Låg energi: Vila, reflektion, planering",
+  "nextCheck": "Nästa kontroll",
+  "yearOfThe": "Året För",
+  "planet": {
+    "in": "{{planet}} i {{sign}}",
+    "copy": "📋 Kopiera",
+    "shadow": "🌑 Skuggan",
+    "growth": "🌱 Tillväxt",
+    "famous": "⭐ Känd",
+    "copied": "✓ Kopierad!",
+    "tagline": "\"{{tagline}}\"",
+    "essence": "💫 Essensen",
+    "atDegree": "{{planet}} vid {{degree}}° {{sign}}",
+    "archetype": "Arketypen",
+    "dailyLife": "I Vardagen",
+    "shadowSide": "🌑 Skuggsidan",
+    "deepWisdom": "🌙 Djupsydost för {{planet}} i {{sign}} kanaliseras...",
+    "famousIntro": "Din {{planet}} i {{sign}} ansluter dig till dessa inflytelserika figurer:",
+    "houseDignity": "{{symbol}} Hus {{house}} • {{dignity}}",
+    "shareThisWith": "⭐ Du Delar Detta Med",
+    "deepWisdomSub": "{{planet}} i {{sign}}, Hus {{house}}",
+    "coreExpression": "Din Kärnexpression",
+    "commonTriggers": "Vanliga Utlösare",
+    "yourGrowthPath": "🌱 Din Tillväxtsväg",
+    "alignedCareers": "Justeringade Yrken",
+    "dailyAffirmation": "🙏 Daglig Bekräftelse",
+    "reflectionPrompts": "💭 Reflektionsfrågor",
+    "practicalExercises": "Praktiga Övningar"
+  },
+  "daily": {
+    "orb": "{{orb}}° orb",
+    "good": "✓ Bra energi idag. Gunstig för de flesta aktiviteter.",
+    "mixed": "◆ Blandade energier. Fortsätt med medvetenhet.",
+    "loading": "Beräknar precisa positioner...",
+    "watchOut": "⚠ Se Upp ({{count}})",
+    "quietDay": "Tyst dag. Inga större transiter påverkar din karta.",
+    "excellent": "Utmärkt dag för viktiga aktiviteter. Stark kosmisk stöd.",
+    "background": "◆ Bakgrund ({{count}})",
+    "universalSky": "Universella Himlen Idag",
+    "addBirthChart": "Lägg till en födelsekarta för personliga transitinformation.",
+    "todayForecast": "Dagens Prognos",
+    "opportunities": "✓ Möjligheter ({{count}})",
+    "activeTransits": "{{count}} aktiv transit",
+    "swissPrecision": "Schweizisk Ephemeris Precision",
+    "challengingDay": "⚠ Utmanande dag. Fokusera på självvård och undvik stora beslut.",
+    "goodForRoutine": "Bra för rutinuppgifter och underhåll.",
+    "activeTransits_plural": "{{count}} aktiva transiter"
+  },
+  "futureView": "Framtida Vy",
+  "scrollHint": "(bläddra →)",
+  "beganCivil": "Började (Civil): {{date}}",
+  "traditions": "Traditioner",
+  "lunarCycle": "Måncykel",
+  "confidence": "Konfidentiellt:",
+  "whyThisDay": "Varför denna dag?",
+  "highEnergy": "Hög energi: Starta projekt, vidta åtgärder, vara social",
+  "focusAreas": "Fokusområden",
+  "compatible": "Kompatibel",
+  "luckyHours": "Tursamma Timmar",
+  "titleFuture": "Himlakalender om {{days}} dagar",
+  "lookingBack": "Tittar Bakåt",
+  "dayOfPlanet": "{{day}}: Dag för {{planet}}",
+  "planets": {
+    "sun": "Sol",
+    "moon": "Måne",
+    "mars": "Mars",
+    "venus": "Venus",
+    "saturn": "Saturn",
+    "mercury": "Kvicksilver",
+    "jupiter": "Jupiter"
+  },
+  "calculating": "Beräknar månposition...",
+  "luckyColors": "Lyckliga färger",
+  "selectedDate": "Vald HEKA-Datum",
+  "dragToScroll": "Dra för att bläddra",
+  "yourLocation": "Din Plats",
+  "significance": "Betydelse",
+  "howToObserve": "Hur man observerar",
+  "sunElevation": "Solens lutning: {{elevation}}°",
+  "newMoonCivil": "Ny måne (Civil)",
+  "cosmicEnergy": "Kosmisk energi",
+  "howToUseThis": "Hur man använder detta",
+  "todaysEnergy": "Dagens Energi",
+  "elements": {
+    "air": "Luft",
+    "fire": "Eld",
+    "water": "Vatten",
+    "earth": "Jord"
+  },
+  "luckyNumbers": "Lyckliga nummer",
+  "export": {
+    "close": "Stäng",
+    "failed": "Misslyckades med att exportera",
+    "guidance": "Vägledning",
+    "creating": "Skapar...",
+    "saveImage": "Spara Bild",
+    "affirmation": "Bekräftelse",
+    "generatedBy": "Genererat av Heka Kalender ✦",
+    "overallGuidance": "Övergripande Vägledning",
+    "celestialGuidance": "Himmelskt Vägledning"
+  },
+  "timezones": {
+    "ET": "Östtid (ET)",
+    "CT": "Centraltid (CT)",
+    "MT": "Bergstid (MT)",
+    "PT": "Stillahavstid (PT)",
+    "UTC": "UTC (Universal)",
+    "Paris": "Paris (CET)",
+    "Tokyo": "Tokyo (JST)",
+    "Dubai": "Dubai (GST)",
+    "London": "London (GMT)",
+    "Berlin": "Berlin (CET)",
+    "Sydney": "Sydney (AEST)",
+    "Shanghai": "Shanghai (CST)",
+    "Auckland": "Auckland (NZST)",
+    "Melbourne": "Melbourne (AEST)"
+  },
+  "startingCivil": "Startar (Civil): {{date}}",
+  "hekaYearLabel": "HEKA År {{year}}",
+  "daysRemaining": "Dagar kvar",
+  "fullMoonCivil": "Full måne (Civil)",
+  "thisMoonCycle": "Denna måncykel",
+  "waxingQuality": "Tilltagande: Tillväxt, bygga upp momentum",
+  "waningQuality": "Minskande: Frigörelse, reflektion, slutförande",
+  "forecastTitle": "Himmels天气预报",
+  "whatThisMeans": "Vad Detta Betyr Just Nu",
+  "planetsActive": "Planeter Aktiva Just Nu",
+  "exactPosition": "Exakt Position",
+  "moonVoidLabel": "Mån Öde",
+  "starsHub": {
+    "back": "← Tillbaka",
+    "live": "Live",
+    "chart": "Diagram",
+    "active": "Aktiv",
+    "sunSign": "Soltecken",
+    "12signs": "12 Tecken",
+    "13signs": "13 Tecken ⛎",
+    "version": "Version 2.2.0 • HEKA Astrologi Motor",
+    "overview": "Översikt",
+    "guidance": "Vägledning",
+    "voidMoon": "Öde Mån",
+    "settings": "Inställningar",
+    "tropical": "Tropisk",
+    "sidereal": "Sidreellt",
+    "positions": "Positioner",
+    "moonPhase": "Månfas",
+    "hourRuler": "Timhärskare",
+    "aboutText": "Drivs av Swiss Ephemeris beräkningar för exakta astronomiska data. Justera dina handlingar med kosmisk rytm.",
+    "tapPlanet": "Tryck på någon planet för att utforska dess detaljerade betydelse",
+    "viewStars": "Visa Stjärnor →",
+    "goToStars": "Gå till Stjärnor för att se din personliga astrologiska vägledning.",
+    "13signDesc": "⛎ 13-tecken sidreellt: Ophiuchus inkluderat. Det mest astronomiskt exakta ramverket.",
+    "retrograde": "℞ Baklänges",
+    "welcomeBack": "Välkommen tillbaka, {{name}}",
+    "retrogrades": "Bakåtgående",
+    "12signsDesc": "Traditionellt sidreellt",
+    "13signsDesc": "Ophiuchus inkluderat",
+    "birthCharts": "Födelsediagram",
+    "universalSky": "Universellt Himla",
+    "zodiacSystem": "Teckensystemet",
+    "tropicalDesc": "12 Tecken · Säsonger",
+    "siderealDesc": "Faststjärnor · Nakshatras",
+    "dailyBriefing": "Daglig Redovisning",
+    "tropicalDesc2": "Klassiska 12-tecken tropiska zodiac beroende av säsongerna.",
+    "celestialFont": "Himla Font",
+    "profilesSaved": "{{count}} profil sparade",
+    "corruptedDate": "⚠️ Trasig födelsedatum upptäckt!",
+    "deleteProfile": "🗑️ Ta bort Profil",
+    "addNewProfile": "➕ Lägg till Ny Profil",
+    "tapForDetails": "Tryck för detaljer →",
+    "housePosition": "Husposition",
+    "celestialTheme": "Himla Tema",
+    "selectTypeface": "Välj typsnitt för denna värld",
+    "manageProfiles": "Hantera dina födelsetecken profiler",
+    "aboutCelestial": "Om Himla Intelligens",
+    "chooseFramework": "Välj ditt himla ramverk",
+    "trueModeWarning": "⚠️ Du är i SANNOLIK mode men inte använd sidreellt. Byt till Sidreellt för full justering.",
+    "syncModeWarning": "⚠️ Du är i SYNK mode men använder sidreellt. Detta är en avancerad åsidosättning.",
+    "receiveGuidance": "Få vägledning från kosmos",
+    "retrogradeCount": "Navigera {{count}} bakåtgående",
+    "allPlanetsDirect": "Alla planeter direkt - en tid för framåtanda.",
+    "exploreCelestial": "Utforska den aktuella himlakartan. Skapa en profil för personlig astrologisk vägledning.",
+    "compareTwoSelves": "Jämför Dina Två Jag",
+    "chooseAtmosphere": "Välj din kosmiska atmosfär",
+    "siderealSignCount": "Antal sidreella tecken",
+    "profileManagement": "Profilhantering",
+    "currentExpression": "Aktuell Expression",
+    "housePositionText": "Denna planet aktiverar livets område som representeras av dess aktuella husposition, färgar dina erfarenheter med {{energy}} energi.",
+    "12signSiderealDesc": "☀️ 12-tecken sidreellt: Traditionella stjärnbilds gränser med ayanamsa-korrigering.",
+    "personalizedWeather": "Dagens himlaklimat anpassat för ditt nataldiagram. {{retrogrades}}",
+    "observatorySettings": "Observatoriumsinställningar",
+    "planetInSignDefault": "{{planet}} i {{sign}} ger unik energi.",
+    "profilesSaved_plural": "{{count}} profiler sparade",
+    "birthChartManagement": "Födelsediagramshantering",
+    "celestialIntelligence": "Himlakunskap",
+    "celestialNotifications": "Himla Notifikationer",
+    "retrogradeCount_plural": "Navigera {{count}} bakåtgående",
+    "currentPlanetaryPositions": "Aktuella Planetpositioner",
+    "openCelestialIntelligence": "Öppna Himlakunskap ✦"
+  },
+  "twoSelves": {
+    "air": "tänkaren, anslutaren",
+    "none": "Ingen",
+    "fire": "den initierande, gnistan",
+    "title": "Dina Två Jag",
+    "error": "Det gick inte att beräkna en eller båda zodiaksystemet. Vänligen kontrollera din födelsedata.",
+    "earth": "byggaren, berget",
+    "water": "kännaren, djupet",
+    "changed": "Ändrad",
+    "subtitle": "Kalendern lärde dig en historia. Stjärnorna berättar en annan.",
+    "tropical": "Tropisk",
+    "trueSelf": "Sant jag",
+    "sidereal": "Sidrerisk",
+    "sunMoved": "Din Sol har flyttat från {{tropical}} till {{sidereal}}.",
+    "ayanamsa": "Ayanamsa, luckan mellan den tropiska zodiacken och de faktiska stjärnorna, är {{degrees}} grader för ditt födelseår.",
+    "civilSelf": "Civilt jag",
+    "whoYouAre": "Vem du är under stjärnorna",
+    "ascendant": "Stjärnhimlen",
+    "midheaven": "Midheaven",
+    "shiftedBy": "Flyttad med {{degrees}}°",
+    "moonMoved": "Din Mån, din känslomässiga kärna, har flyttat från {{tropical}} till {{sidereal}}.",
+    "notAnError": "Det här är inte ett fel. Det här är skillnaden mellan vem du lärde dig att vara och vem stjärnorna säger att du är.",
+    "calculating": "Beräknar tropiska & sidreala kartor...",
+    "revisitHint": "Du kan återvända till denna jämförelse när som helst från diagraminställningarna.",
+    "totalChanged": "I total har {{count}} av dina {{total}} stora himlakroppar ändrat tecken.",
+    "whoYouLearned": "Vem du lärde dig att vara",
+    "rareAlignment": "Dina tropiska och sidreriska diagram är nästan identiska - en sällsynt justering som inträffar när ayanamsa är nära en helteckengräns. Du är en av de få vars civila jag och sant jag talar samma språk.",
+    "identityShift": "Identiteten du lärde dig som {{tropicalElement}} flyttar till {{siderealElement}}.",
+    "ascendantShift": "Din Stjärnhimmel, masken du bär, har flyttat från {{tropical}} till {{sidereal}}.",
+    "midheavenShift": "Din Midheaven, ditt offentliga kall, har flyttat från {{tropical}} till {{sidereal}}.",
+    "defaultElement": "det egna jag",
+    "dominantElement": "Dominerande element",
+    "continueTrueMode": "Fortsätt till Sant Läge"
+  },
+  "historicalView": "Historisk Vy",
+  "dayOfYearValue": "Dag {{day}}",
+  "lookingForward": "Tittar Framåt",
+  "hekaYearBegins": "HEKA År {{year}} Börjar",
+  "countdown": {
+    "days": "dagar",
+    "hours": "tim",
+    "minutes": "min",
+    "seconds": "sek"
+  },
+  "aboutSolarNoon": "Om solmiddag",
+  "newMoonQuality": "Ny måne: Början, sätta avsikter",
+  "moderateEnergy": "Måttlig energi: Rutinarbete, stadig framsteg",
+  "swissEphemeris": "Schweiziska ephemeriden",
+  "retrogradeNote": "Retrograd: Omvägningsperiod",
+  "moonPhaseLabel": "Månfas",
+  "hourlyMoonMood": "Timvis Månhumör",
+  "upcomingEvents": "Kommande Himlaevenemang",
+  "profile": {
+    "addNew": "Lägg Till Ny",
+    "default": "Standard",
+    "noCharts": "Inga kartor ännu",
+    "yourCharts": "Dina Kartor",
+    "createFirst": "Skapa din första födelsekarta",
+    "selectProfile": "Välj Profil"
+  },
+  "briefing": {
+    "focus": "Fokus: {{area}}",
+    "setUpAi": "Ställ in AI →",
+    "dismiss": "Avfärda",
+    "enableAi": "Aktivera AI-ledning",
+    "aiEnhanced": "✨ AI-Förbättrad",
+    "todaysTheme": "Dagens Tema",
+    "todaysFocus": "Dagens Fokus",
+    "voidMoonDesc": "Månen är för närvarande tom—perfekt för reflektion, vila och inre arbete snarare än att starta nya företag.",
+    "unlockDeeper": "Lås upp djupare insikter",
+    "aiConfigured": "Du har en AI-leverantör konfigurerad. Aktivera AI-ledning för poetiska, personliga läsningar.",
+    "yourGuidance": "Din Ledning",
+    "aiUnavailable": "AI-förbättring otillgänglig. Visa mallledning.",
+    "aiAddProvider": "Lägg till en AI-leverantör för att få LLM-förbättrade tolkning som är skräddade efter din unika karta.",
+    "voidMoonActive": "🌙 Tom Mån Active",
+    "turnOnSettings": "Aktivera i Inställningar",
+    "templatePowered": "📚 Mall-Drivs",
+    "templateFallback": "⚠️ Mall Fallback",
+    "dailyAffirmation": "Daglig Bekräftelse",
+    "viewFullGuidance": "Visa Full Ledning",
+    "patternRecognized": "🔮 Mönster Känd"
+  },
+  "aboutThisSeason": "Om denna säsong",
+  "characteristics": "Karakteristika",
+  "fullMoonQuality": "Full måne: Hög energi, manifestation",
+  "activities": {
+    "rest": "vila",
+    "plant": "plantera",
+    "prune": "beskära",
+    "harvest": "skörda",
+    "prepare": "förbereda",
+    "fertilize": "gödsel",
+    "transplant": "omplantera"
+  },
+  "numerologyTitle": "Numerologi: Dag {{day}}",
+  "zodiacSigns": {
+    "leo": "Lejon",
+    "aries": "Vågmästare",
+    "virgo": "Jungfru",
+    "libra": "Vågmätare",
+    "taurus": "Oxe",
+    "gemini": "Tvillingar",
+    "cancer": "Kräfta",
+    "pisces": "Fiskar",
+    "scorpio": "Skorpion",
+    "aquarius": "Vattumannen",
+    "capricorn": "Stenbock",
+    "ophiuchus": "Ofiukhos",
+    "sagittarius": "Skytt"
+  },
+  "dataUnavailable": "Himmelska uppgifter otillgängliga",
+  "thisWeeksThemes": "Detta Veckas Ämnen",
+  "noMajorTransits": "Inga Storskaliga Personliga Transiteringar",
+  "guidanceV2": {
+    "edit": "Redigera",
+    "hour": "{{planet}} Timme",
+    "copy": "Kopiera",
+    "card": "Kort",
+    "share": "Dela",
+    "close": "Stäng",
+    "today": "Idag",
+    "copied": "Kopierad",
+    "cancel": "Avbryt",
+    "history": "Historik",
+    "refresh": "Uppdatera",
+    "setUpAi": "Ställ in AI →",
+    "strength": "Styrka",
+    "yesClear": "Ja, rensa",
+    "yourChart": "Ditt Diagram ✓",
+    "signature": "Signatur",
+    "consulting": "Konsulterar de himla sfärerna...",
+    "aiEnhanced": "✨ AI-Förbättrad",
+    "natalChart": "✓ Födelsediagram",
+    "refreshing": "Uppdaterar...",
+    "focusAreas": "Fokusområden",
+    "confidence": "Säkerhet",
+    "selectDate": "Välj ett datum",
+    "areYouSure": "Är du säker?",
+    "affirmation": "Bekräftelse",
+    "yourPatterns": "Dina Mönster",
+    "unlockDeeper": "Lås upp djupare insikter",
+    "aiConfigured": "Du har en AI-leverantör konfigurerad. Aktivera AI-vägledning för poetiska, anpassade läsningar vävda från ditt födelsediagram och den levande himlen.",
+    "clearHistory": "Rensa historik",
+    "addBirthChart": "Lägg till Födelsediagram",
+    "aiEnhancedVia": "✨ AI-Förbättrad via {{provider}} ({{model}})",
+    "aiAddProvider": "Lägg till en AI-leverantör (Groq, OpenAI eller lokal Ollama) för att få LLM-förbättrade tolkningarna anpassade till ditt unika diagram.",
+    "sacredRituals": "Heliga Ritualer",
+    "aiUnavailable": "AI-förbättring inte tillgänglig: {{reason}}. Visa mallvägledning.",
+    "turnOnSettings": "Aktivera i Inställningar",
+    "morningBriefing": "Morgonbriefing",
+    "loadingGuidance": "Laddar din anpassade vägledning...",
+    "templatePowered": "📚 Malldrivna",
+    "guidanceHistory": "📜 Vägledningshistorik",
+    "noSavedGuidance": "Ingen sparade riktlinjer ännu",
+    "enableAiGuidance": "Aktivera AI-vägledning",
+    "celestialEssence": "Himla Väsent",
+    "aiEnhancedSuffix": "(AI-Förbättrad)",
+    "dailyAffirmation": "Daglig Bekräftelse",
+    "selectDateToView": "Välj ett datum för att visa din sparade vägledning.",
+    "practicalGuidance": "Praktisk vägledning",
+    "dailyAffirmations": "Dagliga Bekräftelser",
+    "reflectionPrompts": "Reflektionsprompter",
+    "aiUnavailableDate": "⚠️ AI-förbättring var inte tillgänglig denna dag. Mallvägledning visas.",
+    "personalizedForYou": "✨ Anpassad för dig",
+    "guidanceConfidence": "Vägledningssäkerhet",
+    "readingsAppearHere": "Dina dagliga läsningar visas automatiskt här.",
+    "yourCelestialRegion": "Din Himla Region",
+    "practicalGuidanceTitle": "Praktisk vägledning"
+  },
+  "birthChart": {
+    "born": "Född",
+    "edit": "✏️ Redigera",
+    "loading": "Laddar himla blåmärke...",
+    "promise": "Löfte",
+    "sunSign": "☉ Soltecken • Du är en {{sign}}",
+    "elements": "Element",
+    "newChart": "+ Ny karta",
+    "dignities": "Ärens",
+    "chartWheel": "Kart hjul",
+    "natalChart": "◉ Natal karta",
+    "dragRotate": "Dra för att rotera • Klicka på planeter för detaljer",
+    "lifeThemes": "🌟 Liv teman",
+    "createFirst": "Skapa din första födelse karta för att låsa upp personligt stjärnmässigt stöd",
+    "soulPromise": "Själs löfte",
+    "growthEdges": "🌱 Tillväxt kanter",
+    "noBirthChart": "Ingen födelse karta hittades",
+    "profileChart": "{{name}}'s karta",
+    "naturalGifts": "🎁 Naturliga gåvor",
+    "majorAspects": "⚡ Major aspekter",
+    "recreateChart": "Återskapa din karta",
+    "createYourChart": "✨ Skapa Din Karta",
+    "unknownLocation": "Okänt läge",
+    "elementalTemple": "🔥 Elementtempel",
+    "chartIncomplete": "⚠️ Karta data ofullständig.",
+    "planetPositions": "🪐 Planet positioner",
+    "yourSoulsPromise": "✨ Ditt själs löfte"
+  },
+  "lastQuarterToNew": "Sista kvartalet till ny: Släpp taget och vila",
+  "cosmicConditions": "Kosmiska Förhållanden",
+  "birthInput": {
+    "house": "Hus {{house}}",
+    "cancel": "Avbryt",
+    "dignity": "{{dignity}}",
+    "yourName": "Ditt namn",
+    "latitude": "Latitud",
+    "timezone": "Tidszon",
+    "enterName": "Ange ditt namn",
+    "birthDate": "Födelsedatum",
+    "birthTime": "Födelsetid",
+    "longitude": "Longitud",
+    "calcFailed": "Det gick inte att beräkna planetpositionerna. Vänligen försök igen.",
+    "invalidDate": "Ogiltigt födelsedatum eller tid",
+    "calculating": "Beräknar din himlakarta...",
+    "privacyNote": "🔒 Dina födelsedata lagras på din enhet och synkroniseras till ditt konto när du är inloggad.",
+    "enterDetails": "Fyll i dina födelseuppgifter för att låsa upp personlig vägledning baserat på din unika himlakarta.",
+    "locationHint": "Börja skriva en förort eller stad (t.ex. \"Bankstown\", \"Sydney\")",
+    "birthLocation": "Födelseort *",
+    "yourBirthChart": "Din Födelse karta",
+    "calculateChart": "✨ Beräkna Min Karta",
+    "pleaseEnterName": "Vänligen ange ditt namn",
+    "pleaseEnterDate": "Vänligen ange ditt födelsedatum",
+    "pleaseEnterTime": "Vänligen ange ditt födelsetid",
+    "noPlanetaryData": "Ingen planetdata returnerades från beräkningen",
+    "houseCalcFailed": "Det gick inte att beräkna huspositionerna. Vänligen kontrollera dina koordinater.",
+    "chartCalcFailed": "Det gick inte att beräkna kartan. Vänligen kontrollera dina inmatningsdata.",
+    "invalidHouseData": "Ogiltig husdata returnerades",
+    "pleaseEnterCoords": "Vänligen ange dina födelseortskoordinater",
+    "invalidHouseData2": "Ogiltig husdata returnerades från beräkningen",
+    "celestialBlueprint": "Din Himlakarta",
+    "latitudePlaceholder": "t.ex., 40.7128",
+    "longitudePlaceholder": "t.ex., -74.0060"
+  },
+  "premiumCards": {
+    "sun": "Sol",
+    "moon": "Måne",
+    "copy": "Kopiera",
+    "weak": "⚠ Svag",
+    "expand": "Expandera",
+    "inDays": "om ~{{days}} dagar",
+    "sunset": "Solnedgång",
+    "whyNow": "VARFÖR {{planet}} NU?",
+    "stormy": "Övertygd",
+    "direct": "→ Direkt",
+    "strong": "★ Stark",
+    "sunrise": "Soluppgång",
+    "neutral": "○ Neutral",
+    "hekaDate": "HEKA DATUM",
+    "aeonGate": "ALTERNATET PORT",
+    "monthOf13": "Månad {{month}} av 13",
+    "dayOfYear": "Dag {{day}} av {{total}}",
+    "civilTime": "🌍 CIVILT TID",
+    "julianDay": "JULIAN DAG",
+    "beMindful": "VAR AKTSAM PÅ",
+    "nextPhase": "NÄSTA FASE",
+    "hourRuler": "Timhärskare",
+    "readOracle": "Läs Oraklet",
+    "clearSkies": "Klara himlar",
+    "retrograde": "← Retrograd",
+    "daysElapsed": "{{days}} dagar har passerat",
+    "calculating": "Beräknar...",
+    "lunarTemple": "DET LUNAR TEMPLET",
+    "waxingTrend": "Tilltagande → Tillväxt",
+    "waningTrend": "Minskande → Minskning",
+    "bestToAvoid": "✗ BÄSTA ATT UNDVIKA",
+    "retroReview": "Med {{count}} planet{{plural}} retrograd är detta en tid för {{significant}} granskning och introspektion.",
+    "hekaCalendar": "◈ HEKA KALENDAR",
+    "yearProgress": "ÅRSFORTGÅNG",
+    "partlyCloudy": "Delvis mulet",
+    "heavyWeather": "Tungt väder",
+    "retroCaution": "Stora nya början bör närmas med försiktighet.",
+    "modalBalance": "MODAL BALANS",
+    "luminariesNow": "LUMINARIER NU",
+    "chaldeanOrder": "Det kaldeiska ordningen",
+    "retroPossible": "Nya projekt är möjliga med extra omsorg i de berörda områdena.",
+    "viewPlanetary": "Vis Planetära Sfärer",
+    "thisPhaseFavors": "DENNA FASE GÖR FÖR",
+    "localSolarTimes": "☀ LOKALA SOLARTIDER",
+    "calculatingLunar": "Beräknar måndata...",
+    "minutesRemaining": "{{minutes}} minuter kvar",
+    "allPlanetsDirect": "Alla planeter direkta",
+    "celestialWeather": "DET HIMLAKSA VÄDERLEKET",
+    "directRetrograde": "{{direct}} direkta, {{retrograde}} retrograda",
+    "planetarySpheres": "DE PLANETÄRA SFÄRERNA",
+    "elementalBalance": "ELEMENTÄR BALANS",
+    "currentPositions": "AKTUELLA POSITIONER",
+    "chaldeanHourglass": "DET KALDEISKA SANDSÄCKET",
+    "favoredActivities": "✓ FAVORITERADE AKTIVITETER",
+    "planetaryStations": "PLANETARISKA STATIONER",
+    "currentAlignments": "AKTUELLA JUSTERINGAR",
+    "nextCelestialEvent": "NÄSTA HIMLAKSEVENT",
+    "moonsCurrentThrone": "☽ MÅNENS NUVARANDE TRON",
+    "retrogradeGuidance": "RETROGRADE RÅD",
+    "calculatingPlanetary": "Beräknar planettim",
+    "celestialBodiesTracked": "{{count}} himmelska kroppar spårade"
+  },
+  "aiSettings": {
+    "title": "AI-FÖRBÄTTRADE LÄSNINGAR",
+    "expand": "Expandera",
+    "active": "Aktiv",
+    "apiKey": "API-nyckel",
+    "format": "Format",
+    "pricing": "Prissättning",
+    "testing": "Testar...",
+    "collapse": "Kollaps",
+    "hideGuide": "Dölj Guide",
+    "showGuide": "Visa Guide",
+    "serverUrl": "Server-URL",
+    "setupGuide": "Installationsguide: {{provider}}",
+    "disconnect": "Koppla från",
+    "connectedTo": "Ansluten till {{provider}}",
+    "useTemplate": "Använd Mallbibliotek",
+    "dataPrivate": "Dina Data Förblir Sekretess",
+    "updateConfig": "Uppdatera Konfiguration",
+    "templateDesc": "169+ handgjorda mallar som täcker alla planeter i alla 13 tecken, vävd in i unika läsningar efter fas, aspekt och kategori. Alltid gratis, alltid omedelbar.",
+    "failedToSave": "Det gick inte att spara",
+    "usingTemplate": "Använder Mallbibliotek (Gratis)",
+    "storedLocally": "{{type}} lagras endast på denna enhet i krypterat lokalt lagringsutrymme. Vi överför aldrig den till våra servrar.",
+    "aiEnhancement": "AI-Förbättring",
+    "changeSettings": "Ändra inställningar",
+    "testConnection": "Testa Anslutning",
+    "pleaseEnterKey": "Vänligen ange en API-nyckel",
+    "connectedShort": "✓ {{provider}} ansluten",
+    "connectProvider": "Anslut din AI-leverantör för förbättrade astrologiska tolkningar",
+    "templateLibrary": "Mallbibliotek",
+    "dataPrivateDesc": "API-nycklar lagras lokalt. Vi ser aldrig dem eller din astrologiska data.",
+    "readingsEnhanced": "Dina läsningar förbättras med AI.",
+    "connectionFailed": "✗ Anslutningen misslyckades. Kontrollera din internetuppkoppling och API-nyckel.",
+    "aiEnhancementDesc": "Valfri AI-genererad läsning för mer nyanserade, personliga tolkningar.",
+    "connectionSuccess": "✓ Anslutning lyckades! API-nyckeln är giltig.",
+    "connectionInvalid": "✗ Ogiltig API-nyckel. Vänligen kontrollera och försök igen.",
+    "templateAvailable": "✓ Mallbiblioteket är alltid tillgängligt",
+    "connectProviderBtn": "Anslut Leverantör",
+    "usingTemplateShort": "✓ Använder Mallbibliotek",
+    "pleaseEnterKeyFirst": "Vänligen ange en API-nyckel först"
+  },
+  "lifeAreas": {
+    "career": "Karriär & Yrken",
+    "health": "Hälsa & Vitalitet",
+    "timing": "Tid & Produktivitet",
+    "finances": "Välstånd & Resurser",
+    "relationships": "Kärlek & Relationer",
+    "personalGrowth": "Personlig Tillväxt"
+  },
+  "aboutThisHekaYear": "Om Detta HEKA År",
+  "universalCalendar": "Universell Kalender",
+  "waxingDescription": "Tilltagande: Bygger upp energi, tillväxt, ackumulering",
+  "waningDescription": "Minskning: Släpper taget, avslutar, färdigställande",
+  "newToFirstQuarter": "Ny till första kvartalet: Börja nya projekt",
+  "fullToLastQuarter": "Full till sista kvartalet: Skörda resultat",
+  "solarNoonSubtitle": "Solen vid sin högsta punkt denna dag",
+  "planetaryQualities": "Planetariska kvaliteter",
+  "firstQuarterToFull": "Första kvartalet till full: Bygga upp momentum",
+  "seasonalActivities": "Återsäsongsaktiviteter",
+  "energeticQualities": "Energiska kvaliteter",
+  "energeticInfluence": "Energiskt inflytande",
+  "moonPhases": {
+    "newMoon": "Nymåne",
+    "fullMoon": "Fullmåne",
+    "lastQuarter": "Sista kvarteret",
+    "firstQuarter": "Första kvarteret",
+    "waxingGibbous": "Tilltagande fullmåne",
+    "waningGibbous": "Avtagande fullmåne",
+    "waxingCrescent": "Tilltagande halvmåne",
+    "waningCrescent": "Avtagande halvmåne"
+  },
+  "planetDomains": {
+    "mars": "handlingar och önskningar",
+    "venus": "relationer och värderingar",
+    "pluto": "omvandling och makt",
+    "saturn": "strukturer och förpliktelser",
+    "uranus": "förändring och frigörelse",
+    "mercury": "kommunikation och planer",
+    "jupiter": "expansion och övertygelser",
+    "neptune": "drömmar och andlighet",
+    "default": "livets områden"
+  },
+  "favorableActivities": "Gunstiga aktiviteter",
+  "moonPhaseDisclaimer": "Månfaserna beräknas matematiskt och kan skilja något från astronomiska observationer.",
+  "daysUntilNextSeason": "dagar till nästa säsong",
+  "solarNoonDisclaimer": "Tider är matematiska approximationer (±10-15 min). Exakt solmiddag varierar beroende på din exakta plats och datum.",
+  "biodynamicPrinciple": "Biodynamiskt princip",
+  "cards": {
+    "moonPhase": {
+      "age": "Ålder",
+      "title": "Månfas",
+      "phase": "Fas",
+      "waxing": "Tilltagande",
+      "waning": "Minskande",
+      "daysUntil": "{{days}} dagar till",
+      "dayOfCycle": "Dag {{day}} av 29,5",
+      "illuminated": "upplysad",
+      "illumination": "Belysning",
+      "voidOfCourse": "Väntande",
+      "lunarNewYear": "Månår"
+    },
+    "seasons": {
+      "title": "Säsonger",
+      "spring": "Vår",
+      "summer": "Sommar",
+      "autumn": "Höst",
+      "winter": "Vinter",
+      "daysUntil": "{{days}} dagar till",
+      "nextSolstice": "Nästa Solstånd",
+      "currentSeason": "Aktuell Säsong",
+      "springEquinox": "Vårjävndel",
+      "autumnEquinox": "Höstjävndel",
+      "summerSolstice": "Sommersolstånd",
+      "winterSolstice": "Vintersolstånd"
+    },
+    "sunTimes": {
+      "title": "Sol tider",
+      "sunset": "Solnedgång",
+      "sunrise": "Soluppgång",
+      "weather": "Väder",
+      "accuracy": "Precision",
+      "dayLength": "Daglängd",
+      "accuracyLevels": {
+        "high": "Hög",
+        "exact": "Exakt",
+        "estimated": "Uppskattad",
+        "approximate": "Ungefärlig"
+      }
+    },
+    "dayOfWeek": {
+      "title": "Veckodag",
+      "planet": "Regerande planet",
+      "energy": "Energi",
+      "favorableActivities": "Gunstiga aktiviteter"
+    },
+    "agriculture": {
+      "title": "Jordbruk",
+      "neutral": "Neutral",
+      "favorable": "Gunstig",
+      "plantToday": "Vad ska planteras idag",
+      "byLocation": "Efter din plats och månfas",
+      "unfavorable": "Ogunstig"
+    },
+    "digitalClock": {
+      "days": "Dagar",
+      "title": "Digital Klocka",
+      "hours": "Timmar",
+      "minutes": "Minuter",
+      "seconds": "Sekunder",
+      "countdowns": "Fyra samtidiga räknare ned"
+    },
+    "planetaryHours": {
+      "title": "Planett timmar",
+      "favors": "Favoriserar",
+      "hourOf": "Timme för {{planet}}",
+      "currentHour": "Aktuell timme",
+      "chaldeanOrder": "Kaldeisk ordning"
+    }
+  },
+  "psychologicalImpact": "Psykologisk Påverkan",
+  "practicalExpression": "Praktisk Uttryck",
+  "agriculturalGuidance": "Lantbruksvägledning",
+  "energyForecastPrefix": "Energiprognoset för",
+  "energyForecastSuffix": "{{date}} kombinerar månfas, planetpositioner och säsongsrytmer.",
+  "hemispheres": {
+    "northern": "Norra halvklotet",
+    "southern": "Södra halvklotet"
+  },
+  "yourPersonalTransits": "Dina Personliga Transiteringar",
+  "universalCalendarNote": "Som den gregorianska kalendern är HEKA-datum samma över hela världen. HEKA Månad {{month}}, Dag {{day}} är samma ögonblick oavsett om du är i Sydney, New York eller London - bara den lokala civil tiden skiljer sig.",
+  "whyThisDayDescription": "Månfasen och årstidsfaktorer indikerade optimala förhållanden för {{activity}} aktiviteter.",
+  "calculatingSolarTimes": "Beräknar soltid...",
+  "confirm": {
+    "deleteProfile": "Radera denna profil? Detta kan inte ångras."
+  },
+  "lookingBackDescription": "Detta datum har passerat. Granska vilka himla的能量 var närvarande denna dag.",
+  "planetaryDayDisclaimer": "Planetariska dagars associationer hämtar från traditionell astrologi och kulturell symbolik.",
+  "historicalSignificance": "Historisk betydelse",
+  "todaysCelestialWeather": "Dagens Himlaklimat",
+  "hekaCalendarIsUniversal": "HEKA Kalender är Universell:",
+  "hekaYearBegunDescription": "Detta HEKA år har börjat. Nästa cykel börjar den 1 april, {{nextYear}}.",
+  "planetaryDays": {
+    "sunday": {
+      "day": "Söndag",
+      "qualities": {
+        "0": "Utstrålning",
+        "1": "Ledarskap",
+        "2": "Framgång",
+        "3": "Synlighet"
+      },
+      "description": "Solensdagen bringar utstrålning, självförtroende och kreativ energi. Idealisk för nya början och att söka synlighet.",
+      "activities": {
+        "0": "Starta nya företag",
+        "1": "Sök erkännande",
+        "2": "Kreativa projekt",
+        "3": "Fysiskt träning"
+      }
+    },
+    "monday": {
+      "day": "Måndag",
+      "qualities": {
+        "0": "Intuition",
+        "1": "Känsla",
+        "2": "Omfamning",
+        "3": "Reflektion"
+      },
+      "description": "Måndagen betonar känslor, intuition och inre arbete. Perfekt för vila och känslomässig behandling.",
+      "activities": {
+        "0": "Självvård",
+        "1": "Hemaktiviteter",
+        "2": "Introspektion",
+        "3": "Familjekalas"
+      }
+    },
+    "friday": {
+      "day": "Fredag",
+      "qualities": {
+        "0": "Kärlek",
+        "1": "Skönhet",
+        "2": "Harmoni",
+        "3": "Kreativitet"
+      },
+      "description": "Venusdagen betonar kärlek, skönhet och harmoni. Perfekt för sociala aktiviteter och konstnärlig uttryck.",
+      "activities": {
+        "0": "Sociala sammankomster",
+        "1": "Konstnärliga sysselsättningar",
+        "2": "Romantik",
+        "3": "Självvård"
+      }
+    },
+    "tuesday": {
+      "day": "Onsdag",
+      "qualities": {
+        "0": "Handling",
+        "1": "Mod",
+        "2": "Drift",
+        "3": "Passion"
+      },
+      "description": "Marsdagen bringar energi, mod och drift. Bäst för att ta itu med åtgärder och övervinna hinder.",
+      "activities": {
+        "0": "Ta itu med utmaningar",
+        "1": "Fysiskt arbete",
+        "2": "Fasthet",
+        "3": "Konkurrens"
+      }
+    },
+    "thursday": {
+      "day": "Torsdag",
+      "qualities": {
+        "0": "Utvidgning",
+        "1": "Tur",
+        "2": "Vishet",
+        "3": "Överflöd"
+      },
+      "description": "Jupiterdagen bringar överflöd, vishet och utvidgning. Gunstig för tillväxt och välstånd.",
+      "activities": {
+        "0": "Stora beslut",
+        "1": "Finansfrågor",
+        "2": "Undervisning",
+        "3": "Reseplanering"
+      }
+    },
+    "saturday": {
+      "day": "Lördag",
+      "qualities": {
+        "0": "Discipline",
+        "1": "Struktur",
+        "2": "Ansvar",
+        "3": "Visdom"
+      },
+      "description": "Saturndagen kräver disciplin och struktur. Bäst för organisation, planering och ansvar.",
+      "activities": {
+        "0": "Organisering",
+        "1": "Planering",
+        "2": "Granska arbete",
+        "3": "Sätt gränser"
+      }
+    },
+    "wednesday": {
+      "day": "Onsdag",
+      "qualities": {
+        "0": "Kommunikation",
+        "1": "Intellekt",
+        "2": "Lärning",
+        "3": "Resa"
+      },
+      "description": "Merkuriedagen gynnar kommunikation, lärande och mental snabbhet. Idealisk för förhandlingar och skrivande.",
+      "activities": {
+        "0": "Skriva",
+        "1": "Förhandlingar",
+        "2": "Studium",
+        "3": "Korta resor"
+      }
+    }
+  },
+  "illuminationMoreThanHalf": "Mer än hälften: Hög manifesteringskraft",
+  "illuminationLessThanHalf": "Mindre än hälften: Introspektion och planering",
+  "thisMoonCycleDescription": "Månen var i {{name}} cykeln.",
+  "lookingForwardDescription": "Detta datum ligger i framtiden. Planera i förväg med dessa kommande himla的能量.",
+  "moonPhaseMeanings": {
+    "newMoon": "Början",
+    "fullMoon": "Slutförande",
+    "lastQuarter": "Frisläppning",
+    "firstQuarter": "Handling",
+    "waxingGibbous": "Förfining",
+    "waningGibbous": "Tacksamhet",
+    "waxingCrescent": "Tillväxt",
+    "waningCrescent": "Restglädje"
+  },
+  "universalCalendarDescription": "Datum är samma över hela världen (som den gregorianska kalendern). Civil datum/tid varierar efter tidszon. Himlakalkulier (solfynd, månfas) är matematiska approximationer ±30 min för utbildningsändamål.",
+  "aboutThisHekaYearDescription": "HEKA året {{year}} börjar den 1 april, {{civilYear}}. Varje HEKA år innehåller 12 månader med 28 dagar, plus mars med 29 dagar (30 i skottår/korrigeringsår).",
+  "solarNoonLocalTimeDescription": "Solen når sin högsta punkt vid {{time}} ({{timezone}})",
+  "solarNoonHistoricalDescription": "Fornkulturer använde solmiddag för tidmätning. Stencirklar och solurverk var justerade för att markera detta ögonblick.",
+  "biodynamicPrincipleDescription": "Denna vägledning följer kosmiska rytmer som påverkar växtvitalitet och jordförhållanden.",
+  "dictionaries": {
+    "planetInSign": {
+      "sun": {
+        "leo": "Sol i Lejonet lyser med kreativ självförtroende. Uttryck dig autentiskt och leda med hjärta.",
+        "aries": "Sol i Vågen ger modig, pionjärenergi. Ett tillfälle att inleda, leda och handlingskraftigt.",
+        "virgo": "Sol i Jungfrun kräver förfining och tjänst. Organisera, förbättra system och se till detaljer.",
+        "libra": "Sol i Vågen söker harmoni och partnerskap. Balansera relationer och uppskattar estetisk skönhet.",
+        "taurus": "Sol i Oxen grundar oss i stabilitet och sensorisk njutning. Fokusera på byggande, vård och uppskattning av skönhet.",
+        "gemini": "Sol i Tvillingarna väcker nyfikenhet och kommunikation. Utbyta idéer, lär och anslut till din gemenskap.",
+        "cancer": "Sol i Krebsen djupare känslor. Vårda relationer, hedra känslor och skapa tillflyktsort.",
+        "pisces": "Sol i Fiskarna upplöser gränser. Anslut till det oändliga, praktisera medkänsla och lit på intuition.",
+        "scorpio": "Sol i Skorpionen djupare förvandling. Omfamna intensitet, undersök mysterier och släpp vad som inte längre tjänar.",
+        "aquarius": "Sol i Vattumannen innoverar för kollektivet. Omfamna unikhet, tänka progressivt och tjänst mänskligheten.",
+        "ophiuchus": "Sol i Ofensnaken upplyser läkande vishet. Ett tillfälle för transformerande kunskap, ormmedicin och heligt återskapande.",
+        "capricorn": "Sol i Stenbocken bygger för långsiktigt. Ta ansvar, sätt ambitiösa mål och mästra ditt handwerk.",
+        "sagittarius": "Sol i Skorpionen expanderar horisonter. Sök visdom, utforska nya territorier och omfamna optimism."
+      },
+      "moon": {
+        "leo": "Månen i Lejonet uttrycker känslor dramatiskt. Värme, kreativitet och behov av erkännande i relationer.",
+        "aries": "Månen i Vågen ger snabba känslor. Impulsiva känslor, passionerade reaktioner och oberoende behov.",
+        "virgo": "Månen i Jungfrun söker ordning och användbarhet. Emotionsell tillfredsställelse genom tjänst, hälsa och förbättring.",
+        "libra": "The Moon in Libra harmonizes emotions. Needs partnership, aesthetic balance, and diplomatic relating.",
+        "taurus": "Månen i Oxen söker bekvämlighet och stabilitet. Vård genom sensualitet, tålamod och materiell säkerhet.",
+        "gemini": "Månen i Tvillingarna svänger med tankar och konversationer. Emotionsell nyfikenhet, mentala stimulansbehov.",
+        "cancer": "Månen är hemma i Krebsen. Djupare vård, skyddsinstinkter och djup känslighet.",
+        "pisces": "Månen i Fiskarna upplöser känslomässiga gränser. Empati, fantasi och andlig känslighet.",
+        "scorpio": "The Moon in Scorpio feels intensely. Emotional depth, transformative experiences, and powerful intuition.",
+        "aquarius": "Månen i Vattumannen avstår för att observera. Emotionsell objektivitet, mänskliga frågor och unika behov.",
+        "ophiuchus": "Månen i Ofen är läkande genom känslor. Intuitiv medicin, transformerande känsla och ormisk visdom.",
+        "capricorn": "Månen i Stenbocken hämmar känslor. Mognad i känslans hantering, ansvar och långsiktig säkerhet.",
+        "sagittarius": "Månen i Skorpionen utforskar känslor. Frihetsbehov, filosofiska känslor och äventyrlig ande."
+      },
+      "mars": {
+        "leo": "Mars in Leo performs boldly. Dramatic action, creative drive, and confident leadership.",
+        "aries": "Mars is at home in Aries. Direct action, courageous initiative, and passionate drive.",
+        "virgo": "Mars in Virgo works precisely. Methodical effort, service-oriented action, and health focus.",
+        "libra": "Mars in Libra acts diplomatically. Indirect confrontation, partnership drive, and aesthetic action.",
+        "taurus": "Mars in Taurus persists steadily. Determined effort, sensual energy, and stubborn resistance.",
+        "gemini": "Mars in Gemini acts mentally. Quick movements, verbal combat, and scattered initiatives.",
+        "cancer": "Mars in Cancer defends protectively. Emotional action, defensive aggression, and nurturing drive.",
+        "pisces": "Mars i Pisces sveper intuitivt. Andlig handling, medkänsam drivkraft och flyktig initiativ.",
+        "scorpio": "Mars is at home in Scorpio. Intense action, strategic power, and transformative drive.",
+        "aquarius": "Mars i Aquarius revolutionerar handling. Reformerande drivkraft, gruppinitiativ och icke-konventionella metoder.",
+        "ophiuchus": "Mars in Ophiuchus acts as healer. Surgical precision, restorative force, and transformative intervention.",
+        "capricorn": "Mars i Capricorn uppnår ambitiöst. Disciplinerade ansträngningar, strategisk klättring och auktoritativ handling.",
+        "sagittarius": "Mars i Sagittarius utforskar äventyrligt. Expanderande initiativ, filosofisk handling och risktagande."
+      },
+      "venus": {
+        "leo": "Venus i Lejonet älskar dramatiskt. Romantiska stora gester, kreativ expression och lojal kärlek.",
+        "aries": "Venus i Aries älskar passionerat. Djärv attraktion, spontan romans och oberoende partnerskap.",
+        "virgo": "Venus i Jungfrun tjänar praktiskt. Hjälpande kärlek, blyg attraktion och uppmärksamhet på relationsdetaljer.",
+        "libra": "Venus is at home in Libra. Harmonious partnerships, aesthetic appreciation, and diplomatic relating.",
+        "taurus": "Venus är hemma i Oxen. Sensuell njutning, stabila relationer och uppskattning av skönhet.",
+        "gemini": "Venus i Tvillingen charmar verbalt. Flirtig anslutning, intellektuell attraktion och social variation.",
+        "cancer": "Venus i Krabban vårdar kärleksfullt. Emotionsell bindning, hemlig harmoni och skyddande vård.",
+        "pisces": "Venus in Pisces loves unconditionally. Romantic idealism, spiritual connection, and compassionate relating.",
+        "scorpio": "Venus in Scorpio loves intensely. Deep transformation through relationships and magnetic attraction.",
+        "aquarius": "Venus in Aquarius connects uniquely. Unconventional relationships, friendship-based love, and freedom.",
+        "ophiuchus": "Venus in Ophiuchus loves as medicine. Healing relationships, transformative devotion, and heart-centered restoration.",
+        "capricorn": "Venus in Capricorn commits seriously. Mature relationships, status considerations, and lasting bonds.",
+        "sagittarius": "Venus in Sagittarius explores freely. Adventurous love, philosophical connection, and open relationships."
+      },
+      "saturn": {
+        "leo": "Saturn i Leo avtemplar kreativitet. Lektioner i ödmjukhet, strukturerat självuttryck och ansvarigt ledarskap.",
+        "aries": "Saturn i Aries testar initiativ. Lektioner i tålamod, begränsad handling och mogen ledarskap.",
+        "virgo": "Saturn i Virgo perfektionerar tjänst. Lektioner i precision, hälsodisiplin och praktisk meisterskap.",
+        "libra": "Saturn i Libra ådriver balans. Lektioner i partnerskapsansvar, rättvisa strukturer och mogen relation.",
+        "taurus": "Saturn i Taurus stabiliserar resurser. Lektioner i uthållighet, materiell ansvarighet och varaktig värdering.",
+        "gemini": "Saturn i Gemini disciplinierar tanken. Lektioner i fokus, allvarlig kommunikation och mental mogenhet.",
+        "cancer": "Saturn i Cancer skyddar gränser. Lektioner i emotionell ansvarighet, familjeplikter och vårdande begränsningar.",
+        "pisces": "Saturn in Pisces dissolves boundaries carefully. Lessons in compassion, spiritual discipline, and mystical responsibility.",
+        "scorpio": "Saturn i Scorpio förändrar dj",
+        "aquarius": "Saturn is at home in Aquarius. Social responsibility, innovative structures, and humanitarian duty.",
+        "ophiuchus": "Saturn in Ophiuchus masters healing. Lessons in medical discipline, structured transformation, and responsible restoration.",
+        "capricorn": "Saturn is at home in Capricorn. Mastery through discipline, authority earned, and lasting achievement.",
+        "sagittarius": "Saturn in Sagittarius structures beliefs. Lessons in wisdom, disciplined expansion, and responsible freedom."
+      },
+      "mercury": {
+        "leo": "Merkurios i Lejonet uttrycker kreativt. Dramatisk tal, självsäkra idéer och hjärta-centrerad tanke.",
+        "aries": "Merkurios i Aries tänker snabbt och direkt. Skarp, impulsiv kommunikation och banbrytande idéer.",
+        "virgo": "Merkurios är hemma i Jungfrun. Analytisk precision, praktisk intelligens och detaljerad analys.",
+        "libra": "Merkurios i Vågen söker balanserad tanke. Diplomatisk kommunikation och övervägande av alla perspektiv.",
+        "taurus": "Merkurios i Oxen tänker praktiskt. Stabil inlärning, känslomässig perception och metodisk kommunikation.",
+        "gemini": "Merkurios är hemma i Tvillingen. Snabb vits, mångsidig tanke och skicklig kommunikation.",
+        "cancer": "Merkurios i Krabban tänker intuitivt. Minnesinriktning, känslomässig intelligens och vårdande ord.",
+        "pisces": "Merkurios i Fiskarna föreställer sig intuitivt. Poetisk expression, mottagenhet i lyssnan och andlig förståelse.",
+        "scorpio": "Merkurios i Skorpionen undersöker djupt. Undersökande tanke, psykologisk insikt och genomträngande ord.",
+        "aquarius": "Merkurios i Vattumannen innoverar tanke. Originala idéer, intellektuell avstårighet och progressiva koncept.",
+        "ophiuchus": "Merkurios i Ofen tänker medicinskt. Läkande kommunikation, medicinsk kunskap och transformerande insikt.",
+        "capricorn": "Merkurios i Stenbocken strukturerar tanke. Strategisk planering, auktorativ tal och praktisk visdom.",
+        "sagittarius": "Merkurios i Skorpionen expanderar förståelsen. Filosofisk tanke och bred kommunikation."
+      },
+      "jupiter": {
+        "leo": "Jupiter i Leo skapar imponerande. Tillväxt genom självuttryck, kreativ överflödighet och generös ledarskap.",
+        "aries": "Jupiter i Aries expanderar drastiskt. Tillväxt genom initiativ, lyckliga nya början och självsäker optimism.",
+        "virgo": "Jupiter i Virgo förbättrar skickligt. Tillväxt genom tjänst, praktisk visdom och hälsovellstånd.",
+        "libra": "Jupiter i Libra harmoniserar rättvist. Tillväxt genom partnerskap, estetisk uppskattning och diplomatisk visdom.",
+        "taurus": "Jupiter i Taurus manifesterar överflödande. Tillväxt genom tålamod, materiella välsignelser och sensuell visdom.",
+        "gemini": "Jupiter i Gemini lär sig mångfacetterat. Tillväxt genom kommunikation, intellektuell expansion och varierade intressen.",
+        "cancer": "Jupiter i Cancer näringsger generöst. Tillväxt genom omvårdnad, emotionell överflödighet och skyddande visdom.",
+        "pisces": "Jupiter i Pisces upplöser i oändligheten. Tillväxt genom medkänsla, andlig överflödighet och universell kärlek.",
+        "scorpio": "Jupiter i Scorpio förändrar djupt. Tillväxt genom intensitet, delade resurser och psykologisk visdom.",
+        "aquarius": "Jupiter i Aquarius innoverar progressivt. Tillväxt genom gemenskap, humanitär visdom och unik vision.",
+        "ophiuchus": "Jupiter i Ophiuchus expanderar helbredande. Tillväxt genom medicin, visdomen hos ormen och transformerande kunskap.",
+        "capricorn": "Jupiter i Capricorn strukturerar visst. Tillväxt genom disciplin, strategisk framgång och auktoritativ visdom.",
+        "sagittarius": "Jupiter är hemma i Sagittarius. Oändlig expansion, filosofisk visdom och lyckliga resor."
+      }
+    },
+    "providerSetup": {
+      "groq": {
+        "type": "groq",
+        "name": "Groq",
+        "logo": "⚡",
+        "color": "#f43f5e",
+        "website": "https://groq.com",
+        "signupUrl": "https://console.groq.com/login",
+        "keyFormat": "Börjar med \"gsk_\" följt av alfanumeriska tecken",
+        "apiKeysUrl": "https://console.groq.com/keys",
+        "description": "Blixtsnabb AI-inference med Llama 3. Gratisnivå inkluderar 1M tokens dagligen.",
+        "pricingNote": "Gratisnivå: 1M tokens/dag. Betalda planer tillgängliga för högre användning.",
+        "freeTierInfo": "1 000 000 tokens/dag gratis",
+        "keyPlaceholder": "gsk_din_api_nyckel_här",
+        "setupSteps": {
+          "0": {
+            "tip": "Använd din e-post eller Google-konto för snabb registrering",
+            "link": "https://console.groq.com/login",
+            "title": "Create a Groq Account",
+            "action": "Gå till Groq-konsolen →",
+            "description": "Besök Groq-konsolen och registrera dig för ett gratiskonto."
+          },
+          "1": {
+            "tip": "Leta efter nyckelikonen i navigeringsmenyn",
+            "link": "https://console.groq.com/keys",
+            "title": "Navigate to API Keys",
+            "action": "Öppna sidan för API-nycklar →",
+            "description": "Efter att du har loggat in, klicka på \"API-nycklar\" i vänsterkolumnen."
+          },
+          "2": {
+            "tip": "Välj ett beskrivande namn så du kommer ihåg vad den är till för",
+            "title": "Create New API Key",
+            "description": "Klicka på knappen \"Skapa API-nyckel\". Ge den ett namn som \"HEKA Kalender\"."
+          },
+          "3": {
+            "tip": "⚠️ För säkerhet, visar Groq bara hela nyckeln en gång. Om du förlorar den, skapa en ny.",
+            "title": "Copy Your API Key",
+            "description": "Kopiera den genererade nyckeln (börjar med \"gsk_\"). Spara den säkert - du kommer inte att se den igen."
+          },
+          "4": {
+            "tip": "Din nyckel lagras endast på denna enhet",
+            "title": "Paste Key in HEKA",
+            "description": "Återvänd till denna skärm och klistra in din nyckel nedan. Klicka på \"Testa anslutning\" för att verifiera."
+          }
+        }
+      },
+      "openai": {
+        "type": "openai",
+        "name": "OpenAI",
+        "logo": "🤖",
+        "color": "#10a37f",
+        "website": "https://openai.com",
+        "signupUrl": "https://platform.openai.com/signup",
+        "keyFormat": "Börjar med \"sk-\" följt av alfanumeriska tecken",
+        "apiKeysUrl": "https://platform.openai.com/api-keys",
+        "description": "GPT-4 och GPT-3.5 Turbo för nyanserade astrologiska tolkning. Industriledande kvalitet.",
+        "pricingNote": "Betala per användning efter gratiskrediter. GPT-3.5: ~0,002 dollar per 1K tokens.",
+        "freeTierInfo": "5 dollar i gratiskrediter för nya användare",
+        "keyPlaceholder": "sk-your_api_key_here",
+        "setupSteps": {
+          "0": {
+            "tip": "Ha ditt telefonnummer klart för SMS-verifikation",
+            "link": "https://platform.openai.com/signup",
+            "title": "Create OpenAI Account",
+            "action": "Registrera dig på OpenAI →",
+            "description": "Registrera dig på OpenAI-plattformen. Du behöver e-postverifikation och ett telefonnummer."
+          },
+          "1": {
+            "tip": "Du kan ställa in användningsbegränsningar för att kontrollera kostnader i Faktureringsinställningar",
+            "title": "Add Payment Method (Optional)",
+            "description": "Medans du får 5 dollar i gratiskrediter, att lägga till ett betalningsmedel säkerställer oberoende tjänst."
+          },
+          "2": {
+            "tip": "Förväxla inte detta med \"Projekt-API-nycklar\" - vi behöver Användar-API-nycklar",
+            "link": "https://platform.openai.com/api-keys",
+            "title": "Gå till avsnittet för API-nycklar",
+            "action": "Öppna API-nycklar →",
+            "description": "Klicka på din profilbild → \"Ditt profil\" → \"Användar-API-nycklar\" eller besök direktlänken."
+          },
+          "3": {
+            "tip": "⚠️ OpenAI visar bara hela nyckeln en gång. Kopiera den omedelbart!",
+            "title": "Skapa en ny hemlig nyckel",
+            "description": "Klicka på \"Skapa ny hemlig nyckel\". Ge den namnet \"HEKA Calendar\" för enkel identifiering."
+          },
+          "4": {
+            "tip": "Ställ in faktureringsvarningar på platform.openai.com/settings/organization/billing/limits",
+            "title": "Konfigurera i HEKA",
+            "description": "Klistra in din nyckel nedan och testa anslutningen. Övervaka användningen i OpenAI-instrumentpanelen."
+          }
+        }
+      },
+      "ollama": {
+        "type": "ollama",
+        "name": "Ollama (Lokal)",
+        "logo": "💻",
+        "color": "#ffffff",
+        "website": "https://ollama.com",
+        "signupUrl": "https://ollama.com/download",
+        "keyFormat": "URL-format: http://localhost:11434",
+        "apiKeysUrl": "",
+        "description": "Kör AI-modeller helt på din egen enhet. Full integritet, ingen internetuppkoppling behövs efter installationen.",
+        "pricingNote": "Inga kostnader. Kräver kapabel hårdvara (8GB+ RAM rekommenderas).",
+        "freeTierInfo": "100% gratis - körs lokalt",
+        "keyPlaceholder": "http://localhost:11434",
+        "setupSteps": {
+          "0": {
+            "tip": "Windows-versionen är tillgänglig via Windows Subsystem for Linux (WSL2)",
+            "link": "https://ollama.com/download",
+            "title": "Ladda ner Ollama",
+            "action": "Ladda ner Ollama →",
+            "description": "Ladda ner och installera Ollama för ditt operativsystem (Mac, Linux eller Windows)."
+          },
+          "1": {
+            "tip": "Llama 3 rekommenderas för bästa resultat. Modellerna är flera GB att ladda ner.",
+            "title": "Installera en modell",
+            "description": "Öppna terminalen och kör: ollama pull llama3 eller ollama pull mistral"
+          },
+          "2": {
+            "tip": "Servern körs på http://localhost:11434 som standard",
+            "title": "Starta Ollama-servern",
+            "description": "Kör: ollama serve för att starta den lokala API-servern. Håll denna terminal öppen."
+          },
+          "3": {
+            "tip": "Första gången laddar ned modellen. Efterföljande körningar är omedelbara.",
+            "title": "Verifiera installationen",
+            "description": "Testa genom att köra: ollama run llama3 i en annan terminal. Skriv ett testmeddelande."
+          },
+          "4": {
+            "tip": "Ollama måste köras när du vill ha AI-utökade läsningar",
+            "title": "Anslut HEKA",
+            "description": "Ange server-URL (vanligtvis http://localhost:11434) nedan och testa anslutningen."
+          }
+        }
+      },
+      "template": {
+        "type": "mall",
+        "name": "Mallbibliotek",
+        "logo": "📚",
+        "color": "#fbbf24",
+        "website": "",
+        "signupUrl": "",
+        "keyFormat": "",
+        "apiKeysUrl": "",
+        "description": "169+ handgjorda planet-tecken-mallar, vävda in i unika läsningar av månfas, aspekt och livskategori. Alltid gratis, alltid omedelbar, ingen installation krävs.",
+        "pricingNote": "Inga kostnader någonsin. Drivs av vårt kurerade mallsystem.",
+        "freeTierInfo": "Helt gratis",
+        "keyPlaceholder": "",
+        "setupSteps": {
+          "0": {
+            "tip": "Mallar täcker alla större himlaevenemang och planetpositioner",
+            "title": "Välj Mallbibliotek",
+            "description": "Detta är standardalternativet. Ingen konfiguration krävs."
+          },
+          "1": {
+            "tip": "Du kan växla till AI-leverantörer när som helst i framtiden",
+            "title": "Börja använda omedelbart",
+            "description": "Alla astrologiska läsningar kommer att använda vårt förskrivna mallbibliotek."
+          }
+        }
+      },
+      "anthropic": {
+        "type": "anthropic",
+        "name": "Anthropic",
+        "logo": "🧠",
+        "color": "#d97757",
+        "website": "https://anthropic.com",
+        "signupUrl": "https://console.anthropic.com/login",
+        "keyFormat": "Börjar med \"sk-ant-\" följt av alfanumeriska tecken",
+        "apiKeysUrl": "https://console.anthropic.com/settings/keys",
+        "description": "Claude AI för tankeväckande, nyanserade astrologiska råd med utökad kontext.",
+        "pricingNote": "Konkurrenskraftiga priser. Claude 3 Haiku: ~0,25 dollar per 1K token.",
+        "freeTierInfo": "5 dollar i gratiskredit för nya användare",
+        "keyPlaceholder": "sk-ant-din_api_nyckel_här",
+        "setupSteps": {
+          "0": {
+            "tip": "Anthropic kan ha en väntelista - godkännande är vanligtvis snabbt",
+            "link": "https://console.anthropic.com/login",
+            "title": "Registrera dig för Anthropic",
+            "action": "Gå till Anthropic-konsol →",
+            "description": "Skapa ett konto i Anthropic-konsolen med din arbetsepost."
+          },
+          "1": {
+            "tip": "Kolla i spammappen om du inte ser e-postmeddelandet inom några minuter",
+            "title": "Verifiera ditt konto",
+            "description": "Kolla din e-post efter verifieringslänk. Slutför alla nödvändiga verifieringssteg."
+          },
+          "2": {
+            "tip": "Inställningarnas tandhjulikon finns i det övre högra hörnet",
+            "link": "https://console.anthropic.com/settings/keys",
+            "title": "Åtkomst till API-nycklar",
+            "action": "Öppna API-nycklar →",
+            "description": "I konsolen, gå till Inställningar → API-nycklar eller använd direktlänken nedan."
+          },
+          "3": {
+            "tip": "You can create multiple keys for different apps",
+            "title": "Generera API-nyckel",
+            "description": "Klicka på \"Skapa"
+          },
+          "4": {
+            "tip": "Nycklar löper aldrig ut om du inte återkallar dem manuellt",
+            "title": "Kopiera och konfigurera",
+            "description": "Kopiera nyckeln (börjar med \"sk-ant-\") och klistra in den nedan i HEKA."
+          }
+        }
+      }
+    },
+    "moonOracle": {
+      "New Moon": {
+        "poem": "In the void between breaths, all potential dwells. The seed waits in darkness, gathering courage to split its shell. Plant intentions now—they will grow with the light.",
+        "title": "THE DARK MYSTERY",
+        "favors": {
+          "0": "Setting intentions",
+          "1": "Planting seeds",
+          "2": "Beginning new ventures",
+          "3": "Inner vision work"
+        },
+        "warnings": {
+          "0": "Don't push for immediate results",
+          "1": "Avoid major launches"
+        }
+      },
+      "Full Moon": {
+        "poem": "Allt som var dolt i mörker är nu avslöjat i ljuset. Frönet som satts vid ny måne bryter igenom jorden. Ditt arbete kulminerar. Världen vittnar ditt fulländighet.",
+        "title": "DET STORE AVSlöJANDET",
+        "favors": {
+          "0": "Festligheter",
+          "1": "Att släppa det som inte längre tjänar",
+          "2": "Publik synlighet",
+          "3": "Tacksamhetsövningar"
+        },
+        "warnings": {
+          "0": "Emotioner är höga",
+          "1": "Sömn kan bli störd"
+        }
+      },
+      "Last Quarter": {
+        "poem": "Halv finns kvar, halv måste gå. Vad kommer du att bära framåt? Vad kommer du att lämna bakom dig? Valet är ditt, och endast ditt.",
+        "title": "FRIgörANDET",
+        "favors": {
+          "0": "Släpp taget",
+          "1": "Släpp förbindelser",
+          "2": "Rensa utrymme",
+          "3": "Ursäkt"
+        },
+        "warnings": {
+          "0": "Börja inte nya projekt",
+          "1": "Avsluta vad du kan"
+        }
+      },
+      "First Quarter": {
+        "poem": "Halv ljus, halv skugga—beslutet hänger i balans. Vägen framåt kräver handling. Välj, och universum samarbetar.",
+        "title": "KRYSSNINGEN",
+        "favors": {
+          "0": "Att fatta beslut",
+          "1": "Att vidta åtgärder",
+          "2": "Att kämpa igenom hinder",
+          "3": "Att engagera sig"
+        },
+        "warnings": {
+          "0": "Undvik tveksamhet",
+          "1": "Titta inte tillbaka"
+        }
+      },
+      "Waxing Gibbous": {
+        "poem": "Nästan full, nästan komplett. Momentum bygger upp sig som en våg som når sin topp. Förfina, justera, förbered dig för avslöjandet.",
+        "title": "SAMLINGEN",
+        "favors": {
+          "0": "Att förfina projekt",
+          "1": "Att justera planer",
+          "2": "Att förbereda för lansering",
+          "3": "Att samla resurser"
+        },
+        "warnings": {
+          "0": "Skynda dig inte till slutförande",
+          "1": "Tålamod belönas"
+        }
+      },
+      "Waning Gibbous": {
+        "poem": "Ljuset börjar sin mjuka tillbakadragning, men visdom består. Dela med dig vad du har lärt dig. Lär andra vad fulländigheten lärde dig.",
+        "title": "DELANDE",
+        "favors": {
+          "0": "Att dela kunskap",
+          "1": "Att undervisa",
+          "2": "Att ge tillbaka",
+          "3": "Tacksamhet"
+        },
+        "warnings": {
+          "0": "Klibba inte fast vid toppen",
+          "1": "Låt cykeln slutföras"
+        }
+      },
+      "Waxing Crescent": {
+        "poem": "A sliver of silver pierces the night. The dream begins to breathe, taking its first steps into form. Trust the unfolding.",
+        "title": "THE FIRST BREATH",
+        "favors": {
+          "0": "Att ta första steg",
+          "1": "Att bygga upp momentum",
+          "2": "Att lära nya färdigheter",
+          "3": "Att knyta kontakter"
+        },
+        "warnings": {
+          "0": "Överkommiera inte",
+          "1": "Förbli flexibel"
+        }
+      },
+      "Waning Crescent": {
+        "poem": "En silvervissling som tonar bort i svart. Vila nu. Arbetet är klart. Överge dig åt mörkret, vetandes att ljuset kommer att återvända.",
+        "title": "DEN ÖVERGIVNA",
+        "favors": {
+          "0": "Djup vila",
+          "1": "Överge dig",
+          "2": "Meditation",
+          "3": "Förberedelse",
+          "4": "Dromarbete"
+        },
+        "warnings": {
+          "0": "Undvik stora beslut",
+          "1": "Bespara energi"
+        }
+      }
+    },
+    "planetaryGuidance": {
+      "sun": {
+        "do": {
+          "0": "Ta ledarskap",
+          "1": "Gör viktiga förfrågningar",
+          "2": "Fokusera på synlighet",
+          "3": "Uttryck dig själv",
+          "4": "Sök erkännande"
+        },
+        "title": "SOLARKLOCKAN",
+        "dont": {
+          "0": "Göm dig i skuggorna",
+          "1": "Undvik ansvar",
+          "2": "Dunkla ditt ljus"
+        },
+        "quality": "Vitalitet & Erkännande",
+        "description": "Solen lyser upp allt den rör vid. Denna timme föredrar synlighet, ledarskap och frågor om hjärta och ego."
+      },
+      "moon": {
+        "do": {
+          "0": "Omvårdnad av relationer",
+          "1": "Lita på intuition",
+          "2": "Hem och familjeärenden",
+          "3": "Emotionsell bearbetning",
+          "4": "Dromarbete"
+        },
+        "title": "MÅNLOCKAN",
+        "dont": {
+          "0": "Tvinga rationella beslut",
+          "1": "Ignorera känslor",
+          "2": "Trycka för hårt"
+        },
+        "quality": "Känsla & Intuition",
+        "description": "Månen styr känslornas tidvågor och intuition. En tid för vård, hem och psykisk mottaglighet."
+      },
+      "mars": {
+        "do": {
+          "0": "Fysisk aktivitet",
+          "1": "Hantera konflikter direkt",
+          "2": "Träna",
+          "3": "Konkurrensutsiktningar",
+          "4": "Ta modiga åtgärder"
+        },
+        "title": "MARSKLOCKAN",
+        "dont": {
+          "0": "Undvik nödvändiga konfrontationer",
+          "1": "Undertryck ilska",
+          "2": "Starta argument"
+        },
+        "quality": "Åtgärd & Drivkraft",
+        "description": "Mars bringar eld, driv och konkurrenskraft. Fysisk handling och konfrontation föredras."
+      },
+      "venus": {
+        "do": {
+          "0": "Romantik och förlovning",
+          "1": "Konstnärlig skapande",
+          "2": "Socialisera",
+          "3": "Skapa skönhet",
+          "4": "Lösa konflikter fredligt"
+        },
+        "title": "DEN VENUSIANSKA TIMMEN",
+        "dont": {
+          "0": "Tvinga ut resultat",
+          "1": "Ignorera estetik",
+          "2": "Skynda intimitet"
+        },
+        "quality": "Kärlek & Skönhet",
+        "description": "Venus badar världen i skönhet och begär. Kärlek, konst och harmoni är överlägset."
+      },
+      "saturn": {
+        "do": {
+          "0": "Fokusera på ansvar",
+          "1": "Studera och organisera",
+          "2": "Planera framåt",
+          "3": "Bygg grunder",
+          "4": "Acceptera begränsningar"
+        },
+        "title": "DEN SATURNINSKA TIMMEN",
+        "dont": {
+          "0": "Skära kort",
+          "1": "Undvika uppgifter",
+          "2": "Förvänta dig omedelbara resultat"
+        },
+        "quality": "Disciplin & Struktur",
+        "description": "Saturn kräver disciplin och struktur. Hårt arbete nu ger varaktiga resultat."
+      },
+      "mercury": {
+        "do": {
+          "0": "Skicka viktiga meddelanden",
+          "1": "Signera kontrakt (om direkt)",
+          "2": "Skriva och studera",
+          "3": "Förhandla",
+          "4": "Resa korta avstånd"
+        },
+        "title": "DEN MERKURIALA TIMMEN",
+        "dont": {
+          "0": "Engagera i bedrägeri",
+          "1": "Sprida skvaller",
+          "2": "Signera om Merkurius bakåtgående"
+        },
+        "quality": "Tankar & Kommunikation",
+        "description": "Merkurigör tanken och tungan snabbare. Kommunikation, lärande och handel flödar lätt nu."
+      },
+      "jupiter": {
+        "do": {
+          "0": "Affärsärenden",
+          "1": "Sök vishet",
+          "2": "Utvidga horisonter",
+          "3": "Lära och lära",
+          "4": "Gester av generositet"
+        },
+        "title": "DEN JOVISKA TIMMEN",
+        "dont": {
+          "0": "Var snål",
+          "1": "Tänk smått",
+          "2": "Begränsa dig själv"
+        },
+        "quality": "Utvidgning & Lycka",
+        "description": "Jupiter utvidgar allt den rör vid. Lycka, vishet och tillväxt är välsignade denna timme."
+      }
+    }
+  }
+}

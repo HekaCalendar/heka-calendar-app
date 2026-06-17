@@ -4,30 +4,23 @@
  */
 
 import { useState } from 'react';
-// import { useSelector, useDispatch } from 'react-redux';
-// import type { RootState } from '../store';
+import { useTranslation } from 'react-i18next';
+
 import { HEKA_MONTHS } from '../services/calendarService';
+import { CalendarNotificationSettings } from './notification/CalendarNotificationSettings';
+import { ConfirmDialog } from './ui/ConfirmDialog';
 
 interface AdvancedSettingsProps {
   isOpen: boolean;
   onClose: () => void;
 }
 
-const NOTIFICATION_OPTIONS = [
-  { id: 'new-year', label: 'HEKA New Year', description: 'Alert when HEKA year begins' },
-  { id: 'new-moon', label: 'New Moon', description: 'Monthly new moon reminder' },
-  { id: 'full-moon', label: 'Full Moon', description: 'Monthly full moon reminder' },
-  { id: 'month-start', label: 'Month Start', description: 'Beginning of each HEKA month' },
-  { id: 'solstice-equinox', label: 'Solstices & Equinoxes', description: 'Seasonal events' },
-  { id: 'daily-reminder', label: 'Daily Reminder', description: 'Daily note reminder at selected time' },
-];
-
 const THEME_OPTIONS = [
-  { id: 'dark-gold', name: 'Dark Gold', description: 'Premium gold on dark', color: '#d4af37' },
-  { id: 'midnight-blue', name: 'Midnight Blue', description: 'Deep blue elegance', color: '#1e3a5f' },
-  { id: 'forest-green', name: 'Forest Green', description: 'Natural earth tones', color: '#2d5016' },
-  { id: 'royal-purple', name: 'Royal Purple', description: 'Mystical purple theme', color: '#5b21b6' },
-  { id: 'crimson-red', name: 'Crimson', description: 'Bold crimson accents', color: '#991b1b' },
+  { id: 'dark-gold', nameKey: 'themeDarkGold', descKey: 'themeDarkGoldDesc', color: '#d4af37' },
+  { id: 'midnight-blue', nameKey: 'themeMidnightBlue', descKey: 'themeMidnightBlueDesc', color: '#1e3a5f' },
+  { id: 'forest-green', nameKey: 'themeForestGreen', descKey: 'themeForestGreenDesc', color: '#2d5016' },
+  { id: 'royal-purple', nameKey: 'themeRoyalPurple', descKey: 'themeRoyalPurpleDesc', color: '#5b21b6' },
+  { id: 'crimson-red', nameKey: 'themeCrimson', descKey: 'themeCrimsonDesc', color: '#991b1b' },
 ];
 
 const FONT_OPTIONS = [
@@ -38,6 +31,7 @@ const FONT_OPTIONS = [
 ];
 
 export const AdvancedSettings: React.FC<AdvancedSettingsProps> = ({ isOpen, onClose }) => {
+  const { t } = useTranslation('settings');
   // const dispatch = useDispatch();
   const [activeTab, setActiveTab] = useState<'general' | 'months' | 'notifications' | 'appearance'>('general');
   
@@ -46,21 +40,13 @@ export const AdvancedSettings: React.FC<AdvancedSettingsProps> = ({ isOpen, onCl
   const [editingMonth, setEditingMonth] = useState<number | null>(null);
   const [tempMonthName, setTempMonthName] = useState('');
   
-  // Notification settings
-  const [notifications, setNotifications] = useState<Record<string, boolean>>({
-    'new-year': true,
-    'new-moon': false,
-    'full-moon': true,
-    'month-start': false,
-    'solstice-equinox': true,
-    'daily-reminder': false,
-  });
-  const [reminderTime, setReminderTime] = useState('20:00');
+
   
   // Appearance
   const [selectedTheme, setSelectedTheme] = useState('dark-gold');
   const [selectedFont, setSelectedFont] = useState('default');
-  const [customBackground, setCustomBackground] = useState<string | null>(null);
+  const [showResetConfirm, setShowResetConfirm] = useState(false);
+
   
   if (!isOpen) return null;
   
@@ -84,34 +70,20 @@ export const AdvancedSettings: React.FC<AdvancedSettingsProps> = ({ isOpen, onCl
   };
   
   const handleResetMonths = () => {
-    if (confirm('Reset all month names to defaults?')) {
-      setCustomMonths(HEKA_MONTHS.map(m => m.name));
-    }
+    setShowResetConfirm(true);
   };
   
   const handleSaveAll = () => {
-    // Save all settings
-    // dispatch(saveAdvancedSettings({...}));
     onClose();
   };
   
-  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setCustomBackground(reader.result as string);
-      };
-      reader.readAsDataURL(file);
-    }
-  };
   
   return (
     <div className="modal-overlay" onClick={(e) => e.target === e.currentTarget && onClose()}>
       <div className="modal" style={{ maxWidth: '600px', maxHeight: '80vh' }}>
         <div className="modal__header">
           <h2 className="modal__title">⚙️ Advanced Settings</h2>
-          <button className="btn btn--icon" onClick={onClose}>×</button>
+          <button className="btn btn--icon" onClick={onClose} aria-label={t('closeSettings')}>×</button>
         </div>
         
         {/* Tabs */}
@@ -145,46 +117,46 @@ export const AdvancedSettings: React.FC<AdvancedSettingsProps> = ({ isOpen, onCl
         {/* General Tab */}
         {activeTab === 'general' && (
           <div className="settings-section">
-            <h3 className="settings-section-title">Calendar Behavior</h3>
+            <h3 className="settings-section-title">{t('calendarBehavior')}</h3>
             
             <div className="setting-item">
               <div className="setting-info">
-                <label>Week Start</label>
-                <p>First day of the week in calendar view</p>
+                <label>{t('weekStart')}</label>
+                <p>{t('weekStartDescription')}</p>
               </div>
               <select className="setting-select">
-                <option value="saturday">Saturday (HEKA Standard)</option>
-                <option value="sunday">Sunday</option>
-                <option value="monday">Monday</option>
+                <option value="saturday">{t('saturday')}</option>
+                <option value="sunday">{t('sunday')}</option>
+                <option value="monday">{t('monday')}</option>
               </select>
             </div>
             
             <div className="setting-item">
               <div className="setting-info">
-                <label>Default View</label>
-                <p>Calendar view when opening the app</p>
+                <label>{t('defaultView')}</label>
+                <p>{t('defaultViewDescription')}</p>
               </div>
               <select className="setting-select">
-                <option value="month">Month View</option>
-                <option value="year">Year Overview</option>
-                <option value="last">Remember Last</option>
+                <option value="month">{t('monthView')}</option>
+                <option value="year">{t('yearOverview')}</option>
+                <option value="last">{t('rememberLast')}</option>
               </select>
             </div>
             
             <div className="setting-item">
               <div className="setting-info">
-                <label>Data Export</label>
-                <p>Download all your calendar data</p>
+                <label>{t('dataExport')}</label>
+                <p>{t('dataExportDescription')}</p>
               </div>
-              <button className="btn">Export JSON</button>
+              <button className="btn">{t('exportJSON')}</button>
             </div>
             
             <div className="setting-item danger">
               <div className="setting-info">
-                <label>Clear All Data</label>
-                <p>Permanently delete all notes and settings</p>
+                <label>{t('clearAllData')}</label>
+                <p>{t('clearAllDataDescription')}</p>
               </div>
-              <button className="btn btn--danger">Delete Everything</button>
+              <button className="btn btn--danger">{t('deleteEverything')}</button>
             </div>
           </div>
         )}
@@ -192,8 +164,19 @@ export const AdvancedSettings: React.FC<AdvancedSettingsProps> = ({ isOpen, onCl
         {/* Month Names Tab */}
         {activeTab === 'months' && (
           <div className="settings-section">
+            <ConfirmDialog
+              isOpen={showResetConfirm}
+              onClose={() => setShowResetConfirm(false)}
+              onConfirm={() => {
+                setCustomMonths(HEKA_MONTHS.map(m => m.name));
+                setShowResetConfirm(false);
+              }}
+              title={t('resetMonthNames', 'Reset month names')}
+              description={t('resetMonthNamesConfirm', 'Reset all month names to their defaults?')}
+              confirmText={t('reset', 'Reset')}
+            />
             <div className="month-names-header">
-              <h3 className="settings-section-title">Customize Month Names</h3>
+              <h3 className="settings-section-title">{t('customizeMonthNames')}</h3>
               <button className="btn btn--sm" onClick={handleResetMonths}>
                 Reset to Default
               </button>
@@ -215,8 +198,8 @@ export const AdvancedSettings: React.FC<AdvancedSettingsProps> = ({ isOpen, onCl
                           if (e.key === 'Escape') handleMonthCancel();
                         }}
                       />
-                      <button className="btn btn--sm btn--primary" onClick={handleMonthSave}>✓</button>
-                      <button className="btn btn--sm" onClick={handleMonthCancel}>×</button>
+                      <button className="btn btn--sm btn--primary" onClick={handleMonthSave} aria-label={t('common.save')}>✓</button>
+                      <button className="btn btn--sm" onClick={handleMonthCancel} aria-label={t('close')}>×</button>
                     </div>
                   ) : (
                     <div className="month-name-display">
@@ -235,44 +218,15 @@ export const AdvancedSettings: React.FC<AdvancedSettingsProps> = ({ isOpen, onCl
         {/* Notifications Tab */}
         {activeTab === 'notifications' && (
           <div className="settings-section">
-            <h3 className="settings-section-title">Notification Preferences</h3>
-            
-            {NOTIFICATION_OPTIONS.map(option => (
-              <div key={option.id} className="notification-option">
-                <div className="notification-info">
-                  <label className="checkbox">
-                    <input
-                      type="checkbox"
-                      checked={notifications[option.id]}
-                      onChange={(e) => setNotifications({
-                        ...notifications,
-                        [option.id]: e.target.checked
-                      })}
-                    />
-                    <span>{option.label}</span>
-                  </label>
-                  <p>{option.description}</p>
-                </div>
-              </div>
-            ))}
-            
-            {notifications['daily-reminder'] && (
-              <div className="reminder-time-setting">
-                <label>Daily Reminder Time</label>
-                <input
-                  type="time"
-                  value={reminderTime}
-                  onChange={(e) => setReminderTime(e.target.value)}
-                />
-              </div>
-            )}
+            <h3 className="settings-section-title">{t('notificationPreferences')}</h3>
+            <CalendarNotificationSettings />
           </div>
         )}
         
         {/* Appearance Tab */}
         {activeTab === 'appearance' && (
           <div className="settings-section">
-            <h3 className="settings-section-title">Theme</h3>
+            <h3 className="settings-section-title">{t('theme')}</h3>
             <div className="theme-grid">
               {THEME_OPTIONS.map(theme => (
                 <button
@@ -284,13 +238,13 @@ export const AdvancedSettings: React.FC<AdvancedSettingsProps> = ({ isOpen, onCl
                     className="theme-preview"
                     style={{ background: theme.color }}
                   />
-                  <span className="theme-name">{theme.name}</span>
-                  <span className="theme-description">{theme.description}</span>
+                  <span className="theme-name">{t(theme.nameKey)}</span>
+                  <span className="theme-description">{t(theme.descKey)}</span>
                 </button>
               ))}
             </div>
             
-            <h3 className="settings-section-title">Typography</h3>
+            <h3 className="settings-section-title">{t('typography')}</h3>
             <div className="font-options">
               {FONT_OPTIONS.map(font => (
                 <button
@@ -304,37 +258,13 @@ export const AdvancedSettings: React.FC<AdvancedSettingsProps> = ({ isOpen, onCl
               ))}
             </div>
             
-            <h3 className="settings-section-title">Custom Background</h3>
-            <div className="custom-background">
-              {customBackground ? (
-                <div className="background-preview">
-                  <img src={customBackground} alt="Custom background" />
-                  <button className="btn btn--sm" onClick={() => setCustomBackground(null)}>
-                    Remove
-                  </button>
-                </div>
-              ) : (
-                <div className="background-upload">
-                  <input
-                    type="file"
-                    accept="image/*"
-                    onChange={handleImageUpload}
-                    id="bg-upload"
-                    hidden
-                  />
-                  <label htmlFor="bg-upload" className="btn">
-                    Upload Image
-                  </label>
-                  <p>Recommended: 1920x1080 or larger</p>
-                </div>
-              )}
-            </div>
+
           </div>
         )}
         
         {/* Footer */}
         <div className="settings-footer">
-          <button className="btn" onClick={onClose}>Cancel</button>
+          <button className="btn" onClick={onClose}>{t('cancel')}</button>
           <button className="btn btn--primary" onClick={handleSaveAll}>
             Save Changes
           </button>

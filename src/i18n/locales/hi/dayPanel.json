@@ -1,0 +1,239 @@
+{
+  "celestialGuide": "दिग्गज मार्गदर्शन",
+  "journal": "पत्रिका",
+  "notes": "टिप्पणियाँ",
+  "events": "घटनाएँ",
+  "tasks": "कार्य",
+  "transits": "परिवहन",
+  "mood": "मनोरंजक",
+  "vibe": "वाइब",
+  "energy": "शक्ति",
+  "hekaRune": "हेका रूण",
+  "celestialAffirmation": "दिग्गज पुष्टिकरण",
+  "moodTracker": "मनोरंजक ट्रैकर",
+  "vibeColor": "वाइब रंग",
+  "addNote": "एक टिप्पणी जोड़ें...",
+  "addEvent": "घटना जोड़ें",
+  "addTask": "कार्य जोड़ें",
+  "eventTitle": "घटना शीर्षक",
+  "taskTitle": "कार्य शीर्षक",
+  "taskCompleted": "पूरा हुआ",
+  "taskPending": "लंबित",
+  "editNote": "टिप्पणी संपादित करें",
+  "deleteNote": "टिप्पणी हटाएं",
+  "notePlaceholder": "यहां अपने विचार लिखें...",
+  "journalPlaceholder": "आपका दिन रिकॉर्ड करें...",
+  "eventPlaceholder": "क्या हो रहा है?",
+  "taskPlaceholder": "क्या करना है?",
+  "addNewNote": "+ नई टिप्पणी",
+  "addNewEvent": "+ नई घटना",
+  "addNewTask": "+ नई कार्यवाही",
+  "noNotes": "इस दिन के लिए कोई टिप्पणियाँ नहीं",
+  "noEvents": "इस दिन के लिए कोई घटनाएँ नहीं",
+  "noTasks": "इस दिन के लिए कोई कार्यवाही नहीं",
+  "noJournal": "इस दिन के लिए कोई पत्रिका प्रविष्टि नहीं",
+  "transitProgress": "परिवहन प्रगति",
+  "transitRemaining": "{{percent}}% बाकी",
+  "currentMood": "वर्तमान मनोरंजक",
+  "selectMood": "अपना मनोरंजक चुनें",
+  "moods": {
+    "joyful": "खुश",
+    "happy": "खुश",
+    "content": "सम्तुलित",
+    "neutral": "न्यूट्रल",
+    "tired": "थका",
+    "sad": "उदास",
+    "anxious": "चिंता味儿",
+    "frustrated": "अप्रत्याशित",
+    "angry": "क्रोधित",
+    "inspired": "प्रेरित",
+    "focused": "ध्यान केंद्रित",
+    "peaceful": "शांतिपूर्ण"
+  },
+  "runeCast": "रून काटना...",
+  "runeReveal": "रून उजागर करें",
+  "runeBlessing": "आज की आशीर्वाद",
+  "runeWisdom": "रून बुद्धिमत्ता",
+  "runeEnergy": "रून ऊर्जा",
+  "emptyState": "विवरण देखने के लिए एक दिन का चयन करें",
+  "closePanel": "पैनल बंद करें",
+  "addTaskBtn": "+ कार्य",
+  "header": {
+    "monthOf": "{{month}} माह / 13",
+    "hekaYear": "हेका वर्ष {{year}}"
+  },
+  "moon": {
+    "calculating": "चंद्राचल की स्थिति की गणना...",
+    "unavailable": "चंद्रमा के चरण के लिए डेटा उपलब्ध नहीं है",
+    "waxing": "बढ़ते हुए",
+    "waning": "घटते हुए",
+    "illuminated": "{{percent}}% प्रकाशित",
+    "age": "{{age}} दिन की उम्र",
+    "swissEphemeris": "स्विस ईफीमेरिस",
+    "southernHemisphere": "दक्षिणी ध्रुवीय क्षेत्र",
+    "northernHemisphere": "उत्तरी ध्रुवीय क्षेत्र"
+  },
+  "holidays": {
+    "inLocation": "{{location}} में त्योहार"
+  },
+  "astrology": {
+    "dailyCosmicGuidance": "दैनिक कोजग्रस मार्गदर्शन",
+    "personalizedFor": "{{name}} के लिए निजीकरण",
+    "birthChartActive": "जन्म चार्ट सक्रिय",
+    "calculatingTransits": "आपके व्यक्तिगत ट्रांसिट्स की गणना...",
+    "connectingCelestial": "स्वर्गीय बुद्धिमत्ता से कनेक्ट हो रहा है...",
+    "unavailable": "स्वर्गीय मार्गदर्शन उपलब्ध नहीं है। विस्तृत ज्योतिष के लिए स्टार्स खंड देखें।",
+    "sunrise": "सूर्योदय: {{time}}",
+    "sunset": "सूर्यस्त: {{time}}",
+    "planetaryHour": "{{planet}} के ग्रहीय घंटे",
+    "locationPin": "{{location}}",
+    "activeTransits": "आपके लिए आज सक्रिय ट्रांसिट्स",
+    "moonIn": "चंद्र ग्रह में {{sign}}",
+    "sunIn": "सूर्य ग्रह में {{sign}}",
+    "todaysTheme": "आज का विषय:",
+    "cosmicGuidance": "कॉज़मिक मार्गदर्शन",
+    "reflection": "छात्रता",
+    "affirmation": "अनुमोदन",
+    "birthChartCta": {
+      "title": "व्यक्तिगत ट्रांसिट्स चाहते हैं?",
+      "description": "स्टार्स अनुभाग में अपनी जन्मरेखा जोड़ें ताकि आप आज की कॉज़मिक मौसम को व्यक्तिगत रूप से कैसे प्रभावित होता है, इसे देख सकें।"
+    }
+  },
+  "lunarMansion": {
+    "title": "चंद्र का घर",
+    "trueMode": "सत्य मोड",
+    "calculating": "सायड्रीय चंद्र स्थिति की गणना...",
+    "totem": "टोटम",
+    "gift": "उपहार",
+    "ruler": "शासक",
+    "quality": "गुणवत्ता",
+    "quarter": "तृतीय",
+    "sunTravelsThrough": "सूर्य {{name}} के माध्यम से यात्रा करता है",
+    "quarters": {
+      "initiation": "प्रारंभ — बीज बोतल दिया गया है",
+      "deepening": "गहरा होने वाला — जड़ें पकड़ लेती हैं",
+      "crisis": "समस्या — परीक्षण आता है",
+      "completion": "समाप्ति — फल पकड़ लेता है"
+    }
+  },
+  "solarReturn": {
+    "title": "सत्य सौर रिटर्न",
+    "titleInDays": "सत्य सौर रिटर्न {{count}} दिन में {{suffix}}",
+    "trueMode": "सत्य मोड",
+    "today": "आज सूर्य आपके सायड्रीय जन्म लंबाई पर वापस आता है।",
+    "approaching": "सूर्य आपके सायड्रीय {{sign}} स्थिति पर {{date}} पर वापस आ जाएगा।",
+    "description": "TRUE HEKA मोड में, आपका जन्म सितारे द्वारा निर्धारित होता है, नागरिक कैलेंडर से नहीं।",
+    "exactOrb": "{{orb}} अर्कमिनट के भीतर सटीक।"
+  },
+  "notesSection": {
+    "tasksAndNotes": "कार्य ({{tasks}}) · नोट ({{notes}})",
+    "tasksOnly": "कार्य ({{count}})",
+    "notesAndTasks": "नोट्स और कार्य ({{count}})",
+    "addNote": "+ नोट",
+    "longHoldHint": "विकल्प के लिए लंबे समय तक पकड़ें · कार्य को संपादित करने के लिए डबल टैप करें",
+    "noNotesOrTasks": "इस दिन के लिए कोई नोट या कार्य नहीं।",
+    "createNoteHint": "एक बनाने के लिए <0>+ नोट</0> या <1>⚡ कार्य जोड़ें</1> ऊपर क्लिक करें।"
+  },
+  "noteEditor": {
+    "makeTask": "⚡ इसे एक कार्य बनाएं",
+    "dueTime": "नियत समय",
+    "remindMe": "मुझे याद दिलाएं",
+    "reminders": {
+      "atTime": "कार्य के समय पर",
+      "5min": "कार्य से 5 मिनट पहले",
+      "10min": "10 मिनट पहले",
+      "15min": "15 मिनट पहले",
+      "30min": "30 मिनट पहले",
+      "1hour": "1 घंटे से पहले"
+    },
+    "howAreYouFeeling": "आप कैस महसूस कर रहे हैं?",
+    "taskPlaceholder": "आप क्या करने की योजना बना रहे हैं?",
+    "notePlaceholder": "अपना नोट लिखें...",
+    "saveTask": "कार्य बचाएं",
+    "saveNote": "नोट बचाएं",
+    "cancel": "रद्द करें"
+  },
+  "noteItem": {
+    "markComplete": "पूरा करें",
+    "completed": "पूरा",
+    "task": "कार्य",
+    "delete": "मिटाएँ"
+  },
+  "selection": {
+    "selectedFromDays": "{{count}} {{days}} दिन से चुना हुआ{{suffix}}",
+    "done": "पूर्ण",
+    "selectAll": "सभी का चयन करें",
+    "duplicate": "डुप्लिकेट...",
+    "delete": "मिटाएँ",
+    "manageDuplicates": "डुप्लिकेट प्रबंध करें:",
+    "duplicateTo": "इसमें डुप्लिकेट करें:",
+    "nextWeek": "अगले सप्ताह",
+    "nextMonth": "अगले महीने",
+    "everyDay": "प्रत्येक {{day}}",
+    "undoEveryDay": "प्रत्येक {{day}} को रद्द करें",
+    "specificDay": "विशिष्ट दिन...",
+    "chooseDays": "दिन चुनें...",
+    "back": "वापस"
+  },
+  "dayPicker": {
+    "cancel": "रद्द करें"
+  },
+  "multiDayPicker": {
+    "selectedCount": "{{count}} दिन चुना हुआ{{suffix}}",
+    "confirm": "पुष्टि करें",
+    "cancel": "रद्द करें"
+  },
+  "confirmations": {
+    "deleteNote": "इस नोट को मिटाएं?",
+    "deleteSelected": "{{days}} दिनों से {{count}} चयनित नोट(s) को मिटाएं?",
+    "duplicateEveryDay": "इन {{count}} आइटम को हर {{day}} के लिए पूरे वर्ष के लिए डुप्लिकेट करें?",
+    "undoDuplicates": "इन {{count}} नोट(s) के सभी डुप्लिकेट उदाहरण को हटा दें?"
+  },
+  "alerts": {
+    "couldNotCalculateDate": "लक्ष्य तिथि की गणना नहीं कर सका",
+    "duplicatedToNextWeek": "{{items}} को अगले सप्ताह ({{month}} {{day}}) में डुप्लिकेट किया गया",
+    "duplicatedToNextMonth": "{{items}} को अगले महीने ({{month}} {{day}}) में डुप्लिकेट किया गया",
+    "duplicatedToDays": "{{count}} {{day}} के दिनों में डुप्लिकेट किया गया",
+    "duplicatedNotes": "डुप्लिकेटेड {{count}} नोट(एस)",
+    "removedDuplicates": "डुप्लिकेटेड नोट हटा दिए गए",
+    "duplicatedToMonth": "अगले महीने {{count}} नोट(एस) डुप्लिकेटेड",
+    "duplicatedToDaysCount": "{{days}} दिन(ों) में {{count}} नोट(एस) डुप्लिकेटेड",
+    "duplicatedSelectedItems": "{{count}} दिन(ों) में चयनित आइटम डुप्लिकेटेड",
+    "signInToSaveTasks": "टास्क को बचाने के लिए आपको साइन इन होना चाहिए। कृपया खाता मेनु खोलें और फिर से साइन इन करें।",
+    "unableToSaveTask": "टास्क को बचाने में असमर्थ। त्रुटि: {{error}}"
+  },
+  "dow": {
+    "sunday": "रविवार",
+    "monday": "सोमवार",
+    "tuesday": "मंगलवार",
+    "wednesday": "बुधवार",
+    "thursday": "गुरुवार",
+    "friday": "शुक्रवार",
+    "saturday": "शनिवार",
+    "short": {
+      "sun": "रवि",
+      "mon": "सोम",
+      "tue": "मंगल",
+      "wed": "बुध",
+      "thu": "गुरु",
+      "fri": "शुक्र",
+      "sat": "शनि"
+    }
+  },
+  "noteCategories": {
+    "personal": "व्यक्तिगत",
+    "work": "काम",
+    "spiritual": "आध्यात्मिक",
+    "family": "परिवार",
+    "health": "स्वास्थ्य",
+    "creative": "सृजनात्मक",
+    "general": "सामान्य"
+  },
+  "moodScale": {
+    "1": "बहुत कम",
+    "2": "कम",
+    "3": "न्यूट्रल",
+    "4": "अच्छा",
+    "5": "श्रेष्ठ"
+  }
+}

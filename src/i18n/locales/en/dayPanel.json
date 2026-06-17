@@ -1,0 +1,240 @@
+{
+  "celestialGuide": "Celestial Guide",
+  "journal": "Journal",
+  "notes": "Notes",
+  "events": "Events",
+  "tasks": "Tasks",
+  "transits": "Transits",
+  "mood": "Mood",
+  "vibe": "Vibe",
+  "energy": "Energy",
+  "hekaRune": "HEKA Rune",
+  "celestialAffirmation": "Celestial Affirmation",
+  "moodTracker": "Mood Tracker",
+  "vibeColor": "Vibe Color",
+  "addNote": "Add a note...",
+  "addEvent": "Add Event",
+  "addTask": "Add Task",
+  "eventTitle": "Event title",
+  "taskTitle": "Task title",
+  "taskCompleted": "Completed",
+  "taskPending": "Pending",
+  "editNote": "Edit Note",
+  "deleteNote": "Delete Note",
+  "notePlaceholder": "Write your thoughts here...",
+  "journalPlaceholder": "Record your day...",
+  "eventPlaceholder": "What's happening?",
+  "taskPlaceholder": "What needs doing?",
+  "addNewNote": "+ New Note",
+  "addNewEvent": "+ New Event",
+  "addNewTask": "+ New Task",
+  "noNotes": "No notes for this day",
+  "noEvents": "No events for this day",
+  "noTasks": "No tasks for this day",
+  "noJournal": "No journal entry for this day",
+  "transitProgress": "Transit Progress",
+  "transitRemaining": "{{percent}}% remaining",
+  "currentMood": "Current Mood",
+  "selectMood": "Select your mood",
+  "moods": {
+    "joyful": "Joyful",
+    "happy": "Happy",
+    "content": "Content",
+    "neutral": "Neutral",
+    "tired": "Tired",
+    "sad": "Sad",
+    "anxious": "Anxious",
+    "frustrated": "Frustrated",
+    "angry": "Angry",
+    "inspired": "Inspired",
+    "focused": "Focused",
+    "peaceful": "Peaceful"
+  },
+  "runeCast": "Casting runes...",
+  "runeReveal": "Reveal Rune",
+  "runeBlessing": "Today's Blessing",
+  "runeWisdom": "Rune Wisdom",
+  "runeEnergy": "Rune Energy",
+  "emptyState": "Select a day to view details",
+  "closePanel": "Close panel",
+  "addTaskBtn": "+ Task",
+  "header": {
+    "monthOf": "Month {{month}} / 13",
+    "hekaYear": "HEKA Year {{year}}"
+  },
+  "moon": {
+    "calculating": "Calculating lunar position...",
+    "unavailable": "Moon phase data unavailable",
+    "waxing": "Waxing",
+    "waning": "Waning",
+    "illuminated": "{{percent}}% illuminated",
+    "age": "Age: {{age}} days",
+    "swissEphemeris": "Swiss Ephemeris",
+    "southernHemisphere": "Southern Hemisphere",
+    "northernHemisphere": "Northern Hemisphere"
+  },
+  "holidays": {
+    "inLocation": "Holidays in {{location}}"
+  },
+  "astrology": {
+    "dailyCosmicGuidance": "Daily Cosmic Guidance",
+    "personalizedFor": "Personalized for {{name}}",
+    "birthChartActive": "Birth Chart Active",
+    "calculatingTransits": "Calculating your personal transits...",
+    "connectingCelestial": "Connecting to celestial intelligence...",
+    "unavailable": "Celestial guidance unavailable. Check the Stars section for detailed astrology.",
+    "sunrise": "Sunrise: {{time}}",
+    "sunset": "Sunset: {{time}}",
+    "planetaryHour": "Planetary Hour: {{planet}}",
+    "locationPin": "{{location}}",
+    "activeTransits": "Active Transits for You Today",
+    "moonIn": "Moon in {{sign}}",
+    "sunIn": "Sun in {{sign}}",
+    "todaysTheme": "Today's Theme:",
+    "cosmicGuidance": "Cosmic Guidance",
+    "reflection": "Reflection",
+    "affirmation": "Affirmation",
+    "birthChartCta": {
+      "title": "Want personalized transits?",
+      "description": "Add your birth chart in the Stars section to see how today's cosmic weather affects you personally."
+    }
+  },
+  "lunarMansion": {
+    "title": "Lunar Mansion",
+    "trueMode": "TRUE Mode",
+    "syncMode": "SYNC Mode",
+    "calculating": "Calculating sidereal moon position...",
+    "totem": "Totem",
+    "gift": "Gift",
+    "ruler": "Ruler",
+    "quality": "Quality",
+    "quarter": "Quarter",
+    "sunTravelsThrough": "Sun travels through {{name}}",
+    "quarters": {
+      "initiation": "Initiation — the seed is planted",
+      "deepening": "Deepening — roots take hold",
+      "crisis": "Crisis — the test arrives",
+      "completion": "Completion — the fruit ripens"
+    }
+  },
+  "solarReturn": {
+    "title": "True Solar Return",
+    "titleInDays": "True Solar Return in {{count}} day{{suffix}}",
+    "trueMode": "TRUE Mode",
+    "today": "The Sun returns to your sidereal birth longitude today.",
+    "approaching": "The Sun will return to your sidereal {{sign}} position on {{date}}.",
+    "description": "In TRUE HEKA mode, your birthday is determined by the stars, not the civil calendar.",
+    "exactOrb": "Exact to within {{orb}} arcminutes."
+  },
+  "notesSection": {
+    "tasksAndNotes": "Tasks ({{tasks}}) · Notes ({{notes}})",
+    "tasksOnly": "Tasks ({{count}})",
+    "notesAndTasks": "Notes & Tasks ({{count}})",
+    "addNote": "+ Note",
+    "longHoldHint": "Long-hold for options · Double-tap a task to edit",
+    "noNotesOrTasks": "No notes or tasks for this day.",
+    "createNoteHint": "Click <0>+ Note</0> or <1>⚡ Add Task</1> above to create one."
+  },
+  "noteEditor": {
+    "makeTask": "⚡ Make this a task",
+    "dueTime": "Due time",
+    "remindMe": "Remind me",
+    "reminders": {
+      "atTime": "At time of task",
+      "5min": "5 minutes before",
+      "10min": "10 minutes before",
+      "15min": "15 minutes before",
+      "30min": "30 minutes before",
+      "1hour": "1 hour before"
+    },
+    "howAreYouFeeling": "How are you feeling?",
+    "taskPlaceholder": "What do you intend to accomplish?",
+    "notePlaceholder": "Write your note...",
+    "saveTask": "Save Task",
+    "saveNote": "Save Note",
+    "cancel": "Cancel"
+  },
+  "noteItem": {
+    "markComplete": "Mark complete",
+    "completed": "Completed",
+    "task": "Task",
+    "delete": "Delete"
+  },
+  "selection": {
+    "selectedFromDays": "{{count}} selected from {{days}} day{{suffix}}",
+    "done": "Done",
+    "selectAll": "Select All",
+    "duplicate": "Duplicate...",
+    "delete": "Delete",
+    "manageDuplicates": "Manage Duplicates:",
+    "duplicateTo": "Duplicate to:",
+    "nextWeek": "Next Week",
+    "nextMonth": "Next Month",
+    "everyDay": "Every {{day}}",
+    "undoEveryDay": "Undo Every {{day}}",
+    "specificDay": "Specific Day...",
+    "chooseDays": "Choose Day(s)...",
+    "back": "Back"
+  },
+  "dayPicker": {
+    "cancel": "Cancel"
+  },
+  "multiDayPicker": {
+    "selectedCount": "{{count}} day{{suffix}} selected",
+    "confirm": "Confirm",
+    "cancel": "Cancel"
+  },
+  "confirmations": {
+    "deleteNote": "Delete this note?",
+    "deleteSelected": "Delete {{count}} selected note(s) from {{days}} day(s)?",
+    "duplicateEveryDay": "Duplicate these {{count}} item(s) to EVERY {{day}} for the rest of the year?",
+    "undoDuplicates": "Remove all duplicated instances of these {{count}} note(s)?"
+  },
+  "alerts": {
+    "couldNotCalculateDate": "Could not calculate target date",
+    "duplicatedToNextWeek": "Duplicated {{items}} to next week ({{month}} {{day}})",
+    "duplicatedToNextMonth": "Duplicated {{items}} to next month ({{month}} {{day}})",
+    "duplicatedToDays": "Duplicated to {{count}} {{day}}s",
+    "duplicatedNotes": "Duplicated {{count}} note(s)",
+    "removedDuplicates": "Removed duplicated notes",
+    "duplicatedToMonth": "Duplicated {{count}} note(s) to next month",
+    "duplicatedToDaysCount": "Duplicated {{count}} note(s) to {{days}} day(s)",
+    "duplicatedSelectedItems": "Duplicated selected items to {{count}} day(s)",
+    "signInToSaveTasks": "You need to be signed in to save tasks. Please open the Account menu and sign in again.",
+    "unableToSaveTask": "Unable to save task. Error: {{error}}"
+  },
+  "dow": {
+    "sunday": "Sunday",
+    "monday": "Monday",
+    "tuesday": "Tuesday",
+    "wednesday": "Wednesday",
+    "thursday": "Thursday",
+    "friday": "Friday",
+    "saturday": "Saturday",
+    "short": {
+      "sun": "Sun",
+      "mon": "Mon",
+      "tue": "Tue",
+      "wed": "Wed",
+      "thu": "Thu",
+      "fri": "Fri",
+      "sat": "Sat"
+    }
+  },
+  "noteCategories": {
+    "personal": "Personal",
+    "work": "Work",
+    "spiritual": "Spiritual",
+    "family": "Family",
+    "health": "Health",
+    "creative": "Creative",
+    "general": "General"
+  },
+  "moodScale": {
+    "1": "Very Low",
+    "2": "Low",
+    "3": "Neutral",
+    "4": "Good",
+    "5": "Excellent"
+  }
+}

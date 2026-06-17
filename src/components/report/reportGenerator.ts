@@ -9,6 +9,7 @@
  */
 
 import type { AstroProfile } from '../../types/astrology';
+import i18n from '../../i18n';
 import { generateNatalChart, calculateJulianDay, calculateAllPlanets, calculateAyanamsa } from '../../astrology/services/swiss-ephemeris/engine';
 import {
   calculateElementalBalance, calculateModalityBalance, getNatalThemes,
@@ -19,6 +20,7 @@ import { calculateAspects } from '../../astrology/services/calculations/aspects'
 import { getSunInSignInterpretation } from '../../astrology/data/interpretations/planetInSign';
 import { getHouseMeaning } from '../../astrology/data/houseMeanings';
 import { calculateBirthMansion, describeMansion, type BirthMansion } from '../../astrology/services/calculations/nakshatras';
+import type { PlanetId, CelestialBody } from '../../astrology/types';
 
 // ── Types ────────────────────────────────────────────────────────────────────
 
@@ -293,7 +295,7 @@ function analyzeHemisphere(bodies: Record<string, any>): { above: number; below:
   const below = vals.filter(b => b.latitude < 0).length;
   const east = vals.filter(b => (b.longitude % 360) < 180).length;
   const west = vals.filter(b => (b.longitude % 360) >= 180).length;
-  let text = '';
+  let text: string;
   if (above > below + 2) text = 'Your planets cluster above the horizon, indicating an extraverted, public, action-oriented life path.';
   else if (below > above + 2) text = 'Your planets cluster below the horizon, indicating an introverted, private, subjectively oriented life path.';
   else text = 'Your planets are balanced between above and below the horizon, suggesting integration of public and private life.';
@@ -353,7 +355,7 @@ export async function generateNatalReport(profile: AstroProfile): Promise<NatalR
   const birthMansion = calculateBirthMansion(birthDateObj, profile.timezone, profile.location.latitude, profile.location.longitude);
 
   // Derived data
-  const tropicalAspects = calculateAspects(tropicalChart.bodies, { includeMinorAspects: false }) as any[];
+  const tropicalAspects = calculateAspects(tropicalChart.bodies as Record<PlanetId, CelestialBody>, { includeMinorAspects: false });
   const tropicalPatterns = detectPatterns(tropicalChart.bodies);
   const tropicalElements = calculateElementalBalance(tropicalChart.bodies);
   const tropicalModalities = calculateModalityBalance(tropicalChart.bodies);
@@ -793,7 +795,7 @@ function buildShapeSection(shape: string, hemisphere: any, elements: any, modali
   content += `Above horizon: ${hemisphere.above} · Below horizon: ${hemisphere.below} · East: ${hemisphere.east} · West: ${hemisphere.west}\n\n`;
 
   content += `### Elemental Balance\n\n`;
-  content += `Fire (${elements.fire}) · Earth (${elements.earth}) · Air (${elements.air}) · Water (${elements.water})\n\n`;
+  content += `Fire (${elements.fire}) · Earth (${elements.earth}) · Air (${elements.air}) · Water (${elements.water}) · Ether (${elements.ether ?? 0})\n\n`;
   if (dominantEl[1] > 3) content += `**${capitalize(dominantEl[0])}-dominant:** ${getElementDescription(dominantEl[0])}\n\n`;
   if (weakestEl[1] < 2) content += `**${capitalize(weakestEl[0])} underrepresented:** ${getElementUnderrep(weakestEl[0])}\n\n`;
 
@@ -855,7 +857,7 @@ function buildTimingSection(profile: AstroProfile, chart: any, planetaryHour: { 
 
   if (sr) {
     content += `### Your Next Solar Return\n\n`;
-    content += `Your personal new year occurs around **${sr.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}**. `;
+    content += `Your personal new year occurs around **${new Intl.DateTimeFormat(i18n.language || 'en', { month: 'long', day: 'numeric', year: 'numeric' }).format(sr)}**. `;
     content += `This is when the Sun returns to its exact natal position. It is the most powerful time for intention-setting, goal-setting, and reviewing the year past. Mark this date in your HEKA calendar.\n\n`;
   }
 

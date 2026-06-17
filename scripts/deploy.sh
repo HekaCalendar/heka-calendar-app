@@ -35,7 +35,7 @@ echo "🔨 Building project..."
 npm run build
 
 # Check build output
-if [ ! -d "dist2" ]; then
+if [ ! -d "dist" ]; then
     echo -e "${RED}❌ Build failed - no dist2 folder found${NC}"
     exit 1
 fi

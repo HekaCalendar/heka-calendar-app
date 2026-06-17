@@ -243,10 +243,14 @@ const astrologySlice = createSlice({
      * Called when the user switches between SYNC and TRUE calendar modes.
      * SYNC  = tropical, Placidus, no Nakshatras
      * TRUE  = sidereal, whole-sign, Lahiri, Nakshatras visible
+     *
+     * NOTE: Only updates GLOBAL preferences, not per-profile preferences.
+     * Per-profile preferences should not be overwritten by mode switches —
+     * users may intentionally want different zodiac systems per profile.
      */
     applyModeDefaults: (state, action: PayloadAction<TimeMode>) => {
       const mode = action.payload;
-      const newPrefs: ProfilePreferences = mode === 'TRUE'
+      state.preferences = mode === 'TRUE'
         ? {
             ...state.preferences,
             zodiacSystem: 'sidereal',
@@ -269,22 +273,6 @@ const astrologySlice = createSlice({
             nakshatraSystem: 'none',
             showDignities: false,
           };
-
-      // Update global preferences
-      state.preferences = newPrefs;
-
-      // CRITICAL: Also update every stored profile's preferences so charts
-      // recalculate correctly when reloaded from storage.
-      const profileIds = Object.keys(state.entities.profiles) as ProfileId[];
-      for (const profileId of profileIds) {
-        const profile = state.entities.profiles[profileId];
-        if (profile) {
-          state.entities.profiles[profileId] = {
-            ...profile,
-            preferences: { ...profile.preferences, ...newPrefs },
-          };
-        }
-      }
     },
     
     // Calculation state

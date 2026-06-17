@@ -1,0 +1,99 @@
+{
+  "title": "ความสำเร็จ",
+  "streak": "ความต่อเนื่อง",
+  "days": "วัน",
+  "totalAchievements": "{{count}} ความสำเร็จ",
+  "earned": "ได้รับ",
+  "locked": "ล็อก",
+  "newAchievement": "ความสำเร็จใหม่!",
+  "categories": {
+    "calendar": "ควบคุมปฏิทิน",
+    "journal": "ผู้เก็บบันทึก",
+    "circle": "ผู้สร้างวง",
+    "coach": "นักสะกดดาว",
+    "explorer": "นักสำรวจ"
+  },
+  "achievements": {
+    "firstStep": {
+      "name": "ขั้นตอนแรก",
+      "description": "เปิดปฏิทินครั้งแรก"
+    },
+    "timeTraveler": {
+      "name": "นักท่องเที่ยวเวลา",
+      "description": "ดูวันที่เกิน 1 ปี"
+    },
+    "streak7": {
+      "name": "สัปดาห์แห่งแสงสว่าง",
+      "description": "ใช้ปฏิทินเป็นsecutively 7 วัน"
+    },
+    "streak30": {
+      "name": "เดือนแห่งดวงดาว",
+      "description": "ใช้ปฏิทินเป็นsecutively 30 วัน"
+    },
+    "streak100": {
+      "name": "ศตวรรษแห่งปราศรัย",
+      "description": "ใช้ปฏิทินเป็นsecutively 100 วัน"
+    },
+    "journalFirst": {
+      "name": "คำพูดแรก",
+      "description": "เขียนบันทึกบล็อกครั้งแรกของคุณ"
+    },
+    "journal10": {
+      "name": "นักเขียนที่เริ่มต้น",
+      "description": "เขียนบันทึกบล็อก 10 บท"
+    },
+    "journal50": {
+      "name": "นักเขียนที่คุ้นเคย",
+      "description": "เขียนบันทึกบล็อก 50 บท"
+    },
+    "friendAdded": {
+      "name": "มิตรคนแรก",
+      "description": "เพิ่มมิตรคนแรกของคุณ"
+    },
+    "circle5": {
+      "name": "วงที่เติบโต",
+      "description": "มีมิตร 5 คนในวงของคุณ"
+    },
+    "aiAsked": {
+      "name": "คนตามหาปราศรัย",
+      "description": "ถามคำถามกับครู AI"
+    },
+    "aiStreak7": {
+      "name": "คำปรึกษาประจำวัน",
+      "description": "ปรึกษาครู AI เป็นsecutively 7 วัน"
+    },
+    "allMoonPhases": {
+      "name": "ผู้สังเกตดวงจันทร์",
+      "description": "ดู 8 ขั้นตอนของดวงจันทร์"
+    },
+    "allZodiac": {
+      "name": "นักสำรวจเหวงราศี",
+      "description": "ดู 13 เหวงราศีทั้งหมด"
+    },
+    "printFirst": {
+      "name": "การพิมพ์ครั้งแรก",
+      "description": "พิมพ์หน้าปฏิทินของคุณครั้งแรก"
+    }
+  },
+  "categoryLabels": {
+    "beginner": "เริ่มต้น",
+    "intermediate": "ระดับกลาง",
+    "advanced": "ขั้นสูง",
+    "master": "ผู้เชี่ยวชาญ",
+    "special": "พิเศษ",
+    "explorer": "นักสำรวจ",
+    "discoverer": "นักค้นพบ",
+    "engager": "ผู้มีส่วนร่วม"
+  },
+  "stats": {
+    "appOpens": "การเปิดแอป",
+    "dayStreak": "คะแนนล่วงหน้า",
+    "hoursSpent": "เวลาที่ใช้",
+    "featuresFound": "คุณลักษณะที่ค้นพบ"
+  },
+  "all": "ทั้งหมด",
+  "showHidden": "แสดงที่ซ่อน",
+  "noAchievements": "ไม่พบความสำเร็จในหมวดนี้",
+  "hiddenAchievement": "ความสำเร็จที่ซ่อน",
+  "secret": "ลับ"
+}

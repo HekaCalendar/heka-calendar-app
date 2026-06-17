@@ -16,6 +16,7 @@
  */
 
 import { aiProviderManager } from '../astrology/services/ai/aiProvider';
+import { templateLibrary } from '../astrology/services/guidance/templates/templateLibrary';
 import { OracleEngine } from './oracleEngine';
 import { calculatePersonalTransits, getCurrentPlanetaryPositions, type BirthChart, type PersonalTransit } from './birthChartIntegration';
 
@@ -31,19 +32,10 @@ export interface EmotionalAnalysis {
   themes: string[];
 }
 
-export interface CrisisIndicators {
-  isCrisis: boolean;
-  type?: 'suicide' | 'self-harm' | 'severe-depression' | 'violence' | 'grief';
-  severity: number; // 0-100
-  keywords: string[];
-  requiresResources: boolean;
-}
-
 export interface ContentAnalysis {
   themes: string[];
   archetypes: string[];
   emotionalProfile: EmotionalAnalysis;
-  crisisCheck: CrisisIndicators;
   entities: string[]; // People, places mentioned
   sentiment: {
     score: number; // -1 to 1
@@ -56,7 +48,7 @@ export interface ContentAnalysis {
 export interface EnhancedInsight {
   id: string;
   text: string;
-  type: 'general' | 'crisis' | 'celebration' | 'challenge' | 'transition' | 'reflection';
+  type: 'general' | 'celebration' | 'challenge' | 'transition' | 'reflection';
   
   // Metadata
   confidence: number;
@@ -91,16 +83,6 @@ export interface EnhancedInsight {
   journalPrompts: string[];
   actionItems: string[];
   
-  // Crisis support
-  supportResources?: {
-    message: string;
-    resources: Array<{
-      name: string;
-      contact: string;
-      available: string;
-    }>;
-  };
-  
   // UI metadata
   visualTheme: {
     color: string;
@@ -110,121 +92,49 @@ export interface EnhancedInsight {
 }
 
 // ═══════════════════════════════════════════════════════════════════════════════
-// CRISIS DETECTION SYSTEM
+// SHADOW RESPONSES — Oracle wisdom for heavy emotional states
+// These are spiritual guidance, not clinical intervention.
 // ═══════════════════════════════════════════════════════════════════════════════
 
-const CRISIS_PATTERNS: Record<string, { patterns: RegExp[]; severity: number; type: CrisisIndicators['type'] }> = {
-  suicide: {
-    patterns: [
-      /\b(kill\s+(?:myself|me)|suicide|suicidal|end\s+(?:it|my\s+life)|not\s+worth\s+living|better\s+off\s+dead|want\s+to\s+die|don't\s+want\s+to\s+live)\b/gi,
-      /\b(no\s+reason\s+to\s+live|can't\s+go\s+on|give\s+up|hopeless|worthless)\b/gi,
-      /\b(hurt\s+myself|self.?harm|cut\s+myself|end\s+the\s+pain)\b/gi,
-    ],
-    severity: 100,
-    type: 'suicide'
-  },
-  selfHarm: {
-    patterns: [
-      /\b(cut\s+(?:myself|me)|self.?harm|hurt\s+myself|burn\s+myself|punish\s+myself)\b/gi,
-      /\b(want\s+to\s+feel\s+pain|deserve\s+to\s+suffer|hurt\s+my\s+body)\b/gi,
-    ],
-    severity: 90,
-    type: 'self-harm'
-  },
-  severeDepression: {
-    patterns: [
-      /\b(can't\s+get\s+out\s+of\s+bed|no\s+energy|empty\s+inside|numb|nothing\s+matters)\b/gi,
-      /\b(deep\s+depression|severe\s+depression|clinical\s+depression|major\s+depression)\b/gi,
-      /\b(crippling\s+depression|can't\s+function|paralyzed\s+by\s+sadness)\b/gi,
-    ],
-    severity: 80,
-    type: 'severe-depression'
-  },
-  violence: {
-    patterns: [
-      /\b(want\s+to\s+kill|hurt\s+someone|violent\s+thoughts|rage|anger\s+out\s+of\s+control)\b/gi,
-    ],
-    severity: 85,
-    type: 'violence'
-  },
-  grief: {
-    patterns: [
-      /\b(lost\s+(?:someone|them|him|her)|died|death\s+of|grief|mourning|can't\s+go\s+on\s+without)\b/gi,
-    ],
-    severity: 70,
-    type: 'grief'
-  }
+const SHADOW_RESPONSES: Record<string, string[]> = {
+  deepShadow: [
+    "The Oracle draws the Shadow card. What you flee from carries your greatest teaching. Turn and look—not with judgment, but with the curiosity of a stranger meeting themselves for the first time.",
+    "The bones speak of crossing water. Troubled times are thresholds, not destinations. The current is strong, but you have swum before. Trust the motion.",
+    "The mirror shows you what you already know. The question is not why you suffer, but what you will become through it. The forge does not apologize for the heat.",
+    "A door stands open behind you. Not to the past—to a room in yourself you have kept locked. The key was always your own willingness to enter.",
+    "The stars do not ask you to be bright today. They ask only that you be honest. Darkness is not failure. It is the womb that precedes all becoming.",
+  ],
+  griefWeight: [
+    "The Oracle casts the Bowl of Memory. What overflows is not meant to be contained. Let it spill. The earth knows how to receive what the heart cannot hold.",
+    "The thread between you and what is lost is not severed—it has changed texture. Grief is the proof that love was real. Do not rush to mend what is still teaching.",
+    "The old texts say: 'The well is deepest where the water has been longest.' Your sorrow has carved space for something only you can fill.",
+    "A candle burns in the temple of what was. Do not blow it out. Let it become a lantern you carry forward, not a fire that consumes.",
+  ],
+  rageFire: [
+    "The Oracle feels the heat from here. Anger is not the enemy—it is the guardian at the gate of your boundaries. Ask it: what are you protecting? Then listen.",
+    "The blade is sharp, but the hand that wields it is weary. Rage is energy misdirected. Find the river it wants to flow into, and let it run.",
+    "The storm in you has a name. It is not destruction. It is the unsaid, the unacknowledged, the unclaimed. Speak one truth today, and the thunder quiets.",
+  ],
+  emptiness: [
+    "The Oracle reads the Void. It is not absence—it is potential before form. The silence you fear is the same silence from which all creation arises.",
+    "You feel hollow because something old has left. Do not fill the space with noise. Let it breathe. The next shape of your life is forming in that emptiness.",
+    "The well appears dry. But below the surface, water moves in channels you cannot see. Trust what is gathering, even when the bucket comes up empty.",
+  ],
 };
 
-const SUPPORT_RESOURCES = {
-  suicide: {
-    message: "I'm hearing that you're going through an incredibly difficult time. Your life has value, and there are people who want to help right now.",
-    resources: [
-      { name: '988 Suicide & Crisis Lifeline', contact: '988 or 1-800-273-8255', available: '24/7, Free & Confidential' },
-      { name: 'Crisis Text Line', contact: 'Text HOME to 741741', available: '24/7, Free' },
-      { name: 'International Association for Suicide Prevention', contact: 'iasp.info/resources/Crisis_Centres', available: 'Find local resources' },
-    ]
-  },
-  selfHarm: {
-    message: "I notice you might be hurting. Please know that pain can be worked through with support—you don't have to carry this alone.",
-    resources: [
-      { name: 'Self-Harm Crisis Support', contact: '1-800-273-8255', available: '24/7' },
-      { name: 'Crisis Text Line', contact: 'Text HOME to 741741', available: '24/7' },
-      { name: 'National Alliance on Mental Health', contact: '1-800-950-6264', available: 'Mon-Fri 10am-10pm ET' },
-    ]
-  },
-  severeDepression: {
-    message: "Depression can make everything feel heavy and hopeless. These feelings are real, but they can shift with support and time.",
-    resources: [
-      { name: 'SAMHSA National Helpline', contact: '1-800-662-4357', available: '24/7, Free, Confidential' },
-      { name: 'National Hopeline Network', contact: '1-800-784-2433', available: '24/7' },
-      { name: 'Psychology Today Therapist Finder', contact: 'psychologytoday.com', available: 'Find local therapists' },
-    ]
-  },
-  violence: {
-    message: "Intense anger can feel overwhelming. There are ways to channel this energy safely and understand what's beneath it.",
-    resources: [
-      { name: 'National Domestic Violence Hotline', contact: '1-800-799-7233', available: '24/7' },
-      { name: 'Crisis Text Line', contact: 'Text HOME to 741741', available: '24/7' },
-      { name: 'SAMHSA Helpline', contact: '1-800-662-4357', available: '24/7' },
-    ]
-  },
-  grief: {
-    message: "Grief is love with nowhere to go. The pain you feel is a testament to how much you cared. You don't have to walk this path alone.",
-    resources: [
-      { name: 'GriefShare Support Groups', contact: 'griefshare.org', available: 'Find local groups' },
-      { name: 'Crisis Text Line', contact: 'Text HOME to 741741', available: '24/7' },
-      { name: 'The Compassionate Friends', contact: 'compassionatefriends.org', available: 'Grief support for bereaved parents' },
-    ]
+function pickShadowResponse(primaryEmotion: string, valence: string, intensity: number): string | null {
+  if (valence !== 'negative' || intensity < 70) return null;
+  // Select shadow category based on emotional signature
+  if (primaryEmotion === 'sadness' || primaryEmotion === 'grief' || primaryEmotion === 'longing') {
+    return pickRandom(SHADOW_RESPONSES.griefWeight);
   }
-};
-
-function detectCrisis(text: string): CrisisIndicators {
-  const lowerText = text.toLowerCase();
-  let maxSeverity = 0;
-  let detectedType: CrisisIndicators['type'] = undefined;
-  const allKeywords: string[] = [];
-  
-  for (const [_category, data] of Object.entries(CRISIS_PATTERNS)) {
-    for (const pattern of data.patterns) {
-      const matches = lowerText.match(pattern);
-      if (matches) {
-        allKeywords.push(...matches);
-        if (data.severity > maxSeverity) {
-          maxSeverity = data.severity;
-          detectedType = data.type;
-        }
-      }
-    }
+  if (primaryEmotion === 'anger' || primaryEmotion === 'fear') {
+    return pickRandom(SHADOW_RESPONSES.rageFire);
   }
-  
-  return {
-    isCrisis: maxSeverity > 0,
-    type: detectedType,
-    severity: maxSeverity,
-    keywords: [...new Set(allKeywords)],
-    requiresResources: maxSeverity >= 70
-  };
+  if (primaryEmotion === 'confusion' || primaryEmotion === 'shame' || intensity > 85) {
+    return pickRandom(SHADOW_RESPONSES.emptiness);
+  }
+  return pickRandom(SHADOW_RESPONSES.deepShadow);
 }
 
 // ═══════════════════════════════════════════════════════════════════════════════
@@ -326,9 +236,7 @@ function analyzeEmotions(text: string): EmotionalAnalysis {
   
   // Determine urgency
   let urgency: EmotionalAnalysis['urgency'] = 'low';
-  const crisis = detectCrisis(text);
-  if (crisis.isCrisis) urgency = 'crisis';
-  else if (intensity > 80) urgency = 'high';
+  if (intensity > 80) urgency = 'high';
   else if (intensity > 50) urgency = 'medium';
   
   return {
@@ -380,9 +288,6 @@ function analyzeContent(content: string): ContentAnalysis {
   // Emotional analysis
   const emotionalProfile = analyzeEmotions(content);
   
-  // Crisis detection
-  const crisisCheck = detectCrisis(content);
-  
   // Sentiment
   const sentiment = analyzeSentiment(content);
   
@@ -401,7 +306,6 @@ function analyzeContent(content: string): ContentAnalysis {
     themes,
     archetypes,
     emotionalProfile,
-    crisisCheck,
     entities,
     sentiment,
     wordCount: content.split(/\s+/).length,
@@ -476,53 +380,49 @@ function pickNRandom<T>(arr: T[], n: number): T[] {
   return shuffled.slice(0, n);
 }
 
-async function generateCrisisInsight(
-  _content: string,
+async function generateShadowInsight(
+  content: string,
   analysis: ContentAnalysis,
   celestialState: Awaited<ReturnType<typeof OracleEngine.getCurrentCelestialState>>,
   birthChart?: BirthChart
 ): Promise<EnhancedInsight> {
-  const type = analysis.crisisCheck.type!;
-  const resourceKey = type === 'self-harm' ? 'selfHarm' : type;
-  const resources = SUPPORT_RESOURCES[resourceKey as keyof typeof SUPPORT_RESOURCES];
+  const emotions = analysis.emotionalProfile;
+  const moonPhase = celestialState.moonPhase;
+  const moonSign = moonPhase.sign;
+  const shadowText = pickShadowResponse(emotions.primaryEmotion, emotions.valence, emotions.intensity) || '';
   
-  const moonSign = celestialState.moonPhase.sign;
+  let text = shadowText;
+  
+  // Blend with celestial context
   const chiron = celestialState.planets.chiron || celestialState.planets.neptune;
-  
-  let text = resources.message;
-  
   if (birthChart && chiron) {
-    text += `\n\nThe current celestial weather shows ${chiron.sign} energy prominent—a sign that healing is possible, even when it feels distant. `;
-    text += `The Moon in ${moonSign} reminds us that all states are temporary, even the most painful ones.`;
+    text += `\n\n${chiron.sign} energy moves through the sky now—an invitation to tend what has been wounded, not to fix it, but to witness it. `;
+    text += `The Moon in ${moonSign} holds space for all that arises, as the sea holds every stone without question.`;
   } else {
-    text += `\n\nThe Moon in ${moonSign} reminds us that emotions, like the tides, shift and change. This intensity won't last forever.`;
+    text += `\n\nThe Moon in ${moonSign} reminds you: even the tide that carries sorrow also carries it away. Nothing stays unchanged.`;
   }
   
   return {
-    id: `crisis-${Date.now()}`,
+    id: `shadow-${Date.now()}`,
     text,
-    type: 'crisis',
-    confidence: 95,
-    strength: 100,
-    uniqueness: 100,
+    type: 'challenge',
+    confidence: 90,
+    strength: 85,
+    uniqueness: 80,
     celestialEvent: {
-      type: 'crisis-support',
-      description: 'Compassionate cosmic guidance',
-      strength: 100,
-      timing: { peak: 'Now', duration: 'Immediate support' }
+      type: moonPhase.phase,
+      description: `${moonPhase.phase} Moon in ${moonSign} — shadow work`,
+      strength: 85,
+      timing: { peak: 'Now', duration: 'Active now' }
     },
-    supportResources: {
-      message: "Please reach out to these resources—they're here for you right now:",
-      resources: resources.resources
-    },
-    affirmations: ['I am worthy of support and healing', 'This pain is temporary', 'I choose to stay'],
-    rituals: ['Place hand on heart, breathe deeply for 60 seconds', 'Text or call one person you trust'],
-    journalPrompts: ['What would I say to a dear friend feeling this way?', 'What small step toward help can I take right now?'],
-    actionItems: ['Contact a support resource above', 'Reach out to someone you trust', 'Consider professional support'],
+    affirmations: generateLocalAffirmations(analysis, analysis.themes, content),
+    rituals: generateLocalRituals(moonPhase.phase, analysis.themes, emotions),
+    journalPrompts: generateLocalJournalPrompts(analysis, content, celestialState, undefined),
+    actionItems: generateActionItems(analysis, analysis.themes, content, celestialState, undefined),
     visualTheme: {
-      color: '#ef4444',
-      icon: '🆘',
-      gradient: 'linear-gradient(135deg, #ef4444 0%, #f87171 100%)'
+      color: '#6366f1',
+      icon: '🌑',
+      gradient: 'linear-gradient(135deg, #1e1b4b 0%, #4338ca 100%)'
     }
   };
 }
@@ -841,10 +741,43 @@ async function tryAIEnhancement(
   birthChartConnection?: EnhancedInsight['birthChartConnection']
 ): Promise<{ text: string; poeticSummary: string; affirmations: string[]; rituals: string[]; journalPrompts: string[] } | null> {
   const activeProvider = aiProviderManager.getActiveProvider();
-  if (activeProvider === 'template') return null;
-  
+  const theme = analysis.themes[0] || 'general';
+  const moonSign = celestialState.moonPhase.sign;
+  const moonPhase = celestialState.moonPhase.phase;
+
+  // ── Template Library Path ──────────────────────────────────────────────
+  // When the user has selected Template Library (no API key), we still enrich
+  // the insight with astrologically-informed content from the template engine.
+  if (activeProvider === 'template') {
+    try {
+      const reading = templateLibrary.generateReading({
+        planet: 'moon',
+        sign: moonSign,
+        moonPhase: moonPhase,
+        category: theme,
+      });
+
+      // Blend the template reading with the base insight text
+      const blendedNarrative = reading.narrative
+        ? `${baseText}\n\n${reading.narrative}`
+        : baseText;
+
+      return {
+        text: blendedNarrative,
+        poeticSummary: reading.title || 'Celestial Reflection',
+        affirmations: reading.affirmation ? [reading.affirmation] : [],
+        rituals: reading.advice || [],
+        journalPrompts: generateLocalJournalPrompts(analysis, originalContent, celestialState, birthChartConnection),
+      };
+    } catch (e) {
+      console.warn('[tryAIEnhancement] Template enrichment failed:', e);
+      // Fall through to local generation
+      return null;
+    }
+  }
+
   const prompt = buildAIInsightPrompt(originalContent, analysis, celestialState, birthChartConnection);
-  
+
   try {
     // Race against a 12-second timeout so the UI never hangs waiting for AI
     const response = await Promise.race([
@@ -852,10 +785,10 @@ async function tryAIEnhancement(
         prompt,
         context: {
           planet: 'moon',
-          sign: celestialState.moonPhase.sign,
-          moonPhase: celestialState.moonPhase.phase,
+          sign: moonSign,
+          moonPhase: moonPhase,
           transits: [],
-          category: analysis.themes[0] || 'general'
+          category: theme
         },
         templateReading: {
           title: 'Oracle Insight',
@@ -866,18 +799,18 @@ async function tryAIEnhancement(
           confidence: 80
         }
       }),
-      new Promise<never>((_, reject) => 
+      new Promise<never>((_, reject) =>
         setTimeout(() => reject(new Error('AI enhancement timed out')), 12000)
       )
     ]);
-    
+
     // If the provider failed internally and fell back to template, the provider field will be 'template'.
     // We only accept genuine AI-generated responses.
     if (response.provider === 'template') {
       console.warn('[tryAIEnhancement] Provider fell back to template; skipping AI result.');
       return null;
     }
-    
+
     const reading = response.reading;
     return {
       text: reading.narrative || baseText,
@@ -898,36 +831,49 @@ function buildAIInsightPrompt(
   celestialState: Awaited<ReturnType<typeof OracleEngine.getCurrentCelestialState>>,
   birthChartConnection?: EnhancedInsight['birthChartConnection']
 ): string {
-  return `You are the HEKA Oracle—a wise, compassionate astrological guide who provides deeply personalized insights.
+  const retrogradePlanets = Object.entries(celestialState.planets || {})
+    .filter(([_, p]: [string, any]) => p.retrograde || p.isRetrograde)
+    .map(([name]) => name);
+  
+  return `You are the HEKA Oracle—a deeply wise, compassionate astrological guide with centuries of accumulated wisdom. You do not give generic horoscopes. You peer into the soul of the person writing and speak directly to their unique situation with piercing clarity and warmth.
 
 USER'S JOURNAL ENTRY:
 """${originalContent}"""
 
-EMOTIONAL ANALYSIS:
+EMOTIONAL LANDSCAPE:
 - Primary emotion: ${analysis.emotionalProfile.primaryEmotion} (intensity: ${analysis.emotionalProfile.intensity}%)
 - Valence: ${analysis.emotionalProfile.valence}
+- Urgency: ${analysis.emotionalProfile.urgency}
 - Detected themes: ${analysis.themes.join(', ')}
+- Archetypes: ${analysis.archetypes.join(', ') || 'seeker'}
 
 CURRENT CELESTIAL WEATHER:
 - Moon phase: ${celestialState.moonPhase.phase} in ${celestialState.moonPhase.sign}
 - Illumination: ${Math.round(celestialState.moonPhase.illumination)}%
+- Retrograde planets: ${retrogradePlanets.join(', ') || 'None'}
 ${birthChartConnection ? `- Personal transit: ${birthChartConnection.interpretation} (activating house ${birthChartConnection.activatedHouse})` : ''}
 
-TASK:
-Create a deeply personalized astrological insight (150-200 words) that:
-1. Acknowledges their emotional state with compassion
-2. Connects their experience to the current celestial energy
-3. Offers specific, actionable wisdom
-4. Uses evocative but clear language
-5. Feels like it was written just for them
+INSTRUCTIONS:
+Write as if you are an old friend who also happens to understand the stars. Your response should:
+1. OPEN with a mirror—acknowledge exactly what they are feeling using their own language and themes
+2. CONNECT their experience to the current moon phase and any relevant planetary movements
+3. OFFER wisdom that is BOTH poetic AND practical—not vague platitudes but specific, grounded guidance
+4. REFERENCE their archetypes if relevant—speak to the deeper pattern beneath the moment
+5. CLOSE with warmth that makes them feel seen, not diagnosed
+
+Tone guidelines:
+- If valence is negative: Be gentle but not condescending. Validate their pain without romanticizing it.
+- If valence is positive: Celebrate with them without trivializing their joy.
+- If themes include change/transition: Emphasize the liminal nature of their position. They are between worlds.
+- If urgency is high: Be direct and grounding. Offer one clear next step.
 
 Respond in JSON:
 {
-  "narrative": "The main insight text",
-  "poeticSummary": "A 1-2 sentence poetic distillation",
-  "affirmations": ["3 specific affirmations"],
-  "rituals": ["2-3 simple rituals aligned with the energy"],
-  "journalPrompts": ["3 introspective questions"]
+  "narrative": "The main insight text (200-280 words). Rich, layered, specific to their entry.",
+  "poeticSummary": "A single profound sentence that captures the essence—like a line of poetry they might write on their mirror.",
+  "affirmations": ["3 deeply personal affirmations that sound like their own wisest self speaking back to them"],
+  "rituals": ["2-3 specific rituals aligned with the current moon phase and their emotional state—not generic 'meditate' but precise actions"],
+  "journalPrompts": ["3 questions that unlock the next layer of their understanding—provocative but kind"]
 }`;
 }
 
@@ -1270,12 +1216,6 @@ function generateActionItems(
   const mirror = extractContentMirror(content);
   const emotion = analysis.emotionalProfile.primaryEmotion;
   
-  if (analysis.crisisCheck.isCrisis) {
-    actions.push('Reach out to a support resource');
-    actions.push('Contact someone you trust');
-    return actions.slice(0, 3);
-  }
-  
   // Content-specific SMART actions
   if (mirror.concern) {
     actions.push(`Set a 10-minute timer and write a single sentence about "${emotion}" without editing.`);
@@ -1376,9 +1316,9 @@ export async function generateEnhancedInsight(
     personalTransits = calculatePersonalTransits(birthChart, currentPositions);
   }
   
-  // Step 4: Check for crisis first
-  if (analysis.crisisCheck.isCrisis) {
-    return generateCrisisInsight(content, analysis, celestialState, birthChart);
+  // Step 4: For very heavy shadow states, use the shadow oracle path
+  if (analysis.emotionalProfile.valence === 'negative' && analysis.emotionalProfile.intensity > 75) {
+    return generateShadowInsight(content, analysis, celestialState, birthChart);
   }
   
   // Step 5: Generate standard insight
@@ -1389,7 +1329,6 @@ export async function generateEnhancedInsight(
 export const EnhancedInsightEngine = {
   generateInsight: generateEnhancedInsight,
   analyzeContent,
-  detectCrisis,
   analyzeEmotions,
   analyzeSentiment,
 };

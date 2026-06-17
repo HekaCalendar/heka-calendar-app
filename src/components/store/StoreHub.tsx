@@ -142,8 +142,8 @@ const PricingSection: React.FC<{
                 <li key={i}><span className="store-check">✦</span>{f}</li>
               ))}
             </ul>
-            <button className="store-pricing-card-btn">
-              {selected?.id === 'yearly' ? 'Selected →' : 'Select Yearly'}
+            <button className="store-pricing-card-btn" disabled>
+              Coming Soon
             </button>
           </div>
         )}
@@ -164,8 +164,8 @@ const PricingSection: React.FC<{
                 <li key={i}><span className="store-check">✦</span>{f}</li>
               ))}
             </ul>
-            <button className="store-pricing-card-btn store-pricing-card-btn--outline">
-              {selected?.id === 'monthly' ? 'Selected →' : 'Select Monthly'}
+            <button className="store-pricing-card-btn store-pricing-card-btn--outline" disabled>
+              Coming Soon
             </button>
           </div>
         )}
@@ -173,11 +173,10 @@ const PricingSection: React.FC<{
 
       {selected && (
         <div className="store-checkout-bar">
-          <button className="store-checkout-btn">
-            Subscribe to {selected.name}
-            <span className="store-checkout-btn-price">${selected.price}{selected.period}</span>
-          </button>
-          <p className="store-checkout-hint">Stripe checkout integration pending</p>
+          <div className="store-checkout-btn" style={{ cursor: 'default', opacity: 0.7 }}>
+            🚀 HEKA Pro — Coming Soon
+          </div>
+          <p className="store-checkout-hint">Subscribe to unlock birth certificates, deep charts, and priority AI guidance.</p>
         </div>
       )}
     </section>
@@ -356,15 +355,15 @@ const ProductModal: React.FC<{
                 }
               }}
             >
-              {product.category === 'physical' ? `Order — $${product.price}` : 'Generate Now'}
+              {product.category === 'physical' ? 'Coming Soon' : 'Generate Now'}
             </button>
           ) : (
-            <button className="store-modal-cinematic-btn store-modal-cinematic-btn--upgrade">
-              Unlock with HEKA Pro
+            <button className="store-modal-cinematic-btn store-modal-cinematic-btn--upgrade" disabled>
+              Coming Soon with HEKA Pro
             </button>
           )}
           {!canAccess && (
-            <p className="store-modal-cinematic-hint">Included with HEKA Pro ($13/month or $130/year)</p>
+            <p className="store-modal-cinematic-hint">Will be included with HEKA Pro ($13/month or $130/year)</p>
           )}
         </div>
       </div>

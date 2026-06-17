@@ -1,0 +1,126 @@
+{
+  "tutorial": {
+    "back": "Zurück",
+    "skip": "Überspringen",
+    "enter": "Gehen Sie zu HEKA",
+    "continue": "Fortsetzen",
+    "stepLabel": "Schritt {{current}} von {{total}}",
+    "journeyTitle": "Deine Reise",
+    "completeLabel": "Abgeschlossen",
+    "actionWaiting": "Tippe um fortzufahren",
+    "steps": {
+      "welcome": {
+        "title": "Willkommen bei HEKA",
+        "detail": "Dreizehn Monate. Achtundzwanzig Tage pro Monat. Der Mond, die Sonne, dein Garten, deine Energie, deine Freunde - endlich im Rhythmus.",
+        "action": "Beginne deine Reise",
+        "instruction": "Du hast noch nie ein solches Kalender gesehen."
+      },
+      "tracker": {
+        "title": "Verfolge deinen Rhythmus",
+        "detail": "Stimmung: 1-10 Schieberegler mit Echtzeit-Emoji. Schlaf: Dauer und Qualität. Energie: physisch, mental, emotional, spirituell. Das Insights-Dashboard zeigt Muster über die Zeit. Ihr Kalender hält Ihre Geschichte.",
+        "action": "Weiter",
+        "instruction": "Dein"
+      },
+      "the-grid": {
+        "title": "Das Raster — Dreizehn Monate",
+        "detail": "Zwölf Monate mit genau 28 Tagen, plus Hexa zwischen August und September. März behält den 29. Tag. Jedes Jahr beginnt am selben Tag. Das Jahr atmet in drei Bogen - Öffnung in Rot, Kern in Grün, Schließung in Lila. Vorhersehbar. Symmetrisch. Sauber.",
+        "action": "Tippe an einem beliebigen Tag um fortzufahren",
+        "instruction": "Zähle sie. Dreizehn. Nicht zwölf."
+      },
+      "features": {
+        "title": "Deine Arsenal",
+        "detail": "Druck: Standard Gold, Minimalist, Heilige Geometrie mit kreisförmigen Zellen, Cyberpunk mit CRT-Scanlinien, Natur有机, Altes Ägypten mit Hieroglyphen. Alle kostenlos. Lebenslang. A4, A3, Brief. Sterne: Schweizer Ephemeris Geburtshoroscope, Bogenmaß-Genauigkeit. Journal: Vier Modi mit KI-Einsichtenerzeugung. Kreis: Echtzeit-Nachrichten, geteilte Aufgaben mit HEKA Fälligkeitstermine. Statistiken: 80+ Erfolge über acht Ebenen. Geheime Erfolge warten darauf, entdeckt zu werden.",
+        "action": "Fahre fort",
+        "instruction": "Sechs Druckthemen. Eine Geburtshoroscopeinheit. Ein Journal. Freunde. Statistiken."
+      },
+      "settings": {
+        "title": "Mach es dein",
+        "detail": "Zivildaten: Überlagerung des Gregorianischen, damit du niemals eine Verabredung verpasst. Mondphasen: Schweizer Ephemeris-Symbole auf jeder Zelle. Feiertage: Community-Beobachtungen. Pure Mode: Vollbild, ablenkungsfrei, Yin-Yang Dunkel/Licht Umschaltung. Der Kalender passt sich an, wie DU die Zeit siehst.",
+        "action": "Schalte eine Einstellung um, um fortzufahren",
+        "instruction": "Drei Umschalter. Pure Mode. Volle Kontrolle."
+      },
+      "ai-coach": {
+        "title": "HEKA KI — Dein Himmelskoach",
+        "detail": "Schwebendes Glas-Orakel. Synthetisiert Mondphasen, deine Transite, Aufgaben, Journal-Gefühlslage, Serien und Standort in poetische, handlungsorientierte Nachrichten. Spricht in deinem Archetyp — Krieger, Mönch, Künstler, Stratege, Mystiker, Phoenix. Erinnert sich an 19 Gespräche. Erkennt Synchronizitäten: Momente, in denen deine Worte mit dem Himmel übereinstimmen. Optionale LLM-Verbesserung mit elegantem Offline-Fallback. Dies ist kein Chatbot. Dies ist ein Orakel.",
+        "action": "Fahre fort",
+        "instruction": "Es beobachtet den Himmel. Es beobachtet dich."
+      },
+      "complete": {
+        "title": "Sie Sind Bereit",
+        "detail": "Sie wissen, wie man dreizehn Monate navigiert. Sie wissen, wie man den Mond liest. Sie wissen, wie man Ihre Energie verfolgt, über Feiertage abstimmt, schöne Seiten druckt, mit den Sternen journaliert und Ihren KI-Trainer konsultiert. Alles andere wartet auf Ihre Neugier.",
+        "action": "Gehen Sie zu HEKA",
+        "instruction": "Der Kalender ist Ihr. Der Himmel ist Ihr."
+      },
+      "day-cells": {
+        "title": "Jede Zelle ist lebendig",
+        "detail": "Schweizer Ephemeris Mondphasen-Emoji. Zivildatum darunter. Feiertage-Punkte — von der Community kuratiert. Notizen-Schnipsel — deine Worte, auf dem Raster sichtbar. Alle dreizehn Monate auf einmal. Das ganze Jahr auf einen Blick.",
+        "action": "Tippe auf einen Tag, um ihn zu öffnen",
+        "instruction": "Jeder Tag erzählt eine Geschichte."
+      },
+      "day-panel": {
+        "title": "Der Tag Öffnet Sich",
+        "detail": "Mond: genaue Beleuchtung, wachsend oder abnehmend, Erkennung von Leerlauf. Astrologie: Echtzeit-Transite gegen dein GEBURTSHOROSKOP. Notizen: nach Stimmung, Aufgabe, Journal kategorisiert. Aufgaben: Fälligkeitszeiten, Erinnerungen. Energie: Abstimmung nach 19:30 Uhr, sehe den Community-Puls. Dies ist keine Kalenderntrée. Dies ist ein Portal.",
+        "action": "Erkunde das Tagespanel und fahre dann fort",
+        "instruction": "Dein Kommandozentrum für einen einzigen Tag."
+      },
+      "community": {
+        "title": "Gestalten Sie das Universum",
+        "detail": "Vorschläge für neue Feiertage. Zehn Upvotes und es wird offiziell. Abstimmen über zukünftige Funktionen — Geplant, In Betracht, In Bearbeitung, Veröffentlicht. Der Kalender entwickelt sich, weil seine Nutzer ihn entwickeln. Dies ist eine Zusammenarbeit.",
+        "action": "Weiter",
+        "instruction": "Ihre Stimme verändert den Kalender."
+      },
+      "navigation": {
+        "title": "Durch die Zeit bewegen",
+        "detail": "Pfeile bewegen zwischen Monaten. Heute springt zurück zu jetzt. Suchen versteht natürliche Sprache - \"Hexa 15\" oder \"31. Januar.\" Horizontal oder vertikal ausklappen für mehr Details. Das ganze Jahr ist nur einen Griff entfernt.",
+        "action": "Tippe ← oder → um zu navigieren",
+        "instruction": "Du bist nie verloren."
+      },
+      "first-note": {
+        "title": "Machen Sie Ihren ersten Eintrag",
+        "detail": "Tippen Sie auf einen beliebigen Tag. Scrollen Sie zu Notizen. Schreiben Sie etwas — eine Aufgabe, eine Stimmung, ein Gedächtnis. Dies ist der erste Eintrag in dem, was zu einer jahrelangen Chronik werden könnte.",
+        "action": "Schreiben Sie eine Notiz, um das Tutorial abzuschließen",
+        "instruction": "Ein Kalender ist nur ein Werkzeug, bis Sie ihn zu Ihrem machen."
+      },
+      "celestial-guide": {
+        "title": "Der Himmelsführer",
+        "detail": "Sonnenzeiten: Live SVG-Ring, Wetter, vierstufige Genauigkeit. Mondphase: Beleuchtung, leerer Mond, Mondneujahr-Countdown. Jahreszeiten: Echte astronomische Sonnenwende-Verfolgung. Landwirtschaft: Was pflanze ich heute, nach deiner Position und Mondphase. Digitale Uhr: Vier gleichzeitige Live-Countdowns. Planetenstunden: Echte Chaldäische Stunden basierend auf tatsächlichem Sonnenaufgang und Sonnenuntergang. Scrolle durch sie. Jeder ist ein wissenschaftliches Instrument.",
+        "action": "Scrolle die himmlischen Karten, um fortzufahren",
+        "instruction": "Sechs Karten. Ein Himmel."
+      }
+    },
+    "printThemes": {
+      "egypt": {
+        "name": "Ägypten",
+        "desc": "Hieroglyphen"
+      },
+      "sacred": {
+        "name": "Heilige Geometrie",
+        "desc": "Kreisförmige Zellen"
+      },
+      "nature": {
+        "name": "Natur",
+        "desc": "Botanisch"
+      },
+      "default": {
+        "name": "Standard",
+        "desc": "Pergamentrolle & Gold"
+      },
+      "cyberpunk": {
+        "name": "Cyberpunk",
+        "desc": "Neonleuchten"
+      },
+      "minimalist": {
+        "name": "Minimalistisch",
+        "desc": "Schweizer Purity"
+      }
+    },
+    "previewAchievements": {
+      "nightOwl": "Nachtfalter",
+      "timeLord": "Zeit Lord",
+      "firstWords": "Erste Worte",
+      "weekWarrior": "Wochenkrieger",
+      "centuryClub": "Jahrhundert Club",
+      "theChronicler": "Der Chronist"
+    }
+  }
+}

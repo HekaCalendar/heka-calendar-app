@@ -1,0 +1,49 @@
+{
+  "best": "Beste: {{count}}",
+  "title": "Jouw Reis",
+  "close": "Sluiten",
+  "reset": "Statistieken Resetten",
+  "avgMood": "Gemiddelde Stemming",
+  "dayStreak": "Dagelangse Reeks",
+  "totalNotes": "Totaal Aantekeningen",
+  "wordsWritten": "Geschreven Woorden",
+  "achievements": "Prestaties ({{earned}}/{{total}})",
+  "resetConfirm": "Resetten",
+  "progressRatio": "{{current}} / {{doel}}",
+  "monthlyTooltip": "{{month}} {{year}}: {{count}} aantekeningen",
+  "notesByCategory": "Aantekeningen per Categorie",
+  "monthlyActivity": "Maandelijkse Activiteit",
+  "mostActiveMonth": "Uw meest actieve maand was \u003cstrong\u003e{{month}}\u003c/strong\u003e met \u003cstrong\u003e{{count}}\u003c/strong\u003e aantekeningen",
+  "categories": {
+    "work": "Werk",
+    "family": "Familie",
+    "health": "Gezondheid",
+    "general": "Algemeen",
+    "personal": "Persoonlijk",
+    "creative": "Creatief",
+    "spiritual": "Spiritueel"
+  },
+  "progressToCentury": "Voortgang naar Eeuwclub",
+  "resetConfirmTitle": "Statistieken Resetten",
+  "badges": {
+    "century": {
+      "name": "Eeuwclub"
+    },
+    "explorer": {
+      "name": "Ontdekkingsreiziger"
+    },
+    "archivist": {
+      "name": "Archivaris"
+    },
+    "first-note": {
+      "name": "Eerste Woorden"
+    },
+    "week-streak": {
+      "name": "Weekstrijder"
+    },
+    "month-streak": {
+      "name": "Maandmeester"
+    }
+  },
+  "resetConfirmDescription": "Weet u zeker dat u alle statistieken wilt resetten? Dit kan niet ongedaan worden gemaakt."
+}

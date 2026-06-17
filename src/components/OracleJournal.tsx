@@ -7,22 +7,26 @@
  */
 
 import { useState, useEffect, useCallback, useMemo, useRef } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useTranslation } from 'react-i18next';
+import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import type { RootState, AppDispatch } from '../store';
+import { selectCalendarNoteEntries } from '../store';
 import { createDiaryEntry, updateDiaryEntry, selectAllEntries, setJournalTheme } from '../store/diarySlice';
 
-import { calculatePersonalTransits, getCurrentPlanetaryPositions } from '../oracle/birthChartIntegration';
-import type { PersonalTransit } from '../oracle/birthChartIntegration';
+import i18n from '../i18n';
 import { JOURNAL_FONTS } from '../oracle/diaryTypes';
+import type { JournalTheme } from '../oracle/diaryTypes';
+import type { BirthChart } from '../oracle/birthChartIntegration';
 import { EnhancedInsightEngine } from '../oracle/enhancedInsightEngine';
 import type { EnhancedInsight } from '../oracle/enhancedInsightEngine';
 import { DiarySearch } from './DiarySearch';
 import { JournalSettings } from './JournalSettings';
+import { getErrorMessage } from '../utils/errorUtils';
 import { OracleModeTracker } from './oracle/modes/OracleModeTracker';
 import { civilToHeka, HEKA_MONTHS } from '../services/calendarService';
 import { aiConfigService } from '../services/aiConfigService';
 
-import type { JournalMode, EntryFilter, CalendarNoteEntry, CelestialState } from './oracle/types';
+import type { JournalMode, EntryFilter } from './oracle/types';
 import { MODULE_THEMES } from './oracle/config/themes';
 import { calculateStreak } from './oracle/utils';
 import { eventBus } from '../services/eventBus';
@@ -31,9 +35,9 @@ import { OracleHeader } from './oracle/OracleHeader';
 import { OracleNavigation } from './oracle/OracleNavigation';
 import { OracleModeOracle } from './oracle/modes/OracleModeOracle';
 import { OracleModeEntries } from './oracle/modes/OracleModeEntries';
-import { OracleModeCelestial } from './oracle/modes/OracleModeCelestial';
+import { OracleModeDailyDraw } from './oracle/dailyOracle/OracleModeDailyDraw';
 import { OracleModeScribe } from './oracle/modes/OracleModeScribe';
-import { TransitDetailModal } from './oracle/modals/TransitDetailModal';
+import { JournalImportExport } from './oracle/modals/JournalImportExport';
 
 import '../styles/oracle-journal.css';
 import '../styles/oracle-journal.landscape.css';
@@ -44,6 +48,7 @@ interface OracleJournalProps {
 }
 
 export const OracleJournal: React.FC<OracleJournalProps> = ({ isOpen, onClose }) => {
+  const { t } = useTranslation('journal');
   const dispatch = useDispatch<AppDispatch>();
   
   // ─────────────────────────────────────────────────────────────────────────
@@ -52,7 +57,7 @@ export const OracleJournal: React.FC<OracleJournalProps> = ({ isOpen, onClose })
   
   const entries = useSelector((state: RootState) => selectAllEntries(state));
   const preferences = useSelector((state: RootState) => state.diary.preferences);
-  const calendarNotes = useSelector((state: RootState) => state.calendar.notes);
+  const calendarNoteEntries = useSelector(selectCalendarNoteEntries, shallowEqual);
   const timeMode = useSelector((state: RootState) => state.calendar.timeMode);
   const displaySettings = useSelector((state: RootState) => state.calendar.display);
   
@@ -71,6 +76,7 @@ export const OracleJournal: React.FC<OracleJournalProps> = ({ isOpen, onClose })
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [showPaperThemeSelector, setShowPaperThemeSelector] = useState(false);
+  const [showImportExport, setShowImportExport] = useState(false);
 
   
   // Module theme (for the journal chrome/ui)
@@ -78,127 +84,23 @@ export const OracleJournal: React.FC<OracleJournalProps> = ({ isOpen, onClose })
   
   // Paper theme (for the writing area) - stored in Redux preferences
   const paperTheme = preferences.theme || 'celestial';
-  
-  // ✦ CELESTIAL STATE
-  const [celestial, setCelestial] = useState<CelestialState>({
-    positions: {},
-    moonPhase: { phase: 'new', sign: 'Aries', illumination: 0, isVoid: false },
-    retrogrades: [],
-    loading: true,
-    error: null,
-  });
-  
-  // ✦ PERSONAL TRANSITS
-  const [personalTransits, setPersonalTransits] = useState<PersonalTransit[]>([]);
-  const [activeTransit, setActiveTransit] = useState<PersonalTransit | null>(null);
-  
+
   // Editor state
   const [scribeContent, setScribeContent] = useState('');
   const [isGeneratingInsight, setIsGeneratingInsight] = useState(false);
   const [generatedInsight, setGeneratedInsight] = useState<EnhancedInsight | null>(null);
-  
-  // ─────────────────────────────────────────────────────────────────────────
-  // REFS
-  // ─────────────────────────────────────────────────────────────────────────
-  
-  const refreshInterval = useRef<NodeJS.Timeout | null>(null);
-  
-  // ─────────────────────────────────────────────────────────────────────────
-  // CELESTIAL DATA LOADING
-  // ─────────────────────────────────────────────────────────────────────────
-  
-  const loadCelestialData = useCallback(async () => {
-    try {
-      setCelestial(prev => ({ ...prev, loading: true, error: null }));
-      
-      const positions = await getCurrentPlanetaryPositions(new Date());
-      
-      const retrogrades = Object.entries(positions)
-        .filter(([_, pos]) => pos.retrograde)
-        .map(([planet]) => planet);
-      
-      const moon = positions.Moon || positions.moon;
-      const sun = positions.Sun || positions.sun;
-      let moonPhase = { phase: 'new', sign: moon?.sign || 'Aries', illumination: 0, isVoid: false };
-      
-      if (moon && sun) {
-        const angle = Math.abs(moon.longitude - sun.longitude);
-        const illumination = (1 - Math.cos((angle * Math.PI) / 180)) / 2 * 100;
-        
-        let phase = 'new';
-        if (angle < 45) phase = 'new';
-        else if (angle < 90) phase = 'waxing_crescent';
-        else if (angle < 135) phase = 'first_quarter';
-        else if (angle < 180) phase = 'waxing_gibbous';
-        else if (angle < 225) phase = 'full';
-        else if (angle < 270) phase = 'waning_gibbous';
-        else if (angle < 315) phase = 'last_quarter';
-        else phase = 'waning_crescent';
-        
-        moonPhase = { 
-          phase, 
-          sign: (String(moon.sign).charAt(0).toUpperCase() + String(moon.sign).slice(1)) as any, 
-          illumination,
-          isVoid: false
-        };
-      }
-      
-      setCelestial({
-        positions,
-        moonPhase,
-        retrogrades,
-        loading: false,
-        error: null,
-      });
-      
-    } catch (error) {
-      console.error('[OracleJournal] Failed to load celestial data:', error);
-      setCelestial(prev => ({
-        ...prev,
-        loading: false,
-        error: 'The stars are temporarily obscured...'
-      }));
-    }
-  }, []);
-  
-  // ─────────────────────────────────────────────────────────────────────────
-  // PERSONAL TRANSITS CALCULATION
-  // ─────────────────────────────────────────────────────────────────────────
-  
-  const calculatePersonalTransitsData = useCallback(async () => {
-    if (!hasBirthChart || !birthChartData) {
-      console.log('[OracleJournal] No birth chart available for transits');
-      setPersonalTransits([]);
-      return;
-    }
-    
-    try {
-      const positions = await getCurrentPlanetaryPositions(new Date());
-      const transits = calculatePersonalTransits(birthChartData as any, positions);
-      
-      setPersonalTransits(transits);
-      
-    } catch (error) {
-      console.error('[OracleJournal] Transit calculation failed:', error);
-    }
-  }, [hasBirthChart, birthChartData]);
+  const [tags, setTags] = useState<string[]>([]);
+  const [isMarkdown, setIsMarkdown] = useState(false);
+  const [autoSaveStatus, setAutoSaveStatus] = useState<'idle' | 'saving' | 'saved'>('idle');
+  const autoSaveTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   
   // ─────────────────────────────────────────────────────────────────────────
   // EFFECTS
   // ─────────────────────────────────────────────────────────────────────────
-  
+
   useEffect(() => {
     if (!isOpen) return;
-    
-    loadCelestialData();
-    calculatePersonalTransitsData();
-    
-    // Refresh every 5 minutes instead of every minute - transits don't change that fast
-    refreshInterval.current = setInterval(() => {
-      loadCelestialData();
-      calculatePersonalTransitsData();
-    }, 300000);
-    
+
     // Listen for AI coach prompt injections
     const unsubPrompt = eventBus.subscribe('heka-journal-prompt', ({ prompt }) => {
       if (prompt) {
@@ -207,47 +109,11 @@ export const OracleJournal: React.FC<OracleJournalProps> = ({ isOpen, onClose })
         setGeneratedInsight(null);
       }
     });
-    
+
     return () => {
-      if (refreshInterval.current) {
-        clearInterval(refreshInterval.current);
-      }
       unsubPrompt();
     };
-  }, [isOpen, loadCelestialData, calculatePersonalTransitsData]);
-  
-  // ─────────────────────────────────────────────────────────────────────────
-  // CALENDAR NOTES CONVERSION (Optimized with stable references)
-  // ─────────────────────────────────────────────────────────────────────────
-  
-  const calendarNoteEntries: CalendarNoteEntry[] = useMemo(() => {
-    const noteCount = Object.values(calendarNotes).reduce((sum, notes) => sum + notes.length, 0);
-    if (noteCount === 0) return [];
-    
-    const result: CalendarNoteEntry[] = [];
-    
-    Object.entries(calendarNotes).forEach(([key, dayNotes]) => {
-      dayNotes.forEach((note, index) => {
-        if (!note || !note.createdAt) return;
-        
-        const civilDate = new Date(note.createdAt);
-        const hekaDate = civilToHeka(civilDate);
-        
-        result.push({
-          id: `calendar-${key}-${index}`,
-          date: note.createdAt,
-          hekaDate: hekaDate || { year: civilDate.getFullYear(), month: 0, day: 1 },
-          timestamp: note.createdAt,
-          content: note.content,
-          category: note.category || 'general',
-          mood: note.mood,
-          sourceKey: key,
-        });
-      });
-    });
-    
-    return result.sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime());
-  }, [calendarNotes]);
+  }, [isOpen]);
   
   // ─────────────────────────────────────────────────────────────────────────
   // STATS (Optimized - single pass calculations)
@@ -258,54 +124,95 @@ export const OracleJournal: React.FC<OracleJournalProps> = ({ isOpen, onClose })
     for (const e of entries) {
       if (e.insight) entriesWithInsights++;
     }
-    
-    let activeTransits = 0;
-    let majorTransits = 0;
-    for (const t of personalTransits) {
-      if (t.strength >= 80) {
-        majorTransits++;
-        activeTransits++;
-      } else if (t.strength >= 30) {
-        activeTransits++;
-      }
-    }
-    
+
     return {
       totalEntries: entries.length,
       entriesWithInsights,
       calendarNotes: calendarNoteEntries.length,
-      activeTransits,
-      majorTransits,
+      activeTransits: 0,
+      majorTransits: 0,
       streak: calculateStreak(entries),
     };
-  }, [entries, calendarNoteEntries.length, personalTransits]);
+  }, [entries, calendarNoteEntries.length]);
   
   // ─────────────────────────────────────────────────────────────────────────
   // HANDLERS
   // ─────────────────────────────────────────────────────────────────────────
   
+  // Auto-save draft to sessionStorage
+  useEffect(() => {
+    if (autoSaveTimerRef.current) clearTimeout(autoSaveTimerRef.current);
+    if (!scribeContent.trim()) {
+      setAutoSaveStatus('idle');
+      return;
+    }
+    setAutoSaveStatus('saving');
+    autoSaveTimerRef.current = setTimeout(() => {
+      try {
+        const draft = {
+          content: scribeContent,
+          tags,
+          isMarkdown,
+          editingEntryId,
+          timestamp: new Date().toISOString(),
+        };
+        sessionStorage.setItem('heka-journal-draft', JSON.stringify(draft));
+        setAutoSaveStatus('saved');
+      } catch {
+        setAutoSaveStatus('idle');
+      }
+    }, 2000);
+    return () => {
+      if (autoSaveTimerRef.current) clearTimeout(autoSaveTimerRef.current);
+    };
+  }, [scribeContent, tags, isMarkdown, editingEntryId]);
+
+  // Restore draft on mount
+  useEffect(() => {
+    try {
+      const raw = sessionStorage.getItem('heka-journal-draft');
+      if (raw) {
+        const draft = JSON.parse(raw);
+        if (draft.content && !editingEntryId) {
+          setScribeContent(draft.content);
+          if (draft.tags) setTags(draft.tags);
+          if (draft.isMarkdown) setIsMarkdown(draft.isMarkdown);
+        }
+      }
+    } catch { /* ignore */ }
+  }, []);
+
   const handleSaveEntry = useCallback(async () => {
     if (!scribeContent.trim()) return;
-    
+
     const now = new Date();
     const hekaDate = civilToHeka(now);
-    const dateString = hekaDate 
+    const dateString = hekaDate
       ? `${hekaDate.year}-${String(hekaDate.month + 1).padStart(2, '0')}-${String(hekaDate.day).padStart(2, '0')}`
       : now.toISOString().split('T')[0];
-    
-    if (editingEntryId) {
-      await dispatch(updateDiaryEntry({ entryId: editingEntryId, content: scribeContent }));
-      setEditingEntryId(null);
-    } else {
-      await dispatch(createDiaryEntry({
-        content: scribeContent,
-        date: dateString,
-      }));
+
+    try {
+      if (editingEntryId) {
+        await dispatch(updateDiaryEntry({ entryId: editingEntryId, content: scribeContent, tags }));
+        setEditingEntryId(null);
+      } else {
+        await dispatch(createDiaryEntry({
+          content: scribeContent,
+          date: dateString,
+          tags,
+          isMarkdown,
+        }));
+      }
+      // Clear draft after successful save
+      sessionStorage.removeItem('heka-journal-draft');
+      setAutoSaveStatus('idle');
+    } catch (error) {
+      console.error('[OracleJournal] Save failed:', getErrorMessage(error));
+      // User can retry — draft is preserved in sessionStorage
     }
-    
+
     const todayIso = new Date().toISOString().split('T')[0];
-    localStorage.setItem('heka-last-journal-date', todayIso);
-    
+
     const themes: string[] = [];
     const contentLower = scribeContent.toLowerCase();
     const themeKeywords = ['gratitude', 'anxiety', 'love', 'work', 'family', 'health', 'dream', 'goal', 'fear', 'hope', 'loss', 'joy', 'stress', 'peace', 'creative', 'travel', 'money', 'friendship'];
@@ -320,14 +227,16 @@ export const OracleJournal: React.FC<OracleJournalProps> = ({ isOpen, onClose })
       lastJournalDate: todayIso,
       lastJournalThemes: themes.slice(0, 3),
     });
-    
+
     setScribeContent('');
+    setTags([]);
     setGeneratedInsight(null);
+    setIsMarkdown(false);
     setMode('entries');
-  }, [dispatch, editingEntryId, scribeContent]);
+  }, [dispatch, editingEntryId, scribeContent, tags, isMarkdown]);
   
   const handlePaperThemeChange = useCallback((themeId: string) => {
-    dispatch(setJournalTheme(themeId as any));
+    dispatch(setJournalTheme(themeId as JournalTheme));
     setShowPaperThemeSelector(false);
   }, [dispatch]);
   
@@ -336,18 +245,18 @@ export const OracleJournal: React.FC<OracleJournalProps> = ({ isOpen, onClose })
   // ─────────────────────────────────────────────────────────────────────────
   
   const formatEntryDate = useCallback((timestamp: string | number | Date) => {
-    if (!timestamp) return 'Unknown Date';
+    if (!timestamp) return t('oracle.unknownDate');
     
     if (typeof timestamp === 'object' && !(timestamp instanceof Date)) {
       console.warn('Invalid timestamp object:', timestamp);
-      return 'Unknown Date';
+      return t('oracle.unknownDate');
     }
     
     const civilDate = new Date(timestamp);
     
     if (isNaN(civilDate.getTime())) {
       console.warn('Invalid date from timestamp:', timestamp);
-      return 'Unknown Date';
+      return t('oracle.unknownDate');
     }
     
     const hekaDate = civilToHeka(civilDate);
@@ -357,15 +266,15 @@ export const OracleJournal: React.FC<OracleJournalProps> = ({ isOpen, onClose })
       let display = `${monthName} ${hekaDate.day}, ${hekaDate.year}`;
       
       if (displaySettings.showCivilDates) {
-        display += ` (${civilDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })})`;
+        display += ` (${new Intl.DateTimeFormat(i18n.language || 'en', { month: 'short', day: 'numeric' }).format(civilDate)})`;
       }
       return display;
     } else {
-      return civilDate.toLocaleDateString('en-US', {
+      return new Intl.DateTimeFormat(i18n.language || 'en', {
         weekday: 'short',
         month: 'short',
         day: 'numeric',
-      });
+      }).format(civilDate);
     }
   }, [timeMode, displaySettings.showCivilDates]);
   
@@ -378,16 +287,16 @@ export const OracleJournal: React.FC<OracleJournalProps> = ({ isOpen, onClose })
       let display = `${monthName} ${hekaDate.day}, ${hekaDate.year}`;
       
       if (displaySettings.showCivilDates) {
-        display += ` (${now.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })})`;
+        display += ` (${new Intl.DateTimeFormat(i18n.language || 'en', { month: 'long', day: 'numeric', year: 'numeric' }).format(now)})`;
       }
       return display;
     } else {
-      return now.toLocaleDateString('en-US', {
+      return new Intl.DateTimeFormat(i18n.language || 'en', {
         weekday: 'long',
         year: 'numeric',
         month: 'long',
         day: 'numeric',
-      });
+      }).format(now);
     }
   }, [timeMode, displaySettings.showCivilDates]);
   
@@ -437,20 +346,17 @@ export const OracleJournal: React.FC<OracleJournalProps> = ({ isOpen, onClose })
           <header className="oracle-header">
             <OracleHeader
               onClose={onClose}
-              celestial={celestial}
               hasBirthChart={hasBirthChart}
               effectiveProfile={effectiveProfile}
-              personalTransitsCount={personalTransits.length}
-              activeTransitsCount={stats.activeTransits}
             />
             <OracleNavigation
               mode={mode}
               setMode={setMode}
               totalEntries={stats.totalEntries}
               calendarNotes={stats.calendarNotes}
-              activeTransits={stats.activeTransits}
               onSearch={() => setIsSearchOpen(true)}
               onSettings={() => setIsSettingsOpen(true)}
+              onImportExport={() => setShowImportExport(true)}
             />
           </header>
           
@@ -478,6 +384,8 @@ export const OracleJournal: React.FC<OracleJournalProps> = ({ isOpen, onClose })
                 onEditEntry={(entry) => {
                   setEditingEntryId(entry.id);
                   setScribeContent(entry.content);
+                  setTags(entry.tags || []);
+                  setIsMarkdown(entry.isMarkdown || false);
                   setMode('scribe');
                 }}
                 onNavigateToDate={() => {
@@ -488,18 +396,14 @@ export const OracleJournal: React.FC<OracleJournalProps> = ({ isOpen, onClose })
               />
             )}
             
-            {mode === 'celestial' && (
-              <OracleModeCelestial
-                celestial={celestial}
-                personalTransits={personalTransits}
-                hasBirthChart={hasBirthChart}
-                birthChartData={birthChartData}
-                onTransitClick={setActiveTransit}
-                onJournalTransit={(transit) => {
-                  setScribeContent(`Today I feel the energy of ${transit.transitingPlanet} ${transit.aspect} my ${transit.natalPlanet}...\n\n`);
+            {mode === 'draw' && (
+              <OracleModeDailyDraw
+                onJournalPrompt={(prompt) => {
+                  setScribeContent(prompt);
                   setMode('scribe');
+                  setGeneratedInsight(null);
                 }}
-                onTrackEnergy={() => setMode('tracker')}
+                birthChartData={birthChartData}
               />
             )}
             
@@ -508,6 +412,10 @@ export const OracleJournal: React.FC<OracleJournalProps> = ({ isOpen, onClose })
                 editingEntryId={editingEntryId}
                 scribeContent={scribeContent}
                 setScribeContent={setScribeContent}
+                tags={tags}
+                setTags={setTags}
+                isMarkdown={isMarkdown}
+                setIsMarkdown={setIsMarkdown}
                 paperTheme={paperTheme}
                 showPaperThemeSelector={showPaperThemeSelector}
                 setShowPaperThemeSelector={setShowPaperThemeSelector}
@@ -515,6 +423,7 @@ export const OracleJournal: React.FC<OracleJournalProps> = ({ isOpen, onClose })
                 generatedInsight={generatedInsight}
                 onDismissInsight={() => setGeneratedInsight(null)}
                 isGeneratingInsight={isGeneratingInsight}
+                autoSaveStatus={autoSaveStatus}
                 onGenerateInsight={async () => {
                   if (!scribeContent.trim()) return;
                   setIsGeneratingInsight(true);
@@ -522,7 +431,7 @@ export const OracleJournal: React.FC<OracleJournalProps> = ({ isOpen, onClose })
                   try {
                     const insight = await EnhancedInsightEngine.generateInsight({
                       content: scribeContent,
-                      birthChart: (birthChartData as any) || undefined,
+                      birthChart: (birthChartData as unknown as BirthChart) || undefined,
                     });
                     
                     setGeneratedInsight(insight);
@@ -530,21 +439,21 @@ export const OracleJournal: React.FC<OracleJournalProps> = ({ isOpen, onClose })
                     console.error('Insight generation failed:', error);
                     setGeneratedInsight({
                       id: `fallback-${Date.now()}`,
-                      text: 'The Oracle is momentarily clouded. Trust your own wisdom for now.',
+                      text: t('fallback.insightText'),
                       type: 'general',
                       confidence: 50,
                       strength: 50,
                       uniqueness: 0,
                       celestialEvent: {
                         type: 'general',
-                        description: 'Cosmic guidance temporarily obscured',
+                        description: t('fallback.celestialDescription'),
                         strength: 50,
-                        timing: { peak: 'Now', duration: 'Immediate' }
+                        timing: { peak: t('fallback.peak'), duration: t('fallback.duration') }
                       },
-                      affirmations: ['I trust my inner wisdom.'],
-                      rituals: ['Take three deep breaths and center yourself.'],
-                      journalPrompts: ['What is my intuition telling me right now?'],
-                      actionItems: ['Return to this reflection when you feel grounded.'],
+                      affirmations: [t('fallback.affirmation')],
+                      rituals: [t('fallback.ritual')],
+                      journalPrompts: [t('fallback.journalPrompt')],
+                      actionItems: [t('fallback.actionItem')],
                       visualTheme: { color: '#9d4edd', icon: '🔮', gradient: 'linear-gradient(135deg, #9d4edd 0%, #c77dff 100%)' }
                     });
                   }
@@ -558,6 +467,8 @@ export const OracleJournal: React.FC<OracleJournalProps> = ({ isOpen, onClose })
                   setEditingEntryId(null);
                   setGeneratedInsight(null);
                   setShowPaperThemeSelector(false);
+                  setTags([]);
+                  setIsMarkdown(false);
                 }}
                 formatCurrentDate={formatCurrentDate}
                 preferences={preferences}
@@ -566,10 +477,15 @@ export const OracleJournal: React.FC<OracleJournalProps> = ({ isOpen, onClose })
           </main>
         </div>
         
-        <TransitDetailModal
-          transit={activeTransit}
-          onClose={() => setActiveTransit(null)}
-        />
+        {mode === 'community' && (
+          <div className="oracle-mode-tracker-wrapper" onClick={e => e.stopPropagation()}>
+            <OracleModeTracker
+              date={new Date().toISOString().split('T')[0]}
+              onClose={() => setMode('oracle')}
+            />
+          </div>
+        )}
+
       </div>
       
       {isSearchOpen && (
@@ -593,15 +509,6 @@ export const OracleJournal: React.FC<OracleJournalProps> = ({ isOpen, onClose })
         />
       )}
       
-      {mode === 'tracker' && (
-        <div className="oracle-mode-tracker-wrapper">
-          <OracleModeTracker
-            date={new Date().toISOString().split('T')[0]}
-            onClose={() => setMode('oracle')}
-          />
-        </div>
-      )}
-
       {isSettingsOpen && (
         <JournalSettings
           isOpen={true}
@@ -609,6 +516,13 @@ export const OracleJournal: React.FC<OracleJournalProps> = ({ isOpen, onClose })
           theme={paperTheme}
           moduleTheme={moduleTheme}
           onModuleThemeChange={setModuleTheme}
+        />
+      )}
+
+      {showImportExport && (
+        <JournalImportExport
+          isOpen={true}
+          onClose={() => setShowImportExport(false)}
         />
       )}
     </>

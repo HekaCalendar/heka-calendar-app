@@ -1,0 +1,99 @@
+{
+  "title": "Bedrifter",
+  "streak": "Streak",
+  "days": "Dager",
+  "totalAchievements": "{{count}} bedrifter",
+  "earned": "Oppnådd",
+  "locked": "Låst",
+  "newAchievement": "Ny Bedrift!",
+  "categories": {
+    "calendar": "Kalendermester",
+    "journal": "Journalholder",
+    "circle": "Sirkelbygger",
+    "coach": "Stjernefot",
+    "explorer": "Utforsker"
+  },
+  "achievements": {
+    "firstStep": {
+      "name": "Første Skritt",
+      "description": "Åpne kalenderen for første gang"
+    },
+    "timeTraveler": {
+      "name": "Tidsreiser",
+      "description": "Se på en dato mer enn 1 år unna"
+    },
+    "streak7": {
+      "name": "Uke med Lys",
+      "description": "Bruk kalenderen i 7 dager på rad"
+    },
+    "streak30": {
+      "name": "Måned med Stjerner",
+      "description": "Bruk kalenderen i 30 dager på rad"
+    },
+    "streak100": {
+      "name": "Århundre med Visdom",
+      "description": "Bruk kalenderen i 100 dager på rad"
+    },
+    "journalFirst": {
+      "name": "Første Ord",
+      "description": "Skriv din første journaloppføring"
+    },
+    "journal10": {
+      "name": "Uvane Skriver",
+      "description": "Skriv 10 journaloppføringer"
+    },
+    "journal50": {
+      "name": "Erfaren Skriver",
+      "description": "Skriv 50 journaloppføringer"
+    },
+    "friendAdded": {
+      "name": "Første Bind",
+      "description": "Legg til din første venn"
+    },
+    "circle5": {
+      "name": "Voksende Sirkel",
+      "description": "Ha 5 venner i din sirkel"
+    },
+    "aiAsked": {
+      "name": "Søker etter Visdom",
+      "description": "Spør AI-treneren et spørsmål"
+    },
+    "aiStreak7": {
+      "name": "Daglig Veiledning",
+      "description": "Henvend deg til AI-treneren i 7 dager"
+    },
+    "allMoonPhases": {
+      "name": "Månefaseobserver",
+      "description": "Se på alle 8 månefaser"
+    },
+    "allZodiac": {
+      "name": "Stjernetegnsutforsker",
+      "description": "Se på alle 13 stjernetegnene"
+    },
+    "printFirst": {
+      "name": "Første utskrift",
+      "description": "Skriv ut din første kalenderside"
+    }
+  },
+  "categoryLabels": {
+    "beginner": "Nybegynner",
+    "intermediate": "Mellom",
+    "advanced": "Avansert",
+    "master": "Mester",
+    "special": "Spesial",
+    "explorer": "Utforsker",
+    "discoverer": "Oppdager",
+    "engager": "Engager"
+  },
+  "stats": {
+    "appOpens": "App Åpninger",
+    "dayStreak": "Dagsrekk",
+    "hoursSpent": "Timer Brukt",
+    "featuresFound": "Funksjoner Funnet"
+  },
+  "all": "Alle",
+  "showHidden": "Vis skjulte",
+  "noAchievements": "Ingen prestasjoner funnet i denne kategorien",
+  "hiddenAchievement": "Skjult Prestasjon",
+  "secret": "HEMMELIG"
+}

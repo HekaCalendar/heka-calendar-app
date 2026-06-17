@@ -21,7 +21,9 @@
     scroll-behavior: smooth !important;
     -webkit-overflow-scrolling: touch !important;
     overscroll-behavior-x: contain !important;
-    /* CRITICAL: Allow both horizontal swipe for cards AND vertical page scroll */
+    /* auto: let the browser evaluate gestures naturally.
+       Since overflow-y:visible in landscape, vertical scrolls the card content.
+       Since overflow-x:auto, horizontal scrolls the panel. */
     touch-action: pan-x pan-y !important;
   }
 
@@ -459,25 +461,12 @@
   }
 }
 
-  /* ═══════════════════════════════════════════════════════════════════════════════
-     SCROLL FIX - Ensure all card elements allow vertical scroll
-     ═══════════════════════════════════════════════════════════════════════════════ */
-  
-  /* ALL celestial card children must allow vertical scroll */
-  .celestial-panel .celestial-expandable-card *,
-  .celestial-panel .celestial-info-section *,
-  .celestial-panel .celestial-info-list *,
-  .celestial-panel .celestial-info-badge *,
-  .celestial-panel .zodiac-card__traits *,
-  .celestial-panel .countdown-widget *,
-  .celestial-panel .selected-date-info * {
-    touch-action: pan-y !important;
-  }
-  
-  /* Card header specifically - ensure click works but scroll passes through */
-  .celestial-panel .celestial-expandable-card__header,
-  .celestial-panel .celestial-expandable-card__header * {
-    touch-action: pan-y !important;
-    user-select: none !important;
-  }
+
+/* ── RTL Overrides ── */
+[dir="rtl"] .celestial-panel .celestial-info-list {
+    padding-right: var(--space-4)
+}
+
+[dir="rtl"] .celestial-panel .celestial-info-badge {
+    margin-left: var(--space-2)
 }

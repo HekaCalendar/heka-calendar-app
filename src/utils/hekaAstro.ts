@@ -181,7 +181,7 @@ export interface HekaZodiacReading {
   arc: ArcType;
   themes: string[];
   guidance: string;
-  element: 'fire' | 'earth' | 'air' | 'water';
+  element: 'fire' | 'earth' | 'air' | 'water' | 'ether';
 }
 
 export function getHekaZodiacReading(hekaMonthIndex: number, hekaDay: number): HekaZodiacReading {
@@ -221,7 +221,7 @@ export interface HekaNatalProfile {
   moonHekaMonth: number;
   risingSign: ZodiacSign | null;
   risingHekaMonth: number | null;
-  dominantElement: 'fire' | 'earth' | 'air' | 'water';
+  dominantElement: 'fire' | 'earth' | 'air' | 'water' | 'ether';
   dominantArc: ArcType;
   hekaSoulPath: string;
 }
@@ -239,14 +239,14 @@ export function calculateHekaNatalProfile(positions: PlanetPosition[]): HekaNata
   const risingMonth = ascendant ? getHekaMonthForZodiac(ascendant.sign) : null;
   
   // Calculate dominant element
-  const elementCounts: Record<string, number> = { fire: 0, earth: 0, air: 0, water: 0 };
+  const elementCounts: Record<string, number> = { fire: 0, earth: 0, air: 0, water: 0, ether: 0 };
   positions.forEach(p => {
     const sign = ZODIAC_SIGNS[p.sign];
     elementCounts[sign.element]++;
   });
   
   const dominantElement = Object.entries(elementCounts)
-    .sort((a, b) => b[1] - a[1])[0][0] as 'fire' | 'earth' | 'air' | 'water';
+    .sort((a, b) => b[1] - a[1])[0][0] as 'fire' | 'earth' | 'air' | 'water' | 'ether';
   
   // Calculate dominant arc
   const arcCounts: Record<string, number> = { inspiration: 0, action: 0, integration: 0, crystallization: 0 };

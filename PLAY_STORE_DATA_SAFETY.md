@@ -1,269 +1,316 @@
-# Play Store Data Safety Form - HEKA Calendar
+# Play Store Data Safety Form — HEKA Calendar Pro v2.2.1
 
-**Use this guide to complete the Data Safety section in Google Play Console**
+**Use this guide to complete the Data Safety section in Google Play Console.**
+
+Last updated: May 28, 2026
 
 ---
 
 ## Section 1: Overview
 
-**App Name:** HEKA Calendar  
-**Data Safety URL:** [Link to your privacy policy]
+**App Name:** HEKA Calendar Pro  
+**Privacy Policy:** https://hekacalendar.com/privacy.html  
+**App Category:** Lifestyle
 
 ---
 
-## Section 2: Data Collection
-
-### Does your app collect or share any of the required user data types?
+## Section 2: Does your app collect or share any of the required user data types?
 
 **Answer:** ✅ **Yes**
-
-### Data Types Collected
-
-| Data Type | Collected? | Shared? | Purpose | Encryption |
-|-----------|------------|---------|---------|------------|
-| **Location** | ✅ Yes | ❌ No | App functionality | N/A (not transmitted) |
-| **Personal Info** | ✅ Yes | ⚠️ Optional* | App functionality | ✅ Encrypted |
-| **Financial Info** | ❌ No | ❌ No | N/A | N/A |
-| **Health & Fitness** | ❌ No | ❌ No | N/A | N/A |
-| **Messages** | ❌ No | ❌ No | N/A | N/A |
-| **Photos/Videos** | ❌ No | ❌ No | N/A | N/A |
-| **Audio** | ❌ No | ❌ No | N/A | N/A |
-| **Files/Docs** | ❌ No | ❌ No | N/A | N/A |
-| **Calendar** | ❌ No | ❌ No | N/A | N/A |
-| **Contacts** | ❌ No | ❌ No | N/A | N/A |
-| **App Activity** | ✅ Yes | ❌ No | App functionality | ✅ Encrypted |
-| **Web Browsing** | ❌ No | ❌ No | N/A | N/A |
-| **App Info/Performance** | ✅ Yes | ❌ No | Analytics | ✅ Encrypted |
-| **Device/Other IDs** | ❌ No | ❌ No | N/A | N/A |
-
-\* Only shared with Firebase if user creates an account (optional)
 
 ---
 
-## Section 3: Location Data Details
+## Section 3: Data Types Collected
 
-### Is location data collected?
-
-**Answer:** ✅ **Yes**
-
-### Location Data Details:
+### Location
 
 | Question | Answer |
 |----------|--------|
-| **Type of location data** | Approximate location (region/country selection) |
-| **Purpose** | Calculate sunrise/sunset times and show regional holidays |
-| **Is it optional?** | No (required for core features) |
-| **Is it continuous?** | No (user selects once, can change in settings) |
-| **Is precise GPS used?** | **NO** - Only user-selected region from dropdown |
-| **Is it shared?** | No |
-| **Is it processed ephemerally?** | N/A (stored locally) |
+| **Approximate location** | ✅ Yes |
+| **Precise location** | ✅ Yes |
+| **Purpose** | App functionality |
+| **Optional?** | ✅ Yes — can be disabled in settings |
+| **Shared?** | ❌ No |
+
+**Details:**
+- Approximate: User-selected region for sunrise/sunset calculations and regional holidays
+- Precise: Real-time geolocation for live sky calculations in the Stars Hub and weather data
+- Both are stored locally by default
+- Only synced to cloud if user creates an optional account and enables cloud sync
 
 **Play Console Selections:**
-- [x] Approximate location
-- [ ] Precise location
-- Purpose: App functionality
+- [x] Approximate location → App functionality
+- [x] Precise location → App functionality
 
 ---
 
-## Section 4: Personal Info Details
-
-### Is personal info collected?
-
-**Answer:** ✅ **Yes**
-
-### Personal Info Details:
+### Personal Info
 
 | Data Type | Collected? | Optional? | Purpose |
 |-----------|------------|-----------|---------|
-| **Name** | ✅ Yes | ✅ Yes | Profile identification |
-| **Email** | ✅ Yes | ✅ Yes | Account authentication (optional) |
-| **Birth date/time** | ✅ Yes | ✅ Yes | Astrological calculations |
-| **Birth location** | ✅ Yes | ✅ Yes | Astrological calculations |
-| **Address** | ❌ No | N/A | N/A |
-| **Phone** | ❌ No | N/A | N/A |
-| **Race/Ethnicity** | ❌ No | N/A | N/A |
-| **Political/Religious** | ❌ No | N/A | N/A |
-| **Sexual Orientation** | ❌ No | N/A | N/A |
+| **Name** | ✅ Yes | ✅ Yes | Profile identification, social features (Cosmic Circle) |
+| **Email address** | ✅ Yes | ✅ Yes | Account authentication (Firebase Auth) |
+| **Phone number** | ❌ No | N/A | N/A |
+| **Other info** | ✅ Yes | ✅ Yes | Birth date, time, and location for astrological calculations |
 
 **Play Console Selections:**
 - [x] Name
 - [x] Email address
-- [ ] Phone number
 - [x] Other info: Birth date, time, and location for astrology
 - Purpose: App functionality, Account management
 
 ---
 
-## Section 5: App Activity Details
-
-### Is app activity data collected?
-
-**Answer:** ✅ **Yes** (locally only)
-
-### App Activity Details:
+### App Activity
 
 | Data Type | Collected? | Purpose |
 |-----------|------------|---------|
-| **App interactions** | ✅ Yes | Feature discovery, tutorials |
-| **In-app search history** | ❌ No | N/A |
+| **App interactions** | ✅ Yes | Feature discovery, tutorials, onboarding |
+| **In-app search history** | ✅ Yes | Full-text journal search index (local) |
 | **Installed apps** | ❌ No | N/A |
-| **Other user-generated content** | ✅ Yes | Calendar notes, journal entries |
-| **Other actions** | ✅ Yes | Achievement progress, settings |
+| **Other user-generated content** | ✅ Yes | Calendar notes, journal entries, reflections |
+| **Other actions** | ✅ Yes | Achievement progress, settings, daily oracle cards |
 
 **Play Console Selections:**
-- [x] App interactions
-- [x] Other user-generated content: Calendar notes, journal entries, mood tracking
-- Purpose: App functionality, Personalization
+- [x] App interactions → App functionality, Personalization
+- [x] Other user-generated content → App functionality
 
 ---
 
-## Section 6: App Info & Performance
+### Photos & Videos
 
-### Is app info and performance data collected?
+| Question | Answer |
+|----------|--------|
+| **Collected?** | ✅ Yes |
+| **Optional?** | ✅ Yes |
+| **Purpose** | App functionality (journal attachments) |
+| **Shared?** | ❌ No |
 
-**Answer:** ✅ **Yes**
-
-### App Info Details:
-
-| Data Type | Collected? | Purpose |
-|-----------|------------|---------|
-| **Crash logs** | ✅ Yes | App stability improvements |
-| **Diagnostics** | ✅ Yes | Performance optimization |
-| **Other app performance data** | ❌ No | N/A |
+**Details:** Photos and videos can be attached to journal entries. Stored locally in IndexedDB. Never shared unless user explicitly shares via the app's share feature.
 
 **Play Console Selections:**
-- [x] Crash logs
-- [x] Diagnostics
-- Purpose: Analytics
+- [x] Photos & videos → App functionality
 
 ---
 
-## Section 7: Data Sharing
+### Audio
+
+| Question | Answer |
+|----------|--------|
+| **Collected?** | ✅ Yes |
+| **Optional?** | ✅ Yes |
+| **Purpose** | App functionality (audio journal attachments) |
+| **Shared?** | ❌ No |
+
+**Details:** Audio recordings can be attached to journal entries. Stored locally in IndexedDB.
+
+**Play Console Selections:**
+- [x] Audio → App functionality
+
+---
+
+### Files & Documents
+
+| Question | Answer |
+|----------|--------|
+| **Collected?** | ✅ Yes |
+| **Optional?** | ✅ Yes |
+| **Purpose** | App functionality (journal attachments, PDF export) |
+| **Shared?** | ❌ No |
+
+**Details:** Users can attach files to journal entries and export data as PDF/JSON. All file operations are local.
+
+**Play Console Selections:**
+- [x] Files & docs → App functionality
+
+---
+
+### Messages
+
+| Question | Answer |
+|----------|--------|
+| **Collected?** | ✅ Yes |
+| **Optional?** | ✅ Yes |
+| **Purpose** | App functionality (Cosmic Circle direct messages) |
+| **Shared?** | ✅ Yes (with Firebase Firestore if enabled) |
+
+**Details:** The Cosmic Circle social feature allows authenticated users to send direct messages to friends. Messages are stored in Firebase Firestore and are encrypted in transit.
+
+**Play Console Selections:**
+- [x] Messages → App functionality
+
+---
+
+### App Info & Performance
+
+| Data Type | Collected? | Purpose | Shared? |
+|-----------|------------|---------|---------|
+| **Crash logs** | ✅ Yes | App stability | ✅ Yes (Firebase Crashlytics, anonymous) |
+| **Diagnostics** | ✅ Yes | Performance optimization | ✅ Yes (Firebase Crashlytics, anonymous) |
+| **Other app performance data** | ❌ No | N/A | N/A |
+
+**Play Console Selections:**
+- [x] Crash logs → Analytics
+- [x] Diagnostics → Analytics
+
+---
+
+### Device or Other IDs
+
+| Question | Answer |
+|----------|--------|
+| **Collected?** | ✅ Yes |
+| **Optional?** | ❌ No |
+| **Purpose** | App functionality (energy voting device identification) |
+| **Shared?** | ❌ No |
+
+**Details:** A persistent device ID (`heka-energy-device-id`) is generated locally for anonymous energy voting participation. This ID is never shared with third parties.
+
+**Play Console Selections:**
+- [x] Device or other IDs → App functionality
+
+---
+
+## Section 4: Data Sharing
 
 ### Is data shared with third parties?
 
-**Answer:** ⚠️ **Yes, but only under specific conditions**
-
-### Data Sharing Details:
+**Answer:** ✅ **Yes, under specific conditions**
 
 | Third Party | Data Shared | Purpose | User Control |
 |-------------|-------------|---------|--------------|
-| **Firebase (Google)** | Email, encrypted user data | Cloud sync, Authentication | User must create account |
-| **OpenAI/Groq/Anthropic** | Astrological context | AI-enhanced readings | User must provide own API key and initiate request |
-| **Other third parties** | ❌ None | N/A | N/A |
+| **Firebase (Google)** | Email, encrypted user data, crash logs | Cloud sync, Authentication, Analytics | User must create account |
+| **OpenAI / Groq / Anthropic** | Astrological context, mood summary | AI-enhanced insights | User must provide own API key and explicitly trigger |
+| **Open-Meteo** | Latitude, longitude | Weather data | Only when location is enabled |
+| **NOAA** | Latitude, longitude | Sunrise/sunset times | Only when location is enabled |
 
-**Important Notes for Play Console:**
-- Data is only shared when user explicitly opts in
+**Important Notes:**
 - Core app functionality requires NO data sharing
 - AI features are completely optional and user-controlled
+- All data sharing requires explicit user action
+
+**Play Console Selections:**
+- [x] Data is shared (with user consent)
+- [x] Data is collected
 
 ---
 
-## Section 8: Security Practices
+## Section 5: Security Practices
 
 ### Data Encryption
 
 | Type | Status |
 |------|--------|
-| **Data encrypted in transit** | ✅ Yes (HTTPS/TLS 1.3) |
-| **Data encrypted at rest** | ✅ Yes (AES-256) |
+| **Data encrypted in transit** | ✅ Yes (HTTPS/TLS 1.3, Firebase TLS) |
+| **Data encrypted at rest** | ✅ Yes (AES-256 for cloud sync, device-native encryption for local data) |
 
-### Play Console Selections:
+**Play Console Selections:**
 - [x] Data encrypted in transit
 - [x] Data encrypted at rest
 
 ---
 
-## Section 9: User Control & Deletion
+## Section 6: User Control & Deletion
 
 ### Can users request deletion of their data?
 
 **Answer:** ✅ **Yes**
 
-### Deletion Methods:
-
 | Data Type | How to Delete |
 |-----------|---------------|
 | Local app data | Uninstall app or clear app storage |
-| Cloud account data | Delete account in Settings |
+| Cloud account data | Email request to hekacalendar@gmail.com (processed within 7 days) |
 | Individual notes/items | Delete within app |
+| Export before deletion | JSON export available in Settings |
 
-### Play Console Selections:
+**Play Console Selections:**
 - [x] Users can request deletion of their data
-- Deletion method: In-app or email request
+- Deletion method: In-app account deletion
 
 ---
 
-## Section 10: Required Disclosures
-
-### Does your app:
+## Section 7: Required Disclosures
 
 | Question | Answer |
 |----------|--------|
-| Collect data while user is not using the app? | ❌ No |
+| Collect data while user is not using the app? | ❌ No (background notifications use local scheduling only) |
 | Use data for advertising? | ❌ No |
 | Share data for advertising? | ❌ No |
-| Use data for personalization? | ✅ Yes (user preferences only) |
-| Use data for analytics? | ✅ Yes (crash reports, app performance) |
-| Collect sensitive personal data? | ⚠️ Birth data for astrology (optional) |
+| Use data for personalization? | ✅ Yes (user preferences, astrology settings) |
+| Use data for analytics? | ✅ Yes (anonymous crash reports) |
+| Collect sensitive personal data? | ✅ Birth data for astrology (optional) |
+| Use AI-generated content? | ✅ Yes (optional LLM-enhanced insights) |
 
 ---
 
-## Section 11: Family Policy Compliance
+## Section 8: Family Policy Compliance
 
-### Is your app designed for children?
+**Is your app designed for children?**
 
 **Answer:** ❌ **No**
 
-### Play Console Selections:
+**Play Console Selections:**
 - [ ] Designed for families
 - [ ] Target audience includes children under 13
-- ✅ Primary audience: Adults interested in astrology and calendar tracking
+- ✅ Primary audience: Adults (18+) interested in astrology, wellness tracking, and calendar tools
+
+**Note:** The app contains spiritual wellness tools intended for adult users.
 
 ---
 
-## Section 12: Security & Compliance Statements
+## Section 9: AI-Generated Content
 
-### Security Certifications
-- [ ] ISO 27001
-- [ ] SOC 2
-- [x] Follows OWASP Mobile Security guidelines
+**Does your app use AI-generated content?**
 
-### Compliance
-- [x] GDPR compliant
-- [x] CCPA compliant
+**Answer:** ✅ **Yes**
+
+**Details:**
+- AI-enhanced celestial insights are available as an **optional, opt-in feature**
+- Users must provide their own API key (OpenAI, Groq, Anthropic, or Ollama)
+- AI features are **disabled by default**
+- All AI-generated content is clearly labeled as AI-enhanced
+- Users can use the app fully without enabling AI features (template-based insights are default)
+
+---
+
+## Section 10: Content Rating
+
+**Target Audience:** Adults 18+  
+**Content Descriptors:**
+- Astrology and spiritual content
+- Community connection resources
 
 ---
 
 ## Quick Reference: Play Console Checkboxes
 
-### Data Types (Check all that apply):
-- [x] Location → Approximate location
+### Data Types:
+- [x] Location → Approximate + Precise
 - [x] Personal info → Name, Email, Other info (birth data)
 - [ ] Financial info
 - [ ] Health & fitness
-- [ ] Messages
-- [ ] Photos & videos
-- [ ] Audio
-- [ ] Files & docs
-- [ ] Calendar
+- [x] Messages
+- [x] Photos & videos
+- [x] Audio
+- [x] Files & docs
+- [ ] Calendar (system calendar — not accessed)
 - [ ] Contacts
 - [x] App activity → App interactions, Other user-generated content
 - [ ] Web browsing
 - [x] App info & performance → Crash logs, Diagnostics
-- [ ] Device or other IDs
+- [x] Device or other IDs
 
 ### Data Usage:
 - [x] App functionality
 - [x] Analytics
-- [x] Developer communications (optional - for support)
+- [x] Developer communications
 - [ ] Advertising or marketing
 - [ ] Fraud prevention, security, compliance
 - [x] Personalization
-- [ ] Account management
+- [x] Account management
 
 ### Data Sharing:
-- [x] Data is shared (but only with user consent)
+- [x] Data is shared (with user consent)
 - [x] Data is collected
 
 ### Security:
@@ -275,26 +322,4 @@
 
 ---
 
-## Developer Notes
-
-### When Completing Play Console Form:
-
-1. **Be transparent** - Better to over-disclose than under-disclose
-2. **Emphasize local-first** - Most data never leaves device
-3. **Highlight user control** - Everything optional except core functionality
-4. **Explain location clearly** - It's region selection, not GPS tracking
-
-### Common Questions:
-
-**Q: Why do you collect location if you don't use GPS?**
-A: Users select a region from a list, which we use to calculate sunrise/sunset times for astrological features.
-
-**Q: Is the astrology data sensitive?**
-A: Birth data is treated as personal information. It's stored locally and only synced to cloud if user creates optional account.
-
-**Q: Can users use the app without sharing any data?**
-A: Yes! The app works completely offline with no account required.
-
----
-
-*Use this document as your reference when filling out the Data Safety section in Google Play Console.*
+*This document reflects the actual data practices of HEKA Calendar Pro v2.2.1. Review and update with each release.*

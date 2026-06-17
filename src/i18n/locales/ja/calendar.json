@@ -1,0 +1,166 @@
+{
+  "months": {
+    "0": "四月",
+    "1": "五月",
+    "2": "六月",
+    "3": "七月",
+    "4": "八月",
+    "5": "ヘキサ",
+    "6": "九月",
+    "7": "十月",
+    "8": "十一月",
+    "9": "十二月",
+    "10": "一月",
+    "11": "二月",
+    "12": "三月"
+  },
+  "monthShort": {
+    "0": "Apr",
+    "1": "May",
+    "2": "Jun",
+    "3": "Jul",
+    "4": "Aug",
+    "5": "ヘキ",
+    "6": "Sep",
+    "7": "Oct",
+    "8": "Nov",
+    "9": "Dec",
+    "10": "Jan",
+    "11": "Feb",
+    "12": "Mar"
+  },
+  "civilMonths": {
+    "0": "Jan",
+    "1": "Feb",
+    "2": "Mar",
+    "3": "Apr",
+    "4": "May",
+    "5": "Jun",
+    "6": "Jul",
+    "7": "Aug",
+    "8": "Sep",
+    "9": "Oct",
+    "10": "Nov",
+    "11": "Dec"
+  },
+  "days": {
+    "0": "日曜日",
+    "1": "月曜日",
+    "2": "火曜日",
+    "3": "水曜日",
+    "4": "木曜日",
+    "5": "金曜日",
+    "6": "土曜日"
+  },
+  "daysShort": {
+    "0": "日",
+    "1": "月",
+    "2": "火",
+    "3": "水",
+    "4": "木",
+    "5": "金",
+    "6": "土"
+  },
+  "daysMin": {
+    "0": "日",
+    "1": "月",
+    "2": "火",
+    "3": "水",
+    "4": "木",
+    "5": "金",
+    "6": "土"
+  },
+  "arcs": {
+    "opening": "開幕",
+    "core": "核心",
+    "closing": "閉幕"
+  },
+  "arcSuffix": "アーク",
+  "arcDescriptions": {
+    "opening": "年は目覚める",
+    "core": "年は栄え",
+    "closing": "年は完成する"
+  },
+  "monthLabel": "月 {{month}}/13",
+  "hekaYear": "HEKA 年 {{year}}",
+  "civilYear": "民用年 {{year}}",
+  "dayOfYear": "年 {{day}} 日目 / {{total}}",
+  "week": "週",
+  "quarter": "四半期",
+  "leapDay": "閏日",
+  "leapDayDescription": "3月に4年ごとに追加される1日",
+  "switchDarkMode": "ダークモードに切り替え",
+  "switchLightMode": "ライトモードに切り替え",
+  "moreNotes": "+{{count}} 個以上",
+  "holiday": "祝日",
+  "note": "メモ",
+  "task": "タスク",
+  "moonPhase": "月の位相",
+  "selectDay": "詳細を表示する日を選択してください",
+  "navigation": {
+    "previousMonth": "前月",
+    "nextMonth": "翌月",
+    "goToToday": "今日に進む",
+    "today": "今日"
+  },
+  "print": {
+    "title": "カレンダーを印刷",
+    "label": "印刷"
+  },
+  "expand": {
+    "shrinkHorizontal": "水平方向に縮小",
+    "expandHorizontal": "水平方向に拡大",
+    "shrinkVertical": "垂直方向に縮小",
+    "expandVertical": "垂直方向に拡大"
+  },
+  "year": {
+    "viewEntireYear": "一整年を表示",
+    "label": "年"
+  },
+  "search": {
+    "title": "日付を検索",
+    "label": "検索"
+  },
+  "features": {
+    "astrologyHub": "占星術ハブ",
+    "stars": "星",
+    "cosmicCircle": "宇宙の輪",
+    "circle": "輪",
+    "oracleJournal": "神諭ジャーナル",
+    "journal": "ジャーナル",
+    "aboutHeka": "HEKAカレンダーについて",
+    "about": "情報",
+    "yourStatistics": "あなたの統計",
+    "stats": "統計",
+    "communityHolidays": "コミュニティの祝日",
+    "community": "コミュニティ"
+  },
+  "toggles": {
+    "civilDates": "民用日付を切り替え",
+    "civil": "民用",
+    "moonPhases": "月の位相を切り替え",
+    "moon": "月",
+    "holidays": "祝日を切り替え",
+    "holidayLabel": "祝日"
+  },
+  "prev": "前",
+  "next": "次",
+  "printYear": "年を印刷",
+  "close": "閉じる",
+  "quickNote": "クイックメモ",
+  "quickNoteTag": "クイックメモ",
+  "addingTo": "追加中",
+  "typeYourNote": "メモを入力...",
+  "saveNote": "メモを保存",
+  "ctrlEnterToSave": "Ctrl + Enterで保存 • Escでキャンセル",
+  "hekaPrefix": "HEKA:",
+  "civilPrefix": "民用:",
+  "moodPrefix": "気分:",
+  "searchTips": {
+    "tip1": "\"1月31日\"または\"今日\"",
+    "tip2": "\"hexa 15\" または \"4月5日\"",
+    "tip3": "ノートの内容やカテゴリー",
+    "tip4": "\"クリスマス\" または \"オーストラリアデー\"",
+    "tip5": "\"2026-01-31\" (ISO形式)"
+  }
+}

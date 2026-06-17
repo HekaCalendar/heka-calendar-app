@@ -9,13 +9,22 @@
 .celestial-panel {
   /* Allow horizontal scrolling */
   overflow-x: auto !important;
-  overflow-y: visible !important;
+  overflow-y: hidden !important;
   
-  /* CRITICAL: Allow BOTH horizontal pan for cards AND vertical scroll for page */
+  /* auto: let the browser evaluate gestures naturally.
+     Since overflow-y:hidden, vertical gestures bubble up to the page.
+     Since overflow-x:auto, horizontal gestures scroll the panel. */
   touch-action: pan-x pan-y !important;
   
-  /* Smooth scrolling on iOS */
-  -webkit-overflow-scrolling: touch !important;
+  /* REMOVED: -webkit-overflow-scrolling: touch causes vertical scroll trap
+     on Android WebView when combined with backdrop-filter and overflow-x:auto.
+     The compositor misclassifies the layer as bidirectionally scrollable. */
+  -webkit-overflow-scrolling: auto !important;
+  
+  /* backdrop-filter creates a composited layer that traps scroll gestures
+     on Android WebView when the element is also a scroll container. */
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
   
   /* Flex layout for horizontal cards */
   display: flex !important;
@@ -34,9 +43,6 @@
   
   /* Remove containment that blocks scroll */
   contain: none !important;
-  
-  /* FIXED: Cards should NOT have touch-action, let panel handle it */
-  touch-action: auto !important;
 }
 
 /* Card children inherit from card */
@@ -48,13 +54,11 @@
 .celestial-panel .celestial-info-badge,
 .celestial-panel .celestial-info-badge * {
   contain: none !important;
-  /* FIXED: No touch-action, inherit from parent */
-  touch-action: auto !important;
 }
 
 /* === CELESTIAL CARD HEADER - Critical for scroll === */
 .celestial-panel .celestial-expandable-card__header {
-  /* FIXED: manipulation = taps only, scroll passes to parent panel */
+  /* manipulation = taps only, scroll passes to parent panel */
   touch-action: manipulation !important;
   /* Ensure clicks still work but don't block scroll */
   user-select: none !important;
@@ -85,6 +89,19 @@
   overflow: visible !important;
   touch-action: auto !important;
   contain: none !important;
+}
+
+/* === SACRED GEOMETRY — Ensure no touch interception === */
+.sacred-field,
+.sacred-header {
+  pointer-events: none !important;
+}
+.sacred-field > svg,
+.sacred-field__svg,
+.sacred-header__motion > svg,
+.sacred-geometry--header,
+.sacred-geometry--background {
+  pointer-events: none !important;
 }
 
 /* === NATIVE APP PRINT SUPPORT === */

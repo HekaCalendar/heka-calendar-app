@@ -1,0 +1,166 @@
+{
+  "months": {
+    "0": "April",
+    "1": "Maj",
+    "2": "Juni",
+    "3": "Juli",
+    "4": "August",
+    "5": "September",
+    "6": "Oktober",
+    "7": "November",
+    "8": "December",
+    "9": "Januar",
+    "10": "Februar",
+    "11": "Marts",
+    "12": "April"
+  },
+  "monthShort": {
+    "0": "Apr",
+    "1": "Maj",
+    "2": "Jun",
+    "3": "Jul",
+    "4": "Aug",
+    "5": "Sep",
+    "6": "Okt",
+    "7": "Nov",
+    "8": "Dec",
+    "9": "Jan",
+    "10": "Feb",
+    "11": "Mar",
+    "12": "Apr"
+  },
+  "civilMonths": {
+    "0": "Jan",
+    "1": "Feb",
+    "2": "Mar",
+    "3": "Apr",
+    "4": "Maj",
+    "5": "Jun",
+    "6": "Jul",
+    "7": "Aug",
+    "8": "Sep",
+    "9": "Okt",
+    "10": "Nov",
+    "11": "Dec"
+  },
+  "days": {
+    "0": "Søndag",
+    "1": "Mandag",
+    "2": "Tirsdag",
+    "3": "Onsdag",
+    "4": "Torsdag",
+    "5": "Fredag",
+    "6": "Lørdag"
+  },
+  "daysShort": {
+    "0": "Søn",
+    "1": "Man",
+    "2": "Tir",
+    "3": "Ons",
+    "4": "Tor",
+    "5": "Fre",
+    "6": "Lør"
+  },
+  "daysMin": {
+    "0": "Sø",
+    "1": "Ma",
+    "2": "Ti",
+    "3": "On",
+    "4": "To",
+    "5": "Fr",
+    "6": "Lø"
+  },
+  "arcs": {
+    "opening": "Åbning",
+    "core": "Kerne",
+    "closing": "Lukning"
+  },
+  "arcSuffix": "Bue",
+  "arcDescriptions": {
+    "opening": "Året vågner",
+    "core": "Året blomstrer",
+    "closing": "Året fuldfører"
+  },
+  "monthLabel": "Måned {{month}}/13",
+  "hekaYear": "HEKA År {{year}}",
+  "civilYear": "Civilt År {{year}}",
+  "dayOfYear": "Dag {{day}} af {{total}}",
+  "week": "Uge",
+  "quarter": "Kvartal",
+  "leapDay": "Skudsdag",
+  "leapDayDescription": "En ekstra dag i marts, hvert 4. år",
+  "switchDarkMode": "Skift til mørk tilstand",
+  "switchLightMode": "Skift til lys tilstand",
+  "moreNotes": "+{{count}} flere",
+  "holiday": "Helligdag",
+  "note": "Bemærkning",
+  "task": "Opgave",
+  "moonPhase": "Fase af Månen",
+  "selectDay": "Vælg en dag for at se detaljer",
+  "navigation": {
+    "previousMonth": "Forrige måned",
+    "nextMonth": "Næste måned",
+    "goToToday": "Gå til i dag",
+    "today": "I dag"
+  },
+  "print": {
+    "title": "Udskriv kalender",
+    "label": "Udskriv"
+  },
+  "expand": {
+    "shrinkHorizontal": "Formindsk vandret",
+    "expandHorizontal": "Udvid vandret",
+    "shrinkVertical": "Formindsk lodret",
+    "expandVertical": "Udvid lodret"
+  },
+  "year": {
+    "viewEntireYear": "Se hele året",
+    "label": "År"
+  },
+  "search": {
+    "title": "Søg efter datoer",
+    "label": "Søg"
+  },
+  "features": {
+    "astrologyHub": "Astrologi Hub",
+    "stars": "Stjerner",
+    "cosmicCircle": "Kosmisk Cirkel",
+    "circle": "Cirkel",
+    "oracleJournal": "Oracle Journal",
+    "journal": "Journal",
+    "aboutHeka": "Om HEKA Kalender",
+    "about": "Om",
+    "yourStatistics": "Dine statistikker",
+    "stats": "Statistik",
+    "communityHolidays": "Fællesskabshelligdage",
+    "community": "Fællesskab"
+  },
+  "toggles": {
+    "civilDates": "Skift civile datoer",
+    "civil": "Civil",
+    "moonPhases": "Skift faser af Månen",
+    "moon": "Måne",
+    "holidays": "Skift helligdage",
+    "holidayLabel": "Helligdage"
+  },
+  "prev": "Forrige",
+  "next": "Næste",
+  "printYear": "Udskriv År",
+  "close": "Luk",
+  "quickNote": "Hurtig Note",
+  "quickNoteTag": "hurtig note",
+  "addingTo": "Tilføjer til",
+  "typeYourNote": "Skriv din note...",
+  "saveNote": "Gem Note",
+  "ctrlEnterToSave": "Ctrl + Enter for at gemme • Esc for at annullere",
+  "hekaPrefix": "HEKA:",
+  "civilPrefix": "Civil:",
+  "moodPrefix": "Stemning:",
+  "searchTips": {
+    "tip1": "\"31. januar\" eller \"i dag\"",
+    "tip2": "\"hexa 15\" eller \"april 5\"",
+    "tip3": "Note indhold eller kategori",
+    "tip4": "\"Jul\" eller \"Australske Nationaldagsdag\"",
+    "tip5": "\"2026-01-31\" (ISO format)"
+  }
+}

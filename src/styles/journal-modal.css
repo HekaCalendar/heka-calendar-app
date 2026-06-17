@@ -985,3 +985,17 @@
 .journal-tab-content::-webkit-scrollbar-thumb:hover {
   background: var(--journal-accent);
 }
+
+
+/* ── RTL Overrides ── */
+[dir="rtl"] .journal-new-entry-btn {
+    margin-right: auto
+}
+
+[dir="rtl"] .journal-tab-count {
+    margin-right: 4px
+}
+
+[dir="rtl"] .journal-new-entry-btn {
+    margin-right: 0
+}

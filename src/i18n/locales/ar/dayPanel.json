@@ -1,0 +1,239 @@
+{
+  "celestialGuide": "مرشد سماوي",
+  "journal": "السجل الشخصي",
+  "notes": "ملاحظات",
+  "events": "أحداث",
+  "tasks": "مهام",
+  "transits": "الانتقالات",
+  "mood": "المزاج",
+  "vibe": "الشعور",
+  "energy": "القوة",
+  "hekaRune": "RUNE HEKA",
+  "celestialAffirmation": "التأكيد السماوي",
+  "moodTracker": "متتبع المزاج",
+  "vibeColor": "لون الشعور",
+  "addNote": "إضافة ملاحظة...",
+  "addEvent": "إضافة حدث",
+  "addTask": "إضافة مهمة",
+  "eventTitle": "عنوان الحدث",
+  "taskTitle": "عنوان المهمة",
+  "taskCompleted": "منجز",
+  "taskPending": "معلق",
+  "editNote": "تحرير المذكرة",
+  "deleteNote": "حذف المذكرة",
+  "notePlaceholder": "اكتب أفكارك هنا...",
+  "journalPlaceholder": "سجل يومك...",
+  "eventPlaceholder": "ماذا يحدث؟",
+  "taskPlaceholder": "ماذا يحتاج إلى القيام به؟",
+  "addNewNote": "+ مذكرة جديدة",
+  "addNewEvent": "+ حدث جديد",
+  "addNewTask": "+ مهمة جديدة",
+  "noNotes": "لا توجد ملاحظات لهذا اليوم",
+  "noEvents": "لا توجد أحداث لهذا اليوم",
+  "noTasks": "لا توجد مهام لهذا اليوم",
+  "noJournal": "لا يوجد مدخلة في السجل لهذا اليوم",
+  "transitProgress": "تقدم الانتقال",
+  "transitRemaining": "الباقي من {{percent}}%",
+  "currentMood": "المزاج الحالي",
+  "selectMood": "اختر مزاجك",
+  "moods": {
+    "joyful": "مبتهج",
+    "happy": "سعيد",
+    "content": "راضي",
+    "neutral": "متعادل",
+    "tired": "نشيط",
+    "sad": "حزين",
+    "anxious": "قلق",
+    "frustrated": "مخبط",
+    "angry": "غاضب",
+    "inspired": "ملهم",
+    "focused": "متمرکز",
+    "peaceful": "هادئ"
+  },
+  "runeCast": "استدعاء الرموز ال\tRunes...",
+  "runeReveal": "كشف الرموز",
+  "runeBlessing": "نعمة اليوم",
+  "runeWisdom": "حكمة الرموز",
+  "runeEnergy": "طاقة الرموز",
+  "emptyState": "حدد يومًا لعرض التفاصيل",
+  "closePanel": "إغلاق اللوحة",
+  "addTaskBtn": "+ مهمة",
+  "header": {
+    "monthOf": "شهر {{month}} / 13",
+    "hekaYear": "سنة هيكا {{year}}"
+  },
+  "moon": {
+    "calculating": "جاري حساب الموقع القمري...",
+    "unavailable": "لا تتوفر بيانات فاز القمر",
+    "waxing": "تزايد القمر",
+    "waning": "انحدار القمر",
+    "illuminated": "{{percent}}% مضاء",
+    "age": "عمر: {{age}} أيام",
+    "swissEphemeris": "التقويم السويسري",
+    "southernHemisphere": "القارة الجنوبية",
+    "northernHemisphere": "القارة الشمالية"
+  },
+  "holidays": {
+    "inLocation": "العطلات في {{location}}"
+  },
+  "astrology": {
+    "dailyCosmicGuidance": "التوجيه الكوني اليومي",
+    "personalizedFor": "مخصص لـ {{name}}",
+    "birthChartActive": "المخطط الnatal النشط",
+    "calculatingTransits": "جاري حساب انتقالاتك الشخصية...",
+    "connectingCelestial": "اتصال بالذكاء السماوي...",
+    "unavailable": "التوجيه السماوي غير متوفر. راجع قسم النجوم لمعرفة علم النجوم التفصيلي.",
+    "sunrise": "الشروق: {{time}}",
+    "sunset": "الغروب: {{time}}",
+    "planetaryHour": "ساعة الكونية: {{planet}}",
+    "locationPin": "{{موقع}}",
+    "activeTransits": "الانتقالات النشطة لديك اليوم",
+    "moonIn": "القمر في {{sign}}",
+    "sunIn": "الشمس في {{sign}}",
+    "todaysTheme": "موضوع اليوم:",
+    "cosmicGuidance": "إرشاد كوني",
+    "reflection": "التفكير الذاتي",
+    "affirmation": "التأكيد",
+    "birthChartCta": {
+      "title": "هل تريد انتقالات شخصية؟",
+      "description": "أضف خريطة ميلادك في قسم النجوم لرؤية كيف يؤثر ال気侯 الكوني اليوم عليك بشكل شخصي."
+    }
+  },
+  "lunarMansion": {
+    "title": "مansion القمر",
+    "trueMode": "الوضع الحقيقي",
+    "calculating": "حساب الموقع الجانبي للقمر...",
+    "totem": "التوم",
+    "gift": "الهدية",
+    "ruler": "الحاكم",
+    "quality": "الجودة",
+    "quarter": "الربع",
+    "sunTravelsThrough": "الشمس تسافر من خلال {{name}}",
+    "quarters": {
+      "initiation": "البدء — يتم زراع البذرة",
+      "deepening": "العمق — ت抓紧 الجذور",
+      "crisis": "الأزمة — يأتي الامتحان",
+      "completion": "الانتهاء — تنضج الفاكهة"
+    }
+  },
+  "solarReturn": {
+    "title": "العودة الشمسية الحقيقية",
+    "titleInDays": "العودة الشمسية الحقيقية في {{count}} يوم{{suffix}}",
+    "trueMode": "الوضع الحقيقي",
+    "today": "الشمس تعود إلى طول ميلادك الجانبي اليوم.",
+    "approaching": "الشمس ستعود إلى موقفك الجانبي {{sign}} في {{date}}.",
+    "description": "في TRUE HEKA الوضع، يحدد عيد ميلادك بالنجوم، وليس التقويم المدني.",
+    "exactOrb": "دقيق حتى حد {{orb}} دقائق قوسية."
+  },
+  "notesSection": {
+    "tasksAndNotes": "المهام ({{tasks}}) · الملاحظات ({{notes}})",
+    "tasksOnly": "المهام ({{count}})",
+    "notesAndTasks": "الملاحظات والمهام ({{count}})",
+    "addNote": "+ ملاحظة",
+    "longHoldHint": "اضغط مطولًا لخيارات · انقر مزدوجًا على مهمة لتحريرها",
+    "noNotesOrTasks": "لا توجد ملاحظات أو مهام لهذا اليوم.",
+    "createNoteHint": "انقر <0>+ ملاحظة</0> أو <1>⚡ إضافة مهمة</1> أعلاه لإنشاء واحدة."
+  },
+  "noteEditor": {
+    "makeTask": "⚡ جعل هذا مهمة",
+    "dueTime": "وقت الاستحقاق",
+    "remindMe": "اذكرني",
+    "reminders": {
+      "atTime": "في وقت المهمة",
+      "5min": "5 دقائق قبل",
+      "10min": "قبل 10 دقائق",
+      "15min": "قبل 15 دقيقة",
+      "30min": "قبل 30 دقيقة",
+      "1hour": "قبل ساعة واحدة"
+    },
+    "howAreYouFeeling": "كيف تشعر؟",
+    "taskPlaceholder": "ماذا تنوي أن تنجزه؟",
+    "notePlaceholder": "اكتب ملاحظتك...",
+    "saveTask": "حفظ المهمة",
+    "saveNote": "حفظ المذكرة",
+    "cancel": "إلغاء"
+  },
+  "noteItem": {
+    "markComplete": "تحديد كمكتمل",
+    "completed": "مكتمل",
+    "task": "مهمة",
+    "delete": "حذف"
+  },
+  "selection": {
+    "selectedFromDays": "مختارة {{count}} من {{days}} يوم{{suffix}}",
+    "done": "تم",
+    "selectAll": "تحديد الكل",
+    "duplicate": "نسخ مكرر...",
+    "delete": "حذف",
+    "manageDuplicates": "إدارة النسخ المكررة:",
+    "duplicateTo": "نسخ إلى:",
+    "nextWeek": "الأسبوع التالي",
+    "nextMonth": "الشهر التالي",
+    "everyDay": "كل {{day}}",
+    "undoEveryDay": "إلغاء كل {{day}}",
+    "specificDay": "يوم معين...",
+    "chooseDays": "اختيار الايام...",
+    "back": "رجوع"
+  },
+  "dayPicker": {
+    "cancel": "إلغاء"
+  },
+  "multiDayPicker": {
+    "selectedCount": "{{count}} يوم{{suffix}} مختار",
+    "confirm": "تأكيد",
+    "cancel": "إلغاء"
+  },
+  "confirmations": {
+    "deleteNote": "حذف هذه المذكرة؟",
+    "deleteSelected": "حذف {{count}} مذكرة مختارة من {{days}} يوم{{suffix}}؟",
+    "duplicateEveryDay": "نسخ {{items}} إلى كل {{day}} حتى نهاية العام؟",
+    "undoDuplicates": "إزالة جميع النسخ المكررة لهذه {{count}} المذكرة؟"
+  },
+  "alerts": {
+    "couldNotCalculateDate": "لا يمكن حساب التاريخ الهدف",
+    "duplicatedToNextWeek": "نسخ {{items}} إلى الأسبوع التالي ({{month}} {{day}})",
+    "duplicatedToNextMonth": "نسخ {{items}} إلى الشهر التالي ({{month}} {{day}})",
+    "duplicatedToDays": "نسخ إلى {{count}} {{day}}s",
+    "duplicatedNotes": "مكررة {{count}} ملاحظة (ملاحظات)",
+    "removedDuplicates": "إزالة المكررات",
+    "duplicatedToMonth": "مكررة {{count}} ملاحظة (ملاحظات) إلى الشهر التالي",
+    "duplicatedToDaysCount": "مكررة {{count}} ملاحظة (ملاحظات) إلى {{days}} يوم (أيام)",
+    "duplicatedSelectedItems": "مكررة العناصر المختارة إلى {{count}} يوم (أيام)",
+    "signInToSaveTasks": "يجب أن تكون مسجلا للحفظ المهام. يرجى فتح قائمة الحساب والدخول مرة أخرى.",
+    "unableToSaveTask": "تعذر حفظ المهمة. خطأ: {{error}}"
+  },
+  "dow": {
+    "sunday": "الأحد",
+    "monday": "الإثنين",
+    "tuesday": "الثلاثاء",
+    "wednesday": "الأربعاء",
+    "thursday": "الخميس",
+    "friday": "الجمعة",
+    "saturday": "السبت",
+    "short": {
+      "sun": "الأحد",
+      "mon": "الإثنين",
+      "tue": "الثلاثاء",
+      "wed": "الأربعاء",
+      "thu": "الخميس",
+      "fri": "الجمعة",
+      "sat": "السبت"
+    }
+  },
+  "noteCategories": {
+    "personal": "شخصي",
+    "work": "عمل",
+    "spiritual": "روحاني",
+    "family": "عائلة",
+    "health": "صحة",
+    "creative": "إبداعي",
+    "general": "عام"
+  },
+  "moodScale": {
+    "1": "منخفض جدا",
+    "2": "منخفض",
+    "3": "متعادل",
+    "4": "جيد",
+    "5": "ممتاز"
+  }
+}

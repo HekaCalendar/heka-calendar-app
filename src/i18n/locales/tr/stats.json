@@ -1,0 +1,49 @@
+{
+  "best": "En İyi: {{count}}",
+  "title": "Senin Yolun",
+  "close": "Kapat",
+  "reset": "İstatistikleri Sıfırla",
+  "avgMood": "Ortalama Ruh Hali",
+  "dayStreak": "Gün Boyu Sıra",
+  "totalNotes": "Toplam Not",
+  "wordsWritten": "Yazılan Sözcük",
+  "achievements": "Başarılar ({{earned}}/{{total}})",
+  "resetConfirm": "Sıfırla",
+  "progressRatio": "{{current}} / {{hedef}}",
+  "monthlyTooltip": "{{month}} {{year}}: {{count}} not",
+  "notesByCategory": "Kategorilere Göre Notlar",
+  "monthlyActivity": "Aylık Faaliyet",
+  "mostActiveMonth": "En aktif ayı \u003cstrong\u003e{{month}}\u003c/strong\u003e ile \u003cstrong\u003e{{count}}\u003c/strong\u003e notla geçirdin",
+  "categories": {
+    "work": "İş",
+    "family": "Aile",
+    "health": "Sağlık",
+    "general": "Genel",
+    "personal": "Kişisel",
+    "creative": "Yaratıcılık",
+    "spiritual": "Manevi"
+  },
+  "progressToCentury": "Yüzyıl Kulübü\u0027ne İlerleme",
+  "resetConfirmTitle": "İstatistikleri Sıfırla",
+  "badges": {
+    "century": {
+      "name": "Yüzyıl Kulübü"
+    },
+    "explorer": {
+      "name": "Gezgin"
+    },
+    "archivist": {
+      "name": "Arşivci"
+    },
+    "first-note": {
+      "name": "İlk Sözcük"
+    },
+    "week-streak": {
+      "name": "Hafta Savaşı"
+    },
+    "month-streak": {
+      "name": "Ay Uzmanı"
+    }
+  },
+  "resetConfirmDescription": "Tüm istatistikleri sıfırlamak istediğinizden emin misiniz? Bu işlem geri alınamaz."
+}

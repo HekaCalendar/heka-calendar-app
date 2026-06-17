@@ -15,7 +15,7 @@ export function safeGet(key: string): string | null {
       return null;
     }
     return localStorage.getItem(`${PREFIX}${key}`);
-  } catch (e) {
+  } catch {
     // Silent fail - private browsing, storage disabled, etc.
     return null;
   }
@@ -48,7 +48,7 @@ export function safeRemove(key: string): void {
       return;
     }
     localStorage.removeItem(`${PREFIX}${key}`);
-  } catch (e) {
+  } catch {
     // Silent fail
   }
 }
@@ -64,7 +64,7 @@ export function safeGetJson<T>(key: string, defaultValue: T): T {
       return defaultValue;
     }
     return JSON.parse(item) as T;
-  } catch (e) {
+  } catch {
     // Invalid JSON or other error
     return defaultValue;
   }
@@ -96,7 +96,7 @@ export function isStorageAvailable(): boolean {
     localStorage.setItem(test, test);
     localStorage.removeItem(test);
     return true;
-  } catch (e) {
+  } catch {
     return false;
   }
 }

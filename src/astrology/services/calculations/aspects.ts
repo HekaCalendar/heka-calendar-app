@@ -30,6 +30,35 @@ export interface AspectCalculationOptions {
   includeMinorAspects?: boolean;
 }
 
+// ── LRU cache for aspect calculations ────────────────────────────────────────
+const MAX_CACHED_ASPECTS = 16;
+const aspectsCache = new Map<string, Aspect[]>();
+
+function getAspectsCacheKey(
+  bodies: Record<PlanetId, CelestialBody>,
+  options: AspectCalculationOptions
+): string {
+  const bodyList = (options.bodyFilter ?? Object.keys(bodies) as PlanetId[]).filter(id => bodies[id]);
+  const bodySig = bodyList
+    .map(id => {
+      const b = bodies[id];
+      return `${id}:${b.longitude.toFixed(4)}:${(b.speed ?? 0).toFixed(4)}`;
+    })
+    .join('|');
+  const optSig = `${options.orbModifier ?? 1}:${options.includeMinorAspects ?? false}:${(options.aspectFilter ?? []).join(',')}`;
+  return `${bodySig}|${optSig}`;
+}
+
+function setCachedAspects(key: string, aspects: Aspect[]): void {
+  aspectsCache.set(key, aspects);
+  while (aspectsCache.size > MAX_CACHED_ASPECTS) {
+    const first = aspectsCache.keys().next().value;
+    if (first !== undefined) {
+      aspectsCache.delete(first);
+    }
+  }
+}
+
 /**
  * Calculate all aspects between a set of celestial bodies
  */
@@ -37,6 +66,10 @@ export function calculateAspects(
   bodies: Record<PlanetId, CelestialBody>,
   options: AspectCalculationOptions = {}
 ): Aspect[] {
+  const cacheKey = getAspectsCacheKey(bodies, options);
+  const cached = aspectsCache.get(cacheKey);
+  if (cached) return cached;
+
   const {
     bodyFilter = Object.keys(bodies) as PlanetId[],
     aspectFilter = [...ASPECT_TYPES],
@@ -68,7 +101,9 @@ export function calculateAspects(
   }
 
   // Sort by orb (tightest first)
-  return aspects.sort((a, b) => a.orb - b.orb);
+  const result = aspects.sort((a, b) => a.orb - b.orb);
+  setCachedAspects(cacheKey, result);
+  return result;
 }
 
 /**

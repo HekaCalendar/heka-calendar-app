@@ -233,19 +233,6 @@ export function getDaysUntilNextSeason(date: Date = new Date(), hemisphere: 'N' 
   // Calculate next season start date
   const nextSeasonMonth = (currentSeason.endMonth + 1) % 12;
   
-  // Find the next season object
-  let nextSeason: SeasonInfo | null = null;
-  for (const season of Object.values(seasons)) {
-    if (season.startMonth === nextSeasonMonth) {
-      nextSeason = season;
-      break;
-    }
-  }
-  
-  if (!nextSeason) {
-    nextSeason = seasons.spring;
-  }
-  
   // Create date for start of next season (first day of start month)
   const nextSeasonDate = new Date(date.getFullYear(), nextSeasonMonth, 1);
   nextSeasonDate.setHours(0, 0, 0, 0);

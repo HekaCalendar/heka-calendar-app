@@ -1,7 +1,7 @@
-// HEKA Calendar Service Worker - v2.2.0
+// HEKA Calendar Service Worker - v%APP_VERSION%
 // Manual update handling with skipWaiting on message
 
-const CACHE_VERSION = '2.2.1-taskbuttons';
+const CACHE_VERSION = '%APP_VERSION%';
 const CACHE_NAME = 'heka-cache-v' + CACHE_VERSION;
 
 // Assets to cache
@@ -11,7 +11,7 @@ const STATIC_ASSETS = [
   '/icon-192.png',
   '/icon-512.png',
   '/icon-512-maskable.png',
-  '/manifest.webmanifest'
+  '/manifest.json'
 ];
 
 // Install event - cache static assets
@@ -90,16 +90,74 @@ self.addEventListener('fetch', (event) => {
   event.respondWith(
     caches.match(request).then((cached) => {
       const fetchPromise = fetch(request).then((networkResponse) => {
-        if (networkResponse.ok) {
+        const contentType = networkResponse.headers.get('content-type') || '';
+        // Never cache an HTML error page as a JS/CSS/WASM asset. This happens
+        // when a hashed asset from an old build is requested but no longer exists.
+        if (networkResponse.ok && !contentType.includes('text/html')) {
           const clone = networkResponse.clone();
           caches.open(CACHE_NAME).then((cache) => {
             cache.put(request, clone);
           });
+          return networkResponse;
         }
-        return networkResponse;
+        // Fall back to the cached version if the server returned an HTML fallback.
+        return cached || networkResponse;
       }).catch(() => cached);
       
       return cached || fetchPromise;
+    })
+  );
+});
+
+// Push event - handle incoming web push notifications
+self.addEventListener('push', (event) => {
+  console.log('[SW] Push received:', event);
+  
+  let data = {};
+  try {
+    data = event.data?.json() || {};
+  } catch (e) {
+    data = { title: event.data?.text() || 'HEKA Calendar' };
+  }
+  
+  const title = data.notification?.title || data.title || 'HEKA Calendar';
+  const body = data.notification?.body || data.body || '';
+  const icon = data.notification?.icon || '/icon-192.png';
+  
+  event.waitUntil(
+    self.registration.showNotification(title, {
+      body,
+      icon,
+      badge: '/icon-192.png',
+      tag: data.tag || 'heka-push',
+      data: data.data || data,
+      requireInteraction: false,
+    })
+  );
+});
+
+// Notification click event - handle user tapping a push notification
+self.addEventListener('notificationclick', (event) => {
+  console.log('[SW] Notification clicked:', event);
+  event.notification.close();
+  
+  const data = event.notification.data || {};
+  let url = data.url || data.deepLink || '/';
+  // Validate URL to prevent open redirect attacks
+  if (!url.startsWith('/') && !url.startsWith(self.location.origin)) {
+    url = '/';
+  }
+
+  event.waitUntil(
+    self.clients.matchAll({ type: 'window', includeUncontrolled: true }).then((clientList) => {
+      // Focus existing tab if open
+      for (const client of clientList) {
+        if (client.url && new URL(client.url).pathname === new URL(url, self.location.origin).pathname) {
+          return client.focus();
+        }
+      }
+      // Open new tab/window
+      return self.clients.openWindow(url);
     })
   );
 });

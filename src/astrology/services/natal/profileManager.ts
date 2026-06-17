@@ -12,7 +12,7 @@
 import type { NatalChart, BirthData } from './natalChart';
 import { saveNatalChart, getNatalChart, deleteNatalChart, getDignity, getHouseFromLongitude } from './natalChart';
 import { calculateCurrentSky, calculateLocalHouses } from '../calculations/swissCalculations';
-import { birthDateTimeToUTC, setZodiacFrame, setSignCount } from '../swiss-ephemeris/engine';
+import { birthDateTimeToUTC, setZodiacFrame, setSignCount, setSiderealMode, isUsingFallback } from '../swiss-ephemeris/engine';
 import { getSignFromLongitude, SIGN_ELEMENTS_13, SIGN_ELEMENTS } from '../../types/core';
 import { getZodiacSystemPreference, getZodiacFramePreference, getSignCountPreference, calculateElementalBalanceWithSystem, calculateModalityBalanceWithSystem } from './zodiacHelpers';
 
@@ -115,7 +115,6 @@ export class ProfileManager {
       this.loadProfilesFromStorage();
       this.loadActiveProfile();
       this.isInitialized = true;
-      console.log('[ProfileManager] Initialized with', this.profiles.size, 'profiles');
     } catch (error) {
       console.error('[ProfileManager] Initialization failed:', error);
     }
@@ -262,7 +261,7 @@ export class ProfileManager {
       throw new ProfileNotFoundError(`Profile ${id} not found`);
     }
 
-    let chart: NatalChart | null = null;
+    let chart: NatalChart | null;
 
     // If birth data changed, recalculate chart
     if (updates.birthData) {
@@ -410,34 +409,32 @@ export class ProfileManager {
     
     const profile = this.profiles.get(profileId);
     if (!profile) {
-      console.log('[ProfileManager] No profile found:', profileId);
       return null;
     }
 
     const currentChart = getNatalChart(profileId);
     if (!currentChart) {
-      console.log('[ProfileManager] No chart found for:', profileId);
       return null;
     }
 
-    console.log('[ProfileManager] Current chart birth data:', JSON.stringify(currentChart.birthData));
 
     // Use provided split fields or fall back to preferences
     const targetFrame = zodiacFrame || getZodiacFramePreference();
     const targetCount = signCount || getSignCountPreference();
     const targetSystem = zodiacSystem || (targetFrame === 'sidereal' ? 'sidereal' : targetCount === 13 ? '13-sign' : '12-sign');
     
-    if (currentChart.zodiacSystem === targetSystem && (currentChart as any).zodiacFrame === targetFrame && (currentChart as any).signCount === targetCount) {
-      console.log('[ProfileManager] Chart already using target system, skipping recalc');
+    if (
+      currentChart.zodiacSystem === targetSystem &&
+      (currentChart as any).zodiacFrame === targetFrame &&
+      (currentChart as any).signCount === targetCount &&
+      !currentChart.calculatedWithFallback
+    ) {
       return currentChart;
     }
 
-    console.log('[ProfileManager] Recalculating chart with', targetFrame, targetCount);
     const newChart = await this.calculateNatalChart(profileId, profile.name, currentChart.birthData, targetSystem, targetFrame, targetCount);
-    console.log('[ProfileManager] New chart sun sign:', newChart.planets.sun?.sign);
     
     saveNatalChart(newChart, profileId);
-    console.log('[ProfileManager] Chart saved to storage');
 
     // Update profile timestamp since chart changed
     const updated = { ...profile, updatedAt: new Date() };
@@ -512,6 +509,12 @@ export class ProfileManager {
     // Set engine state so downstream calculations use correct frame/count
     setZodiacFrame(frame);
     setSignCount(count);
+    // Configure sidereal mode so WASM applies correct ayanamsa
+    if (frame === 'sidereal') {
+      setSiderealMode('lahiri');
+    } else {
+      setSiderealMode(null);
+    }
     // Validate birth data
     if (!birthData.date || !birthData.time) {
       throw new ChartCalculationError('Birth date and time are required');
@@ -520,9 +523,7 @@ export class ProfileManager {
       throw new ChartCalculationError('Valid latitude and longitude are required');
     }
 
-    console.log('[ProfileManager] Raw birth data:', JSON.stringify(birthData));
     const date = birthDateTimeToUTC(birthData.date, birthData.time, birthData.timezone);
-    console.log('[ProfileManager] Parsed UTC date:', date.toISOString(), 'from:', birthData.date, 'T', birthData.time, 'in', birthData.timezone);
     if (isNaN(date.getTime())) {
       throw new ChartCalculationError('Invalid birth date/time format');
     }
@@ -530,9 +531,7 @@ export class ProfileManager {
     // Calculate planetary positions
     let skyData;
     try {
-      console.log('[ProfileManager] Calculating sky for date:', date);
       skyData = await calculateCurrentSky(date);
-      console.log('[ProfileManager] Sky data received:', skyData ? 'yes' : 'no');
     } catch (err) {
       console.error('[ProfileManager] calculateCurrentSky error:', err);
       throw new ChartCalculationError('Failed to calculate planetary positions');
@@ -544,11 +543,6 @@ export class ProfileManager {
     }
 
     const positions = skyData.positions;
-    console.log('[ProfileManager] Positions:', Object.keys(positions));
-    
-    // Log first position to check structure
-    const firstPos = Object.values(positions)[0];
-    console.log('[ProfileManager] First position structure:', firstPos ? Object.keys(firstPos) : 'undefined');
     
     // Validate positions
     if (Object.keys(positions).length === 0) {
@@ -558,9 +552,7 @@ export class ProfileManager {
     // Calculate houses
     let houseData;
     try {
-      console.log('[ProfileManager] Calculating houses...');
       houseData = await calculateLocalHouses(date, birthData.latitude, birthData.longitude);
-      console.log('[ProfileManager] House data received:', houseData ? 'yes' : 'no');
     } catch (err) {
       console.error('[ProfileManager] calculateLocalHouses error:', err);
       throw new ChartCalculationError('Failed to calculate house positions');
@@ -571,7 +563,6 @@ export class ProfileManager {
       throw new ChartCalculationError('Invalid house data returned');
     }
 
-    console.log('[ProfileManager] House cusps count:', houseData.cusps.length);
 
     const houses = {
       type: 'placidus' as const,
@@ -587,7 +578,6 @@ export class ProfileManager {
     const use13Signs = count === 13;
     
     Object.entries(positions).forEach(([planetId, position]) => {
-      console.log(`[ProfileManager] Processing ${planetId}:`, position ? 'valid' : 'undefined');
       if (!position || typeof position.longitude !== 'number') {
         console.warn(`[ProfileManager] Invalid position data for ${planetId}:`, position);
         return; // Skip invalid planet
@@ -603,7 +593,6 @@ export class ProfileManager {
           house,
           dignity: getDignity(planetId, sign),
         };
-        console.log(`[ProfileManager] Added ${planetId} as ${sign} (house ${house})`);
       } catch (houseErr) {
         console.error(`[ProfileManager] Error calculating house for ${planetId}:`, houseErr);
         const sign = getSignFromLongitude(position.longitude as any, use13Signs) as string;
@@ -614,10 +603,8 @@ export class ProfileManager {
           house: 1, // Default to house 1
           dignity: getDignity(planetId, sign),
         };
-        console.log(`[ProfileManager] Added ${planetId} as ${sign} with fallback house`);
       }
     });
-    console.log('[ProfileManager] Final planets in chart:', Object.keys(planets));
     
     if (Object.keys(planets).length === 0) {
       throw new ChartCalculationError('No valid planetary positions found');
@@ -631,11 +618,6 @@ export class ProfileManager {
     const elements = calculateElementalBalanceWithSystem(planets, elementMap as Record<string, string>);
     const modalities = calculateModalityBalanceWithSystem(planets, use13Signs);
     
-    // Safety check: ensure birth data date is not today's date (indicates corruption)
-    const today = new Date().toISOString().split('T')[0];
-    if (birthData.date === today) {
-      console.error('[ProfileManager] WARNING: Birth data appears to be corrupted (using today\'s date). Birth date:', birthData.date);
-    }
     
     const chart: NatalChart = {
       id: `natal-${profileId}`,
@@ -651,6 +633,7 @@ export class ProfileManager {
       zodiacSystem: frame === 'sidereal' ? 'sidereal' : (count === 13 ? '13-sign' : '12-sign'),
       zodiacFrame: frame,
       signCount: count,
+      calculatedWithFallback: isUsingFallback(),
     };
 
     saveNatalChart(chart, profileId);

@@ -18,6 +18,13 @@
 
 import type { Transit } from '../../natal/natalChart';
 import type { CelestialBody } from '../../../types';
+import { ALL_BODY_TEMPLATES } from './bodies';
+import { PHASE_TRANSFORMS, applyPhaseTransform } from './phases';
+import { applyAspectTransform } from './aspects';
+import { applyCategoryLens, type CategoryKey } from './categories';
+import type { DegreePattern } from './degreePatterns';
+import { type ShapeReading } from './chartShapes';
+import { type EnrichedPattern } from './patternInterpretationEngine';
 
 // ═══════════════════════════════════════════════════════════════════════════════
 // TYPES & INTERFACES
@@ -90,6 +97,11 @@ const ELEMENT_QUALITIES: Record<string, { approach: string; challenge: string; g
     challenge: 'overwhelm and emotional confusion',
     gift: 'empathy and creative flow',
   },
+  ether: {
+    approach: 'through transcendent awareness and alchemical transformation',
+    challenge: 'dissociation and boundary dissolution',
+    gift: 'healing, bridge-building, and metamorphic insight',
+  },
 };
 
 const SIGN_DATA: Record<string, {
@@ -161,6 +173,11 @@ const SIGN_DATA: Record<string, {
     element: 'water', modality: 'mutable', keywords: ['compassion', 'imagination', 'unity'],
     climate: 'the dissolving mist of early spring', verb: 'dissolves', virtue: 'spiritual openness', shadow: 'escapist confusion',
     bodyFocus: 'feet, immune system, pineal gland',
+  },
+  ophiuchus: {
+    element: 'ether', modality: 'fixed', keywords: ['healing', 'transformation', 'alchemy', 'initiation'],
+    climate: 'the liminal threshold between death and rebirth', verb: 'transmutes', virtue: 'metamorphic wisdom', shadow: 'dissociative escapism',
+    bodyFocus: 'spinal column, nervous system regeneration, subtle energy channels',
   },
 };
 
@@ -254,6 +271,30 @@ const PLANET_ARCHETYPES: Record<string, {
     financesAdvice: 'Joint resources and investments benefit from thorough research.',
     growthAdvice: 'Letting go is not failure. It is the prerequisite for authentic power.',
   },
+  chiron: {
+    essence: 'The wounded healer', domain: 'healing and integration', elementFocus: 'wholeness',
+    careerAdvice: 'Healing professions, mentoring, and depth work align with your gifts.',
+    relationshipAdvice: 'Your deepest wounds become your greatest teachers in love.',
+    healthAdvice: 'Listen to chronic symptoms — they carry messages your body needs you to hear.',
+    financesAdvice: 'Invest in healing, education, and tools that support your integration.',
+    growthAdvice: 'Your vulnerability is not weakness. It is the doorway to your medicine.',
+  },
+  northNode: {
+    essence: 'Soul purpose and evolutionary direction', domain: 'karmic growth and destiny', elementFocus: 'calling',
+    careerAdvice: 'Follow what feels unfamiliar but magnetic. Growth lives outside comfort.',
+    relationshipAdvice: 'The people who challenge you most are your greatest teachers.',
+    healthAdvice: 'Your body knows the way forward before your mind agrees. Trust its signals.',
+    financesAdvice: 'Invest in your future self. What supports your soul\'s path is never wasted.',
+    growthAdvice: 'The path of least resistance leads away from your purpose. Choose the climb.',
+  },
+  lilith: {
+    essence: 'Wild feminine and primal instinct', domain: 'repressed desire and shadow power', elementFocus: 'liberation',
+    careerAdvice: 'Fields that honour autonomy, sexuality, and boundary-breaking suit you.',
+    relationshipAdvice: 'Your unapologetic truth is not too much. It is exactly enough.',
+    healthAdvice: 'Reclaim the parts of your body and desire that were shamed or denied.',
+    financesAdvice: 'Wealth that funds your freedom is worth more than wealth that funds your cage.',
+    growthAdvice: 'What was banished to your shadow holds your greatest power. Integrate it.',
+  },
 };
 
 // ═══════════════════════════════════════════════════════════════════════════════
@@ -272,36 +313,19 @@ type PlanetSignTemplate = {
   growthAdvice: string;
 };
 
-const PLANET_SIGN_TEMPLATES: Record<string, Record<string, PlanetSignTemplate>> = {
-  sun: {
-    aries: { essence: 'Radiant leadership through bold initiation', element: 'fire', modality: 'cardinal', keywords: ['leadership', 'initiation', 'courage'], careerAdvice: 'Take charge of new projects. Your natural authority shines now.', relationshipAdvice: 'Express your needs directly. Honest communication builds stronger bonds.', healthAdvice: 'Channel excess energy into physical activity. Watch for headaches from stress.', financesAdvice: 'Bold moves can pay off, but research before committing large sums.', growthAdvice: 'Cultivate patience alongside your natural courage. True strength includes restraint.' },
-    taurus: { essence: 'Steady radiance through grounded persistence', element: 'earth', modality: 'fixed', keywords: ['stability', 'sensuality', 'determination'], careerAdvice: 'Build lasting foundations. Your persistence outlasts flashier competitors.', relationshipAdvice: 'Show love through physical presence and tangible gestures.', healthAdvice: 'Focus on throat and neck health. Gentle stretching helps tension release.', financesAdvice: 'Excellent time for long-term investments. Avoid get-rich-quick schemes.', growthAdvice: 'Embrace change as a form of stability. Growth requires adaptation.' },
-    gemini: { essence: 'Curious radiance through mental exploration', element: 'air', modality: 'mutable', keywords: ['curiosity', 'communication', 'adaptability'], careerAdvice: 'Your ideas are flowing. Document them and share with collaborators.', relationshipAdvice: 'Engage in stimulating conversation. Mental connection deepens bonds.', healthAdvice: 'Guard against scattered energy. Create routines for nervous system support.', financesAdvice: 'Multiple streams of income appeal now. Diversify carefully.', growthAdvice: 'Depth complements breadth. Explore one subject thoroughly.' },
-    cancer: { essence: 'Nurturing radiance through emotional wisdom', element: 'water', modality: 'cardinal', keywords: ['nurturing', 'protection', 'intuition'], careerAdvice: 'Lead with empathy. Your sensitivity is a professional strength now.', relationshipAdvice: 'Create safe emotional spaces. Home-centered activities strengthen bonds.', healthAdvice: 'Support digestive health. Emotional eating patterns may surface for healing.', financesAdvice: 'Focus on home and family investments. Security brings peace of mind.', growthAdvice: 'Self-nurturing enables you to care for others. Fill your own cup first.' },
-    leo: { essence: 'Confident radiance through creative expression', element: 'fire', modality: 'fixed', keywords: ['confidence', 'creativity', 'generosity'], careerAdvice: 'Showcase your talents. Recognition comes to authentic self-expression.', relationshipAdvice: 'Express your heart generously. Your warmth attracts love.', healthAdvice: 'Support heart health. Creative expression is therapeutic.', financesAdvice: 'Invest in yourself and creative pursuits. Generosity returns multiplied.', growthAdvice: 'True confidence needs no external validation. Shine from within.' },
-    virgo: { essence: 'Discerning radiance through careful refinement', element: 'earth', modality: 'mutable', keywords: ['precision', 'service', 'health'], careerAdvice: 'Your attention to detail saves the day. Offer practical solutions.', relationshipAdvice: 'Show love through helpful acts. Practical support speaks volumes.', healthAdvice: 'Focus on gut health and daily routines. Small changes compound.', financesAdvice: 'Analyze before investing. Your discernment spots hidden opportunities.', growthAdvice: 'Perfectionism serves no one. Embrace progress over perfection.' },
-    libra: { essence: 'Harmonious radiance through balanced partnership', element: 'air', modality: 'cardinal', keywords: ['harmony', 'beauty', 'diplomacy'], careerAdvice: 'Collaboration succeeds over competition. Your diplomatic skills shine.', relationshipAdvice: 'Seek win-win solutions. Balance giving and receiving love.', healthAdvice: 'Support kidney and skin health. Balance work and rest.', financesAdvice: 'Partnership investments flourish. Seek expert advice.', growthAdvice: 'Your needs matter as much as others. Authentic relationships require honesty.' },
-    scorpio: { essence: 'Transformative radiance through deep intensity', element: 'water', modality: 'fixed', keywords: ['transformation', 'intensity', 'power'], careerAdvice: 'Research and investigation excel. Trust your intuition about hidden matters.', relationshipAdvice: 'Depth over breadth. Meaningful intimacy transforms bonds.', healthAdvice: 'Support reproductive and eliminative systems. Release what no longer serves.', financesAdvice: 'Joint resources and investments benefit from thorough research.', growthAdvice: 'Vulnerability is strength. Let others see your authentic self.' },
-    sagittarius: { essence: 'Expansive radiance through philosophical adventure', element: 'fire', modality: 'mutable', keywords: ['expansion', 'truth', 'adventure'], careerAdvice: 'Think big and share your vision. Teaching and publishing flourish.', relationshipAdvice: 'Share adventures and philosophies. Freedom within commitment works best.', healthAdvice: 'Support liver and hips. Outdoor activity restores balance.', financesAdvice: 'Long-distance investments or education pay off. Think globally.', growthAdvice: 'Truth without compassion can wound. Temper honesty with kindness.' },
-    capricorn: { essence: 'Ambitious radiance through disciplined achievement', element: 'earth', modality: 'cardinal', keywords: ['ambition', 'responsibility', 'mastery'], careerAdvice: 'Climb steadily toward goals. Authority figures recognize your competence.', relationshipAdvice: 'Show commitment through actions. Long-term loyalty matters most.', healthAdvice: 'Support bones, teeth, and joints. Consistency in self-care pays.', financesAdvice: 'Conservative, structured investments build lasting wealth.', growthAdvice: 'Achievement without joy is hollow. Celebrate milestones along the way.' },
-    aquarius: { essence: 'Innovative radiance through collective vision', element: 'air', modality: 'fixed', keywords: ['innovation', 'humanity', 'independence'], careerAdvice: 'Bring fresh perspectives. Group projects and technology excel.', relationshipAdvice: 'Friendship forms relationship foundation. Allow space for individuality.', healthAdvice: 'Support circulatory and nervous systems. Community supports health.', financesAdvice: 'Innovative and unconventional investments may succeed. Stay informed.', growthAdvice: 'Emotions are not weakness. Integrate head and heart.' },
-    pisces: { essence: 'Transcendent radiance through spiritual connection', element: 'water', modality: 'mutable', keywords: ['compassion', 'imagination', 'unity'], careerAdvice: 'Creative and healing professions flourish. Trust intuitive guidance.', relationshipAdvice: 'Unconditional love heals. Spiritual bonds transcend the mundane.', healthAdvice: 'Support feet and immune system. Rest and dream time essential.', financesAdvice: 'Intuitive investments may surprise you. Avoid escapist spending.', growthAdvice: 'Boundaries enable compassion. You cannot pour from an empty cup.' },
-  },
-  moon: {
-    aries: { essence: 'Emotional independence through direct expression', element: 'fire', modality: 'cardinal', keywords: ['impulse', 'courage', 'authenticity'], careerAdvice: 'Trust your gut instincts. Quick emotional reads serve you well.', relationshipAdvice: 'Express feelings honestly. Impatience with emotional games.', healthAdvice: 'Emotions manifest quickly in body. Exercise releases tension.', financesAdvice: 'Impulsive spending possible. Pause before purchases.', growthAdvice: 'All emotions are valid. Practice holding them with patience.' },
-    taurus: { essence: 'Emotional stability through sensual security', element: 'earth', modality: 'fixed', keywords: ['security', 'sensuality', 'loyalty'], careerAdvice: 'Steady emotional presence creates trust. Avoid change for change\'s sake.', relationshipAdvice: 'Physical comfort and consistency nurture connection.', healthAdvice: 'Emotions settle in neck and throat. Massage helps release.', financesAdvice: 'Security needs override risk. Build steady reserves.', growthAdvice: 'Flexibility strengthens security. Resistance causes suffering.' },
-    gemini: { essence: 'Emotional curiosity through mental processing', element: 'air', modality: 'mutable', keywords: ['curiosity', 'communication', 'variety'], careerAdvice: 'Network emotionally. Conversations lead to opportunities.', relationshipAdvice: 'Talk through feelings. Mental connection is emotional connection.', healthAdvice: 'Nervous system needs variety. Change routines regularly.', financesAdvice: 'Multiple small investments suit now. Stay adaptable.', growthAdvice: 'Feel before analyzing. Not everything needs explanation.' },
-    cancer: { essence: 'Emotional depth through nurturing cycles', element: 'water', modality: 'cardinal', keywords: ['nurturing', 'protection', 'cycles'], careerAdvice: 'Care for your professional community. Home-based work thrives.', relationshipAdvice: 'Create emotional homes together. Security enables intimacy.', healthAdvice: 'Emotions affect digestion. Comfort foods in moderation.', financesAdvice: 'Invest in home and family. Long-term security matters.', growthAdvice: 'Your sensitivity is strength. Boundaries protect your gifts.' },
-    leo: { essence: 'Emotional warmth through generous expression', element: 'fire', modality: 'fixed', keywords: ['warmth', 'drama', 'generosity'], careerAdvice: 'Creative leadership from the heart. Recognition feels like oxygen.', relationshipAdvice: 'Grand romantic gestures satisfy. Give and receive appreciation.', healthAdvice: 'Heart-centered activities restore. Creative expression heals.', financesAdvice: 'Generosity returns multiplied. But maintain healthy boundaries.', growthAdvice: 'Self-love is not selfish. Your light helps others see.' },
-    virgo: { essence: 'Emotional care through practical service', element: 'earth', modality: 'mutable', keywords: ['service', 'discernment', 'health'], careerAdvice: 'Helpful competence builds reputation. Attention to detail noticed.', relationshipAdvice: 'Show love through practical care. Acts of service speak loudest.', healthAdvice: 'Worry affects gut health. Routine and order soothe nerves.', financesAdvice: 'Practical budgeting satisfies. Small consistent savings work.', growthAdvice: 'You are enough as you are. Imperfection is human.' },
-    libra: { essence: 'Emotional harmony through balanced relating', element: 'air', modality: 'cardinal', keywords: ['harmony', 'partnership', 'beauty'], careerAdvice: 'Collaborative projects thrive. Your mediation skills shine.', relationshipAdvice: 'Emotional equality matters deeply. Avoid peace at any price.', healthAdvice: 'Balance in all things. Stress shows in skin and kidneys.', financesAdvice: 'Partnership decisions benefit both. Shared resources smooth.', growthAdvice: 'Your needs deserve attention. Harmony includes yourself.' },
-    scorpio: { essence: 'Emotional intensity through transformative depth', element: 'water', modality: 'fixed', keywords: ['intensity', 'privacy', 'power'], careerAdvice: 'Research and investigation excel. Trust intuition on secrets.', relationshipAdvice: 'All-or-nothing emotional investment. Depth over breadth always.', healthAdvice: 'Emotions run deep physically. Release through movement.', financesAdvice: 'Joint resources and investments. Research thoroughly.', growthAdvice: 'Vulnerability creates intimacy. Trust the right people.' },
-    sagittarius: { essence: 'Emotional freedom through expansive truth', element: 'fire', modality: 'mutable', keywords: ['freedom', 'optimism', 'adventure'], careerAdvice: 'International connections benefit. Share your vision widely.', relationshipAdvice: 'Philosophical compatibility matters. Freedom within love.', healthAdvice: 'Adventure feeds the soul. Outdoor movement essential.', financesAdvice: 'Long-term optimistic investments. Education pays dividends.', growthAdvice: 'Commitment brings freedom. Paradox contains truth.' },
-    capricorn: { essence: 'Emotional responsibility through mature restraint', element: 'earth', modality: 'cardinal', keywords: ['responsibility', 'maturity', 'structure'], careerAdvice: 'Emotional professionalism serves you. Authority feels comfortable.', relationshipAdvice: 'Commitment shown through reliability. Actions over words.', healthAdvice: 'Repressed emotions affect bones. Schedule emotional processing.', financesAdvice: 'Conservative approach satisfies. Build for legacy.', growthAdvice: 'Vulnerability is not weakness. True strength includes softness.' },
-    aquarius: { essence: 'Emotional detachment through humanitarian concern', element: 'air', modality: 'fixed', keywords: ['detachment', 'humanity', 'innovation'], careerAdvice: 'Group dynamics fascinate. Humanitarian goals motivate.', relationshipAdvice: 'Friendship first, romance second. Space strengthens bonds.', healthAdvice: 'Community supports wellness. Group activities energize.', financesAdvice: 'Unconventional investments appeal. Social impact matters.', growthAdvice: 'Emotions are information. You can feel without drowning.' },
-    pisces: { essence: 'Emotional dissolution through spiritual compassion', element: 'water', modality: 'mutable', keywords: ['compassion', 'dissolution', 'transcendence'], careerAdvice: 'Creative and healing work satisfies. Boundaries essential for success.', relationshipAdvice: 'Soul connections transcend limits. Compassion with discernment.', healthAdvice: 'Energy boundaries protect health. Rest and dream time crucial.', financesAdvice: 'Intuitive guidance accurate. Avoid rescuing others financially.', growthAdvice: 'Empathy requires boundaries. Your sensitivity needs protection.' },
-  },
-};
+// ═══════════════════════════════════════════════════════════════════════════════
+// REAL HAND-CRAFTED TEMPLATES (imported from 13 body files × 13 signs each)
+// ═══════════════════════════════════════════════════════════════════════════════
+
+const PLANET_SIGN_TEMPLATES: Record<string, Record<string, PlanetSignTemplate>> = {};
+
+// Merge all imported real templates into the lookup structure
+for (const [bodyName, bodyMap] of Object.entries(ALL_BODY_TEMPLATES)) {
+  PLANET_SIGN_TEMPLATES[bodyName] = {};
+  for (const [sign, template] of Object.entries(bodyMap)) {
+    PLANET_SIGN_TEMPLATES[bodyName][sign] = template as PlanetSignTemplate;
+  }
+}
 
 // ═══════════════════════════════════════════════════════════════════════════════
 // MOON PHASE MODIFIERS (8 phases)
@@ -497,22 +521,71 @@ export class TemplateLibrary {
   }
   
   /**
-   * Generate a synthetic template for any planet-sign combo not hand-written
+   * Generate a rich synthetic template for any planet-sign combo not hand-written.
+   * Uses elemental qualities, sign metadata, and archetype data to produce
+   * compelling, non-formulaic output that rivals hand-written templates.
    */
   private generateSyntheticTemplate(planet: string, sign: string): PlanetSignTemplate {
     const archetype = PLANET_ARCHETYPES[planet];
     const signData = SIGN_DATA[sign];
-    
+    const elementQuality = ELEMENT_QUALITIES[signData.element];
+
+    // Rich essence variants — never the same Mad-Libs structure twice
+    const essencePool = [
+      `${archetype.essence} that ${signData.verb} through ${signData.climate}`,
+      `${archetype.essence}, ${signData.verb} within ${signData.climate}`,
+      `The ${archetype.domain} takes on ${signData.climate} — ${archetype.essence.toLowerCase()} ${signData.verb} here`,
+      `${archetype.essence} finds its expression ${elementQuality.approach}, ${signData.verb} through ${signData.climate}`,
+    ];
+    const essence = essencePool[this.hashString(`${planet}-${sign}-essence`) % essencePool.length];
+
+    // Career advice — weave archetype advice with sign-specific climate
+    const careerPool = [
+      `${archetype.careerAdvice} In ${this.capitalize(sign)} territory, ${signData.virtue.toLowerCase()} is your professional edge.`,
+      `${archetype.careerAdvice} The ${this.capitalize(sign)} climate rewards those who ${signData.verb} with intention.`,
+      `Your career path aligns with ${archetype.domain}. ${signData.virtue} opens doors in ${this.capitalize(sign)} season.`,
+    ];
+
+    // Relationship advice
+    const relationshipPool = [
+      `${archetype.relationshipAdvice} ${signData.virtue} deepens connection when expressed ${elementQuality.approach}.`,
+      `${archetype.relationshipAdvice} In ${this.capitalize(sign)} energy, relationships grow through ${signData.verb}.`,
+      `Love flows best when you honour ${signData.virtue.toLowerCase()}. ${archetype.relationshipAdvice}`,
+    ];
+
+    // Health advice
+    const healthPool = [
+      `${archetype.healthAdvice} The ${this.capitalize(sign)} body asks attention at ${signData.bodyFocus}.`,
+      `${archetype.healthAdvice} ${signData.shadow} may manifest physically — tend to ${signData.bodyFocus}.`,
+      `Your vitality aligns with ${archetype.elementFocus}. Support ${signData.bodyFocus} through practices that ${signData.verb}.`,
+    ];
+
+    // Financial advice
+    const financePool = [
+      `${archetype.financesAdvice} ${signData.virtue} guides wise resource management in ${this.capitalize(sign)}.`,
+      `${archetype.financesAdvice} The ${signData.climate} favours patient, ${signData.modality} approaches to wealth.`,
+      `Financial clarity arrives ${elementQuality.approach}. ${archetype.financesAdvice}`,
+    ];
+
+    // Growth advice
+    const growthPool = [
+      `${archetype.growthAdvice} ${signData.shadow} surfaces as your teacher — meet it with ${signData.virtue.toLowerCase()}.`,
+      `${archetype.growthAdvice} Growth in ${this.capitalize(sign)} asks you to ${signData.verb} beyond comfort.`,
+      `Your edge lives where ${signData.shadow} meets ${signData.virtue.toLowerCase()}. ${archetype.growthAdvice}`,
+    ];
+
+    const hash = this.hashString(`${planet}-${sign}`);
+
     return {
-      essence: `${archetype.essence} that ${signData.verb} through ${signData.climate}`,
+      essence,
       element: signData.element,
       modality: signData.modality,
       keywords: signData.keywords,
-      careerAdvice: `${archetype.careerAdvice} The ${this.capitalize(sign)} climate rewards steady, purposeful effort.`,
-      relationshipAdvice: `${archetype.relationshipAdvice} ${signData.virtue} serves you well in matters of the heart.`,
-      healthAdvice: `${archetype.healthAdvice} Pay attention to ${signData.bodyFocus}.`,
-      financesAdvice: `${archetype.financesAdvice} Let ${signData.virtue.toLowerCase()} guide financial decisions.`,
-      growthAdvice: `${archetype.growthAdvice} Watch for ${signData.shadow} — it is your growth edge now.`,
+      careerAdvice: careerPool[hash % careerPool.length],
+      relationshipAdvice: relationshipPool[hash % relationshipPool.length],
+      healthAdvice: healthPool[hash % healthPool.length],
+      financesAdvice: financePool[hash % financePool.length],
+      growthAdvice: growthPool[hash % growthPool.length],
     };
   }
   
@@ -618,7 +691,11 @@ export class TemplateLibrary {
   }
   
   /**
-   * Assemble a fluid, human reading from components
+   * Assemble a fluid, human reading from components — Assembly Engine v3
+   *
+   * Weaves rather than concatenates: the phase, aspect, and category
+   * transforms interleave with the template text to create seamless
+   * narratives that feel authored, not assembled.
    */
   private assembleReading(params: {
     baseTemplate: PlanetSignTemplate;
@@ -631,83 +708,85 @@ export class TemplateLibrary {
     hash: number;
   }): PersonalizedReading {
     const { baseTemplate, phaseModifier, aspectModifier, elementQuality, transit, userElement, category, hash } = params;
-    
-    // Build narrative with fluid variations
+
+    // ── Phase lens: reframe essence through lunar cycle ──
+    const phaseKey = Object.keys(MOON_PHASE_MODIFIERS).find(
+      k => MOON_PHASE_MODIFIERS[k].prefix === phaseModifier.prefix
+    ) || 'new-moon';
+    let essenceText = applyPhaseTransform(baseTemplate.essence, phaseKey, '');
+
+    // ── Aspect lens: weave transit tension into narrative ──
+    if (aspectModifier && transit) {
+      essenceText = applyAspectTransform(essenceText, transit.aspect, transit.transitingPlanet, transit.natalPlanet);
+    }
+
+    // ── Category lens: focus advice on user's concern ──
+    const catKey = (category || 'general') as CategoryKey;
+    const lensed = applyCategoryLens(baseTemplate as unknown as Record<string, string>, catKey);
+
+    // ── Build woven narrative ──
     const opener = this.pickFrom(NARRATIVE_OPENERS, hash)
-      .replace('{essence}', baseTemplate.essence.toLowerCase());
-    
+      .replace('{essence}', essenceText.toLowerCase());
+
     const transition = this.pickFrom(NARRATIVE_TRANSITIONS, hash + 1)
       .replace('{approach}', elementQuality.approach);
-    
+
     const phaseIntegration = this.pickFrom(NARRATIVE_PHASE_INTEGRATIONS, hash + 2)
       .replace('{moonPhase}', phaseModifier.prefix.toLowerCase())
       .replace('{theme}', phaseModifier.theme.toLowerCase());
-    
-    let narrative = `${opener} ${transition} ${phaseIntegration}`;
-    
+
+    let narrative = `${opener} ${transition}\n\n${phaseIntegration}`;
+
     if (aspectModifier) {
       const aspectIntegration = this.pickFrom(NARRATIVE_ASPECT_INTEGRATIONS, hash + 3)
         .replace('{aspectFlavor}', aspectModifier.flavor);
-      narrative += ` ${aspectIntegration}`;
+      narrative += `\n\n${aspectIntegration}`;
     }
-    
+
     if (userElement === baseTemplate.element) {
       const elementIntegration = this.pickFrom(NARRATIVE_ELEMENT_INTEGRATIONS, hash + 4)
         .replace('{element}', userElement);
-      narrative += ` ${elementIntegration}`;
+      narrative += `\n\n${elementIntegration}`;
     }
-    
+
+    // Add elemental resonance from template
+    if ((baseTemplate as any).elementalResonance) {
+      const resonance = (baseTemplate as any).elementalResonance;
+      narrative += `\n\n${resonance}`;
+    }
+
     const closer = this.pickFrom(NARRATIVE_CLOSERS, hash + 5);
-    narrative += ` ${closer}`;
-    
-    // Select category-specific advice
-    let advicePool: string[] = [];
-    switch (category) {
-      case 'career':
-        advicePool = [baseTemplate.careerAdvice];
-        break;
-      case 'relationships':
-        advicePool = [baseTemplate.relationshipAdvice];
-        break;
-      case 'health':
-        advicePool = [baseTemplate.healthAdvice];
-        break;
-      case 'finances':
-        advicePool = [baseTemplate.financesAdvice];
-        break;
-      case 'personalGrowth':
-        advicePool = [baseTemplate.growthAdvice];
-        break;
-      default:
-        advicePool = [baseTemplate.careerAdvice, baseTemplate.relationshipAdvice];
-    }
-    
-    // Add timing and aspect advice
+    narrative += `\n\n${closer}`;
+
+    // ── Advice pool: category-lensed + phase + aspect ──
+    const advicePool: string[] = [lensed.primary, ...lensed.secondary];
     advicePool.push(phaseModifier.timingAdvice);
     if (aspectModifier) {
       advicePool.push(aspectModifier.advice);
     }
-    
-    // Slightly shuffle advice order based on hash for variety
+
     const advice = this.shuffleWithHash(advicePool, hash).slice(0, 4);
-    
-    // Generate affirmation
-    const affirmation = `I embrace ${baseTemplate.keywords[0]} and ${baseTemplate.keywords[1]} with ${baseTemplate.element} energy.`;
-    
-    // Calculate confidence
-    const confidence = aspectModifier 
-      ? Math.round(aspectModifier.intensity * 60)
-      : Math.round(phaseModifier.multiplier * 60);
-    
-    // Build transit context
+
+    // ── Affirmation: from category lens or template ──
+    const affirmation = lensed.affirmation || `I embrace ${baseTemplate.keywords[0]} and ${baseTemplate.keywords[1]} with ${baseTemplate.element} energy.`;
+
+    // ── Confidence: influenced by aspect intensity + phase ──
+    const confidence = aspectModifier
+      ? Math.round(aspectModifier.intensity * 65)
+      : Math.round(phaseModifier.multiplier * 65);
+
+    // ── Transit context ──
     let transitContext: string | undefined;
     if (transit) {
       transitContext = `${this.capitalize(transit.transitingPlanet)} ${transit.aspect} your natal ${transit.natalPlanet} (${transit.orb.toFixed(1)}° ${transit.applying ? 'applying' : 'separating'})`;
     }
-    
-    // Dynamic title
-    const title = `${phaseModifier.prefix}: ${baseTemplate.essence}`;
-    
+
+    // ── Dynamic title ──
+    const phaseTransform = PHASE_TRANSFORMS[phaseKey];
+    const title = phaseTransform
+      ? `${phaseTransform.name}: ${baseTemplate.essence.split('.')[0]}`
+      : `${phaseModifier.prefix}: ${baseTemplate.essence.split('.')[0]}`;
+
     return {
       title,
       summary: baseTemplate.essence,
@@ -720,7 +799,7 @@ export class TemplateLibrary {
   }
   
   /**
-   * Synthesize a holistic snapshot reading from the entire sky
+   * Synthesize a holistic snapshot reading from the entire sky — v3 with patterns
    */
   synthesizeSnapshot(params: {
     positions: Record<string, CelestialBody>;
@@ -730,17 +809,20 @@ export class TemplateLibrary {
     transits?: Transit[];
     planetaryHour?: string;
     journalThemes?: string[];
+    chartPatterns?: EnrichedPattern[];
+    degreePatterns?: Array<{ planet: string; pattern: DegreePattern }>;
+    chartShape?: ShapeReading;
   }): PersonalizedReading {
-    const { positions, moonPhase, retrogrades, dominantElement, transits, planetaryHour, journalThemes } = params;
+    const { positions, moonPhase, retrogrades, dominantElement, transits, planetaryHour, journalThemes, chartPatterns, degreePatterns, chartShape } = params;
     const hash = this.hashString(JSON.stringify({
       sun: positions.sun?.sign,
       moon: positions.moon?.sign,
       phase: moonPhase.phase,
       retro: retrogrades.join(','),
     }));
-    
+
     const paragraphs: string[] = [];
-    
+
     // Paragraph 1: Luminaries + moon phase
     const sun = positions.sun;
     const moon = positions.moon;
@@ -748,20 +830,20 @@ export class TemplateLibrary {
       const sunTemplate = this.getBaseTemplate('sun', sun.sign);
       const moonTemplate = this.getBaseTemplate('moon', moon.sign);
       const phase = MOON_PHASE_MODIFIERS[moonPhase.phase] || MOON_PHASE_MODIFIERS['new-moon'];
-      
-      const sunDesc = sunTemplate 
+
+      const sunDesc = sunTemplate
         ? sunTemplate.essence.toLowerCase().replace(/^(the |a |an )/i, '')
         : `radiates in ${this.capitalize(sun.sign)}`;
       const moonDesc = moonTemplate
         ? moonTemplate.essence.toLowerCase().replace(/^(the |a |an )/i, '')
         : `moves through ${this.capitalize(moon.sign)}`;
-      
+
       paragraphs.push(
         `The Sun ${sunDesc} in ${this.capitalize(sun.sign)}, while the Moon ${moonDesc} through ${this.capitalize(moon.sign)}. ` +
         `The ${phase.prefix.toLowerCase()} moon brings a theme of ${phase.theme.toLowerCase()}.`
       );
     }
-    
+
     // Paragraph 2: Personal planets
     const personalPlanets = ['mercury', 'venus', 'mars'].filter(p => positions[p]);
     if (personalPlanets.length > 0) {
@@ -774,7 +856,7 @@ export class TemplateLibrary {
       });
       paragraphs.push(`The personal planets color your day: ${this.joinWithAnd(descriptions)}.`);
     }
-    
+
     // Paragraph 3: Social planets
     const socialPlanets = ['jupiter', 'saturn'].filter(p => positions[p]);
     if (socialPlanets.length > 0) {
@@ -787,7 +869,7 @@ export class TemplateLibrary {
       });
       paragraphs.push(`The larger forces at play: ${this.joinWithAnd(descriptions)}.`);
     }
-    
+
     // Paragraph 4: Outer planets (only if retrograde or making strong transits)
     const activeOuterPlanets = ['uranus', 'neptune', 'pluto'].filter(p => {
       if (!positions[p]) return false;
@@ -803,8 +885,40 @@ export class TemplateLibrary {
       });
       paragraphs.push(`Slow-moving archetypes shape the background: ${this.joinWithAnd(descriptions)}.`);
     }
-    
-    // Paragraph 5: Elemental resonance
+
+    // Paragraph 5: Chart patterns (NEW — combinations create meaning)
+    if (chartPatterns && chartPatterns.length > 0) {
+      const topPattern = chartPatterns[0];
+      paragraphs.push(
+        `A significant pattern structures your chart: ${topPattern.name} involving ${this.joinWithAnd(topPattern.planets)}. ` +
+        `${topPattern.narrative.split('.')[0]}.`
+      );
+      if (chartPatterns.length > 1) {
+        const second = chartPatterns[1];
+        paragraphs.push(
+          `Also present: ${second.name}. ${second.narrative.split('.')[0]}.`
+        );
+      }
+    }
+
+    // Paragraph 6: Chart shape (NEW — overall architecture)
+    if (chartShape && chartShape.shape !== 'none') {
+      paragraphs.push(
+        `Your chart forms a ${chartShape.name}: ${chartShape.description} ` +
+        `${chartShape.lifeStrategy}`
+      );
+    }
+
+    // Paragraph 7: Degree patterns (NEW — critical degrees)
+    if (degreePatterns && degreePatterns.length > 0) {
+      const topDegree = degreePatterns[0];
+      paragraphs.push(
+        `${this.capitalize(topDegree.planet)} sits at a sensitive degree (${topDegree.pattern.degree.toFixed(1)}°). ` +
+        `${topDegree.pattern.meaning}`
+      );
+    }
+
+    // Paragraph 8: Elemental resonance
     if (dominantElement) {
       const elementLines: Record<string, string[]> = {
         fire: [
@@ -823,10 +937,14 @@ export class TemplateLibrary {
           `Your water-dominant soul feels these shifts before your mind names them. Trust the current.`,
           `The water in your chart absorbs and reflects the sky's mood. Emotional truth is your guide.`,
         ],
+        ether: [
+          `Your ether-dominant awareness perceives the hidden patterns that connect what appears separate. Trust your initiatory sight.`,
+          `The quintessence in your chart bridges realms others cannot see. You are the translator between worlds.`,
+        ],
       };
       paragraphs.push(this.pickFrom(elementLines[dominantElement] || elementLines.fire, hash));
     }
-    
+
     // Paragraph: Planetary hour
     if (planetaryHour) {
       const hourLines = [
@@ -836,7 +954,7 @@ export class TemplateLibrary {
       ];
       paragraphs.push(this.pickFrom(hourLines, hash + 7));
     }
-    
+
     // Paragraph: Journal themes cross-link
     if (journalThemes && journalThemes.length > 0) {
       paragraphs.push(
@@ -844,15 +962,15 @@ export class TemplateLibrary {
         `Today's sky offers a useful mirror for continuing that inquiry.`
       );
     }
-    
+
     // Transit context (strongest transit)
     let transitContext: string | undefined;
     if (transits && transits.length > 0) {
       const t = transits[0];
       transitContext = `${this.capitalize(t.transitingPlanet)} ${t.aspect} your natal ${t.natalPlanet} (${t.orb.toFixed(1)}° ${t.applying ? 'applying' : 'separating'})`;
     }
-    
-    // Advice pool: draw from visible planets
+
+    // Advice pool: draw from visible planets + patterns
     const advicePool: string[] = [];
     const advicePlanets = ['sun', 'moon', 'mercury', 'venus', 'mars'].filter(p => positions[p]);
     advicePlanets.forEach(p => {
@@ -861,36 +979,57 @@ export class TemplateLibrary {
         advicePool.push(template.careerAdvice, template.relationshipAdvice);
       }
     });
-    
+
+    // Add pattern advice
+    if (chartPatterns) {
+      chartPatterns.slice(0, 2).forEach(p => advicePool.push(...p.advice.slice(0, 2)));
+    }
+
+    // Add degree pattern advice
+    if (degreePatterns) {
+      degreePatterns.slice(0, 1).forEach(d => advicePool.push(d.pattern.advice));
+    }
+
     // Add phase timing advice
     const phase = MOON_PHASE_MODIFIERS[moonPhase.phase] || MOON_PHASE_MODIFIERS['new-moon'];
     advicePool.push(phase.timingAdvice);
-    
-    // Shuffle and take 4 unique-ish pieces
+
+    // Shuffle and take 4-5 unique pieces
     const advice = this.shuffleWithHash(advicePool, hash)
       .filter((v, i, a) => a.indexOf(v) === i)
-      .slice(0, 4);
-    
-    // Title variations
-    const titles = [
-      'Celestial Weather Report',
-      'The Sky Speaks',
-      'Your Cosmic Landscape',
-      'Current Celestial Climate',
-      'The Stars Today',
-    ];
-    
+      .slice(0, 5);
+
+    // Title variations — include pattern name if present
+    let title: string;
+    if (chartPatterns && chartPatterns.length > 0) {
+      const titles = [
+        `${chartPatterns[0].name}: Your Celestial Weather`,
+        `The Sky Speaks Through ${chartPatterns[0].name}`,
+        `Your Cosmic Landscape: ${chartPatterns[0].name}`,
+      ];
+      title = this.pickFrom(titles, hash);
+    } else {
+      const titles = [
+        'Celestial Weather Report',
+        'The Sky Speaks',
+        'Your Cosmic Landscape',
+        'Current Celestial Climate',
+        'The Stars Today',
+      ];
+      title = this.pickFrom(titles, hash);
+    }
+
     // Affirmation
     const affirmation = `I flow with the wisdom of the stars and trust my own ${dominantElement || 'inner'} light.`;
-    
+
     return {
-      title: this.pickFrom(titles, hash),
+      title,
       summary: paragraphs[0] || 'The celestial spheres are in constant motion.',
       narrative: paragraphs.join('\n\n'),
       advice,
       affirmation,
       transitContext,
-      confidence: Math.min(95, 70 + (transits?.length || 0) * 5 + (retrogrades.length > 0 ? 5 : 0)),
+      confidence: Math.min(95, 70 + (transits?.length || 0) * 5 + (chartPatterns?.length || 0) * 3 + (retrogrades.length > 0 ? 5 : 0)),
     };
   }
   
@@ -966,6 +1105,7 @@ export class TemplateLibrary {
         earth: [`Your earth constitution benefits from steady routines. Build something tangible by week's end.`],
         air: [`Your air mind will be buzzing. Capture ideas midweek before they float away.`],
         water: [`Your water soul may feel the lunar tides acutely. Honor rest as much as action.`],
+        ether: [`Your ether awareness may reveal hidden connections this week. Trust the patterns that emerge between the obvious events.`],
       };
       paragraphs.push(this.pickFrom(lines[dominantElement] || lines.fire, hash));
     }
@@ -1082,6 +1222,7 @@ export class TemplateLibrary {
         earth: [`This year rewards practical effort and tangible results. Build something that lasts.`],
         air: [`A year of ideas, connections, and intellectual growth. Share what you learn widely.`],
         water: [`Emotional and spiritual depths call this year. Trust intuition over logic in major decisions.`],
+        ether: [`A year of transformation and bridging worlds. The invisible threads between events become visible to you.`],
       };
       paragraphs.push(this.pickFrom(lines[dominantElement] || lines.fire, hash));
     }

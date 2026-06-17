@@ -14,6 +14,7 @@
  */
 
 import React, { useState, useEffect, useCallback, useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import type { RootState } from '../../store';
@@ -21,6 +22,7 @@ import { addAstroProfile } from '../../store';
 import type { AstroProfile } from '../../types/astrology';
 import { generateNatalReport, type NatalReport, type ReportSection } from './reportGenerator';
 import { REPORT_CSS } from './reportCss';
+import { escapeHtml } from '../../utils/htmlEscape';
 
 type ViewState = 'setup' | 'loading' | 'ready' | 'error';
 
@@ -47,6 +49,7 @@ const DEFAULT_SETUP: SetupForm = {
 };
 
 export const NatalReportBuilder: React.FC = () => {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const astroProfiles = useSelector((state: RootState) => state.calendar.astroProfiles);
@@ -275,7 +278,7 @@ export const NatalReportBuilder: React.FC = () => {
               <input
                 className="report-setup-input"
                 type="text"
-                placeholder="e.g. Sarah Chen"
+                placeholder={t('namePlaceholder', 'Enter name')}
                 value={form.name}
                 onChange={e => setForm(f => ({ ...f, name: e.target.value }))}
               />
@@ -321,7 +324,7 @@ export const NatalReportBuilder: React.FC = () => {
               <input
                 className="report-setup-input"
                 type="text"
-                placeholder="e.g. New York, NY, USA"
+                placeholder={t('locationPlaceholder', 'e.g., New York, NY')}
                 value={form.locationName}
                 onChange={e => setForm(f => ({ ...f, locationName: e.target.value }))}
               />
@@ -338,7 +341,7 @@ export const NatalReportBuilder: React.FC = () => {
                   step="0.0001"
                   min="-90"
                   max="90"
-                  placeholder="40.7128"
+                  placeholder={t('latitudePlaceholder', 'e.g., 40.7128')}
                   value={form.latitude}
                   onChange={e => setForm(f => ({ ...f, latitude: e.target.value }))}
                 />
@@ -352,7 +355,7 @@ export const NatalReportBuilder: React.FC = () => {
                   step="0.0001"
                   min="-180"
                   max="180"
-                  placeholder="-74.0060"
+                  placeholder={t('longitudePlaceholder', 'e.g., -74.0060')}
                   value={form.longitude}
                   onChange={e => setForm(f => ({ ...f, longitude: e.target.value }))}
                 />
@@ -365,7 +368,7 @@ export const NatalReportBuilder: React.FC = () => {
               <input
                 className="report-setup-input"
                 type="text"
-                placeholder="America/New_York"
+                placeholder={t('timezonePlaceholder', 'e.g., America/New_York')}
                 value={form.timezone}
                 onChange={e => setForm(f => ({ ...f, timezone: e.target.value }))}
               />
@@ -442,7 +445,7 @@ export const NatalReportBuilder: React.FC = () => {
       {/* Sticky header */}
       {hasEntered && (
         <header className="report-header">
-          <button className="report-back" onClick={() => navigate('/')}>
+          <button className="report-back" onClick={() => navigate('/')} aria-label={t('common.back')}>
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
               <path d="M19 12H5M12 19l-7-7 7-7" />
             </svg>
@@ -460,7 +463,7 @@ export const NatalReportBuilder: React.FC = () => {
       {/* Floating TOC */}
       {hasEntered && (
         <>
-          <button className="report-toc-toggle" onClick={() => setShowToc(!showToc)} title="Contents">
+          <button className="report-toc-toggle" onClick={() => setShowToc(!showToc)} title="Contents" aria-label={t('common.toggleContents')}>
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
               <line x1="3" y1="6" x2="21" y2="6" />
               <line x1="3" y1="12" x2="21" y2="12" />
@@ -654,7 +657,9 @@ const ReportSectionCard: React.FC<{
 };
 
 function formatInline(text: string): string {
-  let html = text.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+  // Escape HTML first, then apply safe markdown-like formatting
+  let html = escapeHtml(text);
+  html = html.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
   html = html.replace(/\*(.+?)\*/g, '<em>$1</em>');
   return html;
 }

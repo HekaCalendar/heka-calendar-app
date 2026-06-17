@@ -359,3 +359,13 @@
   background: linear-gradient(180deg, var(--color-gold-light), var(--color-gold));
   background-clip: content-box;
 }
+
+
+/* ── RTL Overrides ── */
+[dir="rtl"] .celestial-info-list {
+    padding-right: var(--space-4)
+}
+
+[dir="rtl"] .celestial-info-badge {
+    margin-left: var(--space-2)
+}

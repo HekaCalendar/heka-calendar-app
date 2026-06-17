@@ -2,25 +2,70 @@
  * Theme Settings Component - Expandable section with Colors and Fonts
  */
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 import type { RootState } from '../store';
-import { setTheme, setFont } from '../store';
-import { THEME_LIST, FONT_LIST, type ThemeId, type FontId } from '../types/themes';
+import { setTheme, setFont, setHeaderGeometry, setBackgroundGeometry } from '../store';
+import { THEME_LIST, FONT_LIST, HEADER_GEOMETRIES, BACKGROUND_GEOMETRIES, type ThemeId, type FontId, type GeometryPattern, type BackgroundGeometryPattern } from '../types/themes';
+import { SacredGeometry } from './sacred-geometry/SacredGeometry';
 import { useFeatureDiscovery, useSettingsTracking } from '../hooks/useGamification';
 import { tutorialService } from '../services/tutorialService';
 
+/* Defer heavy SVG preview mounts by one frame so the settings panel can paint
+   before all 15 preview geometries are initialised. */
+function DeferredGeometryPreview({
+  pattern,
+  variant,
+}: {
+  pattern: GeometryPattern | BackgroundGeometryPattern;
+  variant: 'header' | 'background';
+}) {
+  const [show, setShow] = useState(false);
+  useEffect(() => {
+    const raf = requestAnimationFrame(() => setShow(true));
+    return () => cancelAnimationFrame(raf);
+  }, []);
+  if (!show) {
+    return <div className="geometry-card__preview" aria-hidden="true" />;
+  }
+  return <SacredGeometry pattern={pattern} variant={variant} />;
+}
+
+const geometryKeyMap: Record<string, string> = {
+  'flower-of-life': 'geometryFlowerOfLife',
+  'seed-of-life': 'geometrySeedOfLife',
+  'metatrons-cube': 'geometryMetatronsCube',
+  'sri-yantra': 'geometrySriYantra',
+  'merkaba': 'geometryMerkaba',
+  'fruit-of-life': 'geometryFruitOfLife',
+  'golden-spiral': 'geometryGoldenSpiral',
+  'hex-flower-grid': 'geometryHexFlowerGrid',
+  'metatrons-lattice': 'geometryMetatronLattice',
+  'sri-yantra-mandala': 'geometrySriYantraMandala',
+  'torus-field': 'geometryTorusField',
+  'tree-of-life': 'geometryTreeOfLife',
+  'vesica-wave': 'geometryVesicaWave',
+  'phyllotaxis-field': 'geometryPhyllotaxisField',
+  'none': 'geometryNone',
+};
+
 export const ThemeSettings: React.FC = () => {
+  const { t } = useTranslation('settings');
   const dispatch = useDispatch();
   const currentThemeId = useSelector((state: RootState) => state.calendar.theme);
   const currentFontId = useSelector((state: RootState) => state.calendar.font);
+  const currentHeaderGeometry = useSelector((state: RootState) => state.calendar.headerGeometry);
+  const currentBackgroundGeometry = useSelector((state: RootState) => state.calendar.backgroundGeometry);
   const { discover } = useFeatureDiscovery();
   const { trackTheme, trackFont } = useSettingsTracking();
   
-  const [expandedSection, setExpandedSection] = useState<'colors' | 'fonts' | null>(null);
+  const [expandedSection, setExpandedSection] = useState<'colors' | 'fonts' | 'header' | 'background' | null>(null);
   
   const currentTheme = THEME_LIST.find(t => t.id === currentThemeId);
   const currentFont = FONT_LIST.find(f => f.id === currentFontId);
+  const currentHeaderGeo = HEADER_GEOMETRIES.find(g => g.id === currentHeaderGeometry);
+  const currentBackgroundGeo = BACKGROUND_GEOMETRIES.find(g => g.id === currentBackgroundGeometry);
 
   const handleThemeSelect = (themeId: ThemeId) => {
     dispatch(setTheme(themeId));
@@ -35,6 +80,14 @@ export const ThemeSettings: React.FC = () => {
     trackFont(fontId);
   };
 
+  const handleHeaderGeometrySelect = (geo: GeometryPattern) => {
+    dispatch(setHeaderGeometry(geo));
+  };
+
+  const handleBackgroundGeometrySelect = (geo: BackgroundGeometryPattern) => {
+    dispatch(setBackgroundGeometry(geo));
+  };
+
   return (
     <div className="theme-settings">
       {/* Colors Section */}
@@ -44,7 +97,7 @@ export const ThemeSettings: React.FC = () => {
           onClick={() => setExpandedSection(expandedSection === 'colors' ? null : 'colors')}
         >
           <span className="theme-settings__icon">🎨</span>
-          <span className="theme-settings__title">Colours</span>
+          <span className="theme-settings__title">{t('colours')}</span>
           <span className="theme-settings__current">
             {currentTheme?.icon} {currentTheme?.name}
           </span>
@@ -99,7 +152,7 @@ export const ThemeSettings: React.FC = () => {
           onClick={() => setExpandedSection(expandedSection === 'fonts' ? null : 'fonts')}
         >
           <span className="theme-settings__icon">🔤</span>
-          <span className="theme-settings__title">Fonts</span>
+          <span className="theme-settings__title">{t('fonts')}</span>
           <span className="theme-settings__current">
             {currentFont?.icon} {currentFont?.name}
           </span>
@@ -129,6 +182,82 @@ export const ThemeSettings: React.FC = () => {
                     </span>
                     {currentFontId === font.id && <span className="font-card__check">✓</span>}
                   </div>
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
+
+      {/* Header Symbol Section */}
+      <div className="theme-settings__section">
+        <button
+          className={`theme-settings__header ${expandedSection === 'header' ? 'theme-settings__header--active' : ''}`}
+          onClick={() => setExpandedSection(expandedSection === 'header' ? null : 'header')}
+        >
+          <span className="theme-settings__icon">◈</span>
+          <span className="theme-settings__title">{t('headerSymbol')}</span>
+          <span className="theme-settings__current">
+            {currentHeaderGeo?.icon} {t(geometryKeyMap[currentHeaderGeo?.id || ''] || '')}
+          </span>
+          <span className="theme-settings__arrow">
+            {expandedSection === 'header' ? '▼' : '▶'}
+          </span>
+        </button>
+
+        {expandedSection === 'header' && (
+          <div className="theme-settings__content">
+            <div className="geometry-grid">
+              {HEADER_GEOMETRIES.map((geo) => (
+                <button
+                  key={geo.id}
+                  className={`geometry-card ${currentHeaderGeometry === geo.id ? 'geometry-card--active' : ''}`}
+                  onClick={() => handleHeaderGeometrySelect(geo.id as GeometryPattern)}
+                  title={t(geometryKeyMap[geo.id])}
+                >
+                  <div className="geometry-card__preview">
+                    <DeferredGeometryPreview pattern={geo.id} variant="header" />
+                  </div>
+                  <span className="geometry-card__name">{t(geometryKeyMap[geo.id])}</span>
+                  {currentHeaderGeometry === geo.id && <span className="geometry-card__check">✓</span>}
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
+
+      {/* Background Pattern Section */}
+      <div className="theme-settings__section">
+        <button
+          className={`theme-settings__header ${expandedSection === 'background' ? 'theme-settings__header--active' : ''}`}
+          onClick={() => setExpandedSection(expandedSection === 'background' ? null : 'background')}
+        >
+          <span className="theme-settings__icon">〰️</span>
+          <span className="theme-settings__title">{t('backgroundPattern')}</span>
+          <span className="theme-settings__current">
+            {currentBackgroundGeo?.icon} {t(geometryKeyMap[currentBackgroundGeo?.id || ''] || '')}
+          </span>
+          <span className="theme-settings__arrow">
+            {expandedSection === 'background' ? '▼' : '▶'}
+          </span>
+        </button>
+
+        {expandedSection === 'background' && (
+          <div className="theme-settings__content">
+            <div className="geometry-grid">
+              {BACKGROUND_GEOMETRIES.map((geo) => (
+                <button
+                  key={geo.id}
+                  className={`geometry-card ${currentBackgroundGeometry === geo.id ? 'geometry-card--active' : ''}`}
+                  onClick={() => handleBackgroundGeometrySelect(geo.id as BackgroundGeometryPattern)}
+                  title={geo.name}
+                >
+                  <div className="geometry-card__preview">
+                    <DeferredGeometryPreview pattern={geo.id} variant="background" />
+                  </div>
+                  <span className="geometry-card__name">{geo.name}</span>
+                  {currentBackgroundGeometry === geo.id && <span className="geometry-card__check">✓</span>}
                 </button>
               ))}
             </div>

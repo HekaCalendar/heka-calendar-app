@@ -1,0 +1,273 @@
+import React from 'react';
+import { render, renderHook, type RenderOptions } from '@testing-library/react';
+import { Provider } from 'react-redux';
+import { configureStore } from '@reduxjs/toolkit';
+import type { RootState } from '../src/store';
+
+export function createMockStore(preloadedState: Partial<RootState> = {}) {
+  const defaultState: RootState = {
+    calendar: {
+      currentView: 'month',
+      viewDate: { year: 2024, month: 5, day: 15 },
+      selectedDate: null,
+      timeMode: 'SYNC',
+      location: 'AU',
+      subRegion: null,
+      theme: 'egyptian-gold',
+      font: 'elegant',
+      headerGeometry: 'none',
+      backgroundGeometry: 'none',
+      auth: {
+        isAuthenticated: false,
+        userId: null,
+        email: null,
+        displayName: null,
+        photoURL: null,
+        lastSync: null,
+        isSyncing: false,
+        syncError: null,
+      },
+      display: {
+        showCivilDates: true,
+        showMoonPhases: true,
+        showHolidays: true,
+        showCelestialCards: true,
+        pureModeLight: false,
+      },
+      ui: {
+        isYearModalOpen: false,
+        isSearchModalOpen: false,
+        isShareModalOpen: false,
+        isStatsModalOpen: false,
+        isSettingsOpen: false,
+        isLoading: false,
+        error: null,
+      },
+      notes: {},
+      statistics: {
+        totalNotes: 0,
+        notesByCategory: { personal: 0, work: 0, spiritual: 0, family: 0, health: 0, creative: 0, general: 0 },
+        notesByMonth: {},
+        currentStreak: 0,
+        longestStreak: 0,
+        moodAverage: 0,
+        moodEntryCount: 0,
+        moodEntriesByMonth: {},
+        moodByMonth: {},
+        mostActiveMonth: { month: '', count: 0 },
+        totalWords: 0,
+      },
+      communityHolidays: [],
+      communityFeatures: [],
+      subscribedCalendars: [],
+      pendingInvites: [],
+      progress: {
+        level: 1,
+        experience: 0,
+        achievements: [],
+        rewards: [],
+        dailyRitualsCompleted: [],
+        appEngagement: {
+          totalAppOpens: 0,
+          currentOpenStreak: 0,
+          longestOpenStreak: 0,
+          lastOpenDate: null,
+          firstOpenDate: '2024-01-01',
+          totalTimeSpent: 0,
+          dailyTimeSpent: {},
+          averageSessionLength: 0,
+          longestSession: 0,
+          uniqueMonthsVisited: [],
+          uniqueYearsVisited: [],
+          uniqueLocationsViewed: [],
+          featuresDiscovered: {},
+          settingsExplored: {},
+          themesTried: [],
+          fontsTried: [],
+          displayModesTried: [],
+          customizationsMade: 0,
+        },
+        featureDiscovery: {
+          openedDateModal: false,
+          openedDayPanel: false,
+          openedCelestialGuide: false,
+          openedOracleJournal: false,
+          openedProfileManager: false,
+          usedTodayButton: false,
+          usedMonthNavigator: false,
+          usedYearNavigator: false,
+          changedLocation: false,
+          changedSubRegion: false,
+          viewedDifferentMonth: false,
+          viewedDifferentYear: false,
+          enabledMoonPhases: false,
+          enabledTransits: false,
+          enabledSeasonalEvents: false,
+          enabledHolidays: false,
+          enabledEnergyVote: false,
+          enabledBirthChart: false,
+          votedOnEnergy: false,
+          createdBirthChart: false,
+          createdNote: false,
+          printedCalendar: false,
+          subscribedToCommunity: false,
+          openedSettings: false,
+          changedTheme: false,
+          changedFont: false,
+          changedDisplayMode: false,
+          customizedColors: false,
+          changedLocationSettings: false,
+          viewedCommunityHolidays: false,
+          suggestedHoliday: false,
+          openedFriends: false,
+        },
+      },
+      astroProfiles: [],
+      selectedAstroProfileId: null,
+      astroPreferences: {
+        enableDailyTips: true,
+        enableRetrogradeAlerts: true,
+        enableMoonPhaseAlerts: true,
+        showTransitsOnCalendar: true,
+        zodiacSystem: '12-sign',
+        zodiacFrame: 'tropical',
+        signCount: 12,
+        houseSystem: 'placidus',
+        ayanamsa: null,
+        showNakshatras: false,
+        nakshatraSystem: 'none',
+      },
+      subscription: {
+        isPro: false,
+        tier: null,
+        expiryDate: null,
+        purchasedProductIds: [],
+      },
+      notificationPreferences: {
+        globalEnabled: true,
+        dailyBriefing: true,
+        celestialEvents: true,
+        moonPhases: true,
+        retrogradeAlerts: true,
+        journalReminders: true,
+        friendActivity: true,
+        quietHours: { start: '22:00', end: '07:00' },
+        adaptiveCaps: { dailyMax: 10, hourlyMax: 3 },
+      },
+    },
+    astrology: {} as any,
+    diary: {
+      entries: {},
+      entriesByDate: {},
+      selectedDate: '2024-06-15',
+      editingEntryId: null,
+      preferences: {
+        theme: 'default',
+        font: 'system',
+        fontSize: 16,
+        showInsights: true,
+        insightThreshold: 0.7,
+        defaultView: 'calendar',
+        ratedInsights: {},
+        dismissedPatterns: [],
+      },
+      ui: {
+        isLoading: false,
+        isSyncing: false,
+        lastSyncAt: null,
+        searchQuery: '',
+        viewMode: 'calendar',
+      },
+    },
+    tutorial: {
+      isActive: false,
+      currentTutorial: null,
+      currentStepIndex: 0,
+      spotlightTarget: null,
+      tooltipPosition: null,
+      completedTutorials: [],
+      progress: [],
+      preferences: {
+        autoShowTutorials: true,
+        showHints: true,
+        hintDelaySeconds: 5,
+      },
+    },
+    friends: {
+      circleTheme: 'nebula',
+      friends: [],
+      friendRequests: [],
+      sentRequests: [],
+      conversations: [],
+      activeConversation: null,
+      messages: {},
+      tasks: [],
+      sharedTasks: [],
+      inviteCode: null,
+      selectedFriend: null,
+      activeTab: 'friends',
+      isLoading: false,
+      error: null,
+      unreadTotal: 0,
+    },
+    planner: {
+      tasks: {},
+      preferences: {
+        dailyBriefingTime: '07:00',
+        defaultReminderMinutes: 10,
+        showCompletedTasks: true,
+      },
+      stats: {
+        currentStreak: 0,
+        longestStreak: 0,
+      },
+      loading: false,
+      error: null,
+    },
+    setup: {
+      isComplete: false,
+      completedAt: null,
+      language: 'en',
+      timeMode: null,
+      zodiacSigns: null,
+      locationEnabled: null,
+      notificationsEnabled: null,
+      aiProvider: null,
+      aiModel: null,
+      aiApiKeyConfigured: false,
+    },
+  };
+
+  return configureStore({
+    reducer: {
+      calendar: () => ({ ...defaultState.calendar, ...(preloadedState.calendar || {}) }),
+      astrology: () => ({}),
+      diary: () => ({ ...defaultState.diary, ...(preloadedState.diary || {}) }),
+      tutorial: () => ({ ...defaultState.tutorial, ...(preloadedState.tutorial || {}) }),
+      friends: () => ({ ...defaultState.friends, ...(preloadedState.friends || {}) }),
+      planner: () => ({ ...defaultState.planner, ...(preloadedState.planner || {}) }),
+      setup: () => ({ ...defaultState.setup, ...(preloadedState.setup || {}) }),
+    },
+  });
+}
+
+export function renderHookWithProviders<T>(
+  hook: () => T,
+  preloadedState: Partial<RootState> = {}
+) {
+  const store = createMockStore(preloadedState);
+  const wrapper = ({ children }: { children: React.ReactNode }) =>
+    React.createElement(Provider, { store }, children);
+  return { ...renderHook(hook, { wrapper }), store };
+}
+
+export function renderWithProviders(
+  ui: React.ReactElement,
+  preloadedState: Partial<RootState> = {},
+  options?: Omit<RenderOptions, 'wrapper'> & { store?: ReturnType<typeof createMockStore> }
+) {
+  const store = options?.store || createMockStore(preloadedState);
+  const wrapper = ({ children }: { children: React.ReactNode }) =>
+    React.createElement(Provider, { store }, children);
+  return { ...render(ui, { wrapper, ...options }), store };
+}

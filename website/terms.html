@@ -3,59 +3,77 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" type="image/png" href="../icon-192.png">
+    <link rel="icon" type="image/webp" href="assets/images/heka-logo.webp">
 
-    <title>Terms of Service | HEKA</title>
+    <title>Terms of Service | HEKA Calendar</title>
+    <meta property="og:title" content="Terms of Service | HEKA Calendar">
     <meta name="description" content="HEKA Calendar Terms of Service. Read our terms of use, disclaimers, and user agreements.">
-    
+    <meta property="og:description" content="HEKA Calendar Terms of Service. Read our terms of use, disclaimers, and user agreements.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://hekacalendar.com/terms.html">
+    <meta name="keywords" content="13 month calendar, 13-month calendar, 28 day calendar, 28-day calendar, alternative calendar, calendar reform, fixed calendar, equal month calendar, thirteen month calendar, natural calendar, seasonal calendar, solar calendar, lunar calendar, HEKA Calendar app">
+    <link rel="canonical" href="https://hekacalendar.com/terms.html">
+
     <link rel="stylesheet" href="assets/css/sacred.css">
     <style>
         .terms-content {
-            max-width: 800px;
+            max-width: 900px;
             margin: 0 auto;
             padding: 40px 24px;
         }
-        
+
         .terms-section {
             margin-bottom: 48px;
         }
-        
+
         .terms-section h2 {
             color: var(--gold);
+            font-family: var(--font-ritual);
             font-size: 1.4rem;
             margin-bottom: 16px;
             padding-bottom: 8px;
             border-bottom: 1px solid var(--veil);
         }
-        
+
         .terms-section h3 {
             color: var(--light-secondary);
+            font-family: var(--font-ritual);
             font-size: 1.1rem;
             margin-top: 24px;
             margin-bottom: 12px;
         }
-        
+
         .terms-section p {
             color: var(--light-secondary);
             line-height: 1.8;
             margin-bottom: 16px;
         }
-        
-        .terms-section ul {
+
+        .terms-section ul,
+        .terms-section ol {
             color: var(--light-secondary);
             line-height: 1.8;
             margin-bottom: 16px;
             padding-left: 24px;
         }
-        
+
         .terms-section li {
             margin-bottom: 8px;
         }
-        
+
         .terms-section strong {
             color: var(--light-primary);
         }
-        
+
+        .terms-section a {
+            color: var(--gold);
+            text-decoration: none;
+        }
+
+        .terms-section a:hover {
+            text-decoration: underline;
+        }
+
         .disclaimer-box {
             background: rgba(239, 68, 68, 0.05);
             border: 1px solid rgba(239, 68, 68, 0.2);
@@ -63,19 +81,25 @@
             padding: 24px;
             margin: 24px 0;
         }
-        
+
         .disclaimer-box h3 {
             color: #ef4444;
             margin-top: 0;
+            font-family: var(--font-ritual);
         }
-        
+
         .highlight-box {
             background: var(--temple);
             border-left: 3px solid var(--gold);
             padding: 16px 24px;
             margin: 24px 0;
         }
-        
+
+        .highlight-box ul,
+        .highlight-box ol {
+            margin-bottom: 0;
+        }
+
         .contact-block {
             background: var(--altar);
             border: 1px solid var(--veil);
@@ -84,16 +108,16 @@
             text-align: center;
             margin-top: 48px;
         }
-        
+
         .contact-block a {
             color: var(--gold);
             text-decoration: none;
         }
-        
+
         .contact-block a:hover {
             text-decoration: underline;
         }
-        
+
         .last-updated {
             text-align: center;
             color: var(--light-tertiary);
@@ -102,24 +126,31 @@
             padding-top: 32px;
             border-top: 1px solid var(--veil);
         }
-        
+
         @media (max-width: 768px) {
             .terms-content {
                 padding: 24px 16px;
             }
-            
+
             .terms-section h2 {
                 font-size: 1.2rem;
             }
         }
     </style>
-</head>
+    <meta property="og:image" content="https://hekacalendar.com/assets/images/heka-banner.webp">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Terms of Service | HEKA Calendar">
+    <meta name="twitter:description" content="HEKA Calendar Terms of Service. Read our terms of use, disclaimers, and user agreements.">
+
+        <meta name="twitter:image" content="https://hekacalendar.com/assets/images/heka-banner.webp">
+
+    </head>
 <body class="bg-sacred">
     <nav class="navbar">
         <div class="container navbar-inner">
             <a href="index.html" class="navbar-brand">
-                <div class="brand-symbol symbol-sun"></div>
-                <span class="brand-text">HEKA</span>
+                <img src="assets/images/heka-logo.webp" alt="HEKA Calendar" class="brand-logo">
+                <span class="brand-text">HEKA Calendar</span>
             </a>
             <button class="navbar-toggle" onclick="toggleNav()" aria-label="Toggle navigation">
                 <span></span>
@@ -132,8 +163,9 @@
                 <a href="precision.html" class="navbar-link">Precision</a>
                 <a href="harmony.html" class="navbar-link">Harmony</a>
                 <a href="features.html" class="navbar-link">Features</a>
+                <a href="app-preview.html" class="navbar-link">Preview</a>
                 <a href="temporal.html" class="navbar-link">Temporal</a>
-                <a href="index.html#download" class="navbar-cta" style="border-color: var(--copper); color: var(--copper);">Download</a>
+                <a href="/app/" class="navbar-cta" style="border-color: var(--copper); color: var(--copper);" target="_blank" rel="noopener">Web App</a>
             </div>
         </div>
     </nav>
@@ -141,11 +173,11 @@
     <main style="padding-top: 100px; min-height: 100vh;">
         <div class="container">
             <div class="terms-content">
-                <span class="section-number section-number-copper">LEGAL</span>
+                <span class="section-number section-number-copper">COVENANT</span>
                 <h1 class="hero-title-elevated" style="font-size: clamp(2rem, 4vw, 3rem); margin-bottom: 16px;">Terms of Service</h1>
                 <p style="color: var(--light-tertiary); margin-bottom: 48px;">
-                    <strong>Last Updated:</strong> April 16, 2026<br>
-                    <strong>Effective Date:</strong> April 2, 2026
+                    <strong>Last Updated:</strong> June 13, 2026<br>
+                    <strong>Effective Date:</strong> June 13, 2026
                 </p>
 
                 <div class="terms-section">
@@ -165,8 +197,10 @@
                         <li><strong>Astrological Features:</strong> Birth charts, planetary positions, transits, and astrological interpretations (the "Astrology Services")</li>
                         <li><strong>Journal System:</strong> Personal diary and reflection tools with optional celestial context</li>
                         <li><strong>Optional Cloud Sync:</strong> Cross-device synchronization via Firebase (requires account creation)</li>
+                        <li><strong>Enterprise SSO:</strong> Organization login via SAML 2.0 or OIDC identity providers</li>
+                        <li><strong>AI Coaching:</strong> Optional LLM-enhanced insights routed through the HEKA AI Proxy</li>
                     </ul>
-                    
+
                     <div class="disclaimer-box">
                         <h3>⚠️ Astrology Disclaimer</h3>
                         <p><strong>For Entertainment and Reflection Only.</strong> The astrological features, birth charts, transit interpretations, and celestial guidance provided by HEKA Calendar are for entertainment, self-reflection, and educational purposes only.</p>
@@ -183,15 +217,16 @@
 
                 <div class="terms-section">
                     <h2>3. User Accounts</h2>
-                    
+
                     <h3>3.1 Account Creation</h3>
                     <p>You may use HEKA Calendar without creating an account. An account is only required for:</p>
                     <ul>
                         <li>Cloud sync across devices</li>
                         <li>Data backup and recovery</li>
-                        <li>Accessing premium features (if applicable)</li>
+                        <li>Accessing premium or enterprise features</li>
+                        <li>Using social features such as Cosmic Circle</li>
                     </ul>
-                    
+
                     <h3>3.2 Account Security</h3>
                     <p>You are responsible for:</p>
                     <ul>
@@ -199,7 +234,7 @@
                         <li>All activities that occur under your account</li>
                         <li>Notifying us immediately of any unauthorized access</li>
                     </ul>
-                    
+
                     <h3>3.3 Account Termination</h3>
                     <p>We reserve the right to suspend or terminate accounts that:</p>
                     <ul>
@@ -207,21 +242,31 @@
                         <li>Engage in fraudulent or abusive behavior</li>
                         <li>Infringe on intellectual property rights</li>
                     </ul>
-                    <p>You may delete your account at any time through the app settings. Deletion removes cloud data but does not affect locally stored data on your devices.</p>
+                    <p>You may delete your account at any time through the app settings. Deletion triggers our server-side <code>deleteUserData</code> function, which removes cloud data and writes an immutable audit log. Local data on your devices remains under your control.</p>
                 </div>
 
                 <div class="terms-section">
-                    <h2>4. Social Features & Community Guidelines</h2>
-                    
-                    <h3>4.1 Cosmic Circle & Friend Connections</h3>
+                    <h2>4. Enterprise SSO</h2>
+                    <p>If your organization enables HEKA Calendar for enterprise use, you may sign in through your organization’s SAML 2.0 or OIDC identity provider.</p>
+                    <ul>
+                        <li>HEKA Calendar receives only the information your identity provider shares (typically email, name, and organization membership).</li>
+                        <li>Your organization’s IT administrator may control access, suspend accounts, or request data deletion.</li>
+                        <li>Enterprise users are subject to their organization’s policies in addition to these Terms.</li>
+                    </ul>
+                </div>
+
+                <div class="terms-section">
+                    <h2>5. Social Features & Community Guidelines</h2>
+
+                    <h3>5.1 Cosmic Circle & Friend Connections</h3>
                     <p>HEKA Calendar offers optional social features including:</p>
                     <ul>
                         <li><strong>Cosmic Circle:</strong> Connect with friends via invite codes to share celestial moments and support</li>
                         <li><strong>Task Sharing:</strong> Share task rituals with other users via unique, time-limited invite links</li>
                         <li><strong>Community Voting:</strong> Participate in anonymous voting for community holidays and feature preferences</li>
                     </ul>
-                    
-                    <h3>4.2 Community Guidelines</h3>
+
+                    <h3>5.2 Community Guidelines</h3>
                     <p>By using social features, you agree to:</p>
                     <ul>
                         <li>Only connect with people you know or who have shared an invite code with you</li>
@@ -231,15 +276,15 @@
                         <li>Respect the privacy of your connections</li>
                     </ul>
                     <p>We reserve the right to suspend or terminate access to social features for violations of these guidelines.</p>
-                    
-                    <h3>4.3 Profile Content</h3>
+
+                    <h3>5.3 Profile Content</h3>
                     <p>You are responsible for your profile information (display name, avatar) and any content you share in messages or tasks. Shared task links expire after 7 days and can only be accepted once.</p>
                 </div>
 
                 <div class="terms-section">
-                    <h2>5. User Conduct</h2>
-                    
-                    <h3>5.1 Acceptable Use</h3>
+                    <h2>6. User Conduct</h2>
+
+                    <h3>6.1 Acceptable Use</h3>
                     <p>You agree to use HEKA Calendar only for lawful purposes and in accordance with these Terms. You agree not to:</p>
                     <ul>
                         <li>Use the Service in any way that violates applicable laws or regulations</li>
@@ -249,70 +294,64 @@
                         <li>Use the Service to generate or distribute harmful, threatening, or discriminatory content</li>
                         <li>Impersonate another person or misrepresent your identity</li>
                     </ul>
-                    
-                    <h3>5.2 AI Features (Optional — Bring Your Own API Key)</h3>
-                    <p>HEKA Calendar offers optional AI-enhanced astrological readings. <strong>Important:</strong> We do not provide AI services directly. Instead, you may choose to connect your own AI provider account.</p>
-                    
+
+                    <h3>6.2 AI Features (Optional)</h3>
+                    <p>HEKA Calendar offers optional AI-enhanced astrological readings. By default, AI requests are routed through the <strong>HEKA AI Proxy</strong> hosted on Vercel.</p>
+
                     <div class="highlight-box">
-                        <strong>How it works:</strong>
+                        <strong>How the proxy works:</strong>
                         <ul style="margin-bottom: 0;">
-                            <li>You provide your own API key from third-party AI services (OpenAI, Groq, Anthropic, or Ollama for local models)</li>
-                            <li>Your API key is stored <strong>only on your device</strong> (in localStorage)</li>
-                            <li>When you request an AI-enhanced reading, your device sends the request directly to the AI provider using your key</li>
-                            <li><strong>You pay the AI provider directly</strong> for any API usage costs</li>
-                            <li>We never see, store, or have access to your API key on our servers</li>
+                            <li>The proxy verifies your Firebase identity token</li>
+                            <li>It applies per-user rate limits to prevent abuse</li>
+                            <li>It forwards your prompt to the selected AI provider using server-side API keys</li>
+                            <li>Provider keys are stored as secure environment variables and are never exposed to the client</li>
+                            <li>Sanitized audit logs are kept for abuse monitoring and rate-limiting</li>
                         </ul>
                     </div>
-                    
+
                     <p><strong>Your responsibilities:</strong></p>
                     <ul>
-                        <li>Creating and maintaining your own account with the AI provider</li>
-                        <li>Complying with that provider's terms of service and privacy policy</li>
-                        <li>Paying all costs associated with API usage (though many providers offer free tiers)</li>
-                        <li>Securing your API key (do not share it or commit it to public repositories)</li>
+                        <li>Using AI features in compliance with these Terms and the AI provider’s terms of service</li>
+                        <li>Not attempting to bypass rate limits or abuse the proxy</li>
+                        <li>Understanding that AI-generated content is provided "as is" without warranty</li>
                     </ul>
-                    
-                    <p><strong>Limitations:</strong></p>
-                    <ul>
-                        <li>AI-enhanced features are provided "as is" without warranty</li>
-                        <li>We are not responsible for AI-generated content, accuracy, or availability</li>
-                        <li>AI features may be slow or unavailable if the third-party service is experiencing issues</li>
-                        <li>You may stop using AI features at any time by removing your API key in Settings</li>
-                    </ul>
-                    
+
+                    <p><strong>Bring-your-own-key option:</strong> Advanced users may connect their own API key from Groq, OpenAI, Anthropic, Moonshot, or a self-hosted Ollama instance. In that case, requests are sent directly from your device to the chosen provider, and you are responsible for that provider’s terms, costs, and key security.</p>
+
                     <div class="highlight-box">
-                        <strong>Fallback:</strong> If no AI provider is configured, the app uses its built-in template library with 26,000+ pre-written readings (always free, always available).
+                        <strong>Fallback:</strong> If no AI provider is configured, the app uses its built-in template library with thousands of pre-written readings (always free, always available).
                     </div>
                 </div>
 
                 <div class="terms-section">
-                    <h2>6. Intellectual Property</h2>
-                    
-                    <h3>6.1 Our Content</h3>
+                    <h2>7. Intellectual Property</h2>
+
+                    <h3>7.1 Our Content</h3>
                     <p>HEKA Calendar and its original content, features, and functionality are owned by us and are protected by international copyright, trademark, patent, trade secret, and other intellectual property laws.</p>
-                    
+
                     <p>You may not:</p>
                     <ul>
                         <li>Copy, modify, or create derivative works of the Service</li>
                         <li>Distribute, sell, or sublicense the Service</li>
                         <li>Remove any copyright or proprietary notices</li>
                     </ul>
-                    
-                    <h3>6.2 Your Content</h3>
+
+                    <h3>7.2 Your Content</h3>
                     <p>You retain ownership of any content you create in HEKA Calendar, including calendar notes, journal entries, and birth chart data.</p>
                     <p><strong>You grant us a limited license</strong> to store, display, and transmit your content solely for the purpose of operating and improving the Service.</p>
-                    
-                    <h3>6.3 Feedback</h3>
+
+                    <h3>7.3 Feedback</h3>
                     <p>Any feedback, suggestions, or ideas you provide may be used by us without compensation or attribution.</p>
                 </div>
 
                 <div class="terms-section">
-                    <h2>7. Data and Privacy</h2>
-                    <p>Your use of HEKA Calendar is also governed by our <a href="privacy.html" style="color: var(--gold);">Privacy Policy</a>. By using the Service, you consent to our collection and use of information as described in the Privacy Policy.</p>
-                    
+                    <h2>8. Data and Privacy</h2>
+                    <p>Your use of HEKA Calendar is also governed by our <a href="privacy.html">Privacy Policy</a>. By using the Service, you consent to our collection and use of information as described in the Privacy Policy.</p>
+
                     <p><strong>Key privacy principles:</strong></p>
                     <ul>
                         <li><strong>Local-First:</strong> Most data stays on your device by default</li>
+                        <li><strong>Server-Verified:</strong> Premium, enterprise, and deletion features are enforced by Firebase Functions</li>
                         <li><strong>Optional Sync:</strong> Cloud features require explicit opt-in</li>
                         <li><strong>No Data Sale:</strong> We do not sell your personal information</li>
                         <li><strong>Export:</strong> You can export your data at any time</li>
@@ -320,55 +359,43 @@
                 </div>
 
                 <div class="terms-section">
-                    <h2>8. Third-Party Services</h2>
-                    
-                    <h3>8.1 Firebase</h3>
-                    <p>Our optional cloud sync uses Firebase (Google). Your use of cloud features is subject to <a href="https://policies.google.com/terms" target="_blank" rel="noopener" style="color: var(--gold);">Google's Terms of Service</a>.</p>
-                    
-                    <h3>8.2 AI Services (Bring Your Own API Key)</h3>
-                    <p>If you choose to provide API keys for AI services (OpenAI, Groq, Anthropic, Ollama):</p>
-                    
-                    <p><strong>Our Role:</strong> We act only as an integration layer. We do not provide AI services ourselves.</p>
-                    
-                    <p><strong>Your Relationship:</strong> You create accounts directly with AI providers and are subject to their terms of service, privacy policies, and pricing.</p>
-                    
-                    <p><strong>Data Flow:</strong></p>
-                    <ol>
-                        <li>Your device sends a prompt to the AI provider's API using YOUR key</li>
-                        <li>The AI provider processes the request and returns a response</li>
-                        <li>Your device displays the response in the app</li>
-                    </ol>
-                    
-                    <div class="disclaimer-box">
-                        <p style="margin: 0;"><strong>Important:</strong> We do not store your API keys on our servers, process AI requests through our infrastructure, control AI responses, or bill you for AI usage. You pay the provider directly.</p>
-                    </div>
-                    
-                    <h3>8.3 App Stores</h3>
+                    <h2>9. Third-Party Services</h2>
+
+                    <h3>9.1 Firebase & Google Cloud</h3>
+                    <p>Our optional cloud sync, authentication, Cloud Functions, and Crashlytics use Firebase and Google Cloud. Your use of cloud features is subject to <a href="https://policies.google.com/terms" target="_blank" rel="noopener">Google's Terms of Service</a>.</p>
+
+                    <h3>9.2 Vercel</h3>
+                    <p>The HEKA AI Proxy is hosted on Vercel. Vercel processes requests only to verify identity, enforce rate limits, and forward them to AI providers. Vercel does not store your journal or birth chart data.</p>
+
+                    <h3>9.3 AI Services</h3>
+                    <p>If you use AI features, prompts may be processed by Groq, OpenAI, Anthropic, Moonshot, or a self-hosted Ollama instance. By using AI features, you accept the applicable provider's terms of service and privacy policy.</p>
+
+                    <h3>9.4 App Stores</h3>
                     <p>Your download and use of HEKA Calendar through app stores (Apple App Store, Google Play Store) is subject to those platforms' terms and conditions.</p>
                 </div>
 
                 <div class="terms-section">
-                    <h2>9. Disclaimers</h2>
-                    
-                    <h3>9.1 "As Is" Disclaimer</h3>
+                    <h2>10. Disclaimers</h2>
+
+                    <h3>10.1 "As Is" Disclaimer</h3>
                     <p>HEKA Calendar is provided on an "AS IS" and "AS AVAILABLE" basis. We make no warranties, expressed or implied, including but not limited to:</p>
                     <ul>
                         <li><strong>Accuracy:</strong> We do not guarantee the accuracy of astrological calculations or interpretations</li>
                         <li><strong>Availability:</strong> We do not guarantee uninterrupted access to the Service</li>
                         <li><strong>Results:</strong> We do not guarantee any specific outcomes from using the Service</li>
                     </ul>
-                    
-                    <h3>9.2 Astrology-Specific Disclaimer</h3>
+
+                    <h3>10.2 Astrology-Specific Disclaimer</h3>
                     <div class="disclaimer-box">
-                        <p><strong>Astrology is not scientifically proven.</strong> Celestial events and planetary positions should not be used as a substitute for professional advice in medical, legal, financial, or psychological matters. Always consult qualified professionals for such advice.</p>
+                        <p style="margin: 0;"><strong>Astrology is not scientifically proven.</strong> Celestial events and planetary positions should not be used as a substitute for professional advice in medical, legal, financial, or psychological matters. Always consult qualified professionals for such advice.</p>
                     </div>
-                    
-                    <h3>9.3 Beta Features</h3>
+
+                    <h3>10.3 Beta Features</h3>
                     <p>Some features may be labeled as "beta" or "experimental." These features are provided for testing purposes and may contain bugs or be discontinued at any time.</p>
                 </div>
 
                 <div class="terms-section">
-                    <h2>10. Limitation of Liability</h2>
+                    <h2>11. Limitation of Liability</h2>
                     <p>To the maximum extent permitted by law:</p>
                     <ul>
                         <li>We shall not be liable for any indirect, incidental, special, consequential, or punitive damages</li>
@@ -377,7 +404,7 @@
                             <ul>
                                 <li>Loss of data due to device failure or user error</li>
                                 <li>Inaccuracies in astrological interpretations</li>
-                                <li>Third-party service outages (Firebase, AI services)</li>
+                                <li>Third-party service outages (Firebase, Vercel, AI services)</li>
                                 <li>Actions taken based on astrological guidance</li>
                             </ul>
                         </li>
@@ -385,7 +412,7 @@
                 </div>
 
                 <div class="terms-section">
-                    <h2>11. Indemnification</h2>
+                    <h2>12. Indemnification</h2>
                     <p>You agree to defend, indemnify, and hold harmless HEKA Calendar and its operators from and against any claims, liabilities, damages, losses, and expenses (including legal fees) arising out of or in any way connected with:</p>
                     <ul>
                         <li>Your use of the Service</li>
@@ -396,15 +423,15 @@
                 </div>
 
                 <div class="terms-section">
-                    <h2>12. Termination</h2>
-                    
-                    <h3>12.1 By You</h3>
+                    <h2>13. Termination</h2>
+
+                    <h3>13.1 By You</h3>
                     <p>You may stop using HEKA Calendar at any time. To delete your account and cloud data, use the in-app settings or contact us.</p>
-                    
-                    <h3>12.2 By Us</h3>
+
+                    <h3>13.2 By Us</h3>
                     <p>We may suspend or terminate your access to the Service immediately, without prior notice or liability, for any reason, including breach of these Terms.</p>
-                    
-                    <h3>12.3 Effect of Termination</h3>
+
+                    <h3>13.3 Effect of Termination</h3>
                     <p>Upon termination:</p>
                     <ul>
                         <li>Your right to use the Service immediately ceases</li>
@@ -415,7 +442,7 @@
                 </div>
 
                 <div class="terms-section">
-                    <h2>13. Changes to These Terms</h2>
+                    <h2>14. Changes to These Terms</h2>
                     <p>We reserve the right to modify these Terms at any time. Changes will be effective immediately upon posting the revised Terms.</p>
                     <p><strong>Material changes</strong> will be notified through:</p>
                     <ul>
@@ -427,22 +454,22 @@
                 </div>
 
                 <div class="terms-section">
-                    <h2>14. Governing Law</h2>
+                    <h2>15. Governing Law</h2>
                     <p>These Terms shall be governed by and construed in accordance with the laws of <strong>New South Wales, Australia</strong>, without regard to its conflict of law provisions.</p>
                     <p>Any legal action or proceeding arising under these Terms shall be brought exclusively in the courts of New South Wales, Australia.</p>
                 </div>
 
                 <div class="terms-section">
-                    <h2>15. Dispute Resolution</h2>
-                    
-                    <h3>15.1 Informal Resolution</h3>
-                    <p>Before filing a claim, you agree to try to resolve disputes informally by contacting us at <a href="mailto:hekacalendar@gmail.com" style="color: var(--gold);">hekacalendar@gmail.com</a>. We'll attempt to resolve the dispute within 30 days.</p>
-                    
-                    <h3>15.2 Arbitration</h3>
+                    <h2>16. Dispute Resolution</h2>
+
+                    <h3>16.1 Informal Resolution</h3>
+                    <p>Before filing a claim, you agree to try to resolve disputes informally by contacting us at <a href="mailto:hekacalendar@gmail.com">hekacalendar@gmail.com</a>. We'll attempt to resolve the dispute within 30 days.</p>
+
+                    <h3>16.2 Arbitration</h3>
                     <p>If informal resolution fails, any dispute shall be resolved through binding arbitration (not court proceedings) in accordance with the rules of the Australian Centre for International Commercial Arbitration (ACICA).</p>
                     <p><strong>Class Action Waiver:</strong> You agree that any proceedings will be conducted only on an individual basis and not as a class action, consolidated action, or representative action.</p>
-                    
-                    <h3>15.3 Exceptions</h3>
+
+                    <h3>16.3 Exceptions</h3>
                     <p>Either party may bring suit in court to:</p>
                     <ul>
                         <li>Enforce intellectual property rights</li>
@@ -451,17 +478,17 @@
                 </div>
 
                 <div class="terms-section">
-                    <h2>16. Severability</h2>
+                    <h2>17. Severability</h2>
                     <p>If any provision of these Terms is held to be unenforceable or invalid, that provision will be limited or eliminated to the minimum extent necessary, and the remaining provisions will continue in full force and effect.</p>
                 </div>
 
                 <div class="terms-section">
-                    <h2>17. Entire Agreement</h2>
+                    <h2>18. Entire Agreement</h2>
                     <p>These Terms, together with our Privacy Policy, constitute the entire agreement between you and HEKA Calendar regarding the Service, superseding any prior agreements.</p>
                 </div>
 
                 <div class="terms-section">
-                    <h2>18. Contact Information</h2>
+                    <h2>19. Contact Information</h2>
                     <div class="contact-block">
                         <p style="margin-bottom: 8px;"><strong>Questions about these Terms?</strong></p>
                         <p style="margin: 0;">Email: <a href="mailto:hekacalendar@gmail.com">hekacalendar@gmail.com</a></p>
@@ -470,9 +497,9 @@
                 </div>
 
                 <div class="terms-section">
-                    <h2>19. App Store Specific Terms</h2>
-                    
-                    <h3>19.1 Apple App Store</h3>
+                    <h2>20. App Store Specific Terms</h2>
+
+                    <h3>20.1 Apple App Store</h3>
                     <p>If you downloaded HEKA Calendar from the Apple App Store:</p>
                     <ul>
                         <li>These Terms are between you and HEKA Calendar, not Apple</li>
@@ -480,8 +507,8 @@
                         <li>Apple is not responsible for addressing any claims related to the app</li>
                         <li>Apple is a third-party beneficiary of these Terms</li>
                     </ul>
-                    
-                    <h3>19.2 Google Play Store</h3>
+
+                    <h3>20.2 Google Play Store</h3>
                     <p>If you downloaded HEKA Calendar from the Google Play Store:</p>
                     <ul>
                         <li>These Terms are between you and HEKA Calendar, not Google</li>
@@ -490,11 +517,11 @@
                 </div>
 
                 <div class="highlight-box" style="margin-top: 48px;">
-                    <p style="margin: 0; text-align: center;"><strong>BY USING HEKA CALENDAR, YOU ACKNOWLEDGE THAT YOU HAVE READ, UNDERSTOOD, AND AGREE TO BE BOUND BY THESE TERMS OF SERVICE.</strong></p>
+                    <p style="margin: 0; text-align: center;"><strong>BY USING HEKA Calendar, YOU ACKNOWLEDGE THAT YOU HAVE READ, UNDERSTOOD, AND AGREE TO BE BOUND BY THESE TERMS OF SERVICE.</strong></p>
                 </div>
 
                 <p class="last-updated">
-                    Last Updated: April 16, 2026
+                    Last Updated: June 13, 2026
                 </p>
             </div>
         </div>
@@ -505,8 +532,8 @@
             <div class="footer-grid">
                 <div>
                     <div class="footer-sigil">
-                        <div class="footer-sigil-symbol symbol-sun"></div>
-                        <span class="footer-sigil-text">HEKA</span>
+                        <img src="assets/images/heka-logo.webp" alt="HEKA Calendar" class="footer-sigil-logo">
+                        <span class="footer-sigil-text">HEKA Calendar</span>
                     </div>
                     <p class="footer-mantra">
                         Time is the structure we live inside. What if it fit better?
@@ -528,7 +555,13 @@
                     <div>
                         <h4 class="footer-column-title">Product</h4>
                         <a href="features.html" class="footer-link">Features</a>
+                        <a href="app-preview.html" class="footer-link">App Preview</a>
                         <a href="temporal.html" class="footer-link">Temporal</a>
+                    </div>
+                    <div>
+                        <h4 class="footer-column-title">Universe</h4>
+                        <a href="https://hekaverse.com" class="footer-link" target="_blank" rel="noopener">Hekaverse</a>
+                        <a href="https://hekatime.com" class="footer-link" target="_blank" rel="noopener">Heka Time</a>
                     </div>
                     <div>
                         <h4 class="footer-column-title">Connect</h4>

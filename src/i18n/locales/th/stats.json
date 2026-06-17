@@ -1,0 +1,49 @@
+{
+  "best": "ที่ดีที่สุด: {{count}}",
+  "title": "การเดินทางของคุณ",
+  "close": "ปิด",
+  "reset": "รีเซ็ตสถิติ",
+  "avgMood": "อารมณ์เฉลี่ย",
+  "dayStreak": "การติดต่อวัน",
+  "totalNotes": "บันทึกทั้งหมด",
+  "wordsWritten": "คำที่เขียน",
+  "achievements": "ความสำเร็จ ({{earned}}/{{total}})",
+  "resetConfirm": "รีเซ็ต",
+  "progressRatio": "{{current}} / {{target}}",
+  "monthlyTooltip": "{{month}} {{year}}: {{count}} บันทึก",
+  "notesByCategory": "บันทึกตามหมวดหมู่",
+  "monthlyActivity": "กิจกรรมรายเดือน",
+  "mostActiveMonth": "เดือนที่คุณใช้งานมากที่สุดคือ \u003cstrong\u003e{{month}}\u003c/strong\u003e ด้วย \u003cstrong\u003e{{count}}\u003c/strong\u003e บันทึก",
+  "categories": {
+    "work": "งาน",
+    "family": "ครอบครัว",
+    "health": "สุขภาพ",
+    "general": "ทั่วไป",
+    "personal": "ส่วนตัว",
+    "creative": "สร้างสรรค์",
+    "spiritual": "จิตวิญญาณ"
+  },
+  "progressToCentury": "ความคืบหน้าสู่ Century Club",
+  "resetConfirmTitle": "รีเซ็ตสถิติ",
+  "badges": {
+    "century": {
+      "name": "สมาชิกศตวรรษ"
+    },
+    "explorer": {
+      "name": "นักสำรวจ"
+    },
+    "archivist": {
+      "name": "นักเก็บรักษา"
+    },
+    "first-note": {
+      "name": "คำแรก"
+    },
+    "week-streak": {
+      "name": "นักรบสัปดาห์"
+    },
+    "month-streak": {
+      "name": "นักรบเดือน"
+    }
+  },
+  "resetConfirmDescription": "คุณแน่ใจหรือไม่ว่าต้องการรีเซ็ตสถิติทั้งหมด? คุณไม่สามารถย้อนคืนการกระทำนี้"
+}

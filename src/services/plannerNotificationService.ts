@@ -6,15 +6,20 @@
  * ═══════════════════════════════════════════════════════════════════════════════
  */
 
-import { LocalNotifications, type LocalNotificationSchema } from '@capacitor/local-notifications';
+import { LocalNotifications, type LocalNotificationSchema, type ActionPerformed } from '@capacitor/local-notifications';
 import { NotificationEngine } from './notificationEngine';
+import { NotificationAnalytics } from './notificationAnalytics';
+import { checkStreakMilestone } from './notificationCelebrations';
+import { getNextScheduleTime } from './notificationScheduling';
 import { seededRandom } from './notificationTemplates';
 import type { PlannerTask } from '../types';
+import { calculateCurrentSky, calculatePreciseMoonPhase } from '../astrology/services/calculations/swissCalculations';
 import { store } from '../store';
 import { selectDate, setView } from '../store';
 import { eventBus } from './eventBus';
+import { civilToHeka } from './calendarService';
 
-const IS_NATIVE_APP = typeof (window as any).Capacitor !== 'undefined';
+const IS_NATIVE_APP = typeof (window as unknown as { Capacitor?: unknown }).Capacitor !== 'undefined';
 
 function isNativePluginAvailable(): boolean {
   if (!IS_NATIVE_APP) return false;
@@ -37,7 +42,7 @@ function getMoonPhaseCategory(phase: string): string {
   return 'general';
 }
 
-function generateDailyBriefingVars(): Record<string, string> {
+async function generateDailyBriefingVars(): Promise<Record<string, string>> {
   const today = new Date().toISOString().split('T')[0];
   const seed = today;
 
@@ -45,6 +50,20 @@ function generateDailyBriefingVars(): Record<string, string> {
   const state = store.getState();
   let moonPhase = 'waxing gibbous';
   let moonSign = 'Gemini';
+
+  try {
+    const { positions } = await calculateCurrentSky();
+    if (positions.moon) {
+      moonSign = String(positions.moon.sign).charAt(0).toUpperCase() + String(positions.moon.sign).slice(1);
+      if (positions.sun) {
+        const precise = calculatePreciseMoonPhase(positions.sun, positions.moon);
+        moonPhase = precise.name.toLowerCase();
+      }
+    }
+  } catch (e) {
+    // Fallback to defaults if Swiss Ephemeris isn't ready
+    console.warn('[PlannerNotificationService] Astro calc failed, using fallback moon data:', e);
+  }
 
   // Get pending tasks
   const plannerTasks = state.planner.tasks;
@@ -92,9 +111,9 @@ const STREAK_SAVER_ID = 888888;
 
 /**
  * Schedule the daily celestial briefing notification.
- * Respects engine dedup: only schedules once per day.
+ * Respects engine dedup and user custom time preferences.
  */
-export async function scheduleDailyBriefing(timeStr: string = '07:00'): Promise<void> {
+export async function scheduleDailyBriefing(): Promise<void> {
   const prefs = store.getState().calendar.notificationPreferences.planner;
   if (!prefs.dailyBriefing) return;
 
@@ -104,18 +123,12 @@ export async function scheduleDailyBriefing(timeStr: string = '07:00'): Promise<
     return;
   }
 
-  const [hours, minutes] = timeStr.split(':').map(Number);
-  const now = new Date();
-  const briefingTime = new Date(now.getFullYear(), now.getMonth(), now.getDate(), hours, minutes, 0, 0);
+  const briefingTime = getNextScheduleTime('dailyBriefing');
 
-  if (briefingTime.getTime() <= now.getTime()) {
-    briefingTime.setDate(briefingTime.getDate() + 1);
-  }
-
-  const vars = generateDailyBriefingVars();
+  const vars = await generateDailyBriefingVars();
   const seed = new Date().toISOString().split('T')[0];
 
-  await NotificationEngine.scheduleTemplated(
+  const result = await NotificationEngine.scheduleTemplated(
     'daily-briefing',
     'standard',
     'planner',
@@ -126,11 +139,16 @@ export async function scheduleDailyBriefing(timeStr: string = '07:00'): Promise<
     DAILY_BRIEFING_ID
   );
 
-  NotificationEngine.markSentToday('daily-briefing');
+  if (result) {
+    NotificationEngine.markSentToday('daily-briefing');
+  } else {
+    console.warn('[PlannerNotificationService] Daily briefing schedule failed — will retry on next interval');
+  }
 }
 
 /**
- * Schedule the streak saver notification for 8 PM if needed.
+ * Schedule the streak saver notification if needed.
+ * Respects user custom time preferences.
  */
 export async function scheduleStreakSaverIfNeeded(): Promise<void> {
   const prefs = store.getState().calendar.notificationPreferences.planner;
@@ -159,7 +177,7 @@ export async function scheduleStreakSaverIfNeeded(): Promise<void> {
     return;
   }
 
-  const saverTime = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 20, 0, 0, 0);
+  const saverTime = getNextScheduleTime('streakSaver');
   if (saverTime.getTime() <= now.getTime()) {
     return;
   }
@@ -191,7 +209,7 @@ export async function scheduleStreakSaverIfNeeded(): Promise<void> {
     return;
   }
 
-  await NotificationEngine.schedule({
+  const result = await NotificationEngine.schedule({
     type: 'streak-saver',
     tier: 'standard',
     title: 'The Cosmos Still Believes in You',
@@ -203,7 +221,11 @@ export async function scheduleStreakSaverIfNeeded(): Promise<void> {
     extra: { type: 'streak-saver' },
   });
 
-  NotificationEngine.markSentToday('streak-saver');
+  if (result) {
+    NotificationEngine.markSentToday('streak-saver');
+  } else {
+    console.warn('[PlannerNotificationService] Streak saver schedule failed — will retry on next interval');
+  }
 }
 
 /**
@@ -254,6 +276,9 @@ export async function sendCompletionCelebration(task: PlannerTask, streak: numbe
     id,
     extra: { type: 'completion-celebration', taskId: task.id, dayKey: task.dayKey },
   });
+
+  // Check for milestone celebration
+  void checkStreakMilestone(streak);
 }
 
 /**
@@ -295,6 +320,74 @@ export async function sendComplementaryTaskSuggestion(task: PlannerTask): Promis
 // NOTIFICATION TAP HANDLER
 // ═══════════════════════════════════════════════════════════════════════════════
 
+function handleNotificationAction(
+  type: string,
+  actionId: string,
+  notification: LocalNotificationSchema,
+  dayKey?: string
+): void {
+  console.log(`[NotificationAction] ${type} → ${actionId}`);
+
+  // Track analytics
+  const tier = notification.extra?._engineTier || 'standard';
+  const section = notification.extra?._engineSection || 'planner';
+  NotificationAnalytics.recordTapped(type, tier, section, undefined, actionId);
+
+  switch (actionId) {
+    case 'complete':
+      // Mark task as complete
+      if (dayKey) {
+        eventBus.emit('heka-notification-action', { action: 'complete-task', dayKey, taskId: notification.extra?.taskId });
+      }
+      break;
+
+    case 'snooze-15':
+    case 'snooze-30':
+    case 'snooze-1h': {
+      const minutes = actionId === 'snooze-15' ? 15 : actionId === 'snooze-30' ? 30 : 60;
+      eventBus.emit('heka-notification-action', { action: 'snooze', notificationId: String(notification.id), type, minutes });
+      break;
+    }
+
+    case 'open-journal':
+      eventBus.emit('heka:notification:navigate', { target: 'journal' });
+      break;
+
+    case 'open-planner':
+      eventBus.emit('heka:notification:navigate', { target: 'planner' });
+      break;
+
+    case 'open-stars':
+      eventBus.emit('heka:notification:navigate', { target: 'stars' });
+      break;
+
+    case 'open-circle':
+      eventBus.emit('heka:notification:navigate', { target: 'circle' });
+      break;
+
+    case 'accept':
+      eventBus.emit('heka-notification-action', { action: 'accept', type, notificationId: String(notification.id) });
+      break;
+
+    case 'decline':
+      eventBus.emit('heka-notification-action', { action: 'decline', type, notificationId: String(notification.id) });
+      break;
+
+    case 'share':
+      eventBus.emit('heka-notification-action', { action: 'share', type, notificationId: String(notification.id) });
+      break;
+
+    case 'dismiss':
+      // Just track dismissal analytics
+      NotificationAnalytics.recordDismissed(type, tier, section);
+      break;
+
+    default:
+      // Unknown action — just open the app
+      eventBus.emit('heka:notification:navigate', { target: 'main' });
+  }
+}
+
 function recordNotificationDelivery(notification: LocalNotificationSchema): void {
   const extra = notification.extra || {};
   const engineType = extra._engineType || extra.type;
@@ -324,10 +417,11 @@ export function initializePlannerNotificationTapHandler(): () => void {
 
   const cleanups: (() => void)[] = [];
 
-  // Handle notification taps (app was backgrounded / killed)
-  LocalNotifications.addListener('localNotificationActionPerformed', (event) => {
+  // Handle notification taps and action buttons (app was backgrounded / killed)
+  LocalNotifications.addListener('localNotificationActionPerformed', (event: ActionPerformed) => {
     const extra = event.notification.extra || {};
-    const { type, dayKey, templateIndex } = extra;
+    const { type, dayKey, templateIndex, _engineTier, _engineSection } = extra;
+    const actionId = event.actionId || null;
 
     // Record delivery in history
     recordNotificationDelivery(event.notification);
@@ -336,6 +430,15 @@ export function initializePlannerNotificationTapHandler(): () => void {
     if (type != null && templateIndex != null) {
       NotificationEngine.recordEngagement(type, templateIndex);
     }
+
+    // Handle action buttons
+    if (actionId) {
+      handleNotificationAction(type, actionId, event.notification, dayKey);
+      return;
+    }
+
+    void _engineTier;
+    void _engineSection;
 
     // Helper to dispatch navigation event for App.tsx to handle modals
     const dispatchNav = (target: string, payload?: Record<string, unknown>) => {
@@ -357,12 +460,10 @@ export function initializePlannerNotificationTapHandler(): () => void {
 
     if (type === 'daily-briefing') {
       const now = new Date();
-      import('./calendarService').then(({ civilToHeka }) => {
-        const hekaDate = civilToHeka(now);
-        if (hekaDate) {
-          store.dispatch(selectDate(hekaDate));
-        }
-      });
+      const hekaDate = civilToHeka(now);
+      if (hekaDate) {
+        store.dispatch(selectDate(hekaDate));
+      }
       return;
     }
 
@@ -402,13 +503,6 @@ export function initializePlannerNotificationTapHandler(): () => void {
       dispatchNav('journal');
       return;
     }
-  }).then((handle) => {
-    cleanups.push(() => handle.remove());
-  }).catch(() => {});
-
-  // Handle notifications delivered while app is in foreground
-  LocalNotifications.addListener('localNotificationReceived', (notification) => {
-    recordNotificationDelivery(notification);
   }).then((handle) => {
     cleanups.push(() => handle.remove());
   }).catch(() => {});

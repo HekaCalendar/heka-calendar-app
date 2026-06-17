@@ -1,0 +1,682 @@
+/**
+ * ═══════════════════════════════════════════════════════════════════════════════
+ * SETUP WIZARD — CINEMATIC OVERRIDE
+ * Transforms the wizard from a card dialog into a full-screen observatory.
+ * Imported after setup-wizard.css; overrides structural and visual styles.
+ * ═══════════════════════════════════════════════════════════════════════════════
+ */
+
+/* ─── Root Tokens (tutorial-aligned) ─── */
+:root {
+  --sw-gold: #d4af37;
+  --sw-gold-soft: rgba(212, 175, 55, 0.12);
+  --sw-gold-glow: rgba(212, 175, 55, 0.35);
+  --sw-text: #f5f3ff;
+  --sw-text-muted: #a89bc8;
+  --sw-text-dim: rgba(255, 255, 255, 0.35);
+  --sw-glass: rgba(12, 10, 20, 0.55);
+  --sw-glass-border: rgba(255, 255, 255, 0.08);
+  --sw-ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --sw-font-display: 'Cinzel Decorative', 'Cinzel', 'Playfair Display', Georgia, serif;
+  --sw-font-title: 'Cormorant Garamond', 'Playfair Display', Georgia, serif;
+  --sw-font-body: 'Cormorant Garamond', Georgia, serif;
+  --sw-font-label: 'Cinzel', Georgia, serif;
+}
+
+/* ─── Kill the Container Prison ─── */
+.setup-wizard {
+  display: contents;
+}
+
+/* ─── Full-Viewport Scene ─── */
+/*
+  Positioned absolutely inside the fixed overlay so it can act as a
+  scroll container on touch devices. A fixed-position scroll container
+  combined with a locked body often refuses pan gestures on Samsung/Android
+  WebViews; absolute positioning avoids that quirk while still filling the
+  viewport.
+*/
+.setup-wizard__scene {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  z-index: 10;
+  padding:
+    calc(20px + env(safe-area-inset-top))
+    calc(24px + env(safe-area-inset-right))
+    calc(150px + env(safe-area-inset-bottom))
+    calc(24px + env(safe-area-inset-left));
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
+  touch-action: pan-y;
+  pointer-events: auto;
+  animation: sceneEnter 0.6s var(--sw-ease) 0.05s both;
+}
+
+
+@keyframes sceneEnter {
+  from { opacity: 0; transform: translateX(50px) scale(0.97); }
+  to { opacity: 1; transform: translateX(0) scale(1); }
+}
+
+.slide-forward {
+  animation: sceneExitForward 0.4s var(--sw-ease) forwards;
+}
+
+.slide-back {
+  animation: sceneExitBack 0.4s var(--sw-ease) forwards;
+}
+
+@keyframes sceneExitForward {
+  from { opacity: 1; transform: translateX(0) scale(1); }
+  to { opacity: 0; transform: translateX(-50px) scale(0.97); }
+}
+
+@keyframes sceneExitBack {
+  from { opacity: 1; transform: translateX(0) scale(1); }
+  to { opacity: 0; transform: translateX(50px) scale(0.97); }
+}
+
+/* ─── Glassmorphism Panel ─── */
+.sw-glass {
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  background: linear-gradient(145deg, rgba(22, 22, 32, 0.75), rgba(14, 14, 22, 0.85));
+  border: 1px solid var(--sw-glass-border);
+  border-radius: 24px;
+  box-shadow:
+    0 20px 60px rgba(0, 0, 0, 0.5),
+    0 0 40px rgba(212, 175, 55, 0.06),
+    inset 0 1px 1px rgba(255, 255, 255, 0.05);
+}
+
+/* ─── Ornamental Gold Line ─── */
+.sw-ornament {
+  width: 100px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--sw-gold), transparent);
+  margin: 0 auto 28px;
+  animation: ornamentGrow 1.5s var(--sw-ease) 0.2s both;
+}
+
+@keyframes ornamentGrow {
+  from { width: 0; opacity: 0; }
+  to { width: 100px; opacity: 1; }
+}
+
+/* ─── Typography Overrides ─── */
+.setup-step__title {
+  font-family: var(--sw-font-title);
+  font-size: clamp(28px, 5vw, 48px);
+  font-weight: 400;
+  color: var(--sw-text);
+  text-align: center;
+  margin: 0 0 12px 0;
+  letter-spacing: -0.3px;
+  line-height: 1.15;
+  text-shadow: 0 0 60px rgba(201, 162, 39, 0.25), 0 0 120px rgba(201, 162, 39, 0.08);
+}
+
+.setup-step__subtitle {
+  font-family: var(--sw-font-body);
+  font-size: clamp(15px, 2.2vw, 20px);
+  color: var(--sw-text-muted);
+  text-align: center;
+  margin: 0 0 36px 0;
+  line-height: 1.6;
+  max-width: 560px;
+}
+
+/* ─── Progress Bar (thin gold line) ─── */
+.setup-wizard__progress-track {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: rgba(255, 255, 255, 0.04);
+  z-index: 20;
+  pointer-events: none;
+}
+
+.setup-wizard__progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--sw-gold), #f4d03f);
+  transition: width 0.6s var(--sw-ease);
+  box-shadow: 0 0 12px rgba(212, 175, 55, 0.4);
+}
+
+/* ─── Constellation Progress Dots ─── */
+.setup-wizard__dots {
+  position: fixed;
+  bottom: calc(24px + env(safe-area-inset-bottom));
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  z-index: 20;
+  pointer-events: none;
+}
+
+.setup-wizard__dot {
+  height: 6px;
+  border-radius: 3px;
+  background: rgba(255, 255, 255, 0.1);
+  transition: all 0.5s var(--sw-ease);
+}
+
+.setup-wizard__dot--active {
+  width: 28px;
+  background: var(--sw-gold);
+  box-shadow: 0 0 12px rgba(212, 175, 55, 0.5);
+}
+
+.setup-wizard__dot--completed {
+  width: 6px;
+  background: rgba(212, 175, 55, 0.5);
+}
+
+.setup-wizard__dot:not(.setup-wizard__dot--active):not(.setup-wizard__dot--completed) {
+  width: 6px;
+}
+
+/* ─── Navigation Buttons ─── */
+.setup-wizard__nav {
+  position: fixed;
+  bottom: calc(56px + env(safe-area-inset-bottom));
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  z-index: 20;
+  padding: 0 24px;
+  pointer-events: none;
+}
+
+.setup-wizard__nav-btn {
+  pointer-events: auto;
+}
+
+.setup-wizard__nav-btn {
+  padding: 14px 36px;
+  border-radius: 14px;
+  font-family: var(--sw-font-label);
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.3s var(--sw-ease);
+  -webkit-tap-highlight-color: transparent;
+  border: none;
+}
+
+.setup-wizard__nav-btn--next {
+  background: linear-gradient(135deg, var(--sw-gold), #b8941f);
+  color: #05040a;
+  box-shadow: 0 4px 20px rgba(212, 175, 55, 0.25);
+}
+
+.setup-wizard__nav-btn--next:hover:not(:disabled) {
+  transform: translateY(-2px) scale(1.03);
+  box-shadow: 0 8px 32px rgba(212, 175, 55, 0.4);
+}
+
+.setup-wizard__nav-btn--next:disabled {
+  opacity: 0.4;
+  cursor: default;
+  transform: none;
+}
+
+.setup-wizard__nav-btn--back {
+  background: transparent;
+  color: var(--sw-text-muted);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(8px);
+}
+
+.setup-wizard__nav-btn--back:hover:not(:disabled) {
+  border-color: rgba(255, 255, 255, 0.2);
+  color: var(--sw-text);
+  background: rgba(255, 255, 255, 0.04);
+}
+
+/* ─── Complete Step ─── */
+.setup-step--complete {
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  animation: completeEnter 0.8s var(--sw-ease) 0.1s both;
+}
+
+@keyframes completeEnter {
+  from { opacity: 0; transform: translateY(30px) scale(0.95); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.setup-step__glow-icon {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(212, 175, 55, 0.2) 0%, transparent 70%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 32px;
+  animation: glowPulse 3s ease-in-out infinite;
+}
+
+.setup-step__glow-icon svg {
+  filter: drop-shadow(0 0 20px rgba(212, 175, 55, 0.5));
+}
+
+@keyframes glowPulse {
+  0%, 100% { transform: scale(1); opacity: 0.9; }
+  50% { transform: scale(1.05); opacity: 1; }
+}
+
+/* ─── Step-specific layout resets ─── */
+.setup-step {
+  flex: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  width: 100%;
+  max-width: 720px;
+  outline: none;
+}
+
+.setup-step--language {
+  justify-content: center;
+  max-width: 520px;
+}
+
+.setup-step--mode {
+  justify-content: center;
+  max-width: 640px;
+}
+
+.setup-step--permissions {
+  justify-content: center;
+  max-width: 560px;
+}
+
+.setup-step--ai {
+  justify-content: flex-start;
+  max-width: 600px;
+}
+
+.setup-step--mode,
+.setup-step--permissions {
+  justify-content: flex-start;
+}
+
+/* Keep the short language / complete steps vertically centred */
+.setup-step--language,
+.setup-step--complete {
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+/* ─── Form Elements ─── */
+.setup-wizard__scene input,
+.setup-wizard__scene select,
+.setup-wizard__scene textarea {
+  font-family: var(--sw-font-body);
+}
+
+/* ─── Responsive ─── */
+@media (max-width: 480px) {
+  .setup-wizard__scene {
+    padding:
+      calc(16px + env(safe-area-inset-top))
+      16px
+      calc(140px + env(safe-area-inset-bottom))
+      16px;
+  }
+
+  .setup-step__title {
+    font-size: clamp(22px, 7vw, 28px);
+  }
+
+  .setup-step__subtitle {
+    font-size: 14px;
+  }
+
+  .setup-wizard__nav-btn {
+    padding: 12px 24px;
+    font-size: 12px;
+  }
+
+  .setup-step__glow-icon {
+    width: 80px;
+    height: 80px;
+  }
+}
+
+/* ─── Glassmorphism Cards (override existing card styles) ─── */
+.mode-card,
+.perm-card,
+.ai-provider-card,
+.ai-config-panel {
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  background: linear-gradient(145deg, rgba(22, 22, 32, 0.65), rgba(14, 14, 22, 0.75)) !important;
+  border: 1px solid var(--sw-glass-border) !important;
+  border-radius: 20px !important;
+  box-shadow:
+    0 16px 48px rgba(0, 0, 0, 0.4),
+    0 0 30px rgba(212, 175, 55, 0.05),
+    inset 0 1px 1px rgba(255, 255, 255, 0.04) !important;
+  transition: all 0.4s var(--sw-ease);
+}
+
+.mode-card:hover,
+.ai-provider-card:hover {
+  border-color: rgba(212, 175, 55, 0.15) !important;
+  box-shadow:
+    0 20px 60px rgba(0, 0, 0, 0.5),
+    0 0 40px rgba(212, 175, 55, 0.1),
+    inset 0 1px 1px rgba(255, 255, 255, 0.06) !important;
+  transform: translateY(-2px);
+}
+
+.mode-card--active,
+.ai-provider-card--active {
+  border-color: rgba(212, 175, 55, 0.25) !important;
+  box-shadow:
+    0 16px 48px rgba(0, 0, 0, 0.4),
+    0 0 40px rgba(212, 175, 55, 0.12),
+    inset 0 1px 1px rgba(255, 255, 255, 0.06) !important;
+}
+
+.perm-card--enabled {
+  border-color: rgba(129, 178, 154, 0.25) !important;
+}
+
+.perm-card--disabled {
+  border-color: rgba(224, 122, 95, 0.15) !important;
+  opacity: 0.7;
+}
+
+/* ─── Form Inputs ─── */
+.setup-wizard__scene input[type="text"],
+.setup-wizard__scene input[type="password"],
+.setup-wizard__scene input[type="date"],
+.setup-wizard__scene input[type="time"],
+.setup-wizard__scene select,
+.setup-wizard__scene textarea {
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  background: rgba(255, 255, 255, 0.04) !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  border-radius: 14px;
+  color: var(--sw-text);
+  transition: all 0.25s var(--sw-ease);
+}
+
+.setup-wizard__scene input:focus,
+.setup-wizard__scene select:focus,
+.setup-wizard__scene textarea:focus {
+  border-color: rgba(212, 175, 55, 0.4) !important;
+  box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.1);
+  outline: none;
+}
+
+/* ─── Compact / Foldable Outer-Screen Fixes ───
+   Samsung Z Fold folded, small phones, short landscape.
+   Keeps headings visible and nav from overlapping content. */
+@media (max-height: 760px), (max-width: 380px) {
+  .setup-wizard__scene {
+    justify-content: flex-start;
+    align-items: center;
+    padding-top: calc(40px + env(safe-area-inset-top));
+    padding-bottom: calc(132px + env(safe-area-inset-bottom));
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+    touch-action: pan-y;
+  }
+
+  .setup-step,
+  .setup-step--mode,
+  .setup-step--permissions {
+    justify-content: flex-start;
+  }
+
+  .sw-ornament {
+    margin-bottom: 16px;
+  }
+
+  .setup-step__title {
+    font-size: clamp(20px, 6vw, 26px);
+    margin-bottom: 8px;
+  }
+
+  .setup-step__subtitle {
+    font-size: 13px;
+    margin-bottom: 18px;
+    max-width: 92%;
+  }
+
+  /* Mode step */
+  .mode-hero {
+    margin-bottom: 12px;
+  }
+
+  .mode-hero__title {
+    font-size: 20px;
+    margin-bottom: 4px;
+  }
+
+  .mode-hero__subtitle {
+    font-size: 12px;
+  }
+
+  .mode-cards {
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+
+  .mode-card {
+    padding: 12px 14px 10px;
+    border-radius: 16px;
+  }
+
+  .mode-card__top {
+    margin-bottom: 8px;
+  }
+
+  .mode-card__header {
+    margin-bottom: 8px;
+    gap: 10px;
+  }
+
+  .mode-card__icon {
+    font-size: 26px;
+  }
+
+  .mode-card__label {
+    font-size: 15px;
+  }
+
+  .mode-card__sublabel {
+    font-size: 11px;
+  }
+
+  .mode-card__desc {
+    font-size: 11px;
+    margin-bottom: 8px;
+    padding-bottom: 8px;
+  }
+
+  .mode-month-grid {
+    gap: 3px;
+    padding: 6px;
+    margin-bottom: 8px;
+    border-radius: 10px;
+  }
+
+  .mode-month-grid__cell {
+    padding: 4px 1px;
+    border-radius: 5px;
+  }
+
+  .mode-month-grid__abbr,
+  .mode-month-grid__days {
+    font-size: 9px;
+  }
+
+  .mode-math {
+    padding: 8px 10px;
+    border-radius: 10px;
+  }
+
+  .mode-math__num {
+    font-size: 14px;
+  }
+
+  .mode-math__op,
+  .mode-math__eq {
+    font-size: 11px;
+  }
+
+  .mode-math__label {
+    font-size: 11px;
+  }
+
+  .mode-persist {
+    margin-bottom: 8px;
+  }
+
+  .mode-card__selected-badge {
+    top: 8px;
+    padding: 3px 10px;
+    font-size: 10px;
+  }
+
+  /* Permissions step */
+  .perm-section {
+    gap: 10px;
+    padding: 14px;
+    border-radius: 16px;
+  }
+
+  .perm-section__header {
+    gap: 10px;
+  }
+
+  .perm-section__icon {
+    width: 34px;
+    height: 34px;
+    border-radius: 10px;
+  }
+
+  .perm-section__title {
+    font-size: 14px;
+  }
+
+  .perm-status {
+    font-size: 10px;
+  }
+
+  .perm-section__features {
+    gap: 5px;
+    margin-bottom: 4px;
+  }
+
+  .perm-section__feature {
+    font-size: 11px;
+    padding-left: 14px;
+  }
+
+  .perm-section__feature::before {
+    width: 5px;
+    height: 5px;
+    top: 6px;
+  }
+
+  .perm-constellation {
+    gap: 0;
+    padding: 2px;
+    margin-bottom: 8px;
+  }
+
+  .perm-constellation__row {
+    padding: 5px 0;
+    gap: 8px;
+  }
+
+  .perm-constellation__icon svg {
+    width: 14px;
+    height: 14px;
+  }
+
+  .perm-constellation__label {
+    font-size: 10px;
+  }
+
+  .perm-constellation__items {
+    font-size: 11px;
+  }
+
+  .perm-action {
+    padding: 8px 14px;
+    font-size: 11px;
+    border-radius: 20px;
+  }
+
+  /* Nav / dots */
+  .setup-wizard__nav {
+    bottom: calc(48px + env(safe-area-inset-bottom));
+    gap: 12px;
+    padding: 0 16px;
+  }
+
+  .setup-wizard__nav-btn {
+    padding: 10px 24px;
+    font-size: 12px;
+    border-radius: 12px;
+  }
+
+  .setup-wizard__dots {
+    bottom: calc(18px + env(safe-area-inset-bottom));
+    gap: 8px;
+  }
+
+  .setup-wizard__dot {
+    height: 5px;
+    border-radius: 2.5px;
+  }
+
+  .setup-wizard__dot--active {
+    width: 22px;
+  }
+}
+
+/* ─── Reduced Motion ─── */
+@media (prefers-reduced-motion: reduce) {
+  .setup-wizard__scene,
+  .slide-forward,
+  .slide-back,
+  .sw-ornament,
+  .setup-step--complete,
+  .setup-step__glow-icon {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  .setup-wizard__progress-fill {
+    transition: none;
+  }
+}

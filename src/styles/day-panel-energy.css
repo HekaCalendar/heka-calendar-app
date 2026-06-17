@@ -123,3 +123,9 @@
 .day-panel__section-title > span:first-child {
   color: #caa24a;
 }
+
+
+/* ── RTL Overrides ── */
+[dir="rtl"] .astro-personalized-badge {
+    margin-right: 8px
+}

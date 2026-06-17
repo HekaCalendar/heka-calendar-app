@@ -1,0 +1,544 @@
+
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Code coverage report for astrology/services/guidance/templates/bodies/uranusTemplates.ts</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../../../../prettify.css" />
+    <link rel="stylesheet" href="../../../../../base.css" />
+    <link rel="shortcut icon" type="image/x-icon" href="../../../../../favicon.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../../../../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+    
+<body>
+<div class='wrapper'>
+    <div class='pad1'>
+        <h1><a href="../../../../../index.html">All files</a> / <a href="index.html">astrology/services/guidance/templates/bodies</a> uranusTemplates.ts</h1>
+        <div class='clearfix'>
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">0% </span>
+                <span class="quiet">Statements</span>
+                <span class='fraction'>0/153</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">0% </span>
+                <span class="quiet">Branches</span>
+                <span class='fraction'>0/1</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">0% </span>
+                <span class="quiet">Functions</span>
+                <span class='fraction'>0/1</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">0% </span>
+                <span class="quiet">Lines</span>
+                <span class='fraction'>0/153</span>
+            </div>
+        
+            
+        </div>
+        <p class="quiet">
+            Press <em>n</em> or <em>j</em> to go to the next uncovered block, <em>b</em>, <em>p</em> or <em>k</em> for the previous block.
+        </p>
+        <template id="filterTemplate">
+            <div class="quiet">
+                Filter:
+                <input type="search" id="fileSearch">
+            </div>
+        </template>
+    </div>
+    <div class='status-line low'></div>
+    <pre><table class="coverage">
+<tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
+<a name='L2'></a><a href='#L2'>2</a>
+<a name='L3'></a><a href='#L3'>3</a>
+<a name='L4'></a><a href='#L4'>4</a>
+<a name='L5'></a><a href='#L5'>5</a>
+<a name='L6'></a><a href='#L6'>6</a>
+<a name='L7'></a><a href='#L7'>7</a>
+<a name='L8'></a><a href='#L8'>8</a>
+<a name='L9'></a><a href='#L9'>9</a>
+<a name='L10'></a><a href='#L10'>10</a>
+<a name='L11'></a><a href='#L11'>11</a>
+<a name='L12'></a><a href='#L12'>12</a>
+<a name='L13'></a><a href='#L13'>13</a>
+<a name='L14'></a><a href='#L14'>14</a>
+<a name='L15'></a><a href='#L15'>15</a>
+<a name='L16'></a><a href='#L16'>16</a>
+<a name='L17'></a><a href='#L17'>17</a>
+<a name='L18'></a><a href='#L18'>18</a>
+<a name='L19'></a><a href='#L19'>19</a>
+<a name='L20'></a><a href='#L20'>20</a>
+<a name='L21'></a><a href='#L21'>21</a>
+<a name='L22'></a><a href='#L22'>22</a>
+<a name='L23'></a><a href='#L23'>23</a>
+<a name='L24'></a><a href='#L24'>24</a>
+<a name='L25'></a><a href='#L25'>25</a>
+<a name='L26'></a><a href='#L26'>26</a>
+<a name='L27'></a><a href='#L27'>27</a>
+<a name='L28'></a><a href='#L28'>28</a>
+<a name='L29'></a><a href='#L29'>29</a>
+<a name='L30'></a><a href='#L30'>30</a>
+<a name='L31'></a><a href='#L31'>31</a>
+<a name='L32'></a><a href='#L32'>32</a>
+<a name='L33'></a><a href='#L33'>33</a>
+<a name='L34'></a><a href='#L34'>34</a>
+<a name='L35'></a><a href='#L35'>35</a>
+<a name='L36'></a><a href='#L36'>36</a>
+<a name='L37'></a><a href='#L37'>37</a>
+<a name='L38'></a><a href='#L38'>38</a>
+<a name='L39'></a><a href='#L39'>39</a>
+<a name='L40'></a><a href='#L40'>40</a>
+<a name='L41'></a><a href='#L41'>41</a>
+<a name='L42'></a><a href='#L42'>42</a>
+<a name='L43'></a><a href='#L43'>43</a>
+<a name='L44'></a><a href='#L44'>44</a>
+<a name='L45'></a><a href='#L45'>45</a>
+<a name='L46'></a><a href='#L46'>46</a>
+<a name='L47'></a><a href='#L47'>47</a>
+<a name='L48'></a><a href='#L48'>48</a>
+<a name='L49'></a><a href='#L49'>49</a>
+<a name='L50'></a><a href='#L50'>50</a>
+<a name='L51'></a><a href='#L51'>51</a>
+<a name='L52'></a><a href='#L52'>52</a>
+<a name='L53'></a><a href='#L53'>53</a>
+<a name='L54'></a><a href='#L54'>54</a>
+<a name='L55'></a><a href='#L55'>55</a>
+<a name='L56'></a><a href='#L56'>56</a>
+<a name='L57'></a><a href='#L57'>57</a>
+<a name='L58'></a><a href='#L58'>58</a>
+<a name='L59'></a><a href='#L59'>59</a>
+<a name='L60'></a><a href='#L60'>60</a>
+<a name='L61'></a><a href='#L61'>61</a>
+<a name='L62'></a><a href='#L62'>62</a>
+<a name='L63'></a><a href='#L63'>63</a>
+<a name='L64'></a><a href='#L64'>64</a>
+<a name='L65'></a><a href='#L65'>65</a>
+<a name='L66'></a><a href='#L66'>66</a>
+<a name='L67'></a><a href='#L67'>67</a>
+<a name='L68'></a><a href='#L68'>68</a>
+<a name='L69'></a><a href='#L69'>69</a>
+<a name='L70'></a><a href='#L70'>70</a>
+<a name='L71'></a><a href='#L71'>71</a>
+<a name='L72'></a><a href='#L72'>72</a>
+<a name='L73'></a><a href='#L73'>73</a>
+<a name='L74'></a><a href='#L74'>74</a>
+<a name='L75'></a><a href='#L75'>75</a>
+<a name='L76'></a><a href='#L76'>76</a>
+<a name='L77'></a><a href='#L77'>77</a>
+<a name='L78'></a><a href='#L78'>78</a>
+<a name='L79'></a><a href='#L79'>79</a>
+<a name='L80'></a><a href='#L80'>80</a>
+<a name='L81'></a><a href='#L81'>81</a>
+<a name='L82'></a><a href='#L82'>82</a>
+<a name='L83'></a><a href='#L83'>83</a>
+<a name='L84'></a><a href='#L84'>84</a>
+<a name='L85'></a><a href='#L85'>85</a>
+<a name='L86'></a><a href='#L86'>86</a>
+<a name='L87'></a><a href='#L87'>87</a>
+<a name='L88'></a><a href='#L88'>88</a>
+<a name='L89'></a><a href='#L89'>89</a>
+<a name='L90'></a><a href='#L90'>90</a>
+<a name='L91'></a><a href='#L91'>91</a>
+<a name='L92'></a><a href='#L92'>92</a>
+<a name='L93'></a><a href='#L93'>93</a>
+<a name='L94'></a><a href='#L94'>94</a>
+<a name='L95'></a><a href='#L95'>95</a>
+<a name='L96'></a><a href='#L96'>96</a>
+<a name='L97'></a><a href='#L97'>97</a>
+<a name='L98'></a><a href='#L98'>98</a>
+<a name='L99'></a><a href='#L99'>99</a>
+<a name='L100'></a><a href='#L100'>100</a>
+<a name='L101'></a><a href='#L101'>101</a>
+<a name='L102'></a><a href='#L102'>102</a>
+<a name='L103'></a><a href='#L103'>103</a>
+<a name='L104'></a><a href='#L104'>104</a>
+<a name='L105'></a><a href='#L105'>105</a>
+<a name='L106'></a><a href='#L106'>106</a>
+<a name='L107'></a><a href='#L107'>107</a>
+<a name='L108'></a><a href='#L108'>108</a>
+<a name='L109'></a><a href='#L109'>109</a>
+<a name='L110'></a><a href='#L110'>110</a>
+<a name='L111'></a><a href='#L111'>111</a>
+<a name='L112'></a><a href='#L112'>112</a>
+<a name='L113'></a><a href='#L113'>113</a>
+<a name='L114'></a><a href='#L114'>114</a>
+<a name='L115'></a><a href='#L115'>115</a>
+<a name='L116'></a><a href='#L116'>116</a>
+<a name='L117'></a><a href='#L117'>117</a>
+<a name='L118'></a><a href='#L118'>118</a>
+<a name='L119'></a><a href='#L119'>119</a>
+<a name='L120'></a><a href='#L120'>120</a>
+<a name='L121'></a><a href='#L121'>121</a>
+<a name='L122'></a><a href='#L122'>122</a>
+<a name='L123'></a><a href='#L123'>123</a>
+<a name='L124'></a><a href='#L124'>124</a>
+<a name='L125'></a><a href='#L125'>125</a>
+<a name='L126'></a><a href='#L126'>126</a>
+<a name='L127'></a><a href='#L127'>127</a>
+<a name='L128'></a><a href='#L128'>128</a>
+<a name='L129'></a><a href='#L129'>129</a>
+<a name='L130'></a><a href='#L130'>130</a>
+<a name='L131'></a><a href='#L131'>131</a>
+<a name='L132'></a><a href='#L132'>132</a>
+<a name='L133'></a><a href='#L133'>133</a>
+<a name='L134'></a><a href='#L134'>134</a>
+<a name='L135'></a><a href='#L135'>135</a>
+<a name='L136'></a><a href='#L136'>136</a>
+<a name='L137'></a><a href='#L137'>137</a>
+<a name='L138'></a><a href='#L138'>138</a>
+<a name='L139'></a><a href='#L139'>139</a>
+<a name='L140'></a><a href='#L140'>140</a>
+<a name='L141'></a><a href='#L141'>141</a>
+<a name='L142'></a><a href='#L142'>142</a>
+<a name='L143'></a><a href='#L143'>143</a>
+<a name='L144'></a><a href='#L144'>144</a>
+<a name='L145'></a><a href='#L145'>145</a>
+<a name='L146'></a><a href='#L146'>146</a>
+<a name='L147'></a><a href='#L147'>147</a>
+<a name='L148'></a><a href='#L148'>148</a>
+<a name='L149'></a><a href='#L149'>149</a>
+<a name='L150'></a><a href='#L150'>150</a>
+<a name='L151'></a><a href='#L151'>151</a>
+<a name='L152'></a><a href='#L152'>152</a>
+<a name='L153'></a><a href='#L153'>153</a>
+<a name='L154'></a><a href='#L154'>154</a></td><td class="line-coverage quiet"><span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js"><span class="cstat-no" title="statement not covered" >import type { BodyTemplates } from './types';<span class="fstat-no" title="function not covered" ><span class="branch-0 cbranch-no" title="branch not covered" ></span></span></span>
+<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" >/**</span>
+<span class="cstat-no" title="statement not covered" > * ═══════════════════════════════════════════════════════════════════════════════</span>
+<span class="cstat-no" title="statement not covered" > * URANUS TEMPLATES — Innovation, liberation, sudden change, originality</span>
+<span class="cstat-no" title="statement not covered" > * ═══════════════════════════════════════════════════════════════════════════════</span>
+<span class="cstat-no" title="statement not covered" > */</span>
+<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" >export const uranusTemplates: BodyTemplates = {</span>
+<span class="cstat-no" title="statement not covered" >  aries: {</span>
+<span class="cstat-no" title="statement not covered" >    essence: 'Your revolution is a lightning strike — sudden, electric, and demanding immediate transformation. Uranus in Aries teaches that liberation requires action, that the pioneer who hesitates is not a pioneer at all, and that true freedom is claimed, not given. You are here to shatter outdated structures with the force of original initiative, to electrify stagnant systems with the shock of the new.',</span>
+<span class="cstat-no" title="statement not covered" >    element: 'fire', modality: 'cardinal', keywords: ['revolutionary action', 'electric initiative', 'sudden breakthrough', 'original force'],</span>
+<span class="cstat-no" title="statement not covered" >    careerAdvice: 'Your professional revolution is immediate and transformative. Startups, tech innovation, emergency response, and pioneering fields suit your electric nature. You excel when breaking new ground. Beware impatience — some revolutions require groundwork. Build the launchpad before lighting the fuse. Your best work disrupts what has grown stale.',</span>
+<span class="cstat-no" title="statement not covered" >    relationshipAdvice: 'You love with electric intensity — sudden, transformative, and impossible to contain. You attract partners who can handle voltage without being burned. Beware restlessness — the thrill of new beginnings can undermine lasting connection. True revolution in love is not constant change but the courage to be authentically yourself within commitment.',</span>
+<span class="cstat-no" title="statement not covered" >    healthAdvice: 'Your nervous system runs at high voltage. Regular explosive movement — martial arts, sprinting, competitive sports — channels your electric energy. Beware nervous exhaustion from constant stimulation. Your body needs sudden exertion and sudden rest. Discipline means knowing when to discharge and when to insulate.',</span>
+<span class="cstat-no" title="statement not covered" >    financesAdvice: 'High-risk, high-reward investments align with your revolutionary nature. Cryptocurrency, startups, and disruptive technologies excite you. Beware the addiction to volatility — wealth built on lightning can disappear as quickly. Diversify your revolution; not every investment needs to change the world.',</span>
+<span class="cstat-no" title="statement not covered" >    growthAdvice: 'Your shadow is impulsivity — the belief that any action is better than thoughtful preparation. The lesson of Uranus in Aries is that true revolution is strategic, not merely reactive. Growth asks you to distinguish between worthy disruption and mere chaos, and to build structures that sustain the change you ignite.',</span>
+<span class="cstat-no" title="statement not covered" >    bodyFocus: 'head, eyes, nervous system, adrenal glands',</span>
+<span class="cstat-no" title="statement not covered" >    elementalResonance: 'Your revolution is lightning — sudden, brilliant, capable of illuminating the landscape or shattering the tower that was built on false foundations.',</span>
+<span class="cstat-no" title="statement not covered" >  },</span>
+<span class="cstat-no" title="statement not covered" >  taurus: {</span>
+<span class="cstat-no" title="statement not covered" >    essence: 'Your revolution is an earthquake in the vault — slow-building pressure that suddenly transforms everything held as secure. Uranus in Taurus teaches that liberation includes material reality, that true freedom requires financial and physical autonomy, and that the structures we call stable are merely waiting to shift. You are here to revolutionise value itself.',</span>
+<span class="cstat-no" title="statement not covered" >    element: 'earth', modality: 'fixed', keywords: ['material revolution', 'financial liberation', 'sensory disruption', 'value transformation'],</span>
+<span class="cstat-no" title="statement not covered" >    careerAdvice: 'Your professional revolution targets systems of value and stability. Fintech, sustainable agriculture, environmental innovation, and transforming traditional industries suit you. You excel when restructuring what others take for granted. Beware the disruption that destroys without replacing — true revolution builds new foundations.',</span>
+<span class="cstat-no" title="statement not covered" >    relationshipAdvice: 'Your love life undergoes sudden transformations around values and security. You attract partners who challenge your understanding of stability. Beware using financial or material change as a proxy for emotional growth. True revolution in love is the courage to redefine what security means without destroying the relationship that provides it.',</span>
+<span class="cstat-no" title="statement not covered" >    healthAdvice: 'Your throat, neck, and thyroid are sites of sudden transformation. Vocal exercises, sound healing, and body-based therapies restore balance. Beware sudden cravings and aversions — your body\'s signals may change overnight. Learn to trust the new while honouring the established. Your senses are evolving; give them space.',</span>
+<span class="cstat-no" title="statement not covered" >    financesAdvice: 'Your financial life is revolutionary — sudden windfalls and unexpected losses are both possible. Cryptocurrency, unconventional assets, and value-transforming investments align with your energy. Build a safety net that accommodates sudden change. Beware the attachment to old security models that no longer serve.',</span>
+<span class="cstat-no" title="statement not covered" >    growthAdvice: 'Your shadow is the destruction of stability — the belief that liberation requires dismantling everything familiar. The lesson of Uranus in Taurus is that revolution can be grounded, that new forms of security can be built. Growth asks you to transform values without discarding the wisdom of endurance.',</span>
+<span class="cstat-no" title="statement not covered" >    bodyFocus: 'throat, neck, thyroid, vocal cords',</span>
+<span class="cstat-no" title="statement not covered" >    elementalResonance: 'Your revolution is tectonic — slow pressure building until the landscape itself transforms, creating new valleys where old mountains stood.',</span>
+<span class="cstat-no" title="statement not covered" >  },</span>
+<span class="cstat-no" title="statement not covered" >  gemini: {</span>
+<span class="cstat-no" title="statement not covered" >    essence: 'Your revolution is a viral idea — spreading through networks, transforming communication, and demanding that information be free. Uranus in Gemini teaches that liberation is intellectual, that the revolution begins in the mind and spreads through connection, and that the structures of language and thought are as oppressive as any physical chains. You are here to electrify the exchange of ideas.',</span>
+<span class="cstat-no" title="statement not covered" >    element: 'air', modality: 'mutable', keywords: ['intellectual revolution', 'communicative innovation', 'networked liberation', 'mental electricity'],</span>
+<span class="cstat-no" title="statement not covered" >    careerAdvice: 'Your professional revolution is communicative and networked. Social media, technology, writing, teaching, and any field where ideas spread rapidly suit you. You excel when connecting disparate concepts in unexpected ways. Beware scattered focus — the revolutionary idea needs follow-through to change anything.',</span>
+<span class="cstat-no" title="statement not covered" >    relationshipAdvice: 'Your relationships are intellectually electric — you connect through ideas, debate, and shared curiosity. You attract partners who stimulate your mind. Beware emotional detachment — ideas are exciting, but intimacy requires presence. True revolution in love is the courage to communicate about feelings, not just concepts.',</span>
+<span class="cstat-no" title="statement not covered" >    healthAdvice: 'Your nervous system and respiratory health are your revolution\'s foundation. Breathwork, mind-body practices, and digital boundaries are essential. Beware information overload — your mind processes faster than your body can sustain. Schedule mental rest as seriously as physical exercise.',</span>
+<span class="cstat-no" title="statement not covered" >    financesAdvice: 'Information arbitrage and tech-forward investments align with your nature. You spot trends before they become mainstream. Beware the addiction to novelty — not every new opportunity is worth pursuing. Build wealth through knowledge, but ground it in practical application.',</span>
+<span class="cstat-no" title="statement not covered" >    growthAdvice: 'Your shadow is intellectual restlessness — the belief that every idea must be pursued immediately. The lesson of Uranus in Gemini is that true mental liberation requires focus as well as freedom. Growth asks you to develop the discipline to carry one revolutionary thought to completion before chasing the next.',</span>
+<span class="cstat-no" title="statement not covered" >    bodyFocus: 'lungs, hands, nervous system, shoulders',</span>
+<span class="cstat-no" title="statement not covered" >    elementalResonance: 'Your revolution is static electricity — crackling through the air, jumping between nodes, transforming the entire network with a single spark.',</span>
+<span class="cstat-no" title="statement not covered" >  },</span>
+<span class="cstat-no" title="statement not covered" >  cancer: {</span>
+<span class="cstat-no" title="statement not covered" >    essence: 'Your revolution is a tidal surge — transforming the foundations of home, family, and emotional security with sudden, irrevocable force. Uranus in Cancer teaches that liberation includes the domestic sphere, that emotional freedom is as revolutionary as political freedom, and that the structures of belonging we inherit may need to be shattered for authentic connection to emerge.',</span>
+<span class="cstat-no" title="statement not covered" >    element: 'water', modality: 'cardinal', keywords: ['domestic revolution', 'emotional liberation', 'familial disruption', 'nurturing transformation'],</span>
+<span class="cstat-no" title="statement not covered" >    careerAdvice: 'Your professional revolution transforms nurturing fields. Home technology, community innovation, real estate disruption, and reimagined family structures suit you. You excel when challenging assumptions about care and belonging. Beware the pull of nostalgia — revolution cannot live in the past. Build new models of community.',</span>
+<span class="cstat-no" title="statement not covered" >    relationshipAdvice: 'Your emotional life undergoes sudden transformations around home and family. You attract partners who challenge your understanding of belonging. Beware using domestic upheaval as escape from intimacy. True revolution in love is the courage to create new forms of family without destroying the connections that sustain you.',</span>
+<span class="cstat-no" title="statement not covered" >    healthAdvice: 'Your stomach and lymphatic system reflect your emotional revolutions. Water-based movement, intuitive eating, and emotional release practices restore balance. Beware sudden dietary changes and emotional eating patterns. Your body holds the history of every home you have left and every family you have redefined.',</span>
+<span class="cstat-no" title="statement not covered" >    financesAdvice: 'Unconventional living arrangements and community-based resources align with your values. Shared housing, co-op models, and family financial innovations suit you. Beware emotional financial decisions — revolution is not an excuse for recklessness. Build security that accommodates your need for change.',</span>
+<span class="cstat-no" title="statement not covered" >    growthAdvice: 'Your shadow is the destruction of belonging — the belief that emotional liberation requires severing all ties. The lesson of Uranus in Cancer is that true freedom includes the courage to belong differently, not the compulsion to belong nowhere. Growth asks you to transform your definitions of home and family without abandoning the need for connection.',</span>
+<span class="cstat-no" title="statement not covered" >    bodyFocus: 'stomach, breasts, lymphatic system, womb',</span>
+<span class="cstat-no" title="statement not covered" >    elementalResonance: 'Your revolution is tidal surge — the sudden flood that rewrites the shoreline, not erasing the land but redefining where it meets the sea.',</span>
+<span class="cstat-no" title="statement not covered" >  },</span>
+<span class="cstat-no" title="statement not covered" >  leo: {</span>
+<span class="cstat-no" title="statement not covered" >    essence: 'Your revolution is a supernova — brilliant, dramatic, and transforming the very nature of creative expression and personal authority. Uranus in Leo teaches that liberation is creative, that authentic self-expression is revolutionary, and that the structures of entertainment and leadership are overdue for transformation. You are here to electrify the stage of life itself.',</span>
+<span class="cstat-no" title="statement not covered" >    element: 'fire', modality: 'fixed', keywords: ['creative revolution', 'dramatic liberation', 'authentic authority', 'expressive breakthrough'],</span>
+<span class="cstat-no" title="statement not covered" >    careerAdvice: 'Your professional revolution is creative and performative. Entertainment, design, technology-driven art, and reimagined leadership models suit your electric nature. You excel when challenging conventions of self-expression. Beware the addiction to shock — true revolution in creativity includes substance alongside spectacle.',</span>
+<span class="cstat-no" title="statement not covered" >    relationshipAdvice: 'Your love life is theatrically transformative — you attract attention and partners who can handle your brilliance. Beware ego-driven rebellion — rejecting commitment to prove your freedom is not liberation, it is fear in costume. True revolution in love is the courage to be fully seen without the armour of performance.',</span>
+<span class="cstat-no" title="statement not covered" >    healthAdvice: 'Your heart and spine are your creative engines. Dance, theatrical movement, and heart-pumping exercise channel your electric energy. Beware burnout from the spotlight — even supernovae exhaust their fuel. Rest is not obscurity; it is regeneration. Your body needs the same dramatic care you give your art.',</span>
+<span class="cstat-no" title="statement not covered" >    financesAdvice: 'Creative investments and unconventional assets align with your revolutionary nature. You spot cultural trends before they mainstream. Beware the addiction to risk for its own sake — not every gamble is worth taking. Build wealth that funds your creative freedom without compromising your stability.',</span>
+<span class="cstat-no" title="statement not covered" >    growthAdvice: 'Your shadow is performative rebellion — the belief that liberation requires constant drama. The lesson of Uranus in Leo is that true creative freedom includes the courage to be ordinary, to create without an audience. Growth asks you to distinguish between authentic expression and attention-seeking, and to trust that your light does not need witnesses to shine.',</span>
+<span class="cstat-no" title="statement not covered" >    bodyFocus: 'heart, spine, circulatory system, upper back',</span>
+<span class="cstat-no" title="statement not covered" >    elementalResonance: 'Your revolution is supernova — the star that burns brightest at its transformation, seeding the galaxy with new elements born from its own dissolution.',</span>
+<span class="cstat-no" title="statement not covered" >  },</span>
+<span class="cstat-no" title="statement not covered" >  virgo: {</span>
+<span class="cstat-no" title="statement not covered" >    essence: 'Your revolution is a system hack — precise, analytical, and transforming the very structures of health, work, and service from within. Uranus in Virgo teaches that liberation is practical, that the revolution begins in daily routines and systems, and that the structures of health and labour are as oppressive as any political regime. You are here to electrify the mundane.',</span>
+<span class="cstat-no" title="statement not covered" >    element: 'earth', modality: 'mutable', keywords: ['systemic revolution', 'health innovation', 'analytical disruption', 'practical liberation'],</span>
+<span class="cstat-no" title="statement not covered" >    careerAdvice: 'Your professional revolution is analytical and health-oriented. Healthcare technology, data analysis, workflow innovation, and reimagined service industries suit your precision. You excel when transforming systems from within. Beware perfectionism paralysis — the perfect revolution never launches. Ship the prototype.',</span>
+<span class="cstat-no" title="statement not covered" >    relationshipAdvice: 'Your relationships are transformed through practical innovation — you show love through improved systems and thoughtful efficiency. You attract partners who appreciate your competence. Beware analytical detachment — efficiency is not intimacy. True revolution in love includes the courage to be inefficient, to waste time together without purpose.',</span>
+<span class="cstat-no" title="statement not covered" >    healthAdvice: 'Your gut and nervous system are your revolution\'s laboratory. Biohacking, alternative health, and precision nutrition align with your nature. Beware the addiction to optimisation — the body is not a machine to be tuned but a living system to be honoured. Sometimes the healthiest choice is to stop optimising.',</span>
+<span class="cstat-no" title="statement not covered" >    financesAdvice: 'Detailed analysis and unconventional investment strategies align with your precision. You spot inefficiencies in financial systems. Beware analysis paralysis — the revolution that never invests never profits. Build wealth through systematic innovation, but know when to act on imperfect information.',</span>
+<span class="cstat-no" title="statement not covered" >    growthAdvice: 'Your shadow is the compulsion to optimise — the belief that liberation means perfecting every system. The lesson of Uranus in Virgo is that true freedom includes the acceptance of mess, of the body that will not be hacked, of the relationship that defies efficiency. Growth asks you to release the need to fix everything, starting with yourself.',</span>
+<span class="cstat-no" title="statement not covered" >    bodyFocus: 'digestive system, intestines, spleen, nervous system',</span>
+<span class="cstat-no" title="statement not covered" >    elementalResonance: 'Your revolution is precision tool — the surgical strike that transforms the system from within, invisible to those who see only the surface.',</span>
+<span class="cstat-no" title="statement not covered" >  },</span>
+<span class="cstat-no" title="statement not covered" >  libra: {</span>
+<span class="cstat-no" title="statement not covered" >    essence: 'Your revolution is a coup in the courtroom — transforming justice, partnership, and aesthetic convention with electrifying fairness. Uranus in Libra teaches that liberation is relational, that the structures of partnership and law are overdue for transformation, and that true equality cannot exist within outdated frameworks. You are here to revolutionise the very concept of balance.',</span>
+<span class="cstat-no" title="statement not covered" >    element: 'air', modality: 'cardinal', keywords: ['relational revolution', 'justice innovation', 'partnership disruption', 'aesthetic liberation'],</span>
+<span class="cstat-no" title="statement not covered" >    careerAdvice: 'Your professional revolution is diplomatic and justice-oriented. Law reform, design innovation, mediation technology, and reimagined partnership models suit your balanced nature. You excel when challenging conventions of fairness. Beware indecision — revolution requires choosing sides, even imperfectly.',</span>
+<span class="cstat-no" title="statement not covered" >    relationshipAdvice: 'Your love life is a laboratory for partnership innovation. You attract partners who challenge conventional relationship structures. Beware using unconventional arrangements as escape from intimacy — polyamory is not a solution for fear of commitment. True revolution in love is the courage to be fully present, whatever the structure.',</span>
+<span class="cstat-no" title="statement not covered" >    healthAdvice: 'Your kidneys, skin, and lower back reflect your need for relational equilibrium. Practices that restore balance — yoga, dance, beauty rituals — are medicine. Beware the stress of perpetual fairness — you cannot balance what others refuse to hold. Your body needs permission to choose itself sometimes.',</span>
+<span class="cstat-no" title="statement not covered" >    financesAdvice: 'Partnership investments and justice-aligned financial models suit your nature. Community investing and shared resources align with your values. Beware the addiction to fairness — not every financial decision can be perfectly equitable. Build wealth that supports your ideals without requiring universal agreement.',</span>
+<span class="cstat-no" title="statement not covered" >    growthAdvice: 'Your shadow is the avoidance of necessary conflict — the belief that revolution must always be harmonious. The lesson of Uranus in Libra is that true justice sometimes requires discord. Growth asks you to fight for what is right even when it disturbs the peace you cherish, knowing that false harmony is worse than honest tension.',</span>
+<span class="cstat-no" title="statement not covered" >    bodyFocus: 'kidneys, skin, lower back, endocrine balance',</span>
+<span class="cstat-no" title="statement not covered" >    elementalResonance: 'Your revolution is lightning reflected — the sudden illumination that reveals every imbalance in the system, demanding immediate correction.',</span>
+<span class="cstat-no" title="statement not covered" >  },</span>
+<span class="cstat-no" title="statement not covered" >  scorpio: {</span>
+<span class="cstat-no" title="statement not covered" >    essence: 'Your revolution is a phoenix immolation — total transformation through the destruction of what no longer serves, emerging from ash with electric new purpose. Uranus in Scorpio teaches that liberation is deep, that true freedom requires facing what we most fear, and that the structures of power, sexuality, and shared resources are due for radical overhaul. You are here to revolutionise the underworld itself.',</span>
+<span class="cstat-no" title="statement not covered" >    element: 'water', modality: 'fixed', keywords: ['deep revolution', 'power transformation', 'sexual liberation', 'taboo disruption'],</span>
+<span class="cstat-no" title="statement not covered" >    careerAdvice: 'Your professional revolution is intense and transformative. Crisis management, research into taboo subjects, power restructuring, and depth psychology suit your nature. You excel when facing what others hide from. Beware the addiction to crisis — not every transformation requires destruction. Build as much as you burn.',</span>
+<span class="cstat-no" title="statement not covered" >    relationshipAdvice: 'Your relationships are laboratories for transformation — intense, deep, and never superficial. You attract partners ready for radical honesty. Beware the compulsion to destroy — some relationships deserve evolution, not immolation. True revolution in love is the courage to transform together rather than alone.',</span>
+<span class="cstat-no" title="statement not covered" >    healthAdvice: 'Your reproductive and eliminative systems process your revolutionary intensity. Deep therapeutic practices, energy work, and crisis-based healing restore you. Beware the addiction to intensity — not every healing requires a breakdown. Your body can transform gently; not every rebirth needs flames.',</span>
+<span class="cstat-no" title="statement not covered" >    financesAdvice: 'Shared resources, power investments, and transformative financial models align with your depth. You understand wealth as energy, not just currency. Beware using financial control as proxy for emotional power. Build wealth through transformation, not destruction of what others hold dear.',</span>
+<span class="cstat-no" title="statement not covered" >    growthAdvice: 'Your shadow is the compulsion to destroy — the belief that liberation requires burning everything to the ground. The lesson of Uranus in Scorpio is that transformation can be surgical, not explosive. Growth asks you to distinguish between necessary death and destructive addiction, and to trust that some structures deserve renovation, not demolition.',</span>
+<span class="cstat-no" title="statement not covered" >    bodyFocus: 'reproductive system, eliminative organs, pelvis, colon',</span>
+<span class="cstat-no" title="statement not covered" >    elementalResonance: 'Your revolution is phoenix fire — total transformation that leaves nothing unchanged, emerging from destruction with new purpose and electric power.',</span>
+<span class="cstat-no" title="statement not covered" >  },</span>
+<span class="cstat-no" title="statement not covered" >  sagittarius: {</span>
+<span class="cstat-no" title="statement not covered" >    essence: 'Your revolution is a warp drive — expanding horizons, challenging belief systems, and electrifying the quest for meaning with sudden breakthroughs. Uranus in Sagittarius teaches that liberation is philosophical, that the structures of belief and meaning are as confining as any physical prison, and that true freedom requires questioning everything we have been taught.',</span>
+<span class="cstat-no" title="statement not covered" >    element: 'fire', modality: 'mutable', keywords: ['philosophical revolution', 'belief disruption', 'expansive liberation', 'visionary breakthrough'],</span>
+<span class="cstat-no" title="statement not covered" >    careerAdvice: 'Your professional revolution is expansive and belief-challenging. Education reform, publishing, international innovation, and visionary enterprises suit your nature. You excel when expanding what is considered possible. Beware the addiction to novelty — the revolution that never lands changes nothing. Build structures for your visions.',</span>
+<span class="cstat-no" title="statement not covered" >    relationshipAdvice: 'Your relationships are transformed through shared adventure and meaning. You attract partners who challenge your worldview. Beware restlessness — the horizon is infinite, but love requires presence. True revolution in love is the courage to find meaning in commitment, not just in escape.',</span>
+<span class="cstat-no" title="statement not covered" >    healthAdvice: 'Your hips, thighs, and liver carry your expansive energy. Outdoor movement, travel, and philosophical practice restore you. Beware excess — your revolutionary nature applies to indulgence as well as ideas. Your body needs grounding journeys as much as it needs adventurous ones.',</span>
+<span class="cstat-no" title="statement not covered" >    financesAdvice: 'International investments, educational opportunities, and belief-aligned enterprises suit your visionary nature. You spot cultural shifts before they mainstream. Beware overconfidence — not every vision is investable. Build wealth that funds your philosophy without requiring it to be universally true.',</span>
+<span class="cstat-no" title="statement not covered" >    growthAdvice: 'Your shadow is the addiction to expansion — the belief that liberation means never arriving. The lesson of Uranus in Sagittarius is that true freedom includes the courage to commit to one truth, one path, one belief long enough to test it. Growth asks you to find depth in focus, to discover that some horizons are best explored by staying still.',</span>
+<span class="cstat-no" title="statement not covered" >    bodyFocus: 'hips, thighs, liver, sciatic nerve',</span>
+<span class="cstat-no" title="statement not covered" >    elementalResonance: 'Your revolution is warp drive — the sudden expansion of horizons that makes the old map irrelevant, the old compass useless, the old destination obsolete.',</span>
+<span class="cstat-no" title="statement not covered" >  },</span>
+<span class="cstat-no" title="statement not covered" >  capricorn: {</span>
+<span class="cstat-no" title="statement not covered" >    essence: 'Your revolution is a palace coup — transforming the very structures of authority, tradition, and established power from within. Uranus in Capricorn teaches that liberation is structural, that the revolution must work within existing frameworks to be sustainable, and that the institutions we inherit can be transformed rather than merely destroyed. You are here to revolutionise the establishment.',</span>
+<span class="cstat-no" title="statement not covered" >    element: 'earth', modality: 'cardinal', keywords: ['structural revolution', 'authority transformation', 'institutional innovation', 'traditional disruption'],</span>
+<span class="cstat-no" title="statement not covered" >    careerAdvice: 'Your professional revolution is institutional and strategic. Corporate innovation, government reform, structural transformation, and legacy industry disruption suit your nature. You excel when changing systems from positions of authority. Beware the addiction to tradition — your gift is knowing what to preserve and what to overthrow.',</span>
+<span class="cstat-no" title="statement not covered" >    relationshipAdvice: 'Your relationships challenge traditional structures of commitment and authority. You attract partners who respect your ambition and share your vision for change. Beware using career revolution as proxy for emotional growth. True revolution in love is the courage to build new structures of partnership that honour both freedom and commitment.',</span>
+<span class="cstat-no" title="statement not covered" >    healthAdvice: 'Your bones, joints, and teeth reflect the weight of structural change. Regular movement, structural alignment, and disciplined self-care are essential. Beware workaholism — the revolution that consumes its revolutionary is not sustainable. Your body needs rest as much as it needs challenge.',</span>
+<span class="cstat-no" title="statement not covered" >    financesAdvice: 'Traditional investments transformed by innovation align with your nature. You understand legacy wealth and its disruption. Build financial structures that honour the past while embracing the future. Beware the addiction to stability — some traditions deserve retirement.',</span>
+<span class="cstat-no" title="statement not covered" >    growthAdvice: 'Your shadow is the fear of chaos — the belief that revolution must be controlled, that transformation cannot be trusted without oversight. The lesson of Uranus in Capricorn is that true structural change includes the courage to let go. Growth asks you to trust that some systems must be dismantled before better ones can be built.',</span>
+<span class="cstat-no" title="statement not covered" >    bodyFocus: 'bones, joints, teeth, knees, skeletal system',</span>
+<span class="cstat-no" title="statement not covered" >    elementalResonance: 'Your revolution is tectonic architecture — the earthquake that reveals the fault lines in the foundation, demanding reconstruction on bedrock that was always unstable.',</span>
+<span class="cstat-no" title="statement not covered" >  },</span>
+<span class="cstat-no" title="statement not covered" >  aquarius: {</span>
+<span class="cstat-no" title="statement not covered" >    essence: 'Your revolution is lightning in its own element — pure, electric, and transforming the very nature of human connection and collective future. Uranus in Aquarius is at home, the revolutionary who understands that true liberation is collective, that individual freedom is meaningless without community, and that the structures of society itself are the chains that must be broken. You are here to revolutionise humanity.',</span>
+<span class="cstat-no" title="statement not covered" >    element: 'air', modality: 'fixed', keywords: ['collective revolution', 'social transformation', 'networked liberation', 'future vision'],</span>
+<span class="cstat-no" title="statement not covered" >    careerAdvice: 'Your professional revolution is collective and technological. Social innovation, technology for humanity, network architecture, and reform movements suit your nature. You excel when envisioning and building the future. Beware detachment — the revolution that forgets the human cost is not liberation but another form of oppression.',</span>
+<span class="cstat-no" title="statement not covered" >    relationshipAdvice: 'Your relationships are defined by shared ideals and collective vision. You attract partners who share your hunger for a better world. Beware using collective causes as proxy for intimacy — the revolution will not keep you warm at night. True connection requires presence, not just shared purpose.',</span>
+<span class="cstat-no" title="statement not covered" >    healthAdvice: 'Your circulatory and nervous systems carry your electric collective energy. Group movement, community health practices, and network-based wellness restore you. Beware nervous exhaustion from collective anxiety — you feel what the group feels. Build boundaries that protect your energy without isolating you from the community you serve.',</span>
+<span class="cstat-no" title="statement not covered" >    financesAdvice: 'Collective resources, social enterprise, and technology investments align with your vision. You understand wealth as collective energy. Build financial models that serve the many, not just the few. Beware the addiction to abstraction — even utopian economics must pay for groceries.',</span>
+<span class="cstat-no" title="statement not covered" >    growthAdvice: 'Your shadow is the tyranny of ideals — the belief that the collective good justifies any individual sacrifice. The lesson of Uranus in Aquarius is that true revolution honours the individual within the collective. Growth asks you to build systems that liberate without homogenising, that unite without erasing difference.',</span>
+<span class="cstat-no" title="statement not covered" >    bodyFocus: 'calves, ankles, circulatory system, nervous system',</span>
+<span class="cstat-no" title="statement not covered" >    elementalResonance: 'Your revolution is lightning captured — electric energy that illuminates the entire network simultaneously, transforming every node it touches.',</span>
+<span class="cstat-no" title="statement not covered" >  },</span>
+<span class="cstat-no" title="statement not covered" >  pisces: {</span>
+<span class="cstat-no" title="statement not covered" >    essence: 'Your revolution is a tsunami of consciousness — dissolving boundaries, transforming spirituality, and electrifying the collective unconscious with sudden waves of awakening. Uranus in Pisces teaches that liberation is mystical, that the structures of reality itself are illusions to be transcended, and that true freedom is found in dissolution rather than conquest. You are here to revolutionise consciousness itself.',</span>
+<span class="cstat-no" title="statement not covered" >    element: 'water', modality: 'mutable', keywords: ['spiritual revolution', 'consciousness transformation', 'boundary dissolution', 'mystical liberation'],</span>
+<span class="cstat-no" title="statement not covered" >    careerAdvice: 'Your professional revolution is healing and transcendent. Spiritual technology, consciousness research, artistic innovation, and compassionate service suit your nature. You excel when dissolving boundaries between disciplines. Beware escapism — the revolution that disappears into mysticism changes nothing in the material world.',</span>
+<span class="cstat-no" title="statement not covered" >    relationshipAdvice: 'Your relationships are spiritually transformative — you connect through shared consciousness and mystical experience. You attract partners who understand your depth. Beware the addiction to transcendence — some relationships need grounding, not elevation. True revolution in love includes the courage to be present in the mundane.',</span>
+<span class="cstat-no" title="statement not covered" >    healthAdvice: 'Your feet and immune system are your mystical anchors. Water therapies, dream work, and spiritual practices restore you. Beware escapism through substances or denial — your sensitivity is a gift that requires protection. Ground your spiritual experiences in physical practice.',</span>
+<span class="cstat-no" title="statement not covered" >    financesAdvice: 'Spiritual investments, artistic ventures, and consciousness-aligned enterprises suit your nature. You understand wealth as energy flow. Build financial structures that accommodate your non-linear path. Beware using mystical justification for financial avoidance — even mystics must eat.',</span>
+<span class="cstat-no" title="statement not covered" >    growthAdvice: 'Your shadow is the compulsion to dissolve — the belief that liberation requires the disappearance of all boundaries, including healthy ones. The lesson of Uranus in Pisces is that true transcendence includes the courage to be embodied, to be bounded, to be human. Growth asks you to build structures that hold your spirituality without limiting it.',</span>
+<span class="cstat-no" title="statement not covered" >    bodyFocus: 'feet, immune system, pineal gland, lymphatic system',</span>
+<span class="cstat-no" title="statement not covered" >    elementalResonance: 'Your revolution is tsunami — the wave that dissolves every boundary, every shore, every distinction between self and other, leaving a transformed landscape in its wake.',</span>
+<span class="cstat-no" title="statement not covered" >  },</span>
+<span class="cstat-no" title="statement not covered" >  ophiuchus: {</span>
+<span class="cstat-no" title="statement not covered" >    essence: 'Your revolution is alchemical lightning — sudden transformation that turns poison into medicine, shadow into power, death into rebirth. Uranus in Ophiuchus teaches that liberation is healing, that the structures of illness and wellness, of wounding and wholeness, are themselves constructs to be revolutionised. You are here to electrify the healing arts and transform what society calls broken into what it has never seen before.',</span>
+<span class="cstat-no" title="statement not covered" >    element: 'ether', modality: 'fixed', keywords: ['healing revolution', 'alchemical transformation', 'shadow liberation', 'medicinal disruption'],</span>
+<span class="cstat-no" title="statement not covered" >    careerAdvice: 'Your professional revolution is healing and transformative. Medical innovation, energy healing, psychology, and research into suppressed knowledge suit you. You excel when challenging what medicine and society call incurable. Beware the wounded healer trap — you cannot revolutionise healing while ignoring your own wounds.',</span>
+<span class="cstat-no" title="statement not covered" >    relationshipAdvice: 'Your relationships are healing laboratories — every connection has the potential to transform both participants. You attract partners ready for deep alchemical work. Beware the compulsion to heal instead of relate; your insight is a gift, but in love it can become a wall. True revolution in love is presence without analysis.',</span>
+<span class="cstat-no" title="statement not covered" >    healthAdvice: 'Your spinal column and nervous system regeneration are your revolution\'s frontier. Energy medicine, spinal alignment, and practices that work with subtle energies restore you. You are sensitive to environmental shifts — your body is a barometer for collective transformation. Build structures that sustain your healing work.',</span>
+<span class="cstat-no" title="statement not covered" >    financesAdvice: 'Investments in healing, transformation, and regenerative enterprises align with your values. Build financial models that accommodate non-linear paths. Beware rescuing others financially — true revolution empowers independence, not dependence. Your wealth serves your mission; protect both.',</span>
+<span class="cstat-no" title="statement not covered" >    growthAdvice: 'Your shadow is the compulsion to transform — the belief that everything must be revolutionised, including what is already whole. The lesson of Uranus in Ophiuchus is that true alchemical power includes the wisdom to leave some things unchanged. Growth asks you to distinguish between necessary transformation and compulsive disruption, and to trust that some structures deserve preservation.',</span>
+<span class="cstat-no" title="statement not covered" >    bodyFocus: 'spinal column, nervous system regeneration, subtle energy channels, cellular renewal',</span>
+<span class="cstat-no" title="statement not covered" >    elementalResonance: 'Your revolution is alchemical lightning — the strike that transforms lead to gold, poison to medicine, death to rebirth, not by destroying but by revealing what was always there.',</span>
+<span class="cstat-no" title="statement not covered" >  },</span>
+<span class="cstat-no" title="statement not covered" >};</span>
+&nbsp;</pre></td></tr></table></pre>
+
+                <div class='push'></div><!-- for sticky footer -->
+            </div><!-- /wrapper -->
+            <div class='footer quiet pad2 space-top1 center small'>
+                Code coverage generated by
+                <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
+                at 2026-05-21T20:28:33.284Z
+            </div>
+        <script src="../../../../../prettify.js"></script>
+        <script>
+            window.onload = function () {
+                prettyPrint();
+            };
+        </script>
+        <script src="../../../../../sorter.js"></script>
+        <script src="../../../../../block-navigation.js"></script>
+    </body>
+</html>
+    

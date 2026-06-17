@@ -1,0 +1,6 @@
+{
+  "routes": [
+    { "handle": "filesystem" },
+    { "src": "/app/:path*", "dest": "/app/index.html" }
+  ]
+}

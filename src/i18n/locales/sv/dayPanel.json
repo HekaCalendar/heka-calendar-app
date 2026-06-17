@@ -1,0 +1,239 @@
+{
+  "celestialGuide": "Himmelsguide",
+  "journal": "Dagbok",
+  "notes": "Anteckningar",
+  "events": "Händelser",
+  "tasks": "Uppgifter",
+  "transits": "Transitter",
+  "mood": "Sinnesstämning",
+  "vibe": "Vibe",
+  "energy": "Energi",
+  "hekaRune": "HEKA Rune",
+  "celestialAffirmation": "Himmelsbekräftelse",
+  "moodTracker": "Sinnesstämningsspårare",
+  "vibeColor": "Vibe-färg",
+  "addNote": "Lägg till en anteckning...",
+  "addEvent": "Lägg till händelse",
+  "addTask": "Lägg till uppgift",
+  "eventTitle": "Händelsetitel",
+  "taskTitle": "Uppgiftstitel",
+  "taskCompleted": "Avslutad",
+  "taskPending": "Väntande",
+  "editNote": "Redigera Anteckning",
+  "deleteNote": "Ta bort Anteckning",
+  "notePlaceholder": "Skriv dina tankar här...",
+  "journalPlaceholder": "Registrera din dag...",
+  "eventPlaceholder": "Vad händer?",
+  "taskPlaceholder": "Vad behöver göras?",
+  "addNewNote": "+ Ny Anteckning",
+  "addNewEvent": "+ Ny Händelse",
+  "addNewTask": "+ Ny Uppgift",
+  "noNotes": "Inga anteckningar för denna dag",
+  "noEvents": "Inga händelser för denna dag",
+  "noTasks": "Inga uppgifter för denna dag",
+  "noJournal": "Inget journalinlägg för denna dag",
+  "transitProgress": "Transitframsteg",
+  "transitRemaining": "{{percent}}% återstår",
+  "currentMood": "Aktuell Sinnesstämning",
+  "selectMood": "Välj din sinnesstämning",
+  "moods": {
+    "joyful": "Glad",
+    "happy": "Lycklig",
+    "content": "Nöjd",
+    "neutral": "Neutral",
+    "tired": "Trött",
+    "sad": "Ledsen",
+    "anxious": "Orolig",
+    "frustrated": "Frustrerad",
+    "angry": "Arg",
+    "inspired": "Inspirerad",
+    "focused": "Fokuserad",
+    "peaceful": "Fredlig"
+  },
+  "runeCast": "Kasta runor...",
+  "runeReveal": "Avslöja Rune",
+  "runeBlessing": "Dagens välsignelse",
+  "runeWisdom": "Rune Visdom",
+  "runeEnergy": "Rune Energi",
+  "emptyState": "Välj en dag för att visa detaljer",
+  "closePanel": "Stäng panel",
+  "addTaskBtn": "+ Uppgift",
+  "header": {
+    "monthOf": "Månad {{month}} / 13",
+    "hekaYear": "HEKA År {{year}}"
+  },
+  "moon": {
+    "calculating": "Beräknar månposition...",
+    "unavailable": "Månfasdata otillgänglig",
+    "waxing": "Tilltagande",
+    "waning": "Minskande",
+    "illuminated": "{{percent}}% upplyst",
+    "age": "Ålder: {{age}} dagar",
+    "swissEphemeris": "Schweiziska Ephemeriden",
+    "southernHemisphere": "Sydhimmel",
+    "northernHemisphere": "Nordhimmel"
+  },
+  "holidays": {
+    "inLocation": "Högtidligheter i {{location}}"
+  },
+  "astrology": {
+    "dailyCosmicGuidance": "Daglig kosmisk vägledning",
+    "personalizedFor": "Anpassad för {{name}}",
+    "birthChartActive": "Födelsediagram Aktivt",
+    "calculatingTransits": "Beräknar dina personliga transiter...",
+    "connectingCelestial": "Ansluter till himlakunskap...",
+    "unavailable": "Himlakunskap otillgänglig. Kolla avsnittet Stjärnor för detaljerad astrologi.",
+    "sunrise": "Soluppgång: {{time}}",
+    "sunset": "Solnedgång: {{time}}",
+    "planetaryHour": "Planett Timme: {{planet}}",
+    "locationPin": "{{location}}",
+    "activeTransits": "Aktiva Transiter för Dig Idag",
+    "moonIn": "Månen i {{sign}}",
+    "sunIn": "Sol i {{sign}}",
+    "todaysTheme": "Dagens tema:",
+    "cosmicGuidance": "Kosmisk vägledning",
+    "reflection": "Reflektion",
+    "affirmation": "Bekräftelse",
+    "birthChartCta": {
+      "title": "Vill ha personliga transiter?",
+      "description": "Lägg till din födelsestavla i Stjärnor-sektionen för att se hur dagens kosmiska väder påverkar dig personligen."
+    }
+  },
+  "lunarMansion": {
+    "title": "Månherrskap",
+    "trueMode": "SANN Läge",
+    "calculating": "Beräknar sidreal månposition...",
+    "totem": "Totem",
+    "gift": "Gåva",
+    "ruler": "Härskare",
+    "quality": "Kvalitet",
+    "quarter": "Kvartal",
+    "sunTravelsThrough": "Sol reser genom {{name}}",
+    "quarters": {
+      "initiation": "Initiativ — fröna planteras",
+      "deepening": "Djupnande — rötterna tar fasta",
+      "crisis": "Kris — provet anländer",
+      "completion": "Slutförande — frukten mognar"
+    }
+  },
+  "solarReturn": {
+    "title": "Sann sol retur",
+    "titleInDays": "Sann sol retur om {{count}} dag{{suffix}}",
+    "trueMode": "SANN Läge",
+    "today": "Sol återvänder till din siderala födelselängd idag.",
+    "approaching": "Sol kommer återvända till din siderala {{sign}} position den {{date}}.",
+    "description": "I SANN HEKA-läget bestäms ditt födelsedatum av stjärnorna, inte den civila kalendern.",
+    "exactOrb": "Exakt inom {{orb}} arkminut."
+  },
+  "notesSection": {
+    "tasksAndNotes": "Uppgifter ({{tasks}}) · Anteckningar ({{notes}})",
+    "tasksOnly": "Uppgifter ({{count}})",
+    "notesAndTasks": "Anteckningar & Uppgifter ({{count}})",
+    "addNote": "+ Anteckning",
+    "longHoldHint": "Långtryck för alternativ · Dubbeltryck en uppgift för att redigera",
+    "noNotesOrTasks": "Inga anteckningar eller uppgifter för denna dag.",
+    "createNoteHint": "Klicka <0>+ Anteckning</0> eller <1>⚡ Lägg till uppgift</1> ovanför för att skapa en."
+  },
+  "noteEditor": {
+    "makeTask": "⚡ Gör detta till en uppgift",
+    "dueTime": "Förfallo tid",
+    "remindMe": "Påminn mig",
+    "reminders": {
+      "atTime": "Vid uppgiftens tid",
+      "5min": "5 minuter före",
+      "10min": "10 minuter före",
+      "15min": "15 minuter före",
+      "30min": "30 minuter före",
+      "1hour": "1 timme före"
+    },
+    "howAreYouFeeling": "Hur mår du?",
+    "taskPlaceholder": "Vad tänker du åstadkomma?",
+    "notePlaceholder": "Skriv din anteckning...",
+    "saveTask": "Spara Uppgift",
+    "saveNote": "Spara Anteckning",
+    "cancel": "Avbryt"
+  },
+  "noteItem": {
+    "markComplete": "Markera som färdig",
+    "completed": "Färdig",
+    "task": "Uppgift",
+    "delete": "Ta bort"
+  },
+  "selection": {
+    "selectedFromDays": "{{count}} valda från {{days}} dag{{suffix}}",
+    "done": "Klar",
+    "selectAll": "Markera alla",
+    "duplicate": "Duplicera...",
+    "delete": "Ta bort",
+    "manageDuplicates": "Hantera Dubblettposter:",
+    "duplicateTo": "Duplicera till:",
+    "nextWeek": "Nästa Vecka",
+    "nextMonth": "Nästa Månad",
+    "everyDay": "Varje {{day}}",
+    "undoEveryDay": "Ångra Varje {{day}}",
+    "specificDay": "Specifik Dag...",
+    "chooseDays": "Välj Dag(ar)...",
+    "back": "Tillbaka"
+  },
+  "dayPicker": {
+    "cancel": "Avbryt"
+  },
+  "multiDayPicker": {
+    "selectedCount": "{{count}} dag{{suffix}} vald",
+    "confirm": "Bekräfta",
+    "cancel": "Avbryt"
+  },
+  "confirmations": {
+    "deleteNote": "Ta bort denna anteckning?",
+    "deleteSelected": "Ta bort {{count}} valda anteckningar från {{days}} dag(ar)?",
+    "duplicateEveryDay": "Duplicera dessa {{count}} objekt till VARJE {{day}} för resten av året?",
+    "undoDuplicates": "Ta bort alla duplicerade instanser av dessa {{count}} anteckningar?"
+  },
+  "alerts": {
+    "couldNotCalculateDate": "Kunde inte beräkna måldatum",
+    "duplicatedToNextWeek": "Duplicerade {{items}} till nästa vecka ({{month}} {{day}})",
+    "duplicatedToNextMonth": "Duplicerade {{items}} till nästa månad ({{month}} {{day}})",
+    "duplicatedToDays": "Duplicerat till {{count}} {{day}}s",
+    "duplicatedNotes": "Dubblerade {{count}} anteckning(ar)",
+    "removedDuplicates": "Dubblerade anteckningar borttagna",
+    "duplicatedToMonth": "Dubblerade {{count}} anteckningar till nästa månad",
+    "duplicatedToDaysCount": "Dubblerade {{count}} anteckningar till {{days}} dag(ar)",
+    "duplicatedSelectedItems": "Dubblerade valda objekt till {{count}} dag(ar)",
+    "signInToSaveTasks": "Du måste vara inloggad för att spara uppgifter. Öppna kontomenyn och logga in igen.",
+    "unableToSaveTask": "Det gick inte att spara uppgift. Fel: {{error}}"
+  },
+  "dow": {
+    "sunday": "Söndag",
+    "monday": "Måndag",
+    "tuesday": "Tisdag",
+    "wednesday": "Onsdag",
+    "thursday": "Torsdag",
+    "friday": "Fredag",
+    "saturday": "Lördag",
+    "short": {
+      "sun": "Sön",
+      "mon": "Mån",
+      "tue": "Tis",
+      "wed": "Ons",
+      "thu": "Tor",
+      "fri": "Fre",
+      "sat": "Lör"
+    }
+  },
+  "noteCategories": {
+    "personal": "Personligt",
+    "work": "Arbete",
+    "spiritual": "Andligt",
+    "family": "Familj",
+    "health": "Hälsa",
+    "creative": "Kreativ",
+    "general": "Allmänt"
+  },
+  "moodScale": {
+    "1": "Väldigt Låg",
+    "2": "Låg",
+    "3": "Neutral",
+    "4": "Bra",
+    "5": "Utmärkt"
+  }
+}

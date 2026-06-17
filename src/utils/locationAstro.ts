@@ -4,8 +4,7 @@
  */
 
 import { ZodiacSign, PlanetPosition } from '../types/astrology';
-// import { NatalChart } from '../types/astrology';
-// import { AstroProfile } from '../types/astrology';
+
 
 // Hemisphere types
 export type Hemisphere = 'northern' | 'southern' | 'equatorial';

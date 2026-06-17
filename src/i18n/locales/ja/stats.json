@@ -1,0 +1,49 @@
+{
+  "best": "最高: {{count}}",
+  "title": "あなたの旅",
+  "close": "閉じる",
+  "reset": "統計をリセット",
+  "avgMood": "平均気分",
+  "dayStreak": "デイストリーク",
+  "totalNotes": "ノートの総数",
+  "wordsWritten": "書かれた言葉",
+  "achievements": "達成（{{earned}}/{{total}})",
+  "resetConfirm": "リセット",
+  "progressRatio": "{{current}} / {{target}}",
+  "monthlyTooltip": "{{month}} {{year}}: {{count}} ノート",
+  "notesByCategory": "カテゴリ別のノート",
+  "monthlyActivity": "月ごとの活動",
+  "mostActiveMonth": "最も活発な月は\u003cstrong\u003e{{month}}\u003c/strong\u003eで\u003cstrong\u003e{{count}}\u003c/strong\u003eノート",
+  "categories": {
+    "work": "仕事",
+    "family": "家族",
+    "health": "健康",
+    "general": "一般",
+    "personal": "個人",
+    "creative": "クリエイティブ",
+    "spiritual": "精神的"
+  },
+  "progressToCentury": "世紀クラブへの進捗",
+  "resetConfirmTitle": "統計をリセット",
+  "badges": {
+    "century": {
+      "name": "世紀クラブ"
+    },
+    "explorer": {
+      "name": "探検家"
+    },
+    "archivist": {
+      "name": "アーカイブ家"
+    },
+    "first-note": {
+      "name": "最初の言葉"
+    },
+    "week-streak": {
+      "name": "ウィークウォーリアー"
+    },
+    "month-streak": {
+      "name": "マンスマスター"
+    }
+  },
+  "resetConfirmDescription": "すべての統計をリセットしてもよろしいですか？ これは元に戻すことができません。"
+}

@@ -214,7 +214,7 @@ export const ElementTemple: React.FC<ElementTempleProps> = ({
             {isBalanced ? 'Balanced' : `${dominantElement?.name} Dominant`}
           </div>
           <div style={{
-            fontSize: '11px',
+            fontSize: '12px',
             color: 'rgba(255, 255, 255, 0.4)',
             marginTop: '4px',
           }}>
@@ -263,7 +263,7 @@ export const ElementTemple: React.FC<ElementTempleProps> = ({
             >
               <div style={{ fontSize: '20px', marginBottom: '4px' }}>{element.symbol}</div>
               <div style={{
-                fontSize: '11px',
+                fontSize: '12px',
                 textTransform: 'uppercase',
                 letterSpacing: '1px',
                 color: element.color,
@@ -280,7 +280,7 @@ export const ElementTemple: React.FC<ElementTempleProps> = ({
                 {element.count}
               </div>
               <div style={{
-                fontSize: '10px',
+                fontSize: '12px',
                 color: 'rgba(255, 255, 255, 0.4)',
               }}>
                 {element.percentage}%

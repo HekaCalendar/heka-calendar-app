@@ -1,0 +1,99 @@
+{
+  "title": "Prestatieën",
+  "streak": "Reeks",
+  "days": "Dagen",
+  "totalAchievements": "{{count}} prestaties",
+  "earned": "Verdiend",
+  "locked": "Vergrendeld",
+  "newAchievement": "Nieuwe Prestatie!",
+  "categories": {
+    "calendar": "Kalender Meester",
+    "journal": "Dagboekhouder",
+    "circle": "Cirkel Bouwer",
+    "coach": "Sterrenkijker",
+    "explorer": "Ontdekkingsreiziger"
+  },
+  "achievements": {
+    "firstStep": {
+      "name": "Eerste Stap",
+      "description": "Open de kalender voor de eerste keer"
+    },
+    "timeTraveler": {
+      "name": "Tijdreiziger",
+      "description": "Bekijk een datum meer dan 1 jaar weg"
+    },
+    "streak7": {
+      "name": "Week van Licht",
+      "description": "Gebruik de kalender voor 7 dagen op rij"
+    },
+    "streak30": {
+      "name": "Maand van Sterren",
+      "description": "Gebruik de kalender voor 30 dagen op rij"
+    },
+    "streak100": {
+      "name": "Eeuw van Wijsheid",
+      "description": "Gebruik de kalender voor 100 dagen op rij"
+    },
+    "journalFirst": {
+      "name": "Eerste Woorden",
+      "description": "Schrijf je eerste dagboekentry"
+    },
+    "journal10": {
+      "name": "Ontluikende Schrijver",
+      "description": "Schrijf 10 dagboekentries"
+    },
+    "journal50": {
+      "name": "Ervaren Schrijver",
+      "description": "Schrijf 50 dagboekentries"
+    },
+    "friendAdded": {
+      "name": "Eerste Verbond",
+      "description": "Voeg je eerste vriend toe"
+    },
+    "circle5": {
+      "name": "Groeiende Cirkel",
+      "description": "Heb 5 vrienden in je cirkel"
+    },
+    "aiAsked": {
+      "name": "Zoeker van Wijsheid",
+      "description": "Stel een vraag aan de AI coach"
+    },
+    "aiStreak7": {
+      "name": "Dagelijkse Begeleiding",
+      "description": "Raadpleeg de AI coach voor 7 dagen"
+    },
+    "allMoonPhases": {
+      "name": "Maanwaarnemer",
+      "description": "Bekijk alle 8 maanfases"
+    },
+    "allZodiac": {
+      "name": "Dodekans Ontdekkingsreiziger",
+      "description": "Bekijk alle 13 sterrenbeelden"
+    },
+    "printFirst": {
+      "name": "Eerste Print",
+      "description": "Print je eerste kalenderpagina"
+    }
+  },
+  "categoryLabels": {
+    "beginner": "Beginner",
+    "intermediate": "Gemiddeld",
+    "advanced": "Geavanceerd",
+    "master": "Meester",
+    "special": "Speciaal",
+    "explorer": "Ontdekkingsreiziger",
+    "discoverer": "Ontdekkingsreiziger",
+    "engager": "Engager"
+  },
+  "stats": {
+    "appOpens": "App Opens",
+    "dayStreak": "Dagelange reeks",
+    "hoursSpent": "Uren doorgebracht",
+    "featuresFound": "Kenmerken gevonden"
+  },
+  "all": "Alles",
+  "showHidden": "Toon verborgen",
+  "noAchievements": "Geen prestatieën gevonden in deze categorie",
+  "hiddenAchievement": "Verborgen Prestatie",
+  "secret": "GEHEIM"
+}

@@ -1,0 +1,126 @@
+{
+  "tutorial": {
+    "back": "Geri",
+    "skip": "Atla",
+    "enter": "HEKA'ya Gir",
+    "continue": "Devam Et",
+    "stepLabel": "Adım {{current}} / {{total}}",
+    "journeyTitle": "Senin Yolun",
+    "completeLabel": "Tamamlandı",
+    "actionWaiting": "Devam etmek için dokun",
+    "steps": {
+      "welcome": {
+        "title": "HEKA'ya Hoş Geldiniz",
+        "detail": "On üç ay. Her biri tam 28 gün. Ay, güneş, bahçe, enerji, arkadaşlar - sonunda ritme girdi.",
+        "action": "Yolunla Başla",
+        "instruction": "Bu tür bir takvimi hiç görmedin."
+      },
+      "tracker": {
+        "title": "Ritmini Takip Et",
+        "detail": "Ruh hali: Gerçek zamanlı emoji ile 1-10 kaydırıcı. Uyku: Süre ve kalite. Enerji: Fiziksel, zihinsel, duygusal, manevi. İçgörüler panosu zaman içindeki desenleri ortaya çıkarır. Kalenin hikayesini tutar.",
+        "action": "Devam Et",
+        "instruction": "Vücudun kalenin bir parçasıdır."
+      },
+      "the-grid": {
+        "title": "Izgara — On Üç Ay",
+        "detail": "Tam 28 gün olan on iki ay ve Ağustos ve Eylül arasındaki Hexa. Mart'ta 29. gün var. Her ay aynı gün başlar. Yıl üç eylemlere bölünmüştür — Kırmızıda Açılım, Yeşilde Çekirdek, Morda Kapanış. Tutarlı. Simetrik. Temiz.",
+        "action": "Devam etmek için herhangi bir güne dokunun",
+        "instruction": "Sayın. On üç. On iki değil."
+      },
+      "features": {
+        "title": "Silah Deposun",
+        "detail": "Baskı: Varsayılan Altın, Minimalist, Daireli hücreli Sacred Geometry, CRT çizgileri ile Cyberpunk, Doğal Organic Nature, Hiyeroqlifli Antik Mısır. Tümü ücretsiz. Yaşam ömrü. A4, A3, Letter. Yıldızlar: İsviçre Efemerisi doğum şemaları, saniyelik doğruluk. Günlük: AI içgörüsü ile dört mod. Çeviri: gerçek zamanlı mesajlaşma, HEKA vadesi dolacak sürelerle paylaşılan görevler. İstatistikler: sekiz seviyedeki 80+ başarı. Gizli başarılar keşfedilmeyi bekliyor.",
+        "action": "Devam etmek için",
+        "instruction": "Altı baskı teması. Doğum şematik altyapısı. Bir günlüğü. Arkadaşlar. İstatistikler."
+      },
+      "settings": {
+        "title": "Şunu Yap",
+        "detail": "Sivil Tarihler: Gregorian'ı asla bir toplantı kaçırmamanız için üst katman. Ay Aşamaları: Her hücrede İsviçre Efemerisi glifleri. Bayramlar: topluluk gözlemlenmeler. Pure Mod: tam ekran, dikkat dağıtıcısız, Yin-Yang karanlık/açık geçiş. Takvim SENİN zamanınızı nasıl gördüğünize uyar.",
+        "action": "Ayarları değiştirerek devam edin",
+        "instruction": "Üç geçiş. Pure Mod. Tam kontrol."
+      },
+      "ai-coach": {
+        "title": "HEKA AI — Gökyüzü Koçunuz",
+        "detail": "Yüzen cam orakül. Ay aşımalarını, geçişlerini, görevlerini, günlük duygularını, dizileri ve konumunuzu şiirsel, eylemcileştiren mesajlara dönüştürür. Söyleyiş şeklindeki kahramanla konuşur — Savaşçı, Çelebi, Sanatçı, Stratejist, Mistis, Föniks. 19 konuşmayı hatırlar. Senkronizasyonları algılar: sözlerinle gökyüzü aynı anda hizalanan anlar. İsteğe bağlı LLM artırımı ile hizli çevrimdışı geri dönüş. Bu bir sohbet botu değil. Bu bir orakül.",
+        "action": "Dev",
+        "instruction": "Gökyüzünü izler. Seni izler."
+      },
+      "complete": {
+        "title": "Hazırsınız",
+        "detail": "On üç ayın nasıl dolaştığını biliyorsunuz. Ayın nasıl okunacağını biliyorsunuz. Enerjiyi nasıl takip edeceğinizi, bayramlar üzerinde nasıl oy kullanacağınızı, güzel sayfaları nasıl yazdıracağınızı, yıldızlarla günlük yazmayı ve AI antrenörünüzle danışmayı biliyorsunuz. Diğer her şey merakınızı bekliyor.",
+        "action": "HEKA'ya Gir",
+        "instruction": "Kalen sizindir. Gökyüzü sizindir."
+      },
+      "day-cells": {
+        "title": "Her Hücre Canlı",
+        "detail": "İsviçre Efemerisi ay aydı. Altında sivil tarih. Bayram noktaları — topluluk tarafından düzenlenen. Not parçacıkları — senin sözlerin, ızgarada görünür. Bir seferde on üç ay. Bütün yıl, bir bakışta.",
+        "action": "Açılmasını istediğiniz güne dokunun",
+        "instruction": "Her gün bir hikaye anlatır."
+      },
+      "day-panel": {
+        "title": "Gün Açılıyor",
+        "detail": "Ay: tam Aydınlık, büyüyen veya küçülen, Ders Watı Course tespiti. Astroloji: gerçek zamanlı geçişler DOĞUM ŞEHİRİNİZE göre. Notlar: ruh hali, görev, günlüğe göre kategorilere ayrılmıştır. Görevler: vadesi dolacak süreler, hatırlatıcılar. Enerji: 19:30'dan sonra oy verin, topluluk nabzını görün. Bu bir takvim girişi değil. Bu bir portal.",
+        "action": "Gün panelini keşfedin ve devam edin",
+        "instruction": "Tek bir gün için komut merkeziniz."
+      },
+      "community": {
+        "title": "Kosmosu Düzenle",
+        "detail": "Yeni bayramlar önerin. On oy alır ve resmi hale gelir. Yaklaşan özelliklere oy verin - Planlanmış, Düşünülüyoruz, Devam Eden, Yayınlanan. Kalenin kullanıcıları tarafından geliştirildiği için kalen gelişir. Bu bir işbirliğidir.",
+        "action": "Devam Et",
+        "instruction": "Oy kullandığınızda kalen değişir."
+      },
+      "navigation": {
+        "title": "Zamanla Hareket Et",
+        "detail": "Oklar aylar arasında hareket eder. Bugün şimdiye geri döner. Arama doğal dil anlamına gelir — \"Hexa 15\" veya \"31 Ocak.\" Dikey veya yatay olarak genişletin ve daha fazla ayrıntı görün. Tüm yıl bir hareket uzaklığındayken.",
+        "action": "← veya → üzerine dokunun ile gezin",
+        "instruction": "Asla kaybolmadın."
+      },
+      "first-note": {
+        "title": "İlk İşaretinizi Yapın",
+        "detail": "Herhangi bir güne dokunun. Notlara kaydırın. Bir şey yazın - bir görev, bir ruh hali, bir anı. Bu, yıllar süren bir kroniklemeye dönüşebilecek ilk giriştir.",
+        "action": "Eğitimi tamamlamak için bir not yazın",
+        "instruction": "Kalen bir araç olduğu sürece sizinleşene kadar."
+      },
+      "celestial-guide": {
+        "title": "Gökyüzü Rehberi",
+        "detail": "Güneş Zamanları: canlı SVG halka, hava durumu, dört katlı doğruluk. Ay Aşama: Aydınlık, boş ay, ay yeni yılı geri sayım. Mevsimler: gerçek astronomik yarıçap izlemesi. Tarım: bugün ne ekeceğiniz, konumunuz ve ay aşımalarına göre. Dijital Saat: dört eşzamanlı canlı geri sayım. Planetary Hours: gerçek gün doğumü ve gün batımına dayalı gerçek Kalde saatleri. Bunları kaydırın. Her biri bir bilimsel alet.",
+        "action": "Gökyüzü kartlarını kaydırarak devam edin",
+        "instruction": "Altı kart. Tek bir gökyüzü."
+      }
+    },
+    "printThemes": {
+      "egypt": {
+        "name": "Mısır",
+        "desc": "Hiyeroglifler"
+      },
+      "sacred": {
+        "name": "Kutsal Geometri",
+        "desc": "Daireli hücreler"
+      },
+      "nature": {
+        "name": "Doğa",
+        "desc": "Bitkisel"
+      },
+      "default": {
+        "name": "Varsayılan",
+        "desc": "Kağıt ve altın"
+      },
+      "cyberpunk": {
+        "name": "Kiberpunk",
+        "desc": "Neon ışık"
+      },
+      "minimalist": {
+        "name": "Minimalist",
+        "desc": "İsvİççelik saflığı"
+      }
+    },
+    "previewAchievements": {
+      "nightOwl": "Gece Kargası",
+      "timeLord": "Zaman Efendisi",
+      "firstWords": "İlk Sözler",
+      "weekWarrior": "Hafta Savaşçısı",
+      "centuryClub": "Yüzyıl Kulübü",
+      "theChronicler": "Kronikçi"
+    }
+  }
+}

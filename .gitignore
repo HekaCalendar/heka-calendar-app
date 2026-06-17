@@ -15,11 +15,18 @@ tutorial*.png
 final-test.png
 test.png
 
+# Website assets (allow logos/images)
+!website/assets/images/*.png
+
 # Android Signing Keys (CRITICAL - Never commit these!)
 android/app/key.properties
+android/key.properties
 android/app/*.keystore
 android/app/*.jks
+android/*.keystore
+android/*.jks
 *.keystore
+*.keystore.backup.*
 *.jks
 
 # Environment variables
@@ -31,10 +38,12 @@ android/app/*.jks
 # Build outputs
 dist/
 dist2/
+dist3/
 android/app/build/
 ios/App/build/
 src-tauri/target/
 _apk_check/
+output/
 
 # Node modules
 node_modules/
@@ -49,3 +58,13 @@ node_modules/
 # OS
 .DS_Store
 Thumbs.db
+.aider*
+
+# Playwright
+playwright-report/
+test-results/
+blob-report/
+
+coverage/
+
+.env.server

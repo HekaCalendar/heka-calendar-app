@@ -1,0 +1,126 @@
+{
+  "tutorial": {
+    "back": "Späť",
+    "skip": "Preskočiť",
+    "enter": "Zadajte HEKA",
+    "continue": "Pokračovať",
+    "stepLabel": "Krok {{current}} z {{total}}",
+    "journeyTitle": "Tvoja cesta",
+    "completeLabel": "Dokončené",
+    "actionWaiting": "Ťuknite pre pokračovanie",
+    "steps": {
+      "welcome": {
+        "title": "Vitajte v HEKA",
+        "detail": "Trinásť mesiacov. Dvadsiaty osem dní každý. Mesiac, slniečko, záhrada, energia, priatelia — konečne v rytme.",
+        "action": "Začnite vašu cestu",
+        "instruction": "Nikdy ste nevideli takýto kalendár."
+      },
+      "tracker": {
+        "title": "Sleduj svoj rytmus",
+        "detail": "Nálada: posúvník 1-10 s reálnym emotikonom. Spánok: trvanie a kvalita. Energia: fyzická, mentálna, emocionálna, duchovná. Nástroj pre zistenia ukazuje vzorce na čas. Tvoje kalendár drží tvoj príbeh.",
+        "action": "Pokračuj",
+        "instruction": "Tvoje telo je súčasť kalendára."
+      },
+      "the-grid": {
+        "title": "Mriežka — Trinásť mesiacov",
+        "detail": "Dvanásť mesiacov presne 28 dní, plus Hexa medzi augustom a septembrom. Marec obsahuje 29. deň. Každý mesiac začína tým istým dňom. Rok dýcha v troch oblúkoch — Otváranie v červenom, Jadro v zelenom, Ukončenie v fialovom. Predvídateľné. Symetrické. Čisté.",
+        "action": "Ťuknite na akýkoľvek deň pre pokračovanie",
+        "instruction": "Počítajte ich. Trinásť. Nie dvanásť."
+      },
+      "features": {
+        "title": "Vaše zbrane",
+        "detail": "Tlač: Predvolené Zlaté, Minimalistické, Sváteční geometria s koláčovými bunkami, Cyberpunk s CRT čiarkami, Prírodné有机, Staroveké Egypt s hieroglifmi. Všetko zadarmo. Naživoto. A4, A3, List. Hviezdy: Švajčiarská ephemerida narodinných grafov, presnosť v arc-sekundách. Denník: štyri režimy s AI generáciou prehľadov. Kruh: živé správy, zdieľané úlohy s HEKA dátummi splatnosti. Štatistiky: viac ako 80 úspechov v ôsmich úrovniach. Tajné úspechy čakajú na objavenie.",
+        "action": "Pokračujte",
+        "instruction": "Šesť tlačových tém. Motor narodinného grafu. Denník. Priatelia. Štatistiky."
+      },
+      "settings": {
+        "title": "Urob to svojím",
+        "detail": "Občianske dátumy: prekrytie Gregoriánskeho kalendára, takže nikdy nezmeškate schôdzu. Fáza mesiaca: Švajčiarske ephemeridné symboly na každej bunke. sviatky: komunitné pozorovania. Čistý režim: celobrazový, bez rozptýlenia, prepínač tien a svetla Yin-Yang. Kalendár sa prispôsobí tomu, ako VY vidíte čas.",
+        "action": "Prepojte akékoľvek nastavenie a pokračujte",
+        "instruction": "Tri prepínače. Čistý režim. Komplétny kontrola."
+      },
+      "ai-coach": {
+        "title": "HEKA AI - Váš nebeský trenér",
+        "detail": "Plávajúci sklenený orakulum. Zdôvodňuje fázu mesiaca, vaše prechody, úlohy, náladovú náladu denníka, výtržnosti a polohu do poetických, konštruktívnych správ. Hovorí v Vašej archet",
+        "action": "Pokračuj",
+        "instruction": "Sleduje nebo. Sleduje vás."
+      },
+      "complete": {
+        "title": "Si pripravený",
+        "detail": "Vieš, ako navigovať cez trinásty mesiac. Vieš, ako čítať mesiac. Vieš, ako sledovať svoju energiu, hlasovať o sviatkach, tlačiť nádherné stránky, denníkovať s hviezdami a konzultovať sa s AI trenérom. všetko ostatné čaká na tvoju zvedavosť.",
+        "action": "Vstup do HEKA",
+        "instruction": "Kalendár je tvoje. Nebo je tvoje."
+      },
+      "day-cells": {
+        "title": "Každá bunka je živá",
+        "detail": "Fáza mesiaca podľa Švajčiarskej ephemeridy s emoji. Okrem toho dátum podľa občianskeho kalendára. Špeciálne body pre sviatky - komunitou kurované. Poznámky - vaše slová, viditeľné na plátne. Celý rok naraz. Celý rok na jeden pohľad.",
+        "action": "Ťuknutím na akúkoľvek deň ho otvoríte",
+        "instruction": "Každý deň vypráví príbeh"
+      },
+      "day-panel": {
+        "title": "Deň sa otvorí",
+        "detail": "Mesiac: presná osvetlenie, rast alebo úbytek, detekcia Mesiac bez cesty. Astrológia: skutočné prechodové proti Vášmu narodinnému grafu. Poznámky: zaradené podľa nálad, úloh, denníka. Úlohy: dátumy splatnosti, pripomienky. Energia: hlasujte po 19:30, zobrazte pulzáciu komunity. Toto nie je záznam z kalendára. Toto je portál.",
+        "action": "Preskúmajte panel dňa a pokračujte",
+        "instruction": "Vaša centralá kontrola pre jeden deň."
+      },
+      "community": {
+        "title": "Tvaruj vesmír",
+        "detail": "Navrhni nové sviatky. Desať hlasov a stane sa to oficiálnym. Hlasuj o budúcich funkciách — Plánované, Zvažované, Prebiehajúce, Uverejnené. Kalendár sa vyvíja, pretože jeho používatelia ho vyvíjajú. Toto je spolupráca.",
+        "action": "Pokračuj",
+        "instruction": "Tvoje hlasovanie mení kalendár."
+      },
+      "navigation": {
+        "title": "Presúvanie sa časom",
+        "detail": "Šípky presúvajú medzi mesiacmi. Dnes sa vráti na teraz. Vyhľadávanie rozumie prirodzenému jazyku — \"Hexa 15\" alebo \"1. január\". Rozbaliť horizontálne alebo vertikálne pre viac detailov. Celý rok je len jednym gestom ďaleko.",
+        "action": "Ťuknite na ← alebo → pre navigáciu",
+        "instruction": "Nikdy nie ste stratení."
+      },
+      "first-note": {
+        "title": "Urob svoj prvý záznam",
+        "detail": "Ťukni na akýkoľvek deň. Posuň sa do Poznámok. Napíš niečo — úlohu, náladu, spomienky. Toto je prvý záznam v tom, čo by mohlo stať sa dlhoročným chronickým záznamom.",
+        "action": "Napíš poznámku na dokončenie výučného kurzu",
+        "instruction": "Kalendár je len nástrojom, kým ho nerobíš svojím."
+      },
+      "celestial-guide": {
+        "title": "Nebeský príručka",
+        "detail": "Časy Slnka: živý SVG prstenec, počasie, štvrťové presnosť. Fáza mesiaca: osvetlenie, mesiac bez cesty, odpočítavanie na mesiačný nový rok. Sezóny: skutočné astronomické slnečné slnisko sledovanie. Polnohospodárstvo: čo dnes zasadiť podľa Vašej polohy a fáza mesiaca. Digitálny čas: štyri súčasné živé odpočítavania. Planétové hodiny: skutočné Chaldejské hodiny založené na skutočnom východe a západe slnka. Prejdite sa cez ne. Každá je vedeckým nástrojom.",
+        "action": "Prejdite cez nebeské karty a pokračujte",
+        "instruction": "Šesť kariet. Jedno nebo."
+      }
+    },
+    "printThemes": {
+      "egypt": {
+        "name": "Egypt",
+        "desc": "Hieroglyfy"
+      },
+      "sacred": {
+        "name": "Sväté geo",
+        "desc": "Kruhové bunky"
+      },
+      "nature": {
+        "name": "Príroda",
+        "desc": "Botanické"
+      },
+      "default": {
+        "name": "Predvolené",
+        "desc": "Pergamen a zlato"
+      },
+      "cyberpunk": {
+        "name": "Cyberpunk",
+        "desc": "Neónové žiarenie"
+      },
+      "minimalist": {
+        "name": "Minimalistické",
+        "desc": "Švajčiarska čistota"
+      }
+    },
+    "previewAchievements": {
+      "nightOwl": "Sova",
+      "timeLord": "Pán času",
+      "firstWords": "Prvé slová",
+      "weekWarrior": "Týždeňový bojovník",
+      "centuryClub": "Storočia klub",
+      "theChronicler": "Kroníka"
+    }
+  }
+}

@@ -7,6 +7,7 @@ import { useState, useMemo, useCallback } from 'react';
 import { useSelector } from 'react-redux';
 import type { RootState } from '../store';
 import type { DiaryEntry } from '../oracle/diaryTypes';
+import i18n from '../i18n';
 import '../styles/diary-search.css';
 import '../styles/diary-search.landscape.css';
 
@@ -49,7 +50,8 @@ export const DiarySearch: React.FC<DiarySearchProps> = ({
     if (typeof theme === 'string') return theme;
     if (typeof theme === 'object' && theme !== null) {
       // Extract theme from object if passed incorrectly
-      return (theme as any).id || (theme as any).theme || 'night';
+      const themeObj = theme as { id?: string; theme?: string };
+      return themeObj.id || themeObj.theme || 'night';
     }
     return 'night';
   }, [theme]);
@@ -91,10 +93,14 @@ export const DiarySearch: React.FC<DiarySearchProps> = ({
         const category = result.type === 'calendar'
           ? (result.entry as CalendarNoteEntry).category.toLowerCase()
           : '';
-        return searchTerms.some(term => 
-          content.includes(term) || 
+        const tags = result.type === 'diary'
+          ? (result.entry as DiaryEntry).tags?.join(' ').toLowerCase() || ''
+          : '';
+        return searchTerms.some(term =>
+          content.includes(term) ||
           insightText.includes(term) ||
-          category.includes(term)
+          category.includes(term) ||
+          tags.includes(term)
         );
       });
     }
@@ -186,13 +192,13 @@ export const DiarySearch: React.FC<DiarySearchProps> = ({
             <input
               type="text"
               className="diary-search-input"
-              placeholder="Search Oracle entries & calendar notes..."
+              placeholder={i18n.t('searchPlaceholder', 'Search dates, notes, holidays...')}
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               autoFocus
             />
             {query && (
-              <button className="diary-search-clear" onClick={() => setQuery('')}>
+              <button className="diary-search-clear" onClick={() => setQuery('')} aria-label={i18n.t('clear', { ns: 'common' })}>
                 ×
               </button>
             )}
@@ -206,7 +212,7 @@ export const DiarySearch: React.FC<DiarySearchProps> = ({
         <div className="diary-search-filters">
           <div className="diary-search-filter-group">
             <label>Source:</label>
-            <select value={filter} onChange={(e) => setFilter(e.target.value as any)}>
+            <select value={filter} onChange={(e) => setFilter(e.target.value as typeof filter)}>
               <option value="all">All sources</option>
               <option value="diary">✨ Oracle Diary</option>
               <option value="calendar">📅 Calendar Notes</option>
@@ -215,7 +221,7 @@ export const DiarySearch: React.FC<DiarySearchProps> = ({
           
           <div className="diary-search-filter-group">
             <label>Time:</label>
-            <select value={dateRange} onChange={(e) => setDateRange(e.target.value as any)}>
+            <select value={dateRange} onChange={(e) => setDateRange(e.target.value as typeof dateRange)}>
               <option value="all">All time</option>
               <option value="week">Last week</option>
               <option value="month">Last month</option>
@@ -256,12 +262,12 @@ export const DiarySearch: React.FC<DiarySearchProps> = ({
                         {result.type === 'diary' ? '✨ Oracle' : '📅 Calendar'}
                       </span>
                       <span className="diary-search-result-date">
-                        {new Date(result.entry.timestamp).toLocaleDateString('en-US', {
+                        {new Intl.DateTimeFormat(i18n.language || 'en', {
                           weekday: 'short',
                           month: 'short',
                           day: 'numeric',
                           year: 'numeric',
-                        })}
+                        }).format(new Date(result.entry.timestamp))}
                       </span>
                       {result.type === 'diary' && (result.entry as DiaryEntry).insight?.userRating === 'resonated' && (
                         <span className="diary-search-result-badge resonated">💫</span>
@@ -299,11 +305,11 @@ export const DiarySearch: React.FC<DiarySearchProps> = ({
                     <div className="diary-search-result-meta">
                       <span>{result.entry.content.split(/\s+/).length} words</span>
                       <span>•</span>
-                      <span>{new Date(result.entry.timestamp).toLocaleTimeString('en-US', {
+                      <span>{new Intl.DateTimeFormat(i18n.language || 'en', {
                         hour: 'numeric',
                         minute: '2-digit',
                         hour12: true,
-                      })}</span>
+                      }).format(new Date(result.entry.timestamp))}</span>
                     </div>
                   </div>
                 ))}

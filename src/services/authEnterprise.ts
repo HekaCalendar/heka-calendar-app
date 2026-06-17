@@ -18,7 +18,9 @@ import {
   type User,
   type UserCredential
 } from 'firebase/auth';
+import { getErrorMessage, getErrorCode } from '../utils/errorUtils';
 import { getApp } from 'firebase/app';
+import { deleteUserPersonalData } from './userDataDeletion';
 
 // Security configuration
 const SECURITY_CONFIG = {
@@ -150,7 +152,7 @@ class EnterpriseAuthService {
     }
 
     // In production, send to server
-    console.log('[AUDIT]', logEntry.action, entry.success ? '✓' : '✗', entry.details || '');
+    // Audit logging: details redacted in production
   }
 
   getAuditLog(): AuditLogEntry[] {
@@ -234,12 +236,12 @@ class EnterpriseAuthService {
 
       this.startSession();
       return userCredential;
-    } catch (error: any) {
+    } catch (error) {
       this.logAudit({
         action: 'SIGNUP',
         email,
         success: false,
-        details: error.message
+        details: getErrorMessage(error)
       });
       throw this.formatError(error);
     }
@@ -266,16 +268,16 @@ class EnterpriseAuthService {
 
       this.startSession();
       return userCredential;
-    } catch (error: any) {
+    } catch (error) {
       this.recordFailedAttempt(email);
-      
+
       this.logAudit({
         action: 'LOGIN',
         email,
         success: false,
-        details: error.message
+        details: getErrorMessage(error)
       });
-      
+
       throw this.formatError(error);
     }
   }
@@ -298,14 +300,14 @@ class EnterpriseAuthService {
       });
       
       return true;
-    } catch (error: any) {
+    } catch (error) {
       this.logAudit({
         action: 'REAUTHENTICATE',
         userId: user.uid,
         success: false,
-        details: error.message
+        details: getErrorMessage(error)
       });
-      throw new Error('Incorrect password');
+      throw new Error('Incorrect password', { cause: error });
     }
   }
 
@@ -336,12 +338,12 @@ class EnterpriseAuthService {
         userId: user.uid,
         success: true
       });
-    } catch (error: any) {
+    } catch (error) {
       this.logAudit({
         action: 'PASSWORD_CHANGE',
         userId: user.uid,
         success: false,
-        details: error.message
+        details: getErrorMessage(error)
       });
       throw this.formatError(error);
     }
@@ -361,24 +363,38 @@ class EnterpriseAuthService {
     await this.reAuthenticate(password);
 
     try {
+      // Delete personal data before removing the auth account so the user
+      // record can still be referenced during cleanup.
+      const deletionResult = await deleteUserPersonalData();
+      if (!deletionResult.success) {
+        console.error('[EnterpriseAuth] Data deletion warnings:', deletionResult.errors);
+      }
+
       await deleteUser(user);
-      
+
+      // Clear remaining local state after auth deletion.
+      if (typeof window !== 'undefined') {
+        localStorage.clear();
+        sessionStorage.clear();
+      }
+
       this.logAudit({
         action: 'ACCOUNT_DELETE',
         userId: user.uid,
-        success: true
+        success: true,
+        details: `Cloud items removed: ${deletionResult.cloudItemsDeleted}`
       });
-      
+
       this.session = null;
       if (this.sessionTimeoutId) {
         clearTimeout(this.sessionTimeoutId);
       }
-    } catch (error: any) {
+    } catch (error) {
       this.logAudit({
         action: 'ACCOUNT_DELETE',
         userId: user.uid,
         success: false,
-        details: error.message
+        details: getErrorMessage(error)
       });
       throw this.formatError(error);
     }
@@ -404,12 +420,12 @@ class EnterpriseAuthService {
       if (this.sessionTimeoutId) {
         clearTimeout(this.sessionTimeoutId);
       }
-    } catch (error: any) {
+    } catch (error) {
       this.logAudit({
         action: 'LOGOUT',
         userId: user?.uid,
         success: false,
-        details: error.message
+        details: getErrorMessage(error)
       });
       throw this.formatError(error);
     }
@@ -428,12 +444,12 @@ class EnterpriseAuthService {
         email,
         success: true
       });
-    } catch (error: any) {
+    } catch (error) {
       this.logAudit({
         action: 'PASSWORD_RESET_REQUEST',
         email,
         success: false,
-        details: error.message
+        details: getErrorMessage(error)
       });
       throw this.formatError(error);
     }
@@ -469,7 +485,7 @@ class EnterpriseAuthService {
   }
 
   // Error formatting
-  private formatError(error: any): Error {
+  private formatError(error: unknown): Error {
     const errorMessages: Record<string, string> = {
       'auth/invalid-email': 'Invalid email address format',
       'auth/user-disabled': 'This account has been disabled',
@@ -483,7 +499,8 @@ class EnterpriseAuthService {
       'auth/requires-recent-login': 'Please sign in again to continue',
     };
 
-    const message = errorMessages[error.code] || error.message || 'An unexpected error occurred';
+    const code = getErrorCode(error);
+    const message = (code && errorMessages[code]) || getErrorMessage(error) || 'An unexpected error occurred';
     return new Error(message);
   }
 }

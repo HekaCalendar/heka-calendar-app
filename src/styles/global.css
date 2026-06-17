@@ -31,6 +31,15 @@ noscript {
   background: #0c0c0f;
 }
 
+/* ==========================================================================
+   Accessibility: Restore focus indicators globally
+   Overrides any component-level outline:none removals
+   ========================================================================== */
+:focus-visible {
+  outline: 2px solid var(--color-gold, #c9a227) !important;
+  outline-offset: 2px !important;
+}
+
 :root {
   /* Core Color System - Sophisticated Dark Theme */
   --color-bg: #070708;
@@ -60,9 +69,9 @@ noscript {
   
   /* Semantic Colors */
   --color-text: #f8f7f5;
-  --color-text-secondary: #a1a1aa;
-  --color-text-muted: #71717a;
-  --color-text-subtle: #52525b;
+  --color-text-secondary: #c4c4cc;
+  --color-text-muted: #a1a1aa;
+  --color-text-subtle: #86868f;
   
   --color-border: rgba(255, 255, 255, 0.08);
   --color-border-hover: rgba(212, 175, 55, 0.3);
@@ -81,8 +90,8 @@ noscript {
   --font-mono: 'JetBrains Mono', ui-monospace, monospace;
   
   /* Font Sizes */
-  --text-xs: 0.65rem;
-  --text-sm: 0.8rem;
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
   --text-base: 0.95rem;
   --text-lg: 1.1rem;
   --text-xl: 1.35rem;
@@ -220,6 +229,267 @@ optgroup {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  position: relative;
+}
+
+/* ==========================================================================
+   Sacred Field — Living Geometry Background
+   ========================================================================== */
+
+/* Global focus-visible ring for keyboard accessibility */
+*:focus-visible {
+  outline: 2px solid var(--color-primary, var(--sacred-primary, #d4af37));
+  outline-offset: 2px;
+}
+
+/* Theme-responsive sacred color */
+:root,
+[data-theme="egyptian-gold"]   { --sacred-primary: #d4af37; }
+[data-theme="cyberpunk-neon"]  { --sacred-primary: #ff00ff; }
+[data-theme="nordic-frost"]    { --sacred-primary: #58a6ff; }
+[data-theme="solar-flare"]     { --sacred-primary: #ff6b35; }
+[data-theme="void-walker"]     { --sacred-primary: #b8a1e0; }
+[data-theme="nature-spirit"]   { --sacred-primary: #7cb342; }
+
+/* Sacred Field — massive viewport-filling geometry tapestry */
+.sacred-field {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+  /* Layer promotion + layout containment for GPU compositing on low-end devices */
+  transform: translateZ(0);
+  contain: layout paint;
+}
+
+/* All background SVGs — oversized so only centre is visible, no edges */
+.sacred-field > svg,
+.sacred-field__svg {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  /* 100vmax still covers the viewport with safe margin during slow rotations
+     while cutting GPU memory vs the previous 180vmax. */
+  width: 100vmax;
+  height: 100vmax;
+  transform: translate(-50%, -50%);
+  /* CRITICAL: Prevent sacred geometry SVG from capturing touch events.
+     Even with pointer-events:none on the parent container, SVG children
+     with fills can be hit-test targets on Android WebView. */
+  pointer-events: none !important;
+  will-change: transform;
+  backface-visibility: hidden;
+  /* Static opacity keeps the background on its own composited layer
+     without paying for an opacity animation on every frame. */
+  opacity: 0.45;
+}
+
+/* All sacred geometry SVGs — header and background variants */
+.sacred-geometry--header,
+.sacred-geometry--background {
+  pointer-events: none !important;
+}
+
+/* Very slow cosmic drift — full rotation in 400s (nearly imperceptible) */
+.sacred-field__grid,
+.sacred-geometry__group {
+  transform-origin: 400px 400px;
+  animation: sacredDrift 400s linear infinite;
+  will-change: transform;
+  backface-visibility: hidden;
+}
+
+@keyframes sacredDrift {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+/* ─── Unique animations per background pattern ─── */
+
+/* Metatron's Lattice — structured, geometric, steady clockwise */
+.sacred-field[data-pattern="metatrons-lattice"] .sacred-geometry__group {
+  transform-origin: 400px 400px;
+  animation: sacredDriftMetatron 350s linear infinite;
+}
+
+/* Sri Yantra Mandala — meditative, very slow counter-clockwise */
+.sacred-field[data-pattern="sri-yantra-mandala"] .sacred-geometry__group {
+  transform-origin: 400px 400px;
+  animation: sacredDriftYantra 500s linear infinite reverse;
+}
+
+/* Torus Field — dynamic energy, faster clockwise */
+.sacred-field[data-pattern="torus-field"] .sacred-geometry__group {
+  transform-origin: 400px 400px;
+  animation: sacredDriftTorus 280s linear infinite;
+}
+
+/* Tree of Life — slow, rooted, steady clockwise */
+.sacred-field[data-pattern="tree-of-life"] .sacred-geometry__group {
+  transform-origin: 400px 400px;
+  animation: sacredDriftTree 450s linear infinite;
+}
+
+/* Vesica Wave — flowing, counter-clockwise drift */
+.sacred-field[data-pattern="vesica-wave"] .sacred-geometry__group {
+  transform-origin: 400px 400px;
+  animation: sacredDriftWave 320s linear infinite reverse;
+}
+
+/* Phyllotaxis Field — organic, golden-ratio, very slow clockwise */
+.sacred-field[data-pattern="phyllotaxis-field"] .sacred-geometry__group {
+  transform-origin: 400px 400px;
+  animation: sacredDriftPhyllotaxis 360s linear infinite;
+}
+
+@keyframes sacredDriftMetatron {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+@keyframes sacredDriftYantra {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+@keyframes sacredDriftTorus {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+@keyframes sacredDriftTree {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+@keyframes sacredDriftWave {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+@keyframes sacredDriftPhyllotaxis {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+/* Respect reduced motion — static faint geometry */
+@media (prefers-reduced-motion: reduce) {
+  .sacred-field__grid,
+  .sacred-field,
+  .sacred-field > svg,
+  .sacred-geometry__group {
+    animation: none !important;
+  }
+  .sacred-field { opacity: 0.25; }
+  .sacred-field__svg { opacity: 0.25; }
+}
+
+/* Header symbol sizing tokens */
+:root {
+  --header-symbol-size: 540px;
+  --header-symbol-half: 270px;
+}
+
+@media (max-width: 640px) {
+  :root {
+    --header-symbol-size: 320px;
+    --header-symbol-half: 160px;
+  }
+}
+
+/* Flower of Life behind header — positioned just above the title */
+.app-header--custom-geo::before {
+  display: none !important;
+}
+
+.app-header::before {
+  content: '';
+  position: absolute;
+  top: -130px;
+  left: 50%;
+  width: var(--header-symbol-size);
+  height: var(--header-symbol-size);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Cdefs%3E%3ClinearGradient id='folGrad' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%23d4af37;stop-opacity:0.15'/%3E%3Cstop offset='50%25' style='stop-color:%23d4af37;stop-opacity:0.08'/%3E%3Cstop offset='100%25' style='stop-color:%23d4af37;stop-opacity:0.15'/%3E%3C/linearGradient%3E%3C/defs%3E%3Cg fill='none' stroke='url(%23folGrad)' stroke-width='0.8'%3E%3Ccircle cx='100' cy='100' r='30'/%3E%3Ccircle cx='100' cy='70' r='30'/%3E%3Ccircle cx='100' cy='130' r='30'/%3E%3Ccircle cx='74' cy='85' r='30'/%3E%3Ccircle cx='126' cy='85' r='30'/%3E%3Ccircle cx='74' cy='115' r='30'/%3E%3Ccircle cx='126' cy='115' r='30'/%3E%3Ccircle cx='100' cy='40' r='30'/%3E%3Ccircle cx='100' cy='160' r='30'/%3E%3Ccircle cx='48' cy='70' r='30'/%3E%3Ccircle cx='152' cy='70' r='30'/%3E%3Ccircle cx='48' cy='130' r='30'/%3E%3Ccircle cx='152' cy='130' r='30'/%3E%3Ccircle cx='48' cy='100' r='30'/%3E%3Ccircle cx='152' cy='100' r='30'/%3E%3C/g%3E%3C/svg%3E");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  opacity: 0.5;
+  pointer-events: none;
+  transform: translate3d(-50%, 80px, 0);
+  animation: headerFigure8SpinBefore 16s linear infinite;
+  will-change: transform;
+  backface-visibility: hidden;
+}
+
+@keyframes folRotate {
+  from { rotate: 0deg; }
+  to   { rotate: 360deg; }
+}
+
+/* Figure-8 orbital drift + axial spin for header symbols — transform-only for GPU */
+
+/* Horizontal figure-8 in the header area */
+@keyframes headerFigure8 {
+  0%    { transform: translate3d(-50%, 80px, 0); }
+  12.5% { transform: translate3d(calc(25vw - 50%), -40px, 0); }
+  25%   { transform: translate3d(calc(50vw - 100%), 80px, 0); }
+  37.5% { transform: translate3d(calc(25vw - 50%), 160px, 0); }
+  50%   { transform: translate3d(-50%, 80px, 0); }
+  62.5% { transform: translate3d(calc(-25vw - 50%), -40px, 0); }
+  75%   { transform: translate3d(-50vw, 80px, 0); }
+  87.5% { transform: translate3d(calc(-25vw - 50%), 160px, 0); }
+  100%  { transform: translate3d(-50%, 80px, 0); }
+}
+
+/* Independent axial spin for the inner symbol */
+@keyframes headerSpin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+/* Combined path + spin for ::before pseudo-element — transform-only */
+@keyframes headerFigure8SpinBefore {
+  0%    { transform: translate3d(-50%, 80px, 0) rotate(0deg); }
+  12.5% { transform: translate3d(calc(25vw - 50%), -40px, 0) rotate(90deg); }
+  25%   { transform: translate3d(calc(50vw - 100%), 80px, 0) rotate(180deg); }
+  37.5% { transform: translate3d(calc(25vw - 50%), 160px, 0) rotate(270deg); }
+  50%   { transform: translate3d(-50%, 80px, 0) rotate(360deg); }
+  62.5% { transform: translate3d(calc(-25vw - 50%), -40px, 0) rotate(450deg); }
+  75%   { transform: translate3d(-50vw, 80px, 0) rotate(540deg); }
+  87.5% { transform: translate3d(calc(-25vw - 50%), 160px, 0) rotate(630deg); }
+  100%  { transform: translate3d(-50%, 80px, 0) rotate(720deg); }
+}
+
+
+
+/* Sacred Header — for non-default geometry patterns */
+.sacred-header {
+  position: absolute;
+  top: -130px;
+  left: 0;
+  width: 100%;
+  height: 750px;
+  pointer-events: none;
+  z-index: 0;
+  contain: layout paint;
+}
+
+.sacred-header__motion {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  width: var(--header-symbol-size);
+  height: var(--header-symbol-size);
+  opacity: 0.5;
+  transform: translate3d(-50%, 80px, 0);
+  animation: headerFigure8 16s linear infinite;
+  will-change: transform;
+  backface-visibility: hidden;
+}
+
+.sacred-header__motion > svg {
+  width: 100%;
+  height: 100%;
+  animation: headerSpin 20s linear infinite;
+  will-change: transform;
+  backface-visibility: hidden;
 }
 
 /* ==========================================================================
@@ -231,7 +501,7 @@ optgroup {
   justify-content: flex-end;
   padding: 12px var(--space-6) 10px;
   margin-bottom: 0;
-  margin-top: env(safe-area-inset-top, 7px);
+  margin-top: calc(env(safe-area-inset-top, 7px) + 6px);
   border-bottom: 1px solid rgba(255, 255, 255, 0.05);
   position: relative;
   z-index: 10;
@@ -241,7 +511,7 @@ optgroup {
   .app-top-bar {
     justify-content: center;
     padding: 10px var(--space-4) 8px;
-    margin-top: env(safe-area-inset-top, 5px);
+    margin-top: calc(env(safe-area-inset-top, 5px) + 6px);
   }
 }
 
@@ -253,30 +523,6 @@ optgroup {
   text-align: center;
   margin-bottom: var(--space-8);
   position: relative;
-}
-
-/* Flower of Life behind header - positioned just above sign in */
-.app-header::before {
-  content: '';
-  position: absolute;
-  top: -130px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 300px;
-  height: 300px;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Cdefs%3E%3ClinearGradient id='folGrad' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%23d4af37;stop-opacity:0.15'/%3E%3Cstop offset='50%25' style='stop-color:%23d4af37;stop-opacity:0.08'/%3E%3Cstop offset='100%25' style='stop-color:%23d4af37;stop-opacity:0.15'/%3E%3C/linearGradient%3E%3C/defs%3E%3Cg fill='none' stroke='url(%23folGrad)' stroke-width='0.8'%3E%3Ccircle cx='100' cy='100' r='30'/%3E%3Ccircle cx='100' cy='70' r='30'/%3E%3Ccircle cx='100' cy='130' r='30'/%3E%3Ccircle cx='74' cy='85' r='30'/%3E%3Ccircle cx='126' cy='85' r='30'/%3E%3Ccircle cx='74' cy='115' r='30'/%3E%3Ccircle cx='126' cy='115' r='30'/%3E%3Ccircle cx='100' cy='40' r='30'/%3E%3Ccircle cx='100' cy='160' r='30'/%3E%3Ccircle cx='48' cy='70' r='30'/%3E%3Ccircle cx='152' cy='70' r='30'/%3E%3Ccircle cx='48' cy='130' r='30'/%3E%3Ccircle cx='152' cy='130' r='30'/%3E%3Ccircle cx='48' cy='100' r='30'/%3E%3Ccircle cx='152' cy='100' r='30'/%3E%3C/g%3E%3C/svg%3E");
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: center;
-  opacity: 0.5;
-  pointer-events: none;
-  z-index: -1;
-  animation: folPulse 8s ease-in-out infinite;
-}
-
-@keyframes folPulse {
-  0%, 100% { opacity: 0.35; transform: translateX(-50%) scale(1); }
-  50% { opacity: 0.5; transform: translateX(-50%) scale(1.02); }
 }
 
 /* Line above heading - sits at the very top of header */
@@ -570,8 +816,8 @@ optgroup {
 }
 
 .settings-modal__close {
-  width: 32px;
-  height: 32px;
+  width: 48px;
+  height: 48px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -701,6 +947,58 @@ optgroup {
 }
 
 .error-banner button:hover {
+  opacity: 1;
+}
+
+/* ==========================================================================
+   Warning Banner (Exact Alarm / Battery Optimization)
+   ========================================================================== */
+
+.warning-banner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: linear-gradient(90deg, rgba(245, 158, 11, 0.12) 0%, rgba(245, 158, 11, 0.05) 100%);
+  border: 1px solid rgba(245, 158, 11, 0.35);
+  border-radius: var(--radius-md);
+  padding: var(--space-3) var(--space-4);
+  margin-bottom: var(--space-5);
+  color: #f59e0b;
+  font-size: var(--text-sm);
+}
+
+.warning-banner__action {
+  font-size: var(--text-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-weight: 600;
+  color: #f59e0b;
+  background: rgba(245, 158, 11, 0.15);
+  border: 1px solid rgba(245, 158, 11, 0.3);
+  border-radius: var(--radius-sm);
+  padding: 4px 10px;
+  cursor: pointer;
+  transition: background var(--transition-fast), opacity var(--transition-fast);
+}
+
+.warning-banner__action:hover {
+  background: rgba(245, 158, 11, 0.25);
+}
+
+.warning-banner__dismiss {
+  font-size: var(--text-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-weight: 600;
+  color: rgba(245, 158, 11, 0.7);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  opacity: 0.7;
+  transition: opacity var(--transition-fast);
+}
+
+.warning-banner__dismiss:hover {
   opacity: 1;
 }
 
@@ -1039,6 +1337,84 @@ optgroup {
   box-shadow: 0 0 15px rgba(212, 175, 55, 0.2);
 }
 
+.btn--vote {
+  background: linear-gradient(135deg, rgba(139, 92, 246, 0.22) 0%, rgba(124, 58, 237, 0.14) 50%, rgba(139, 92, 246, 0.18) 100%);
+  border: 1px solid rgba(167, 139, 250, 0.45);
+  border-left: 2px solid rgba(192, 169, 255, 0.7);
+  color: #f0e6ff;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-shadow: 0 0 10px rgba(167, 139, 250, 0.35);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.08),
+    0 0 0 1px rgba(139, 92, 246, 0.12),
+    0 2px 8px rgba(0, 0, 0, 0.25);
+}
+
+.btn--vote .vote-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  color: #d8c4ff;
+  filter: drop-shadow(0 0 4px rgba(167, 139, 250, 0.55));
+}
+
+.btn--vote .vote-icon svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* Live indicator pulse dot */
+.btn--vote .vote-pulse {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  width: 6px;
+  height: 6px;
+  background: #c4a8ff;
+  border-radius: 50%;
+  box-shadow: 0 0 6px 1px rgba(196, 168, 255, 0.85);
+  animation: votePulse 2.5s ease-in-out infinite;
+  z-index: 2;
+}
+
+.btn--vote:hover {
+  border-color: rgba(192, 169, 255, 0.7);
+  background: linear-gradient(135deg, rgba(139, 92, 246, 0.32) 0%, rgba(124, 58, 237, 0.22) 50%, rgba(139, 92, 246, 0.28) 100%);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.12),
+    0 0 0 1px rgba(139, 92, 246, 0.2),
+    0 0 24px rgba(139, 92, 246, 0.25),
+    0 4px 12px rgba(0, 0, 0, 0.3);
+  transform: translateY(-1px);
+}
+
+.btn--vote:hover .vote-icon {
+  color: #ede4ff;
+  filter: drop-shadow(0 0 8px rgba(196, 168, 255, 0.9));
+}
+
+.btn--vote:hover .vote-pulse {
+  background: #ddd0ff;
+  box-shadow: 0 0 8px 2px rgba(196, 168, 255, 1);
+}
+
+.btn--vote:active {
+  transform: translateY(0);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.05),
+    0 0 0 1px rgba(139, 92, 246, 0.15),
+    0 1px 4px rgba(0, 0, 0, 0.3);
+}
+
+@keyframes votePulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.25; transform: scale(0.65); }
+}
+
 .btn--icon {
   width: 36px;
   height: 36px;
@@ -1084,7 +1460,13 @@ optgroup {
 }
 
 .calendar-grid--expanded .calendar-grid__week {
-  gap: var(--space-3);
+  row-gap: var(--space-3);
+  column-gap: 6px;
+}
+
+.calendar-grid--expanded .calendar-grid__dow {
+  row-gap: var(--space-3);
+  column-gap: 6px;
 }
 
 .calendar-grid--expanded .day-cell {
@@ -1107,6 +1489,13 @@ optgroup {
   margin-top: var(--space-2);
 }
 
+/* Float celestial badges so moon emoji never expands grid tracks */
+.calendar-grid--expanded .day-cell__celestial-badges {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+}
+
 /* ==========================================================================
    Horizontal Expand Mode - Widescreen Panoramic View
    ========================================================================== */
@@ -1121,46 +1510,48 @@ optgroup {
 }
 
 .calendar-grid--expanded-h .calendar-grid__dow {
-  grid-template-columns: repeat(7, 180px);
-  gap: var(--space-3);
+  grid-template-columns: repeat(7, 1fr);
+  gap: 8px;
+  padding: 0;
 }
 
 .calendar-grid--expanded-h .calendar-grid__week {
-  grid-template-columns: repeat(7, 180px);
-  gap: var(--space-3);
+  grid-template-columns: repeat(7, 1fr);
+  gap: 8px;
+  padding: var(--space-1) 0;
 }
 
 .calendar-grid--expanded-h .day-cell {
-  aspect-ratio: auto;
-  min-height: 140px;
+  aspect-ratio: 1;
+  min-height: 180px;
   padding: var(--space-4);
 }
 
 /* Combined vertical + horizontal expand = large cells with proper grid */
-/* Width = content (7×220 + 6×12 = 1652px) + padding (40px) = 1692px */
+/* Width = content (7×220 + 6×12 = 1612px) + padding (40px) = 1652px */
 .calendar-grid--expanded.calendar-grid--expanded-h {
-  width: 1692px;
-  min-width: 1692px;
+  width: 1652px;
+  min-width: 1652px;
   padding: var(--space-5);
   margin: 0 auto;
 }
 
 .calendar-grid--expanded.calendar-grid--expanded-h .calendar-grid__week {
-  /* Fixed column width instead of minmax to prevent overlap */
-  grid-template-columns: repeat(7, 220px);
-  gap: var(--space-3);
+  grid-template-columns: repeat(7, 1fr);
+  gap: 8px;
+  padding: var(--space-1) 0;
 }
 
 .calendar-grid--expanded.calendar-grid--expanded-h .day-cell {
-  aspect-ratio: auto;
+  aspect-ratio: 1;
   min-height: 220px;
-  min-width: 220px;
   width: 100%;
 }
 
 .calendar-grid--expanded.calendar-grid--expanded-h .calendar-grid__dow {
-  grid-template-columns: repeat(7, 220px);
-  gap: var(--space-3);
+  grid-template-columns: repeat(7, 1fr);
+  gap: 8px;
+  padding: 0;
 }
 
 .calendar-grid--expanded-h .day-cell__heka-num {
@@ -1188,11 +1579,21 @@ optgroup {
   
   .calendar-grid--expanded-h .calendar-grid__week,
   .calendar-grid--expanded-h .calendar-grid__dow {
-    grid-template-columns: repeat(7, 130px);
+    grid-template-columns: repeat(7, 1fr);
+    gap: 8px;
+  }
+  
+  .calendar-grid--expanded-h .calendar-grid__week {
+    padding: var(--space-1) 0;
+  }
+  
+  .calendar-grid--expanded-h .calendar-grid__dow {
+    padding: 0;
   }
   
   .calendar-grid--expanded-h .day-cell {
-    min-height: 120px;
+    aspect-ratio: 1;
+    min-height: 130px;
     padding: var(--space-3);
   }
   
@@ -1205,12 +1606,21 @@ optgroup {
   
   .calendar-grid--expanded.calendar-grid--expanded-h .calendar-grid__week,
   .calendar-grid--expanded.calendar-grid--expanded-h .calendar-grid__dow {
-    grid-template-columns: repeat(7, 150px);
+    grid-template-columns: repeat(7, 1fr);
+    gap: 8px;
+  }
+  
+  .calendar-grid--expanded.calendar-grid--expanded-h .calendar-grid__week {
+    padding: var(--space-1) 0;
+  }
+  
+  .calendar-grid--expanded.calendar-grid--expanded-h .calendar-grid__dow {
+    padding: 0;
   }
   
   .calendar-grid--expanded.calendar-grid--expanded-h .day-cell {
-    min-height: 180px;
-    min-width: 150px;
+    aspect-ratio: 1;
+    min-height: 150px;
   }
 }
 
@@ -1501,7 +1911,7 @@ optgroup {
 }
 
 .day-cell__solar-return {
-  font-size: 10px;
+  font-size: 12px;
   opacity: 0.95;
   line-height: 1;
   filter: drop-shadow(0 0 4px rgba(251, 191, 36, 0.6));
@@ -1544,7 +1954,7 @@ optgroup {
 
 .day-cell__note-preview {
   margin-top: 4px;
-  font-size: 9px;
+  font-size: 11px;
   color: var(--color-text-muted);
   line-height: 1.3;
   overflow: hidden;
@@ -1565,7 +1975,7 @@ optgroup {
   color: var(--color-gold);
   font-weight: 600;
   margin-left: 4px;
-  font-size: 10px;
+  font-size: 12px;
 }
 
 /* Expanded note preview styles for larger cells */
@@ -1582,7 +1992,7 @@ optgroup {
 
 .day-cell__note-preview--expanded .note-preview-text {
   display: block;
-  font-size: 10px;
+  font-size: 12px;
   line-height: 1.4;
   padding: 2px 6px;
   margin-bottom: 2px;
@@ -1932,6 +2342,79 @@ optgroup {
   color: var(--color-gold);
   font-weight: 600;
   margin-left: auto;
+}
+
+/* Geometry Grid — For Header Symbol + Background Pattern */
+.geometry-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-3);
+}
+
+@media (max-width: 768px) {
+  .geometry-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  .geometry-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.geometry-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-3);
+  background: linear-gradient(145deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.02) 100%);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  text-align: center;
+}
+
+.geometry-card:hover {
+  border-color: var(--color-border-hover);
+  background: rgba(255,255,255,0.06);
+}
+
+.geometry-card--active {
+  border-color: var(--color-gold);
+  box-shadow: 0 0 0 2px var(--color-gold-glow);
+}
+
+.geometry-card__preview {
+  width: 64px;
+  height: 64px;
+  border-radius: var(--radius-sm);
+  background: rgba(0,0,0,0.4);
+  overflow: hidden;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.geometry-card__preview > svg {
+  width: 100%;
+  height: 100%;
+}
+
+.geometry-card__name {
+  font-weight: 500;
+  color: var(--color-text);
+  font-size: var(--text-xs);
+  line-height: 1.3;
+}
+
+.geometry-card__check {
+  color: var(--color-gold);
+  font-weight: 600;
+  font-size: var(--text-xs);
 }
 
 /* ==========================================================================
@@ -2695,6 +3178,33 @@ optgroup {
 .badge-name {
   font-size: var(--text-xs);
   color: var(--color-text-secondary);
+}
+
+@media (max-width: 480px) {
+  .stats-overview {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .stat-value {
+    font-size: var(--text-xl);
+  }
+
+  .stat-label {
+    font-size: 0.625rem;
+    letter-spacing: 0.06em;
+  }
+
+  .badges-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .badge-icon {
+    font-size: 1.5rem;
+  }
+
+  .badge-name {
+    font-size: 0.625rem;
+  }
 }
 
 .badge-lock {
@@ -4269,9 +4779,10 @@ optgroup {
   gap: var(--space-4);
   padding: var(--space-4);
   padding-bottom: var(--space-6);
-  /* FIXED: Use auto instead of scroll to prevent scroll capture issues */
+  /* FIXED: pan-x on panel + overflow-y:hidden prevents vertical scroll trap.
+     Vertical gestures bubble up to the page; horizontal scrolls the panel. */
   overflow-x: auto;
-  overflow-y: visible;
+  overflow-y: hidden;
   /* FIXED: Removed scroll-snap which was causing scroll issues */
   /* scroll-snap-type: x mandatory; */
   scroll-behavior: smooth;
@@ -5639,10 +6150,11 @@ optgroup {
     padding: 4px 10px;
   }
   
-  /* Thicker header in landscape — avoid narrow strip look */
+  /* Thicker header in landscape — container moves up with more bottom breathing room */
   .app-header {
-    padding-top: 64px !important;
-    padding-bottom: 32px !important;
+    margin-top: 20px !important;      /* was 50px inline — move container UP toward top of screen */
+    padding-top: 50px !important;     /* keep golden line close to heading */
+    padding-bottom: 64px !important;  /* extend downward for thickness */
   }
   
   /* Cap cell sizes - don't expand to fill width */
@@ -5848,7 +6360,7 @@ optgroup {
 }
 
 .mansion-mode-badge {
-  font-size: 9px;
+  font-size: 11px;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 1.5px;
@@ -5935,7 +6447,7 @@ optgroup {
 }
 
 .mansion-detail__label {
-  font-size: 10px;
+  font-size: 12px;
   color: var(--color-text-subtle);
   text-transform: uppercase;
   letter-spacing: 1px;
@@ -5980,7 +6492,7 @@ optgroup {
 }
 
 .mansion-totem-label {
-  font-size: 10px;
+  font-size: 12px;
   color: var(--color-text-subtle);
   text-transform: uppercase;
   letter-spacing: 1px;
@@ -6005,7 +6517,7 @@ optgroup {
 }
 
 .solar-return-mode-badge {
-  font-size: 9px;
+  font-size: 11px;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 1.5px;
@@ -6550,4 +7062,199 @@ optgroup {
 .profile-setup-modal ::-webkit-scrollbar-thumb {
   background: var(--color-gold);
   border-radius: 3px;
+}
+
+
+/* ── RTL Overrides ── */
+[dir="rtl"] select {
+    padding-left: 2.5rem
+}
+
+[dir="rtl"] .app-header::before {
+    margin-right: calc(50% - var(--header-symbol-half))
+}
+
+[dir="rtl"] .sacred-header__motion {
+    margin-right: calc(50% - var(--header-symbol-half))
+}
+
+[dir="rtl"] .settings-group__control--stack .btn {
+    text-align: right
+}
+
+[dir="rtl"] .day-cell {
+    text-align: right
+}
+
+[dir="rtl"] .note-preview-text {
+    border-right: 2px solid var(--color-gold)
+}
+
+[dir="rtl"] .note-more-indicator {
+    margin-right: 4px
+}
+
+[dir="rtl"] .theme-settings__title {
+    text-align: right
+}
+
+[dir="rtl"] .theme-settings__current {
+    margin-left: var(--space-2)
+}
+
+[dir="rtl"] .theme-card {
+    text-align: right
+}
+
+[dir="rtl"] .font-card {
+    text-align: right
+}
+
+[dir="rtl"] .font-card__desc {
+    margin-right: 1.8rem
+}
+
+[dir="rtl"] .font-card__check {
+    margin-right: auto
+}
+
+[dir="rtl"] .print-preview__content {
+    padding-left: var(--space-2)
+}
+
+[dir="rtl"] .theme-select {
+    padding-left: 40px
+}
+
+[dir="rtl"] .ag-card {
+    border-right: 3px solid
+}
+
+[dir="rtl"] .ag-plant {
+    border-right-color: #22c55e
+}
+
+[dir="rtl"] .ag-transplant {
+    border-right-color: #3b82f6
+}
+
+[dir="rtl"] .ag-harvest {
+    border-right-color: #eab308
+}
+
+[dir="rtl"] .ag-prune {
+    border-right-color: #8b5cf6
+}
+
+[dir="rtl"] .ag-fertilize {
+    border-right-color: #06b6d4
+}
+
+[dir="rtl"] .ag-rest {
+    border-right-color: #6b7280
+}
+
+[dir="rtl"] .holiday-card.approved {
+    border-right: 3px solid #22c55e
+}
+
+[dir="rtl"] .holiday-card.pending {
+    border-right: 3px solid #eab308
+}
+
+[dir="rtl"] .duplicate-options .btn {
+    text-align: right
+}
+
+[dir="rtl"] .note-item--selectable {
+    padding-right: 40px
+}
+
+[dir="rtl"] .notes-list.selection-active .note-item {
+    padding-right: 40px
+}
+
+[dir="rtl"] .calendar-container {
+    padding-right: 4px;
+    padding-left: 4px
+}
+
+[dir="rtl"] .calendar-grid {
+    padding-right: var(--space-2);
+    padding-left: var(--space-2)
+}
+
+[dir="rtl"] .journal-sidebar {
+    border-left: 1px solid var(--color-border);
+    padding-left: var(--space-4)
+}
+
+[dir="rtl"] .journal-content {
+    padding-right: var(--space-2)
+}
+
+[dir="rtl"] .journal-entry-btn {
+    text-align: right
+}
+
+[dir="rtl"] .celestial-panel .celestial-info-list {
+    padding-right: var(--space-4)
+}
+
+[dir="rtl"] .celestial-panel .celestial-info-badge {
+    margin-left: var(--space-2)
+}
+
+[dir="rtl"] .celestial-panel .zodiac-card__label {
+    margin-left: var(--space-2)
+}
+
+[dir="rtl"] .celestial-panel .zodiac-card__trait {
+    margin-left: var(--space-1)
+}
+
+[dir="rtl"] .year-modal-overlay {
+    padding-right: 0;
+    padding-left: 0
+}
+
+[dir="rtl"] .calendar-grid {
+    padding-right: 6px;
+    padding-left: 6px
+}
+
+[dir="rtl"] .celestial-tooltip__section ul {
+    padding-right: var(--space-4)
+}
+
+[dir="rtl"] .mansion-mode-badge {
+    margin-right: auto
+}
+
+[dir="rtl"] .solar-return-mode-badge {
+    margin-right: auto
+}
+
+[dir="rtl"] .solar-return-card {
+    border-right: 3px solid #fbbf24
+}
+
+[dir="rtl"] .astro-card--moon {
+    border-right: 3px solid #8b5cf6
+}
+
+[dir="rtl"] .astro-guidance {
+    border-right: 3px solid #3b82f6
+}
+
+[dir="rtl"] .astro-prompt {
+    border-right: 3px solid #10b981
+}
+
+[dir="rtl"] .astro-affirmation {
+    border-right: 3px solid #ec4899
+}
+
+[dir="rtl"] .welcome-modal__info {
+    text-align: right
 }

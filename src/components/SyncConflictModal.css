@@ -1,0 +1,98 @@
+.sync-conflict-modal {
+  padding: var(--space-6);
+  max-width: 680px;
+  width: 90vw;
+  color: var(--color-text);
+  background: var(--color-surface);
+  border-radius: var(--radius-lg);
+}
+
+.sync-conflict-modal__title {
+  margin: 0 0 var(--space-2);
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.sync-conflict-modal__subtitle {
+  margin: 0 0 var(--space-5);
+  color: var(--color-text-muted);
+}
+
+.sync-conflict-modal__sides {
+  display: grid;
+  gap: var(--space-4);
+  grid-template-columns: 1fr 1fr;
+  margin-bottom: var(--space-5);
+}
+
+.sync-conflict-modal__side {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding: var(--space-4);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s;
+}
+
+.sync-conflict-modal__side.is-selected {
+  border-color: var(--color-gold);
+  background: rgba(201, 162, 39, 0.08);
+}
+
+.sync-conflict-modal__side-title {
+  font-weight: 600;
+}
+
+.sync-conflict-modal__side-hint {
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+}
+
+.sync-conflict-modal__preview {
+  max-height: 220px;
+  overflow: auto;
+  font-size: 0.8rem;
+  background: var(--color-background);
+  border-radius: var(--radius-sm);
+  padding: var(--space-3);
+  margin-top: auto;
+}
+
+.sync-conflict-modal__preview pre {
+  margin: 0;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.sync-conflict-modal__actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--space-3);
+}
+
+.sync-conflict-modal__btn {
+  padding: var(--space-2) var(--space-4);
+  border-radius: var(--radius-md);
+  border: 1px solid transparent;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.sync-conflict-modal__btn--secondary {
+  background: transparent;
+  border-color: var(--color-border);
+  color: var(--color-text);
+}
+
+.sync-conflict-modal__btn--primary {
+  background: var(--color-gold);
+  color: #0a0910;
+}
+
+@media (max-width: 640px) {
+  .sync-conflict-modal__sides {
+    grid-template-columns: 1fr;
+  }
+}

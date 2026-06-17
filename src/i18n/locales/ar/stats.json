@@ -1,0 +1,49 @@
+{
+  "best": "أفضل: {{count}}",
+  "title": "رحلتك",
+  "close": "إغلاق",
+  "reset": "إعادة تعيين الإحصائيات",
+  "avgMood": "متوسط المزاج",
+  "dayStreak": "سلسلة أيام",
+  "totalNotes": "إجمالي الملاحظات",
+  "wordsWritten": "كلمات مكتوبة",
+  "achievements": "الإنجازات ({{earned}}/{{total}})",
+  "resetConfirm": "إعادة تعيين",
+  "progressRatio": "{{current}} / {{target}}",
+  "monthlyTooltip": "{{month}} {{year}}: {{count}} ملاحظات",
+  "notesByCategory": "الملاحظات حسب الفئة",
+  "monthlyActivity": "نشاط شهري",
+  "mostActiveMonth": "شهر نشطreatest كان \u003cstrong\u003e{{month}}\u003c/strong\u003e مع \u003cstrong\u003e{{count}}\u003c/strong\u003e ملاحظات",
+  "categories": {
+    "work": "عمل",
+    "family": "عائلة",
+    "health": "صحة",
+    "general": "عام",
+    "personal": "شخصي",
+    "creative": "إبداعي",
+    "spiritual": "روحاني"
+  },
+  "progressToCentury": "تقدم إلى نادي القرن",
+  "resetConfirmTitle": "إعادة تعيين الإحصائيات",
+  "badges": {
+    "century": {
+      "name": "نادي القرن"
+    },
+    "explorer": {
+      "name": "مستكشف"
+    },
+    "archivist": {
+      "name": "مستودع"
+    },
+    "first-note": {
+      "name": "الكلمات الأولى"
+    },
+    "week-streak": {
+      "name": "نزاع الاسبوع"
+    },
+    "month-streak": {
+      "name": "نزاع الشهر"
+    }
+  },
+  "resetConfirmDescription": "هل أنت متأكد من أنك تريد إعادة تعيين جميع الإحصائيات؟ لا يمكن التراجع عن هذا الإجراء."
+}

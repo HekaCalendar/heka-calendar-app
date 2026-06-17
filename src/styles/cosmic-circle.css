@@ -990,3 +990,9 @@
 .circle-messages__list::-webkit-scrollbar-thumb:hover {
   background: var(--circle-accent-light);
 }
+
+
+/* ── RTL Overrides ── */
+[dir="rtl"] .circle-messages__list {
+    padding-left: var(--space-2)
+}

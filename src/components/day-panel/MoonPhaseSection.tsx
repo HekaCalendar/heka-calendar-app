@@ -4,6 +4,7 @@
  */
 
 import { memo } from 'react';
+import { useTranslation } from 'react-i18next';
 import type { MoonPhaseSectionProps } from './types';
 
 export const MoonPhaseSection = memo(({
@@ -11,12 +12,14 @@ export const MoonPhaseSection = memo(({
   isLoading,
   hemisphere,
 }: MoonPhaseSectionProps) => {
+  const { t } = useTranslation('dayPanel');
+
   if (isLoading) {
     return (
       <div className="day-panel__section moon-section">
         <div className="moon-loading">
           <span className="spinner"></span>
-          <span>Calculating lunar position...</span>
+          <span>{t('moon.calculating')}</span>
         </div>
       </div>
     );
@@ -25,7 +28,7 @@ export const MoonPhaseSection = memo(({
   if (!moonData) {
     return (
       <div className="day-panel__section moon-section">
-        <div className="moon-unavailable">Moon phase data unavailable</div>
+        <div className="moon-unavailable">{t('moon.unavailable')}</div>
       </div>
     );
   }
@@ -37,14 +40,14 @@ export const MoonPhaseSection = memo(({
         <div className="moon-info">
           <div className="moon-phase">{moonData.name}</div>
           <div className="moon-details">
-            {moonData.waxing ? 'Waxing' : 'Waning'} • {moonData.illumination}% illuminated
+            {moonData.waxing ? t('moon.waxing') : t('moon.waning')} • {t('moon.illuminated', { percent: moonData.illumination })}
           </div>
-          <div className="moon-age">Age: {moonData.age} days</div>
-          <div className="moon-precision">✨ Swiss Ephemeris</div>
+          <div className="moon-age">{t('moon.age', { age: moonData.age })}</div>
+          <div className="moon-precision">✨ {t('moon.swissEphemeris')}</div>
         </div>
       </div>
       <div className="moon-hemisphere">
-        {hemisphere === 'S' ? '🌏 Southern Hemisphere' : '🌍 Northern Hemisphere'}
+        {hemisphere === 'S' ? `🌏 ${t('moon.southernHemisphere')}` : `🌍 ${t('moon.northernHemisphere')}`}
       </div>
     </div>
   );

@@ -1,0 +1,322 @@
+{
+  "infoModal": {
+    "hero": {
+      "title": "HEKA — LịchBuilt cho Trí Não",
+      "subtitleLine1": "Mười ba tháng.",
+      "subtitleLine2": "Mỗi tháng bốn tuần. Một năm rõ ràng."
+    },
+    "guideComplete": "Hướng dẫn hoàn tất",
+    "spotlight": {
+      "title": "Bạn có biết không?",
+      "facts": [
+        "Các tháng không đều của lịch格里高利 phần lớn là kết quả của chính trị La Mã và tínhkitschcủa các hoàng đế.",
+        "Mười ba tháng của HEKA, mỗi tháng hai mươi tám ngày, tạo ra các quý hoàn hảo và thời gian nhận lương dễ dự đoán.",
+        "Ở chế độ TRUE, HEKA tuân theo quy tắc leap year 128 năm để đạt độ chính xác thiên văn dài hạn.",
+        "Lớp phủ dân sự cho phép bạn nhìn thấy các ngày格里高利 cùng với HEKA để bạn không bao giờ mất đi sự phối hợp.",
+        "Những mục nhật ký của bạn lưu cục bộ theo mặc định và chỉ đồng bộ khi bạn chọn đăng nhập."
+      ]
+    },
+    "home": "Trang chủ",
+    "backToHome": "Quay lại Trang chủ",
+    "deeperQuestions": "Câu hỏi sâu sắc",
+    "chapters": {
+      "home": {
+        "num": "0",
+        "chip": "BẮT ĐẦU",
+        "title": "Chào mừng",
+        "hook": "Cách khác nhau để sống trong năm.",
+        "teaser": "Bắt đầu tại đây."
+      },
+      "ch1": {
+        "num": "01",
+        "chip": "CƠ SỞ",
+        "title": "Lịch",
+        "hook": "Mười ba tháng. Mỗi tháng bốn tuần. Một năm rõ ràng.",
+        "teaser": "Điều gì làm HEKA là và tại sao nó cảm thấy khác biệt."
+      },
+      "ch2": {
+        "num": "02",
+        "chip": "CẤU TRÚC",
+        "title": "Quy mô của năm",
+        "hook": "Mở đầu, lõi, và kết thúc: một năm có hình dạng câu chuyện.",
+        "teaser": "Cách các tháng chảy từ tháng Tư đến tháng Ba."
+      },
+      "ch3": {
+        "num": "03",
+        "chip": "CÔNG CỤ",
+        "title": "Đồng Hồ Hằng Ngày của Bạn",
+        "hook": "Nhật ký, mặt trăng, sao, và lớp phủ dân sự — đều thuộc về bạn.",
+        "teaser": "Những tính năng làm cho HEKA thực tế."
+      },
+      "ch4": {
+        "num": "04",
+        "chip": "CHẾ ĐỘ",
+        "title": "SYNC so TRUE",
+        "hook": "Hai cách xử lý ngày leap. Chọn sự đúng đắn của bạn.",
+        "teaser": "Sự phối hợp quen thuộc hoặc độ chính xác thiên văn."
+      },
+      "ch5": {
+        "num": "05",
+        "chip": "LỊCH SỬ",
+        "title": "Tại sao lịch trôi dạt",
+        "hook": "Nhận lại sự hỗn độn, các bản vá chính trị và cơ hội thiết kế lại.",
+        "teaser": "Câu chuyện đằng sau lịch bạn đã được giao."
+      },
+      "ch6": {
+        "num": "06",
+        "chip": "THAM NHẬP",
+        "title": "Bắt đầu sống bên trong nó",
+        "hook": "Ba bước nhỏ để làm cho HEKA trở thành chế độ xem mặc định của bạn.",
+        "teaser": "Làm thế nào để bắt đầu mà không làm rối cuộc sống của bạn."
+      },
+      "ch7": {
+        "num": "07",
+        "chip": "Nghĩa nghĩa",
+        "title": "Thời gian như sự đại diện",
+        "hook": "Sự rõ ràng, nhịp độ và sự lựa chọn để sử dụng một công cụ tốt hơn.",
+        "teaser": "Tại sao cấu trúc của thời gian quan trọng."
+      }
+    },
+    "chapterLeads": {
+      "home": "Hướng dẫn này là một cây cầu. Qua nó với bước chân của bạn.",
+      "ch1": "HEKA không phải là một sự điều chỉnh đối với lịch格里高利. Nó là một sự thay thế được xây dựng từ những nguyên tắc đầu tiên.",
+      "ch2": "Năm có hình dạng khi cấu trúc của nó phản ánh nhịp độ của hành động và nghỉ ngơi.",
+      "ch3": "Một lịch chỉ hữu ích nếu nó tích hợp với cuộc sống bạn đang sống.",
+      "ch4": "Cùng một cấu trúc có thể phục vụ nhu cầu khác nhau. Chế độ bạn chọn là sở thích, không phải là giáo điều.",
+      "ch5": "Hiểu biết lịch hiện tại đã ra đời như thế nào làm cho những thiếu sót của nó dễ tha thứ hơn — và dễ để lại hơn.",
+      "ch6": "Việc tiếp nhận diễn ra bằng những bước nhỏ. Bạn không cần quyền phép hoặc một bản tuyên bố.",
+      "ch7": "Bình chứa thời gian định hình nội dung của cuộc sống. Chọn một cách có chủ đích."
+    },
+    "cardsByChapter": {
+      "ch1": [
+        {
+          "h": "Vấn đề bạn cảm thấy",
+          "b": "Các tháng không đều. Các ngày lễ tán loạn. Một năm lúng túng từ tháng một đến tháng mười hai mà không có cảm giác của sự bắt đầu, trung điểm hay kết thúc. Bạn đã cảm thấy sự chafing này. HEKA loại bỏ nó."
+        },
+        {
+          "h": "Giải pháp chúng tôi đã xây dựng",
+          "b": "Mười ba tháng. Mười hai tháng có hai mươi tám ngày trong sự đối xứng hoàn hảo. Tháng ba, tháng cuối, mang ngày nhuận. Bốn tuần hoàn hảo mỗi tháng. Một năm chảy: Tháng tư mở ra, từ tháng năm đến tháng mười hai hình thành lõi ổn định, từ tháng một đến tháng ba hoàn thành nó."
+        },
+        {
+          "h": "Thế giới bạn giữ",
+          "b": "HEKA không làm rối cuộc sống của bạn. Các ngày dân sự vẫn hiển thị. Các cuộc hẹn, cam kết và nghĩa vụ pháp lý của bạn vẫn ở chính xác nơi bạn mong đợi. Bạn chỉ đơn giản có một ống kính rõ ràng hơn."
+        }
+      ],
+      "ch2": [
+        {
+          "h": "Đường cong mở đầu",
+          "b": "Tháng tư là ngưỡng cửa. Năm không bắt đầu trong sự kiệt sức của mùa đông, mà trong sức sống của mùa xuân. Sự mọc mới. Các dự án mới. Sự mở đầu tuyên bố: có gì đó đang bắt đầu."
+        },
+        {
+          "h": "Đường cong lõi",
+          "b": "Từ tháng năm đến tháng mười hai là phần trung tâm dài, ổn định. Chín tháng với nhịp độ đều đặn và có thể dự đoán. Lập kế hoạch với lòng tin. Xây dựng động lực. Đây là nơi công việc diễn ra."
+        },
+        {
+          "h": "Đường cong kết thúc",
+          "b": "Từ tháng một đến tháng ba đưa năm đến quyết định của nó. Hoàn thành những gì bạn đã bắt đầu. Thu hoạch những gì bạn đã trồng"
+        }
+      ],
+      "ch3": [
+        {
+          "h": "Ngày Lịch Sống Của Bạn",
+          "b": "Bật tắt lớp phủ lịch và xem các ngày theo lịch Gregorian cùng với HEKA. Cuộc hẹn nha khoa của bạn, sinh nhật mẹ bạn, hạn chót thuế của bạn — tất cả vẫn nằm chính xác nơi bạn mong đợi."
+        },
+        {
+          "h": "Nhật Ký Của Bạn",
+          "b": "Bài đăng hàng ngày với lịch sử sửa đổi — tự động giữ tối đa 50 phiên bản. Tìm kiếm toàn văn trên mọi thứ. Mặc định là cục bộ; sao lưu đám mây khi bạn đăng nhập."
+        },
+        {
+          "h": "Mặt Trời & Các Sao Của Bạn",
+          "b": "Các giai đoạn của mặt trăng, vị trí của các hành tinh và di chuyển hiện rõ ngay lập tức. Tùy chọn và chính xác. Thêm biểu đồ sinh của bạn để có các bài đọc riêng qua Oracle."
+        }
+      ],
+      "ch4": [
+        {
+          "h": "Chế Độ SYNC: Con Đường Quen Thuyết",
+          "b": "Tháng Ba có thêm một ngày khi lịch Gregorian cho là nên. Đối với việc phối hợp hàng ngày với thế giới dân sự, đây là chế độ của bạn. Cấu trúc giống nhau. Thời gian quen thuộc."
+        },
+        {
+          "h": "Chế độ TRUE: Con đường Thành thật",
+          "b": "HEKA tuân theo quy tắc sửa chữa riêng của mình: mỗi bốn năm có một tháng Ba dài 30 ngày, trừ mỗi 128 năm không. Đây là sự chính xác thiên văn học. Đây là tính toàn vẹn dài hạn."
+        },
+        {
+          "h": "Chuyển bất kỳ lúc nào",
+          "b": "Các tháng không thay đổi. Tuần không thay đổi. Chỉ việc kích hoạt sửa chữa thay đổi. Thử nghiệm. Xem chế độ nào phù hợp với nhu cầu của bạn. Bạn không bị khóa vào đâu."
+        }
+      ],
+      "ch5": [
+        {
+          "h": "Kế thừa, không phải Thiết kế",
+          "b": "Lịch hiện tại của chúng ta là một đống sự cố lịch sử. Chính trị La Mã. Hội nghị tôn giáo. Bộ phận thiên văn học được thêm vào cách thế kỷ. Nó chưa bao giờ được thiết kế như một hệ thống."
+        },
+        {
+          "h": "Bù đắp Gregorian",
+          "b": "1582: Giáo hoàng Gregory sửa chữa vấn đề lệch. Nhưng ông giữ lại các tháng không đều, cấu trúc phân tán, hỗn độn kế thừa. Một sự sửa chữa cần thiết, nhưng không phải là giải pháp hoàn toàn."
+        },
+        {
+          "h": "Phản ứng HEKA",
+          "b": "Chúng tôi giữ lại những gì hoạt động: tuần bảy ngày, canh chỉnh mùa, theo dõi năm dương lịch. Chúng tôi thiết kế lại những gì không hoạt động: cấu trúc tháng, dòng chảy năm, vị trí sửa chữa. Xây dựng cho trí óc nghĩ suy."
+        }
+      ],
+      "ch6": [
+        {
+          "h": "Bước một: Kích hoạt Lớp phủ",
+          "b": "Bật các ngày dân sự. Bây giờ bạn thấy cả hai hệ thống đồng thời. Ngày HEKA của bạn và ngày Gregorian của bạn. Cầu nối đã xây dựng. Qua nó bất kỳ lúc nào bạn cần."
+        },
+        {
+          "h": "Bước hai: Chọn Chế độ của bạn",
+          "b": "Bắt đầu với SYNC nếu bạn muốn sự quen thuộc. Chuyển sang TRUE nếu bạn muốn sự thuần khiết. Bạn có thể thay đổi ý kiến. Lịch thay đổi theo bạn, không phải ngược lại."
+        },
+        {
+          "h": "Bước ba: Sống bên trong nó",
+          "b": "Sử dụng HEKA như chế độ xem chính. Lập kế hoạch tháng của bạn. Ghi chú ngày của bạn. Cảm nhận sự khác biệt của một năm có cấu trúc thực sự. Thế giới dân sự không cần biết. Bạn sẽ biết."
+        }
+      ],
+      "ch7": [
+        {
+          "h": "Chi phí Muốn giao",
+          "b": "Mỗi khi bạn tự hỏi có bao nhiêu ngày trong tháng này, bạn phải trả một số thuế nhỏ. Mỗi sự bất thường làm mất tập trung. HEKA loại bỏ những thứ này. Bạn giữ năng lượng của mình cho những gì quan trọng."
+        },
+        {
+          "h": "Nhịp đập Tạo ra Lặng bình",
+          "b": "Khi cấu trúc có thể dự đoán, tâm trí thư giãn. Bạn biết bạn đang ở đâu trong năm. Bạn cảm nhận sự mở ra, lõi, sự đóng cửa. Thời gian trở thành không gian bạn sống trong, không phải hỗn độn bạn phải sống sót."
+        },
+        {
+          "h": "Quyền lực Qua thời gian",
+          "b": "Bạn không chọn lịch Gregorian. Nó được đưa cho bạn. HEKA là một lựa chọn. Sử dụng công cụ được thiết kế cho rõ ràng. Lấy quyền lực qua cấu trúc của ngày của bạn. Đây là lịch của bạn."
+        }
+      ]
+    },
+    "gatesByChapter": {
+      "ch1": [
+        {
+          "t": "Đây có phải là một tôn giáo hoặc phong trào không?",
+          "tag": "SẴN SÁCH",
+          "b": "Không phải. HEKA là một công cụ. Giống như một cái búa tốt hơn hoặc một bản đồ rõ ràng hơn. Không cần thành viên. Không cần phải nhận bất kỳ quan điểm nào. Chỉ là một lịch làm việc tốt hơn so với lịch mà bạn kế thừa."
+        },
+        {
+          "t": "Tại sao là mười ba tháng?",
+          "tag": "LÝ TRÌ",
+          "b": "Mười hai tháng có độ dài không đều tạo ra những trò chơi trí óc. Mười ba tháng mỗi tháng bốn tuần tạo ra sự đều đặn hoàn hảo. 13 × 28 = 364. Plus một ngày đặc biệt. Số học là gọn gàng. Kinh nghiệm còn gọn gàng hơn."
+        },
+        {
+          "t": "Điều này có làm nhầm người khác không?",
+          "tag": "THỰC TẾ",
+          "b": "Bạn thấy các ngày HEKA. Họ thấy các ngày dân sự. Khi bạn nói \"ngày 15 tháng Ba\", bạn có nghĩa là cùng một ngày họ hiểu. Lớp phủ民 sự đảm bảo bạn không bao giờ mất liên lạc. Bạn nhận được sự rõ ràng. Họ không mất gì."
+        }
+      ],
+      "ch2": [
+        {
+          "t": "Tại sao năm bắt đầu vào tháng Tư?",
+          "tag": "KÝ HIẾU",
+          "b": "Mùa xuân là sự mở đầu phổ quát. Sự phát triển bắt đầu. Năng lượng tăng lên. Bắt đầu năm vào tháng Tư làm cho lịch trình phù hợp với cảm nhận được của sự làm mới. Tháng Giêng bắt đầu trong sự kiệt sức của mùa đông. Tháng Tư bắt đầu trong khả năng của mùa xuân."
+        },
+        {
+          "t": "Tên các tháng là gì?",
+          "tag": "TRẮC TẮT",
+          "b": "Tháng Tư, Tháng Năm, Tháng Sáu, Tháng Bảy, Tháng Tám, Tháng Lục, Tháng Chín, Tháng Mười, Tháng Mười Một, Tháng Mười Hai, Tháng Giêng, Tháng Hai, Tháng Ba. Tháng Lục — tháng thứ sáu — lấp đầy khoảng trống. Các tháng còn lại bạn đã biết. Chỉ là vị trí của chúng thay đổi."
+        },
+        {
+          "t": "Làm thế nào để xử lý sự sửa chữa?",
+          "tag": "CHÍNH XÁC",
+          "b": "Mỗi lịch mặt trời đều cần sự sửa chữa. HEKA đặt nó vào tháng Ba, vào cuối năm. Tháng Ba có 29 ngày, hoặc 30 ngày trong năm nhuận. Mười hai tháng khác đều đều có quy luật, vĩnh viễn đều đặn. Sự sửa chữa được chứa đựng, không tán loạn."
+        }
+      ],
+      "ch3": [
+        {
+          "t": "Tôi có thể in lịch HEKA không?",
+          "tag": "VẬT CHẤT",
+          "b": "Có. In xem tháng hoặc xem năm đầy đủ. Sạch sẽ, không rối. Thiết kế cho giấy. Ghim chúng vào tường. Mang chúng trong sổ tay. Tiện lợi kỹ thuật số và đồ vật vật lý, cả hai."
+        },
+        {
+          "t": "Về các ngày lễ thì sao?",
+          "tag": "TÚY CHỌN",
+          "b": "Bật/tắt các bộ ngày lễ cho khu vực của bạn. Hoặc không quan tâm chúng. HEKA không bắt buộc phải có những ngày lễ của nó — nó giúp bạn theo dõi những ngày lễ quan trọng với bạn, lồng vào trên một cấu trúc rõ ràng hơn."
+        },
+        {
+          "t": "Dữ liệu của tôi lưu ở đâu?",
+          "tag": "LƯU TRỮ",
+          "b": "Mặc định, mọi thứ đều lưu trên thiết bị của bạn — ghi chú, nhật ký, cài đặt. Nếu bạn tạo tài khoản, dữ liệu của bạn sẽ được sao lưu vào lưu trữ đám mây mã hóa. Bạn có thể xuất mọi thứ bất kỳ lúc nào. Bạn giữ quyền kiểm soát."
+        },
+        {
+          "t": "Sổ nhật ký có thể làm gì?",
+          "tag": "NĂNG LƯỢNG",
+          "b": "Nhập hàng ngày với lịch sử sửa đổi tự động. Tìm kiếm văn bản toàn văn trong toàn bộ lưu trữ của bạn. Mặc định đều là cục bộ; đồng bộ với đám mây khi bạn đăng nhập."
+        }
+      ],
+      "ch4": [
+        {
+          "t": "Chế độ nào là \"đúng\"?",
+          "tag": "LỰA CHỌN",
+          "b": "Cả hai. SYNC là đúng để phối hợp với thế giới dân sự. TRUE là đúng để độ chính xác thiên văn. Nhu cầu của bạn quyết định sự đúng đắn quan trọng hơn đối với bạn vào lúc này."
+        },
+        {
+          "t": "Chế độ TRUE có lệch khỏi các ngày dân sự không?",
+          "tag": "SÁCH LÝ",
+          "b": "Chậm rãi, vâng. Chế độ TRUE tuân theo quy tắc nhuận của nó, không phải của Gregorian. Qua các thế kỷ, sự lệch dần trở nên đáng chú ý. Đối với cuộc sống hàng ngày, sự khác biệt không thể nhận thấy. Đối với suy nghĩ dài hạn, sự thuần khiết quan trọng."
+        },
+        {
+          "t": "Các tổ chức có thể áp dụng HEKA không?",
+          "tag": "LỆNH HOẠN",
+          "b": "Có thể, cuối cùng. Nhưng các tổ chức không cần thay đổi để bạn hưởng lợi. HEKA hoạt động hoàn hảo như một lớp phủ cá nhân. Bắt đầu từ đó. Để công cụ chứng minh chính nó."
+        }
+      ],
+      "ch5": [
+        {
+          "t": "Tại sao các tháng có độ dài khác nhau?",
+          "tag": "LỊCH SỬ",
+          "b": "Chính trị La Mã. Julius Caesar và Augustus cần các tháng được đặt tên theo họ. Lịch đã được điều chỉnh để thích ứng với tínhkitsch. Những bất thường này hóa thành \"truyền thống\". Tradition không 항상 là trí tuệ."
+        },
+        {
+          "t": "Cải cách Gregorian đã đủ không?",
+          "tag": "ĐÁNH GIÁ",
+          "b": "Nó đã sửa chữa"
+        },
+        {
+          "t": "Có người nào đã thử cải cách lịch chưa?",
+          "tag": "CÁC THỬ THÁCH",
+          "b": "Rất nhiều. Lịch Cộng hòa Pháp. Lịch Thế giới. Lịch Quốc tế Cố định. Một số rất xuất sắc, tất cả đều thất bại về mặt chính trị. HEKA học hỏi từ chúng: tương thích với thời gian dân sự là cần thiết. Cách mạng thông qua sự tiến hóa."
+        }
+      ],
+      "ch6": [
+        {
+          "t": "Làm thế nào để giải thích điều này với người khác?",
+          "tag": "ĐÀM LUẬN",
+          "b": "Bạn không cần làm gì. Sử dụng nó. Nếu bị hỏi, hãy nói: \"Tôi tìm thấy một lịch giúp tôi lên kế hoạch tốt hơn.\" Cho họ thấy. Hãy để họ nhìn thấy sự rõ ràng. Sự thuyết phục xảy ra thông qua minh chứng, không phải thông qua tuyên bố."
+        },
+        {
+          "t": "Nếu tôi muốn ngừng sử dụng nó thì sao?",
+          "tag": "TỪ DO",
+          "b": "Dừng. Các ngày dân sự của bạn vẫn còn. Các cuộc hẹn của bạn vẫn ở nơi chúng đang ở. Không có khóa vào. Không có chi phí đã đầu tư. HEKA phải giành được vị trí trong cuộc sống của bạn mỗi ngày, nếu không thì không xứng đáng để ở lại."
+        },
+        {
+          "t": "Bây giờ tôi nên bắt đầu từ đâu?",
+          "tag": "HÀNH ĐỘNG",
+          "b": "Mở cài đặt. Bật lớp phủ dân sự. Xem ngày hôm nay trong cả hai hệ thống. Đó là bước đầu tiên. Bạn đã thực hiện bước này bằng cách mở hướng dẫn này."
+        },
+        {
+          "t": "Oracle là gì?",
+          "tag": "TRÍ TUỆ",
+          "b": "Một trí tuệ thiên thể đọc vị trí hành tinh cho bất kỳ ngày bạn chọn và cung cấp hướng dẫn. Không bắt buộc. Thêm bản đồ sinh nhật của bạn để nhận được các chuyển động cá nhân hóa và hiểu biết sâu hơn."
+        }
+      ],
+      "ch7": [
+        {
+          "t": "Lịch thực sự ảnh hưởng đến tư duy không?",
+          "tag": "Tâm lý học",
+          "b": "Rất sâu. Chúng ta nghĩ trong các cấu trúc mà chúng ta sống. Các tháng không đều tạo ra sự cản trở nhận thức ở mức thấp. Các tháng đều tạo ra dòng chảy nhận thức. Bạn có thể không chú ý đến sự cản trở cho đến khi nó biến mất. Sau đó bạn không thể không chú ý đến nó."
+        },
+        {
+          "t": "Về mặt gắn kết văn hóa thì sao?",
+          "tag": "SỬ DỤNG",
+          "b": "Giữ chúng. Sinh nhật của bạn. Lễ kỷ niệm năm mới của bạn. Festival mùa của bạn. HEKA không xóa văn hóa - nó cung cấp một công cụ rõ ràng hơn cho nó. Nội dung vẫn còn. Chứa đựng được cải tiến."
+        },
+        {
+          "t": "Tại sao điều này quan trọng đến nỗi cần xây dựng?",
+          "tag": "SỞ TRƯỞNG",
+          "b": "Bởi vì thời gian là chất nền của cuộc sống. Bởi vì chúng ta xứng đáng sở hữu công cụ được thiết kế cho trí óc, không phải kế thừa từ sự cố. Bởi vì ai đó nên cố gắng xây dựng thứ gì tốt hơn. Chúng tôi đã làm. Bạn đang ở đây."
+        }
+      ]
+    }
+  }
+}

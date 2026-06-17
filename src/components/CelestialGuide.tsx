@@ -7,16 +7,23 @@
  * ═══════════════════════════════════════════════════════════════════════════════
  */
 
-import { useState, useEffect, useLayoutEffect, useMemo, memo, useRef } from 'react';
+import { useState, useEffect, useLayoutEffect, useMemo, memo, useRef, useCallback } from 'react';
 import { useSelector, shallowEqual } from 'react-redux';
 import type { RootState } from '../store';
 import { useFeatureDiscovery } from '../hooks/useGamification';
 import { LOCATIONS, SUB_REGIONS } from '../types';
 import { hekaToCivil, HEKA_MONTHS } from '../services/calendarService';
+
+interface DetectedLocation {
+  latitude: number;
+  longitude: number;
+  name: string;
+}
 import { getZodiacSystemPreference, getZodiacFramePreference, getSignCountPreference } from '../astrology/services/natal/zodiacHelpers';
 import { setZodiacSystem, setZodiacFrame, setSignCount } from '../astrology/services/swiss-ephemeris/engine';
 import '../styles/celestial-scrollbar.css';
 import '../components/celestial-cards/UnifiedCards.css';
+import { useTranslation } from 'react-i18next';
 
 import { SunTimesCard, DigitalClockCard, MoonPhaseCard, SeasonCard, AgriculturalCard, DayOfWeekCard } from './celestial-cards';
 
@@ -88,11 +95,54 @@ const CelestialGuideComponent: React.FC = () => {
   const subRegion = useSelector((state: RootState) => state.calendar.subRegion);
   const display = useSelector((state: RootState) => state.calendar.display, shallowEqual);
   const { discover } = useFeatureDiscovery();
+  const { t, i18n } = useTranslation('celestial');
   
   // Track that user has viewed Celestial Guide
   useEffect(() => {
     discover('openedCelestialGuide');
   }, [discover]);
+
+  // ═══════════════════════════════════════════════════════════════════════════════
+  // BROWSER GEOLOCATION — for premium precise location feel
+  // ═══════════════════════════════════════════════════════════════════════════════
+  const [detectedLocation, setDetectedLocation] = useState<DetectedLocation | null>(null);
+
+  const fetchReverseGeocode = useCallback(async (lat: number, lon: number): Promise<string> => {
+    try {
+      const controller = new AbortController();
+      const timeout = setTimeout(() => controller.abort(), 3000);
+      const res = await fetch(
+        `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${lon}&localityLanguage=en`,
+        { signal: controller.signal }
+      );
+      clearTimeout(timeout);
+      if (!res.ok) return t('yourLocation');
+      const data = await res.json();
+      return data.city || data.locality || data.principalSubdivision || t('yourLocation');
+    } catch {
+      return t('yourLocation');
+    }
+  }, [t]);
+
+  useEffect(() => {
+    if (!navigator.geolocation) return;
+
+    // Silently attempt geolocation — don't prompt aggressively
+    navigator.geolocation.getCurrentPosition(
+      async (pos) => {
+        const name = await fetchReverseGeocode(pos.coords.latitude, pos.coords.longitude);
+        setDetectedLocation({
+          latitude: pos.coords.latitude,
+          longitude: pos.coords.longitude,
+          name,
+        });
+      },
+      () => {
+        // Silent fail — fallback to selected location
+      },
+      { timeout: 8000, maximumAge: 600000 }
+    );
+  }, [fetchReverseGeocode]);
 
   // Set zodiac system on mount
   useEffect(() => {
@@ -104,16 +154,49 @@ const CelestialGuideComponent: React.FC = () => {
     setSignCount(signCount);
   }, []);
 
-  // Location data with sub-region support
+  // ═══════════════════════════════════════════════════════════════════════════════
+  // SCROLL BEHAVIOUR
+  // Vertical scrolling is handled natively by the browser. The CSS touch-action
+  // rules on .heka-card (auto) and .celestial-panel (auto) allow the browser to
+  // use angle detection: horizontal swipes scroll the panel, vertical swipes
+  // bubble up to the page. No JavaScript interception needed.
+  // ═══════════════════════════════════════════════════════════════════════════════
+
+  // Location data with sub-region support + browser geolocation fallback
   const locationData = useMemo(() => {
+    const countryData = LOCATIONS[location];
+
+    // 1. Browser geolocation is most precise — use if available
+    if (detectedLocation) {
+      const subRegionData = subRegion ? SUB_REGIONS[location]?.find(r => r.code === subRegion) : null;
+      return {
+        country: location,
+        timezone: subRegionData?.timezone || countryData.timezone,
+        latitude: detectedLocation.latitude,
+        longitude: detectedLocation.longitude,
+        name: `${detectedLocation.name}, ${countryData.name}`,
+        region: countryData.region,
+      };
+    }
+
+    // 2. Sub-region selected
     if (subRegion) {
       const subRegionData = SUB_REGIONS[location]?.find(r => r.code === subRegion);
       if (subRegionData) {
-        return { country: location, timezone: subRegionData.timezone, latitude: subRegionData.latitude, longitude: subRegionData.longitude, name: subRegionData.name, region: LOCATIONS[location].region };
+        return {
+          country: location,
+          timezone: subRegionData.timezone,
+          latitude: subRegionData.latitude,
+          longitude: subRegionData.longitude,
+          name: `${subRegionData.name}, ${countryData.name}`,
+          region: countryData.region,
+        };
       }
     }
-    return LOCATIONS[location];
-  }, [location, subRegion]);
+
+    // 3. Country-level fallback
+    return countryData;
+  }, [location, subRegion, detectedLocation]);
 
   const targetHekaDate = selectedDate || viewDate;
   const civilDate = useMemo(() => {
@@ -125,8 +208,11 @@ const CelestialGuideComponent: React.FC = () => {
 
   const dateContext = useMemo(() => getDateContext(civilDate), [civilDate]);
   const { isHistoricalView, isFutureView } = useMemo(() => {
-    const todayYear = new Date().getFullYear();
-    return { isHistoricalView: civilDate.getFullYear() < todayYear, isFutureView: civilDate.getFullYear() > todayYear };
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const selected = new Date(civilDate);
+    selected.setHours(0, 0, 0, 0);
+    return { isHistoricalView: selected.getTime() < today.getTime(), isFutureView: selected.getTime() > today.getTime() };
   }, [civilDate]);
   const dayOfYear = useMemo(() => {
     const startOfYear = new Date(civilDate.getFullYear(), 0, 0);
@@ -135,10 +221,10 @@ const CelestialGuideComponent: React.FC = () => {
 
   // Contextual title
   const contextualTitle = useMemo(() => {
-    if (dateContext.isToday) return "Today's Celestial Guide";
-    if (dateContext.isPast) return `Celestial Guide for ${dateContext.diffDays} days ago`;
-    return `Celestial Guide in ${dateContext.diffDays} days`;
-  }, [dateContext]);
+    if (dateContext.isToday) return t('title');
+    if (dateContext.isPast) return t('titlePast', { days: dateContext.diffDays });
+    return t('titleFuture', { days: dateContext.diffDays });
+  }, [dateContext, t]);
 
   // Top scroll track refs for synced horizontal scrolling
   const panelRef = useRef<HTMLDivElement>(null);
@@ -268,6 +354,74 @@ const CelestialGuideComponent: React.FC = () => {
     };
   }, [showTopScroll]);
 
+  // ═══════════════════════════════════════════════════════════════════════════════
+  // ANDROID WEBVIEW VERTICAL SCROLL FIX
+  // Android WebView's gesture classifier locks to scroll containers with
+  // overflow-x:auto and incorrectly traps vertical pan gestures. CSS
+  // touch-action is ignored. We bypass the broken classifier by attaching
+  // a non-passive touchmove listener, detecting direction, and manually
+  // scrolling the page for vertical gestures while letting horizontal
+  // gestures scroll the panel natively.
+  // ═══════════════════════════════════════════════════════════════════════════════
+  useEffect(() => {
+    const panel = panelRef.current;
+    if (!panel) return;
+
+    // Only apply on touch devices (coarse pointer) — desktop wheel/mouse
+    // should work natively.
+    const isTouchDevice = window.matchMedia('(pointer: coarse)').matches;
+    if (!isTouchDevice) return;
+
+    let startX = 0;
+    let startY = 0;
+    let lastY = 0;
+    let direction: 'h' | 'v' | null = null;
+
+    const onTouchStart = (e: TouchEvent) => {
+      if (e.touches.length !== 1) return;
+      startX = e.touches[0].clientX;
+      startY = e.touches[0].clientY;
+      lastY = startY;
+      direction = null;
+    };
+
+    const onTouchMove = (e: TouchEvent) => {
+      if (e.touches.length !== 1) return;
+      const x = e.touches[0].clientX;
+      const y = e.touches[0].clientY;
+
+      if (!direction) {
+        const dx = Math.abs(x - startX);
+        const dy = Math.abs(y - startY);
+        if (dx < 12 && dy < 12) return; // still in slop zone
+        direction = dx > dy ? 'h' : 'v';
+      }
+
+      if (direction === 'v') {
+        e.preventDefault();
+        const deltaY = y - lastY;
+        lastY = y;
+        window.scrollBy(0, -deltaY);
+      }
+    };
+
+    const onTouchEnd = () => {
+      direction = null;
+    };
+
+    panel.addEventListener('touchstart', onTouchStart, { passive: true });
+    panel.addEventListener('touchmove', onTouchMove, { passive: false });
+    panel.addEventListener('touchend', onTouchEnd);
+    panel.addEventListener('touchcancel', onTouchEnd);
+
+    return () => {
+      panel.removeEventListener('touchstart', onTouchStart);
+      panel.removeEventListener('touchmove', onTouchMove);
+      panel.removeEventListener('touchend', onTouchEnd);
+      panel.removeEventListener('touchcancel', onTouchEnd);
+    };
+  }, []);
+
   // Only show Celestial Guide if the unified toggle is enabled
   if (!display.showCelestialCards) return null;
 
@@ -277,8 +431,8 @@ const CelestialGuideComponent: React.FC = () => {
       <div className="celestial-panel__title" style={{ padding: '0 var(--space-4)' }}>
         <span>✦</span> {contextualTitle}
         <span className="celestial-date-context">
-          {isHistoricalView && " 📜 Historical View"}
-          {isFutureView && " 🔮 Future View"}
+          {isHistoricalView && `📜 ${t('historicalView')}`}
+          {isFutureView && `🔮 ${t('futureView')}`}
         </span>
       </div>
 
@@ -295,33 +449,33 @@ const CelestialGuideComponent: React.FC = () => {
       <div className="celestial-panel" ref={panelRef}>
         
         {/* Selected Date Info Card - contextual, not a celestial card */}
-        {(isHistoricalView || isFutureView) && (
+        {(dateContext.isPast || dateContext.isFuture) && (
           <ExpandableCard
             title={`${HEKA_MONTHS[targetHekaDate.month].name} ${targetHekaDate.day}, ${targetHekaDate.year}`}
-            subtitle="Selected HEKA Date"
+            subtitle={t('selectedDate')}
             icon="📅"
             accentColor="#c9a227"
             defaultExpanded={true}
           >
             <div className="selected-date-info">
               <InfoBadge 
-                label="Civil Date" 
-                value={civilDate.toLocaleDateString('en-US', { 
+                label={t('civilDate')} 
+                value={new Intl.DateTimeFormat(i18n.language || 'en', { 
                   weekday: 'long', 
                   year: 'numeric', 
                   month: 'long', 
                   day: 'numeric' 
-                })} 
+                }).format(civilDate)} 
               />
-              <InfoBadge label="Day of Year" value={`Day ${dayOfYear}`} />
+              <InfoBadge label={t('dayOfYear')} value={t('dayOfYearValue', { day: dayOfYear })} />
               {dateContext.isPast && (
-                <InfoSection title="Looking Back">
-                  <p>This date has passed. Review what celestial energies were present on this day.</p>
+                <InfoSection title={t('lookingBack')}>
+                  <p>{t('lookingBackDescription')}</p>
                 </InfoSection>
               )}
               {dateContext.isFuture && (
-                <InfoSection title="Looking Forward">
-                  <p>This date is in the future. Plan ahead using these upcoming celestial energies.</p>
+                <InfoSection title={t('lookingForward')}>
+                  <p>{t('lookingForwardDescription')}</p>
                 </InfoSection>
               )}
             </div>
@@ -340,7 +494,7 @@ const CelestialGuideComponent: React.FC = () => {
         <DayOfWeekCard date={civilDate} location={locationData} />
         
         {/* Scroll hint - positioned above scrollbar */}
-        <div className="scrollbar-hint">← Drag to scroll →</div>
+        <div className="scrollbar-hint">{`← ${t('dragToScroll')} →`}</div>
       </div>
     </div>
   );

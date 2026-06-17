@@ -1,0 +1,49 @@
+{
+  "best": "Кращий: {{count}}",
+  "title": "Твій Путь",
+  "close": "Закрити",
+  "reset": "Скинути Статистику",
+  "avgMood": "Середній Настрій",
+  "dayStreak": "Дня в ряд",
+  "totalNotes": "Всього нот",
+  "wordsWritten": "Написаних Слів",
+  "achievements": "Досягнення ({{earned}}/{{total}})",
+  "resetConfirm": "Скинути",
+  "progressRatio": "{{current}} / {{target}}",
+  "monthlyTooltip": "{{month}} {{year}}: {{count}} нот",
+  "notesByCategory": "Ноти за Категоріями",
+  "monthlyActivity": "Щомісячна Активність",
+  "mostActiveMonth": "Ваше найактивніше місяць було \u003cstrong\u003e{{month}}\u003c/strong\u003e з \u003cstrong\u003e{{count}}\u003c/strong\u003e нотами",
+  "categories": {
+    "work": "Робота",
+    "family": "Сім\u0027я",
+    "health": "Здоров\u0027я",
+    "general": "Загалом",
+    "personal": "Особисте",
+    "creative": "Творче",
+    "spiritual": "Духовне"
+  },
+  "progressToCentury": "Прогрес до Клубу Століття",
+  "resetConfirmTitle": "Скинути Статистику",
+  "badges": {
+    "century": {
+      "name": "Клуб Століття"
+    },
+    "explorer": {
+      "name": "Експлорер"
+    },
+    "archivist": {
+      "name": "Архівіст"
+    },
+    "first-note": {
+      "name": "Перші Слова"
+    },
+    "week-streak": {
+      "name": "Тижневик"
+    },
+    "month-streak": {
+      "name": "Місячник"
+    }
+  },
+  "resetConfirmDescription": "Ви впевнені, що хочете скинути всю статистику? Це неможливо буде скасувати."
+}

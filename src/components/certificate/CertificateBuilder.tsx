@@ -6,6 +6,7 @@
  */
 
 import React, { useState, useEffect, useCallback, useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import {
   createEmptyCertificateData,
@@ -23,15 +24,12 @@ import { CertificateExport } from './CertificateExport';
 
 type BuilderStep = 'birth-data' | 'template-select' | 'preview' | 'export';
 
-const STEPS: { id: BuilderStep; label: string }[] = [
-  { id: 'birth-data', label: 'Details' },
-  { id: 'template-select', label: 'Template' },
-  { id: 'preview', label: 'Preview' },
-  { id: 'export', label: 'Export' },
-];
+const STEP_IDS: BuilderStep[] = ['birth-data', 'template-select', 'preview', 'export'];
 
 export const CertificateBuilder: React.FC = () => {
+  const { t } = useTranslation('certificate');
   const navigate = useNavigate();
+  const STEPS = STEP_IDS.map(id => ({ id, label: t(id === 'birth-data' ? 'details' : id === 'template-select' ? 'template' : id) }));
   const [step, setStep] = useState<BuilderStep>('birth-data');
   const [data, setData] = useState<CertificateData>(createEmptyCertificateData());
   const [enrichedData, setEnrichedData] = useState<CertificateData | null>(null);
@@ -78,7 +76,7 @@ export const CertificateBuilder: React.FC = () => {
       setEnrichedData(enriched);
       setStep('preview');
     } catch (err) {
-      setLoadError(err instanceof Error ? err.message : 'Failed to compute celestial data');
+      setLoadError(err instanceof Error ? err.message : t('failedToComputeCelestialData'));
     } finally {
       setIsLoading(false);
     }
@@ -129,13 +127,13 @@ export const CertificateBuilder: React.FC = () => {
     <div className="cert-builder">
       {/* Header */}
       <header className="cert-builder-header">
-        <button className="cert-builder-back" onClick={handleBack}>
+        <button className="cert-builder-back" onClick={handleBack} aria-label={t('common.back')}>
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
             <path d="M19 12H5M12 19l-7-7 7-7" />
           </svg>
-          {step === 'birth-data' ? 'Store' : 'Back'}
+          {step === 'birth-data' ? t('store') : t('back')}
         </button>
-        <div className="cert-builder-title">Birth Certificate</div>
+        <div className="cert-builder-title">{t('birthCertificate')}</div>
         <div className="cert-builder-step-label">{STEPS[stepIndex].label}</div>
       </header>
 
@@ -167,7 +165,7 @@ export const CertificateBuilder: React.FC = () => {
         {step === 'preview' && isLoading && (
           <div className="cert-loading">
             <div className="cert-loading-spinner" />
-            <div className="cert-loading-text">Computing celestial data...</div>
+            <div className="cert-loading-text">{t('computingCelestialData')}</div>
           </div>
         )}
 
@@ -175,7 +173,7 @@ export const CertificateBuilder: React.FC = () => {
           <div className="cert-error">
             <div className="cert-error-icon">⚠️</div>
             <div className="cert-error-text">{loadError}</div>
-            <button className="cert-nav-btn cert-nav-btn--back" onClick={() => setLoadError(null)}>Try Again</button>
+            <button className="cert-nav-btn cert-nav-btn--back" onClick={() => setLoadError(null)}>{t('tryAgain')}</button>
           </div>
         )}
 
@@ -201,14 +199,14 @@ export const CertificateBuilder: React.FC = () => {
       {step !== 'export' && (
         <div className="cert-nav">
           <button className="cert-nav-btn cert-nav-btn--back" onClick={handleBack}>
-            {step === 'birth-data' ? 'Cancel' : 'Back'}
+            {step === 'birth-data' ? t('cancel') : t('back')}
           </button>
           <button
             className="cert-nav-btn cert-nav-btn--next"
             onClick={handleNext}
             disabled={!canProceed() || isLoading}
           >
-            {step === 'template-select' ? 'Generate Preview →' : step === 'preview' ? 'Export →' : 'Continue →'}
+            {step === 'template-select' ? t('generatePreview') : step === 'preview' ? t('exportArrow') : t('continueArrow')}
           </button>
         </div>
       )}

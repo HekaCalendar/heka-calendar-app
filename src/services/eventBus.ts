@@ -19,7 +19,7 @@
 
 import type { HekaDate } from '../types';
 import type { PlannerTask } from '../types';
-import type { UnlockedAchievement } from '../types';
+import type { UnlockedAchievement } from '../services/gamificationService';
 
 // ═══════════════════════════════════════════════════════════════════════════════
 // EVENT MAP — Single source of truth for all app events
@@ -33,6 +33,8 @@ export interface EventMap {
 
   // ─── Navigation ───
   'navigate-to-stars': { tab?: string };
+  'navigate-to-circle': void;
+  'navigate-to-planner': { taskId?: string };
 
   // ─── Modal Opens ───
   'heka-open-circle': void;
@@ -45,14 +47,40 @@ export interface EventMap {
 
   // ─── Notifications ───
   'heka:notification:navigate': { target: string };
+  'heka-notification-sent': { type: string; title: string };
+  'heka-notification-delivered': { id: string; type: string };
+  'heka-notification-action': { action: string; [key: string]: any };
+  'heka-push-token': { token: string; platform: string };
+  'heka-push-received': { type: string; data: Record<string, string>; title: string; body: string };
+  'heka-push-tapped': { type: string; data: Record<string, string> };
 
   // ─── Planner ───
   'heka-task-created': { task: PlannerTask; isFirstTask: boolean };
   'heka-task-completed': { task: PlannerTask; streak: number };
 
   // ─── Gamification ───
+  // NOTE: uses the gamification service's UnlockedAchievement (extends Achievement)
+  // so consumers receive name, description, icon, etc., not just id/unlockedAt.
   'heka-achievement-detected': { achievement: UnlockedAchievement };
   'heka-achievement-unlocked': { achievement: UnlockedAchievement };
+
+  // ─── Tutorial ───
+  'heka-tutorial-complete': { aiEnabled: boolean };
+
+  // ─── Security ───
+  'heka:secure-storage:unavailable': void;
+  'heka:error:logged': { context: string; message: string; code?: string };
+
+  // ─── Offline Sync ───
+  'offline:mutationEnqueued': { mutation: import('./offlineSyncEngine').PendingMutation };
+  'offline:syncStarted': Record<string, never>;
+  'offline:syncFinished': { pending: number };
+  'offline:mutationApplied': { mutation: import('./offlineSyncEngine').PendingMutation };
+  'offline:mutationFailed': { mutation: import('./offlineSyncEngine').PendingMutation; error: string };
+  'offline:conflict': import('./offlineSyncEngine').SyncConflict;
+  'offline:conflictResolved': { conflict: import('./offlineSyncEngine').SyncConflict; resolution: import('./offlineSyncEngine').ConflictResolution };
+  'offline:requestApplyMutation': { mutation: import('./offlineSyncEngine').PendingMutation };
+  'offline:applyMutation': { mutationId: string; success: boolean; conflict?: import('./offlineSyncEngine').SyncConflict };
 }
 
 export type EventName = keyof EventMap;

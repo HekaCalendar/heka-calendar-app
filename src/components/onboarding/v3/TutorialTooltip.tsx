@@ -5,6 +5,7 @@
  */
 
 import React, { useEffect, useState, useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 import type { TutorialStep } from './TutorialEngine';
 
 interface TutorialTooltipProps {
@@ -18,21 +19,21 @@ interface TutorialTooltipProps {
 }
 
 const PRINT_THEMES = [
-  { name: 'Default', class: 'tt-gallery__item--print-default', color: '#b8941f', desc: 'Parchment & gold' },
-  { name: 'Minimalist', class: 'tt-gallery__item--print-minimal', color: '#888', desc: 'Swiss purity' },
-  { name: 'Sacred Geo', class: 'tt-gallery__item--print-geometry', color: '#d4af37', desc: 'Circular cells' },
-  { name: 'Cyberpunk', class: 'tt-gallery__item--print-cyber', color: '#ff00ff', desc: 'Neon glow' },
-  { name: 'Nature', class: 'tt-gallery__item--print-nature', color: '#33691e', desc: 'Botanical' },
-  { name: 'Egypt', class: 'tt-gallery__item--print-egypt', color: '#b8941f', desc: 'Hieroglyphs' },
+  { key: 'default', class: 'tt-gallery__item--print-default', color: '#b8941f' },
+  { key: 'minimalist', class: 'tt-gallery__item--print-minimal', color: '#888' },
+  { key: 'sacred', class: 'tt-gallery__item--print-geometry', color: '#d4af37' },
+  { key: 'cyberpunk', class: 'tt-gallery__item--print-cyber', color: '#ff00ff' },
+  { key: 'nature', class: 'tt-gallery__item--print-nature', color: '#33691e' },
+  { key: 'egypt', class: 'tt-gallery__item--print-egypt', color: '#b8941f' },
 ];
 
 const ACHIEVEMENTS = [
-  { icon: '📝', name: 'First Words', tier: 1 },
-  { icon: '🔥', name: 'Week Warrior', tier: 2 },
-  { icon: '💯', name: 'Century Club', tier: 3 },
-  { icon: '📚', name: 'The Chronicler', tier: 4 },
-  { icon: '🦉', name: 'Night Owl', tier: 2 },
-  { icon: '⏳', name: 'Time Lord', tier: 5 },
+  { key: 'firstWords', icon: '📝', tier: 1 },
+  { key: 'weekWarrior', icon: '🔥', tier: 2 },
+  { key: 'centuryClub', icon: '💯', tier: 3 },
+  { key: 'theChronicler', icon: '📚', tier: 4 },
+  { key: 'nightOwl', icon: '🦉', tier: 2 },
+  { key: 'timeLord', icon: '⏳', tier: 5 },
 ];
 
 export const TutorialTooltip: React.FC<TutorialTooltipProps> = ({
@@ -44,6 +45,7 @@ export const TutorialTooltip: React.FC<TutorialTooltipProps> = ({
   onSkip,
   interactionReady,
 }) => {
+  const { t } = useTranslation(['tutorial', 'common']);
   const [position, setPosition] = useState<'bottom' | 'top' | 'left' | 'right' | 'center'>('center');
   const [coords, setCoords] = useState({ x: 0, y: 0 });
   const [animState, setAnimState] = useState<'entering' | 'idle' | 'exiting'>('entering');
@@ -159,6 +161,10 @@ export const TutorialTooltip: React.FC<TutorialTooltipProps> = ({
   const showPrintPreview = step.id === 'features';
   const showAchievementPreview = step.id === 'features';
 
+  const stepLabel = step.id === 'complete'
+    ? t('tutorial:completeLabel')
+    : t('tutorial:stepLabel', { current: stepIndex + 1, total: totalSteps - 1 });
+
   return (
     <div
       ref={tooltipRef}
@@ -190,9 +196,7 @@ export const TutorialTooltip: React.FC<TutorialTooltipProps> = ({
           <div className="tt-tooltip__header">
             <div className="tt-tooltip__step-group">
               <div className="tt-tooltip__step-badge">{stepIndex + 1}</div>
-              <span className="tt-tooltip__step-label">
-                {step.id === 'complete' ? 'Complete' : `Step ${stepIndex + 1} of ${totalSteps - 1}`}
-              </span>
+              <span className="tt-tooltip__step-label">{stepLabel}</span>
             </div>
 
             {/* Circular progress */}
@@ -233,10 +237,10 @@ export const TutorialTooltip: React.FC<TutorialTooltipProps> = ({
             <div className="tt-gallery">
               <div className="tt-gallery__grid">
                 {PRINT_THEMES.map((theme) => (
-                  <div key={theme.name} className={`tt-gallery__item ${theme.class}`}>
+                  <div key={theme.key} className={`tt-gallery__item ${theme.class}`}>
                     <div className="tt-gallery__dot" style={{ background: theme.color, boxShadow: `0 0 8px ${theme.color}60` }} />
-                    <div className="tt-gallery__name">{theme.name}</div>
-                    <div className="tt-gallery__desc">{theme.desc}</div>
+                    <div className="tt-gallery__name">{t(`tutorial:printThemes.${theme.key}.name`)}</div>
+                    <div className="tt-gallery__desc">{t(`tutorial:printThemes.${theme.key}.desc`)}</div>
                   </div>
                 ))}
               </div>
@@ -248,9 +252,9 @@ export const TutorialTooltip: React.FC<TutorialTooltipProps> = ({
             <div className="tt-gallery">
               <div className="tt-gallery__scroll">
                 {ACHIEVEMENTS.map((ach) => (
-                  <div key={ach.name} className="tt-gallery__achievement">
+                  <div key={ach.key} className="tt-gallery__achievement">
                     <div className="tt-gallery__achievement-icon">{ach.icon}</div>
-                    <div className="tt-gallery__achievement-name">{ach.name}</div>
+                    <div className="tt-gallery__achievement-name">{t(`tutorial:previewAchievements.${ach.key}`)}</div>
                     <div className="tt-gallery__achievement-stars">
                       {Array.from({ length: ach.tier }, (_, i) => (
                         <span key={i} className="tt-gallery__achievement-star">★</span>
@@ -278,18 +282,18 @@ export const TutorialTooltip: React.FC<TutorialTooltipProps> = ({
           <div className="tt-tooltip__buttons">
             {onBack && (
               <button className="tt-btn tt-btn--back" onClick={onBack}>
-                ← Back
+                ← {t('tutorial:back')}
               </button>
             )}
             <div style={{ flex: 1 }} />
             {step.id !== 'complete' && (
               <button className="tt-btn tt-btn--skip" onClick={onSkip}>
-                Skip
+                {t('tutorial:skip')}
               </button>
             )}
             {(!step.requiresInteraction || interactionReady) && (
               <button className="tt-btn tt-btn--primary" onClick={onNext}>
-                {step.id === 'complete' ? 'Enter HEKA →' : 'Continue →'}
+                {step.id === 'complete' ? `${t('tutorial:enter')} →` : `${t('tutorial:continue')} →`}
               </button>
             )}
           </div>

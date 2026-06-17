@@ -150,7 +150,7 @@ const PLAY_STORE_URL = 'https://play.google.com/store/apps/details?id=com.heka.c
 
 // Web landing page base URL (fallback if no custom domain yet)
 // For now, we'll use a data URL approach or a simple redirect page
-const WEB_LANDING_BASE = 'https://heka-calendar-pro.vercel.app/task';
+const WEB_LANDING_BASE = 'https://hekacalendar.com/task';
 
 /**
  * Generate a smart share link that works for both app and web
@@ -176,7 +176,7 @@ export function generateTaskShareLink(shareCode: string, title?: string, creator
  * This redirects to /invite with task preview embedded
  */
 export function generateInviteTaskShareLink(inviteCode: string, title?: string, creatorName?: string, taskCode?: string): string {
-  const INVITE_LANDING_BASE = 'https://heka-calendar-pro.vercel.app/invite';
+  const INVITE_LANDING_BASE = 'https://hekacalendar.com/invite';
   const params = new URLSearchParams();
   params.set('code', inviteCode);
   params.set('type', 'task');
@@ -352,14 +352,18 @@ export async function acceptSharedTask(
   await batch.commit();
 
   // Notify creator
-  void NotificationEngine.notifyCore(
-    'task-completed',
-    'circle',
-    'Task Accepted',
-    `${currentUser.displayName || 'Someone'} accepted your task: ${sharedTask.title}`,
-    { taskId: taskRef.id },
-    parseInt(taskRef.id.slice(-8), 16) || undefined
-  );
+  try {
+    await NotificationEngine.notifyCore(
+      'task-completed',
+      'circle',
+      'Task Accepted',
+      `${currentUser.displayName || 'Someone'} accepted your task: ${sharedTask.title}`,
+      { taskId: taskRef.id },
+      parseInt(taskRef.id.slice(-8), 16) || undefined
+    );
+  } catch (err) {
+    console.error('[TaskShareService] Failed to send task completion notification:', err);
+  }
 
   return {
     success: true,
@@ -402,14 +406,18 @@ export async function declineSharedTask(
   });
 
   // Notify creator
-  void NotificationEngine.notifyCore(
-    'task-declined',
-    'circle',
-    'Task Declined',
-    `${currentUser.displayName || 'Someone'} declined your task: ${sharedTask.title}${reason ? ` - ${reason}` : ''}`,
-    { shareCode },
-    parseInt(shareCode.slice(-8), 36) || undefined
-  );
+  try {
+    await NotificationEngine.notifyCore(
+      'task-declined',
+      'circle',
+      'Task Declined',
+      `${currentUser.displayName || 'Someone'} declined your task: ${sharedTask.title}${reason ? ` - ${reason}` : ''}`,
+      { shareCode },
+      parseInt(shareCode.slice(-8), 36) || undefined
+    );
+  } catch (err) {
+    console.error('[TaskShareService] Failed to send task declined notification:', err);
+  }
 
   return { success: true };
 }

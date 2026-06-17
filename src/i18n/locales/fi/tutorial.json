@@ -1,0 +1,126 @@
+{
+  "tutorial": {
+    "back": "Takaisin",
+    "skip": "Ohita",
+    "enter": "Mene HEKA",
+    "continue": "Jatka",
+    "stepLabel": "Vaihe {{current}}/{{total}}",
+    "journeyTitle": "Rataksesi",
+    "completeLabel": "Valmis",
+    "actionWaiting": "Napauta jatkaaksesi",
+    "steps": {
+      "welcome": {
+        "title": "Tervetuloa HEKA:an",
+        "detail": "Tuhansetta kuukautta. Kaksikymmentäkahdeksan päivää each. Kuu, aurinko, puutarha, energia, ystävät — viimein sävyyn.",
+        "action": "Aloita Rataksesi",
+        "instruction": "Et ole koskaan nähnyt kalenteria kuin tätä."
+      },
+      "tracker": {
+        "title": "Seuraa Rytmiäsi",
+        "detail": "Tunnelma: 1-10 liukusäädintä reaaliajassa hymiöiden kanssa. Uni: kesto ja laatu. Energia: fyysinen, henkinen, emoktionaalinen, hengellinen. Insight-näyttöalue paljastaa kuviot ajan myötä. Kalenterisi säilyttää tarinasi.",
+        "action": "Jatka",
+        "instruction": "Ruumis on osa kalenteria."
+      },
+      "the-grid": {
+        "title": "Ruudukko — Tuhattuhatta Kuukautta",
+        "detail": "Kaksitoista kuukautta täsmälleen kahdeksantoista päivänä, plus Hexa elokuun ja syyskuun välillä. Maaliskuun on 29. päivä. Kukin kuukausi alkaa samana päivänä. Vuosi hengittää kolmella kaarella — Avaus punaisella, Ydin vihreällä, Sulkeutuminen violetilla. Ennustettavissa. Symmetrisessä. Siistissä.",
+        "action": "Napauta mitä tahansa päivää jatkaaksesi",
+        "instruction": "Lukua niitä. Tuhattuhatta. Ei kaksituhattakolme."
+      },
+      "features": {
+        "title": "Asevarusteesi",
+        "detail": "Tulosta: Oletus Kultainen, Minimalistinen, Pyhä Geometria ympyrömuodossa, Cyberpunk CRT-viivalla, Luonto Orgaaninen, Muinaisen Egyptin hieroglyfeillä. Kaikki ilmaiset. Ikuisesti. A4, A3, Kirjekuori. Tähdet: Swiss Ephemeris syntymäkartat, arc-sekuntitarkkuus. Päiväkirja: neljä tilaa AI-näkökulman kanssa. Ympyrä: reaaliaikaviesti, jaetut tehtävät HEKA eräajoina. Tilastot: 80+ saavutus kahdeksalla tasolla. Salaiset saavutukset odottavat löytämistä.",
+        "action": "Jatka",
+        "instruction": "Kuusi tulostusteemaa. Syntymäkartta moottori. Päiväkirja. Kaverit. Tilastot."
+      },
+      "settings": {
+        "title": "Tee Sen Omasi",
+        "detail": "Siviilikalenterit: ylikuormaustaso Gregoriaanisella, jotta et koskaan ole kokouksessa myöhässä. Kuunpasat: Swiss Ephemeris-merkinnät jokaisessa solmussa. Löylypäivät: yhteisön juhlat. Eritila: koko näyttö, häiriöttämätön, Yin-Yang tumma/valo valinta. Kalenteri sopeutuu siihen, miten SINÄ näet ajan.",
+        "action": "Valitse mikä tahansa asetus ja jatka",
+        "instruction": "Kolme valintanauhaa. Eritila. Täydellinen hallinta."
+      },
+      "ai-coach": {
+        "title": "HEKA AI — Sinun Tahtiopas",
+        "detail": "Kelluva lasi oraakkeli. Yhdistää kuunpasat, sinun liikkeet, tehtävät, päiväkirjatunnelmia, rivit ja sijaintia runollisiksi, toteuttamiskelpoisiksi viesteiksi. Puhuu arketyypistäsi — Sotilas, Mölkky, Taiteilija, Strategi, Mystikko, Feniks. Muistaa 19",
+        "action": "Jatka",
+        "instruction": "Se tarkkailee taivasta. Se tarkkailee sinua."
+      },
+      "complete": {
+        "title": "Olet Valmis",
+        "detail": "Tiedät kuinka navigoida kolmetoista kuukautta. Tiedät kuinka lukea kuu. Tiedät kuinka seurata energiaasi, äänestää juhlapäiviä, tulostaa kauniita sivuja, päiväkirjata tähtien kanssa ja kysyä AI-opastajasi neuvoa. Kaikki muu odottaa uteliaisuuttasi.",
+        "action": "Mene HEKAan",
+        "instruction": "Kalenteri on sinun. Taivas on sinun."
+      },
+      "day-cells": {
+        "title": "Jokainen Solu On Elävä",
+        "detail": "Swiss Ephemeris kuun vaihe emoji. Siviilikalenteri alla. Löylypäivät — yhteisön kuroittamat. Huomautusselitteet — sinun sanat, näkyvissä ruudulla. Kaikki kolmetoista kuukautta kerralla. Koko vuosi yhdellä silmäyksellä.",
+        "action": "Klikkaa mitä tahansa päivää avataksesi sen",
+        "instruction": "Jokainen päivä kertoo tarinan."
+      },
+      "day-panel": {
+        "title": "Päivä Avautuu",
+        "detail": "Kuu: tarkka valaistus, kasvava tai vähenevä, Tyhjä Kurssi havainto. Astrologia: reaaliaikaiset liikkeet SINUN syntymäkarttasi vastaan. Muistot: luokittelemattomat tunnelmaan, tehtävään, päiväkirjaan. Tehtävät: eräajat, muistutukset. Energia: äänestä klo 19:30 jälkeen, katso yhteisön herätys. Tämä ei ole kalenterimerkintä. Tämä on portaali.",
+        "action": "Tutki päiväpaneelia ja jatka sitten",
+        "instruction": "Yksittäisen päivän komentokeskus."
+      },
+      "community": {
+        "title": "Muokkaa Kosmosta",
+        "detail": "Ehdota uusia juhlapäiviä. Kymmenen upvotea ja se muuttuu viraliseksi. Äänestä tulevista ominaisuuksista — Suunnitellut, Harkitse, Kesken, Julkaistu. Kalenteri kehittyy, koska sen käyttäjät kehittävät sitä. Tämä on yhteistyötä.",
+        "action": "Jatka",
+        "instruction": "Äänesi muuttaa kalenteria."
+      },
+      "navigation": {
+        "title": "Liiku Ajan Takaisin Ja Eteenpäin",
+        "detail": "Nuolet siirtyvät kuukausien välillä. Tänään palaa takaisin nyt. Haku ymmärtää luonnollista kieltä — \"Hexa 15\" tai \"tammikuu 31.\" Laajenna vaakasuorasti tai pystysuorasti saadaksesi enemmän yksityiskohtia. Koko vuosi on vain eleen päässä.",
+        "action": "Napauta ← tai → navigoimaan",
+        "instruction": "Sinua ei koskaan menetä."
+      },
+      "first-note": {
+        "title": "Tee Ensimmäinen Merkkinsä",
+        "detail": "Kosketa mitä tahansa päivää. Vieritä Notit-kohtaan. Kirjoita jotain — tehtävä, tunnelma, muisto. Tämä on ensimmäinen merkintä, joka voi kehittyä vuosien pituiseksi kronologiaksi.",
+        "action": "Kirjoita viesti suorittaaksesi opastuksen",
+        "instruction": "Kalenteri on vain työkalu, kunnes teet siitä itsesi."
+      },
+      "celestial-guide": {
+        "title": "Tähtiluettelo",
+        "detail": "Auringon Aikat: reaaliaikainen SVG-rengas, sää, neljästasoinen tarkkuus. Kuun Vaihe: valaistus, tyhjä kuu, kuuvuoden laskenta. Kaudet: todellinen astronominen juurennusseuranta. Maataloustuotanto: mitä istuttaa tänään, sijaintisi ja kuunpasan mukaan. Digitaalinen kello: neljä samanaikaista laskentaa. Planeetatun Ajat: todellinen Khaldelainen tunnit todellisen auringonnousun ja -laskuun perustuen. Vieritä niiden läpi. Jokainen on tieteellinen instrumentti.",
+        "action": "Vieritä tahtiluettelokortteja ja jatka",
+        "instruction": "Kuusi korttia. Yksi taivas."
+      }
+    },
+    "printThemes": {
+      "egypt": {
+        "name": "Egypti",
+        "desc": "Hieroglyfit"
+      },
+      "sacred": {
+        "name": "Pyhä Geo",
+        "desc": "Ympyröityt solut"
+      },
+      "nature": {
+        "name": "Luonto",
+        "desc": "Botaninen"
+      },
+      "default": {
+        "name": "Oletus",
+        "desc": "Kokopaperi & kulta"
+      },
+      "cyberpunk": {
+        "name": "Kyberpunk",
+        "desc": "Neonvalo"
+      },
+      "minimalist": {
+        "name": "Minimalistinen",
+        "desc": "Sveitsiläinen puhdas"
+      }
+    },
+    "previewAchievements": {
+      "nightOwl": "ÖÖ-koira",
+      "timeLord": "Ajanjanoja",
+      "firstWords": "Ensimmäiset Sanat",
+      "weekWarrior": "Viikkosoturi",
+      "centuryClub": "Satavuosiklubi",
+      "theChronicler": "Kroonikoitsija"
+    }
+  }
+}

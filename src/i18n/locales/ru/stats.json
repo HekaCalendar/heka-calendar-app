@@ -1,0 +1,49 @@
+{
+  "best": "Лучшее: {{count}}",
+  "title": "Твой Путь",
+  "close": "Закрыть",
+  "reset": "Сбросить Статистику",
+  "avgMood": "Средний Настроенность",
+  "dayStreak": "Дневной Сtrieт",
+  "totalNotes": "Общее Количество Заметок",
+  "wordsWritten": "Написано Слов",
+  "achievements": "Достижения ({{earned}}/{{total}})",
+  "resetConfirm": "Сбросить",
+  "progressRatio": "{{current}} / {{target}}",
+  "monthlyTooltip": "{{month}} {{year}}: {{count}} заметок",
+  "notesByCategory": "Заметки по Категориям",
+  "monthlyActivity": "Месячная Активность",
+  "mostActiveMonth": "Твой рекорд по активности - \u003cstrong\u003e{{month}}\u003c/strong\u003e с \u003cstrong\u003e{{count}}\u003c/strong\u003e заметками",
+  "categories": {
+    "work": "Работа",
+    "family": "Семья",
+    "health": "Здоровье",
+    "general": "Общее",
+    "personal": "Личное",
+    "creative": "Творческое",
+    "spiritual": "Духовное"
+  },
+  "progressToCentury": "Прогресс к Клубу Векового",
+  "resetConfirmTitle": "Сбросить Статистику",
+  "badges": {
+    "century": {
+      "name": "Клуб Векового"
+    },
+    "explorer": {
+      "name": "Исследователь"
+    },
+    "archivist": {
+      "name": "Архивист"
+    },
+    "first-note": {
+      "name": "Первые Слова"
+    },
+    "week-streak": {
+      "name": "Тыжневый Воин"
+    },
+    "month-streak": {
+      "name": "Месячный Мастер"
+    }
+  },
+  "resetConfirmDescription": "Ты уверен, что хочешь сбросить всю статистику? Это действие нельзя будет отменить."
+}

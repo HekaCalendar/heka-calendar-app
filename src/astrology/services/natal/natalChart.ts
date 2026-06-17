@@ -37,6 +37,7 @@ export interface NatalChart {
     earth: number;
     air: number;
     water: number;
+    ether: number;
   };
   modalities: {
     cardinal: number;
@@ -47,6 +48,7 @@ export interface NatalChart {
   zodiacSystem: '12-sign' | '13-sign' | 'sidereal';
   zodiacFrame?: 'tropical' | 'sidereal';
   signCount?: 12 | 13;
+  calculatedWithFallback?: boolean;
 }
 
 export interface Transit {
@@ -145,15 +147,15 @@ export function deleteNatalChart(profileId: string = 'default'): void {
 /**
  * Calculate elemental balance from chart
  */
-export function calculateElementalBalance(planets: Record<string, NatalPlanet>): NatalChart['elements'] {
-  const elements = { fire: 0, earth: 0, air: 0, water: 0 };
+export function calculateElementalBalance(planets: Record<string, CelestialBody>): NatalChart['elements'] {
+  const elements = { fire: 0, earth: 0, air: 0, water: 0, ether: 0 };
   
   const signElements: Record<string, keyof typeof elements> = {
     aries: 'fire', leo: 'fire', sagittarius: 'fire',
     taurus: 'earth', virgo: 'earth', capricorn: 'earth',
     gemini: 'air', libra: 'air', aquarius: 'air',
     cancer: 'water', scorpio: 'water', pisces: 'water',
-    ophiuchus: 'water',
+    ophiuchus: 'ether',
   };
   
   Object.values(planets).forEach(planet => {
@@ -180,7 +182,7 @@ export function getDominantElement(elements: NatalChart['elements']): string | n
 /**
  * Calculate modality balance
  */
-export function calculateModalityBalance(planets: Record<string, NatalPlanet>): NatalChart['modalities'] {
+export function calculateModalityBalance(planets: Record<string, CelestialBody>): NatalChart['modalities'] {
   const modalities = { cardinal: 0, fixed: 0, mutable: 0 };
   
   const signModalities: Record<string, keyof typeof modalities> = {

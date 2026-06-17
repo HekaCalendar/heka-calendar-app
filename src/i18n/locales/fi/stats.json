@@ -1,0 +1,49 @@
+{
+  "best": "Paras: {{count}}",
+  "title": "Reissusi",
+  "close": "Sulje",
+  "reset": "Nollaa tilastot",
+  "avgMood": "Keskimääräinen tunnelma",
+  "dayStreak": "Päiväjarrutus",
+  "totalNotes": "Kokonaan muistiinpanoja",
+  "wordsWritten": "Kirjoitettuja sanoja",
+  "achievements": "Saavutukset ({{earned}}/{{total}})",
+  "resetConfirm": "Nollaa",
+  "progressRatio": "{{current}} / {{target}}",
+  "monthlyTooltip": "{{month}} {{year}}: {{count}} muistiinpanoa",
+  "notesByCategory": "Muistiinpanot kategorioittain",
+  "monthlyActivity": "Kuukausittivityyto",
+  "mostActiveMonth": "Aktiivisin kuukausi oli \u003cstrong\u003e{{month}}\u003c/strong\u003e jossa oli \u003cstrong\u003e{{count}}\u003c/strong\u003e muistiinpanoa",
+  "categories": {
+    "work": "Työ",
+    "family": "Perhe",
+    "health": "Terveys",
+    "general": "Yleinen",
+    "personal": "Henkilökohtainen",
+    "creative": "Luova",
+    "spiritual": "Henkinen"
+  },
+  "progressToCentury": "Edistyminen satakilpailuun",
+  "resetConfirmTitle": "Nollaa tilastot",
+  "badges": {
+    "century": {
+      "name": "Satakilpailu"
+    },
+    "explorer": {
+      "name": "Tutkimusmatkustaja"
+    },
+    "archivist": {
+      "name": "Arkistomonisteri"
+    },
+    "first-note": {
+      "name": "Ensimmäiset sanat"
+    },
+    "week-streak": {
+      "name": "Viikosiveto"
+    },
+    "month-streak": {
+      "name": "Kuukausiveto"
+    }
+  },
+  "resetConfirmDescription": "Haluatko varmasti nollata kaikki tilastot? Tätä toimintoa ei voi perua."
+}

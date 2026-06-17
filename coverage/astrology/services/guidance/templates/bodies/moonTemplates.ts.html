@@ -1,0 +1,544 @@
+
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Code coverage report for astrology/services/guidance/templates/bodies/moonTemplates.ts</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../../../../prettify.css" />
+    <link rel="stylesheet" href="../../../../../base.css" />
+    <link rel="shortcut icon" type="image/x-icon" href="../../../../../favicon.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../../../../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+    
+<body>
+<div class='wrapper'>
+    <div class='pad1'>
+        <h1><a href="../../../../../index.html">All files</a> / <a href="index.html">astrology/services/guidance/templates/bodies</a> moonTemplates.ts</h1>
+        <div class='clearfix'>
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">0% </span>
+                <span class="quiet">Statements</span>
+                <span class='fraction'>0/153</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">0% </span>
+                <span class="quiet">Branches</span>
+                <span class='fraction'>0/1</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">0% </span>
+                <span class="quiet">Functions</span>
+                <span class='fraction'>0/1</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">0% </span>
+                <span class="quiet">Lines</span>
+                <span class='fraction'>0/153</span>
+            </div>
+        
+            
+        </div>
+        <p class="quiet">
+            Press <em>n</em> or <em>j</em> to go to the next uncovered block, <em>b</em>, <em>p</em> or <em>k</em> for the previous block.
+        </p>
+        <template id="filterTemplate">
+            <div class="quiet">
+                Filter:
+                <input type="search" id="fileSearch">
+            </div>
+        </template>
+    </div>
+    <div class='status-line low'></div>
+    <pre><table class="coverage">
+<tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
+<a name='L2'></a><a href='#L2'>2</a>
+<a name='L3'></a><a href='#L3'>3</a>
+<a name='L4'></a><a href='#L4'>4</a>
+<a name='L5'></a><a href='#L5'>5</a>
+<a name='L6'></a><a href='#L6'>6</a>
+<a name='L7'></a><a href='#L7'>7</a>
+<a name='L8'></a><a href='#L8'>8</a>
+<a name='L9'></a><a href='#L9'>9</a>
+<a name='L10'></a><a href='#L10'>10</a>
+<a name='L11'></a><a href='#L11'>11</a>
+<a name='L12'></a><a href='#L12'>12</a>
+<a name='L13'></a><a href='#L13'>13</a>
+<a name='L14'></a><a href='#L14'>14</a>
+<a name='L15'></a><a href='#L15'>15</a>
+<a name='L16'></a><a href='#L16'>16</a>
+<a name='L17'></a><a href='#L17'>17</a>
+<a name='L18'></a><a href='#L18'>18</a>
+<a name='L19'></a><a href='#L19'>19</a>
+<a name='L20'></a><a href='#L20'>20</a>
+<a name='L21'></a><a href='#L21'>21</a>
+<a name='L22'></a><a href='#L22'>22</a>
+<a name='L23'></a><a href='#L23'>23</a>
+<a name='L24'></a><a href='#L24'>24</a>
+<a name='L25'></a><a href='#L25'>25</a>
+<a name='L26'></a><a href='#L26'>26</a>
+<a name='L27'></a><a href='#L27'>27</a>
+<a name='L28'></a><a href='#L28'>28</a>
+<a name='L29'></a><a href='#L29'>29</a>
+<a name='L30'></a><a href='#L30'>30</a>
+<a name='L31'></a><a href='#L31'>31</a>
+<a name='L32'></a><a href='#L32'>32</a>
+<a name='L33'></a><a href='#L33'>33</a>
+<a name='L34'></a><a href='#L34'>34</a>
+<a name='L35'></a><a href='#L35'>35</a>
+<a name='L36'></a><a href='#L36'>36</a>
+<a name='L37'></a><a href='#L37'>37</a>
+<a name='L38'></a><a href='#L38'>38</a>
+<a name='L39'></a><a href='#L39'>39</a>
+<a name='L40'></a><a href='#L40'>40</a>
+<a name='L41'></a><a href='#L41'>41</a>
+<a name='L42'></a><a href='#L42'>42</a>
+<a name='L43'></a><a href='#L43'>43</a>
+<a name='L44'></a><a href='#L44'>44</a>
+<a name='L45'></a><a href='#L45'>45</a>
+<a name='L46'></a><a href='#L46'>46</a>
+<a name='L47'></a><a href='#L47'>47</a>
+<a name='L48'></a><a href='#L48'>48</a>
+<a name='L49'></a><a href='#L49'>49</a>
+<a name='L50'></a><a href='#L50'>50</a>
+<a name='L51'></a><a href='#L51'>51</a>
+<a name='L52'></a><a href='#L52'>52</a>
+<a name='L53'></a><a href='#L53'>53</a>
+<a name='L54'></a><a href='#L54'>54</a>
+<a name='L55'></a><a href='#L55'>55</a>
+<a name='L56'></a><a href='#L56'>56</a>
+<a name='L57'></a><a href='#L57'>57</a>
+<a name='L58'></a><a href='#L58'>58</a>
+<a name='L59'></a><a href='#L59'>59</a>
+<a name='L60'></a><a href='#L60'>60</a>
+<a name='L61'></a><a href='#L61'>61</a>
+<a name='L62'></a><a href='#L62'>62</a>
+<a name='L63'></a><a href='#L63'>63</a>
+<a name='L64'></a><a href='#L64'>64</a>
+<a name='L65'></a><a href='#L65'>65</a>
+<a name='L66'></a><a href='#L66'>66</a>
+<a name='L67'></a><a href='#L67'>67</a>
+<a name='L68'></a><a href='#L68'>68</a>
+<a name='L69'></a><a href='#L69'>69</a>
+<a name='L70'></a><a href='#L70'>70</a>
+<a name='L71'></a><a href='#L71'>71</a>
+<a name='L72'></a><a href='#L72'>72</a>
+<a name='L73'></a><a href='#L73'>73</a>
+<a name='L74'></a><a href='#L74'>74</a>
+<a name='L75'></a><a href='#L75'>75</a>
+<a name='L76'></a><a href='#L76'>76</a>
+<a name='L77'></a><a href='#L77'>77</a>
+<a name='L78'></a><a href='#L78'>78</a>
+<a name='L79'></a><a href='#L79'>79</a>
+<a name='L80'></a><a href='#L80'>80</a>
+<a name='L81'></a><a href='#L81'>81</a>
+<a name='L82'></a><a href='#L82'>82</a>
+<a name='L83'></a><a href='#L83'>83</a>
+<a name='L84'></a><a href='#L84'>84</a>
+<a name='L85'></a><a href='#L85'>85</a>
+<a name='L86'></a><a href='#L86'>86</a>
+<a name='L87'></a><a href='#L87'>87</a>
+<a name='L88'></a><a href='#L88'>88</a>
+<a name='L89'></a><a href='#L89'>89</a>
+<a name='L90'></a><a href='#L90'>90</a>
+<a name='L91'></a><a href='#L91'>91</a>
+<a name='L92'></a><a href='#L92'>92</a>
+<a name='L93'></a><a href='#L93'>93</a>
+<a name='L94'></a><a href='#L94'>94</a>
+<a name='L95'></a><a href='#L95'>95</a>
+<a name='L96'></a><a href='#L96'>96</a>
+<a name='L97'></a><a href='#L97'>97</a>
+<a name='L98'></a><a href='#L98'>98</a>
+<a name='L99'></a><a href='#L99'>99</a>
+<a name='L100'></a><a href='#L100'>100</a>
+<a name='L101'></a><a href='#L101'>101</a>
+<a name='L102'></a><a href='#L102'>102</a>
+<a name='L103'></a><a href='#L103'>103</a>
+<a name='L104'></a><a href='#L104'>104</a>
+<a name='L105'></a><a href='#L105'>105</a>
+<a name='L106'></a><a href='#L106'>106</a>
+<a name='L107'></a><a href='#L107'>107</a>
+<a name='L108'></a><a href='#L108'>108</a>
+<a name='L109'></a><a href='#L109'>109</a>
+<a name='L110'></a><a href='#L110'>110</a>
+<a name='L111'></a><a href='#L111'>111</a>
+<a name='L112'></a><a href='#L112'>112</a>
+<a name='L113'></a><a href='#L113'>113</a>
+<a name='L114'></a><a href='#L114'>114</a>
+<a name='L115'></a><a href='#L115'>115</a>
+<a name='L116'></a><a href='#L116'>116</a>
+<a name='L117'></a><a href='#L117'>117</a>
+<a name='L118'></a><a href='#L118'>118</a>
+<a name='L119'></a><a href='#L119'>119</a>
+<a name='L120'></a><a href='#L120'>120</a>
+<a name='L121'></a><a href='#L121'>121</a>
+<a name='L122'></a><a href='#L122'>122</a>
+<a name='L123'></a><a href='#L123'>123</a>
+<a name='L124'></a><a href='#L124'>124</a>
+<a name='L125'></a><a href='#L125'>125</a>
+<a name='L126'></a><a href='#L126'>126</a>
+<a name='L127'></a><a href='#L127'>127</a>
+<a name='L128'></a><a href='#L128'>128</a>
+<a name='L129'></a><a href='#L129'>129</a>
+<a name='L130'></a><a href='#L130'>130</a>
+<a name='L131'></a><a href='#L131'>131</a>
+<a name='L132'></a><a href='#L132'>132</a>
+<a name='L133'></a><a href='#L133'>133</a>
+<a name='L134'></a><a href='#L134'>134</a>
+<a name='L135'></a><a href='#L135'>135</a>
+<a name='L136'></a><a href='#L136'>136</a>
+<a name='L137'></a><a href='#L137'>137</a>
+<a name='L138'></a><a href='#L138'>138</a>
+<a name='L139'></a><a href='#L139'>139</a>
+<a name='L140'></a><a href='#L140'>140</a>
+<a name='L141'></a><a href='#L141'>141</a>
+<a name='L142'></a><a href='#L142'>142</a>
+<a name='L143'></a><a href='#L143'>143</a>
+<a name='L144'></a><a href='#L144'>144</a>
+<a name='L145'></a><a href='#L145'>145</a>
+<a name='L146'></a><a href='#L146'>146</a>
+<a name='L147'></a><a href='#L147'>147</a>
+<a name='L148'></a><a href='#L148'>148</a>
+<a name='L149'></a><a href='#L149'>149</a>
+<a name='L150'></a><a href='#L150'>150</a>
+<a name='L151'></a><a href='#L151'>151</a>
+<a name='L152'></a><a href='#L152'>152</a>
+<a name='L153'></a><a href='#L153'>153</a>
+<a name='L154'></a><a href='#L154'>154</a></td><td class="line-coverage quiet"><span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js"><span class="cstat-no" title="statement not covered" >import type { BodyTemplates } from './types';<span class="fstat-no" title="function not covered" ><span class="branch-0 cbranch-no" title="branch not covered" ></span></span></span>
+<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" >/**</span>
+<span class="cstat-no" title="statement not covered" > * ═══════════════════════════════════════════════════════════════════════════════</span>
+<span class="cstat-no" title="statement not covered" > * MOON TEMPLATES — Emotional inner world, instincts, nurture</span>
+<span class="cstat-no" title="statement not covered" > * ═══════════════════════════════════════════════════════════════════════════════</span>
+<span class="cstat-no" title="statement not covered" > */</span>
+<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" >export const moonTemplates: BodyTemplates = {</span>
+<span class="cstat-no" title="statement not covered" >  aries: {</span>
+<span class="cstat-no" title="statement not covered" >    essence: 'Your emotional tides move with the speed of flash floods — sudden, direct, and impossible to contain. The Moon in Aries feels first and thinks later, which is both your power and your vulnerability. You experience emotions as physical urgency, a need to act, to confront, to clear the air. Your inner world is a battlefield where honesty is the only acceptable weapon.',</span>
+<span class="cstat-no" title="statement not covered" >    element: 'fire', modality: 'cardinal', keywords: ['impulse', 'courage', 'authenticity', 'directness'],</span>
+<span class="cstat-no" title="statement not covered" >    careerAdvice: 'Trust your gut instincts on professional matters — they fire faster than your rational mind and are often right. Create a work environment where you can act on intuition without bureaucratic delay. You thrive in roles requiring quick emotional reads and decisive responses. Beware impatience with slower colleagues; not everyone processes at your speed.',</span>
+<span class="cstat-no" title="statement not covered" >    relationshipAdvice: 'Express feelings honestly, even when the honesty is uncomfortable. You attract partners who value emotional authenticity over diplomatic restraint. Your needs are immediate and valid — do not apologise for wanting them met now. Practice holding space for your partner\'s slower emotional rhythm without losing your own.',</span>
+<span class="cstat-no" title="statement not covered" >    healthAdvice: 'Emotions manifest quickly in your body — tension headaches, adrenal spikes, restless energy. Exercise is your emotional release valve; without it, feelings become physical symptoms. Support your head, eyes, and adrenal system. Learn to feel the emotion without immediately acting on it — the pause is where wisdom lives.',</span>
+<span class="cstat-no" title="statement not covered" >    financesAdvice: 'Impulsive spending is your financial shadow — the need to act on desire before reason intervenes. Build a 24-hour pause rule for purchases above a threshold. Your gut about investments is sharp, but verify with research. Security comes from action, not accumulation.',</span>
+<span class="cstat-no" title="statement not covered" >    growthAdvice: 'Your emotional reactivity is not weakness — it is speed. The lesson of Moon in Aries is not to slow down, but to aim before you fire. Growth asks you to distinguish between genuine emotional needs and reflexive reactions, and to express both with courage.',</span>
+<span class="cstat-no" title="statement not covered" >    bodyFocus: 'head, eyes, adrenal system, cranium',</span>
+<span class="cstat-no" title="statement not covered" >    elementalResonance: 'Your emotional water flashes to steam — hot, urgent, clearing the landscape so new growth can emerge.',</span>
+<span class="cstat-no" title="statement not covered" >  },</span>
+<span class="cstat-no" title="statement not covered" >  taurus: {</span>
+<span class="cstat-no" title="statement not covered" >    essence: 'Your emotional tides move like ancient rivers — slow, deep, and carving permanent channels through stone. The Moon in Taurus does not rush feeling; it inhabits it fully, sensually, without apology. You need physical comfort to feel emotionally safe, and once safe, your loyalty is geological. Your inner world is a garden that rewards patient tending and punishes hasty disturbance.',</span>
+<span class="cstat-no" title="statement not covered" >    element: 'earth', modality: 'fixed', keywords: ['security', 'sensuality', 'loyalty', 'steadiness'],</span>
+<span class="cstat-no" title="statement not covered" >    careerAdvice: 'Steady emotional presence creates professional trust. You thrive in stable environments where change happens predictably. Home-based work, food, finance, and creative fields suit your need for tangible results. Beware resistance to necessary change — your stability is strength until it becomes rigidity.',</span>
+<span class="cstat-no" title="statement not covered" >    relationshipAdvice: 'Physical comfort and consistency nurture your heart. You show love through presence, touch, and creating beautiful shared spaces. You attract partners who value reliability and sensual intimacy. Beware possessiveness — love held too tightly becomes confinement. Trust that what is yours will stay without chains.',</span>
+<span class="cstat-no" title="statement not covered" >    healthAdvice: 'Emotions settle in your throat and neck, manifesting as tension, thyroid imbalance, or comfort-eating patterns. Massage, gentle stretching, and sensual self-care restore your equilibrium. Your body craves routine — regular sleep, nourishing food, and physical affection are non-negotiable medicine.',</span>
+<span class="cstat-no" title="statement not covered" >    financesAdvice: 'Security needs override risk-taking. Build steady reserves through conservative, consistent saving. You find deep satisfaction in tangible assets — property, art, quality goods. Beware hoarding; abundance flows when it circulates. Your financial peace comes from knowing the cupboard is full.',</span>
+<span class="cstat-no" title="statement not covered" >    growthAdvice: 'Your need for stability can become a prison. The lesson of Moon in Taurus is that security is internal, not external. Growth asks you to risk the comfort of the known for the possibility of the truly nourishing. Flexibility strengthens, not weakens, your foundation.',</span>
+<span class="cstat-no" title="statement not covered" >    bodyFocus: 'throat, neck, thyroid, vocal cords',</span>
+<span class="cstat-no" title="statement not covered" >    elementalResonance: 'Your emotional water runs deep and slow — groundwater, not rainfall, sustaining life through drought and plenty alike.',</span>
+<span class="cstat-no" title="statement not covered" >  },</span>
+<span class="cstat-no" title="statement not covered" >  gemini: {</span>
+<span class="cstat-no" title="statement not covered" >    essence: 'Your emotional tides are quicksilver — shifting, curious, reflecting many colours in rapid succession. The Moon in Gemini processes feeling through mental channels, turning emotions into thoughts, stories, and questions. You feel a hundred things before breakfast, and each feeling is valid, if fleeting. Your inner world is a library where every book is open at once.',</span>
+<span class="cstat-no" title="statement not covered" >    element: 'air', modality: 'mutable', keywords: ['curiosity', 'communication', 'variety', 'mental processing'],</span>
+<span class="cstat-no" title="statement not covered" >    careerAdvice: 'Network emotionally — your professional opportunities arise through conversation and connection. Writing, media, teaching, and communications fields suit your mental-emotional agility. Beware scattered focus; your greatest challenge is depth, not breadth. Choose 2-3 professional relationships and cultivate them with sustained attention.',</span>
+<span class="cstat-no" title="statement not covered" >    relationshipAdvice: 'Talk through your feelings — mental connection is emotional connection for you. You attract partners who stimulate your mind and respect your changing moods. Beware emotional detachment; not everything needs analysis. Some feelings exist to be felt, not explained. Practice holding emotion in your body without naming it.',</span>
+<span class="cstat-no" title="statement not covered" >    healthAdvice: 'Your nervous system is your emotional barometer. Anxiety manifests as restlessness, shallow breathing, or hand tension. Mental rest is as important as physical sleep — without it, your nervous system frays. Breathwork, journaling, and varied movement restore your equilibrium. Change your environment when you feel stuck.',</span>
+<span class="cstat-no" title="statement not covered" >    financesAdvice: 'Multiple small income streams suit you better than a single source. Your financial curiosity leads to diverse investments. Beware analysis paralysis — over-researching prevents action. Set a decision deadline and honour it. Your adaptability is your financial superpower when focused.',</span>
+<span class="cstat-no" title="statement not covered" >    growthAdvice: 'Your emotional variety is not shallowness — it is range. The lesson of Moon in Gemini is that depth and breadth are not mutually exclusive. Growth asks you to stay with a feeling long enough to understand it, without requiring it to last forever. Not everything permanent is profound, and not everything fleeting is superficial.',</span>
+<span class="cstat-no" title="statement not covered" >    bodyFocus: 'lungs, hands, nervous system, shoulders',</span>
+<span class="cstat-no" title="statement not covered" >    elementalResonance: 'Your emotional water mists and evaporates — becoming atmosphere, becoming thought, becoming the weather that others breathe without noticing.',</span>
+<span class="cstat-no" title="statement not covered" >  },</span>
+<span class="cstat-no" title="statement not covered" >  cancer: {</span>
+<span class="cstat-no" title="statement not covered" >    essence: 'Your emotional tides are the ocean itself — vast, rhythmic, holding memory in every molecule. The Moon in Cancer is home, the original lunar placement where feeling is not experienced but inhabited. You are permeable to the emotions around you, absorbing joy and sorrow as effortlessly as skin absorbs sunlight. Your inner world is a sanctuary you create for yourself and others.',</span>
+<span class="cstat-no" title="statement not covered" >    element: 'water', modality: 'cardinal', keywords: ['nurturing', 'protection', 'cycles', 'intuition'],</span>
+<span class="cstat-no" title="statement not covered" >    careerAdvice: 'Care for your professional community as you would family. Home-based work, caregiving, food, history, and real estate align with your gifts. Your intuition about people and timing is a competitive advantage — trust it when logic is uncertain. Build a career that feels like an extension of home, not an escape from it.',</span>
+<span class="cstat-no" title="statement not covered" >    relationshipAdvice: 'Create emotional homes together. You give love unconditionally but trust must be earned. Your devotion runs deeper than most can fathom. Beware the shell — your sensitivity is your gift, but it requires protection. Let love in slowly; let it out generously. The right person will not mistake your depth for neediness.',</span>
+<span class="cstat-no" title="statement not covered" >    healthAdvice: 'Your stomach is your emotional compass. What you cannot digest emotionally, your body attempts to process physically. Nourish yourself with foods that comfort without numbing. Water-based movement restores your lunar rhythm. Sleep is sacred — guard it as fiercely as you guard those you love.',</span>
+<span class="cstat-no" title="statement not covered" >    financesAdvice: 'Invest in home, family, and long-term security. Your financial decisions are emotional — build reserves that create peace of mind. Real estate and family businesses align with your values. Beware emotional spending; shopping to fill a void creates a different kind of emptiness.',</span>
+<span class="cstat-no" title="statement not covered" >    growthAdvice: 'Your capacity to nurture is infinite, but your energy is not. The lesson of Moon in Cancer is that self-care is not selfish — it is sustainable. Growth asks you to distinguish between loving someone and carrying them, between empathy and enmeshment. Your sensitivity is strength when it has boundaries.',</span>
+<span class="cstat-no" title="statement not covered" >    bodyFocus: 'stomach, breasts, lymphatic system, womb',</span>
+<span class="cstat-no" title="statement not covered" >    elementalResonance: 'Your emotional water is tidal — pulled by invisible forces, ancient, carrying the memory of every shore it has ever touched.',</span>
+<span class="cstat-no" title="statement not covered" >  },</span>
+<span class="cstat-no" title="statement not covered" >  leo: {</span>
+<span class="cstat-no" title="statement not covered" >    essence: 'Your emotional tides are warm, dramatic, and generously given. The Moon in Leo feels with the heart of a performer — every emotion is amplified, coloured, worthy of an audience. You need to be seen in your feelings, to have your emotional generosity recognised and appreciated. Your inner world is a theatre where love is the starring role.',</span>
+<span class="cstat-no" title="statement not covered" >    element: 'fire', modality: 'fixed', keywords: ['warmth', 'drama', 'generosity', 'heart'],</span>
+<span class="cstat-no" title="statement not covered" >    careerAdvice: 'Creative leadership from the heart — recognition feels like oxygen to you. Entertainment, design, education, and any field where your emotional warmth shapes the experience suit you. Beware the need for constant applause; your worth is not measured by audience size. Build a career that satisfies your heart, not just your ego.',</span>
+<span class="cstat-no" title="statement not covered" >    relationshipAdvice: 'Grand romantic gestures satisfy your soul. You give love abundantly and expect appreciation in return — not as transaction, but as mirror. You attract partners who bask in your warmth and reflect it back. Beware pride in vulnerability; asking for what you need is not weakness, it is the courage to be seen fully.',</span>
+<span class="cstat-no" title="statement not covered" >    healthAdvice: 'Your heart and spine carry your emotional centre. Dance, theatrical movement, and heart-pumping exercise restore your vitality. Creative expression is not optional — it is emotional medicine. Watch for burnout from overgiving; your light cannot illuminate if the wick is exhausted. Rest is part of the performance.',</span>
+<span class="cstat-no" title="statement not covered" >    financesAdvice: 'Invest in what makes you feel alive — and in yourself. Your confidence attracts abundance, but pride can lead to overspending on status. True wealth is the freedom to create without constraint. Build reserves that fund your vision, not your image. Generosity returns, but only when boundaries exist.',</span>
+<span class="cstat-no" title="statement not covered" >    growthAdvice: 'Your need for recognition is not vanity — it is the human need to matter. The lesson of Moon in Leo is that the heart does not perform for applause; it simply loves. Growth asks you to give generously without requiring validation, and to receive love without measuring its volume.',</span>
+<span class="cstat-no" title="statement not covered" >    bodyFocus: 'heart, spine, circulatory system, upper back',</span>
+<span class="cstat-no" title="statement not covered" >    elementalResonance: 'Your emotional water warms to body-temperature — the kind of warmth that invites others to shed their armour and be held.',</span>
+<span class="cstat-no" title="statement not covered" >  },</span>
+<span class="cstat-no" title="statement not covered" >  virgo: {</span>
+<span class="cstat-no" title="statement not covered" >    essence: 'Your emotional tides are precise, discerning, and quietly powerful. The Moon in Virgo processes feeling through analysis, seeking to understand, improve, and serve. You feel most secure when things are ordered, when chaos has been distilled into manageable parts. Your inner world is a workshop where emotions are refined into useful wisdom.',</span>
+<span class="cstat-no" title="statement not covered" >    element: 'earth', modality: 'mutable', keywords: ['service', 'discernment', 'health', 'practical care'],</span>
+<span class="cstat-no" title="statement not covered" >    careerAdvice: 'Helpful competence builds your professional reputation. Healthcare, editing, research, data analysis, and service-oriented fields suit your meticulous nature. Your emotional investment in your work is your strength — and your risk. Beware perfectionism; done is better than perfect when perfect is impossible.',</span>
+<span class="cstat-no" title="statement not covered" >    relationshipAdvice: 'Show love through acts of service — the meal prepared, the problem solved, the detail remembered. You attract partners who appreciate your thoughtfulness. Beware the critic — your discernment is a gift, but applied to loved ones it becomes wound. Practice receiving help as gracefully as you give it.',</span>
+<span class="cstat-no" title="statement not covered" >    healthAdvice: 'Your gut is your emotional second brain. Worry manifests as digestive distress, anxiety as nervous tension. Routine, clean food, and practices that calm the mind-body connection restore you. Beware hypochondria; not every sensation is significant. Trust your body\'s wisdom without obsessing over its noise.',</span>
+<span class="cstat-no" title="statement not covered" >    financesAdvice: 'Meticulous budgeting and conservative planning suit you. You spot inefficiencies that cost others thousands. Invest in health, education, and tools that increase effectiveness. Beware miserliness; money is meant to circulate, not just accumulate. Your financial peace comes from knowing every detail is accounted for.',</span>
+<span class="cstat-no" title="statement not covered" >    growthAdvice: 'Your need to improve can become a compulsion — the belief that nothing and no one is good enough as-is. The lesson of Moon in Virgo is that love does not require perfection. Growth asks you to embrace the beautiful mess of being human, starting with your own imperfections.',</span>
+<span class="cstat-no" title="statement not covered" >    bodyFocus: 'digestive system, intestines, spleen, nervous system',</span>
+<span class="cstat-no" title="statement not covered" >    elementalResonance: 'Your emotional water filters through earth — becoming clear, drinkable, the kind of nourishment that sustains without overwhelming.',</span>
+<span class="cstat-no" title="statement not covered" >  },</span>
+<span class="cstat-no" title="statement not covered" >  libra: {</span>
+<span class="cstat-no" title="statement not covered" >    essence: 'Your emotional tides seek equilibrium — the gentle pull toward balance, beauty, and harmonious connection. The Moon in Libra feels through relationship, processing emotions in dialogue, in reflection, in the space between self and other. You are uncomfortable with emotional discord and will move mountains to restore peace. Your inner world is a scale, forever seeking the point where both sides are honoured.',</span>
+<span class="cstat-no" title="statement not covered" >    element: 'air', modality: 'cardinal', keywords: ['harmony', 'partnership', 'beauty', 'diplomacy'],</span>
+<span class="cstat-no" title="statement not covered" >    careerAdvice: 'Collaborative projects thrive under your emotional diplomacy. Law, design, counselling, public relations, and the arts suit your gift for creating agreement. Your professional reputation is built on fairness. Beware indecision — sometimes any choice is better than perpetual deliberation. Trust your aesthetic intuition; it is sharper than you credit.',</span>
+<span class="cstat-no" title="statement not covered" >    relationshipAdvice: 'Emotional equality matters deeply. You attract partners who value harmony and shared beauty. Your love is refined, thoughtful, and deeply aesthetic. Beware peace at any price — a relationship that requires you to abandon your needs is not balance, it is self-erasure. Your needs deserve a seat at the table.',</span>
+<span class="cstat-no" title="statement not covered" >    healthAdvice: 'Your kidneys, skin, and lower back reflect your stress levels. Balance is not just philosophical — it is physiological. Practices that restore equilibrium — tai chi, balanced nutrition, beauty rituals — are medicine. Avoid extremes; your body prefers moderation. Emotional discord manifests as physical tension faster than you acknowledge.',</span>
+<span class="cstat-no" title="statement not covered" >    financesAdvice: 'Partnership investments and shared resources flourish under your guidance. Your sense of fairness makes you a trusted financial advisor. Beware aesthetic impulse spending — beauty is worth investment, but not debt. Build wealth that supports a beautiful, balanced life without compromising your peace.',</span>
+<span class="cstat-no" title="statement not covered" >    growthAdvice: 'Your need for harmony can become avoidance — the refusal to feel anger, grief, or conflict because they disturb the peace. The lesson of Moon in Libra is that true harmony includes dissonance. Growth asks you to honour your own emotional needs even when expressing them disturbs the equilibrium you cherish.',</span>
+<span class="cstat-no" title="statement not covered" >    bodyFocus: 'kidneys, skin, lower back, endocrine balance',</span>
+<span class="cstat-no" title="statement not covered" >    elementalResonance: 'Your emotional water seeks the level — finding balance, reflecting what is above and below with equal fidelity.',</span>
+<span class="cstat-no" title="statement not covered" >  },</span>
+<span class="cstat-no" title="statement not covered" >  scorpio: {</span>
+<span class="cstat-no" title="statement not covered" >    essence: 'Your emotional tides run through underground rivers — deep, dark, and carrying treasures others fear to seek. The Moon in Scorpio feels with volcanic intensity, all-or-nothing, transformative. You do not skim the surface of emotion; you dive to the bottom, holding your breath until you find what is real. Your inner world is a crucible where feelings are alchemised into power.',</span>
+<span class="cstat-no" title="statement not covered" >    element: 'water', modality: 'fixed', keywords: ['intensity', 'privacy', 'power', 'transformation'],</span>
+<span class="cstat-no" title="statement not covered" >    careerAdvice: 'Research, investigation, psychology, and crisis management suit your emotional courage. You excel where others falter — in the dark, the hidden, the taboo. Your intuition about power dynamics is your professional superpower. Beware manipulation; your ability to read people is a gift, not a weapon. Build trust through transparency, not control.',</span>
+<span class="cstat-no" title="statement not covered" >    relationshipAdvice: 'All-or-nothing emotional investment. You do not date; you merge. You attract partners who can meet you in the depths without drowning. Beware jealousy and possessiveness — they poison the very intimacy you crave. True power in love is the courage to be vulnerable without guarantee of safety.',</span>
+<span class="cstat-no" title="statement not covered" >    healthAdvice: 'Your reproductive and eliminative systems process what your psyche cannot release. Deep tissue work, sexual healing, and therapeutic practices restore you. Beware addictive patterns — your intensity seeks extremes. Moderation is the true discipline of power. Your body speaks in symbols; learn its language without fear.',</span>
+<span class="cstat-no" title="statement not covered" >    financesAdvice: 'Joint resources, investments, and other people\'s money are your domain. Your research skills prevent costly mistakes. Beware financial secrecy — transparency builds the trust that creates wealth. Invest in transformation, not control. Your financial power grows through shared resources managed with integrity.',</span>
+<span class="cstat-no" title="statement not covered" >    growthAdvice: 'Your emotional intensity is not pathology — it is depth. The lesson of Moon in Scorpio is that letting go is not failure; it is the prerequisite for authentic power. Growth asks you to distinguish between intimacy and control, between love and possession. Your depth is your gift when it includes the courage to surface.',</span>
+<span class="cstat-no" title="statement not covered" >    bodyFocus: 'reproductive system, eliminative organs, pelvis, colon',</span>
+<span class="cstat-no" title="statement not covered" >    elementalResonance: 'Your emotional water is subterranean — dark, pressurised, capable of dissolving stone or carrying gold depending on what it touches.',</span>
+<span class="cstat-no" title="statement not covered" >  },</span>
+<span class="cstat-no" title="statement not covered" >  sagittarius: {</span>
+<span class="cstat-no" title="statement not covered" >    essence: 'Your emotional tides are the wanderlust of feeling — expansive, optimistic, forever seeking the next emotional horizon. The Moon in Sagittarius feels through philosophy, through meaning, through the grand narrative that makes sense of experience. You are uncomfortable with emotional stagnation; feelings must lead somewhere, teach something, expand your understanding. Your inner world is a map with no edges.',</span>
+<span class="cstat-no" title="statement not covered" >    element: 'fire', modality: 'mutable', keywords: ['freedom', 'optimism', 'adventure', 'truth'],</span>
+<span class="cstat-no" title="statement not covered" >    careerAdvice: 'International connections, teaching, publishing, and visionary projects benefit from your emotional expansiveness. You thrive when your work has meaning beyond the paycheck. Beware overcommitment — your optimism can lead to promising more than you can deliver. Build systems that ground your vision in executable steps.',</span>
+<span class="cstat-no" title="statement not covered" >    relationshipAdvice: 'Philosophical compatibility matters as much as chemistry. You attract partners who share your hunger for meaning and adventure. Your love is generous, honest, and freedom-loving. Beware restlessness — the grass is not always greener. Commitment does not cage the adventurer; it gives them a home to return to.',</span>
+<span class="cstat-no" title="statement not covered" >    healthAdvice: 'Your hips, thighs, and liver carry your wanderlust. Outdoor movement restores your vitality. Beware excess — your expansive nature applies to indulgence as well as exploration. Your body needs movement, but it also needs rest between journeys. Moderation is the adventure you have not yet taken.',</span>
+<span class="cstat-no" title="statement not covered" >    financesAdvice: 'Long-term growth investments and educational opportunities align with your vision. Your optimism attracts abundance, but overconfidence leads to risky speculation. Build wealth that funds your adventures without chaining you to them. Beware the get-rich-quick scheme — your fortune grows through wisdom.',</span>
+<span class="cstat-no" title="statement not covered" >    growthAdvice: 'Your emotional restlessness is not shallowness — it is the refusal to settle for small stories. The lesson of Moon in Sagittarius is that the greatest adventure is inward. Growth asks you to find expansion in depth, to discover that the inner landscape is as vast as any foreign shore.',</span>
+<span class="cstat-no" title="statement not covered" >    bodyFocus: 'hips, thighs, liver, sciatic nerve',</span>
+<span class="cstat-no" title="statement not covered" >    elementalResonance: 'Your emotional water evaporates into vision — becoming cloud, becoming rain elsewhere, refusing to be contained by any single vessel.',</span>
+<span class="cstat-no" title="statement not covered" >  },</span>
+<span class="cstat-no" title="statement not covered" >  capricorn: {</span>
+<span class="cstat-no" title="statement not covered" >    essence: 'Your emotional tides move like glaciers — slow, immense, and shaping the landscape permanently. The Moon in Capricorn does not indulge feeling; it masters it, demonstrating that emotional maturity is not the absence of feeling but the capacity to hold it without being controlled. Your inner world is a fortress built stone by stone, where vulnerability is granted only to those who have earned entry.',</span>
+<span class="cstat-no" title="statement not covered" >    element: 'earth', modality: 'cardinal', keywords: ['responsibility', 'maturity', 'structure', 'restraint'],</span>
+<span class="cstat-no" title="statement not covered" >    careerAdvice: 'Emotional professionalism serves you. Authority feels comfortable because you have earned it through competence. You excel in leadership, management, and fields requiring long-term commitment. Beware emotional austerity — your competence is impressive, but your warmth is what makes you unforgettable. Let your team see the human beneath the executive.',</span>
+<span class="cstat-no" title="statement not covered" >    relationshipAdvice: 'Commitment shown through reliability. You attract partners who value loyalty and shared goals. Your love is demonstrated, not declared — through presence across years, not grand gestures. Beware emotional distance — your reserved nature can be mistaken for coldness. Let your partner see the warmth beneath the competence.',</span>
+<span class="cstat-no" title="statement not covered" >    healthAdvice: 'Your bones, joints, and teeth reflect the weight you carry. Structural health is your foundation. Beware somatising responsibility — your body absorbs what your mind refuses to delegate. Rest is not laziness; it is structural maintenance. Schedule emotional processing the way you schedule meetings.',</span>
+<span class="cstat-no" title="statement not covered" >    financesAdvice: 'Conservative, structured, long-term wealth-building is your language. Real estate, retirement planning, and legacy investments align with your values. You understand that wealth is built one brick at a time. Beware using money as a scorecard for worth — your value is not your net worth.',</span>
+<span class="cstat-no" title="statement not covered" >    growthAdvice: 'Your self-reliance is strength until it becomes isolation. The lesson of Moon in Capricorn is that vulnerability is not weakness — it is the courage to be seen without your armour. Growth asks you to receive help, to feel without controlling, and to trust that your worth exists independent of your achievements.',</span>
+<span class="cstat-no" title="statement not covered" >    bodyFocus: 'bones, joints, teeth, knees, skeletal system',</span>
+<span class="cstat-no" title="statement not covered" >    elementalResonance: 'Your emotional water has frozen to permafrost — preserving ancient memories, supporting structures that others could not build on shifting ground.',</span>
+<span class="cstat-no" title="statement not covered" >  },</span>
+<span class="cstat-no" title="statement not covered" >  aquarius: {</span>
+<span class="cstat-no" title="statement not covered" >    essence: 'Your emotional tides are electrical currents — sudden, illuminating, connecting disparate feelings into patterns others cannot see. The Moon in Aquarius processes emotion through intellect, seeking to understand feeling as data, as system, as collective experience. You are uncomfortable with conventional emotional expression; your feelings are unique, forward-thinking, sometimes ahead of their time. Your inner world is a network, not a hierarchy.',</span>
+<span class="cstat-no" title="statement not covered" >    element: 'air', modality: 'fixed', keywords: ['detachment', 'humanity', 'innovation', 'objectivity'],</span>
+<span class="cstat-no" title="statement not covered" >    careerAdvice: 'Group dynamics, technology, social reform, and scientific research suit your intellectual-emotional style. You excel when given freedom to innovate. Beware detachment — your ideas change the world only when you stay engaged long enough to implement them. Build networks of collaborators who share your vision.',</span>
+<span class="cstat-no" title="statement not covered" >    relationshipAdvice: 'Friendship forms the foundation of your love. You attract partners who respect your independence and share your ideals. Your love is loyal but unconventional. Beware emotional distance — intellect is your comfort zone, but intimacy requires feeling. The right partner will evolve beside you, not demand conformity.',</span>
+<span class="cstat-no" title="statement not covered" >    healthAdvice: 'Your circulatory and nervous systems carry your electric energy. Unconventional health practices may appeal. Beware nervous exhaustion from overstimulation. Your body needs grounding as much as your mind needs stimulation. Regular digital detox is not optional — it is survival. Community wellness activities restore you.',</span>
+<span class="cstat-no" title="statement not covered" >    financesAdvice: 'Innovative investments — technology, social enterprise, cryptocurrency — align with your vision. Beware detachment from financial reality; even revolutionaries must pay rent. Build wealth that funds your ideals without compromising them. Your financial power comes from networks, not solo genius.',</span>
+<span class="cstat-no" title="statement not covered" >    growthAdvice: 'Your emotional detachment is not coldness — it is the refusal to be controlled by feeling. The lesson of Moon in Aquarius is that objectivity and empathy are not opposites. Growth asks you to feel without being overwhelmed, to care without losing your unique perspective. Your humanity is your gift when it includes your own heart.',</span>
+<span class="cstat-no" title="statement not covered" >    bodyFocus: 'calves, ankles, circulatory system, nervous system',</span>
+<span class="cstat-no" title="statement not covered" >    elementalResonance: 'Your emotional water conducts electricity — becoming the medium through which insight travels, connecting what was separate into something newly whole.',</span>
+<span class="cstat-no" title="statement not covered" >  },</span>
+<span class="cstat-no" title="statement not covered" >  pisces: {</span>
+<span class="cstat-no" title="statement not covered" >    essence: 'Your emotional tides are the ocean itself — boundless, boundaryless, dissolving the line between self and other, between feeling and knowing. The Moon in Pisces absorbs everything — the joy, the grief, the unspoken truths that hover in every room. You feel what others cannot name, and your compassion is both your superpower and your vulnerability. Your inner world is a dream that bleeds into waking life.',</span>
+<span class="cstat-no" title="statement not covered" >    element: 'water', modality: 'mutable', keywords: ['compassion', 'dissolution', 'transcendence', 'dreams'],</span>
+<span class="cstat-no" title="statement not covered" >    careerAdvice: 'Healing arts, creative fields, spiritual guidance, film, music, and compassionate service suit your gifts. You excel when work feels like devotion. Beware martyrdom — sacrifice without boundaries breeds resentment, not grace. Build structures that protect your sensitivity while allowing your gifts to flow. Your intuition is your professional edge.',</span>
+<span class="cstat-no" title="statement not covered" >    relationshipAdvice: 'Soul connections transcend logic. You love with the depth of one who has never fully believed in separation. You attract partners who need your compassion, but ensure they respect your boundaries. Beware saviour dynamics — you cannot heal someone who refuses to heal. True love is two whole beings choosing to swim together.',</span>
+<span class="cstat-no" title="statement not covered" >    healthAdvice: 'Your feet and immune system are your anchors. Water-based therapies, dream work, and creative expression are essential medicine. Beware escapism — your sensitivity seeks relief in substances, screens, or denial. Sleep is your sanctuary; guard it as sacred. Your body is a barometer for collective health; protect it vigilantly.',</span>
+<span class="cstat-no" title="statement not covered" >    financesAdvice: 'Intuitive guidance can lead to surprising financial insights. Creative investments may flourish. Beware escapist spending — retail therapy does not fill the void. Build financial boundaries as carefully as emotional ones. Trust your intuition, but verify with practical checks. Abundance flows when you stop trying to save everyone.',</span>
+<span class="cstat-no" title="statement not covered" >    growthAdvice: 'Your compassion is infinite, but your energy is not. The lesson of Moon in Pisces is that boundaries are not walls — they are the shore that allows the ocean to exist. Growth asks you to distinguish between empathy and enmeshment, between love and sacrifice. You are not meant to be the container for all wounds.',</span>
+<span class="cstat-no" title="statement not covered" >    bodyFocus: 'feet, immune system, pineal gland, lymphatic system',</span>
+<span class="cstat-no" title="statement not covered" >    elementalResonance: 'Your emotional water is the ocean — containing all rivers, holding all tears, remembering every shore it has ever touched and every shore it has not yet reached.',</span>
+<span class="cstat-no" title="statement not covered" >  },</span>
+<span class="cstat-no" title="statement not covered" >  ophiuchus: {</span>
+<span class="cstat-no" title="statement not covered" >    essence: 'Your emotional tides are the serpent coiled at the base of the spine — kundalini, latent power, the wisdom that healing requires touching what poisons. The Moon in Ophiuchus feels with the intensity of one who has walked through death and returned with medicine. You absorb others\' pain as effortlessly as breath, and your emotional boundaries are permeable by design. Your inner world is an initiation chamber where every feeling is a teacher, every wound a doorway.',</span>
+<span class="cstat-no" title="statement not covered" >    element: 'ether', modality: 'fixed', keywords: ['healing', 'transmutation', 'initiation', 'permeability'],</span>
+<span class="cstat-no" title="statement not covered" >    careerAdvice: 'Your professional path weaves between healing and mystery — medicine, psychology, energy work, research into the taboo. You excel where transformation is required and others turn away. Your intuition about hidden emotional systems is unparalleled. Beware the wounded healer trap — you cannot heal what you refuse to feel in yourself. Build a career on empowerment, not rescue.',</span>
+<span class="cstat-no" title="statement not covered" >    relationshipAdvice: 'Your relationships are initiations — alchemical vessels where both participants transform. You attract partners who are ready to heal, not those seeking to be fixed. Beware merging too completely; your gift is connection, but your growth requires a self distinct from those you love. True intimacy is two wholes choosing to overlap.',</span>
+<span class="cstat-no" title="statement not covered" >    healthAdvice: 'Your spinal column and nervous system regeneration are your focuses. Energy medicine, spinal alignment, and subtle body practices restore you. You are sensitive to environmental energies — your body is a barometer for collective emotional health. Beware absorbing others\' illnesses; your healing gift requires energetic hygiene. Rest is regeneration, not weakness.',</span>
+<span class="cstat-no" title="statement not covered" >    financesAdvice: 'Your financial path is non-linear — sudden losses and restorations. Investments in healing, transformation, and regenerative enterprises align with your values. Build flexibility into your financial structures. Beware rescuing others financially; true help empowers independence, not dependence. Your wealth grows when you charge for your gifts.',</span>
+<span class="cstat-no" title="statement not covered" >    growthAdvice: 'Your emotional permeability is not weakness — it is the gift of transmutation. The lesson of Moon in Ophiuchus is that the healer must also be healed. Growth asks you to receive the medicine you so freely offer, to trust that your wholeness serves the world more than your sacrifice. You are not meant to carry every wound you touch.',</span>
+<span class="cstat-no" title="statement not covered" >    bodyFocus: 'spinal column, nervous system regeneration, subtle energy channels, cellular renewal',</span>
+<span class="cstat-no" title="statement not covered" >    elementalResonance: 'Your emotional water has become elixir — no longer merely feeling but transmuting, turning poison into medicine, shadow into gold, wound into doorway.',</span>
+<span class="cstat-no" title="statement not covered" >  },</span>
+<span class="cstat-no" title="statement not covered" >};</span>
+&nbsp;</pre></td></tr></table></pre>
+
+                <div class='push'></div><!-- for sticky footer -->
+            </div><!-- /wrapper -->
+            <div class='footer quiet pad2 space-top1 center small'>
+                Code coverage generated by
+                <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
+                at 2026-05-21T20:28:33.284Z
+            </div>
+        <script src="../../../../../prettify.js"></script>
+        <script>
+            window.onload = function () {
+                prettyPrint();
+            };
+        </script>
+        <script src="../../../../../sorter.js"></script>
+        <script src="../../../../../block-navigation.js"></script>
+    </body>
+</html>
+    

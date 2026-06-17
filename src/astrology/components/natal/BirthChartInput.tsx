@@ -8,6 +8,7 @@
  */
 
 import React, { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import type { BirthData, NatalChart, NatalPlanet } from '../../services/natal/natalChart';
 import { 
   saveNatalChart, 
@@ -93,10 +94,12 @@ const styles: Record<string, React.CSSProperties> = {
     fontSize: '1rem',
     outline: 'none',
     transition: 'all 0.2s ease',
+    width: '100%',
+    boxSizing: 'border-box',
   },
   row: {
     display: 'grid',
-    gridTemplateColumns: '1fr 1fr',
+    gridTemplateColumns: '0.85fr 1.15fr',
     gap: '16px',
   },
   timezoneSelect: {
@@ -255,20 +258,20 @@ const ELEMENT_COLORS: Record<string, string> = {
 
 // Timezone options
 const TIMEZONES = [
-  { value: 'UTC', label: 'UTC (Universal)' },
-  { value: 'America/New_York', label: 'Eastern Time (ET)' },
-  { value: 'America/Chicago', label: 'Central Time (CT)' },
-  { value: 'America/Denver', label: 'Mountain Time (MT)' },
-  { value: 'America/Los_Angeles', label: 'Pacific Time (PT)' },
-  { value: 'Europe/London', label: 'London (GMT)' },
-  { value: 'Europe/Paris', label: 'Paris (CET)' },
-  { value: 'Europe/Berlin', label: 'Berlin (CET)' },
-  { value: 'Asia/Tokyo', label: 'Tokyo (JST)' },
-  { value: 'Asia/Shanghai', label: 'Shanghai (CST)' },
-  { value: 'Asia/Dubai', label: 'Dubai (GST)' },
-  { value: 'Australia/Sydney', label: 'Sydney (AEST)' },
-  { value: 'Australia/Melbourne', label: 'Melbourne (AEST)' },
-  { value: 'Pacific/Auckland', label: 'Auckland (NZST)' },
+  { value: 'UTC', label: 'timezones.UTC' },
+  { value: 'America/New_York', label: 'timezones.ET' },
+  { value: 'America/Chicago', label: 'timezones.CT' },
+  { value: 'America/Denver', label: 'timezones.MT' },
+  { value: 'America/Los_Angeles', label: 'timezones.PT' },
+  { value: 'Europe/London', label: 'timezones.London' },
+  { value: 'Europe/Paris', label: 'timezones.Paris' },
+  { value: 'Europe/Berlin', label: 'timezones.Berlin' },
+  { value: 'Asia/Tokyo', label: 'timezones.Tokyo' },
+  { value: 'Asia/Shanghai', label: 'timezones.Shanghai' },
+  { value: 'Asia/Dubai', label: 'timezones.Dubai' },
+  { value: 'Australia/Sydney', label: 'timezones.Sydney' },
+  { value: 'Australia/Melbourne', label: 'timezones.Melbourne' },
+  { value: 'Pacific/Auckland', label: 'timezones.Auckland' },
 ];
 
 export const BirthChartInput: React.FC<BirthChartInputProps> = ({
@@ -276,6 +279,7 @@ export const BirthChartInput: React.FC<BirthChartInputProps> = ({
   onCancel,
   existingChart,
 }) => {
+  const { t } = useTranslation('celestial');
   const [formData, setFormData] = useState<FormData>({
     name: existingChart?.name || '',
     birthDate: existingChart?.birthData.date || '',
@@ -330,7 +334,7 @@ export const BirthChartInput: React.FC<BirthChartInputProps> = ({
     
     // Validate date
     if (isNaN(date.getTime())) {
-      throw new Error('Invalid birth date or time');
+      throw new Error(t('birthInput.invalidDate'));
     }
     
     // Calculate positions using Swiss Ephemeris
@@ -339,11 +343,11 @@ export const BirthChartInput: React.FC<BirthChartInputProps> = ({
       skyData = await calculateCurrentSky(date);
     } catch (err) {
       console.error('[BirthChartInput] Swiss Ephemeris calculation error:', err);
-      throw new Error('Failed to calculate planetary positions. Please try again.');
+      throw new Error(t('birthInput.calcFailed'), { cause: err });
     }
     
     if (!skyData || !skyData.positions) {
-      throw new Error('No planetary data returned from calculation');
+      throw new Error(t('birthInput.noPlanetaryData'));
     }
     
     const positions = skyData.positions;
@@ -354,11 +358,11 @@ export const BirthChartInput: React.FC<BirthChartInputProps> = ({
       houses = await calculateLocalHouses(date, birthData.latitude, birthData.longitude);
     } catch (err) {
       console.error('[BirthChartInput] House calculation error:', err);
-      throw new Error('Failed to calculate house positions. Please check your coordinates.');
+      throw new Error(t('birthInput.houseCalcFailed'), { cause: err });
     }
     
     if (!houses || !houses.cusps) {
-      throw new Error('Invalid house data returned');
+      throw new Error(t('birthInput.invalidHouseData'));
     }
     
     // Transform to NatalPlanet format with house placements
@@ -397,19 +401,19 @@ export const BirthChartInput: React.FC<BirthChartInputProps> = ({
     
     // Validate
     if (!formData.name.trim()) {
-      setError('Please enter your name');
+      setError(t('birthInput.pleaseEnterName'));
       return;
     }
     if (!formData.birthDate) {
-      setError('Please enter your birth date');
+      setError(t('birthInput.pleaseEnterDate'));
       return;
     }
     if (!formData.birthTime) {
-      setError('Please enter your birth time');
+      setError(t('birthInput.pleaseEnterTime'));
       return;
     }
     if (!formData.latitude || !formData.longitude) {
-      setError('Please enter your birth location coordinates');
+      setError(t('birthInput.pleaseEnterCoords'));
       return;
     }
     
@@ -435,11 +439,11 @@ export const BirthChartInput: React.FC<BirthChartInputProps> = ({
         houseData = await calculateLocalHouses(date, birthData.latitude, birthData.longitude);
       } catch (houseErr) {
         console.error('[BirthChartInput] House calculation error:', houseErr);
-        throw new Error('Failed to calculate house positions. Please check your coordinates.');
+        throw new Error('Failed to calculate house positions. Please check your coordinates.', { cause: houseErr });
       }
       
       if (!houseData || !houseData.cusps) {
-        throw new Error('Invalid house data returned from calculation');
+        throw new Error(t('birthInput.invalidHouseData2'));
       }
       
       const houses = {
@@ -491,20 +495,17 @@ export const BirthChartInput: React.FC<BirthChartInputProps> = ({
       };
       
       // Debug birth data
-      console.log('[BirthChartInput] Birth data:', birthData);
       
       // Save to storage using profile manager (creates both profile and chart)
       try {
-        const newProfile = await profileManager.createProfile(formData.name, birthData, {
+        await profileManager.createProfile(formData.name, birthData, {
           makeDefault: true,
         });
-        console.log('[BirthChartInput] Profile created:', newProfile.id);
       } catch (profileErr) {
         console.error('[BirthChartInput] Profile creation error:', profileErr);
         // Fallback: save natal chart directly
         try {
           saveNatalChart(chart);
-          console.log('[BirthChartInput] Chart saved directly as fallback');
         } catch (saveErr) {
           console.error('[BirthChartInput] Direct save also failed:', saveErr);
         }
@@ -514,7 +515,7 @@ export const BirthChartInput: React.FC<BirthChartInputProps> = ({
       onChartCalculated(chart);
     } catch (err) {
       console.error('[BirthChartInput] Chart calculation failed:', err);
-      const errorMessage = err instanceof Error ? err.message : 'Failed to calculate chart. Please check your input data.';
+      const errorMessage = err instanceof Error ? err.message : t('birthInput.chartCalcFailed');
       setError(errorMessage);
       setIsLoading(false);
       return;
@@ -528,7 +529,7 @@ export const BirthChartInput: React.FC<BirthChartInputProps> = ({
       <div style={styles.container}>
         <div style={styles.loading}>
           <div style={styles.spinner} />
-          <p style={styles.loadingText}>Calculating your celestial blueprint...</p>
+          <p style={styles.loadingText}>{t('birthInput.calculating')}</p>
         </div>
       </div>
     );
@@ -537,9 +538,9 @@ export const BirthChartInput: React.FC<BirthChartInputProps> = ({
   return (
     <div style={styles.container}>
       <header style={styles.header}>
-        <h1 style={styles.title}>Your Birth Chart</h1>
+        <h1 style={styles.title}>{t('birthInput.yourBirthChart')}</h1>
         <p style={styles.subtitle}>
-          Enter your birth details to unlock personalized guidance based on your unique celestial blueprint.
+          {t('birthInput.enterDetails')}
         </p>
       </header>
       
@@ -547,7 +548,7 @@ export const BirthChartInput: React.FC<BirthChartInputProps> = ({
       
       <form onSubmit={handleSubmit} style={styles.form}>
         <div style={styles.inputGroup}>
-          <label style={styles.label}>Your Name</label>
+          <label style={styles.label}>{t('birthInput.yourName')}</label>
           <input
             type="text"
             autoComplete="off"
@@ -555,14 +556,14 @@ export const BirthChartInput: React.FC<BirthChartInputProps> = ({
             autoCapitalize="words"
             value={formData.name}
             onChange={(e) => handleChange('name', e.target.value)}
-            placeholder="Enter your name"
+            placeholder={t('birthInput.enterName')}
             style={styles.input}
           />
         </div>
         
         <div style={styles.row}>
           <div style={styles.inputGroup}>
-            <label style={styles.label}>Birth Date</label>
+            <label style={styles.label}>{t('birthInput.birthDate')}</label>
             <input
               type="date"
               autoComplete="off"
@@ -573,7 +574,7 @@ export const BirthChartInput: React.FC<BirthChartInputProps> = ({
           </div>
           
           <div style={styles.inputGroup}>
-            <label style={styles.label}>Birth Time</label>
+            <label style={styles.label}>{t('birthInput.birthTime')}</label>
             <input
               type="time"
               autoComplete="off"
@@ -586,7 +587,7 @@ export const BirthChartInput: React.FC<BirthChartInputProps> = ({
         
         <div style={styles.row}>
           <div style={styles.inputGroup}>
-            <label style={styles.label}>Latitude</label>
+            <label style={styles.label}>{t('birthInput.latitude')}</label>
             <input
               type="number"
               step="0.000001"
@@ -594,13 +595,13 @@ export const BirthChartInput: React.FC<BirthChartInputProps> = ({
               inputMode="decimal"
               value={formData.latitude}
               onChange={(e) => handleChange('latitude', e.target.value)}
-              placeholder="e.g., 40.7128"
+              placeholder={t('birthInput.latitudePlaceholder')}
               style={styles.input}
             />
           </div>
           
           <div style={styles.inputGroup}>
-            <label style={styles.label}>Longitude</label>
+            <label style={styles.label}>{t('birthInput.longitude')}</label>
             <input
               type="number"
               step="0.000001"
@@ -608,14 +609,14 @@ export const BirthChartInput: React.FC<BirthChartInputProps> = ({
               inputMode="decimal"
               value={formData.longitude}
               onChange={(e) => handleChange('longitude', e.target.value)}
-              placeholder="e.g., -74.0060"
+              placeholder={t('birthInput.longitudePlaceholder')}
               style={styles.input}
             />
           </div>
         </div>
         
         <div style={styles.inputGroup}>
-          <label style={styles.label}>Timezone</label>
+          <label style={styles.label}>{t('birthInput.timezone')}</label>
           <select
             value={formData.timezone}
             onChange={(e) => handleChange('timezone', e.target.value)}
@@ -623,17 +624,17 @@ export const BirthChartInput: React.FC<BirthChartInputProps> = ({
           >
             {TIMEZONES.map(tz => (
               <option key={tz.value} value={tz.value} style={{ background: '#1a1a2e', color: '#fff' }}>
-                {tz.label}
+                {t(tz.label)}
               </option>
             ))}
           </select>
         </div>
         
         <div style={styles.inputGroup}>
-          <label style={styles.label}>Birth Location *</label>
+          <label style={styles.label}>{t('birthInput.birthLocation')}</label>
           <LocationSearch onLocationSelect={handleLocationSelect} />
           <p style={{ ...styles.privacyNote, marginTop: '6px', textAlign: 'left' }}>
-            Start typing a suburb or city (e.g. "Bankstown", "Sydney")
+            {t('birthInput.locationHint')}
           </p>
         </div>
         
@@ -674,7 +675,7 @@ export const BirthChartInput: React.FC<BirthChartInputProps> = ({
             }}
           >
             <span>✨</span>
-            Calculate My Chart
+            {t('birthInput.calculateChart')}
           </button>
           <button
             type="button"
@@ -687,19 +688,19 @@ export const BirthChartInput: React.FC<BirthChartInputProps> = ({
               e.currentTarget.style.background = 'transparent';
             }}
           >
-            Cancel
+            {t('birthInput.cancel')}
           </button>
         </div>
       </form>
       
       <p style={styles.privacyNote}>
-        🔒 Your birth data is stored only on your device and used solely for chart calculations.
+        {t('birthInput.privacyNote')}
       </p>
       
       {/* Result Preview */}
       {calculatedChart && (
         <div style={styles.resultCard}>
-          <h3 style={styles.resultTitle}>Your Celestial Blueprint</h3>
+          <h3 style={styles.resultTitle}>{t('birthInput.celestialBlueprint')}</h3>
           <div style={styles.planetGrid}>
             {Object.entries(calculatedChart.planets).slice(0, 8).map(([planet, data]) => (
               <div key={planet} style={styles.planetCard}>
@@ -710,7 +711,7 @@ export const BirthChartInput: React.FC<BirthChartInputProps> = ({
                   {data.sign.charAt(0).toUpperCase() + data.sign.slice(1)}
                 </div>
                 <div style={styles.planetDegree}>
-                  House {data.house} • {data.dignity !== 'neutral' && data.dignity}
+                  {t('birthInput.house', { house: data.house })} • {data.dignity !== 'neutral' && t('birthInput.dignity', { dignity: data.dignity })}
                 </div>
               </div>
             ))}

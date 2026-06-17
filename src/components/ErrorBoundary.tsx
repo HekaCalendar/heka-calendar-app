@@ -1,59 +1,90 @@
 import { Component, ErrorInfo, type ReactNode } from 'react';
+import { monitoring } from '../services/monitoring';
+import './ErrorBoundary.css';
 
 interface Props { children: ReactNode; }
-interface State { hasError: boolean; }
+interface State { hasError: boolean; error?: Error; }
 
 // Module-level flag - persists across re-renders
 let wasmErrorSuppressed = false;
+
+/**
+ * Report an error to any configured monitoring service.
+ * Currently a safe no-op hook; wire to Sentry/Crashlytics in production.
+ */
+function reportError(error: Error, errorInfo: ErrorInfo) {
+  monitoring.captureException(error, {
+    componentStack: errorInfo?.componentStack,
+    boundary: 'ErrorBoundary',
+  });
+}
 
 export class ErrorBoundary extends Component<Props, State> {
   public state: State = { hasError: false };
 
   public static getDerivedStateFromError(error: Error): Partial<State> | null {
     const msg = error?.message || '';
-    
-    // If it's a WASM error, suppress it completely
+
+    // WASM init errors are usually transient; suppress once and keep the app alive.
     if (msg.includes('is not a function') || msg.includes('WASM') || msg.includes('swisseph') || msg.includes('#185')) {
       if (!wasmErrorSuppressed) {
         wasmErrorSuppressed = true;
         console.warn('[ErrorBoundary] WASM error suppressed - continuing normally');
       }
-      // Return null - no state change, no re-render
       return null;
     }
-    
-    return { hasError: true };
+
+    return { hasError: true, error };
   }
 
   public componentDidCatch(error: Error, errorInfo: ErrorInfo) {
-    // Complete silent for WASM errors
     const msg = error?.message || '';
     if (msg.includes('is not a function') || msg.includes('WASM') || msg.includes('swisseph') || msg.includes('#185')) {
       return;
     }
-    console.error('[ErrorBoundary] Error:', error?.message || error);
-    console.error('[ErrorBoundary] ComponentStack:', errorInfo?.componentStack || 'none');
+    reportError(error, errorInfo);
   }
 
   private handleRetry = () => {
-    this.setState({ hasError: false });
+    this.setState({ hasError: false, error: undefined });
+  };
+
+  private handleReload = () => {
+    if (typeof window !== 'undefined') {
+      window.location.reload();
+    }
   };
 
   public render() {
     if (this.state.hasError) {
       return (
-        <div style={{ 
-          padding: '2rem', 
-          textAlign: 'center', 
-          background: '#0c0c0f', 
-          color: '#f5f5f5', 
-          minHeight: '100vh',
-          fontFamily: 'system-ui, sans-serif'
-        }}>
-          <h1 style={{ color: '#ff6b6b', marginBottom: '1rem' }}>Something went wrong</h1>
-          <button onClick={this.handleRetry} style={{ padding: '0.75rem 1.5rem', fontSize: '1rem', background: '#6c5ce7', color: 'white', border: 'none', borderRadius: '0.5rem', cursor: 'pointer' }}>
-            Try Again
-          </button>
+        <div className="heka-error-boundary">
+          <div className="heka-error-boundary__card">
+            <div className="heka-error-boundary__icon">✦</div>
+            <h1 className="heka-error-boundary__title">The temple needs a moment</h1>
+            <p className="heka-error-boundary__text">
+              Something unexpected interrupted the experience. Your data is safe.
+            </p>
+            {this.state.error && (
+              <pre className="heka-error-boundary__code">
+                {this.state.error.message}
+              </pre>
+            )}
+            <div className="heka-error-boundary__actions">
+              <button
+                className="heka-error-boundary__btn heka-error-boundary__btn--primary"
+                onClick={this.handleRetry}
+              >
+                Try Again
+              </button>
+              <button
+                className="heka-error-boundary__btn heka-error-boundary__btn--secondary"
+                onClick={this.handleReload}
+              >
+                Reload App
+              </button>
+            </div>
+          </div>
         </div>
       );
     }

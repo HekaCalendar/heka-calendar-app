@@ -1,0 +1,166 @@
+{
+  "months": {
+    "0": "에이프릴",
+    "1": "메이",
+    "2": "쥰",
+    "3": "줄라이",
+    "4": "오거스트",
+    "5": "헥사",
+    "6": "셰텨버",
+    "7": "옥토버",
+    "8": "노벤버",
+    "9": "디셈버",
+    "10": "잔요어리",
+    "11": "퓨브러리",
+    "12": "마치"
+  },
+  "monthShort": {
+    "0": "에이프",
+    "1": "메이",
+    "2": "쥰",
+    "3": "줄라이",
+    "4": "오거스트",
+    "5": "헥사",
+    "6": "셰텨",
+    "7": "옥토",
+    "8": "노벤",
+    "9": "디셈",
+    "10": "잔요",
+    "11": "퓨브",
+    "12": "마치"
+  },
+  "civilMonths": {
+    "0": "잔요어리",
+    "1": "퓨브러리",
+    "2": "마치",
+    "3": "에이프릴",
+    "4": "메이",
+    "5": "쥰",
+    "6": "줄라이",
+    "7": "오거스트",
+    "8": "셰텨버",
+    "9": "옥토버",
+    "10": "노벤버",
+    "11": "디셈버"
+  },
+  "days": {
+    "0": "일요일",
+    "1": "월요일",
+    "2": "화요일",
+    "3": "수요일",
+    "4": "목요일",
+    "5": "금요일",
+    "6": "토요일"
+  },
+  "daysShort": {
+    "0": "일",
+    "1": "월",
+    "2": "화",
+    "3": "수",
+    "4": "목",
+    "5": "금",
+    "6": "토"
+  },
+  "daysMin": {
+    "0": "일",
+    "1": "월",
+    "2": "화",
+    "3": "수",
+    "4": "목",
+    "5": "금",
+    "6": "토"
+  },
+  "arcs": {
+    "opening": "개막",
+    "core": "핵심",
+    "closing": "폐막"
+  },
+  "arcSuffix": "아크",
+  "arcDescriptions": {
+    "opening": "일년이 깨어난다",
+    "core": "일년이 꽃피고",
+    "closing": "일년이 완성된다"
+  },
+  "monthLabel": "월 {{month}}/13",
+  "hekaYear": "HEKA 년도 {{year}}",
+  "civilYear": "민간 년도 {{year}}",
+  "dayOfYear": "일년 중 {{day}}일째 {{total}}일",
+  "week": "주",
+  "quarter": "분기",
+  "leapDay": "윤일",
+  "leapDayDescription": "3월에 4년마다 추가되는 특별한 날",
+  "switchDarkMode": "다크 모드로 전환",
+  "switchLightMode": "라이트 모드로 전환",
+  "moreNotes": "+{{count}}개 더",
+  "holiday": "휴일",
+  "note": "메모",
+  "task": "작업",
+  "moonPhase": "달의 상태",
+  "selectDay": "자세한 정보를 보려면 날짜를 선택하세요",
+  "navigation": {
+    "previousMonth": "이전 달",
+    "nextMonth": "다음 달",
+    "goToToday": "오늘로 이동",
+    "today": "오늘"
+  },
+  "print": {
+    "title": "캘린더 인쇄",
+    "label": "인쇄"
+  },
+  "expand": {
+    "shrinkHorizontal": "가로 축소",
+    "expandHorizontal": "가로 확장",
+    "shrinkVertical": "세로 축소",
+    "expandVertical": "세로 확장"
+  },
+  "year": {
+    "viewEntireYear": "온 해 보기",
+    "label": "년도"
+  },
+  "search": {
+    "title": "날짜 검색",
+    "label": "검색"
+  },
+  "features": {
+    "astrologyHub": "점성술 허브",
+    "stars": "별",
+    "cosmicCircle": "우주 무리",
+    "circle": "무리",
+    "oracleJournal": "오라클 저널",
+    "journal": "저널",
+    "aboutHeka": "HEKA 캘린더 정보",
+    "about": "정보",
+    "yourStatistics": "당신의 통계",
+    "stats": "통계",
+    "communityHolidays": "커뮤니티 휴일",
+    "community": "커뮤니티"
+  },
+  "toggles": {
+    "civilDates": "민간 날짜 전환",
+    "civil": "민간",
+    "moonPhases": "달의 상태 전환",
+    "moon": "달",
+    "holidays": "휴일 전환",
+    "holidayLabel": "휴일"
+  },
+  "prev": "이전",
+  "next": "다음",
+  "printYear": "연도 인쇄",
+  "close": "닫기",
+  "quickNote": "빠른 노트",
+  "quickNoteTag": "빠른 노트",
+  "addingTo": "추가 중",
+  "typeYourNote": "노트 입력...",
+  "saveNote": "노트 저장",
+  "ctrlEnterToSave": "저장하려면 Ctrl + Enter • 취소하려면 Esc",
+  "hekaPrefix": "HEKA:",
+  "civilPrefix": "민간:",
+  "moodPrefix": "기분:",
+  "searchTips": {
+    "tip1": "\"1월 31일\" 또는 \"오늘\"",
+    "tip2": "\"15일 헥사\" 또는 \"4월 5일\"",
+    "tip3": "노트 내용이나 카테고리",
+    "tip4": "\"크리스마스\" 또는 \"호주 날\"",
+    "tip5": "\"2026-01-31\" (ISO 형식)"
+  }
+}

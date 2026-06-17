@@ -1,7 +1,7 @@
 # Privacy Policy for HEKA Calendar
 
-**Last Updated:** March 27, 2026  
-**Effective Date:** March 27, 2026
+**Last Updated:** May 6, 2026  
+**Effective Date:** May 6, 2026
 
 ---
 
@@ -27,8 +27,8 @@ HEKA Calendar ("we," "our," or "us") is committed to protecting your privacy. Th
 - Birth date, time, and location you enter
 - Name (optional, for profile identification)
 - Calculated astrological charts
-- **Storage:** Local device only (unless you enable optional cloud sync)
-- **Note:** Location is used for sunrise/sunset calculations only
+- **Storage:** Local device by default; synced to Firebase when you sign in and enable cloud sync
+- **Note:** Location coordinates are used for astrological calculations (houses, transits, planetary hours)
 
 **Energy Ratings:**
 - Daily energy votes (1-10 scale)
@@ -39,7 +39,7 @@ HEKA Calendar ("we," "our," or "us") is committed to protecting your privacy. Th
 - Theme and font selections
 - Display settings
 - Location/region selection
-- **Storage:** Local device only
+- **Storage:** Local device by default; synced to Firebase when you sign in and enable cloud sync
 
 ### 2. Information from Third-Party Services (Optional, User-Initiated)
 
@@ -48,7 +48,7 @@ HEKA Calendar ("we," "our," or "us") is committed to protecting your privacy. Th
   - OpenAI
   - Groq
   - Anthropic
-- **Data Sent:** Astrological context (planet positions, transits) + your API key
+- **Data Sent:** Astrological context (planet positions, transits), your API key, and optionally: recent journal snippets, mood averages, task summaries, and location context — depending on the AI feature you use. This data is sent directly from your device to the AI provider; we do not proxy or store it.
 - **Control:** You choose whether to use AI; we never send data without your explicit action
 - **Storage:** Your API keys stored only on your device
 
@@ -59,31 +59,34 @@ HEKA Calendar ("we," "our," or "us") is committed to protecting your privacy. Th
 - Friend connections you create
 - Task rituals you create or receive
 - Messages with friends
-- **Storage:** Encrypted cloud storage (Firebase)
+- Your current calendar view (e.g., "Arc 3 - Day 12") — shared as presence indicator with friends
+- **Storage:** Firebase cloud storage (encrypted in transit and at rest by Google)
 - **Note:** You choose who to connect with via invite codes
-- **Security:** End-to-end encryption for messages
+- **Security:** Protected by Firebase Authentication and Firestore Security Rules
 
 ### 4. Account Information (Optional Cloud Sync)
 
 **If You Create an Account:**
 - Email address (for authentication)
 - Display name and profile photo (optional)
-- Encrypted backup of your local data
+- Backup of your local data (notes, journal, birth charts, preferences)
 - **Service:** Firebase (Google)
 - **Purpose:** Cross-device sync and Cosmic Circle features
-- **Encryption:** All data encrypted in transit (HTTPS) and at rest
+- **Encryption:** All data encrypted in transit (HTTPS) and at rest by Google
 
 ### 5. What We Do NOT Collect
 
 HEKA Calendar does **NOT** collect:
-- ❌ Precise GPS location (we only use your selected region)
-- ❌ Device ID or fingerprinting
 - ❌ Contacts from your phone
 - ❌ Photos, camera access, or microphone
 - ❌ SMS, call logs, or other apps on your device
 - ❌ Browsing history
-- ❌ IP addresses
 - ❌ Advertising identifiers
+
+**What we DO access (only with your permission):**
+- 📍 **Precise location** — Only when you explicitly allow it, for birth chart calculations, planetary hours, sunrise/sunset times, weather, and reverse geocoding. You can also enter coordinates manually. Your precise coordinates are sent to: Open-Meteo (weather), NOAA Sunrise-Sunset API (solar times), and BigDataCloud (city name lookup).
+- 🌐 **IP address** — Not collected by us directly, but received by third-party services we use (Firebase for auth/sync).
+- 🔋 **Local device identifier** — A random ID is generated and stored locally on your device for the energy voting feature. This ID never leaves your device and is not linked to you.
 
 ---
 
@@ -142,7 +145,7 @@ Astrological context is sent to AI services only when:
 ✅ **Export your data** - Built-in export functionality in Settings  
 ✅ **Delete your data** - Clear app storage or uninstall  
 ✅ **Opt out of cloud sync** - Use local-only mode  
-✅ **Delete your account** - Removes all cloud data within 30 days  
+✅ **Delete your account** - Removes your Firebase Authentication record  
 ✅ **Control AI usage** - Only use AI if you provide your own API key
 
 ### Data Portability
@@ -195,7 +198,12 @@ We use the following third-party services:
 - No precise coordinates are ever accessed or stored
 
 **Why we request location permission:**
-The Android manifest includes location permissions for calculating sunrise/sunset times based on your selected region's latitude/longitude. This is used for the planetary hours feature and accurate astrological calculations.
+The Android manifest includes location permissions for optional features:
+- Calculating sunrise/sunset times and planetary hours
+- Accurate astrological house calculations for birth charts
+- Reverse geocoding to find your city name
+
+**You control this:** Location access is optional. You can decline the permission and manually enter any city or coordinates. We do not track your location in the background.
 
 ---
 
@@ -214,8 +222,8 @@ HEKA Calendar is not intended for children under 13. We do not knowingly collect
 
 ### Cloud Data (if applicable):
 - Retained while your account is active
-- Deleted within 30 days of account deletion
 - You can delete your account anytime in Settings
+- **Note:** Account deletion removes your Firebase Authentication record. Full deletion of all Firestore documents (messages, friendships, notes backup) is planned but not yet fully automated.
 
 ---
 
@@ -274,16 +282,14 @@ This app complies with:
 
 | Data Type | Storage | Shared? | Purpose |
 |-----------|---------|---------|---------|
-| Calendar Notes | Local Device | ❌ No | Personal record keeping |
-| Journal Entries | Local Device | ❌ No | Personal reflection |
+| Calendar Notes | Local + Optional Firebase | ❌ No | Personal record keeping |
+| Journal Entries | Local + Optional Firebase | ❌ No | Personal reflection |
 | Mood/Energy Ratings | Local Device | ❌ No | Personal tracking |
-| Calendar Notes | Local Device | ❌ No | Personal record keeping |
-| Journal Entries | Local Device | ❌ No | Personal reflection |
-| Birth Chart Data | Local Device | ❌ No | Astrological calculations |
-| Cosmic Circle Profile | Firebase (Encrypted) | ✅ Only with friends you choose | Social features |
-| Messages/Tasks | Firebase (Encrypted) | ✅ Only with connected friends | Communication |
-| Email (optional) | Firebase | ⚠️ With Google (encrypted) | Account authentication |
-| Cloud Backup (optional) | Firebase | ⚠️ With Google (encrypted) | Cross-device sync |
+| Birth Chart Data | Local + Optional Firebase | ❌ No | Astrological calculations |
+| Cosmic Circle Profile | Firebase | ✅ Only with friends you choose | Social features |
+| Messages/Tasks | Firebase | ✅ Only with connected friends | Communication |
+| Email (optional) | Firebase | ⚠️ With Google | Account authentication |
+| Cloud Backup (optional) | Firebase | ⚠️ With Google | Cross-device sync |
 | AI Requests | External APIs | ✅ Only when you initiate | Enhanced readings |
 
 **Bottom Line:** Your personal data stays on your device unless you explicitly choose to enable cloud sync. We believe in privacy by design.

@@ -1,0 +1,166 @@
+{
+  "months": {
+    "0": "Abril",
+    "1": "Mayo",
+    "2": "Junio",
+    "3": "Julio",
+    "4": "Agosto",
+    "5": "Semana",
+    "6": "Septiembre",
+    "7": "Octubre",
+    "8": "Noviembre",
+    "9": "Diciembre",
+    "10": "Enero",
+    "11": "Febrero",
+    "12": "Marzo"
+  },
+  "monthShort": {
+    "0": "Abr",
+    "1": "Mayo",
+    "2": "Jun",
+    "3": "Jul",
+    "4": "Ago",
+    "5": "Jun",
+    "6": "Sep",
+    "7": "Oct",
+    "8": "Nov",
+    "9": "Dic",
+    "10": "Ene",
+    "11": "Feb",
+    "12": "Mar"
+  },
+  "civilMonths": {
+    "0": "Ene",
+    "1": "Feb",
+    "2": "Mar",
+    "3": "Abr",
+    "4": "Mayo",
+    "5": "Jun",
+    "6": "Jul",
+    "7": "Ago",
+    "8": "Sep",
+    "9": "Oct",
+    "10": "Nov",
+    "11": "Dic"
+  },
+  "days": {
+    "0": "Domingo",
+    "1": "Lunes",
+    "2": "Martes",
+    "3": "Miércoles",
+    "4": "Jueves",
+    "5": "Viernes",
+    "6": "Sábado"
+  },
+  "daysShort": {
+    "0": "Dom",
+    "1": "Lun",
+    "2": "Mar",
+    "3": "Mié",
+    "4": "Jue",
+    "5": "Vie",
+    "6": "Sáb"
+  },
+  "daysMin": {
+    "0": "Do",
+    "1": "Lu",
+    "2": "Ma",
+    "3": "Mi",
+    "4": "Ju",
+    "5": "Vi",
+    "6": "Sá"
+  },
+  "arcs": {
+    "opening": "Apertura",
+    "core": "Núcleo",
+    "closing": "Cierre"
+  },
+  "arcSuffix": "Arco",
+  "arcDescriptions": {
+    "opening": "El año se despierta",
+    "core": "El año florece",
+    "closing": "El año se completa"
+  },
+  "monthLabel": "Mes {{month}}/13",
+  "hekaYear": "Año HEKA {{year}}",
+  "civilYear": "Año Civil {{year}}",
+  "dayOfYear": "Día {{day}} de {{total}}",
+  "week": "Semana",
+  "quarter": "Trimestre",
+  "leapDay": "Día Adicional",
+  "leapDayDescription": "Un día extra en marzo, cada 4 años",
+  "switchDarkMode": "Cambiar a modo oscuro",
+  "switchLightMode": "Cambiar a modo claro",
+  "moreNotes": "+{{count}} más",
+  "holiday": "Feriado",
+  "note": "Nota",
+  "task": "Tarea",
+  "moonPhase": "Fase de la Luna",
+  "selectDay": "Selecciona un día para ver detalles",
+  "navigation": {
+    "previousMonth": "Mes anterior",
+    "nextMonth": "Mes siguiente",
+    "goToToday": "Ir a hoy",
+    "today": "Hoy"
+  },
+  "print": {
+    "title": "Imprimir calendario",
+    "label": "Imprimir"
+  },
+  "expand": {
+    "shrinkHorizontal": "Reducir horizontalmente",
+    "expandHorizontal": "Expandir horizontalmente",
+    "shrinkVertical": "Reducir verticalmente",
+    "expandVertical": "Expandir verticalmente"
+  },
+  "year": {
+    "viewEntireYear": "Ver todo el año",
+    "label": "Año"
+  },
+  "search": {
+    "title": "Buscar fechas",
+    "label": "Buscar"
+  },
+  "features": {
+    "astrologyHub": "Centro de Astrología",
+    "stars": "Estrellas",
+    "cosmicCircle": "Círculo Cósmico",
+    "circle": "Círculo",
+    "oracleJournal": "Diario de Oráculo",
+    "journal": "Diario",
+    "aboutHeka": "Acerca del Calendario HEKA",
+    "about": "Acerca de",
+    "yourStatistics": "Tus estadísticas",
+    "stats": "Estadísticas",
+    "communityHolidays": "Días festivos comunitarios",
+    "community": "Comunidad"
+  },
+  "toggles": {
+    "civilDates": "Activar fechas civiles",
+    "civil": "Civil",
+    "moonPhases": "Activar fases lunares",
+    "moon": "Luna",
+    "holidays": "Activar festivos",
+    "holidayLabel": "Festivos"
+  },
+  "prev": "Anterior",
+  "next": "Siguiente",
+  "printYear": "Imprimir Año",
+  "close": "Cerrar",
+  "quickNote": "Nota Rápida",
+  "quickNoteTag": "nota rápida",
+  "addingTo": "Añadiendo a",
+  "typeYourNote": "Escribe tu nota...",
+  "saveNote": "Guardar Nota",
+  "ctrlEnterToSave": "Ctrl + Enter para guardar • Esc para cancelar",
+  "hekaPrefix": "HEKA:",
+  "civilPrefix": "Civil:",
+  "moodPrefix": "Estado de ánimo:",
+  "searchTips": {
+    "tip1": "\"31 de enero\" o \"hoy\"",
+    "tip2": "\"hexa 15\" o \"abril 5\"",
+    "tip3": "Contenido de la nota o categoría",
+    "tip4": "\"Navidad\" o \"Día de Australia\"",
+    "tip5": "\"2026-01-31\" (formato ISO)"
+  }
+}

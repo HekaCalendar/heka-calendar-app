@@ -1,0 +1,99 @@
+{
+  "title": "Riconoscimenti",
+  "streak": "Serie",
+  "days": "Giorni",
+  "totalAchievements": "{{count}} riconoscimenti",
+  "earned": "Guadagno",
+  "locked": "Bloccato",
+  "newAchievement": "Nuovo Riconoscimento!",
+  "categories": {
+    "calendar": "Maestro del Calendario",
+    "journal": "Custode del Diario",
+    "circle": "Costruttore di Cerchio",
+    "coach": "Osservatore delle Stelle",
+    "explorer": "Esploratore"
+  },
+  "achievements": {
+    "firstStep": {
+      "name": "Primo Passo",
+      "description": "Apri il calendario per la prima volta"
+    },
+    "timeTraveler": {
+      "name": "Viaggiatore del Tempo",
+      "description": "Visualizza una data più di 1 anno lontana"
+    },
+    "streak7": {
+      "name": "Settimana di Luce",
+      "description": "Usa il calendario per 7 giorni di fila"
+    },
+    "streak30": {
+      "name": "Mese di Stelle",
+      "description": "Usa il calendario per 30 giorni di fila"
+    },
+    "streak100": {
+      "name": "Secolo di Sapienza",
+      "description": "Usa il calendario per 100 giorni di fila"
+    },
+    "journalFirst": {
+      "name": "Prime Parole",
+      "description": "Scrivi la tua prima voce di diario"
+    },
+    "journal10": {
+      "name": "Scrittore in Fiore",
+      "description": "Scrivi 10 voci di diario"
+    },
+    "journal50": {
+      "name": "Scrittore Esperto",
+      "description": "Scrivi 50 voci di diario"
+    },
+    "friendAdded": {
+      "name": "Primo Legame",
+      "description": "Aggiungi il tuo primo amico"
+    },
+    "circle5": {
+      "name": "Cerchio in Crescita",
+      "description": "Hai 5 amici nel tuo cerchio"
+    },
+    "aiAsked": {
+      "name": "Cericatore di Sapienza",
+      "description": "Chiedi alla consulente IA una domanda"
+    },
+    "aiStreak7": {
+      "name": "Orientamento Giornaliero",
+      "description": "Consulta la consulente IA per 7 giorni"
+    },
+    "allMoonPhases": {
+      "name": "Osservatore Lunare",
+      "description": "Visualizza tutte le 8 fasi lunari"
+    },
+    "allZodiac": {
+      "name": "Esploratore dello Zodiaco",
+      "description": "Visualizza tutti i 13 segni dello zodiaco"
+    },
+    "printFirst": {
+      "name": "Prima Stampa",
+      "description": "Stampa la tua prima pagina calendario"
+    }
+  },
+  "categoryLabels": {
+    "beginner": "Principiante",
+    "intermediate": "Intermedio",
+    "advanced": "Avanzato",
+    "master": "Maestro",
+    "special": "Speciale",
+    "explorer": "Esploratore",
+    "discoverer": "Scoperto",
+    "engager": "Coinvolto"
+  },
+  "stats": {
+    "appOpens": "Apertura App",
+    "dayStreak": "Giorno di Serie",
+    "hoursSpent": "Ore Trascorse",
+    "featuresFound": "Caratteristiche Trovate"
+  },
+  "all": "Tutti",
+  "showHidden": "Mostra Nascosti",
+  "noAchievements": "Nessun risultato trovato in questa categoria",
+  "hiddenAchievement": "Risultato Nascosto",
+  "secret": "SEGRETO"
+}

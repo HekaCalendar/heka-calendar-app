@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Heka Time — A New Measure for the Wrist</title>
+  <meta name="description" content="The world's first horological system designed for a 13-month calendar. Precise, beautiful, and true to the rhythms that actually govern our sky.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Cinzel+Decorative:wght@400;700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles/main.css">
+  <link rel="stylesheet" href="styles/home.css">
+</head>
+<body>
+
+  <!-- Sacred Geometry Background -->
+  <div class="sacred-bg">
+    <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <pattern id="flower" x="0" y="0" width="40" height="40" patternUnits="userSpaceOnUse">
+          <circle cx="20" cy="20" r="8" fill="none" stroke="currentColor" stroke-width="0.3"/>
+          <circle cx="20" cy="12" r="8" fill="none" stroke="currentColor" stroke-width="0.3"/>
+          <circle cx="20" cy="28" r="8" fill="none" stroke="currentColor" stroke-width="0.3"/>
+          <circle cx="12" cy="16" r="8" fill="none" stroke="currentColor" stroke-width="0.3"/>
+          <circle cx="28" cy="16" r="8" fill="none" stroke="currentColor" stroke-width="0.3"/>
+          <circle cx="12" cy="24" r="8" fill="none" stroke="currentColor" stroke-width="0.3"/>
+          <circle cx="28" cy="24" r="8" fill="none" stroke="currentColor" stroke-width="0.3"/>
+        </pattern>
+      </defs>
+      <rect width="100%" height="100%" fill="url(#flower)"/>
+    </svg>
+  </div>
+
+  <!-- Noise Overlay -->
+  <div class="noise-overlay"></div>
+
+  <!-- Navigation -->
+  <nav id="navbar">
+    <a href="./index.html" class="nav-logo">
+      <div class="nav-logo-icon">H</div>
+      <div class="nav-logo-text">HEKA <span>TIME</span></div>
+    </a>
+    <button class="mobile-nav-toggle" aria-label="Toggle navigation" aria-expanded="false">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+    <ul class="nav-links">
+      <li><a href="./index.html" aria-current="page">Home</a></li>
+      <li><a href="./calendar.html">The Calendar</a></li>
+      <li><a href="./watch.html">The Watch</a></li>
+      <li><a href="./designers.html">For Designers</a></li>
+    </ul>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-badge">
+      <span class="pulse"></span>
+      A Hekaverse Project
+    </div>
+
+    <!-- Watch Visual -->
+    <div class="watch-hero-container">
+      <div class="watch-case">
+        <div class="watch-bezel">
+          <div class="watch-dial">
+            <div class="watch-month-ring" id="monthRing"></div>
+            <div class="watch-center-text">
+              <div class="heka-label">Heka</div>
+              <div class="time-display" id="liveTime">00:00</div>
+              <div class="date-display" id="liveDate">---</div>
+            </div>
+            <div class="watch-hand hour"></div>
+            <div class="watch-hand minute"></div>
+            <div class="watch-hand second"></div>
+            <div class="watch-center-dot"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <h1>
+      A New Measure<br>for the <span class="gold-accent">Wrist</span>
+    </h1>
+    <p class="hero-subtitle">
+      The world's first horological system designed for a 13-month calendar.
+      Precise, beautiful, and true to the rhythms that actually govern our sky.
+    </p>
+    <div class="hero-cta">
+      <a href="./calendar.html" class="btn btn-primary">Explore the Calendar</a>
+      <a href="./watch.html" class="btn btn-secondary">The Watch Vision</a>
+    </div>
+
+    <div class="hero-scroll">
+      <span>Scroll</span>
+      <div class="hero-scroll-line"></div>
+    </div>
+  </section>
+
+  <!-- Problem Section -->
+  <section class="problem-section">
+    <div class="section-label reveal">The Problem</div>
+    <h2 class="reveal">Time Was Never<br>Designed</h2>
+    <p class="reveal">
+      For centuries, we have measured our lives with months of 28, 29, 30, and 31 days.
+      Weeks do not fit. The moon is ignored. Holidays scatter without rhythm.
+      And our wrists? They wear the inheritance of empire.
+    </p>
+
+    <div class="problem-grid">
+      <div class="problem-card reveal">
+        <div class="number">01</div>
+        <h4>Broken Months</h4>
+        <p>Twelve irregular months that refuse to align with the 13 lunar cycles that actually occur each year.</p>
+      </div>
+      <div class="problem-card reveal">
+        <div class="number">02</div>
+        <h4>Shifting Weeks</h4>
+        <p>The 1st of the month falls on a different weekday every time. Birthday weekdays change year to year.</p>
+      </div>
+      <div class="problem-card reveal">
+        <div class="number">03</div>
+        <h4>Ignored Rhythms</h4>
+        <p>Weeks, months, and years operate on three disconnected systems. No watch can reconcile them gracefully.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Brief Calendar Overview -->
+  <section id="structure">
+    <div class="section-label reveal">The Structure</div>
+    <h2 class="reveal">Thirteen Months.<br>Twenty-Eight Days.</h2>
+    <p class="reveal">
+      HEKA organizes the year into 13 equal months of 28 days each — exactly 4 perfect weeks.
+      The 365th day (and 366th in leap years) belongs to March alone, creating a natural threshold between cycles.
+    </p>
+
+    <div class="months-visual reveal">
+      <div class="month-pillar">
+        <div class="month-bar opening"><span class="days-label">28</span></div>
+        <div class="month-name-label">Apr</div>
+      </div>
+      <div class="month-pillar">
+        <div class="month-bar core"><span class="days-label">28</span></div>
+        <div class="month-name-label">May</div>
+      </div>
+      <div class="month-pillar">
+        <div class="month-bar core"><span class="days-label">28</span></div>
+        <div class="month-name-label">Jun</div>
+      </div>
+      <div class="month-pillar">
+        <div class="month-bar core"><span class="days-label">28</span></div>
+        <div class="month-name-label">Jul</div>
+      </div>
+      <div class="month-pillar">
+        <div class="month-bar core"><span class="days-label">28</span></div>
+        <div class="month-name-label">Aug</div>
+      </div>
+      <div class="month-pillar">
+        <div class="month-bar core"><span class="days-label">28</span></div>
+        <div class="month-name-label hexa">Hexa</div>
+      </div>
+      <div class="month-pillar">
+        <div class="month-bar core"><span class="days-label">28</span></div>
+        <div class="month-name-label">Sep</div>
+      </div>
+      <div class="month-pillar">
+        <div class="month-bar core"><span class="days-label">28</span></div>
+        <div class="month-name-label">Oct</div>
+      </div>
+      <div class="month-pillar">
+        <div class="month-bar core"><span class="days-label">28</span></div>
+        <div class="month-name-label">Nov</div>
+      </div>
+      <div class="month-pillar">
+        <div class="month-bar core"><span class="days-label">28</span></div>
+        <div class="month-name-label">Dec</div>
+      </div>
+      <div class="month-pillar">
+        <div class="month-bar closing"><span class="days-label">28</span></div>
+        <div class="month-name-label">Jan</div>
+      </div>
+      <div class="month-pillar">
+        <div class="month-bar closing"><span class="days-label">28</span></div>
+        <div class="month-name-label">Feb</div>
+      </div>
+      <div class="month-pillar">
+        <div class="month-bar march"><span class="days-label">29/30</span></div>
+        <div class="month-name-label">Mar</div>
+      </div>
+    </div>
+
+    <div class="equation reveal">
+      <span class="term">12 &times; 28</span>
+      <span class="operator">+</span>
+      <span class="term">March(29/30)</span>
+      <span class="operator">=</span>
+      <span class="result">365 / 366</span>
+    </div>
+
+    <p class="reveal" style="text-align: center; margin-top: 1.5rem; font-size: 0.85rem; color: var(--text-tertiary);">
+      The year begins on <strong style="color: var(--gold);">April 1</strong> — when the northern hemisphere awakens and the southern enters rest.
+    </p>
+  </section>
+
+  <!-- Brief Arc Overview -->
+  <section id="arcs">
+    <div class="section-label reveal">The Narrative</div>
+    <h2 class="reveal">Three Arcs.<br>One Story.</h2>
+    <p class="reveal">
+      The HEKA year is not merely divided — it is composed. Like any great work, it has
+      an opening, a core, and a closing. Each arc carries its own energy, color, and purpose.
+    </p>
+
+    <div class="arc-section opening-arc reveal">
+      <div class="arc-badge opening">Opening Arc</div>
+      <h3>Threshold &amp; Beginning</h3>
+      <p style="max-width: 500px;">
+        April stands alone as the gateway. A single month of pure initiation — planting seeds,
+        setting intention, crossing the threshold into the new cycle. The Opening Arc is red
+        with the vitality of spring.
+      </p>
+      <div class="arc-months-list">
+        <div class="arc-month-tag" style="border-color: rgba(220,38,38,0.3); color: #fca5a5;">April</div>
+      </div>
+    </div>
+
+    <div class="arc-section core-arc reveal">
+      <div class="arc-badge core">Core Arc</div>
+      <h3>The Work of the Year</h3>
+      <p style="max-width: 500px;">
+        Nine perfectly regular months where momentum builds. May through December form the
+        beating heart of the year — each exactly 28 days, each beginning on the same weekday.
+        Hexa, the bridge month, marks the pivot point for mid-course correction.
+      </p>
+      <div class="arc-months-list">
+        <div class="arc-month-tag" style="border-color: rgba(22,163,74,0.3); color: #86efac;">May</div>
+        <div class="arc-month-tag" style="border-color: rgba(22,163,74,0.3); color: #86efac;">June</div>
+        <div class="arc-month-tag" style="border-color: rgba(22,163,74,0.3); color: #86efac;">July</div>
+        <div class="arc-month-tag" style="border-color: rgba(22,163,74,0.3); color: #86efac;">August</div>
+        <div class="arc-month-tag" style="border-color: rgba(212,175,55,0.3); color: var(--gold);">Hexa</div>
+        <div class="arc-month-tag" style="border-color: rgba(22,163,74,0.3); color: #86efac;">September</div>
+        <div class="arc-month-tag" style="border-color: rgba(22,163,74,0.3); color: #86efac;">October</div>
+        <div class="arc-month-tag" style="border-color: rgba(22,163,74,0.3); color: #86efac;">November</div>
+        <div class="arc-month-tag" style="border-color: rgba(22,163,74,0.3); color: #86efac;">December</div>
+      </div>
+    </div>
+
+    <div class="arc-section closing-arc reveal">
+      <div class="arc-badge closing">Closing Arc</div>
+      <h3>Resolution &amp; The Closing</h3>
+      <p style="max-width: 500px;">
+        January, February, and March bring the year to its conclusion. March carries the
+        leap days — all temporal correction contained in one place. Days 29 and 30 complete
+        the cycle, part of the natural rhythm that closes one year and opens the next.
+      </p>
+      <div class="arc-months-list">
+        <div class="arc-month-tag" style="border-color: rgba(124,58,237,0.3); color: #c4b5fd;">January</div>
+        <div class="arc-month-tag" style="border-color: rgba(124,58,237,0.3); color: #c4b5fd;">February</div>
+        <div class="arc-month-tag" style="border-color: rgba(124,58,237,0.3); color: #c4b5fd;">March</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="cta-section">
+    <div class="cta-glow">
+      <h2 class="reveal">Design the Future<br>of Time</h2>
+    </div>
+    <p class="reveal">
+      Heka Time is an open invitation to the world's finest watchmakers.
+      We have designed the calendar. Now we seek the hands that will bring it to the wrist.
+    </p>
+    <div class="reveal" style="margin-top: 1rem;">
+      <a href="./designers.html" class="btn btn-primary" style="padding: 1rem 2.5rem; font-size: 0.9rem;">
+        Connect With Us
+      </a>
+    </div>
+    <p class="reveal" style="margin-top: 2rem; font-size: 0.8rem; color: var(--text-tertiary);">
+      Part of the <strong style="color: var(--gold);">Hekaverse</strong> · hekaverse.com
+    </p>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-logo">HEKA <span style="color: var(--text-secondary); font-weight: 400;">TIME</span></div>
+    <div class="footer-tagline">A calendar that breathes. A watch that understands.</div>
+    <div class="footer-links">
+      <a href="./index.html">Home</a>
+      <a href="./calendar.html">The Calendar</a>
+      <a href="./watch.html">The Watch</a>
+      <a href="./designers.html">For Designers</a>
+      <a href="https://hekacalendar.com" target="_blank" rel="noopener">Heka Calendar</a>
+      <a href="https://hekaverse.com" target="_blank" rel="noopener">Hekaverse</a>
+    </div>
+    <div class="footer-copy">
+      &copy; 2026 Hekaverse. All rights reserved. · hekatime.com · hekaverse.com
+    </div>
+  </footer>
+
+  <script src="scripts/shared.js"></script>
+  <script src="scripts/home.js"></script>
+</body>
+</html>

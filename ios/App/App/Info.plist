@@ -56,6 +56,10 @@
 			</array>
 		</dict>
 	</array>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>HEKA Calendar uses your location to calculate accurate sunrise, sunset, and planetary hour times. You can also enter coordinates manually.</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>HEKA Calendar uses your location to calculate accurate sunrise, sunset, and planetary hour times. Background location is not used.</string>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<true/>
 </dict>

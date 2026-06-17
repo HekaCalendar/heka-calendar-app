@@ -1,0 +1,99 @@
+{
+  "title": "Saavutukset",
+  "streak": "Jatkuvuus",
+  "days": "Päivää",
+  "totalAchievements": "{{count}} saavutusta",
+  "earned": "Ansaittu",
+  "locked": "Lukittu",
+  "newAchievement": "Uusi saavutus!",
+  "categories": {
+    "calendar": "Kalenterin mestari",
+    "journal": "Päiväkirjan hoitaja",
+    "circle": "Ympyröiden rakentaja",
+    "coach": "Tähti katselija",
+    "explorer": "Tutkimusmatkustaja"
+  },
+  "achievements": {
+    "firstStep": {
+      "name": "Ensimmäinen askel",
+      "description": "Avaa kalenteri ensimmäistä kertaa"
+    },
+    "timeTraveler": {
+      "name": "Ajattelija",
+      "description": "Katso päivämäärä yli 1 vuoden päässä"
+    },
+    "streak7": {
+      "name": "Vaikkaisen viikko",
+      "description": "Käytä kalenteria 7 päivää peräkkäin"
+    },
+    "streak30": {
+      "name": "Tähtien kuukausi",
+      "description": "Käytä kalenteria 30 päivää peräkkäin"
+    },
+    "streak100": {
+      "name": "Viisikymmenten viisaudet",
+      "description": "Käytä kalenteria 100 päivää peräkkäin"
+    },
+    "journalFirst": {
+      "name": "Ensimmäinen sana",
+      "description": "Kirjoita ensimmäinen päiväkirjamerkintäsi"
+    },
+    "journal10": {
+      "name": "Kasvava kirjailija",
+      "description": "Kirjoita 10 päiväkirjamerkintää"
+    },
+    "journal50": {
+      "name": "Kokenut kirjoittaja",
+      "description": "Kirjoita 50 päiväkirjamerkintää"
+    },
+    "friendAdded": {
+      "name": "Ensimmäinen side",
+      "description": "Lisää ensimmäinen ystävä"
+    },
+    "circle5": {
+      "name": "Kasvava ympyrö",
+      "description": "Pyy siellä 5 ystävää ympyröösi"
+    },
+    "aiAsked": {
+      "name": "Viisauden etsijä",
+      "description": "Kysy AI-koulelta kysymys"
+    },
+    "aiStreak7": {
+      "name": "Päivittäinen opastus",
+      "description": "Konsultoi AI-kouletta 7 päivää"
+    },
+    "allMoonPhases": {
+      "name": "Kuuasemaselailija",
+      "description": "Katso kaikki 8 kuuasemastoa"
+    },
+    "allZodiac": {
+      "name": "Võruududest uurija",
+      "description": "Katso kaikki 13 tärkijunett"
+    },
+    "printFirst": {
+      "name": "Ensimmäinen tulostus",
+      "description": "Tulosta ensimmäinen kalenterisivu"
+    }
+  },
+  "categoryLabels": {
+    "beginner": "Alkulainen",
+    "intermediate": "Keskisuorittaja",
+    "advanced": "Edistynyt",
+    "master": "Mestari",
+    "special": "Erityinen",
+    "explorer": "Tutkimusmatkaaja",
+    "discoverer": "Löytäjä",
+    "engager": "Osallistuja"
+  },
+  "stats": {
+    "appOpens": "Sovelluksen käynnistymisiä",
+    "dayStreak": "Päiväjono",
+    "hoursSpent": "Tunteja vietetty",
+    "featuresFound": "Löydettyjä ominaisuuksia"
+  },
+  "all": "Kaikki",
+  "showHidden": "Näytä piilotetut",
+  "noAchievements": "Ei saavutuksia tässä kategoriassa",
+  "hiddenAchievement": "Piilotettu saavutus",
+  "secret": "SALAISUUS"
+}

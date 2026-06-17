@@ -1,0 +1,99 @@
+{
+  "title": "Başarılar",
+  "streak": "Sıra",
+  "days": "Günler",
+  "totalAchievements": "{{count}} başarı",
+  "earned": "Kazanıldı",
+  "locked": "Kilitlendi",
+  "newAchievement": "Yeni Başarı!",
+  "categories": {
+    "calendar": "Takvim Ustası",
+    "journal": "Günlük Tutucu",
+    "circle": "Çember İnşaçısı",
+    "coach": "Yıldız Gözlemcisi",
+    "explorer": "Gezegenler"
+  },
+  "achievements": {
+    "firstStep": {
+      "name": "İlk Adım",
+      "description": "Takvimi ilk kez aç"
+    },
+    "timeTraveler": {
+      "name": "Zaman Seyyahı",
+      "description": "1 yıldan daha uzak bir tarih görüntüle"
+    },
+    "streak7": {
+      "name": "Işık Haftası",
+      "description": "Takvimi 7 gün boyunca kullan"
+    },
+    "streak30": {
+      "name": "Yıldız Ayı",
+      "description": "Takvimi 30 gün boyunca kullan"
+    },
+    "streak100": {
+      "name": "Bilgelik Yüzyılı",
+      "description": "Takvimi 100 gün boyunca kullan"
+    },
+    "journalFirst": {
+      "name": "İlk Sözler",
+      "description": "İlk günlük girdininizi yazın"
+    },
+    "journal10": {
+      "name": "Güçlenen Yazar",
+      "description": "10 günlük girdiniz yazın"
+    },
+    "journal50": {
+      "name": "Deneyimli Yazar",
+      "description": "50 günlük girdiniz yazın"
+    },
+    "friendAdded": {
+      "name": "İlk Bağ",
+      "description": "İlk arkadaşınızı ekleyin"
+    },
+    "circle5": {
+      "name": "Büyüyen Çember",
+      "description": "Çemberinizde 5 arkadaşınız olsun"
+    },
+    "aiAsked": {
+      "name": "Bilgelik Arayıcısı",
+      "description": "Yapay zeka antrenörüne bir soru sorun"
+    },
+    "aiStreak7": {
+      "name": "Günlük Rehberlik",
+      "description": "Yapay zeka antrenörünü 7 gün boyunca danışın"
+    },
+    "allMoonPhases": {
+      "name": "Ay Faslı Gözlemcisi",
+      "description": "Tüm 8 ay fazilerini görüntüleyin"
+    },
+    "allZodiac": {
+      "name": "Burç Gezginleri",
+      "description": "Tüm 13 burcu görüntüleyin"
+    },
+    "printFirst": {
+      "name": "İlk Yazdırma",
+      "description": "İlk takvim sayfanızı yazdırın"
+    }
+  },
+  "categoryLabels": {
+    "beginner": "Acemi",
+    "intermediate": "İleri Düzey",
+    "advanced": "Gelişmiş",
+    "master": "Usta",
+    "special": "Özel",
+    "explorer": "Keşifçi",
+    "discoverer": "Keşfetme",
+    "engager": "Meydan Okuma"
+  },
+  "stats": {
+    "appOpens": "Uygulama Açıldı",
+    "dayStreak": "Gün Boyu Seri",
+    "hoursSpent": "Harcanan Saat",
+    "featuresFound": "Bulunan Özellikler"
+  },
+  "all": "Hepsi",
+  "showHidden": "Gizlileri göster",
+  "noAchievements": "Bu kategoride başarı bulunamadı",
+  "hiddenAchievement": "Gizli Başarı",
+  "secret": "GİZLİ"
+}

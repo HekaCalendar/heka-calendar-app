@@ -4,6 +4,10 @@
  */
 
 import { persistence } from '../astrology/services/persistence';
+import { aiConfigService } from './aiConfigService';
+import { decryptState, isEncryptedState } from '../utils/stateCrypto';
+
+declare const __APP_VERSION__: string;
 
 export interface ExportData {
   exportDate: string;
@@ -38,7 +42,7 @@ export interface ExportData {
 export async function exportAllUserData(): Promise<ExportData> {
   const exportData: ExportData = {
     exportDate: new Date().toISOString(),
-    appVersion: '2.2.0',
+    appVersion: typeof __APP_VERSION__ !== 'undefined' ? __APP_VERSION__ : '2.2.16',
     dataVersion: '1.0',
     userData: {
       profiles: [],
@@ -74,11 +78,28 @@ export async function exportAllUserData(): Promise<ExportData> {
       exportData.userData.charts.push(...charts);
     }
 
-    // Export calendar notes
+    // Export the main encrypted calendar state (notes, settings, etc.)
+    try {
+      const encryptedState = localStorage.getItem('heka-calendar-state');
+      if (encryptedState) {
+        if (isEncryptedState(encryptedState)) {
+          const decrypted = await decryptState(encryptedState);
+          if (decrypted) {
+            exportData.calendarData.settings = JSON.parse(decrypted);
+          }
+        } else {
+          exportData.calendarData.settings = JSON.parse(encryptedState);
+        }
+      }
+    } catch (e) {
+      console.error('[DataExport] Failed to decrypt calendar state:', e);
+    }
+
+    // Export calendar notes (legacy / supplemental keys)
     const notes: Record<string, any> = {};
     for (let i = 0; i < localStorage.length; i++) {
       const key = localStorage.key(i);
-      if (key && key.startsWith('heka:')) {
+      if (key && (key.startsWith('heka:') || key.startsWith('hec-'))) {
         try {
           const value = localStorage.getItem(key);
           if (value) {
@@ -132,30 +153,20 @@ export async function exportAllUserData(): Promise<ExportData> {
     }
 
     // Export AI config (without API keys for security)
-    const aiConfig = localStorage.getItem('celestial-ai-config');
-    if (aiConfig) {
-      try {
-        const config = JSON.parse(aiConfig);
-        exportData.aiConfig = {
-          provider: config.type,
-          hasCustomKeys: !!(localStorage.getItem('celestial-groq-key') || 
-                          localStorage.getItem('celestial-openai-key')),
-        };
-      } catch {
-        exportData.aiConfig = { hasCustomKeys: false };
-      }
+    try {
+      const config = aiConfigService.getConfig();
+      exportData.aiConfig = {
+        provider: config.provider,
+        hasCustomKeys: !!(config.apiKey && config.provider !== 'template'),
+      };
+    } catch {
+      exportData.aiConfig = { hasCustomKeys: false };
     }
-
-    // Check for custom API keys (don't export the keys, just note they exist)
-    exportData.aiConfig.hasCustomKeys = !!(
-      localStorage.getItem('celestial-groq-key') ||
-      localStorage.getItem('celestial-openai-key')
-    );
 
     return exportData;
   } catch (error) {
     console.error('[DataExport] Failed to export data:', error);
-    throw new Error('Failed to export user data. Please try again.');
+    throw new Error('Failed to export user data. Please try again.', { cause: error });
   }
 }
 
@@ -318,7 +329,7 @@ export async function clearAllUserData(): Promise<void> {
     console.log('[DataExport] All user data cleared');
   } catch (error) {
     console.error('[DataExport] Failed to clear data:', error);
-    throw new Error('Failed to clear user data. Please try again.');
+    throw new Error('Failed to clear user data. Please try again.', { cause: error });
   }
 }
 

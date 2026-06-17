@@ -300,3 +300,33 @@
     margin-top: 8px;
   }
 }
+
+
+/* ── RTL Overrides ── */
+[dir="rtl"] .db-degree {
+    margin-right: auto
+}
+
+[dir="rtl"] .db-rating {
+    text-align: left
+}
+
+[dir="rtl"] .db-transit {
+    border-right: 3px solid transparent
+}
+
+[dir="rtl"] .db-positive .db-transit {
+    border-right-color: #22c55e
+}
+
+[dir="rtl"] .db-challenging .db-transit {
+    border-right-color: #ef4444
+}
+
+[dir="rtl"] .db-neutral .db-transit {
+    border-right-color: #71717a
+}
+
+[dir="rtl"] .db-rating {
+    text-align: right
+}

@@ -110,7 +110,7 @@ function getActiveProfileId(): string | null {
     if (newSelected) {
       return JSON.parse(newSelected);
     }
-  } catch (e) {
+  } catch {
     // Ignore
   }
 
@@ -121,7 +121,7 @@ function getActiveProfileId(): string | null {
       const parsed = JSON.parse(oldActive);
       return parsed.id || null;
     }
-  } catch (e) {
+  } catch {
     // Ignore
   }
 

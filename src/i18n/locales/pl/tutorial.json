@@ -1,0 +1,126 @@
+{
+  "tutorial": {
+    "back": "Wstecz",
+    "skip": "Pomiń",
+    "enter": "Wejdź do HEKA",
+    "continue": "Kontynuuj",
+    "stepLabel": "Krok {{current}} z {{total}}",
+    "journeyTitle": "Twoja Podróże",
+    "completeLabel": "Ukończono",
+    "actionWaiting": "Kliknij, aby kontynuować",
+    "steps": {
+      "welcome": {
+        "title": "Witaj w HEKA",
+        "detail": "Trzynaste miesiące. Każdemu 28 dni. Księżyc, słońce, twój ogród, twoja energia, twoi przyjaciele — w końcu w rytmie.",
+        "action": "Rozpocznij Twoją Podróże",
+        "instruction": "Nigdy wcześniej nie widziałeś takiego kalendarza."
+      },
+      "tracker": {
+        "title": "Śledź swój rytm",
+        "detail": "Nastrój: suwak 1-10 z rzeczywistym emoji. Sen: czas trwania i jakość. Energia: fizyczna, mentalna, emocjonalna, duchowa. Tablica informacji ujawnia wzorce na przestrzeni czasu. Twój kalendarz przechowuje twoją historię.",
+        "action": "Kontynuuj",
+        "instruction": "Twoje ciało jest częścią kalendarza."
+      },
+      "the-grid": {
+        "title": "Siatka — Trzynaste Miesiące",
+        "detail": "Dwanascie miesięcy dokładnie 28 dni, plus Hexa między sierpniem a wrzesień. Luty zawiera 29. dzień. Każde miesiące zaczyna się w tym samym dniu. Rok oddycha w trzech łukach — Otwierający się na czerwono, Równowaga na zieleno, Zamykający się na fioletowo. Przewidywalne. Symetryczne. Czyste.",
+        "action": "Kliknij dowolny dzień, aby kontynuować",
+        "instruction": "Liczyć je. Trzynaste. Nie dwanascie."
+      },
+      "features": {
+        "title": "Twój Arsenal",
+        "detail": "Wydruk: Domyślne Złoto, Minimalistyczne, Święte Geometria z komórkami okręgłymi, Cyberpunk z liniami skanowania CRT, Przyroda Organiczna, Starożytne Egipt z hieroglifami. Wszystkie za darmo. Na całe życie. A4, A3, Letter. Gwiazdy: mapy urodzenia Swiss Ephemeris, dokładność do arc-sekundy. Dziennik: cztery tryby z generacją wglądu AI. Koło: komunikacja na żywo, współdzielone zadania z datami wykonania HEKA. Statystyki: 80+ osiągnięć na osiem poziomów. Tajne osiągnięcia czekają na odkrycie.",
+        "action": "Kontynuuj",
+        "instruction": "Sześć motywów wydruku. Silnik mapy urodzenia. Dziennik. Przyjaciele. Statystyki."
+      },
+      "settings": {
+        "title": "Utwórz To Na Swoje",
+        "detail": "Daty cywilne: nakładka Gregoriańska, abyś nigdy nie przegapił spotkanie. Fazy księżyca: glify Swiss Ephemeris na każdej komórce. Święta: obchody społeczności. Tryb Pure: pełny ekran, bez rozproszeń, przełącznik ciemności Yin-Yang. Kalendarz dostosowuje się do tego, jak TY widzisz czas.",
+        "action": "Przełącz dowolną opcję, aby kontynuować",
+        "instruction": "Trzy przełączniki. Tryb Pure. Pełna kontrola."
+      },
+      "ai-coach": {
+        "title": "HEKA AI — Twój Niebieski Trener",
+        "detail": "Plastykowe sphinxowe sphinxy. Składa się z faz księżyca, twoich przemieszczeń, zadań, nastroju dziennika, serii i lokalizacji w wierszach poetyckich, działających wiadomościach",
+        "action": "Kontynuuj",
+        "instruction": "Obserwuje niebo. Obserwuje ciebie."
+      },
+      "complete": {
+        "title": "Jesteś gotowy",
+        "detail": "Wiesz, jak nawigować po trzynaście miesiącach. Wiesz, jak czytać księżyc. Wiesz, jak śledzić swoją energię, głosować nad świętami, drukować piękne strony, dziennikować z gwiazdami i porozmawiać z AI coachem. Reszta czeka na twoją ciekawość.",
+        "action": "Wejdź do HEKA",
+        "instruction": "Kalendarz jest twój. Niebo jest twoje."
+      },
+      "day-cells": {
+        "title": "Każda komórka jest żywa",
+        "detail": "Faza księżyca Swiss Ephemeris emoji. Data cywilna pod spodem. Kropki świąt — kuratorskie społeczności. Przypomnienia — twoje słowa, widoczne na siatce. Wszystkie trzynaście miesięcy na raz. Całe roku, w jednym spojrzeniu.",
+        "action": "Dotknij dowolnego dnia, aby go otworzyć",
+        "instruction": "Każdy dzień opowiada historię"
+      },
+      "day-panel": {
+        "title": "Dzień Otwiera się",
+        "detail": "Księżyc: dokładne oświetlenie, rosnące lub malejące, Wykrywanie Pustki Trasy. Astrologia: rzeczywiste przemieszczenia w stosunku do TWOjej mapy urodzenia. Notatki: zkategoriowane według nastroju, zadania, dziennik. Zadania: terminy wykonania, przypomnienia. Energia: głosowanie po 19:30, zobacz puls społeczności. To nie jest wpis kalendarzowy. To jest portal.",
+        "action": "Poznaj panel dnia, a następnie kontynuuj",
+        "instruction": "Twój centrum kontrolne dla pojedynczego dnia."
+      },
+      "community": {
+        "title": "Kształtuj wszechświat",
+        "detail": "Zaproponuj nowe święta. Dziesięć polubień i staje się oficjalnym. Głosuj nad nadchodzącymi funkcjami — Zaplanowane, Rozważane, W toku, Wydane. Kalendarz ewoluuje, ponieważ jego użytkownicy go ewoluują. To jest wspólna praca.",
+        "action": "Kontynuuj",
+        "instruction": "Twój głos zmienia kalendarz."
+      },
+      "navigation": {
+        "title": "Przesuń się w czasie",
+        "detail": "Strzałki przesuwają się między miesiącami. Dzisiaj wraca do teraz. Wyszukiwarka rozumie język naturalny — \"Hexa 15\" lub \"31 stycznia\". Rozwiń poziomo lub pionowo, aby uzyskać więcej szczegółów. Całe życie jest tylko jednym gestem.",
+        "action": "Kliknij ← lub →, aby nawigować",
+        "instruction": "Nigdy nie jesteś zagubiony."
+      },
+      "first-note": {
+        "title": "Zrób swoje pierwsze znacznik",
+        "detail": "Dotknij dowolnego dnia. Przewiń do Notatek. Napisz coś — zadanie, nastrój, pamięć. To jest pierwszy wpis w tym, co może stać się wieloletnim kroniką.",
+        "action": "Napisz notatkę, aby zakończyć samouczek",
+        "instruction": "Kalendarz jest tylko narzędziem, zanim go przekształcisz w swoje."
+      },
+      "celestial-guide": {
+        "title": "Przewodnik Niebios",
+        "detail": "Czas Słońca: na żywo SVG pierścień, pogoda, cztery poziomy dokładności. Faza Księżyca: oświetlenie, pusta księżyc, odliczanie do nowego roku księżycowego. Sezony: prawdziwe astronomiczne święta zimowe. Rolnictwo: co zasadzić dzisiaj, według Twojej lokalizacji i fazy księżyca. Zegar cyfrowy: cztery jednocześnie na żywo odliczające się liczniki. Godziny planetarne: prawdziwe chaldejskie godziny oparte na rzeczywistym wschodzie i zachodzie słońca. Przewiń przez nie. Każda to narzędzie naukowe.",
+        "action": "Przewiń karty niebieskie, aby kontynuować",
+        "instruction": "Sześć kart. Jedno niebo."
+      }
+    },
+    "printThemes": {
+      "egypt": {
+        "name": "Egipt",
+        "desc": "Hieroglify"
+      },
+      "sacred": {
+        "name": "Święta Geometria",
+        "desc": "Okrągłe komórki"
+      },
+      "nature": {
+        "name": "Natura",
+        "desc": "Roślinność"
+      },
+      "default": {
+        "name": "Domyślne",
+        "desc": "Pergamin i złoto"
+      },
+      "cyberpunk": {
+        "name": "Cyberpunk",
+        "desc": "Neonowe świecidło"
+      },
+      "minimalist": {
+        "name": "Minimalistyczny",
+        "desc": "Szwajcarska czystość"
+      }
+    },
+    "previewAchievements": {
+      "nightOwl": "Sowa Nocna",
+      "timeLord": "Przywódca Czasu",
+      "firstWords": "Pierwsze Słowa",
+      "weekWarrior": "Tygodniowy Wojownik",
+      "centuryClub": "Klub Stoletniej",
+      "theChronicler": "Kronikarz"
+    }
+  }
+}

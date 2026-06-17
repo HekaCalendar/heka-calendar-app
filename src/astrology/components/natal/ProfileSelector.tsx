@@ -9,6 +9,7 @@
  */
 
 import React, { useState, useEffect, useCallback, useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 import { profileManager, type ProfileListItem } from '../../services/natal/profileManager';
 
 interface ProfileSelectorProps {
@@ -53,7 +54,7 @@ const styles: Record<string, React.CSSProperties> = {
     color: 'rgba(255, 255, 255, 0.95)',
   },
   details: {
-    fontSize: '11px',
+    fontSize: '12px',
     color: 'rgba(255, 255, 255, 0.5)',
   },
   dropdown: {
@@ -142,12 +143,12 @@ const styles: Record<string, React.CSSProperties> = {
     textOverflow: 'ellipsis',
   },
   profileSigns: {
-    fontSize: '11px',
+    fontSize: '12px',
     color: 'rgba(255, 255, 255, 0.5)',
     marginTop: '2px',
   },
   defaultBadge: {
-    fontSize: '10px',
+    fontSize: '12px',
     padding: '2px 6px',
     background: 'rgba(251, 191, 36, 0.2)',
     color: '#fbbf24',
@@ -181,6 +182,7 @@ export const ProfileSelector: React.FC<ProfileSelectorProps> = ({
   const [profiles, setProfiles] = useState<ProfileListItem[]>([]);
   const [activeProfileId, setActiveProfileId] = useState<string | null>(null);
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const { t } = useTranslation('celestial');
 
   // Load profiles
   const loadProfiles = useCallback(() => {
@@ -246,7 +248,7 @@ export const ProfileSelector: React.FC<ProfileSelectorProps> = ({
         <span style={styles.avatar}>{activeProfile?.avatar || '✨'}</span>
         {!compact && (
           <div style={styles.info}>
-            <span style={styles.name}>{activeProfile?.name || 'Select Profile'}</span>
+            <span style={styles.name}>{activeProfile?.name || t('profile.selectProfile')}</span>
             {activeProfile && (
               <span style={styles.details}>
                 {SIGN_SYMBOLS[activeProfile.sunSign]} {activeProfile.sunSign.slice(0, 3)} • 
@@ -262,9 +264,9 @@ export const ProfileSelector: React.FC<ProfileSelectorProps> = ({
       {isOpen && (
         <div style={{...styles.dropdown, ...(window.innerWidth < 400 && styles.dropdownRight)}}>
           <div style={styles.dropdownHeader}>
-            <span style={styles.dropdownTitle}>Your Charts</span>
+            <span style={styles.dropdownTitle}>{t('profile.yourCharts')}</span>
             <button style={styles.addButton} onClick={handleAddProfile}>
-              <span>+</span> Add New
+              <span>+</span> {t('profile.addNew')}
             </button>
           </div>
 
@@ -272,8 +274,8 @@ export const ProfileSelector: React.FC<ProfileSelectorProps> = ({
             {profiles.length === 0 ? (
               <div style={styles.emptyState}>
                 <div style={styles.emptyIcon}>🌙</div>
-                <div>No charts yet</div>
-                <div style={{ fontSize: '12px', marginTop: '4px' }}>Create your first birth chart</div>
+                <div>{t('profile.noCharts')}</div>
+                <div style={{ fontSize: '12px', marginTop: '4px' }}>{t('profile.createFirst')}</div>
               </div>
             ) : (
               profiles.map((profile) => (
@@ -296,7 +298,7 @@ export const ProfileSelector: React.FC<ProfileSelectorProps> = ({
                     </div>
                   </div>
                   {profile.isDefault && (
-                    <span style={styles.defaultBadge}>Default</span>
+                    <span style={styles.defaultBadge}>{t('profile.default')}</span>
                   )}
                 </div>
               ))

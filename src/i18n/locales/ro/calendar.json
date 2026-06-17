@@ -1,0 +1,166 @@
+{
+  "months": {
+    "0": "Aprilie",
+    "1": "Mai",
+    "2": "Iunie",
+    "3": "Iulie",
+    "4": "August",
+    "5": "Septembrie",
+    "6": "Octombrie",
+    "7": "Noiembrie",
+    "8": "Decembrie",
+    "9": "Ianuarie",
+    "10": "Februarie",
+    "11": "Martie",
+    "12": "Aprilie"
+  },
+  "monthShort": {
+    "0": "Apr",
+    "1": "Mai",
+    "2": "Iun",
+    "3": "Iul",
+    "4": "Aug",
+    "5": "Sep",
+    "6": "Oct",
+    "7": "Noi",
+    "8": "Dec",
+    "9": "Ian",
+    "10": "Feb",
+    "11": "Mar",
+    "12": "Apr"
+  },
+  "civilMonths": {
+    "0": "Ian",
+    "1": "Feb",
+    "2": "Mar",
+    "3": "Apr",
+    "4": "Mai",
+    "5": "Jun",
+    "6": "Jul",
+    "7": "Aug",
+    "8": "Sep",
+    "9": "Oct",
+    "10": "Noi",
+    "11": "Dec"
+  },
+  "days": {
+    "0": "Duminică",
+    "1": "Luni",
+    "2": "marți",
+    "3": "miercuri",
+    "4": "joi",
+    "5": "vineri",
+    "6": "sâmbătă"
+  },
+  "daysShort": {
+    "0": "Dum",
+    "1": "Lun",
+    "2": "Mar",
+    "3": "Mie",
+    "4": "Joi",
+    "5": "Vin",
+    "6": "Sâm"
+  },
+  "daysMin": {
+    "0": "Du",
+    "1": "Lu",
+    "2": "Ma",
+    "3": "Mi",
+    "4": "Jo",
+    "5": "Vi",
+    "6": "Sâ"
+  },
+  "arcs": {
+    "opening": "Deschidere",
+    "core": "Nucleu",
+    "closing": "Închidere"
+  },
+  "arcSuffix": "Arc",
+  "arcDescriptions": {
+    "opening": "Anul se trezește",
+    "core": "Anul înflorește",
+    "closing": "Anul se finalizează"
+  },
+  "monthLabel": "Luna {{month}}/13",
+  "hekaYear": "Anul HEKA {{year}}",
+  "civilYear": "Anul civil {{year}}",
+  "dayOfYear": "Ziua {{day}} din {{total}}",
+  "week": "Săptămână",
+  "quarter": "Trimestru",
+  "leapDay": "Zi de sar",
+  "leapDayDescription": "O zi suplimentară în martie, la fiecare 4 ani",
+  "switchDarkMode": "Comutare la modul întunecat",
+  "switchLightMode": "Comutare la modul luminos",
+  "moreNotes": "+{{count}} în plus",
+  "holiday": "Sărbătoare",
+  "note": "Notă",
+  "task": "Sarcina",
+  "moonPhase": "Faza Lunii",
+  "selectDay": "Selectează o zi pentru a vizualiza detaliile",
+  "navigation": {
+    "previousMonth": "Luna precedentă",
+    "nextMonth": "Luna următoare",
+    "goToToday": "Mergi la astăzi",
+    "today": "Astăzi"
+  },
+  "print": {
+    "title": "Imprimă calendarul",
+    "label": "Imprimare"
+  },
+  "expand": {
+    "shrinkHorizontal": "Micșorează pe orizontală",
+    "expandHorizontal": "Extinde pe orizontală",
+    "shrinkVertical": "Micșorează pe verticală",
+    "expandVertical": "Extinde pe verticală"
+  },
+  "year": {
+    "viewEntireYear": "Vezi întreaga an",
+    "label": "An"
+  },
+  "search": {
+    "title": "Caută date",
+    "label": "Căutare"
+  },
+  "features": {
+    "astrologyHub": "Centru Astrologie",
+    "stars": "Stele",
+    "cosmicCircle": "Cerc Cosmic",
+    "circle": "Cerc",
+    "oracleJournal": "Jurnal Oracle",
+    "journal": "Jurnal",
+    "aboutHeka": "Despre HEKA Calendar",
+    "about": "Despre",
+    "yourStatistics": "Statisticile tale",
+    "stats": "Statistici",
+    "communityHolidays": "Sărbători comunitare",
+    "community": "Comunitate"
+  },
+  "toggles": {
+    "civilDates": "Comută date civile",
+    "civil": "Civil",
+    "moonPhases": "Comută fazele lunii",
+    "moon": "Lună",
+    "holidays": "Comută sărbători",
+    "holidayLabel": "Sărbători"
+  },
+  "prev": "Anterior",
+  "next": "Următor",
+  "printYear": "Imprimare An",
+  "close": "Închide",
+  "quickNote": "Notiță Rapidă",
+  "quickNoteTag": "notiță rapidă",
+  "addingTo": "Adăugare la",
+  "typeYourNote": "Tastează nota ta...",
+  "saveNote": "Salvează Nota",
+  "ctrlEnterToSave": "Ctrl + Enter pentru a salva • Esc pentru a renunța",
+  "hekaPrefix": "HEKA:",
+  "civilPrefix": "Civil:",
+  "moodPrefix": "Stare de spirit:",
+  "searchTips": {
+    "tip1": "\"31st of ianuarie\" sau \"astăzi\"",
+    "tip2": "\"hexa 15\" sau \"aprilie 5\"",
+    "tip3": "Conținutul notiței sau categorie",
+    "tip4": "\"Crăciun\" sau \"Ziua Australiei\"",
+    "tip5": "\"2026-01-31\" (format ISO)"
+  }
+}

@@ -3,21 +3,7 @@
  * Handles invite links, task shares, and navigation to specific app sections
  */
 
-// Type definition for Capacitor App plugin (avoids direct dependency)
-interface CapacitorAppPlugin {
-  addListener: (event: string, callback: (data: { url: string }) => void) => Promise<{ remove: () => void }>;
-  getLaunchUrl: () => Promise<{ url?: string }>;
-}
-
-// Conditionally import Capacitor App plugin (only available in native builds)
-let App: CapacitorAppPlugin | null = null;
-try {
-  // eslint-disable-next-line @typescript-eslint/no-var-requires
-  const capacitorApp = require('@capacitor/app');
-  App = capacitorApp.App;
-} catch (e) {
-  // Capacitor app plugin not available (web build)
-}
+import { App } from '@capacitor/app';
 
 export interface DeepLinkData {
   type: 'invite' | 'task' | 'profile' | 'date';
@@ -27,7 +13,7 @@ export interface DeepLinkData {
   date?: { year: number; month: number; day: number };
 }
 
-const WEB_LANDING_BASE = 'https://heka-calendar-pro.vercel.app/invite';
+const WEB_LANDING_BASE = 'https://hekacalendar.com/invite';
 
 let isInitialized = false;
 let pendingInviteCode: string | null = null;
@@ -41,7 +27,7 @@ function restorePendingCodes(): void {
       const storedTask = sessionStorage.getItem('pendingTaskCode');
       if (storedInvite && !pendingInviteCode) pendingInviteCode = storedInvite;
       if (storedTask && !pendingTaskCode) pendingTaskCode = storedTask;
-    } catch {}
+    } catch { /* ignore */ }
   }
 }
 
@@ -71,23 +57,20 @@ export function initializeDeepLinks(
 
   // Handle app opened via URL
   const handleAppUrl = (url: string) => {
-    console.log('[DeepLink] App opened with URL:', url);
     const data = parseDeepLink(url);
     
     if (data?.type === 'invite' && data.code) {
-      console.log('[DeepLink] Invite code detected:', data.code);
       pendingInviteCode = data.code;
       if (typeof window !== 'undefined') {
-        try { sessionStorage.setItem('pendingInviteCode', data.code); } catch {}
+        try { sessionStorage.setItem('pendingInviteCode', data.code); } catch { /* ignore */ }
       }
       onInviteReceived(data.code);
     }
     
     if (data?.type === 'task' && data.taskId) {
-      console.log('[DeepLink] Task share code detected:', data.taskId);
       pendingTaskCode = data.taskId;
       if (typeof window !== 'undefined') {
-        try { sessionStorage.setItem('pendingTaskCode', data.taskId); } catch {}
+        try { sessionStorage.setItem('pendingTaskCode', data.taskId); } catch { /* ignore */ }
       }
       if (onTaskReceivedCallback) {
         onTaskReceivedCallback(data.taskId);
@@ -102,12 +85,18 @@ export function initializeDeepLinks(
     const inviteParam = urlParams.get('invite');
     const taskParam = urlParams.get('task');
     
+    const VALID_PARAM_REGEX = /^[A-Za-z0-9_-]{4,64}$/;
+
     if (inviteParam) {
-      handleAppUrl(`heka-calendar://invite/${inviteParam}`);
+      if (VALID_PARAM_REGEX.test(inviteParam)) {
+        handleAppUrl(`heka-calendar://invite/${inviteParam}`);
+      }
     }
     
     if (taskParam) {
-      handleAppUrl(`heka-calendar://task/${taskParam}`);
+      if (VALID_PARAM_REGEX.test(taskParam)) {
+        handleAppUrl(`heka-calendar://task/${taskParam}`);
+      }
     }
 
     // Also check hash-based params (for hash router compatibility)
@@ -119,11 +108,15 @@ export function initializeDeepLinks(
       const hashTaskParam = hashParams.get('task');
       
       if (hashInviteParam) {
-        handleAppUrl(`heka-calendar://invite/${hashInviteParam}`);
+        if (VALID_PARAM_REGEX.test(hashInviteParam)) {
+          handleAppUrl(`heka-calendar://invite/${hashInviteParam}`);
+        }
       }
       
       if (hashTaskParam) {
-        handleAppUrl(`heka-calendar://task/${hashTaskParam}`);
+        if (VALID_PARAM_REGEX.test(hashTaskParam)) {
+          handleAppUrl(`heka-calendar://task/${hashTaskParam}`);
+        }
       }
     }
   }
@@ -135,12 +128,11 @@ export function initializeDeepLinks(
     });
 
     // Also check if app was opened with a URL initially
-    void App.getLaunchUrl().then((result: { url?: string }) => {
-      if (result.url) {
-        console.log('[DeepLink] Launch URL:', result.url);
+    App.getLaunchUrl().then((result) => {
+      if (result?.url) {
         handleAppUrl(result.url);
       }
-    });
+    }).catch(() => {});
 
     return () => {
       void listenerPromise.then((listener: { remove: () => void }) => listener.remove());
@@ -177,7 +169,7 @@ export function parseDeepLink(url: string): DeepLinkData | null {
     
     // Handle https://heka.calendar/invite/CODE format
     if (url.includes('heka.calendar') || url.includes('hekacalendar')) {
-      const inviteMatch = url.match(/[\/invite\/]+([A-Z0-9-]+)/i);
+      const inviteMatch = url.match(/[/invite/]+([A-Z0-9-]+)/i);
       if (inviteMatch) {
         return { type: 'invite', code: inviteMatch[1] };
       }
@@ -217,7 +209,7 @@ export function getPendingInviteCode(): string | null {
   const code = pendingInviteCode;
   pendingInviteCode = null;
   if (typeof window !== 'undefined') {
-    try { sessionStorage.removeItem('pendingInviteCode'); } catch {}
+    try { sessionStorage.removeItem('pendingInviteCode'); } catch { /* ignore */ }
   }
   return code;
 }
@@ -235,7 +227,7 @@ export function hasPendingInvite(): boolean {
 export function clearPendingInvite(): void {
   pendingInviteCode = null;
   if (typeof window !== 'undefined') {
-    try { sessionStorage.removeItem('pendingInviteCode'); } catch {}
+    try { sessionStorage.removeItem('pendingInviteCode'); } catch { /* ignore */ }
   }
 }
 
@@ -246,7 +238,7 @@ export function getPendingTaskCode(): string | null {
   const code = pendingTaskCode;
   pendingTaskCode = null;
   if (typeof window !== 'undefined') {
-    try { sessionStorage.removeItem('pendingTaskCode'); } catch {}
+    try { sessionStorage.removeItem('pendingTaskCode'); } catch { /* ignore */ }
   }
   return code;
 }
@@ -264,6 +256,6 @@ export function hasPendingTaskShare(): boolean {
 export function clearPendingTaskShare(): void {
   pendingTaskCode = null;
   if (typeof window !== 'undefined') {
-    try { sessionStorage.removeItem('pendingTaskCode'); } catch {}
+    try { sessionStorage.removeItem('pendingTaskCode'); } catch { /* ignore */ }
   }
 }

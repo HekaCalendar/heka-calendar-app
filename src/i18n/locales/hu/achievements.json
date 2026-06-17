@@ -1,0 +1,99 @@
+{
+  "title": "Eredmények",
+  "streak": "Sor",
+  "days": "Napok",
+  "totalAchievements": "{{count}} eredmény",
+  "earned": "Kihasználva",
+  "locked": "Zárolt",
+  "newAchievement": "Új Eredmény!",
+  "categories": {
+    "calendar": "Naptármester",
+    "journal": "Naplótartó",
+    "circle": "Körépítő",
+    "coach": "Csillagfigyelő",
+    "explorer": "Felfedező"
+  },
+  "achievements": {
+    "firstStep": {
+      "name": "Első Lépés",
+      "description": "Nyissa meg először a naptárt"
+    },
+    "timeTraveler": {
+      "name": "Időutazó",
+      "description": "Nézzen meg egy dátumot, amely több mint 1 évre van a jövőben"
+    },
+    "streak7": {
+      "name": "Hét Napja a Fénynek",
+      "description": "Használja a naptárt 7 egymást követő napon"
+    },
+    "streak30": {
+      "name": "Hét Napja a Csillagoknak",
+      "description": "Használja a naptárt 30 egymást követő napon"
+    },
+    "streak100": {
+      "name": "Száz Éve a bölcsességnek",
+      "description": "Használja a naptárt 100 egymást követő napon"
+    },
+    "journalFirst": {
+      "name": "Első Szó",
+      "description": "Írjon be először naplóbejegyzést"
+    },
+    "journal10": {
+      "name": "Kicsi Író",
+      "description": "Írjon be 10 naplóbejegyzést"
+    },
+    "journal50": {
+      "name": "Köpenytermő Kínálat",
+      "description": "Írjon be 50 naplóbejegyzést"
+    },
+    "friendAdded": {
+      "name": "Első kötődést",
+      "description": "Adja hozzá első barátját"
+    },
+    "circle5": {
+      "name": "Növekvő Kör",
+      "description": "Legyen 5 barátja a körében"
+    },
+    "aiAsked": {
+      "name": "Bölcsesség Kérője",
+      "description": "Kérdezze meg az AI tréner egy kérdést"
+    },
+    "aiStreak7": {
+      "name": "Napi Útmutatás",
+      "description": "Tanulmányozzon 7 napon át az AI tréner"
+    },
+    "allMoonPhases": {
+      "name": "Holdfigyelő",
+      "description": "Nézzen meg minden 8 holdfázist"
+    },
+    "allZodiac": {
+      "name": "Horoszkóp-felfedező",
+      "description": "Nézzen meg minden 13 horoszkópos jelet"
+    },
+    "printFirst": {
+      "name": "Első nyomtatás",
+      "description": "Nyomtasd ki az első naptároldalt"
+    }
+  },
+  "categoryLabels": {
+    "beginner": "Kezdő",
+    "intermediate": "Közepes",
+    "advanced": "Haladó",
+    "master": "Mester",
+    "special": "Speciális",
+    "explorer": "Felfedezõ",
+    "discoverer": "Felfedezõ",
+    "engager": "Kapcsolódó"
+  },
+  "stats": {
+    "appOpens": "Alkalmazásnyitások",
+    "dayStreak": "Napi sorozat",
+    "hoursSpent": "Elköltött órák",
+    "featuresFound": "Felfedezések száma"
+  },
+  "all": "Összes",
+  "showHidden": "Rejtett mutatása",
+  "noAchievements": "Nincsenek elérések ebben a kategóriában",
+  "hiddenAchievement": "Rejtett Elérés",
+  "secret": "TITKOS"
+}

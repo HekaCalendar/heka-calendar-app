@@ -1,0 +1,49 @@
+{
+  "best": "श्रेष्ठ: {{count}}",
+  "title": "आपका सफर",
+  "close": "बंद करें",
+  "reset": "सांख्यिकी रीसेट करें",
+  "avgMood": "औसत मूड",
+  "dayStreak": "दिन स्ट्रीक",
+  "totalNotes": "कुल नोट्स",
+  "wordsWritten": "लिखे गए शब्द",
+  "achievements": "उपलब्धियां ({{earned}}/{{total}})",
+  "resetConfirm": "रीसेट करें",
+  "progressRatio": "{{current}} / {{लक्ष्य}}",
+  "monthlyTooltip": "{{month}} {{year}}: {{count}} नोट्स",
+  "notesByCategory": "श्रेणी के अनुसार नोट्स",
+  "monthlyActivity": "मासिक गतिविधि",
+  "mostActiveMonth": "आपका सबसे सक्रिय महीना था \u003cstrong\u003e{{month}}\u003c/strong\u003e जिसमें \u003cstrong\u003e{{count}}\u003c/strong\u003e नोट्स थे",
+  "categories": {
+    "work": "काम",
+    "family": "परिवार",
+    "health": "स्वास्थ्य",
+    "general": "सामान्य",
+    "personal": "व्यक्तिगत",
+    "creative": "क्रिएटिव",
+    "spiritual": "आध्यात्मिक"
+  },
+  "progressToCentury": "शतक क्लब की प्रगति",
+  "resetConfirmTitle": "सांख्यिकी रीसेट करें",
+  "badges": {
+    "century": {
+      "name": "शतक क्लब"
+    },
+    "explorer": {
+      "name": "एक्सप्लोरर"
+    },
+    "archivist": {
+      "name": "अर्काइवइस्ट"
+    },
+    "first-note": {
+      "name": "पहले शब्द"
+    },
+    "week-streak": {
+      "name": "सप्ताह वारियर"
+    },
+    "month-streak": {
+      "name": "माह मास्टर"
+    }
+  },
+  "resetConfirmDescription": "क्या आप वाकई सभी सांख्यिकियों को रीसेट करना चाहते हैं? यह पूर्ववत नहीं किया जा सकता।"
+}

@@ -139,6 +139,7 @@
   .month-header__row {
     flex-wrap: nowrap;
   }
+}
 
 @media (max-width: 768px) {
   .app {
@@ -216,7 +217,7 @@
   
   .month-header__controls .btn {
     padding: 4px 6px;
-    font-size: 10px;
+    font-size: 12px;
     flex-shrink: 0;
   }
   
@@ -391,4 +392,186 @@
   .day-cell {
     min-height: 80px;
   }
+}
+
+/* ==========================================================================
+   NON-ENGLISH COMPACT MODE — emoji-only pills need more width
+   ========================================================================== */
+
+/* Regular month header: 40% wider pills for non-English (emoji-only) */
+.month-header--compact .month-header__row .btn:not(.btn-today):not(.btn-year):not(.btn--icon) {
+  min-width: 48px;
+  padding: var(--space-1) var(--space-3);
+}
+
+/* Non-English: double the horizontal gap between pills in each row
+   (column-gap only — does NOT affect vertical spacing between rows) */
+.month-header--compact .month-header__row {
+  column-gap: calc(var(--space-1) * 2);
+}
+
+/* ==========================================================================
+   NARROW FLIP PHONE / COVER SCREEN (≤420px) — Samsung Z Fold 7, etc.
+   ========================================================================== */
+
+@media (max-width: 420px) {
+  /* ---- Calendar Grid ---- */
+  .calendar-grid {
+    padding: var(--space-1);
+  }
+  .calendar-grid__week {
+    gap: 2px;
+    padding: 1px;
+  }
+  .calendar-grid__dow {
+    gap: 2px;
+    padding: 1px;
+  }
+  .calendar-grid__dow-cell {
+    font-size: 0.55rem;
+    padding: 2px;
+  }
+
+  /* ---- Calendar Cells ---- */
+  .day-cell {
+    min-height: 48px;
+    padding: 2px;
+    overflow: hidden;
+    border-radius: 2px;
+  }
+  .day-cell__natural {
+    font-size: var(--text-sm);
+    line-height: 1;
+  }
+  .day-cell__civil {
+    font-size: 0.5rem;
+    line-height: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .day-cell__moon {
+    font-size: 12px;
+    line-height: 1;
+  }
+  .day-cell__arc {
+    font-size: 0.5rem;
+    padding: 1px 2px;
+  }
+  .day-cell__content {
+    gap: 1px;
+  }
+
+  /* ---- Month Header: force emoji-only for ALL languages ---- */
+  .pill-text {
+    display: none;
+  }
+  .month-header__row .btn:not(.btn-today):not(.btn-year):not(.btn--icon) {
+    min-width: 32px;
+    padding: 4px 6px;
+    font-size: 14px;
+  }
+  .month-header__row {
+    gap: 3px;
+  }
+  .month-header__column {
+    gap: 3px;
+  }
+
+  /* ---- App Header: override massive inline margins ---- */
+  .app-header {
+    margin-top: 12px !important;
+    padding-top: 8px !important;
+    padding-bottom: 8px !important;
+    margin-bottom: var(--space-4) !important;
+  }
+  .app-header__top-line {
+    width: 100% !important;
+    max-width: 220px;
+    top: 4px;
+  }
+  .app-title {
+    font-size: var(--text-lg) !important;
+    letter-spacing: 0.02em;
+    margin-bottom: var(--space-1);
+  }
+  .app-subtitle {
+    font-size: 0.6rem !important;
+    margin-bottom: var(--space-1);
+  }
+  .mode-indicator {
+    font-size: 0.55rem;
+    padding: 2px 6px;
+  }
+
+  /* ---- Settings Toggle Buttons ---- */
+  .settings-toggle-wrapper {
+    height: 36px;
+    gap: 4px;
+    margin-bottom: var(--space-3);
+  }
+  .settings-toggle-btn {
+    font-size: 0.7rem;
+    padding: 4px 6px;
+    border-radius: 6px;
+  }
+  .toggle-text {
+    display: none;
+  }
+
+  /* ---- Search Modal ---- */
+  .search-modal.modal-overlay {
+    padding: 8px !important;
+    align-items: center !important;
+  }
+  .search-modal__content {
+    max-width: 100% !important;
+    width: 100%;
+    max-height: calc(100dvh - 16px) !important;
+    border-radius: 12px;
+  }
+  .search-modal__header {
+    padding: 14px 12px !important;
+  }
+  .search-modal__header input {
+    font-size: 1rem !important;
+  }
+  .search-modal__tabs {
+    gap: 4px !important;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    padding-bottom: 2px;
+  }
+  .search-modal__tabs::-webkit-scrollbar {
+    display: none;
+  }
+  .search-modal__tabs button {
+    padding: 3px 8px !important;
+    font-size: 0.7rem !important;
+    flex-shrink: 0;
+  }
+  .search-modal__results {
+    max-height: calc(100dvh - 200px) !important;
+    padding: 6px !important;
+  }
+  .search-modal__footer {
+    display: none !important;
+  }
+}
+
+@media (max-width: 360px) {
+  .search-modal__tabs button span:last-child {
+    display: none;
+  }
+}
+
+
+/* ── RTL Overrides ── */
+[dir="rtl"] .day-panel {
+    border-right: none
+}
+
+[dir="rtl"] .journal-sidebar {
+    border-left: none
 }

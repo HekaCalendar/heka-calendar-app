@@ -4,11 +4,13 @@
  */
 
 import { useState, useMemo, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import type { RootState } from '../store';
 import type { PersonalTransit, TransitNotification } from '../oracle/birthChartIntegration';
 import '../styles/transit-timeline.css';
 import { getSignFromLongitude, SIGN_BOUNDARIES_13 } from '../astrology/types/core';
+import type { Degree } from '../astrology/types/core';
 import type { ZodiacSign13 } from '../astrology/types/core';
 import { getSignCount } from '../astrology/services/swiss-ephemeris/engine';
 
@@ -41,6 +43,7 @@ export const TransitTimeline: React.FC<TransitTimelineProps> = ({
   transits,
   notifications = []
 }) => {
+  const { t } = useTranslation('celestial');
   const [selectedTransit, setSelectedTransit] = useState<PersonalTransit | null>(null);
   const [filterStrength, setFilterStrength] = useState<number>(30);
   const [currentPositions, setCurrentPositions] = useState<Record<string, any>>({});
@@ -97,7 +100,7 @@ export const TransitTimeline: React.FC<TransitTimelineProps> = ({
 
   const formatDegree = (longitude: number) => {
     const normalized = ((longitude % 360) + 360) % 360;
-    const sign = getSignFromLongitude(normalized as any, getSignCount() === 13);
+    const sign = getSignFromLongitude(normalized as unknown as Degree, getSignCount() === 13);
     // For 13-sign, degree within sign isn't simply longitude % 30
     const signStart = getSignCount() === 13
       ? (SIGN_BOUNDARIES_13[sign as ZodiacSign13]?.[0] ?? 0)
@@ -152,7 +155,7 @@ export const TransitTimeline: React.FC<TransitTimelineProps> = ({
                      moonPhase.phase === 'waning_gibbous' ? 'Waning Gibbous' :
                      moonPhase.phase === 'last_quarter' ? 'Last Quarter' : 'Waning Crescent'}</h3>
                 <p>in {moonPhase.sign}</p>
-                <span className="transit-moon-illumination">{Math.round(moonPhase.illumination)}% illuminated</span>
+                <span className="transit-moon-illumination">{Math.round(moonPhase.illumination)}% {t('cards.moonPhase.illuminated')}</span>
                 {moonPhase.isVoid && (
                   <span className="transit-moon-void">⚠️ Void of Course</span>
                 )}
@@ -385,13 +388,14 @@ const TransitDetail: React.FC<{
   transit: PersonalTransit;
   onClose: () => void;
 }> = ({ transit, onClose }) => {
+  const { t } = useTranslation('celestial');
   return (
     <div className="transit-detail">
       <div className="transit-detail-header">
         <h3>
           {transit.transitingPlanet} {transit.aspect} Natal {transit.natalPlanet}
         </h3>
-        <button className="transit-detail-close" onClick={onClose}>×</button>
+        <button className="transit-detail-close" onClick={onClose} aria-label={t('close')}>×</button>
       </div>
 
       <div className="transit-detail-content">

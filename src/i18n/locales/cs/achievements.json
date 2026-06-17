@@ -1,0 +1,99 @@
+{
+  "title": "Úspěchy",
+  "streak": "Séria",
+  "days": "Dny",
+  "totalAchievements": "{{count}} úspěchů",
+  "earned": "Získáno",
+  "locked": "Uzamčeno",
+  "newAchievement": "Nový úspěch!",
+  "categories": {
+    "calendar": "Mistr kalendáře",
+    "journal": "Zápisovatel deníku",
+    "circle": "Stavitel kruhu",
+    "coach": "Hvězdný pozorovatel",
+    "explorer": "Průzkumník"
+  },
+  "achievements": {
+    "firstStep": {
+      "name": "První krok",
+      "description": "Poprvé otevřete kalendář"
+    },
+    "timeTraveler": {
+      "name": "Cestovatel času",
+      "description": "Zobrazení data více než o rok dál"
+    },
+    "streak7": {
+      "name": "Týden světla",
+      "description": "Použití kalendáře po sobě 7 dní"
+    },
+    "streak30": {
+      "name": "Měsíc hvězd",
+      "description": "Použití kalendáře po sobě 30 dní"
+    },
+    "streak100": {
+      "name": "Století moudrosti",
+      "description": "Použití kalendáře po sobě 100 dní"
+    },
+    "journalFirst": {
+      "name": "První slova",
+      "description": "Napsání prvního záznamu do deníku"
+    },
+    "journal10": {
+      "name": "Květinář spisovatel",
+      "description": "Napsání 10 záznamů do deníku"
+    },
+    "journal50": {
+      "name": "Zkušený píseo",
+      "description": "Napsání 50 záznamů do deníku"
+    },
+    "friendAdded": {
+      "name": "První vazba",
+      "description": "Přidání prvního přítele"
+    },
+    "circle5": {
+      "name": "Růst kruhu",
+      "description": "Mít 5 přátel ve svém kruhu"
+    },
+    "aiAsked": {
+      "name": "Hledač moudrosti",
+      "description": "Zeptání se na otázku AI trenéra"
+    },
+    "aiStreak7": {
+      "name": "Denní vedení",
+      "description": "Poradenství u AI trenéra po dobu 7 dní"
+    },
+    "allMoonPhases": {
+      "name": "Pozorovatel měsíčních fází",
+      "description": "Zobrazení všech 8 fáz měsíce"
+    },
+    "allZodiac": {
+      "name": "Průzkumník zvěrokruhu",
+      "description": "Zobrazení všech 13 zvěrokruhů"
+    },
+    "printFirst": {
+      "name": "První Tisk",
+      "description": "Vytiskni si svou první kalendářní stránku"
+    }
+  },
+  "categoryLabels": {
+    "beginner": "Začátečník",
+    "intermediate": "Středně pokročilý",
+    "advanced": "Pokročilý",
+    "master": "Mistr",
+    "special": "Speciální",
+    "explorer": "Objevovatel",
+    "discoverer": "Objevovatel",
+    "engager": "Zapojený"
+  },
+  "stats": {
+    "appOpens": "Otevření aplikace",
+    "dayStreak": "Dny v řadě",
+    "hoursSpent": "Strávený čas",
+    "featuresFound": "Nalezené prvky"
+  },
+  "all": "Vše",
+  "showHidden": "Ukázat skryté",
+  "noAchievements": "V této kategorii nebyla nalezena žádná úspěch",
+  "hiddenAchievement": "Skrytý úspěch",
+  "secret": "TAJEMSTVÍ"
+}

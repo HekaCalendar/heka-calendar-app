@@ -1,0 +1,1411 @@
+{
+  "ends": "समाप्त होता है",
+  "title": "आज का तारामंडल मार्गदर्शन",
+  "civil": "सिविल",
+  "speed": "गति",
+  "avoid": "रुकावट",
+  "natal": "जन्म",
+  "house": "घर",
+  "exact": "सटीक",
+  "began": "शुरू हुआ",
+  "status": "स्थिति",
+  "traits": "गुण",
+  "element": "तत्व",
+  "forDate": "के लिए {{month}} {{day}}",
+  "bestFor": "सभी के लिए सबसे अच्छा",
+  "fromDate": "से {{month}} {{day}}",
+  "whatIsIt": "यह क्या है?",
+  "guidance": {
+    "today": "आज",
+    "mixed": "मिश्रित",
+    "career": "करियर",
+    "health": "स्वास्थ्य",
+    "timing": "समय",
+    "thisWeek": "इस सप्ताह",
+    "thisYear": "इस साल",
+    "finances": "वित्त",
+    "bestDays": "✦ सबसे अच्छे दिन",
+    "keyThemes": "मुख्य विषय",
+    "lifeAreas": "जीवन के क्षेत्र",
+    "excellent": "श्रेष्ठ",
+    "favorable": "सुसज्जित",
+    "difficult": "कठिन",
+    "calculating": "स्वर्गीय मार्गदर्शन की गणना...",
+    "challenging": "चुनौतीपूर्ण",
+    "overallScore": "समग्र स्कोर",
+    "todaySubtitle": "वर्तमान स्वर्गीय मौसम",
+    "relationships": "संबंध",
+    "lunarGuidance": "☽ चंद्र मार्गदर्शन",
+    "personalGrowth": "व्यक्तिगत विकास",
+    "thisWeekSubtitle": "7-दिन की कोज की पूर्वानुमान",
+    "thisYearSubtitle": "{{year}} संक्षेप",
+    "unableToGenerate": "इस समय मार्गदर्शन उत्पन्न करने में असमर्थ।",
+    "yourCelestialRegion": "आपका स्वर्गीय क्षेत्र",
+    "planetaryHighlights": "ग्रहीय हाइलाइट्स"
+  },
+  "duration": "अवधि",
+  "titlePast": "{{days}} दिन पहले के तारामंडल मार्गदर्शन",
+  "civilDate": "नागरिक तारीख",
+  "dayOfYear": "साल का दिन",
+  "solarNoon": "सूर्य के चोटि",
+  "localTime": "स्थानीय समय:",
+  "lowEnergy": "कम ऊर्जा: आराम, चिंतन, योजना बनाना",
+  "nextCheck": "अगला जांच",
+  "yearOfThe": "वर्ष का",
+  "planet": {
+    "in": "{{planet}} {{sign}} में",
+    "copy": "📋 कॉपी",
+    "shadow": "🌑 छाय",
+    "growth": "🌱 विकास",
+    "famous": "⭐ प्रसिद्ध",
+    "copied": "✓ कॉपी किया!",
+    "tagline": "\"{{tagline}}\"",
+    "essence": "💫 सरगर्भ",
+    "atDegree": "{{planet}} {{degree}}° {{sign}} में",
+    "archetype": "प्राचीन रूप",
+    "dailyLife": "दैनिक जीवन में",
+    "shadowSide": "🌑 छायर साइड",
+    "deepWisdom": "🌙 {{planet}} {{sign}} के लिए गहरे ज्ञान का चैनल...",
+    "famousIntro": "आपका {{planet}} {{sign}} में इन प्रभावशाली आदमी से जोड़ता है:",
+    "houseDignity": "{{symbol}} घर {{house}} • {{dignity}}",
+    "shareThisWith": "⭐ आप इसे साझा करते हैं",
+    "deepWisdomSub": "{{planet}} {{sign}} में, घर {{house}}",
+    "coreExpression": "आपका मूल भाव",
+    "commonTriggers": "सामान्य ट्रिगर",
+    "yourGrowthPath": "🌱 आपका विकास पथ",
+    "alignedCareers": "संरेखित करियर पथ",
+    "dailyAffirmation": "🙏 दैनिक आश्वस्ति",
+    "reflectionPrompts": "💭 चिंतन प्रॉम्प्ट्स",
+    "practicalExercises": "वास्तविक अभ्यास"
+  },
+  "daily": {
+    "orb": "{{orb}}° ऑर्ब",
+    "good": "✓ आज की शक्ति अच्छी है। अधिकांश गतिविधियों के लिए सौहार्द।",
+    "mixed": "◆ मिश्रित ऊर्जा। जागरूकता के साथ आगे बढ़ें।",
+    "loading": "सटीक स्थिति की गणना...",
+    "watchOut": "⚠ सावधान ({{count}})",
+    "quietDay": "शांतिपूर्ण दिन। आपके चार्ट को प्रभावित करने वाले कोई बड़े ट्रांसिट नहीं।",
+    "excellent": "महत्वपूर्ण गतिविधियों के लिए उत्तम दिन। मजबूत ब्रह्मांडी समर्थन।",
+    "background": "◆ पृष्ठभूमि ({{count}})",
+    "universalSky": "आज का सार्वभौमिक आकाश",
+    "addBirthChart": "व्यक्तिगत ट्रांसिट जानकारी के लिए जन्म चार्ट जोड़ें।",
+    "todayForecast": "आज का पूर्वानुमान",
+    "opportunities": "✓ अवसर ({{count}})",
+    "activeTransits": "{{count}} सक्रिय ट्रांसिट",
+    "swissPrecision": "स्विस ईफ़िमेरिस精准度",
+    "challengingDay": "⚠ चुनौतीपूर्ण दिन। स्व-सम्पर्क पर ध्यान दें और बड़ी निर्णयों से बचें।",
+    "goodForRoutine": "रूटिन कार्यों और रखरखाव के लिए अच्छा है।",
+    "activeTransits_plural": "{{count}} सक्रिय ट्रांसिट्स"
+  },
+  "futureView": "भविष्य दृश्य",
+  "scrollHint": "(स्क्रॉल करें →)",
+  "beganCivil": "शुरूआत (नागरिक): {{date}}",
+  "traditions": "परंपराएं",
+  "lunarCycle": "चंद्र चक्र",
+  "confidence": "विश्वास:",
+  "whyThisDay": "इस दिन क्यों?",
+  "highEnergy": "उच्च ऊर्जा: परियोजना शुरू करें, क्रियान्वयन करें, सामाजिक हो जाओ",
+  "focusAreas": "ध्यान केंद्रित करने की जगह",
+  "compatible": "संगत",
+  "luckyHours": "भाग्यशाली घंटे",
+  "titleFuture": "{{days}} दिन में तारामंडल मार्गदर्शन",
+  "lookingBack": "पीछे देखो",
+  "dayOfPlanet": "{{day}}: दिन {{planet}} का",
+  "planets": {
+    "sun": "सूरज",
+    "moon": "चंद्रमा",
+    "mars": "मंगल",
+    "venus": "शुक्र",
+    "saturn": "शनि",
+    "mercury": "बुध",
+    "jupiter": "बृहस्पति"
+  },
+  "calculating": "चंद्र स्थान की गणना...",
+  "luckyColors": "भाग्यशाली रंग",
+  "selectedDate": "चुना HEKA तारीख",
+  "dragToScroll": "स्क्रॉल करने के लिए खींचें",
+  "yourLocation": "आपका स्थान",
+  "significance": "महत्व",
+  "howToObserve": "कैसे मनाने का",
+  "sunElevation": "सूर्य की ऊंचाई: {{elevation}}°",
+  "newMoonCivil": "न्यू मून (सिविल)",
+  "cosmicEnergy": "ब्रह्मांडीय शक्ति",
+  "howToUseThis": "इसका उपयोग कैसे करें",
+  "todaysEnergy": "आज की ऊर्जा",
+  "elements": {
+    "air": "हवा",
+    "fire": "आग",
+    "water": "पानी",
+    "earth": "भूमि"
+  },
+  "luckyNumbers": "भाग्यशाली संख्याएँ",
+  "export": {
+    "close": "बंद करें",
+    "failed": "निर्यात करने में विफल",
+    "guidance": "मार्गदर्शन",
+    "creating": "बना रहा है...",
+    "saveImage": "तस्वीर सहेजें",
+    "affirmation": "आश्वस्ति",
+    "generatedBy": "हेका कैलेंडर द्वारा जनित ✦",
+    "overallGuidance": "समग्र मार्गदर्शन",
+    "celestialGuidance": "स्वर्गीय मार्गदर्शन"
+  },
+  "timezones": {
+    "ET": "पूर्वी समय (ET)",
+    "CT": "मध्य समय (CT)",
+    "MT": "पहाड़ीय समय (MT)",
+    "PT": "पेसिफिक समय (PT)",
+    "UTC": "यूटीसी (वैश्विक)",
+    "Paris": "पेरिस (सीईटी)",
+    "Tokyo": "टोक्यो (जीएसटी)",
+    "Dubai": "दुबई (जीएसटी)",
+    "London": "लंदन (जीएमटी)",
+    "Berlin": "बर्लिन (सीईटी)",
+    "Sydney": "सिडनी (एएएसटी)",
+    "Shanghai": "शंघाई (सीएसटी)",
+    "Auckland": "ऑकलैंड (एनज़एसटी)",
+    "Melbourne": "मल्बोर्न (एएएसटी)"
+  },
+  "startingCivil": "शुरूआत (नागरिक): {{date}}",
+  "hekaYearLabel": "HEKA वर्ष {{year}}",
+  "daysRemaining": "दिन शेष",
+  "fullMoonCivil": "फुल मून (सिविल)",
+  "thisMoonCycle": "इस चंद्र चक्र",
+  "waxingQuality": "वैक्सिंग: वृद्धि, गति बढ़ाने",
+  "waningQuality": "वेनिंग: रिलीज़, चिंतन, पूर्ति",
+  "forecastTitle": "तारिक़ी पूर्वानुमान",
+  "whatThisMeans": "यह अभी क्या मतलब है",
+  "planetsActive": "अब सक्रिय ग्रह",
+  "exactPosition": "टीका स्थिति",
+  "moonVoidLabel": "रिक्त चंद्रमा",
+  "starsHub": {
+    "back": "← वापस",
+    "live": "लाइव",
+    "chart": "चार्ट",
+    "active": "सक्रिय",
+    "sunSign": "सूर्य Rashi",
+    "12signs": "12 Rashi",
+    "13signs": "13 Rashi ⛎",
+    "version": "संस्करण 2.2.0 • HEKA Astrology Engine",
+    "overview": "संक्षिप्त विवरण",
+    "guidance": "निर्देश",
+    "voidMoon": "रिक्त चंद्रमा",
+    "settings": "सेटिंग्स",
+    "tropical": "ट्रॉपिकल",
+    "sidereal": "साइड्रियल",
+    "positions": "स्थितियाँ",
+    "moonPhase": "चंद्रमासी",
+    "hourRuler": "घंटे का शासक",
+    "aboutText": "स्वीस एफेमेरिस गणनाओं द्वारा संचालित तार्किक आँकड़े के साथ। अपने क्रिया को ब्रह्मांडीय रीत में समंजित करें।",
+    "tapPlanet": "कोई भी ग्रह को टैप करें और इसकी विस्तृत अर्थ की खोज करें",
+    "viewStars": "View Stars →",
+    "goToStars": "Go to Stars to see your personalized astrological guidance.",
+    "13signDesc": "⛎ 13 Rashi साइड्रियल: ओफियूचस शामिल। सबसे खगोलशास्त्रीय रूप से सटीक ढांचा।",
+    "retrograde": "℞ रिट्रोग्रेड",
+    "welcomeBack": "वापसी स्वागत है, {{name}}",
+    "retrogrades": "रिट्रोग्रेड",
+    "12signsDesc": "परंपरागत साइड्रियल",
+    "13signsDesc": "ओफियूचस शामिल",
+    "birthCharts": "Birth Charts",
+    "universalSky": "सार्वभौमिक आकाश",
+    "zodiacSystem": "ज़ोडिएस प्रणाली",
+    "tropicalDesc": "12 Rashi · मौसम",
+    "siderealDesc": "स्थायी तारे · Nakshatras",
+    "dailyBriefing": "दैनिक ब्रिफिंग",
+    "tropicalDesc2": "वर्तमान 12 Rashi ट्रॉपिकल ज्योतिष संबंधित मौसम।",
+    "celestialFont": "स्वर्गीय फ़ॉन्ट",
+    "profilesSaved": "{{count}} प्रोफ़ाइल बचा गई",
+    "corruptedDate": "⚠️ दूषित जन्म तिथि का पता चला है!",
+    "deleteProfile": "🗑️ प्रोफ़ाइल हटाएं",
+    "addNewProfile": "➕ नया प्रोफ़ाइल जोड़ें",
+    "tapForDetails": "विवरण के लिए टैप करें →",
+    "housePosition": "घर स्थिति",
+    "celestialTheme": "स्वर्गीय थीम",
+    "selectTypeface": "इस क्षेत्र के लिए फ़ॉन्ट चुनें",
+    "manageProfiles": "अपने जन्म चार्ट प्रोफ़ाइलों को प्रबंधित करें",
+    "aboutCelestial": "स्वर्गीय बुद्धिमत्ता के बारे में",
+    "chooseFramework": "अपना स्वर्गीय ढांचा चुनें",
+    "trueModeWarning": "⚠️ आप TRUE मोड में हैं लेकिन साइड्रियल का उपयोग नहीं कर रहे हैं। पूर्ण संरेखण के लिए साइड्रियल पर स्विच करें।",
+    "syncModeWarning": "⚠️ आप SYNC मोड में हैं लेकिन साइड्रियल का उपयोग कर रहे हैं। यह एक उन्नत ओवरराइड है।",
+    "receiveGuidance": "ब्रह्मांड से मार्गदर्शन प्राप्त करें",
+    "retrogradeCount": "Navigate {{count}} retrograde",
+    "allPlanetsDirect": "सभी ग्रह प्रत्यक्ष — आगे बढ़ने का समय।",
+    "exploreCelestial": "वर्तमान तारामंडलीय परिदृश्य की खोज करें। व्यक्तिगत ज्योतिषीय मार्गदर्शन के लिए प्रोफ़ाइल बनाएं।",
+    "compareTwoSelves": "अपनी दो आत्माओं की तुलना करें",
+    "chooseAtmosphere": "अपना ब्रह्मांडीय वातावरण चुनें",
+    "siderealSignCount": "साइड्रियल Rashi गणना",
+    "profileManagement": "प्रोफ़ाइल प्रबंधन",
+    "currentExpression": "वर्तमान अभिव्यक्ति",
+    "housePositionText": "इस ग्रह का वर्तमान घर स्थिति जीवन के क्षेत्र को सक्रिय करता है जिसका प्रतिनिधित्व यह करता है, और आपके अनुभवों को {{energy}} ऊर्जा के साथ रंग देता है।",
+    "12signSiderealDesc": "☀️ 12 Rashi साइड्रियल: परंपरागत रस्सि सीमाओं के साथ आयनाम्सा सुधार।",
+    "personalizedWeather": "आपके जन्म चार्ट के लिए व्यक्तिगत तारामंडलीय मौसम। {{retrogrades}}",
+    "observatorySettings": "अंशगणना सेटिंग्स",
+    "planetInSignDefault": "{{planet}} in {{sign}} brings unique energy.",
+    "profilesSaved_plural": "{{count}} प्रोफ़ाइल बचे",
+    "birthChartManagement": "Birth Chart Management",
+    "celestialIntelligence": "तारामंडलीय बुद्धि",
+    "celestialNotifications": "स्वर्गीय अधिसूचनाएं",
+    "retrogradeCount_plural": "Navigate {{count}} retrogrades",
+    "currentPlanetaryPositions": "वर्तमान ग्रह स्थितियाँ",
+    "openCelestialIntelligence": "Open Celestial Intelligence ✦"
+  },
+  "twoSelves": {
+    "air": "विचारक, संयोजक",
+    "none": "कोई नहीं",
+    "fire": "प्रारंभक, ज्वलन",
+    "title": "तुम्हारे दोनों आत्मा",
+    "error": "एक या दोनों ज्योतिष प्रणाली की गणना में विफल। कृपया अपने जन्म डेटा की जाँच करें।",
+    "earth": "निर्माता, पर्वत",
+    "water": "भावक, गहराई",
+    "changed": "बदल गया",
+    "subtitle": "पंचांग ने आपको एक कहानी सिखाई। तारे एक और बताते हैं।",
+    "tropical": "ग्रीष्म",
+    "trueSelf": "सच्ची आत्मा",
+    "sidereal": "तारा",
+    "sunMoved": "आपका सूरज {{tropical}} से {{sidereal}} पर हट गया।",
+    "ayanamsa": "आयनाम्सा, ग्रीष्म ज्योतिष और वास्तविक तारे के बीच की छेद, आपके जन्म वर्ष के लिए {{degrees}} डिग्री है।",
+    "civilSelf": "नागरिक आत्मा",
+    "whoYouAre": "तुम कितने तारे के तले हो",
+    "ascendant": "उच्च",
+    "midheaven": "मध्य स्वर्ग",
+    "shiftedBy": "डिग्री {{degrees}}° से बदल गया",
+    "moonMoved": "आपका चंद्र, आपकी भावनात्मक मूल, {{tropical}} से {{sidereal}} पर हट गया।",
+    "notAnError": "यह एक त्रुटि नहीं है। यह वह फर्क है जो आपने सीखने वाला हो और जो तारे कहते हैं कि आप हैं।",
+    "calculating": "ट्रॉपिकल और सिड्रल चार्ट गणना कर रहा है...",
+    "revisitHint": "आप इस तुलना को कभी भी चार्ट सेटिंग्स से फिर से देख सकते हैं।",
+    "totalChanged": "कुल मिलाकर, आपके {{total}} प्रमुख स्वार्थिक शरीरों में से {{count}} रेश बदल गए।",
+    "whoYouLearned": "जिसे आपने सीखा है",
+    "rareAlignment": "आपका ग्रीष्म और तारा का चार्ट लगभग एकदम समान है - यह दुर्लभ समन्वय होता है जब आयनाम्सा एक पूर्ण-रेश के निकट होता है। आप वे कुछ लोग हैं जिनके नागरिक आत्मा और सच्ची आत्मा एक ही भाषा बोलते हैं।",
+    "identityShift": "जो पहचान आपने {{tropicalElement}} के रूप में सीखी थी, वह {{siderealElement}} में बदल गई है।",
+    "ascendantShift": "आपका उच्च, जिसके मास्क आप पहनते हैं, {{tropical}} से {{sidereal}} पर हट गया।",
+    "midheavenShift": "आपका मध्य स्वर्ग, आपका सार्वजनिक कॉलिंग, {{tropical}} से {{sidereal}} पर हट गया।",
+    "defaultElement": "स्वयं",
+    "dominantElement": "प्रमुख तत्व",
+    "continueTrueMode": "सच्ची मोड में जारी रखें"
+  },
+  "historicalView": "इतिहासिक दृश्य",
+  "dayOfYearValue": "दिन {{day}}",
+  "lookingForward": "आगे देखो",
+  "hekaYearBegins": "HEKA वर्ष {{year}} शुरू होता है",
+  "countdown": {
+    "days": "दिन",
+    "hours": "घंटे",
+    "minutes": "मिनट",
+    "seconds": "सेकंड"
+  },
+  "aboutSolarNoon": "सूर्य के चोटि के बारे में",
+  "newMoonQuality": "न्यू मून: आरंभ, इरादे तय करें",
+  "moderateEnergy": "मध्यम ऊर्जा: नियमित कार्य, स्थिर प्रगति",
+  "swissEphemeris": "स्विस ईफिमेरिस",
+  "retrogradeNote": "रिट्रोग्रेड: पुनर्विचार अवधि",
+  "moonPhaseLabel": "चंद्रमासी",
+  "hourlyMoonMood": "घंटेवारी चंद्रमा की मूड",
+  "upcomingEvents": "आगामी तारामंडलीय घटनाएँ",
+  "profile": {
+    "addNew": "नया जोड़ें",
+    "default": "डिफ़ॉल्ट",
+    "noCharts": "अभी तक कोई चार्ट नहीं",
+    "yourCharts": "तुम्हारे चार्ट",
+    "createFirst": "अपना पहला जन्म चार्ट बनाएं",
+    "selectProfile": "प्रोफ़ाइल चुनें"
+  },
+  "briefing": {
+    "focus": "ध्यान: {{क्षेत्र}}",
+    "setUpAi": "AI सेट अप →",
+    "dismiss": "खारिज करें",
+    "enableAi": "AI मार्गदर्शन सक्षम करें",
+    "aiEnhanced": "✨ AI-संवर्धित",
+    "todaysTheme": "आज का विषय",
+    "todaysFocus": "आज का फ़ोकस",
+    "voidMoonDesc": "चन्द्र वर्तमान में ख़ाली है—नई उद्देश्यों की शुरुआत करने के बजाय चिंतन, आराम और आंतरिक कार्य के लिए अच्छा समय है।",
+    "unlockDeeper": "गहरे अंतर्दृष्टि खोलें",
+    "aiConfigured": "आपके पास AI प्रदाता का विन्यास किया हुआ है। AI मार्गदर्शन को सक्षम करें कवितात्मक, व्यक्तिगत पढ़ने के लिए।",
+    "yourGuidance": "आपका मार्गदर्शन",
+    "aiUnavailable": "AI सुविधा उपलब्ध नहीं है। टेम्पलेट मार्गदर्शन दिखा रहा है।",
+    "aiAddProvider": "एक AI प्रदाता जोड़ें अपने अद्वितीय चार्ट के अनुकूल LLM-संवर्धित व्याख्या प्राप्त करने के लिए।",
+    "voidMoonActive": "🌙 ख़ाली चन्द्र सक्रिय",
+    "turnOnSettings": "सेटिंग्स में सक्षम करें",
+    "templatePowered": "📚 टेम्पलेट-संचालित",
+    "templateFallback": "⚠️ टेम्पलेट फ़ेलबैक",
+    "dailyAffirmation": "दैनिक अफर्माशन",
+    "viewFullGuidance": "पूरी मार्गदर्शन देखें",
+    "patternRecognized": "🔮 पैटर्न पहचान लिया"
+  },
+  "aboutThisSeason": "इस मौसम के बारे में",
+  "characteristics": "लक्षणات",
+  "fullMoonQuality": "फुल मून: शिखर शक्ति, प्रकटि",
+  "activities": {
+    "rest": "आराम करें",
+    "plant": "बगावत",
+    "prune": "काटना",
+    "harvest": "फसल उगाना",
+    "prepare": "तैयार करें",
+    "fertilize": "युक्ति",
+    "transplant": "पुनर्वसति"
+  },
+  "numerologyTitle": "संख्याशास्त्र: दिन {{day}}",
+  "zodiacSigns": {
+    "leo": "सिंह",
+    "aries": "मेष",
+    "virgo": "कन्या",
+    "libra": "तुला",
+    "taurus": "वृषभ",
+    "gemini": "तुला",
+    "cancer": "कर्कट",
+    "pisces": "मीन",
+    "scorpio": "वृश्चिक",
+    "aquarius": "कुम्भ",
+    "capricorn": "मकर",
+    "ophiuchus": "ओफियुचस",
+    "sagittarius": "धनु"
+  },
+  "dataUnavailable": "तारिक़ी डाटा उपलब्ध नहीं",
+  "thisWeeksThemes": "इस सप्ताह के विषय",
+  "noMajorTransits": "कोई प्रमुख व्यक्तिगत स्थानांतरण नहीं",
+  "guidanceV2": {
+    "edit": "संपादित करें",
+    "hour": "{{planet}} घंटे",
+    "copy": "कॉपी",
+    "card": "कार्ड",
+    "share": "शेयर",
+    "close": "बंद करें",
+    "today": "आज",
+    "copied": "कॉपी किया गया",
+    "cancel": "रद्द करें",
+    "history": "इतिहास",
+    "refresh": "ताज़ा करें",
+    "setUpAi": "AI सेट अप करें →",
+    "strength": "बल",
+    "yesClear": "हाँ, साफ़ करें",
+    "yourChart": "तुम्हारा चार्ट ✓",
+    "signature": "हस्ताक्षर",
+    "consulting": "सूर्य के क्षेत्रों से परामर्श...",
+    "aiEnhanced": "✨ AI-संवर्धित",
+    "natalChart": "✓ जन्म चार्ट",
+    "refreshing": "ताज़ा हो रहा है...",
+    "focusAreas": "फोकस क्षेत्र",
+    "confidence": "आत्मविश्वास",
+    "selectDate": "एक दिन चुनें",
+    "areYouSure": "क्या आप सच में निश्चित हैं?",
+    "affirmation": "असह्यता",
+    "yourPatterns": "तुम्हारी पैटर्न्स",
+    "unlockDeeper": "गहरे अंतर्दृष्टि खोलें",
+    "aiConfigured": "आपके पास AI प्रदाता को कॉन्फ़िगर किया गया है। आपके जन्म चार्ट और लाइव आकाश से कविता से भरपूर, व्यक्तिगत पढ़ने के लिए AI मार्गदर्शन चालू करें।",
+    "clearHistory": "इतिहास साफ़ करें",
+    "addBirthChart": "जन्म चार्ट जोड़ें",
+    "aiEnhancedVia": "✨ AI-संवर्धित के माध्यम से {{provider}} ({{model}})",
+    "aiAddProvider": "एक AI प्रदाता (Groq, OpenAI, या स्थानीय Ollama) जोड़ें ताकि आपके अद्वितीय चार्ट के अनुकूल LLM-संवर्धित व्याख्या प्राप्त करें।",
+    "sacredRituals": "पवित्रSanskar",
+    "aiUnavailable": "AI सुधार उपलब्ध नहीं है: {{reason}}। टेम्पलेट मार्गदर्शन दिखाया जा रहा है।",
+    "turnOnSettings": "सेटिंग्स में चालू करें",
+    "morningBriefing": "सुबह की जानकारी",
+    "loadingGuidance": "तुम्हारी अनुकूलित मार्गदर्शन लोड हो रहा है...",
+    "templatePowered": "📚 टेम्पलेट-संवर्धित",
+    "guidanceHistory": "📜 मार्गदर्शन इतिहास",
+    "noSavedGuidance": "अभी तक कोई सहेजी गई मार्गदर्शन नहीं",
+    "enableAiGuidance": "AI मार्गदर्शन सक्षम करें",
+    "celestialEssence": "स्वर्गीय सरलता",
+    "aiEnhancedSuffix": "(AI-संवर्धित)",
+    "dailyAffirmation": "दैनिक पुष्टि",
+    "selectDateToView": "अपने सहेजे गए मार्गदर्शन देखने के लिए एक दिन चुनें।",
+    "practicalGuidance": "वास्तविक मार्गदर्शन",
+    "dailyAffirmations": "दैनिक पुष्टियाँ",
+    "reflectionPrompts": "चिंतन प्रॉम्प्ट्स",
+    "aiUnavailableDate": "⚠️ इस दिन को AI सुधार उपलब्ध नहीं था। टेम्पलेट मार्गदर्शन दिखाया गया।",
+    "personalizedForYou": "✨ आपके लिए अनुकूलित",
+    "guidanceConfidence": "मार्गदर्शन के आत्मविश्वास",
+    "readingsAppearHere": "आपके दैनिक पढ़ने यहाँ स्वचालित रूप से दिखाई देंगे।",
+    "yourCelestialRegion": "तुम्हारा स्वार्थिक क्षेत्र",
+    "practicalGuidanceTitle": "वास्तविक मार्गदर्शन"
+  },
+  "birthChart": {
+    "born": "जन्मे",
+    "edit": "✏️ संपादित करें",
+    "loading": "स्थानीय नीति लोड हो रहा है...",
+    "promise": "प्रतिज्ञा",
+    "sunSign": "☉ सूर्य लक्षण • आपका {{sign}} हैं",
+    "elements": "तत्व",
+    "newChart": "+ नया चार्ट",
+    "dignities": "गुणवत्ता",
+    "chartWheel": "चार्ट चक्र",
+    "natalChart": "◉ जन्म चार्ट",
+    "dragRotate": "चक्र को घुमाने के लिए खींचें • विस्तृत जानकारी के लिए ग्रहों पर क्लिक करें",
+    "lifeThemes": "🌟 जीवन विषय",
+    "createFirst": "अपने व्यक्तिगत स्वार्थ के लिए सिविता की सिविता को अनलॉक करने के लिए अपना पहला जन्म चार्ट बनाएं",
+    "soulPromise": "आत्मा की प्रतिज्ञा",
+    "growthEdges": "🌱 वृद्धि किनारे",
+    "noBirthChart": "कोई जन्म चार्ट नहीं मिला",
+    "profileChart": "{{name}} का चार्ट",
+    "naturalGifts": "🎁 प्राकृतिक उपहार",
+    "majorAspects": "⚡ प्रमुख पहलुओं",
+    "recreateChart": "अपना चार्ट फिर से बनाएं",
+    "createYourChart": "✨ अपना चार्ट बनाएं",
+    "unknownLocation": "अज्ञात स्थान",
+    "elementalTemple": "🔥 तत्वीय मंदिर",
+    "chartIncomplete": "⚠️ चार्ट डेटा अपूर्ण है।",
+    "planetPositions": "🪐 ग्रह स्थितियाँ",
+    "yourSoulsPromise": "✨ आपकी आत्मा की प्रतिज्ञा"
+  },
+  "lastQuarterToNew": "अंतिम क्वार्टर से नया: जारी रखें और आराम करें",
+  "cosmicConditions": "कॉज्मिक स्थितियाँ",
+  "birthInput": {
+    "house": "घर {{house}}",
+    "cancel": "रद्द करें",
+    "dignity": "{{dignity}}",
+    "yourName": "तुम्हारा नाम",
+    "latitude": "अक्षांश",
+    "timezone": "समय क्षेत्र",
+    "enterName": "अपना नाम दर्ज करें",
+    "birthDate": "जन्म तिथि",
+    "birthTime": "जन्म समय",
+    "longitude": "रेखांश",
+    "calcFailed": "ग्रह स्थलों की गणना में विफलता। कृपया पुनः प्रयास करें।",
+    "invalidDate": "अमान्य जन्म तिथि या समय",
+    "calculating": "तुम्हारा आकाशीय ब्लूप्रिंट गणना कर रहा है...",
+    "privacyNote": "🔒 आपका जन्म डेटा आपके उपकरण पर संग्रहीत किया जाता है और जब आप साइन इन होते हैं तो आपके खाते से सिंक्रनाइज़ किया जाता है।",
+    "enterDetails": "अपने विशिष्ट स्वार्थ के आधार पर व्यक्तिगत मार्गदर्शन खोलने के लिए अपने जन्म विवरण दर्ज करें जो आपके अद्वितीय आकाशीय ब्लूप्रिंट पर आधारित हैं।",
+    "locationHint": "शहर या उपनगर का नाम टाइप शुरू करें (उदाहरण \"बैंकस्टाउन\", \"सिडनी\")",
+    "birthLocation": "जन्म स्थान *",
+    "yourBirthChart": "तुम्हारा जन्म चार्ट",
+    "calculateChart": "✨ मेरा चार्ट गणना करें",
+    "pleaseEnterName": "कृपया अपना नाम दर्ज करें",
+    "pleaseEnterDate": "कृपया अपना जन्म तिथि दर्ज करें",
+    "pleaseEnterTime": "कृपया अपना जन्म समय दर्ज करें",
+    "noPlanetaryData": "गणना से कोई ग्रहीय डेटा लौटा नहीं",
+    "houseCalcFailed": "घर स्थलों की गणना में विफलता। कृपया अपने निर्देशांक की जाँच करें।",
+    "chartCalcFailed": "चार्ट की गणना में विफलता। कृपया अपने इनपुट डेटा की जाँच करें।",
+    "invalidHouseData": "अवैध घर डेटा लौटा",
+    "pleaseEnterCoords": "कृपया अपने जन्म स्थान की समीक्षा निर्देशांक दर्ज करें",
+    "invalidHouseData2": "गणना से अवैध घर डेटा लौटा",
+    "celestialBlueprint": "तुम्हारा आकाशीय ब्लूप्रिंट",
+    "latitudePlaceholder": "उदाहरण के लिए, 40.7128",
+    "longitudePlaceholder": "उदाहरण के लिए, -74.0060"
+  },
+  "premiumCards": {
+    "sun": "सूरज",
+    "moon": "चन्द्रमा",
+    "copy": "प्रतिलिपि बनाएं",
+    "weak": "⚠ कमज़ोर",
+    "expand": "विस्तृत करें",
+    "inDays": "~{{days}} दिनों में",
+    "sunset": "सूर्यसंतान",
+    "whyNow": "WHY {{planet}} अब?",
+    "stormy": "तापसी",
+    "direct": "→ प्रत्यक्ष",
+    "strong": "★ मजबूत",
+    "sunrise": "सूर्योदय",
+    "neutral": "○ निरपेक्ष",
+    "hekaDate": "हेका दिन",
+    "aeonGate": "दिनचर्या के द्वार",
+    "monthOf13": "13 के महीने {{month}}",
+    "dayOfYear": "{{total}} के दिन {{day}}",
+    "civilTime": "🌍 नागरिक समय",
+    "julianDay": "युलियन दिन",
+    "beMindful": "इस पर ध्यान दें",
+    "nextPhase": "अगला चरण",
+    "hourRuler": "घड़ी के शासक",
+    "readOracle": "ओरैकल पढ़ें",
+    "clearSkies": "स्वच्छ आसमान",
+    "retrograde": "← पृष्ठगति",
+    "daysElapsed": "{{days}} दिन बीत गए",
+    "calculating": "गणना हो रही है...",
+    "lunarTemple": "चन्द्र मंदिर",
+    "waxingTrend": "बढ़ते हुए → बढ़ता है",
+    "waningTrend": "घटते हुए → कम हो रहा है",
+    "bestToAvoid": "✗ बचने के लिए सबसे अच्छा",
+    "retroReview": "जब {{count}} ग्रह पृष्ठगति में हैं, तो यह एक समय है {{significant}} समीक्षा और अंतर्दृष्टि के लिए।",
+    "hekaCalendar": "◈ हेका कैलेंडर",
+    "yearProgress": "साल का प्रगति",
+    "partlyCloudy": "आंशिक रूप से बादल密",
+    "heavyWeather": "भारी मौसम",
+    "retroCaution": "मुख्य नई शुरुआतों को सावधानी से संबंधित करें।",
+    "modalBalance": "मोडल संतुलन",
+    "luminariesNow": "अब प्रकाशमान",
+    "chaldeanOrder": "चाल्डीन क्रम",
+    "retroPossible": "नई परियोजनाएं प्रभावित क्षेत्रों में अतिरिक्त ध्यान के साथ संभव हैं।",
+    "viewPlanetary": "ग्रहीय क्षेत्र देखें",
+    "thisPhaseFavors": "इस चरण का पक्ष",
+    "localSolarTimes": "☀ स्थानीय सौर समय",
+    "calculatingLunar": "चन्द्रीय डेटा गणना हो रही है...",
+    "minutesRemaining": "{{minutes}} मिनट शेष",
+    "allPlanetsDirect": "सभी ग्रह प्रत्यक्ष",
+    "celestialWeather": "स्वर्गीय मौसम",
+    "directRetrograde": "{{direct}} प्रत्यक्ष, {{retrograde}} पृष्ठगति",
+    "planetarySpheres": "ग्रहीय क्षेत्र",
+    "elementalBalance": "बासिक संतुलन",
+    "currentPositions": "वर्तमान स्थितियाँ",
+    "chaldeanHourglass": "चाल्डीन घड़ी",
+    "favoredActivities": "✓ पसंदीदा गतिविधियाँ",
+    "planetaryStations": "ग्रहणिक स्टेशन",
+    "currentAlignments": "वर्तमान संरेखण",
+    "nextCelestialEvent": "अगला स्वर्गीय घटना",
+    "moonsCurrentThrone": "☽ चन्द्र का वर्तमान सिंहासन",
+    "retrogradeGuidance": "पृष्ठगति मार्गदर्शन",
+    "calculatingPlanetary": "ग्रहणिक घड़ी गणना हो रही है...",
+    "celestialBodiesTracked": "{{count}} स्वर्गीय शरीर ट्रैक किया जा रहा है"
+  },
+  "aiSettings": {
+    "title": "एआई-संवर्धित पढ़ाई",
+    "expand": "विस्तृत करें",
+    "active": "सक्रिय",
+    "apiKey": "API कुंजी",
+    "format": "फ़ॉर्मेट",
+    "pricing": "मूल्य निर्धारण",
+    "testing": "परीक्षण हो रहा है...",
+    "collapse": "संक्षिप्त करें",
+    "hideGuide": "मार्गदर्शिका छुपाएं",
+    "showGuide": "मार्गदर्शिका दिखाएं",
+    "serverUrl": "सर्वर URL",
+    "setupGuide": "सेटअप मार्गदर्शिका: {{provider}}",
+    "disconnect": "डिस्कनेक्ट करें",
+    "connectedTo": "सम्पर्क {{provider}} से",
+    "useTemplate": "टेम्पलेट लाइब्रेरी का उपयोग करें",
+    "dataPrivate": "आपका डेटा निजी रहता है",
+    "updateConfig": "कॉन्फ़िगरेशन अपडेट करें",
+    "templateDesc": "169+ हाथ-निर्मित टेम्पलेट जो सभी 13 संकेतों में सभी ग्रहों को शामिल करते हैं, और उनका उपयोग एकमात्र पढ़ाई में चरण, पक्ष और श्रेणी के आधार पर बनाते हैं। हमेशा मुफ्त, हमेशा तुरंत।",
+    "failedToSave": "सहेजने में विफल",
+    "usingTemplate": "टेम्पलेट लाइब्रेरी का उपयोग कर रहा है (मुफ्त)",
+    "storedLocally": "{{type}} इस उपकरण में ही क्रिप्टेड स्थानीय भंडारण में संग्रहीत किया जाता है। हम इसे हमारे सर्वरों को कभी नहीं भेजते।",
+    "aiEnhancement": "एआई सुधार",
+    "changeSettings": "सेटिंग्स बदलें",
+    "testConnection": "कनेक्शन परीक्षा करें",
+    "pleaseEnterKey": "कृपया एपीआई कुंजी दर्ज करें",
+    "connectedShort": "✓ {{provider}} कनेक्टेड",
+    "connectProvider": "अपने एआई प्रदाता से कनेक्ट करें उच्चतम ज्योतिषीय व्याख्या के लिए",
+    "templateLibrary": "टेम्पलेट लाइब्रेरी",
+    "dataPrivateDesc": "API कुंजी स्थानीय रूप से संग्रहीत होती है। हम उन्हें या आपके ज्योतिषीय डेटा को कभी नहीं देखते।",
+    "readingsEnhanced": "आपकी पढ़ाई एआई के साथ सुधार जा रही है।",
+    "connectionFailed": "✗ कनेक्शन विफल। अपने इंटरनेट और एपीआई कुंजी की जांच करें।",
+    "aiEnhancementDesc": "वैकल्पिक एआई-जनित पढ़ाई अधिक संवेदनशील, व्यक्तिगत व्याख्या के लिए।",
+    "connectionSuccess": "✓ कनेक्शन सफल! API कुंजी मान्य है।",
+    "connectionInvalid": "✗ अमान्य एपीआई कुंजी। कृपया जांचें और पुनः प्रयास करें।",
+    "templateAvailable": "✓ टेम्पलेट लाइब्रेरी हमेशा उपलब्ध है",
+    "connectProviderBtn": "प्रदाता से कनेक्ट करें",
+    "usingTemplateShort": "✓ टेम्पलेट लाइब्रेरी का उपयोग कर रहा है",
+    "pleaseEnterKeyFirst": "कृपया पहले एपीआई कुंजी दर्ज करें"
+  },
+  "lifeAreas": {
+    "career": "करियर और व्यवसाय",
+    "health": "सेहत और ज़ोर",
+    "timing": "समय और उत्पादकता",
+    "finances": "सम्पत्ति और संसाधन",
+    "relationships": "मोहब्बत और रिश्तों",
+    "personalGrowth": "व्यक्तिगत विकास"
+  },
+  "aboutThisHekaYear": "इस HEKA वर्ष के बारे में",
+  "universalCalendar": "वैश्विक कैलेंडर",
+  "waxingDescription": "वृद्धि: ऊर्जा का निर्माण, वृद्धि, संचय",
+  "waningDescription": "घटना: जारी रखना, जाने देना, पूर्णता",
+  "newToFirstQuarter": "नया से पहले क्वार्टर: नई परियोजनाएं शुरू करें",
+  "fullToLastQuarter": "पूर्ण से अंतिम क्वार्टर: परिणामों का फसल उगάएँ",
+  "solarNoonSubtitle": "इस दिन सूर्य का सर्वोच्च बिंदु",
+  "planetaryQualities": "ग्रहीय गुण",
+  "firstQuarterToFull": "पहला क्वार्टर से पूर्ण: गति बढ़ाएँ",
+  "seasonalActivities": "मौसमिक गतिविधियाँ",
+  "energeticQualities": "शक्तिशाली गुणवत्ता",
+  "energeticInfluence": "शक्तिशाली प्रभाव",
+  "moonPhases": {
+    "newMoon": "न्यू मून",
+    "fullMoon": "पूर्ण चंद्रमा",
+    "lastQuarter": "आखिरी क्वार्टर",
+    "firstQuarter": "पहला क्वार्टर",
+    "waxingGibbous": "वाक्सिंग गिब्बोस",
+    "waningGibbous": "वेनिंग गिब्बोस",
+    "waxingCrescent": "वाक्सिंग क्रेसेंट",
+    "waningCrescent": "वेनिंग क्रेसेंट"
+  },
+  "planetDomains": {
+    "mars": "कार्यवाही और इच्छा",
+    "venus": "संबंध और मूल्य",
+    "pluto": "परिवर्तन और शक्ति",
+    "saturn": "संरचना और प्रतिबद्धता",
+    "uranus": "परिवर्तन और मुक्ति",
+    "mercury": "संचार और योजना",
+    "jupiter": "विस्तार और विश्वास",
+    "neptune": "सपने और आध्यात्मिकता",
+    "default": "जीवन के क्षेत्र"
+  },
+  "favorableActivities": "सुविधाजनक गतिविधियां",
+  "moonPhaseDisclaimer": "चंद्रमासे गणितीय रूप से गणना की जाती है और आकाशगंगा के gözlemlemesi से थोड़ा भिन्न हो सकती है।",
+  "daysUntilNextSeason": "अगली मौसम तक के दिन",
+  "solarNoonDisclaimer": "समय गणितीय अनुमान हैं (±10-15 मिनट)। सटीक सूर्य के चोटि आपकी सटीक स्थिति और तारीख के आधार पर भिन्न हो सकते हैं।",
+  "biodynamicPrinciple": "बाइोडाइनेमिक सिद्धांत",
+  "cards": {
+    "moonPhase": {
+      "age": "आयु",
+      "title": "चंद्र का चरण",
+      "phase": "चरण",
+      "waxing": "बढ़ते हुए",
+      "waning": "घटते हुए",
+      "daysUntil": "{{days}} दिनों में",
+      "dayOfCycle": "29.5 के दिन {{day}}",
+      "illuminated": "प्रकाशित",
+      "illumination": "प्रकाशित",
+      "voidOfCourse": "विधि से रिक्त",
+      "lunarNewYear": "चंद्री नव वर्ष"
+    },
+    "seasons": {
+      "title": "मौसम",
+      "spring": "सप्रिंग",
+      "summer": "समर",
+      "autumn": "ऑटम",
+      "winter": "विंटर",
+      "daysUntil": "{{days}} दिनों में",
+      "nextSolstice": "अगला सोलस्टिस",
+      "currentSeason": "वर्तमान मौसम",
+      "springEquinox": "सप्रिंग इक्विनोक्स",
+      "autumnEquinox": "ऑटम इक्विनोक्स",
+      "summerSolstice": "समर सोलस्टिस",
+      "winterSolstice": "विंटर सोलस्टिस"
+    },
+    "sunTimes": {
+      "title": "सूरज का समय",
+      "sunset": "सूरज डूबना",
+      "sunrise": "सूरज उगमन",
+      "weather": "मौसम",
+      "accuracy": "सटीकता",
+      "dayLength": "दिन की लंबाई",
+      "accuracyLevels": {
+        "high": "उच्च",
+        "exact": "सटीक",
+        "estimated": "अनुमानित",
+        "approximate": "अनुमानित"
+      }
+    },
+    "dayOfWeek": {
+      "title": "सप्ताह का दिन",
+      "planet": "शासक ग्रह",
+      "energy": "शक्ति",
+      "favorableActivities": "सुविधाजनक गतिविधियाँ"
+    },
+    "agriculture": {
+      "title": "कृषि",
+      "neutral": "न्यूट्रल",
+      "favorable": "सुविधाजनक",
+      "plantToday": "आज क्या बोना है",
+      "byLocation": "आपकी स्थानीयता और चंद्र माहITI के अनुसार",
+      "unfavorable": "असुविधाजनक"
+    },
+    "digitalClock": {
+      "days": "दिन",
+      "title": "डिजिटल घड़ी",
+      "hours": "घंटे",
+      "minutes": "मिनट",
+      "seconds": "सेकंड",
+      "countdowns": "चार समकालीन लाइव काउंटडाउन"
+    },
+    "planetaryHours": {
+      "title": "ग्रहीय घंटे",
+      "favors": "पसंद",
+      "hourOf": "चांद्र के घंटे {{planet}}",
+      "currentHour": "वर्तमान घंटा",
+      "chaldeanOrder": "चाल्डियन क्रम"
+    }
+  },
+  "psychologicalImpact": "मनोवैज्ञानिक प्रभाव",
+  "practicalExpression": "वास्तविक अभिव्यक्ति",
+  "agriculturalGuidance": "कृषि मार्गदर्शन",
+  "energyForecastPrefix": "शक्ति की भविष्यवाणी के लिए",
+  "energyForecastSuffix": "{{date}} चंद्रमा के चरण, ग्रहों की स्थिति, और मौसम के रीतियों को मिला कर बनाती है।",
+  "hemispheres": {
+    "northern": "उत्तर ध्रुवीय क्षेत्र",
+    "southern": "दक्षिण ध्रुवीय क्षेत्र"
+  },
+  "yourPersonalTransits": "आपके व्यक्तिगत स्थानांतरण",
+  "universalCalendarNote": "ग्रेगोरी कैलेंडर की तरह, HEKA तारीखें वैश्विक रूप से एक जैसी होती हैं। HEKA महीना {{month}}, दिन {{day}} सिडनी, न्यू यॉर्क या लंदन में हो, वही पल हो - केवल स्थानीय नागरिक समय भिन्न होता है।",
+  "whyThisDayDescription": "चंद्र का चक्र और मौसमिक कारकों ने {{activity}} गतिविधियों के लिए उत्तम स्थिति इंगित की।",
+  "calculatingSolarTimes": "सूरज के समय की गणना...",
+  "confirm": {
+    "deleteProfile": "इस प्रोफ़ाइल को हटाएं? यह पूर्ववत नहीं हो सकता।"
+  },
+  "lookingBackDescription": "यह तारीख बीत चुकी है। इस दिन पर मौजूद तारामंडल ऊर्जाओं की समीक्षा करें।",
+  "planetaryDayDisclaimer": "ग्रहीय दिनों के संबंध परंपरागत ज्योतिष और सांस्कृतिक प्रतीकचित्र से निर्मित हैं।",
+  "historicalSignificance": "इतिहासिक महत्व",
+  "todaysCelestialWeather": "आज की तारामंडलीय मौसम",
+  "hekaCalendarIsUniversal": "HEKA कैलेंडर वैश्विक है:",
+  "hekaYearBegunDescription": "इस HEKA वर्ष का शुरुआत हुआ है। अगला चक्र 1 अप्रैल, {{nextYear}} को शुरू होता है।",
+  "planetaryDays": {
+    "sunday": {
+      "day": "रविवार",
+      "qualities": {
+        "0": "जीवंतता",
+        "1": "नेतृत्व",
+        "2": "सफलता",
+        "3": "दृश्यता"
+      },
+      "description": "सूर्य का दिन जीवनशक्ति, आत्मविश्वास और क्रिएटिव ऊर्जा लाता है। नई शुरुआतों और दृश्यता की खोज के लिए आदर्श।",
+      "activities": {
+        "0": "नई उद्योगों का शुरुआत करें",
+        "1": "प्रामाणिकता की खोज करें",
+        "2": "क्रिएटिव परियोजनाओं",
+        "3": "शारीरिक व्यायाम"
+      }
+    },
+    "monday": {
+      "day": "सोमवार",
+      "qualities": {
+        "0": "अंतर्ज्ञान",
+        "1": "भावना",
+        "2": "पालन-पोषण",
+        "3": "चिंतन"
+      },
+      "description": "चन्द्र के दिन भावना, अंतर्ज्ञान और आंतरिक कार्य पर जोर देते हैं। आराम और भावनात्मक प्रक्रिया के लिए उत्तम।",
+      "activities": {
+        "0": "स्व-सुरक्षा",
+        "1": "घर के कार्य",
+        "2": "आत्म-चिंतन",
+        "3": "परिवार का समय"
+      }
+    },
+    "friday": {
+      "day": "शुक्रवार",
+      "qualities": {
+        "0": "प्रेम",
+        "1": "सुंदरता",
+        "2": "संगतता",
+        "3": "सृजनशीलता"
+      },
+      "description": "वैनस के दिन प्रेम, सुंदरता, और संगतता पर जोर देता है। सामाजिक गतिविधियों और कलात्मक अभिव्यक्ति के लिए पर्याप्त।",
+      "activities": {
+        "0": "सामाजिक इकट्ठे",
+        "1": "कलात्मक प्रवृत्ति",
+        "2": "रोमांस",
+        "3": "स्व-प्यार"
+      }
+    },
+    "tuesday": {
+      "day": "बुधवार",
+      "qualities": {
+        "0": "कार्रवाई",
+        "1": "साहस",
+        "2": "प्रेरणा",
+        "3": "ज्ञान"
+      },
+      "description": "मंगल के दिन ऊर्जा, साहस और प्रेरणा लाते हैं। कार्रवाई करने और बाधाओं को ओवरकम करने के लिए सबसे अच्छा।",
+      "activities": {
+        "0": "चुनौतियों का सामना करें",
+        "1": "शारीरिक काम",
+        "2": "अभिव्यक्ति",
+        "3": "प्रतिस्पर्धा"
+      }
+    },
+    "thursday": {
+      "day": "गुरुवार",
+      "qualities": {
+        "0": "विस्तार",
+        "1": "भाग्य",
+        "2": "ज्ञान",
+        "3": "अभिगमन"
+      },
+      "description": "गुरु के दिन अभिगमन, ज्ञान और विस्तार लाते हैं। वृद्धि और समृद्धि के लिए सुसज्जित।",
+      "activities": {
+        "0": "बड़े निर्णय",
+        "1": "वित्तीय मामलों",
+        "2": "शिक्षा",
+        "3": "यात्रा योजना"
+      }
+    },
+    "saturday": {
+      "day": "शनिवार",
+      "qualities": {
+        "0": "नियमितता",
+        "1": "संरचना",
+        "2": "जिम्मेदारी",
+        "3": "बुद्धिमत्ता"
+      },
+      "description": "शनि के दिन नियमितता और संरचना की आवश्यकता होती है। संगठन, योजना बनाना, और जिम्मेदारी के लिए सबसे अच्छा।",
+      "activities": {
+        "0": "संगठन",
+        "1": "योजना",
+        "2": "कार्य की समीक्षा करें",
+        "3": "सीमा निर्धारित करें"
+      }
+    },
+    "wednesday": {
+      "day": "बृहस्पतिवार",
+      "qualities": {
+        "0": "संचार",
+        "1": "बुद्धि",
+        "2": "सीख",
+        "3": "यात्रा"
+      },
+      "description": "बुध के दिन संचार, सीख और मानसिक कौशल को पसंद करते हैं। सन्मेलन और लिखने के लिए आदर्श।",
+      "activities": {
+        "0": "लिखना",
+        "1": "सम्मेलन",
+        "2": "अध्ययन",
+        "3": "छोटे सफर"
+      }
+    }
+  },
+  "illuminationMoreThanHalf": "अधिकतम आधे से अधिक: शिखर प्रकटिहरण शक्ति",
+  "illuminationLessThanHalf": "आधे से कम: अन्तर्दृष्टि और योजना बनाना",
+  "thisMoonCycleDescription": "चंद्र का नाम {{name}} चक्र में था।",
+  "lookingForwardDescription": "यह तारीख भविष्य में है। इन आने वाले तारामंडल ऊर्जाओं का उपयोग करके आगे की योजना बनाएं।",
+  "moonPhaseMeanings": {
+    "newMoon": "शुरुआत",
+    "fullMoon": "पूर्णता",
+    "lastQuarter": "छोड़ना",
+    "firstQuarter": "कार्रवाई",
+    "waxingGibbous": "सुधार",
+    "waningGibbous": "धन्यवाद",
+    "waxingCrescent": "वृद्धि",
+    "waningCrescent": "आराम"
+  },
+  "universalCalendarDescription": "तारीखें वैश्विक रूप से एक जैसी होती हैं (जैसी ग्रेगोरी कैलेंडर)। नागरिक तारीख/समय समय क्षेत्र के अनुसार भिन्न होता है। तारामंडल गणनाएं (सूर्य दोपहर, चंद्रमा के चरण) शैक्षिक उद्देश्यों के लिए गणितीय अनुमान हैं ±30 मिनट।",
+  "aboutThisHekaYearDescription": "HEKA वर्ष {{year}} 1 अप्रैल, {{civilYear}} को शुरू होता है। प्रत्येक HEKA वर्ष में 12 महीने होते हैं, हर महीने 28 दिनों का, साथ ही मार्च 29 दिनों का (छोटे/सुधार वर्षों में 30 दिन)।",
+  "solarNoonLocalTimeDescription": "सूर्य ने {{time}} ({{timezone}}) पर अपना सर्वोच्च बिंदु हाasil किया",
+  "solarNoonHistoricalDescription": "प्राचीन संस्कृतियों ने समय की गिनती के लिए सूर्य के चोटि का उपयोग किया। स्टोन सर्कल और सन्ध्याघट इस पहल को निशान लगाने के लिए संरेखित थे।",
+  "biodynamicPrincipleDescription": "इस मार्गदर्शन का पालन क्रमभूमि की शक्ति और मिट्टी की स्थिति प्रभावित करने वाले ब्रह्मांडीय रीत्थों का पालन करता है।",
+  "dictionaries": {
+    "planetInSign": {
+      "sun": {
+        "leo": "सिंह में सूरज रचनात्मक आत्मविश्वास के साथ चमकता है। अपने आप को असलीता से व्यक्त करें और दिल के साथ नेतृत्व करें।",
+        "aries": "मृगशीर्ष में सूरज हिम्मत और नवाचार की ऊर्जा लाता है। आरंभ करने, नेतृत्व करने और साहसी कदम उठाने का समय।",
+        "virgo": "कन्या में सूरज संशोधन और सेवा का आह्वान करता है। व्यवस्था को संगठित करें, प्रबंधन सुधारें और विवरणों का ध्यान दें।",
+        "libra": "तुला में सूरज सौम्यता और साझेदारी की तलाश करता है। संबंधों को संतुलित करें और सौंदर्य की सराहना करें।",
+        "taurus": "तारुस में सूरज हमें स्थिरता और संवेदनशील आनंद में मूलभूत करता है। निर्माण करने, पालन करने और सौंदर्य की सराहना करने का फोकस करें।",
+        "gemini": "कुंभ में सूरजiosity और संचार को जगाता है। विचारों का आदान-प्रदान करें, सीखें और अपने समुदाय से जुड़ें।",
+        "cancer": "कर्क में सूरज भावनात्मक संबंधों को गहरा करता है। संबंधों को पालित करें, भावनाओं का सम्मान करें और आश्रय बनाएं।",
+        "pisces": "The Sun in Pisces dissolves boundaries. Connect with the infinite, practice compassion, and trust intuition.",
+        "scorpio": "वृश्चिक में सूरज परिवर्तन के गहरे में डूबता है। तीव्रता को स्वीकार करें, रहस्यों की जांच करें और अब नहीं सेवा करने वाली चीज़ों को छोड़ दें।",
+        "aquarius": "क",
+        "ophiuchus": "ओफियुचस में सूरज चिकित्सा ज्ञान को प्रकाशित करता है। परिवर्तनशील ज्ञान, सर्प चिकित्सा और पवित्र पुनर्निर्माण का समय।",
+        "capricorn": "मकर में सूरज लंबे समय के लिए निर्माण करता है। जिम्मेदारी लें, महत्वपूर्ण लक्ष्य们त करें और अपना कला कौशल मास्टर करें।",
+        "sagittarius": "धनु में सूरज क्षितिजों को विस्तृत करता है। ज्ञान की तलाश करें, नई क्षेत्रों की अन्वेषण करें और आशावादी रहें।"
+      },
+      "moon": {
+        "leo": "The Moon in Leo expresses feelings dramatically. Warmth, creativity, and need for recognition in relationships.",
+        "aries": "The Moon in Aries brings quick emotional responses. Impulsive feelings, passionate reactions, and independent needs.",
+        "virgo": "The Moon in Virgo seeks order and usefulness. Emotional satisfaction through service, health, and improvement.",
+        "libra": "The Moon in Libra harmonizes emotions. Needs partnership, aesthetic balance, and diplomatic relating.",
+        "taurus": "The Moon in Taurus seeks comfort and stability. Nurturing through sensuality, patience, and material security.",
+        "gemini": "The Moon in Gemini fluctuates with thoughts and conversations. Emotional curiosity, mental stimulation needs.",
+        "cancer": "The Moon is at home in Cancer. Deep nurturing, protective instincts, and profound emotional sensitivity.",
+        "pisces": "चांद्र पिसेस में भावनात्मक सीमाओं को पिघलता है। सहानुभूति, कल्पनाशीलता, और आध्यात्मिक संवेदनशीलता।",
+        "scorpio": "The Moon in Scorpio feels intensely. Emotional depth, transformative experiences, and powerful intuition.",
+        "aquarius": "चांद्र एक्वारियस में अलग होकर निरीक्षण करता है। भावनात्मक वस्तुतः, मानवतावादी चिंताएँ, और अद्वितीय आवश्यकताएँ।",
+        "ophiuchus": "चांद्र ओफियुचस में भावनाओं के माध्यम से चिकित्सा करता है। अंतर्दृष्टि चिकित्सा, परिवर्तनशील भावना, और सर्प बुद्धि।",
+        "capricorn": "चांद्र कब्रicorn में भावनाओं को प्रतिबंधित करता है। भावनाओं के वृद्धिभरी संचालन, जिम्मेदारी, और लंबे समय की सुरक्षा।",
+        "sagittarius": "चांद्र सजितारीस में भावनात्मक रूप से अन्वेषण करता है। स्वतंत्रता की आवश्यकता, दार्शनिक भावनाएँ, और साहसी आत्मा।"
+      },
+      "mars": {
+        "leo": "Mars in Leo performs boldly. Dramatic action, creative drive, and confident leadership.",
+        "aries": "Mars is at home in Aries. Direct action, courageous initiative, and passionate drive.",
+        "virgo": "Mars in Virgo works precisely. Methodical effort, service-oriented action, and health focus.",
+        "libra": "Mars in Libra acts diplomatically. Indirect confrontation, partnership drive, and aesthetic action.",
+        "taurus": "Mars in Taurus persists steadily. Determined effort, sensual energy, and stubborn resistance.",
+        "gemini": "Mars in Gemini acts mentally. Quick movements, verbal combat, and scattered initiatives.",
+        "cancer": "Mars in Cancer defends protectively. Emotional action, defensive aggression, and nurturing drive.",
+        "pisces": "मंगल मीनराशि में अंतर्दृष्टि से डrifts। आध्यात्मिक कार्रवाई, दयालु प्रेरणा, और अहसास की प्रेरणा।",
+        "scorpio": "Mars is at home in Scorpio. Intense action, strategic power, and transformative drive.",
+        "aquarius": "मंगल कुम्भराशि में कार्रवाई को परिवर्तित करता है। सुधार की प्रेरणा, समूह आरंभ, और असामान्य विधियां।",
+        "ophiuchus": "Mars in Ophiuchus acts as healer. Surgical precision, restorative force, and transformative intervention.",
+        "capricorn": "मंगल मकरराशि में लम्बे-धारे से प्राप्त होता है। अनुशासित प्रयास, रणनीतिक चढ़ाव, और अधिकारी कार्रवाई।",
+        "sagittarius": "मंगल को धनुराशि में साहसिक रूप से अन्वेषण करता है। विस्तृत आरंभ, दार्शनिक कार्रवाई, और जोखिम उठाने की।"
+      },
+      "venus": {
+        "leo": "Venus in Leo loves dramatically. Romantic grand gestures, creative expression, and loyal affection.",
+        "aries": "Venus in Aries loves passionately. Bold attraction, spontaneous romance, and independent partnerships.",
+        "virgo": "Venus in Virgo serves practically. Helpful love, modest attraction, and attention to relationship details.",
+        "libra": "Venus is at home in Libra. Harmonious partnerships, aesthetic appreciation, and diplomatic relating.",
+        "taurus": "Venus is at home in Taurus. Sensual pleasure, stable relationships, and appreciation of beauty.",
+        "gemini": "Venus in Gemini charms verbally. Flirtatious connections, intellectual attraction, and social variety.",
+        "cancer": "Venus in Cancer nurtures lovingly. Emotional bonding, domestic harmony, and protective care.",
+        "pisces": "Venus in Pisces loves unconditionally. Romantic idealism, spiritual connection, and compassionate relating.",
+        "scorpio": "Venus in Scorpio loves intensely. Deep transformation through relationships and magnetic attraction.",
+        "aquarius": "Venus in Aquarius connects uniquely. Unconventional relationships, friendship-based love, and freedom.",
+        "ophiuchus": "Venus in Ophiuchus loves as medicine. Healing relationships, transformative devotion, and heart-centered restoration.",
+        "capricorn": "Venus in Capricorn commits seriously. Mature relationships, status considerations, and lasting bonds.",
+        "sagittarius": "Venus in Sagittarius explores freely. Adventurous love, philosophical connection, and open relationships."
+      },
+      "saturn": {
+        "leo": "Saturn in Leo tempers creativity. Lessons in humility, structured self-expression, and responsible leadership.",
+        "aries": "Saturn in Aries tests initiative. Lessons in patience, restrained action, and mature leadership.",
+        "virgo": "Saturn in Virgo perfects service. Lessons in precision, health discipline, and practical mastery.",
+        "libra": "Saturn in Libra commits to balance. Lessons in partnership responsibility, fair structures, and mature relating.",
+        "taurus": "Saturn in Taurus stabilizes resources. Lessons in persistence, material responsibility, and enduring values.",
+        "gemini": "Saturn in Gemini disciplines the mind. Lessons in focus, serious communication, and mental maturity.",
+        "cancer": "Saturn in Cancer protects boundaries. Lessons in emotional responsibility, family duty, and nurturing limits.",
+        "pisces": "Saturn in Pisces dissolves boundaries carefully. Lessons in compassion, spiritual discipline, and mystical responsibility.",
+        "scorpio": "Saturn in Scorpio transforms deeply. Lessons in power, shared resource responsibility, and psychological maturity.",
+        "aquarius": "Saturn is at home in Aquarius. Social responsibility, innovative structures, and humanitarian duty.",
+        "ophiuchus": "Saturn in Ophiuchus masters healing. Lessons in medical discipline, structured transformation, and responsible restoration.",
+        "capricorn": "Saturn is at home in Capricorn. Mastery through discipline, authority earned, and lasting achievement.",
+        "sagittarius": "Saturn in Sagittarius structures beliefs. Lessons in wisdom, disciplined expansion, and responsible freedom."
+      },
+      "mercury": {
+        "leo": "मेरक्री लीओ में रचनात्मक रूप से अभिव्यक्त करता है। नाटकीय भाषण, आत्मविश्वास वाली विचार, और हृदय केंद्रित विचार।",
+        "aries": "मेरक्री अरिज़ में तेजी से और सीधे सोचता है। तीखा, आकस्मिक संचार और नवाचार।",
+        "virgo": "मेरक्री वर्ग में घर है। विश्लेषणात्मक सटीकता, व्यावसायिक बुद्धि, और विस्तृत विश्लेषण।",
+        "libra": "मेरक्री लिब्रा में संतुलित विचार की खोज में है। राजनैतिक संचार और सभी दृष्टिकोणों को विचार।",
+        "taurus": "मेरक्री टॉरस में व्यावसायिक रूप से सोचता है। स्थिर सीखने, संवेदनशील अहसास, और विधिगत संचार।",
+        "gemini": "मेरक्री जमिनी में घर है। तेजी से विनोदी, विविध सोच, और कौशलमय संचार।",
+        "cancer": "मेरक्री कंकर में अंतर्ज्ञान से सोचता है। स्मृति केंद्रित, भावनात्मक बुद्धि, और पालनहारी शब्द।",
+        "pisces": "Mercury in Pisces imagines intuitively. Poetic expression, receptive listening, and spiritual understanding.",
+        "scorpio": "मेरक्री स्कॉर्पियो में गहरे से जाँच करता है। जासूसी सोच, मनोवैज्ञानिक अंतर्दृष्टि, और प्रदर्शनशील शब्द।",
+        "aquarius": "Mercury in Aquarius innovates thinking. Original ideas, intellectual detachment, and progressive concepts.",
+        "ophiuchus": "मेरक्री ओफियुचस में चिकित्सा से सोचता है। चिकित्सा संचार, चिकित्सा ज्ञान, और परिवर्तनशील अंतर्दृष्टि।",
+        "capricorn": "मेरक्री कब्रicorn में सोच",
+        "sagittarius": "मेरक्री सजितारीस में समझ को विस्तृत करता है। दार्शनिक सोच और व्यापक संचार।"
+      },
+      "jupiter": {
+        "leo": "जुपिटर सिंहराशि में वीरंगना से निर्माण करता है। आत्म-प्रकटि के माध्यम से वृद्धि, रचनात्मक संपत्ति, और करुणामय नेतृत्व।",
+        "aries": "जुपिटर अरिराशि में जटिल रूप से विस्तृत होता है। आरंभ के माध्यम से वृद्धि, भाग्यशाली नई शुरुआत, और आत्मविश्वास।",
+        "virgo": "जुपिटर कन्याराशि में कौशल से सुधारता है। सेवा के माध्यम से वृद्धि, स्वास्थ्य अनुशासन, और व्यावसायिक मास्टरी।",
+        "libra": "जुपिटर तुलाराशि में न्याय से समन्वय करता है। साझेदари के माध्यम से वृद्धि, सौंदर्य की सराहना, और राजनैतिकी बुद्धि।",
+        "taurus": "जुपिटर तौराराशि में अभूतपूर्व रूप से प्रकट होता है। धैर्य के माध्यम से वृद्धि, सामग्री आशीर्वाद, और संवेदनशील बुद्धि।",
+        "gemini": "जुपिटर मिथुनराशि में विविध रूप से सीखता है। संचार के माध्यम से वृद्धि, बुद्धिजीवी विस्तार, और विभिन्न रुचियाँ।",
+        "cancer": "जुपिटर कर्कराशि में परोपकार से पोषण देता है। पालन-पोषण के माध्यम से वृद्धि, भावनात्मक संपत्ति, और संरक्षक बुद्धि।",
+        "pisces": "Jupiter in Pisces dissolves into infinity. Growth through compassion, spiritual abundance, and universal love.",
+        "scorpio": "जुपिटर स्कोर्pioराशि में गहरे में बदलता है। तीव्रता के माध्यम से वृद्धि, साझेदari संसाधन जिम्मेदारी, और मनोवैज्ञानिक बुद्धि।",
+        "aquarius": "Jupiter in Aquarius innovates progressively. Growth through community, humanitarian wisdom, and unique vision.",
+        "ophiuchus": "जुपिटर ओफियुचस में चिकित्सा को विस्तार देता है। चिकित्सा अनुशासन, सर्प की बुद्धि, और परिवर्तनीय ज्ञान के माध्यम से वृद्धि।",
+        "capricorn": "जुपिटर को मकरराशि में घर है। अनुशासित माध्यम से मास्टरी, हास",
+        "sagittarius": "जुपिटर को धनुराशि में घर है। बिना किसी सीमा के विस्तार, दार्शनिक बुद्धि, और भाग्यशाली यात्राएं।"
+      }
+    },
+    "providerSetup": {
+      "groq": {
+        "type": "ग्रोक",
+        "name": "ग्रोक",
+        "logo": "⚡",
+        "color": "#f43f5e",
+        "website": "https://groq.com",
+        "signupUrl": "https://console.groq.com/login",
+        "keyFormat": "\"gsk_\" के साथ शुरू होता है और अक्षर-संगीत के बाद अक्षर-संगीत के साथ",
+        "apiKeysUrl": "https://console.groq.com/keys",
+        "description": "ललमा 3 के साथ धूम्रपान AI अनुमान। निःशुल्क स्तर में 1M टोकन प्रति दिन शामिल हैं।",
+        "pricingNote": "फ्री टियर: 1M टोकन्स/दिन। उच्च उपयोग के लिए भुगतान योजनाएं उपलब्ध हैं।",
+        "freeTierInfo": "1,000,000 टोकन/दिन निःशुल्क",
+        "keyPlaceholder": "gsk_your_api_key_here",
+        "setupSteps": {
+          "0": {
+            "tip": "त्वरित साइनअप के लिए अपने ईमेल या गूगल खाता का उपयोग करें",
+            "link": "https://console.groq.com/login",
+            "title": "एक Groq खाता बनाएं",
+            "action": "Groq कंसोल पर जाएं →",
+            "description": "Groq कंसोल पर जाएं और एक फ्री खाता के लिए साइन अप करें।"
+          },
+          "1": {
+            "tip": "नेविगेशन मेनू में कुंजी आइकन की तलाश करें",
+            "link": "https://console.groq.com/keys",
+            "title": "एपीआई कुंजियों पर नेविगेट करें",
+            "action": "API Keys पेज खोलें →",
+            "description": "लॉग इन होने के बाद, बायी साइडबार में \"API Keys\" पर क्लिक करें।"
+          },
+          "2": {
+            "tip": "इसके लिए एक वर्णनात्मक नाम चुनें ताकि आप इसे क्यों उपयोग करते हैं याद रखें",
+            "title": "नई एपीआई कुंजी बनाएं",
+            "description": "\"Create API Key\" बटन पर क्लिक करें। इसे \"HEKA कैलेंडर\" जैसे नाम दें।"
+          },
+          "3": {
+            "tip": "⚠️ सुरक्षा के लिए, Groq केवल एक बार पूरी कुंजी दिखाता है। यदि आप इसे खो देते हैं, तो नई बनाएं।",
+            "title": "अपनी एपीआई कुंजी को कॉपी करें",
+            "description": "जनरेटेड कुंजी को कॉपी करें (\"gsk_\" से शुरू होता है)। इसे सुरक्षित रूप से संग्रहीत करें - आप इसे फिर से नहीं देखेंगे।"
+          },
+          "4": {
+            "tip": "आपका कुंजी केवल इस उपकरण पर संग्रहीत किया जाता है",
+            "title": "HEKA में कुंजी को पेस्ट करें",
+            "description": "इस स्क्रीन पर वापस जाएं और नीचे अपना कुंजी पेस्ट करें। \"Test Connection\" पर क्लिक करें ताकि सत्यापित करें।"
+          }
+        }
+      },
+      "openai": {
+        "type": "openai",
+        "name": "OpenAI",
+        "logo": "🤖",
+        "color": "#10a37f",
+        "website": "https://openai.com",
+        "signupUrl": "https://platform.openai.com/signup",
+        "keyFormat": "\"sk-\" से शुरू होता है और अक्षर-सङ्ख्यात्मक चरित्रों के बाद होता है",
+        "apiKeysUrl": "https://platform.openai.com/api-keys",
+        "description": "गुणवत्तावान ज्योतिषिक व्याख्याओं के लिए GPT-4 और GPT-3.5 Turbo। उद्योग के लिए शीर्ष गुणवत्ता।",
+        "pricingNote": "मुफ्त क्रेडिट के बाद प्रयोग के आधार पर भुगतान करें। GPT-3.5: ~$0.002 प्रति 1K टोकन्स।",
+        "freeTierInfo": "नए उपयोगकर्ताओं के लिए $5 की मुफ्त क्रेडिट",
+        "keyPlaceholder": "sk-your_api_key_here",
+        "setupSteps": {
+          "0": {
+            "tip": "Have your phone ready for SMS verification",
+            "link": "https://platform.openai.com/signup",
+            "title": "OpenAI खाता बनाएं",
+            "action": "Sign Up at OpenAI →",
+            "description": "OpenAI प्लेटफॉर्म पर साइन अप करें। आपको ईमेल सत्यापन और एक फोन नंबर की आवश्यकता होगी।"
+          },
+          "1": {
+            "tip": "आप बिलिंग सेटिंग्स में लागतों को नियंत्रित करने के लिए उपयोग सीमाओं को सेट कर सकते हैं",
+            "title": "Add Payment Method (Optional)",
+            "description": "While you get $5 in free credits, adding a payment method ensures uninterrupted service."
+          },
+          "2": {
+            "tip": "इसका \"प्रोजेक्ट एपीआई कुंजियाँ\" से भ्रंति न करें - हमें यूजर एपीआई कुंजियाँ चाहिए",
+            "link": "https://platform.openai.com/api-keys",
+            "title": "एपीआई कुंजी अनुभाग पर जाएं",
+            "action": "ऑपेन एपीआई कुंजियाँ →",
+            "description": "अपना प्रोफ़ाइल चित्र क्लिक करें → \"आपका प्रोफ़ाइल\" → \"यूजर एपीआई कुंजियाँ\" या सीधे लिंक पर जाएं।"
+          },
+          "3": {
+            "tip": "⚠️ ओपनएआई केवल एक बार पूरी कुंजी दिखाता है। इसे तुरंत कॉपी करें!",
+            "title": "नई सिक्रेट की बनाएं",
+            "description": "“Create new secret key” पर क्लिक करें। इसे आसानी से पहचान के लिए “HEKA Calendar” नाम दें।"
+          },
+          "4": {
+            "tip": "प्लेटफॉर्म.openai.com/settings/organization/billing/limits पर बिलिंग अलर्ट सेट करें",
+            "title": "हेका में कॉन्फ़िगर करें",
+            "description": "नीचे अपना कुंजी पेस्ट करें और कनेक्शन का परीक्षण करें। ओपनएआई डैशबोर्ड में उपयोग को मॉनिटर करें।"
+          }
+        }
+      },
+      "ollama": {
+        "type": "ollama",
+        "name": "Ollama (Local)",
+        "logo": "💻",
+        "color": "#ffffff",
+        "website": "https://ollama.com",
+        "signupUrl": "https://ollama.com/download",
+        "keyFormat": "URL format: http://localhost:11434",
+        "apiKeysUrl": "",
+        "description": "Run AI models entirely on your own device. Complete privacy, no internet needed after setup.",
+        "pricingNote": "No costs. Requires capable hardware (8GB+ RAM recommended).",
+        "freeTierInfo": "100% free - runs locally",
+        "keyPlaceholder": "http://localhost:11434",
+        "setupSteps": {
+          "0": {
+            "tip": "Windows version is available via Windows Subsystem for Linux (WSL2)",
+            "link": "https://ollama.com/download",
+            "title": "Download Ollama",
+            "action": "Download Ollama →",
+            "description": "Download and install Ollama for your operating system (Mac, Linux, or Windows)."
+          },
+          "1": {
+            "tip": "Llama 3 is recommended for best results. Models are several GB to download.",
+            "title": "Install a Model",
+            "description": "Open terminal and run: ollama pull llama3 or ollama pull mistral"
+          },
+          "2": {
+            "tip": "The server runs on http://localhost:11434 by default",
+            "title": "Start Ollama Server",
+            "description": "Run: ollama serve to start the local API server. Keep this terminal open."
+          },
+          "3": {
+            "tip": "First run downloads the model. Subsequent runs are instant.",
+            "title": "Verify Installation",
+            "description": "Test by running: ollama run llama3 in another terminal. Type a test message."
+          },
+          "4": {
+            "tip": "Ollama must be running whenever you want AI-enhanced readings",
+            "title": "Connect HEKA",
+            "description": "Enter the server URL (usually http://localhost:11434) below and test connection."
+          }
+        }
+      },
+      "template": {
+        "type": "टेम्पलेट",
+        "name": "टेम्पलेट लाइब्रेरी",
+        "logo": "📚",
+        "color": "#fbbf24",
+        "website": "",
+        "signupUrl": "",
+        "keyFormat": "",
+        "apiKeysUrl": "",
+        "description": "169+ हाथ-कला द्वारा बनाए गए ग्रह-चिह्न टेम्पलेट, चांद की चन्द्रमा के अनुसार, पक्ष, और जीवन श्रेणी में एक-of-a-kind पढ़ने में बुनकर। हमेशा निःशुल्क, हमेशा तुरंत, सेटअप की आवश्यकता नहीं।",
+        "pricingNote": "कभी भी कोई खर्च नहीं। हमारे संकलित टेम्पलेट सिस्टम द्वारा संचालित।",
+        "freeTierInfo": "पूरी तरह से निःशुल्क",
+        "keyPlaceholder": "",
+        "setupSteps": {
+          "0": {
+            "tip": "टेम्पलेट सभी प्रमुख स्वार्थ और ग्रह स्थितियों को कवर करती हैं",
+            "title": "टेम्पलेट लाइब्रेरी का चयन करें",
+            "description": "यह डिफ़ॉल्ट विकल्प है। कॉन्फ़िगरेशन की आवश्यकता नहीं।"
+          },
+          "1": {
+            "tip": "आप भविष्य में कभी भी AI प्रदाताओं में स्विच कर सकते हैं",
+            "title": "तुरंत उपयोग शुरू करें",
+            "description": "सभी ज्योतिषीय पढ़ने हमारे पूर्व-लिखित टेम्पलेट लाइब्रेरी का उपयोग करेंगे।"
+          }
+        }
+      },
+      "anthropic": {
+        "type": "anthropic",
+        "name": "Anthropic",
+        "logo": "🧠",
+        "color": "#d97757",
+        "website": "https://anthropic.com",
+        "signupUrl": "https://console.anthropic.com/login",
+        "keyFormat": "\"sk-ant-\" के साथ शुरू होता है और अल्फान्यूमेरिक चरित्रों के बाद",
+        "apiKeysUrl": "https://console.anthropic.com/settings/keys",
+        "description": "विचारशील, संवेदनशील ज्योतिष मार्गदर्शन के लिए क्लोड एआई के साथ विस्तृत संदर्भ।",
+        "pricingNote": "स्पर्धात्मक दरें। क्लोड 3 हाइकू: ~$0.25 प्रति 1K टोकन्स।",
+        "freeTierInfo": "नई उपयोगकर्ताओं के लिए $5 की मुफ्त क्रेडिट",
+        "keyPlaceholder": "sk-ant-your_api_key_here",
+        "setupSteps": {
+          "0": {
+            "tip": "Anthropic की एक वेटलिस्ट हो सकती है - अनुमोदन आमतौर पर जल्दी होता है",
+            "link": "https://console.anthropic.com/login",
+            "title": "Anthropic के लिए साइन अप करें",
+            "action": "Anthropic कंसोल पर जाएं →",
+            "description": "अपने कार्य ईमेल का उपयोग करके Anthropic कंसोल में एक खाता बनाएं।"
+          },
+          "1": {
+            "tip": "कुछ मिनटों के भीतर ईमेल नहीं देखें तो स्पैम फोल्डर की जांच करें",
+            "title": "अपना खाता सत्यापित करें",
+            "description": "सत्यापन लिंक के लिए अपना ईमेल जांचें। किसी आवश्यक सत्यापन कदमों को पूरा करें।"
+          },
+          "2": {
+            "tip": "The settings gear icon is in the top-right corner",
+            "link": "https://console.anthropic.com/settings/keys",
+            "title": "Access API Keys",
+            "action": "Open API Keys →",
+            "description": "In the console, go to Settings → API Keys or use the direct link below."
+          },
+          "3": {
+            "tip": "You can create multiple keys for different apps",
+            "title": "Generate API Key",
+            "description": "Click \"Create Key\". Give it a descriptive name like \"HEKA Astrology\"."
+          },
+          "4": {
+            "tip": "Keys never expire unless you revoke them manually",
+            "title": "Copy and Configure",
+            "description": "Copy the key (starts with \"sk-ant-\") and paste it below in HEKA."
+          }
+        }
+      }
+    },
+    "moonOracle": {
+      "New Moon": {
+        "poem": "In the void between breaths, all potential dwells. The seed waits in darkness, gathering courage to split its shell. Plant intentions now—they will grow with the light.",
+        "title": "THE DARK MYSTERY",
+        "favors": {
+          "0": "Setting intentions",
+          "1": "Planting seeds",
+          "2": "Beginning new ventures",
+          "3": "Inner vision work"
+        },
+        "warnings": {
+          "0": "Don't push for immediate results",
+          "1": "Avoid major launches"
+        }
+      },
+      "Full Moon": {
+        "poem": "सभी जो अंधकार में छुपी थी, अब प्रकाश में प्रकट हुई है। न्यू मून पर बोया हुआ बीज मिट्टी से बाहर निकलता है। आपका काम समाप्त हो रहा है। दुनिया आपकी पूर्णता को देख रही है।",
+        "title": "महत्वपूर्ण प्रकटिहोत्सा",
+        "favors": {
+          "0": "मनाना",
+          "1": "जो अब काम नहीं कर रहा है उसे छोड़ना",
+          "2": "सार्वजनिक दृश्यता",
+          "3": "कृतज्ञता अभ्यास"
+        },
+        "warnings": {
+          "0": "भावनाएं उच्च हो सकती हैं",
+          "1": "सोना-सोना被打乱 हो सकता है"
+        }
+      },
+      "Last Quarter": {
+        "poem": "Half remains, half must go. What will you carry forward? What will you leave behind? The choice is yours, and yours alone.",
+        "title": "THE RELEASING",
+        "favors": {
+          "0": "छोड़ना",
+          "1": "संबंधों को छोड़ना",
+          "2": "स्थान को साफ़ करना",
+          "3": "क्षमा"
+        },
+        "warnings": {
+          "0": "नई परियोजनाएं शुरू न करें",
+          "1": "आपके योग्यता के भीतर समाप्त करें"
+        }
+      },
+      "First Quarter": {
+        "poem": "आधे प्रकाश, आधा छाया—निर्णय संतुलन में है। आगे बढ़ने की राह कार्रवाई की आवश्यकता है। चुनें, और ब्रह्मांड आपके साथ है।",
+        "title": "द्वारा",
+        "favors": {
+          "0": "निर्णय लेना",
+          "1": "कार्रवाई करना",
+          "2": "अवरोधों को धक्का देना",
+          "3": "प्रतिबद्धि करना"
+        },
+        "warnings": {
+          "0": "तर्क-वितर्क से बचें",
+          "1": "पीछे मुड़ना मत करें"
+        }
+      },
+      "Waxing Gibbous": {
+        "poem": "हम Baird पूर्ण, लगभग पूर्ण। गति एक लहर की तरह बनाए रखती है। संशोधित करें, समायोजित करें, प्रकटिहोत्सा के लिए तैयार हो जाओ।",
+        "title": "संकलन",
+        "favors": {
+          "0": "परियोजनाओं को संशोधित करना",
+          "1": "योजनाओं को समायोजित करना",
+          "2": "प्रारंभ के लिए तैयार होना",
+          "3": "संसाधन इकट्ठा करना"
+        },
+        "warnings": {
+          "0": "समाप्ति की ओर दौड़ मत करें",
+          "1": "धैर्य पुरस्कार देता है"
+        }
+      },
+      "Waning Gibbous": {
+        "poem": "प्रकाश अपनी नरम पलटाई शुरू करती है, लेकिन ज्ञान बचता है। वह जो आपने सीखा है, उसे साझा करें। दूसरों को पूर्णता ने क्या सिखाया, उसे सिखाइए।",
+        "title": "साझा करना",
+        "favors": {
+          "0": "ज्ञान साझा करना",
+          "1": "पढ़ाना",
+          "2": "Giving back",
+          "3": "Gratitude"
+        },
+        "warnings": {
+          "0": "Don't cling to the peak",
+          "1": "Let the cycle complete"
+        }
+      },
+      "Waxing Crescent": {
+        "poem": "A sliver of silver pierces the night. The dream begins to breathe, taking its first steps into form. Trust the unfolding.",
+        "title": "THE FIRST BREATH",
+        "favors": {
+          "0": "पहले कदम उठाएँ",
+          "1": "गति बनाए रखें",
+          "2": "नई कौशल सीखें",
+          "3": "कनेक्शन बनाएँ"
+        },
+        "warnings": {
+          "0": "अधिक प्रतिबद्धि मत लें",
+          "1": "फ्लैक्सिबल रहें"
+        }
+      },
+      "Waning Crescent": {
+        "poem": "एक चांदी सिसका काले में ध्वस्त हो रहा है। अब आराम करें। काम हो गया है। अंधकार में सURRENDER करें, यह जानते हुए कि प्रकाश वापस आएगा।",
+        "title": "सURRENDER",
+        "favors": {
+          "0": "गहरे आराम",
+          "1": "सURRENDER",
+          "2": "ध्यान",
+          "3": "तैयारी",
+          "4": "सपने का काम"
+        },
+        "warnings": {
+          "0": "महत्वपूर्ण निर्णयों से बचें",
+          "1": "शक्ति को संरक्षित रखें"
+        }
+      }
+    },
+    "planetaryGuidance": {
+      "sun": {
+        "do": {
+          "0": "नेतृत्व लें",
+          "1": "महत्वपूर्ण अनुरोध करें",
+          "2": "दृश्यता पर ध्यान दें",
+          "3": "अपनी ख्याति को व्यक्त करें",
+          "4": "प्रसिद्धि की तलाश करें"
+        },
+        "title": "सोलर घड़ी",
+        "dont": {
+          "0": "छाया में छुपें",
+          "1": "जिम्मेदारी से बचें",
+          "2": "अपनी प्रकाश को कम करें"
+        },
+        "quality": "जीवंतता & प्रसिद्धि",
+        "description": "सूरज इसे छूने वाले सभी को प्रकाशित करता है। यह घड़ी दृश्यता, नेतृत्व और ह्रदय और अहंकार के मसलों के लिए पसंद है।"
+      },
+      "moon": {
+        "do": {
+          "0": "संबंधों को पालन करें",
+          "1": "अंतर्दृष्टि पर विश्वास करें",
+          "2": "घर और परिवार के मसले",
+          "3": "भावनात्मक प्रक्रिया",
+          "4": "सपने का काम"
+        },
+        "title": "चंद्र घड़ी",
+        "dont": {
+          "0": "तर्किक निर्णयों को मजबूत करें",
+          "1": "भावनाओं को नज़रअंदाज़ करें",
+          "2": "बहुत मुश्किल से धक्का दें"
+        },
+        "quality": "भावना & अंतर्दृष्टि",
+        "description": "चंद्र भावना और अंतर्दृष्टि के जलकूलों का शासन करता है। पालन करने, घर और मनोवैज्ञानिक स्वीकृति के लिए समय है।"
+      },
+      "mars": {
+        "do": {
+          "0": "शारीर",
+          "1": "सीधे संघर्ष का संबंध रखें",
+          "2": "व्यायाम करें",
+          "3": "प्रत्यक्ष प्रस्तुतियाँ",
+          "4": "दृढ़ कार्रवाई करें"
+        },
+        "title": "मांगलिक घड़ी",
+        "dont": {
+          "0": "आवश्यक संघर्ष से बचें",
+          "1": "क्रोध को दबाए रखें",
+          "2": "विवाद शुरू करें"
+        },
+        "quality": "कार्रवाई & त्वर",
+        "description": "मांगल आग, क्षमता और प्रतिस्पर्धात्मक ऊर्जा लाता है। शारीरिक कार्रवाई और सामना पसंद हैं।"
+      },
+      "venus": {
+        "do": {
+          "0": "प्रेम और प्रेम की सौगात",
+          "1": "कलात्मक सृजन",
+          "2": "सामाजिकता",
+          "3": "सुंदरता बनाएँ",
+          "4": "सम्पूर्ण विरोध शांति से हल करें"
+        },
+        "title": "वेनस घड़ी",
+        "dont": {
+          "0": "परिणाम को मजबूत करें",
+          "1": "सौंदर्य को नजरअंदाज करें",
+          "2": "गहराई को तेजी से करें"
+        },
+        "quality": "मोह और सौंदर्य",
+        "description": "वेनस दुनिया को सुंदरता और इच्छा में डुबोता है। प्रेम, कला, और सद्भाव सर्वोच्च हैं।"
+      },
+      "saturn": {
+        "do": {
+          "0": "जिम्मेदारियों पर ध्यान दें",
+          "1": "अध्ययन और व्यवस्था करें",
+          "2": "अगले के लिए योजना बनाएं",
+          "3": "आधार बनाएं",
+          "4": "सीमाओं को स्वीकार करें"
+        },
+        "title": "शनि का समय",
+        "dont": {
+          "0": "कोने काटें",
+          "1": "कामों से बचें",
+          "2": "तुरंत परिणाम की उम्मीद न करें"
+        },
+        "quality": "कठोरता & संरचना",
+        "description": "शनि ने कठोरता और संरचना की मांग की है। अब कठिन श्रम को永久 के परिणामों में बदल देता है।"
+      },
+      "mercury": {
+        "do": {
+          "0": "महत्वपूर्ण संदेश भेजें",
+          "1": "अनुबंध परिहरित करें (यदि सीधे)",
+          "2": "लिखें और अध्ययन करें",
+          "3": "सम्झौता करें",
+          "4": "छोटे दूरी पर यात्रा करें"
+        },
+        "title": "मेरक्रियल घड़ी",
+        "dont": {
+          "0": "धोखे में भाग लें",
+          "1": "गपशप का चक्र चलाने से बचें",
+          "2": "मेरक्रि रिट्रोग्रेड होने पर अनुबंध परिहरित न करें"
+        },
+        "quality": "मन & संचार",
+        "description": "मेरक्रि मन और जीभ को तेजी से कर देता है। संचार, सीखना, और वाणिज्य आसानी से अब बहते हैं।"
+      },
+      "jupiter": {
+        "do": {
+          "0": "व्यापारिक सौदा",
+          "1": "ज्ञान की तलाश करें",
+          "2": "क्षेत्र को बढ़ावा दें",
+          "3": "शिक्षा और सीखना",
+          "4": "दान की क्रिया"
+        },
+        "title": "जुपिटर घड़ी",
+        "dont": {
+          "0": "छोटे दिमाग से सोचें",
+          "1": "छोटे विचार रखें",
+          "2": "अपनी सीमाओं को कम करो"
+        },
+        "quality": "विस्तार & भाग्य",
+        "description": "जुपिटर सभी को बढ़ावा देता है। भाग्य, ज्ञान, और विकास इस घड़ी में आशीर्वादित हैं।"
+      }
+    }
+  }
+}

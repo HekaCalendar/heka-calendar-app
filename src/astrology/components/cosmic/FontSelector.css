@@ -197,3 +197,13 @@
     grid-template-columns: 1fr;
   }
 }
+
+
+/* ── RTL Overrides ── */
+[dir="rtl"] .ci-font-name {
+    text-align: right
+}
+
+[dir="rtl"] .ci-font-option {
+    text-align: right
+}

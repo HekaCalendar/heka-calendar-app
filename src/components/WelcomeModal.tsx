@@ -1,9 +1,11 @@
 import React, { useState, useCallback } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import type { AppDispatch } from '../store';
 import { acceptInvite } from '../store/friendsSlice';
 import { clearPendingInvite } from '../services/deepLinkService';
 import { tutorialService } from '../services/tutorialService';
+import { getErrorMessage } from '../utils/errorUtils';
 
 interface WelcomeModalProps {
   isOpen: boolean;
@@ -18,6 +20,7 @@ export const WelcomeModal: React.FC<WelcomeModalProps> = ({
   onClose,
   onAccepted,
 }) => {
+  const { t } = useTranslation('common');
   const dispatch = useDispatch<AppDispatch>();
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -36,8 +39,8 @@ export const WelcomeModal: React.FC<WelcomeModalProps> = ({
       // Creates a pending friendship — the inviter will need to accept
       clearPendingInvite();
       setSuccess(true);
-    } catch (err: any) {
-      setError(err?.message || 'Failed to send friend request. Please check the code and try again.');
+    } catch (err) {
+      setError(getErrorMessage(err, t('failedToSendFriendRequest')));
     } finally {
       setIsLoading(false);
     }
@@ -60,21 +63,21 @@ export const WelcomeModal: React.FC<WelcomeModalProps> = ({
     <div className="modal-overlay" onClick={handleSkip}>
       <div className="modal welcome-modal" onClick={(e) => e.stopPropagation()}>
         <div className="modal__header">
-          <h2 className="modal__title">✨ Welcome to the Circle</h2>
-          <button className="modal__close" onClick={handleSkip}>×</button>
+          <h2 className="modal__title">{t('welcomeToTheCircle')}</h2>
+          <button className="modal__close" onClick={handleSkip} aria-label={t('close')}>×</button>
         </div>
         
         <div className="welcome-modal__content">
           <div className="welcome-modal__icon">🌙</div>
           
           <p className="welcome-modal__intro">
-            Enter an invite code to send a friend request
+            {t('enterInviteCode')}
           </p>
 
           {inviteCode && (
             <div className="welcome-modal__invite-info">
               <p style={{ fontSize: 'var(--text-xs)', color: 'var(--color-text-muted)', margin: 0 }}>
-                Invite Code Detected:
+                {t('inviteCodeDetected')}
               </p>
               <code className="welcome-modal__code">{inviteCode}</code>
               
@@ -83,13 +86,13 @@ export const WelcomeModal: React.FC<WelcomeModalProps> = ({
                 onClick={() => handleAccept(inviteCode)}
                 disabled={isLoading}
               >
-                {isLoading ? '✨ Sending...' : '🌟 Send Friend Request'}
+                {isLoading ? t('sending') : t('sendFriendRequest')}
               </button>
             </div>
           )}
 
           <div className="welcome-modal__divider">
-            <span>or enter a code manually</span>
+            <span>{t('orEnterCodeManually')}</span>
           </div>
 
           <div className="welcome-modal__manual">
@@ -98,7 +101,7 @@ export const WelcomeModal: React.FC<WelcomeModalProps> = ({
               className="input"
               value={manualCode}
               onChange={(e) => setManualCode(e.target.value.toUpperCase())}
-              placeholder="Enter invite code (e.g., ABC-DEF-GHI)"
+              placeholder={t('inviteCodePlaceholder')}
               maxLength={12}
               disabled={isLoading}
               style={{ textAlign: 'center', textTransform: 'uppercase' }}
@@ -108,19 +111,19 @@ export const WelcomeModal: React.FC<WelcomeModalProps> = ({
               onClick={handleManualSubmit}
               disabled={!manualCode.trim() || isLoading}
             >
-              Send Request
+              {t('sendRequest')}
             </button>
           </div>
 
           {success && (
             <div className="welcome-modal__success" style={{ color: 'var(--color-success)', textAlign: 'center', padding: 'var(--space-3)', background: 'rgba(34,197,94,0.1)', borderRadius: 'var(--radius-lg)' }}>
-              ✨ Friend request sent! They'll need to accept before you can chat.
+              {t('friendRequestSent')}
               <button
                 className="btn btn--primary"
                 style={{ marginTop: 'var(--space-3)' }}
                 onClick={onAccepted}
               >
-                Open Cosmic Circle
+                {t('openCosmicCircle')}
               </button>
             </div>
           )}
@@ -132,18 +135,18 @@ export const WelcomeModal: React.FC<WelcomeModalProps> = ({
           )}
 
           <button onClick={handleSkip} className="welcome-modal__skip">
-            Skip for now
+            {t('skipForNow')}
           </button>
 
           <div className="welcome-modal__info">
             <p style={{ fontSize: 'var(--text-xs)', color: 'var(--color-text-muted)', margin: '0 0 var(--space-2)' }}>
-              Joining a Circle allows you to:
+              {t('joiningCircleAllows')}
             </p>
             <ul className="welcome-modal__features">
-              <li>📜 Send and receive Task Rituals</li>
-              <li>💬 Message through cosmic channels</li>
-              <li>🗓️ Align on HEKA dates together</li>
-              <li>✨ Share celestial insights</li>
+              <li>{t('sendReceiveTaskRituals')}</li>
+              <li>{t('messageCosmicChannels')}</li>
+              <li>{t('alignHekaDates')}</li>
+              <li>{t('shareCelestialInsights')}</li>
             </ul>
           </div>
         </div>

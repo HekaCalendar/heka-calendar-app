@@ -5,6 +5,8 @@
  */
 
 import React, { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
+import i18n from '../../../i18n';
 import { 
   getRegionForLocation, 
   generateDailyGuidance,
@@ -24,16 +26,17 @@ interface CelestialGuidanceProps {
 
 type TimeFrame = 'daily' | 'weekly' | 'yearly';
 
-const timeframeLabels: Record<TimeFrame, { label: string; subtitle: string }> = {
-  daily: { label: 'Today', subtitle: 'Current celestial weather' },
-  weekly: { label: 'This Week', subtitle: '7-day cosmic forecast' },
-  yearly: { label: 'This Year', subtitle: `${new Date().getFullYear()} overview` },
+const timeframeLabels: Record<TimeFrame, { labelKey: string; subtitleKey: string }> = {
+  daily: { labelKey: 'guidance.today', subtitleKey: 'guidance.todaySubtitle' },
+  weekly: { labelKey: 'guidance.thisWeek', subtitleKey: 'guidance.thisWeekSubtitle' },
+  yearly: { labelKey: 'guidance.thisYear', subtitleKey: 'guidance.thisYearSubtitle' },
 };
 
 export const CelestialGuidance: React.FC<CelestialGuidanceProps> = ({ 
   latitude, 
   longitude 
 }) => {
+  const { t } = useTranslation('celestial');
   const [timeframe, setTimeframe] = useState<TimeFrame>('daily');
   const [guidance, setGuidance] = useState<GuidanceReading | null>(null);
   const [region, setRegion] = useState<CelestialRegion | null>(null);
@@ -123,7 +126,7 @@ export const CelestialGuidance: React.FC<CelestialGuidanceProps> = ({
   if (!guidance || !region) {
     return (
       <div style={{ padding: '40px', textAlign: 'center', color: 'rgba(255,255,255,0.5)' }}>
-        <p>Unable to generate guidance at this time.</p>
+        <p>{t('guidance.unableToGenerate')}</p>
       </div>
     );
   }
@@ -141,7 +144,7 @@ export const CelestialGuidance: React.FC<CelestialGuidanceProps> = ({
         }}
       >
         <div style={{ fontSize: 12, color: 'rgba(255,255,255,0.5)', marginBottom: 4 }}>
-          Your Celestial Region
+          {t('guidance.yourCelestialRegion')}
         </div>
         <div style={{ fontSize: 18, color: 'rgba(255,255,255,0.9)', marginBottom: 4 }}>
           {region.name}
@@ -174,7 +177,7 @@ export const CelestialGuidance: React.FC<CelestialGuidanceProps> = ({
             }}
           >
             <div style={{ fontSize: 13, color: timeframe === tf ? 'rgba(255,255,255,0.9)' : 'rgba(255,255,255,0.6)' }}>
-              {timeframeLabels[tf].label}
+              {t(timeframeLabels[tf].labelKey)}
             </div>
           </button>
         ))}
@@ -201,7 +204,7 @@ export const CelestialGuidance: React.FC<CelestialGuidanceProps> = ({
       {/* Key Themes */}
       <div style={{ marginBottom: 24 }}>
         <div style={{ fontSize: 12, color: 'rgba(255,255,255,0.5)', marginBottom: 12, textTransform: 'uppercase', letterSpacing: '0.1em' }}>
-          Key Themes
+          {t('guidance.keyThemes')}
         </div>
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
           {guidance.keyThemes.map((theme, i) => (
@@ -224,15 +227,15 @@ export const CelestialGuidance: React.FC<CelestialGuidanceProps> = ({
       {/* Detailed Scores */}
       <div style={{ marginBottom: 24 }}>
         <div style={{ fontSize: 12, color: 'rgba(255,255,255,0.5)', marginBottom: 12, textTransform: 'uppercase', letterSpacing: '0.1em' }}>
-          Life Areas
+          {t('guidance.lifeAreas')}
         </div>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-          <ScoreBar label="Career" score={guidance.scores.career} />
-          <ScoreBar label="Relationships" score={guidance.scores.relationships} />
-          <ScoreBar label="Health" score={guidance.scores.health} />
-          <ScoreBar label="Finances" score={guidance.scores.finances} />
-          <ScoreBar label="Personal Growth" score={guidance.scores.personalGrowth} />
-          <ScoreBar label="Timing" score={guidance.scores.timing} />
+          <ScoreBar label={t('guidance.career')} score={guidance.scores.career} />
+          <ScoreBar label={t('guidance.relationships')} score={guidance.scores.relationships} />
+          <ScoreBar label={t('guidance.health')} score={guidance.scores.health} />
+          <ScoreBar label={t('guidance.finances')} score={guidance.scores.finances} />
+          <ScoreBar label={t('guidance.personalGrowth')} score={guidance.scores.personalGrowth} />
+          <ScoreBar label={t('guidance.timing')} score={guidance.scores.timing} />
         </div>
       </div>
 
@@ -240,7 +243,7 @@ export const CelestialGuidance: React.FC<CelestialGuidanceProps> = ({
       {guidance.bestDays && guidance.bestDays.length > 0 && (
         <div style={{ marginBottom: 24 }}>
           <div style={{ fontSize: 12, color: '#22c55e', marginBottom: 8, textTransform: 'uppercase', letterSpacing: '0.1em' }}>
-            ✦ Best Days
+            {t('guidance.bestDays')}
           </div>
           <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
             {guidance.bestDays.map((date, i) => (
@@ -254,7 +257,7 @@ export const CelestialGuidance: React.FC<CelestialGuidanceProps> = ({
                   color: '#4ade80',
                 }}
               >
-                {date.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' })}
+                {new Intl.DateTimeFormat(i18n.language || 'en', { weekday: 'short', month: 'short', day: 'numeric' }).format(date)}
               </span>
             ))}
           </div>
@@ -264,7 +267,7 @@ export const CelestialGuidance: React.FC<CelestialGuidanceProps> = ({
       {/* Planetary Highlights */}
       <div style={{ marginBottom: 24 }}>
         <div style={{ fontSize: 12, color: 'rgba(255,255,255,0.5)', marginBottom: 12, textTransform: 'uppercase', letterSpacing: '0.1em' }}>
-          Planetary Highlights
+          {t('guidance.planetaryHighlights')}
         </div>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
           {guidance.planetaryHighlights.map((highlight, i) => (
@@ -301,7 +304,7 @@ export const CelestialGuidance: React.FC<CelestialGuidanceProps> = ({
         }}
       >
         <div style={{ fontSize: 12, color: '#a78bfa', marginBottom: 8, textTransform: 'uppercase', letterSpacing: '0.1em' }}>
-          ☽ Lunar Guidance
+          {t('guidance.lunarGuidance')}
         </div>
         <p style={{ margin: 0, fontSize: 14, lineHeight: 1.7, color: 'rgba(255,255,255,0.8)' }}>
           {guidance.lunarGuidance}
@@ -312,8 +315,9 @@ export const CelestialGuidance: React.FC<CelestialGuidanceProps> = ({
 };
 
 const ScoreCard: React.FC<{ score: number }> = ({ score }) => {
+  const { t } = useTranslation('celestial');
   const color = getScoreColor(score);
-  const label = score > 5 ? 'Excellent' : score > 2 ? 'Favorable' : score > -2 ? 'Mixed' : score > -5 ? 'Challenging' : 'Difficult';
+  const label = score > 5 ? t('guidance.excellent') : score > 2 ? t('guidance.favorable') : score > -2 ? t('guidance.mixed') : score > -5 ? t('guidance.challenging') : t('guidance.difficult');
   const emoji = score > 5 ? '✦' : score > 2 ? '◆' : score > -2 ? '◈' : score > -5 ? '◇' : '◊';
   
   return (

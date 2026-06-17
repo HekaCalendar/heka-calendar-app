@@ -1,0 +1,49 @@
+{
+  "best": "Cel mai bun: {{count}}",
+  "title": "Calea Ta",
+  "close": "Închide",
+  "reset": "ReseteazăStatisticile",
+  "avgMood": "Medie Stare de Humor",
+  "dayStreak": "Seria Zilnică",
+  "totalNotes": "Total Note",
+  "wordsWritten": "Woarți Scrise",
+  "achievements": "Realizări ({{earned}}/{{total}})",
+  "resetConfirm": "Resetează",
+  "progressRatio": "{{current}} / {{target}}=Progresul este {{current}} / {{target}}",
+  "monthlyTooltip": "{{month}} {{year}}: {{count}} note",
+  "notesByCategory": "Note după Categorie",
+  "monthlyActivity": "Activitate Lunară",
+  "mostActiveMonth": "Luna ta de activitate a fost \u003cstrong\u003e{{month}}\u003c/strong\u003e cu \u003cstrong\u003e{{count}}\u003c/strong\u003e note",
+  "categories": {
+    "work": "Muncă",
+    "family": "Familie",
+    "health": "Sănătate",
+    "general": "General=General",
+    "personal": "Personal=Personal",
+    "creative": "Creativ",
+    "spiritual": "Spiritual=Spiritual"
+  },
+  "progressToCentury": "Progres către Clubul Secolilor",
+  "resetConfirmTitle": "ReseteazăStatisticile",
+  "badges": {
+    "century": {
+      "name": "Clubul Secolilor"
+    },
+    "explorer": {
+      "name": "Explorator"
+    },
+    "archivist": {
+      "name": "Arhivist"
+    },
+    "first-note": {
+      "name": "Primele Cuvinte"
+    },
+    "week-streak": {
+      "name": "Lupta Saptămânală"
+    },
+    "month-streak": {
+      "name": "Maestru al Lunii"
+    }
+  },
+  "resetConfirmDescription": "Sigur dorești să resetezi toate statisticile? Acest lucru nu poate fi revenit."
+}

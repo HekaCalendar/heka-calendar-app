@@ -32,7 +32,7 @@ export const celestialOnboarding: Tutorial = {
       id: 'summoning',
       type: 'welcome',
       title: 'The Calendar That Time Forgot',
-      content: 'For centuries, we have measured our lives with months of 28, 29, 30, and 31 days. Weeks do not fit. The moon is ignored. Holidays scatter without rhythm.\n\nHEKA is different. Thirteen months. Twenty-eight days each. Four perfect weeks every month. Saturday begins the week. Friday completes it. A calendar that breathes.',
+      content: 'For centuries, we have measured our lives with months of 28, 29, 30, and 31 days. Weeks do not fit. The moon is ignored. Holidays scatter without rhythm.\n\nHEKA is different. Twelve months of twenty-eight days. March, the closing month, carries twenty-nine — thirty in a leap year. Four perfect weeks every month. Saturday begins the week. Friday completes it. A calendar that breathes.',
       position: 'center',
       actionLabel: 'Awaken',
       tone: 'mysterious',

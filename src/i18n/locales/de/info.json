@@ -1,0 +1,322 @@
+{
+  "infoModal": {
+    "hero": {
+      "title": "HEKA — Ein Kalender, der für den Geist konzipiert wurde",
+      "subtitleLine1": "Dreizehn Monate.",
+      "subtitleLine2": "Jedes vier Wochen. Ein klares Jahr."
+    },
+    "guideComplete": "Leitfaden abgeschlossen",
+    "spotlight": {
+      "title": "Wusste Sie, dass?",
+      "facts": [
+        "Die unregelmäßigen Monate des Gregorianischen Kalenders sind größtenteils das Ergebnis römischer Politik und Kaiseregos.",
+        "Die dreizehn Monate von HEKA mit jeweils vierundzwanzig Tagen erzeugen perfekte Quartale und vorhersehbare Bezugszeiträume.",
+        "Im WAHRMODUS folgt HEKA einer 128-jährigen Schaltjahrregel für langfristige astronomische Präzision.",
+        "Die zivile Überlagerung ermöglicht es Ihnen, Gregorianische Daten neben HEKA zu sehen, damit Sie nie die Koordination verlieren.",
+        "Ihre Journaleinträge bleiben standardmäßig lokal und synchronisieren sich nur, wenn Sie sich entscheiden, sich anzumelden."
+      ]
+    },
+    "home": "Startseite",
+    "backToHome": "Zurück zur Startseite",
+    "deeperQuestions": "Tiefere Fragen",
+    "chapters": {
+      "home": {
+        "num": "0",
+        "chip": "START",
+        "title": "Willkommen",
+        "hook": "Ein anderer Weg, das Jahr zu erleben.",
+        "teaser": "Fangen Sie hier an."
+      },
+      "ch1": {
+        "num": "01",
+        "chip": "GRUNDLAGEN",
+        "title": "Der Kalender",
+        "hook": "Dreizehn Monate. Jede vier Wochen. Ein klares Jahr.",
+        "teaser": "Was HEKA ist und warum es sich anders anfühlt."
+      },
+      "ch2": {
+        "num": "02",
+        "chip": "STRUKTUR",
+        "title": "Der Bogen des Jahres",
+        "hook": "Eröffnung, Kern und Schließung: ein Jahr mit narrativer Form.",
+        "teaser": "Wie die Monate von April bis März fließen."
+      },
+      "ch3": {
+        "num": "03",
+        "chip": "WERKZEUGE",
+        "title": "Ihr täglicher Begleiter",
+        "hook": "Journal, Mond, Sterne und zivile Überlagerung - alles Ihr.",
+        "teaser": "Die Funktionen, die HEKA praktisch machen."
+      },
+      "ch4": {
+        "num": "04",
+        "chip": "MODI",
+        "title": "SYNC vs WAHR",
+        "hook": "Zwei Wege, um den Schalttag zu behandeln. Wählen Sie Ihre Richtigkeit.",
+        "teaser": "Vertraute Koordination oder astronomische Reinheit."
+      },
+      "ch5": {
+        "num": "05",
+        "chip": "GESCHICHTE",
+        "title": "Warum Kalender abdriften",
+        "hook": "Vererbter Chaos, politische Patchwork und die Chance, neu zu gestalten.",
+        "teaser": "Die Geschichte des Kalender, den du erhalten hast."
+      },
+      "ch6": {
+        "num": "06",
+        "chip": "Einführung",
+        "title": "Beginnen Sie, darin zu leben",
+        "hook": "Drei kleine Schritte, um HEKA zu Ihrer Standardansicht zu machen.",
+        "teaser": "Wie man anfängt, ohne Ihr Leben zu stören."
+      },
+      "ch7": {
+        "num": "07",
+        "chip": "BEDEUTUNG",
+        "title": "Zeit als Handlungsfähigkeit",
+        "hook": "Klarheit, Rhythmus und die Wahl, ein besseres Werkzeug zu verwenden.",
+        "teaser": "Warum die Struktur der Zeit wichtig ist."
+      }
+    },
+    "chapterLeads": {
+      "home": "Diese Anleitung ist eine Brücke. Schreiten Sie sie in Ihrem eigenen Tempo über.",
+      "ch1": "HEKA ist keine Anpassung an den Gregorianischen Kalender. Es ist eine Ersetzung, die auf ersten Prinzipien aufgebaut ist.",
+      "ch2": "Das Jahr hat Form, wenn seine Struktur der Rhythmus von Handeln und Ruhen spiegelt.",
+      "ch3": "Ein Kalender ist nur nützlich, wenn er in das Leben integriert, das Sie bereits leben.",
+      "ch4": "Die gleiche Struktur kann unterschiedliche Bedürfnisse bedienen. Der Modus, den Sie wählen, ist eine Präferenz, keine Dogmatik.",
+      "ch5": "Wenn Sie verstehen, wie der aktuelle Kalender entstanden ist, sind seine Mängel leichter zu verzeihen - und leichter zu verlassen.",
+      "ch6": "Die Akzeptanz geschieht in kleinen Schritten. Sie benötigen keine Erlaubnis oder ein Manifest.",
+      "ch7": "Der Behälter der Zeit formt den Inhalt des Lebens. Wählen Sie ihn bewusst."
+    },
+    "cardsByChapter": {
+      "ch1": [
+        {
+          "h": "Das Problem, das Sie fühlen",
+          "b": "Unregelmäßige Monate. Verstreute Feiertage. Ein Jahr, das von Januar bis Dezember stolpert, ohne Sinn für Anfang, Mitte oder Ende. Sie haben dieses Reibungsverlust gespürt. HEKA entfernt es."
+        },
+        {
+          "h": "Die Lösung, die wir gebaut haben",
+          "b": "Dreizehn Monate. Zwölf haben vierundzwanzig Tage in perfekter Symmetrie. März, der Abschlussmonat, trägt den Schalttag. Vier perfekte Wochen pro Monat. Ein fließendes Jahr: April öffnet, Mai bis Dezember bilden den stabilen Kern, Januar bis März vervollständigen es."
+        },
+        {
+          "h": "Die Welt, die Sie behalten",
+          "b": "HEKA stört Ihr Leben nicht. Zivile Daten bleiben sichtbar. Ihre Termine, Verpflichtungen und rechtlichen Pflichten bleiben genau dort, wo sie sind. Sie gewinnen einfach eine klarere Linse."
+        }
+      ],
+      "ch2": [
+        {
+          "h": "Die Einführungsbogene",
+          "b": "April ist der Schwellenwert. Das Jahr beginnt nicht in winterlicher Erschöpfung, sondern in der Frühlingsvitalität. Neues Wachstum. Neue Projekte. Die Einführung verkündet: etwas fängt an."
+        },
+        {
+          "h": "Der Kernbogen",
+          "b": "Mai bis Dezember ist die lange, stabile Mitte. Neun Monate vollkommen regelmäßiger und vorhersehbarer Rhythmus. Planen Sie mit Zuversicht. Bauen Sie Schwung auf. Hier geschieht die Arbeit."
+        },
+        {
+          "h": "Der Abschlussbogen",
+          "b": "Januar bis März bringen das Jahr zu seiner Auflösung. Beenden Sie, was Sie begonnen haben. Ernten Sie, was Sie angebaut haben. Abschluss schafft Raum für Reflexion und bereitet Sie auf die"
+        }
+      ],
+      "ch3": [
+        {
+          "h": "Ihre bürgerlichen Daten bleiben",
+          "b": "Schalten Sie die bürgerliche Überlagerung um und sehen Sie Gregorianische Daten neben HEKA. Ihr Zahnarzttermin, der Geburtstag Ihrer Mutter, Ihre Steuerfrist - alles bleibt genau dort, wo Sie es erwarten."
+        },
+        {
+          "h": "Ihr Journal",
+          "b": "Tägliche Einträge mit Versionsgeschichte - bis zu 50 Versionen werden automatisch aufbewahrt. Volltextsuche über alles. Standardmäßig lokal; Cloud-Sicherung, wenn Sie sich anmelden."
+        },
+        {
+          "h": "Ihr Mond & Sterne",
+          "b": "Mondphasen, Planetenpositionen und Transite sind auf einen Blick sichtbar. Optional und präzise. Fügen Sie Ihr Geburtschart hinzu, für persönliche Lesungen durch den Orakel."
+        }
+      ],
+      "ch4": [
+        {
+          "h": "SYNC Modus: Der bekannte Weg",
+          "b": "März erhält seinen extra Tag, wenn der Gregorianische Kalender es vorgibt. Für die tägliche Koordination mit der zivilen Welt ist dies dein Modus. Gleicher Aufbau. Vertraute Zeitpunkte."
+        },
+        {
+          "h": "WAHRHEIT Modus: Der Ehrliche Pfad",
+          "b": "HEKA folgt seiner eigenen Korrekturregel: Jedes vierte Jahr hat einen 30-tägigen März, außer alle 128. Jahr, das nicht tut. Dies ist astronomische Präzision. Dies ist langfristige Integrität."
+        },
+        {
+          "h": "Jederzeit umschalten",
+          "b": "Die Monate ändern sich nicht. Die Woche ändert sich nicht. Nur der Korrekturauslöser verschiebt sich. Experimentiere. Siehe, welcher Modus zu deinen Bedürfnissen passt. Du bist nicht festgezwickt."
+        }
+      ],
+      "ch5": [
+        {
+          "h": "Vererbung, nicht Design",
+          "b": "Unser aktueller Kalender ist eine Sammlung historischer Zwischenfälle. Römische Politik. Religionskonzilien. Astronomische Patchs, die Jahrhunderte getrennt hinzugefügt wurden. Es wurde nie als System konzipiert."
+        },
+        {
+          "h": "Der Gregorianische Patch",
+          "b": "1582: Papst Gregor korrigierte das Driftproblem. Aber er behielt die unregelmäßigen Monate, die verstreute Struktur, das geerbte Chaos bei. Eine notwendige Korrektur, aber keine vollständige Lösung."
+        },
+        {
+          "h": "Die HEKA Antwort",
+          "b": "Wir behielten, was funktioniert: siebentägige Wochen, saisonale Ausrichtung, Sonnenjahr-Verfolgung. Wir haben neu gestaltet, was nicht funktioniert hat: Monatsstruktur, Jahresfluss, Platzierung der Korrektur. Für Gehirne, die denken."
+        }
+      ],
+      "ch6": [
+        {
+          "h": "Schritt Eins: Aktiviere die Überlagerung",
+          "b": "Schalte zivile Daten an. Jetzt siehst du beide Systeme gleichzeitig. Dein HEKA-Datum und dein Gregorianisches Datum. Die Brücke ist gebaut. Quer darüber, wann immer du musst."
+        },
+        {
+          "h": "Schritt Zwei: Wähle deinen Modus",
+          "b": "Fang mit SYNC an, wenn du Vertrautheit willst. Wechsle zu WAHRHEIT, wenn du Reinheit willst. Du kannst deine Meinung ändern. Der Kalender passt sich dir an, nicht umgekehrt."
+        },
+        {
+          "h": "Schritt Drei: Leben darin",
+          "b": "Benutze HEKA als deine Hauptansicht. Plane deinen Monat. Notiere deine Tage. Fühl die Differenz eines Jahres mit tatsächlicher Struktur. Die zivile Welt muss es nicht wissen. Du wirst es wissen."
+        }
+      ],
+      "ch7": [
+        {
+          "h": "Reibungskosten Energie",
+          "b": "Jedes Mal, wenn du dir wunderst, wie viele Tage in diesem Monat sind, zahlst du eine kleine Steuer. Jede Unregelmäßigkeit zehrt auf de Konzentration. HEKA entfernt diese Steuern. Du behältst deine Energie für das, was zählt."
+        },
+        {
+          "h": "Rhythmus schafft Ruhe",
+          "b": "Wenn die Struktur vorhersehbar ist, entspannt der Geist. Du weißt, wo du im Jahr bist. Du fühlst den Anfang, das Zentrum, das Ende. Die Zeit wird ein Raum, den du bewohnst, nicht ein Chaos, das du überleben musst."
+        },
+        {
+          "h": "Handlungsfreiheit über die Zeit",
+          "b": "Du hast den Gregorianischen Kalender nicht gewählt. Er wurde dir gegeben. HEKA ist eine Wahl. Um ein Werkzeug für Klarheit zu benutzen. Um die Handlungsfreiheit über die Struktur"
+        }
+      ]
+    },
+    "gatesByChapter": {
+      "ch1": [
+        {
+          "t": "Ist dies eine Religion oder Bewegung?",
+          "tag": "KLARHEIT",
+          "b": "Nein. HEKA ist ein Werkzeug. Wie ein besserer Hammer oder eine klarere Karte. Keine Mitgliedschaft erforderlich. Keine Überzeugungen zu adoptieren. Nur ein Kalender, der besser funktioniert als der, den Sie geerbt haben."
+        },
+        {
+          "t": "Warum dreizehn Monate?",
+          "tag": "LOGIK",
+          "b": "Zwölf Monate mit unterschiedlicher Länge erfordern geistige Akrobatik. Dreizehn Monate zu jeweils vier Wochen bringen perfekte Regelmäßigkeit. 13 × 28 = 364. Plus einen besonderen Tag. Die Mathematik ist sauber. Die Erfahrung ist noch sauberer."
+        },
+        {
+          "t": "Wird das andere Menschen verwirren?",
+          "tag": "REALITÄT",
+          "b": "Sie sehen HEKA-Datumsangaben. Sie sehen bürgerliche Daten. Wenn Sie \"15. März\" sagen, meinen Sie denselben Tag, den sie meinen. Die bürgerliche Überlagerung stellt sicher, dass Sie nie die Koordination verlieren. Sie gewinnen Klarheit. Sie verlieren nichts."
+        }
+      ],
+      "ch2": [
+        {
+          "t": "Warum beginnt das Jahr im April?",
+          "tag": "SYMBOL",
+          "b": "Frühling ist die universelle Öffnung. Wachstum beginnt. Energie steigt. Das Beginen des Jahres im April richtet den Kalender mit der gefühlten Erfahrung der Erneuerung aus. Januar beginnt im Wintererschöpfung. April beginnt im Frühlingsmöglichkeiten."
+        },
+        {
+          "t": "Was sind die Monatsnamen?",
+          "tag": "ORDNUNG",
+          "b": "April, Mai, Juni, Juli, August, Hexa, September, Oktober, November, Dezember, Januar, Februar, März. Hexa — der sechste Monat — schließt die Lücke. Die restlichen kennen Sie bereits. Nur ihre Positionen ändern sich."
+        },
+        {
+          "t": "Wie wird Korrektur gehandhabt?",
+          "tag": "PRÄZISION",
+          "b": "Jeder Sonnenkalender benötigt Korrekturen. HEKA legt alle im März, am Ende des Jahres. Der März hat 29 Tage, oder 30 bei Schaltjahren. Die anderen zwölf Monate sind perfekt, dauerhaft gleichmäßig. Die Korrektur ist enthalten, nicht verstreut."
+        }
+      ],
+      "ch3": [
+        {
+          "t": "Kann ich HEKA-Kalender drucken?",
+          "tag": "PHYSISCH",
+          "b": "Ja. Drucke Monatsansichten oder ganzjährige Ansichten. Sauber, unübersichtlich, für Papier konzipiert. Hefte sie an Wände. Trage sie in Notizbücher. Die digitale Bequemlichkeit und das physische Artefact, beide."
+        },
+        {
+          "t": "Was ist mit Feiertagen?",
+          "tag": "BENUTZERDEFINIERT",
+          "b": "Schalte Feiertagssets für deine Region um. Oder ignoriere sie. HEKA erzwingt keine eigenen Feiertage — es hilft dir, diejenigen zu verfolgen, die für dich wichtig sind, überlagert auf eine klare Struktur."
+        },
+        {
+          "t": "Wo leben meine Daten?",
+          "tag": "VERTRAUEN",
+          "b": "Standardmäßig bleibt alles auf deinem Gerät — Notizen, Journal, Einstellungen. Wenn du ein Konto erstellst, wird deine Daten auf verschlüsselten Cloud-Speicher gesichert. Du kannst alles jederzeit exportieren. Du bleibst im Kontroll."
+        },
+        {
+          "t": "Was kann das Journal tun?",
+          "tag": "FÄHIGKEIT",
+          "b": "Tägliche Einträge mit automatischer Versionsgeschichte. Volltextsuche in deinem gesamten Archiv. Standardmäßig lokal; synchronisiert mit der Cloud, wenn du dich einloggst."
+        }
+      ],
+      "ch4": [
+        {
+          "t": "Welcher Modus ist \"richtig\"?",
+          "tag": "AUSWAHL",
+          "b": "Beide. SYNC ist richtig für die Koordination mit der zivilen Welt. TRUE ist richtig für astronomische Präzision. Dein Bedarf bestimmt, welche Richtigkeit jetzt mehr für dich zählt."
+        },
+        {
+          "t": "Verdoppelt sich der TRUE-Modus von den zivilen Daten?",
+          "tag": "DIVERGENZ",
+          "b": "Langsam, ja. Der TRUE-Modus folgt seinen eigenen Schaltregeln, nicht den gregorianischen. Über Jahrhunderte wird die Abweichung bemerkbar. Für das tägliche Leben ist der Unterschied unmerklich. Für langfristiges Denken ist die Reinheit entscheidend."
+        },
+        {
+          "t": "Können Institutionen HEKA anwenden?",
+          "tag": "Skala",
+          "b": "Eventuell später. Aber Institutionen müssen sich nicht ändern, damit du von Nutzen ziehen kannst. HEKA funktioniert perfekt als persönliche Überlagerung. Fang da an. Lass das Werkzeug sich beweisen."
+        }
+      ],
+      "ch5": [
+        {
+          "t": "Warum haben Monate unterschiedliche Längen?",
+          "tag": "GESCHICHTE",
+          "b": "Römische Politik. Julius Cäsar und Augustus brauchten Monate, die nach ihnen benannt waren. Der Kalender wurde angepasst, um Egos unterzubringen. Diese Unregelmäßigkeiten wurden zu \"Tradition\" fossilisiert. Tradition ist nicht immer Weisheit."
+        },
+        {
+          "t": "War die Gregorianische Reform ausreichend?",
+          "tag": "BEWERTUNG",
+          "b": "Es hat die Abweichung behoben. Es hat die Struktur nicht behoben. Die Monate blieben unregelmäßig, die Quartale uneben, das Jahr ohne narrative Form. Ein notwendiger"
+        },
+        {
+          "t": "Haben andere versucht, die Kalenderreform durchzuführen?",
+          "tag": "VERSUCHE",
+          "b": "Viele. Der französische Revolutionskalender. Der Weltkalender. Der Internationale Festkalender. Einige brillant, alle politisch gescheitert. HEKA lernt daraus: Kompatibilität mit der Zivilzeit ist unerlässlich. Revolution durch Evolution."
+        }
+      ],
+      "ch6": [
+        {
+          "t": "Wie erkläre ich das anderen?",
+          "tag": "UNTERHALTUNG",
+          "b": "Du musst es nicht. Benutze es. Wenn gefragt, sag: \"Ich habe einen Kalender gefunden, der mir hilft, besser zu planen.\" Zeig es ihnen. Lass sie die Klarheit sehen. Überzeugung geschieht durch Demonstration, nicht durch Deklaration."
+        },
+        {
+          "t": "Was, wenn ich es nicht mehr benutzen möchte?",
+          "tag": "FREIHEIT",
+          "b": "Hör auf. Deine Zivildaten bleiben. Deine Termine bleiben, wo sie sind. Kein Einbuchten. Kein Sunk-Kosten. HEKA muss jeden Tag seinen Platz in deinem Leben verdienen, sonst hat es nicht das Recht, zu bleiben."
+        },
+        {
+          "t": "Wo fange ich jetzt an?",
+          "tag": "AKTION",
+          "b": "Öffne die Einstellungen. Aktiviere die Zivilüberlagerung. Schau dir heute in beiden Systemen an. Das ist der erste Schritt. Du hast ihn bereits durch das Öffnen dieser Anleitung unternommen."
+        },
+        {
+          "t": "Was ist die Orakel?",
+          "tag": "INTELLIGENZ",
+          "b": "Eine himmlische Intelligenz, die Planetenpositionen für jedes Datum, das Sie auswählen, liest und Anleitung bietet. Optional. Fügen Sie Ihre Geburtskarte hinzu, um personalisierte Transite und tiefere Einblicke zu erhalten."
+        }
+      ],
+      "ch7": [
+        {
+          "t": "Beeinflusst der Kalender wirklich den Geist?",
+          "tag": "PSYCHOLOGIE",
+          "b": "Profund. Wir denken in den Strukturen, die wir bewohnen. Ungleichmäßige Monate erzeugen eine geringe kognitive Reibung. Regelmäßige Monate erzeugen kognitive Fluss. Sie werden die Reibung nicht bemerken, bis sie weg ist. Dann können Sie sie nicht mehr nicht bemerken."
+        },
+        {
+          "t": "Was ist mit kulturellen Bindungen?",
+          "tag": "RESPECT",
+          "b": "Behaltet sie. Ihr Geburtstag. Ihre Neujahrsfeiern. Ihre saisonalen Festivals. HEKA löscht nicht die Kultur aus - es bietet ein klares Gefäß dafür. Der Inhalt bleibt. Das Gefäß verbessert sich."
+        },
+        {
+          "t": "Warum ist das wichtig genug, um etwas zu bauen?",
+          "tag": "MISSION",
+          "b": "Weil Zeit das Substrat des Lebens ist. Weil wir Verfahren verdienen, die für Geister konzipiert sind, nicht von Zufällen geerbt. Weil jemand versuchen sollte, etwas Besseres zu bauen. Wir haben es getan. Sie sind hier."
+        }
+      ]
+    }
+  }
+}

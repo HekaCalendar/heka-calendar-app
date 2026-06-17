@@ -5,6 +5,7 @@
  */
 
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import type { Goal } from '../routineData';
 import type { NoteCategory } from '../../../types';
 import { GOAL_TIMEFRAME_LABELS, generateId } from '../routineData';
@@ -37,6 +38,7 @@ const EMPTY_GOAL: Goal = {
 };
 
 export const GoalsStep: React.FC<Props> = ({ goals, onChange }) => {
+  const { t } = useTranslation();
   const [addingFor, setAddingFor] = useState<Goal['timeframe'] | null>(null);
   const [newGoal, setNewGoal] = useState<Goal>({ ...EMPTY_GOAL, id: generateId() });
   const [editingId, setEditingId] = useState<string | null>(null);
@@ -120,8 +122,8 @@ export const GoalsStep: React.FC<Props> = ({ goals, onChange }) => {
                             </div>
                           </div>
                           <div style={{ display: 'flex', gap: 4, flexShrink: 0 }}>
-                            <button className="routine-item-edit" onClick={() => setEditingId(goal.id)} title="Edit">✎</button>
-                            <button className="routine-item-delete" onClick={() => removeGoal(goal.id)} title="Remove">✕</button>
+                            <button className="routine-item-edit" onClick={() => setEditingId(goal.id)} title="Edit" aria-label={t('common.edit')}>✎</button>
+                            <button className="routine-item-delete" onClick={() => removeGoal(goal.id)} title="Remove" aria-label={t('common.delete')}>✕</button>
                           </div>
                         </div>
                       )}
@@ -165,6 +167,7 @@ interface GoalEditFormProps {
 }
 
 const GoalEditForm: React.FC<GoalEditFormProps> = ({ goal, isNew, onSave, onCancel, onChange }) => {
+  const { t } = useTranslation();
   const isControlled = !!onChange;
   const g = goal;
   const set = (updates: Partial<Goal>) => {
@@ -186,7 +189,7 @@ const GoalEditForm: React.FC<GoalEditFormProps> = ({ goal, isNew, onSave, onCanc
           type="text"
           value={g.name}
           onChange={e => set({ name: e.target.value })}
-          placeholder="e.g. Learn Spanish, Write novel, Get fit"
+          placeholder={t('goalNamePlaceholder', 'e.g., Meditate daily')}
           autoFocus={isNew}
         />
       </div>
@@ -195,7 +198,7 @@ const GoalEditForm: React.FC<GoalEditFormProps> = ({ goal, isNew, onSave, onCanc
         <textarea
           value={g.description}
           onChange={e => set({ description: e.target.value })}
-          placeholder="Details, milestones, why this matters..."
+          placeholder={t('goalDetailsPlaceholder', 'Describe your goal...')}
           rows={2}
           style={{ resize: 'vertical', minHeight: 48 }}
         />
@@ -268,7 +271,7 @@ const GoalEditForm: React.FC<GoalEditFormProps> = ({ goal, isNew, onSave, onCanc
             type="text"
             value={g.tags.join(', ')}
             onChange={e => set({ tags: e.target.value.split(',').map(s => s.trim()).filter(Boolean) })}
-            placeholder="learning, fitness, side-project"
+            placeholder={t('tagsPlaceholder', 'Add tags...')}
           />
         </div>
       </div>

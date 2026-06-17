@@ -4,6 +4,7 @@
  */
 
 import React, { useRef, useState, useCallback } from 'react';
+import { useTranslation } from 'react-i18next';
 import html2canvas from 'html2canvas';
 import { jsPDF } from 'jspdf';
 import type { CertificateData, CertificateOptions, TemplateId } from './certificateData';
@@ -37,6 +38,7 @@ const TEMPLATE_MAP: Record<TemplateId, React.FC<{ data: CertificateData; options
 };
 
 export const CertificateExport: React.FC<Props> = ({ data, templateId, options }) => {
+  const { t } = useTranslation('certificate');
   const captureRef = useRef<HTMLDivElement>(null);
   const [status, setStatus] = useState<'idle' | 'png' | 'pdf' | 'clipboard' | 'success'>('idle');
   const [error, setError] = useState<string | null>(null);
@@ -59,7 +61,7 @@ export const CertificateExport: React.FC<Props> = ({ data, templateId, options }
       });
 
       const blob = await new Promise<Blob | null>(resolve => canvas.toBlob(resolve, 'image/png'));
-      if (!blob) throw new Error('Failed to generate image');
+      if (!blob) throw new Error(t('failedToGenerateImage'));
 
       const url = URL.createObjectURL(blob);
       const link = document.createElement('a');
@@ -71,7 +73,7 @@ export const CertificateExport: React.FC<Props> = ({ data, templateId, options }
       URL.revokeObjectURL(url);
       setStatus('success');
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Export failed');
+      setError(err instanceof Error ? err.message : t('exportFailed'));
       setStatus('idle');
     }
   }, [data.name]);
@@ -113,7 +115,7 @@ export const CertificateExport: React.FC<Props> = ({ data, templateId, options }
       URL.revokeObjectURL(url);
       setStatus('success');
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Export failed');
+      setError(err instanceof Error ? err.message : t('exportFailed'));
       setStatus('idle');
     }
   }, [data.name]);
@@ -150,7 +152,7 @@ export const CertificateExport: React.FC<Props> = ({ data, templateId, options }
       URL.revokeObjectURL(url);
       setStatus('success');
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Copy failed');
+      setError(err instanceof Error ? err.message : t('copyFailed'));
       setStatus('idle');
     }
   }, [data.name]);
@@ -159,13 +161,13 @@ export const CertificateExport: React.FC<Props> = ({ data, templateId, options }
     return (
       <div className="cert-export-success cert-fade-in">
         <div className="cert-export-success-icon">✨</div>
-        <div className="cert-export-success-title">Certificate Created!</div>
-        <div className="cert-export-success-text">Your birth certificate has been generated successfully.</div>
+        <div className="cert-export-success-title">{t('certificateCreated')}</div>
+        <div className="cert-export-success-text">{t('certificateCreatedDesc')}</div>
         <button
           className="cert-nav-btn cert-nav-btn--next"
           onClick={() => setStatus('idle')}
         >
-          Create Another
+          {t('createAnother')}
         </button>
       </div>
     );
@@ -192,21 +194,21 @@ export const CertificateExport: React.FC<Props> = ({ data, templateId, options }
           onClick={downloadPNG}
           disabled={status !== 'idle'}
         >
-          {status === 'png' ? 'Creating PNG...' : '📷 Download PNG'}
+          {status === 'png' ? t('creatingPNG') : t('downloadPNG')}
         </button>
         <button
           className="cert-export-btn cert-export-btn--pdf"
           onClick={downloadPDF}
           disabled={status !== 'idle'}
         >
-          {status === 'pdf' ? 'Creating PDF...' : '📄 Download PDF'}
+          {status === 'pdf' ? t('creatingPDF') : t('downloadPDF')}
         </button>
         <button
           className="cert-export-btn cert-export-btn--clipboard"
           onClick={copyToClipboard}
           disabled={status !== 'idle'}
         >
-          {status === 'clipboard' ? 'Copying...' : '📋 Copy Image'}
+          {status === 'clipboard' ? t('copying') : t('copyImage')}
         </button>
       </div>
 

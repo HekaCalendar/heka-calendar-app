@@ -6,7 +6,7 @@
     "beforeDevCommand": "npm run dev -- --port 5173",
     "beforeBuildCommand": "npm run build",
     "devUrl": "http://localhost:5173",
-    "frontendDist": "../dist2"
+    "frontendDist": "../dist"
   },
   "app": {
     "windows": [

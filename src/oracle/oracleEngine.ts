@@ -12,7 +12,8 @@
  */
 
 import { calculateJulianDay, calculateAllPlanets } from '../astrology/services/swiss-ephemeris/engine';
-import { calculateVoidMoonStatus } from '../astrology/services/calculations/swissCalculations';
+import { calculateVoidMoonStatus, getFallbackPositions } from '../astrology/services/calculations/swissCalculations';
+import { getSignCount } from '../astrology/services/swiss-ephemeris/engine';
 import type { CelestialBody } from '../astrology/types';
 
 // ============================================================================
@@ -188,6 +189,8 @@ export type AspectType = 'conjunction' | 'opposition' | 'trine' | 'square' | 'se
 export interface CelestialEvent {
   type: 'moon-phase' | 'transit' | 'void-moon' | 'aspect' | 'house-transit';
   planet?: string;
+  transitingPlanet?: string;
+  transitingSign?: string;
   secondaryPlanet?: string;
   sign?: string;
   house?: number;
@@ -224,13 +227,18 @@ export async function getCurrentCelestialState(date: Date = new Date()): Promise
     date.getUTCSeconds()
   );
   
-  const positions = calculateAllPlanets(jd);
+  let positions = calculateAllPlanets(jd);
+  
+  // Fallback when WASM is not yet initialized (mobile cold start)
+  if (!positions || !positions.sun || !positions.moon) {
+    positions = getFallbackPositions(jd, getSignCount() === 13);
+  }
   
   const sun = positions.sun;
   const moon = positions.moon;
   const angle = ((moon.longitude - sun.longitude) % 360 + 360) % 360;
   
-  let moonPhaseName = '';
+  let moonPhaseName: string;
   if (angle < 45) moonPhaseName = 'new';
   else if (angle < 135) moonPhaseName = 'waxing';
   else if (angle < 225) moonPhaseName = 'full';

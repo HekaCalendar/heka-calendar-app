@@ -1,0 +1,239 @@
+{
+  "celestialGuide": "Himmelsführer",
+  "journal": "Tagebuch",
+  "notes": "Notizen",
+  "events": "Ereignisse",
+  "tasks": "Aufgaben",
+  "transits": "Transite",
+  "mood": "Stimmung",
+  "vibe": "Vibe",
+  "energy": "Energie",
+  "hekaRune": "HEKA Rune",
+  "celestialAffirmation": "Himmelsbestätigung",
+  "moodTracker": "Stimmungstracker",
+  "vibeColor": "Vibe Farbe",
+  "addNote": "Notiz hinzufügen...",
+  "addEvent": "Ereignis hinzufügen",
+  "addTask": "Aufgabe hinzufügen",
+  "eventTitle": "Ereignis Titel",
+  "taskTitle": "Aufgaben Titel",
+  "taskCompleted": "Abgeschlossen",
+  "taskPending": "Ausstehend",
+  "editNote": "Notiz bearbeiten",
+  "deleteNote": "Notiz löschen",
+  "notePlaceholder": "Schreibe hier deine Gedanken...",
+  "journalPlaceholder": "Notiere deinen Tag...",
+  "eventPlaceholder": "Was geschieht?",
+  "taskPlaceholder": "Was muss erledigt werden?",
+  "addNewNote": "+ Neue Notiz",
+  "addNewEvent": "+ Neues Ereignis",
+  "addNewTask": "+ Neue Aufgabe",
+  "noNotes": "Keine Notizen für diesen Tag",
+  "noEvents": "Keine Ereignisse für diesen Tag",
+  "noTasks": "Keine Aufgaben für diesen Tag",
+  "noJournal": "Kein Tagebucheintrag für diesen Tag",
+  "transitProgress": "Transit Fortschritt",
+  "transitRemaining": "{{percent}}% verbleibend",
+  "currentMood": "Aktuelle Stimmung",
+  "selectMood": "Wähle deine Stimmung",
+  "moods": {
+    "joyful": "Froh",
+    "happy": "Glücklich",
+    "content": "Zufrieden",
+    "neutral": "Neutral",
+    "tired": "Müde",
+    "sad": "Traurig",
+    "anxious": "Besorgt",
+    "frustrated": "Frustriert",
+    "angry": "Wütend",
+    "inspired": "Inspiriert",
+    "focused": "Fokussiert",
+    "peaceful": "Friedlich"
+  },
+  "runeCast": "Runen werfen...",
+  "runeReveal": "Rune enthüllen",
+  "runeBlessing": "Heutige Segnung",
+  "runeWisdom": "Rune Weisheit",
+  "runeEnergy": "Rune Energie",
+  "emptyState": "Wähle einen Tag, um Details zu sehen",
+  "closePanel": "Panel schließen",
+  "addTaskBtn": "+ Aufgabe",
+  "header": {
+    "monthOf": "Monat {{month}} / 13",
+    "hekaYear": "HEKA Jahr {{year}}"
+  },
+  "moon": {
+    "calculating": "Berechne Mondposition...",
+    "unavailable": "Mondphasendaten nicht verfügbar",
+    "waxing": "Zunehmend",
+    "waning": "Abnehmend",
+    "illuminated": "{{percent}}% beleuchtet",
+    "age": "Alter: {{age}} Tage",
+    "swissEphemeris": "Schweizer Ephemeris",
+    "southernHemisphere": "Südliche Hemisphäre",
+    "northernHemisphere": "Nördliche Hemisphäre"
+  },
+  "holidays": {
+    "inLocation": "Feiertage in {{location}}"
+  },
+  "astrology": {
+    "dailyCosmicGuidance": "Tägliche kosmische Anleitung",
+    "personalizedFor": "Personalisiert für {{name}}",
+    "birthChartActive": "Geburtschart aktiv",
+    "calculatingTransits": "Berechne deine persönlichen Transite...",
+    "connectingCelestial": "Verbindung zur himmlischen Intelligenz...",
+    "unavailable": "Himmelsführung nicht verfügbar. Schauen Sie im Sternenabschnitt für detaillierte Astrologie.",
+    "sunrise": "Sonnenaufgang: {{time}}",
+    "sunset": "Sonnenuntergang: {{time}}",
+    "planetaryHour": "Planetenstunde: {{planet}}",
+    "locationPin": "{{Standort}}",
+    "activeTransits": "Aktive Transite für dich heute",
+    "moonIn": "Mond im {{sign}}",
+    "sunIn": "Sonne im {{sign}}",
+    "todaysTheme": "Heutiges Thema:",
+    "cosmicGuidance": "Kosmische Anleitung",
+    "reflection": "Reflektion",
+    "affirmation": "Bestärken",
+    "birthChartCta": {
+      "title": "Möchten Sie personalisierte Transite?",
+      "description": "Fügen Sie Ihr Geburtschart im Sternenbereich hinzu, um zu sehen, wie das kosmische Wetter heute persönlich auf Sie wirkt."
+    }
+  },
+  "lunarMansion": {
+    "title": "Mondhütte",
+    "trueMode": "WAHRER Modus",
+    "calculating": "Seitlicher Mondstand wird berechnet...",
+    "totem": "Totem",
+    "gift": "Geschenk",
+    "ruler": "Herrscher",
+    "quality": "Qualität",
+    "quarter": "Quartal",
+    "sunTravelsThrough": "Sonne durchquert {{name}}",
+    "quarters": {
+      "initiation": "Initiation — die Saat wird gesät",
+      "deepening": "Vertiefung — Wurzeln greifen fest",
+      "crisis": "Krise — die Prüfung erscheint",
+      "completion": "Vollendung — das Obst reift"
+    }
+  },
+  "solarReturn": {
+    "title": "Wahrer Sonnenwende",
+    "titleInDays": "Wahrer Sonnenwende in {{count}} Tag{{suffix}}",
+    "trueMode": "WAHRER Modus",
+    "today": "Heute kehrt die Sonne zu Ihrer siderealen Geburtslänge zurück.",
+    "approaching": "Die Sonne kehrt am {{date}} zu Ihrer siderealen {{sign}}-Position zurück.",
+    "description": "Im WAHRER HEKA-Modus wird Ihr Geburtstag von den Sternen bestimmt, nicht vom Zivilkalender.",
+    "exactOrb": "Exakt innerhalb von {{orb}} Bogenminuten."
+  },
+  "notesSection": {
+    "tasksAndNotes": "Aufgaben ({{tasks}}) · Notizen ({{notes}})",
+    "tasksOnly": "Aufgaben ({{count}})",
+    "notesAndTasks": "Notizen & Aufgaben ({{count}})",
+    "addNote": "+ Notiz",
+    "longHoldHint": "Lange drücken für Optionen · Doppeltippen Sie auf eine Aufgabe, um sie zu bearbeiten",
+    "noNotesOrTasks": "Keine Notizen oder Aufgaben für diesen Tag.",
+    "createNoteHint": "Klicken Sie auf <0>+ Notiz</0> oder <1>⚡ Aufgabe hinzufügen</1> oben, um eine zu erstellen."
+  },
+  "noteEditor": {
+    "makeTask": "⚡ Dies zu einer Aufgabe machen",
+    "dueTime": "Fälligkeitszeit",
+    "remindMe": "Erinnere mich",
+    "reminders": {
+      "atTime": "Zur Zeit der Aufgabe",
+      "5min": "5 Minuten vor",
+      "10min": "10 Minuten vorher",
+      "15min": "15 Minuten vorher",
+      "30min": "30 Minuten vorher",
+      "1hour": "1 Stunde vorher"
+    },
+    "howAreYouFeeling": "Wie fühlst du dich?",
+    "taskPlaceholder": "Was hast du vor, zu erledigen?",
+    "notePlaceholder": "Schreib deine Notiz...",
+    "saveTask": "Aufgabe speichern",
+    "saveNote": "Notiz speichern",
+    "cancel": "Abbrechen"
+  },
+  "noteItem": {
+    "markComplete": "Als erledigt markieren",
+    "completed": "Abgeschlossen",
+    "task": "Aufgabe",
+    "delete": "Löschen"
+  },
+  "selection": {
+    "selectedFromDays": "{{count}} ausgewählt von {{days}} Tag{{suffix}}",
+    "done": "Fertig",
+    "selectAll": "Alles auswählen",
+    "duplicate": "Duplizieren...",
+    "delete": "Löschen",
+    "manageDuplicates": "Duplikate verwalten:",
+    "duplicateTo": "Duplizieren nach:",
+    "nextWeek": "Nächste Woche",
+    "nextMonth": "Nächster Monat",
+    "everyDay": "Jeden {{day}}",
+    "undoEveryDay": "Rückgängig für jeden {{day}}",
+    "specificDay": "Bestimmter Tag...",
+    "chooseDays": "Tag(e) auswählen...",
+    "back": "Zurück"
+  },
+  "dayPicker": {
+    "cancel": "Abbrechen"
+  },
+  "multiDayPicker": {
+    "selectedCount": "{{count}} Tag{{suffix}} ausgewählt",
+    "confirm": "Bestätigen",
+    "cancel": "Abbrechen"
+  },
+  "confirmations": {
+    "deleteNote": "Diesen Hinweis löschen?",
+    "deleteSelected": "Diese {{count}} ausgewählte Notiz(en) aus {{days}} Tag(en) löschen?",
+    "duplicateEveryDay": "Diese {{count}} Element(e) zu JEDEM {{day}} für den Rest des Jahres duplizieren?",
+    "undoDuplicates": "Alle duplizierten Instanzen dieser {{count}} Notiz(en) entfernen?"
+  },
+  "alerts": {
+    "couldNotCalculateDate": "Zieldatum konnte nicht berechnet werden",
+    "duplicatedToNextWeek": "Dupliziert {{items}} in die nächste Woche ({{month}} {{day}})",
+    "duplicatedToNextMonth": "Dupliziert {{items}} in den nächsten Monat ({{month}} {{day}})",
+    "duplicatedToDays": "Dupliziert zu {{count}} {{day}}s",
+    "duplicatedNotes": "Doppelte {{count}} Notiz(en)",
+    "removedDuplicates": "Entfernte doppelte Notizen",
+    "duplicatedToMonth": "Doppelte {{count}} Notiz(en) auf nächsten Monat",
+    "duplicatedToDaysCount": "Doppelte {{count}} Notiz(en) auf {{days}} Tag(e)",
+    "duplicatedSelectedItems": "Ausgewählte Elemente auf {{count}} Tag(e) dupliziert",
+    "signInToSaveTasks": "Sie müssen angemeldet sein, um Aufgaben zu speichern. Bitte öffnen Sie das Konto-Menü und melden Sie sich erneut an.",
+    "unableToSaveTask": "Aufgabe kann nicht gespeichert werden. Fehler: {{error}}"
+  },
+  "dow": {
+    "sunday": "Sonntag",
+    "monday": "Montag",
+    "tuesday": "Dienstag",
+    "wednesday": "Mittwoch",
+    "thursday": "Donnerstag",
+    "friday": "Freitag",
+    "saturday": "Samstag",
+    "short": {
+      "sun": "Son",
+      "mon": "Mon",
+      "tue": "Die",
+      "wed": "Mit",
+      "thu": "Don",
+      "fri": "Fre",
+      "sat": "Sam"
+    }
+  },
+  "noteCategories": {
+    "personal": "Persönlich",
+    "work": "Arbeit",
+    "spiritual": "Spirituell",
+    "family": "Familie",
+    "health": "Gesundheit",
+    "creative": "Kreativ",
+    "general": "Allgemein"
+  },
+  "moodScale": {
+    "1": "Sehr niedrig",
+    "2": "Niedrig",
+    "3": "Neutral",
+    "4": "Gut",
+    "5": "Ausgezeichnet"
+  }
+}

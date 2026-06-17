@@ -9,6 +9,7 @@
  */
 
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import type { NatalPlanet } from '../../services/natal/natalChart';
 import { getPlanetSignContent } from '../../content/planetaryMeanings';
 
@@ -52,6 +53,7 @@ export const PlanetDetailModal: React.FC<PlanetDetailModalProps> = ({
   isOpen,
   onClose,
 }) => {
+  const { t } = useTranslation('celestial');
   const [activeTab, setActiveTab] = useState<TabType>('essence');
   const [copiedPrompt, setCopiedPrompt] = useState<number | null>(null);
   
@@ -72,7 +74,7 @@ export const PlanetDetailModal: React.FC<PlanetDetailModalProps> = ({
     <div style={styles.overlay} onClick={onClose}>
       <div style={styles.modal} onClick={(e) => e.stopPropagation()}>
         {/* Close Button */}
-        <button style={styles.closeButton} onClick={onClose}>
+        <button style={styles.closeButton} onClick={onClose} aria-label={t('close')}>
           ✕
         </button>
         
@@ -83,10 +85,10 @@ export const PlanetDetailModal: React.FC<PlanetDetailModalProps> = ({
           </div>
           <div style={styles.headerText}>
             <h2 style={styles.title}>
-              {PLANET_NAMES[planetId] || planetId} in {planet.sign.charAt(0).toUpperCase() + planet.sign.slice(1)}
+              {t('planet.in', { planet: PLANET_NAMES[planetId] || planetId, sign: planet.sign.charAt(0).toUpperCase() + planet.sign.slice(1) })}
             </h2>
             <p style={styles.subtitle}>
-              {signSymbol} House {planet.house} • {planet.dignity}
+              {t('planet.houseDignity', { symbol: signSymbol, house: planet.house, dignity: planet.dignity })}
             </p>
           </div>
         </div>
@@ -94,21 +96,21 @@ export const PlanetDetailModal: React.FC<PlanetDetailModalProps> = ({
         {/* Archetype Card */}
         {content && (
           <div style={{ ...styles.archetypeCard, borderColor: planetColor + '40' }}>
-            <div style={styles.archetypeLabel}>The Archetype</div>
+            <div style={styles.archetypeLabel}>{t('planet.archetype')}</div>
             <div style={{ ...styles.archetypeName, color: planetColor }}>
               {content.archetype}
             </div>
-            <div style={styles.tagline}>"{content.tagline}"</div>
+            <div style={styles.tagline}>{t('planet.tagline', { tagline: content.tagline })}</div>
           </div>
         )}
         
         {/* Tabs */}
         <div style={styles.tabs}>
           {[
-            { id: 'essence', label: '💫 Essence', icon: '✨' },
-            { id: 'shadow', label: '🌑 Shadow', icon: '🌑' },
-            { id: 'growth', label: '🌱 Growth', icon: '🌱' },
-            { id: 'famous', label: '⭐ Famous', icon: '⭐' },
+            { id: 'essence', label: t('planet.essence'), icon: '✨' },
+            { id: 'shadow', label: t('planet.shadow'), icon: '🌑' },
+            { id: 'growth', label: t('planet.growth'), icon: '🌱' },
+            { id: 'famous', label: t('planet.famous'), icon: '⭐' },
           ].map((tab) => (
             <button
               key={tab.id}
@@ -138,7 +140,7 @@ export const PlanetDetailModal: React.FC<PlanetDetailModalProps> = ({
               {activeTab === 'essence' && (
                 <div style={styles.tabPanel}>
                   <h3 style={{ ...styles.sectionTitle, color: planetColor }}>
-                    Your Core Expression
+                    {t('planet.coreExpression')}
                   </h3>
                   <ul style={styles.essenceList}>
                     {content.essence.map((item, i) => (
@@ -147,7 +149,7 @@ export const PlanetDetailModal: React.FC<PlanetDetailModalProps> = ({
                   </ul>
                   
                   <div style={styles.realWorldSection}>
-                    <h4 style={styles.subSectionTitle}>In Daily Life</h4>
+                    <h4 style={styles.subSectionTitle}>{t('planet.dailyLife')}</h4>
                     <div style={styles.strengthsGrid}>
                       {content.realWorld.strengths.slice(0, 3).map((strength, i) => (
                         <div key={i} style={{ ...styles.strengthBadge, background: planetColor + '15', color: planetColor }}>
@@ -158,7 +160,7 @@ export const PlanetDetailModal: React.FC<PlanetDetailModalProps> = ({
                   </div>
                   
                   <div style={styles.journalSection}>
-                    <h4 style={styles.subSectionTitle}>💭 Reflection Prompts</h4>
+                    <h4 style={styles.subSectionTitle}>{t('planet.reflectionPrompts')}</h4>
                     {content.journalPrompts.slice(0, 2).map((prompt, i) => (
                       <div 
                         key={i} 
@@ -167,7 +169,7 @@ export const PlanetDetailModal: React.FC<PlanetDetailModalProps> = ({
                       >
                         <span>{prompt}</span>
                         <span style={styles.copyHint}>
-                          {copiedPrompt === i ? '✓ Copied!' : '📋 Copy'}
+                          {copiedPrompt === i ? t('planet.copied') : t('planet.copy')}
                         </span>
                       </div>
                     ))}
@@ -179,13 +181,13 @@ export const PlanetDetailModal: React.FC<PlanetDetailModalProps> = ({
                 <div style={styles.tabPanel}>
                   <div style={{ ...styles.shadowBox, borderColor: planetColor + '30' }}>
                     <h3 style={{ ...styles.shadowTitle, color: '#ef4444' }}>
-                      🌑 The Shadow Side
+                      {t('planet.shadowSide')}
                     </h3>
                     <p style={styles.shadowText}>{content.shadow.description}</p>
                   </div>
                   
                   <div style={styles.triggersSection}>
-                    <h4 style={styles.subSectionTitle}>Common Triggers</h4>
+                    <h4 style={styles.subSectionTitle}>{t('planet.commonTriggers')}</h4>
                     <div style={styles.triggersList}>
                       {content.shadow.triggers.map((trigger, i) => (
                         <span key={i} style={styles.triggerTag}>• {trigger}</span>
@@ -194,7 +196,7 @@ export const PlanetDetailModal: React.FC<PlanetDetailModalProps> = ({
                   </div>
                   
                   <div style={styles.affirmationBox}>
-                    <h4 style={styles.subSectionTitle}>🙏 Daily Affirmation</h4>
+                    <h4 style={styles.subSectionTitle}>{t('planet.dailyAffirmation')}</h4>
                     <p style={styles.affirmationText}>"{content.shadow.affirmation}"</p>
                   </div>
                 </div>
@@ -204,13 +206,13 @@ export const PlanetDetailModal: React.FC<PlanetDetailModalProps> = ({
                 <div style={styles.tabPanel}>
                   <div style={styles.growthPath}>
                     <h3 style={{ ...styles.sectionTitle, color: planetColor }}>
-                      🌱 Your Growth Path
+                      {t('planet.yourGrowthPath')}
                     </h3>
                     <p style={styles.growthText}>{content.shadow.growthPath}</p>
                   </div>
                   
                   <div style={styles.practicesSection}>
-                    <h4 style={styles.subSectionTitle}>Practical Exercises</h4>
+                    <h4 style={styles.subSectionTitle}>{t('planet.practicalExercises')}</h4>
                     {content.practices.slice(0, 3).map((practice, i) => (
                       <div key={i} style={styles.practiceItem}>
                         <span style={{ ...styles.practiceNumber, background: planetColor + '20', color: planetColor }}>
@@ -222,7 +224,7 @@ export const PlanetDetailModal: React.FC<PlanetDetailModalProps> = ({
                   </div>
                   
                   <div style={styles.careersSection}>
-                    <h4 style={styles.subSectionTitle}>Aligned Career Paths</h4>
+                    <h4 style={styles.subSectionTitle}>{t('planet.alignedCareers')}</h4>
                     <div style={styles.careersList}>
                       {content.realWorld.careers.slice(0, 4).map((career, i) => (
                         <span key={i} style={styles.careerTag}>{career}</span>
@@ -235,10 +237,10 @@ export const PlanetDetailModal: React.FC<PlanetDetailModalProps> = ({
               {activeTab === 'famous' && (
                 <div style={styles.tabPanel}>
                   <h3 style={{ ...styles.sectionTitle, color: planetColor }}>
-                    ⭐ You Share This With
+                    {t('planet.shareThisWith')}
                   </h3>
                   <p style={styles.famousIntro}>
-                    Your {planetId} in {planet.sign} connects you to these influential figures:
+                    {t('planet.famousIntro', { planet: planetId, sign: planet.sign })}
                   </p>
                   <div style={styles.famousGrid}>
                     {content.famousExamples.map((person, i) => (
@@ -262,7 +264,7 @@ export const PlanetDetailModal: React.FC<PlanetDetailModalProps> = ({
         {/* Footer */}
         <div style={styles.footer}>
           <span style={styles.footerText}>
-            {planetId.charAt(0).toUpperCase() + planetId.slice(1)} at {Math.floor(planet.degreeInSign ?? 0)}° {planet.sign}
+            {t('planet.atDegree', { planet: planetId.charAt(0).toUpperCase() + planetId.slice(1), degree: Math.floor(planet.degreeInSign ?? 0), sign: planet.sign })}
             {planet.isRetrograde && ' ℞'}
           </span>
         </div>
@@ -354,7 +356,7 @@ const styles: Record<string, React.CSSProperties> = {
     borderLeftWidth: '4px',
   },
   archetypeLabel: {
-    fontSize: '11px',
+    fontSize: '12px',
     textTransform: 'uppercase',
     letterSpacing: '2px',
     color: 'rgba(255, 255, 255, 0.5)',
@@ -459,7 +461,7 @@ const styles: Record<string, React.CSSProperties> = {
     transition: 'all 0.2s ease',
   },
   copyHint: {
-    fontSize: '11px',
+    fontSize: '12px',
     color: 'rgba(255, 255, 255, 0.4)',
   },
   shadowBox: {

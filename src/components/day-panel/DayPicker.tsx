@@ -4,14 +4,13 @@
  */
 
 import { memo, useState, useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
 import { HEKA_MONTHS, getDaysInMonth, getCivilStartOfHekaMonth, hekaToCivil } from '../../services/calendarService';
 import type { HekaMonthIndex } from '../../types';
 import type { DayPickerProps } from './types';
 
-// Day of week headers - HEKA calendar starts on Saturday
-const DOW_HEADERS = ['Sat', 'Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri'];
-
 export const DayPicker = memo(({ currentViewDate, onSelectDay, onCancel }: DayPickerProps) => {
+  const { t } = useTranslation('dayPanel');
   const [pickerYear, setPickerYear] = useState(currentViewDate.year);
   const [pickerMonth, setPickerMonth] = useState(currentViewDate.month);
 
@@ -29,7 +28,15 @@ export const DayPicker = memo(({ currentViewDate, onSelectDay, onCancel }: DayPi
   // Calculate day of week for each day (for tooltips)
   const getDayOfWeek = (day: number): string => {
     const civil = hekaToCivil({ year: pickerYear, month: pickerMonth as HekaMonthIndex, day });
-    const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+    const days = [
+      t('dow.sunday'),
+      t('dow.monday'),
+      t('dow.tuesday'),
+      t('dow.wednesday'),
+      t('dow.thursday'),
+      t('dow.friday'),
+      t('dow.saturday'),
+    ];
     return days[civil.getDay()];
   };
 
@@ -58,6 +65,16 @@ export const DayPicker = memo(({ currentViewDate, onSelectDay, onCancel }: DayPi
     return cells;
   }, [firstDayOffset, daysInMonth, monthName]);
 
+  const dowHeaders = [
+    t('dow.short.sat'),
+    t('dow.short.sun'),
+    t('dow.short.mon'),
+    t('dow.short.tue'),
+    t('dow.short.wed'),
+    t('dow.short.thu'),
+    t('dow.short.fri'),
+  ];
+
   return (
     <div className="day-picker day-picker--calendar">
       <div className="day-picker__header">
@@ -68,7 +85,7 @@ export const DayPicker = memo(({ currentViewDate, onSelectDay, onCancel }: DayPi
           } else {
             setPickerMonth(m => m - 1);
           }
-        }}>←</button>
+        }} aria-label={t('previous')}>←</button>
         <span className="day-picker__month">{monthName} {pickerYear}</span>
         <button className="btn btn--icon" onClick={() => {
           if (pickerMonth === 12) {
@@ -77,12 +94,12 @@ export const DayPicker = memo(({ currentViewDate, onSelectDay, onCancel }: DayPi
           } else {
             setPickerMonth(m => m + 1);
           }
-        }}>→</button>
+        }} aria-label={t('nextItem')}>→</button>
       </div>
 
       {/* Day of week headers - rendered as first row inside the grid */}
       <div className="day-picker__grid" style={{ marginBottom: '4px' }}>
-        {DOW_HEADERS.map(dow => (
+        {dowHeaders.map(dow => (
           <div key={dow} className="day-picker__dow-cell" style={{
             textAlign: 'center',
             fontSize: '0.7rem',
@@ -112,7 +129,7 @@ export const DayPicker = memo(({ currentViewDate, onSelectDay, onCancel }: DayPi
       </div>
 
       <button className="btn btn--sm btn--secondary day-picker__cancel" onClick={onCancel}>
-        Cancel
+        {t('dayPicker.cancel')}
       </button>
     </div>
   );

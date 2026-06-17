@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import type { DiaryEntry } from '../../../oracle/diaryTypes';
 import type { CalendarNoteEntry, EntryFilter } from '../types';
 
@@ -23,13 +24,14 @@ export const OracleModeEntries: React.FC<OracleModeEntriesProps> = ({
   formatEntryDate,
   onSetMode,
 }) => {
+  const { t } = useTranslation('journal');
   return (
     <div className="oracle-mode-entries">
       <div className="entries-filters">
         {[
-          { id: 'all', label: 'All Entries', icon: '📜' },
-          { id: 'insights', label: 'With Insights', icon: '🔮' },
-          { id: 'transits', label: 'Calendar Notes', icon: '📅' },
+          { id: 'all', label: t('entriesMode.allEntries'), icon: '📜' },
+          { id: 'insights', label: t('entriesMode.withInsights'), icon: '🔮' },
+          { id: 'transits', label: t('entriesMode.calendarNotes'), icon: '📅' },
         ].map((f) => (
           <button
             key={f.id}
@@ -45,9 +47,9 @@ export const OracleModeEntries: React.FC<OracleModeEntriesProps> = ({
         {entryFilter !== 'transits' && entries.length === 0 && (
           <div className="entries-empty">
             <div className="empty-icon">📜</div>
-            <h3>No Oracle Entries Yet</h3>
+            <h3>{t('entriesMode.noEntries')}</h3>
             <button className="empty-cta" onClick={() => onSetMode('scribe')}>
-              Start Writing
+              {t('entriesMode.startWriting')}
             </button>
           </div>
         )}
@@ -55,7 +57,7 @@ export const OracleModeEntries: React.FC<OracleModeEntriesProps> = ({
         {entryFilter === 'transits' && calendarNoteEntries.length === 0 && (
           <div className="entries-empty">
             <div className="empty-icon">📅</div>
-            <h3>No Calendar Notes</h3>
+            <h3>{t('entriesMode.noCalendarNotes')}</h3>
           </div>
         )}
         
@@ -67,7 +69,7 @@ export const OracleModeEntries: React.FC<OracleModeEntriesProps> = ({
           >
             <div className="entry-header">
               <span className="entry-date">{formatEntryDate(entry.timestamp)}</span>
-              {entry.insight && <span className="entry-badge insight">🔮 Insight</span>}
+              {entry.insight && <span className="entry-badge insight">{t('entriesMode.insightBadge')}</span>}
             </div>
             <p className="entry-preview">{entry.content.slice(0, 120)}...</p>
             {entry.insight && (
@@ -87,7 +89,7 @@ export const OracleModeEntries: React.FC<OracleModeEntriesProps> = ({
           >
             <div className="entry-header">
               <span className="entry-date">{formatEntryDate(note.timestamp)}</span>
-              <span className="entry-badge calendar">📅 Calendar</span>
+              <span className="entry-badge calendar">{t('entriesMode.calendarBadge')}</span>
             </div>
             <p className="entry-preview">{note.content}</p>
           </div>

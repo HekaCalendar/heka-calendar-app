@@ -4,8 +4,42 @@
  */
 
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import type { PrintTheme, YearData, MonthData, DayData } from './types';
 import type { PrintOptions } from '../../types';
+
+// ============================================================================
+// UTILITY: Validate CSS color values to prevent injection
+// ============================================================================
+
+const VALID_COLOR_RE = /^(#[0-9a-fA-F]{3,8}|rgb\(\s*\d+\s*,\s*\d+\s*,\s*\d+\s*\)|rgba\(\s*\d+\s*,\s*\d+\s*,\s*\d+\s*,\s*[\d.]+\s*\)|hsl\(\s*\d+\s*,\s*\d+%\s*,\s*\d+%\s*\)|hsla\(\s*\d+\s*,\s*\d+%\s*,\s*\d+%\s*,\s*[\d.]+\s*\)|[a-zA-Z]+)$/;
+
+function validateColor(value: string): string {
+  if (VALID_COLOR_RE.test(value)) return value;
+  console.warn('[PrintRenderer] Rejected invalid color value:', value);
+  return 'transparent';
+}
+
+function validateThemeColors(colors: PrintTheme['colors']): PrintTheme['colors'] {
+  return {
+    primary: validateColor(colors.primary),
+    primaryLight: validateColor(colors.primaryLight),
+    primaryDark: validateColor(colors.primaryDark),
+    secondary: validateColor(colors.secondary),
+    accent: validateColor(colors.accent),
+    background: validateColor(colors.background),
+    surface: validateColor(colors.surface),
+    surfaceElevated: validateColor(colors.surfaceElevated),
+    text: validateColor(colors.text),
+    textSecondary: validateColor(colors.textSecondary),
+    textMuted: validateColor(colors.textMuted),
+    border: validateColor(colors.border),
+    borderLight: validateColor(colors.borderLight),
+    arcOpening: validateColor(colors.arcOpening),
+    arcCore: validateColor(colors.arcCore),
+    arcClosing: validateColor(colors.arcClosing),
+  };
+}
 
 // ============================================================================
 // UTILITY: Generate CSS from design tokens
@@ -13,6 +47,7 @@ import type { PrintOptions } from '../../types';
 
 function generateThemeCSS(theme: PrintTheme): string {
   const { colors, typography, spacing, effects } = theme;
+  const safeColors = validateThemeColors(colors);
   
   return `
     @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Cinzel+Decorative:wght@400;700&family=Inter:wght@300;400;500;600&family=Crimson+Pro:wght@400;600&display=swap');
@@ -25,26 +60,26 @@ function generateThemeCSS(theme: PrintTheme): string {
     
     :root {
       /* Colors */
-      --color-primary: ${colors.primary};
-      --color-primary-light: ${colors.primaryLight};
-      --color-primary-dark: ${colors.primaryDark};
-      --color-secondary: ${colors.secondary};
-      --color-accent: ${colors.accent};
+      --color-primary: ${safeColors.primary};
+      --color-primary-light: ${safeColors.primaryLight};
+      --color-primary-dark: ${safeColors.primaryDark};
+      --color-secondary: ${safeColors.secondary};
+      --color-accent: ${safeColors.accent};
       
-      --color-bg: ${colors.background};
-      --color-surface: ${colors.surface};
-      --color-surface-elevated: ${colors.surfaceElevated};
+      --color-bg: ${safeColors.background};
+      --color-surface: ${safeColors.surface};
+      --color-surface-elevated: ${safeColors.surfaceElevated};
       
-      --color-text: ${colors.text};
-      --color-text-secondary: ${colors.textSecondary};
-      --color-text-muted: ${colors.textMuted};
+      --color-text: ${safeColors.text};
+      --color-text-secondary: ${safeColors.textSecondary};
+      --color-text-muted: ${safeColors.textMuted};
       
-      --color-border: ${colors.border};
-      --color-border-light: ${colors.borderLight};
+      --color-border: ${safeColors.border};
+      --color-border-light: ${safeColors.borderLight};
       
-      --color-arc-opening: ${colors.arcOpening};
-      --color-arc-core: ${colors.arcCore};
-      --color-arc-closing: ${colors.arcClosing};
+      --color-arc-opening: ${safeColors.arcOpening};
+      --color-arc-core: ${safeColors.arcCore};
+      --color-arc-closing: ${safeColors.arcClosing};
       
       /* Typography */
       --font-display: ${typography.display.fontFamily};
@@ -92,60 +127,62 @@ interface YearCoverProps {
 
 const YearCover: React.FC<YearCoverProps> = ({ year, theme }) => {
   const { layouts } = theme;
+  const { t } = useTranslation(['print', 'calendar']);
+  const hekaDays = [6, 0, 1, 2, 3, 4, 5] as const;
   
   return (
     <div className="print-page year-cover" data-theme={theme.id}>
       <div className="year-cover-content">
-        <div className="year-cover-badge">THE MODERN HEKA CALENDAR</div>
+        <div className="year-cover-badge">{t('print:theModernHekaCalendar')}</div>
         
         <div className="year-cover-year">
-          <span className="year-label">Year</span>
+          <span className="year-label">{t('print:year')}</span>
           <span className="year-number">{year}</span>
         </div>
         
         <div className="year-cover-range">
-          April {year} — March {year + 1}
+          {t('print:aprilToMarch', { startYear: year, endYear: year + 1 })}
         </div>
         
         <div className="year-cover-meta">
-          <span>13 Months</span>
+          <span>{t('print:thirteenMonths')}</span>
           <span className="meta-dot">·</span>
-          <span>28 Days</span>
+          <span>{t('print:twentyEightDays')}</span>
           <span className="meta-dot">·</span>
-          <span className="meta-motto">Time is a circle, not a line</span>
+          <span className="meta-motto">{t('print:timeIsACircle')}</span>
         </div>
         
         {layouts.yearCover.showArcs && (
           <div className="year-cover-arcs">
             <div className="arcs-title">
               <span className="title-line" />
-              <span className="title-text">The Three Arcs</span>
+              <span className="title-text">{t('print:theThreeArcs')}</span>
               <span className="title-line" />
             </div>
             <div className="arcs-grid">
               <div className="arc-card arc-opening">
                 <div className="arc-glow" />
                 <span className="arc-icon">🌅</span>
-                <span className="arc-name">OPENING</span>
+                <span className="arc-name">{t('calendar:arcs.opening').toUpperCase()}</span>
                 <span className="arc-divider" />
-                <span className="arc-months">April</span>
-                <span className="arc-desc">New Beginnings</span>
+                <span className="arc-months">{t('calendar:months.0')}</span>
+                <span className="arc-desc">{t('print:newBeginnings')}</span>
               </div>
               <div className="arc-card arc-core">
                 <div className="arc-glow" />
                 <span className="arc-icon">☀️</span>
-                <span className="arc-name">CORE</span>
+                <span className="arc-name">{t('calendar:arcs.core').toUpperCase()}</span>
                 <span className="arc-divider" />
-                <span className="arc-months">May – December</span>
-                <span className="arc-desc">Growth & Abundance</span>
+                <span className="arc-months">{t('calendar:months.1')} – {t('calendar:months.9')}</span>
+                <span className="arc-desc">{t('print:growthAndAbundance')}</span>
               </div>
               <div className="arc-card arc-closing">
                 <div className="arc-glow" />
                 <span className="arc-icon">🌙</span>
-                <span className="arc-name">CLOSING</span>
+                <span className="arc-name">{t('calendar:arcs.closing').toUpperCase()}</span>
                 <span className="arc-divider" />
-                <span className="arc-months">January – March</span>
-                <span className="arc-desc">Reflection & Rest</span>
+                <span className="arc-months">{t('calendar:months.10')} – {t('calendar:months.12')}</span>
+                <span className="arc-desc">{t('print:reflectionAndRest')}</span>
               </div>
             </div>
           </div>
@@ -153,13 +190,13 @@ const YearCover: React.FC<YearCoverProps> = ({ year, theme }) => {
         
         {layouts.yearCover.showWeekdayLegend && (
           <div className="year-cover-weekdays">
-            <span className="weekdays-label">The HEKA Week</span>
+            <span className="weekdays-label">{t('print:theHekaWeek')}</span>
             <div className="weekdays-grid">
-              {['Saturday', 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'].map((day, i) => (
-                <div key={day} className="weekday-item">
+              {hekaDays.map((dayIndex, i) => (
+                <div key={dayIndex} className="weekday-item">
                   <span className={`weekday-dot ${i === 0 || i === 1 || i === 6 ? 'weekend' : 'workday'}`} />
-                  <span className="weekday-name">{day}</span>
-                  <span className="weekday-type">{i === 0 || i === 1 || i === 6 ? 'Weekend' : 'Work'}</span>
+                  <span className="weekday-name">{t(`calendar:days.${dayIndex}`)}</span>
+                  <span className="weekday-type">{i === 0 || i === 1 || i === 6 ? t('print:weekend') : t('print:work')}</span>
                 </div>
               ))}
             </div>
@@ -403,8 +440,10 @@ interface MonthPageProps {
 }
 
 const MonthPage: React.FC<MonthPageProps> = ({ monthData, theme, options }) => {
-  const { month, monthIndex, arc, days, startDayOffset } = monthData;
+  const { monthIndex, arc, days, startDayOffset } = monthData;
   const { layouts, typography, spacing } = theme;
+  const { t } = useTranslation(['print', 'calendar']);
+  const hekaDaysShort = [6, 0, 1, 2, 3, 4, 5] as const;
   
   const arcColors = {
     OPENING: theme.colors.arcOpening,
@@ -421,27 +460,27 @@ const MonthPage: React.FC<MonthPageProps> = ({ monthData, theme, options }) => {
       data-arc={arc.toLowerCase()}
     >
       <div className="month-header">
-        <span className="brand">THE MODERN HEKA CALENDAR</span>
-        <h2 className="month-title">{month.name}</h2>
+        <span className="brand">{t('print:theModernHekaCalendar')}</span>
+        <h2 className="month-title">{t(`calendar:months.${monthIndex}`)}</h2>
         <div className="month-meta">
           {layouts.monthPage.showArcIndicator && (
             <span className="arc-badge" style={{ color: arcColor, borderColor: arcColor }}>
-              {arc} ARC
+              {t(`calendar:arcs.${arc.toLowerCase()}`)}{t('print:arcSuffix')}
             </span>
           )}
-          <span className="month-number">Month {monthIndex + 1} of 13</span>
+          <span className="month-number">{t('print:monthOfThirteen', { month: monthIndex + 1 })}</span>
         </div>
       </div>
       
       <div className="calendar-grid">
         {/* Day of week headers */}
-        {['Sat', 'Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri'].map((dow, i) => (
+        {hekaDaysShort.map((dayIndex, i) => (
           <div 
-            key={dow} 
+            key={dayIndex} 
             className={`dow-header ${i === 0 || i === 1 || i === 6 ? 'weekend' : ''}`}
             style={{ color: arcColor }}
           >
-            {dow}
+            {t(`calendar:daysShort.${dayIndex}`)}
           </div>
         ))}
         
@@ -559,6 +598,7 @@ interface DayCellProps {
 }
 
 const DayCell: React.FC<DayCellProps> = ({ dayData, theme, options, arcColor }) => {
+  const { t } = useTranslation('print');
   const { day, moonPhase, holidays, notes, civilDate } = dayData;
   const { layouts, spacing } = theme;
   
@@ -589,7 +629,7 @@ const DayCell: React.FC<DayCellProps> = ({ dayData, theme, options, arcColor }) 
               }}
             >
               {note.content.substring(0, 20)}
-              {note.content.length > 20 ? '...' : ''}
+              {note.content.length > 20 ? t('print:noteTruncation') : ''}
             </div>
           ))}
           {layouts.dayCell.noteDisplayStyle === 'dot' && notes.length > 0 && (
@@ -605,7 +645,7 @@ const DayCell: React.FC<DayCellProps> = ({ dayData, theme, options, arcColor }) 
       {options.includeHolidays && holidays.length > 0 && (
         <div className="holiday-badge">
           {holidays[0].name.substring(0, 15)}
-          {holidays[0].name.length > 15 ? '...' : ''}
+          {holidays[0].name.length > 15 ? t('print:holidayTruncation') : ''}
         </div>
       )}
       
@@ -714,11 +754,12 @@ export const PrintDocument: React.FC<PrintDocumentProps> = ({
   options,
   showYearCover = true
 }) => {
+  const { t } = useTranslation('print');
   return (
     <html>
       <head>
         <meta charSet="UTF-8" />
-        <title>HEKA Calendar {yearData.year}</title>
+        <title>{t('hekaCalendarYear', { year: yearData.year })}</title>
         <style dangerouslySetInnerHTML={{ 
           __html: generateThemeCSS(theme) 
         }} />

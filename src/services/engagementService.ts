@@ -9,7 +9,7 @@
  */
 
 import type { AppDispatch, RootState } from '../store';
-import type { FeatureDiscoveryKey, AppEngagement } from '../types';
+import type { FeatureDiscoveryKey, AppEngagement, CountryCode } from '../types';
 import {
   trackAppOpen,
   trackTimeSpent,
@@ -51,7 +51,7 @@ let timeTrackingInterval: ReturnType<typeof setInterval> | null = null;
  * Initialize app engagement tracking on app load
  * Call this once when the app initializes
  */
-export function initializeEngagementTracking(dispatch: AppDispatch): void {
+export function initializeEngagementTracking(dispatch: AppDispatch): () => void {
   // Track this app open
   dispatch(trackAppOpen());
   
@@ -59,7 +59,12 @@ export function initializeEngagementTracking(dispatch: AppDispatch): void {
   startSessionTracking(dispatch);
   
   // Setup visibility change listener for background/foreground tracking
-  setupVisibilityListener(dispatch);
+  const cleanupVisibility = setupVisibilityListener(dispatch);
+  
+  return () => {
+    stopSessionTracking(dispatch);
+    cleanupVisibility();
+  };
 }
 
 /**
@@ -109,10 +114,10 @@ function finalizeSession(_dispatch: AppDispatch): void {
   }
 }
 
-function setupVisibilityListener(dispatch: AppDispatch): void {
-  if (typeof document === 'undefined') return;
+function setupVisibilityListener(dispatch: AppDispatch): () => void {
+  if (typeof document === 'undefined') return () => {};
   
-  document.addEventListener('visibilitychange', () => {
+  const handler = () => {
     if (document.hidden) {
       // App going to background - mark last activity
       session.lastActivityTime = Date.now();
@@ -130,7 +135,10 @@ function setupVisibilityListener(dispatch: AppDispatch): void {
       
       session.lastActivityTime = Date.now();
     }
-  });
+  };
+  
+  document.addEventListener('visibilitychange', handler);
+  return () => document.removeEventListener('visibilitychange', handler);
 }
 
 /**
@@ -234,7 +242,7 @@ export function trackLocationExploration(
   location: string,
   subRegion?: string | null
 ): void {
-  dispatch(trackLocationChange({ location: location as any, subRegion }));
+  dispatch(trackLocationChange({ location: location as CountryCode, subRegion }));
 }
 
 /**

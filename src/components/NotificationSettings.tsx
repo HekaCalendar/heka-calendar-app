@@ -10,16 +10,18 @@ import {
   testNotification,
   type NotificationPermissionType
 } from '../services/notificationService';
+import { AlertDialog } from './ui/AlertDialog';
 
 export const NotificationSettings: React.FC = () => {
   const [permission, setPermission] = useState<NotificationPermissionType | 'prompt' | null>(null);
   const [isRequesting, setIsRequesting] = useState(false);
   const [testStatus, setTestStatus] = useState<'idle' | 'sent' | 'error'>('idle');
   const [isNativeApp, setIsNativeApp] = useState(false);
+  const [disableHint, setDisableHint] = useState<string | null>(null);
 
   // Check if in native app context
   useEffect(() => {
-    const checkNative = typeof window !== 'undefined' && !!(window as any).Capacitor;
+    const checkNative = typeof window !== 'undefined' && !!(window as unknown as { Capacitor?: unknown }).Capacitor;
     setIsNativeApp(checkNative);
   }, []);
 
@@ -81,7 +83,7 @@ export const NotificationSettings: React.FC = () => {
       await testNotification();
       setTestStatus('sent');
       setTimeout(() => setTestStatus('idle'), 3000);
-    } catch (err) {
+    } catch {
       setTestStatus('error');
       setTimeout(() => setTestStatus('idle'), 3000);
     }
@@ -160,12 +162,10 @@ export const NotificationSettings: React.FC = () => {
             <button 
               className="btn btn--sm" 
               onClick={() => {
-                // Open browser/device settings to disable
                 if (isNativeApp) {
-                  // For native, we can't disable programmatically but can guide user
-                  alert('To disable notifications, go to your device Settings > Apps > HEKA Calendar > Notifications');
+                  setDisableHint('To disable notifications, go to your device Settings > Apps > HEKA Calendar > Notifications');
                 } else {
-                  alert('To disable notifications, click the 🔒 icon in your browser address bar and change notification settings');
+                  setDisableHint('To disable notifications, click the lock icon in your browser address bar and change notification settings');
                 }
               }}
               style={{ 
@@ -197,6 +197,14 @@ export const NotificationSettings: React.FC = () => {
           </button>
         )}
       </div>
+
+      <AlertDialog
+        isOpen={!!disableHint}
+        onClose={() => setDisableHint(null)}
+        title="Disable Notifications"
+        description={disableHint || ''}
+        confirmText="Got it"
+      />
     </div>
   );
 };

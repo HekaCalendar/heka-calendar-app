@@ -11,7 +11,7 @@
 // ============================================================================
 
 export type ZodiacSign = 'aries' | 'taurus' | 'gemini' | 'cancer' | 'leo' | 'virgo' | 
-                         'libra' | 'scorpio' | 'sagittarius' | 'capricorn' | 'aquarius' | 'pisces';
+                         'libra' | 'scorpio' | 'sagittarius' | 'capricorn' | 'aquarius' | 'pisces' | 'ophiuchus';
 
 export interface PlanetPosition {
   longitude: number;
@@ -95,14 +95,14 @@ const PLANET_DIGNITIES: Record<string, {
 }> = {
   Sun: { domicile: ['leo'], exaltation: 'aries', detriment: ['aquarius'], fall: 'libra' },
   Moon: { domicile: ['cancer'], exaltation: 'taurus', detriment: ['capricorn'], fall: 'scorpio' },
-  Mercury: { domicile: ['gemini', 'virgo'], exaltation: 'virgo', detriment: ['sagittarius', 'pisces'], fall: 'pisces' },
+  Mercury: { domicile: ['gemini', 'virgo', 'ophiuchus'], exaltation: 'virgo', detriment: ['sagittarius', 'pisces'], fall: 'pisces' },
   Venus: { domicile: ['taurus', 'libra'], exaltation: 'pisces', detriment: ['scorpio', 'aries'], fall: 'virgo' },
   Mars: { domicile: ['aries', 'scorpio'], exaltation: 'capricorn', detriment: ['libra', 'taurus'], fall: 'cancer' },
   Jupiter: { domicile: ['sagittarius', 'pisces'], exaltation: 'cancer', detriment: ['gemini', 'virgo'], fall: 'capricorn' },
   Saturn: { domicile: ['capricorn', 'aquarius'], exaltation: 'libra', detriment: ['cancer', 'leo'], fall: 'aries' },
   Uranus: { domicile: ['aquarius'], exaltation: null, detriment: ['leo'], fall: null },
   Neptune: { domicile: ['pisces'], exaltation: null, detriment: ['virgo'], fall: null },
-  Pluto: { domicile: ['scorpio'], exaltation: null, detriment: ['taurus'], fall: null },
+  Pluto: { domicile: ['scorpio', 'ophiuchus'], exaltation: null, detriment: ['taurus'], fall: null },
 };
 
 const HOUSE_KEYWORDS: Record<number, { areas: string[]; keywords: string[] }> = {
@@ -138,9 +138,30 @@ const PLANET_SIGNIFICANCE: Record<string, number> = {
 // UTILITY FUNCTIONS
 // ============================================================================
 
-function getWholeSignHouse(longitude: number, ascendantDegree: number): number {
+import { getSignFromLongitude, toDegree, ZODIAC_SIGNS_13, type ZodiacSign13 } from '../astrology/types/core';
+
+function getWholeSignHouse(longitude: number, ascendantDegree: number, use13Signs?: boolean): number {
   const normLong = ((longitude % 360) + 360) % 360;
   const normAsc = ((ascendantDegree % 360) + 360) % 360;
+
+  // Auto-detect 13-sign mode if not explicitly provided
+  const _use13Signs = use13Signs ?? false;
+
+  if (_use13Signs) {
+    // 13-sign mode: use actual sign names and their positions in the 13-sign order
+    const ascSign = getSignFromLongitude(toDegree(normAsc), true);
+    const planetSign = getSignFromLongitude(toDegree(normLong), true);
+    const ascIndex = ZODIAC_SIGNS_13.indexOf(ascSign as ZodiacSign13);
+    const planetIndex = ZODIAC_SIGNS_13.indexOf(planetSign as ZodiacSign13);
+    if (ascIndex === -1 || planetIndex === -1) return 1;
+    let house = planetIndex - ascIndex + 1;
+    if (house <= 0) house += 13;
+    // Houses are always 1-12 regardless of sign count
+    if (house > 12) house -= 12;
+    return house;
+  }
+
+  // 12-sign mode: traditional 30° division
   const ascSignIndex = Math.floor(normAsc / 30);
   const planetSignIndex = Math.floor(normLong / 30);
   let house = planetSignIndex - ascSignIndex + 1;
@@ -182,11 +203,17 @@ export function calculateChartRulerStatus(
   currentPositions: Record<string, PlanetPosition>
 ): ChartRulerStatus {
   const ascendantSign = birthChart.ascendant.sign;
+  
+  // Auto-detect 13-sign mode
+  const use13Signs = ascendantSign === 'ophiuchus' ||
+    Object.values(currentPositions).some(p => p.sign === 'ophiuchus') ||
+    Object.values(birthChart.planets).some(p => p.sign === 'ophiuchus');
   const chartRulerMap: Record<ZodiacSign, string> = {
     'aries': 'Mars', 'taurus': 'Venus', 'gemini': 'Mercury',
     'cancer': 'Moon', 'leo': 'Sun', 'virgo': 'Mercury',
     'libra': 'Venus', 'scorpio': 'Pluto', 'sagittarius': 'Jupiter',
-    'capricorn': 'Saturn', 'aquarius': 'Uranus', 'pisces': 'Neptune'
+    'capricorn': 'Saturn', 'aquarius': 'Uranus', 'pisces': 'Neptune',
+    'ophiuchus': 'Chiron'
   };
   
   const chartRuler = chartRulerMap[ascendantSign];
@@ -244,7 +271,7 @@ export function calculateChartRulerStatus(
         orb,
         strength,
         activatedHouse: 0,
-        natalHouse: getWholeSignHouse(natalRuler.longitude, birthChart.ascendant.longitude),
+        natalHouse: getWholeSignHouse(natalRuler.longitude, birthChart.ascendant.longitude, use13Signs),
         transitingSign: position.sign,
         natalSign: natalRuler.sign,
         isChartRulerActivated: true,
@@ -260,7 +287,7 @@ export function calculateChartRulerStatus(
   const aspectStrength = aspects.reduce((sum, a) => sum + a.strength, 0) / Math.max(aspects.length, 1);
   const overallStrength = Math.min(100, (dignityScore + 5) * 10 + aspectStrength * 0.3);
   
-  let guidance = '';
+  let guidance: string;
   if (isInDomicile) {
     guidance = `Your chart ruler ${chartRuler} is in its home sign ${currentRuler.sign}. You radiate authenticity.`;
   } else if (isExalted) {
@@ -274,7 +301,7 @@ export function calculateChartRulerStatus(
   return {
     chartRuler,
     currentSign: currentRuler.sign,
-    currentHouse: getWholeSignHouse(currentRuler.longitude, birthChart.ascendant.longitude),
+    currentHouse: getWholeSignHouse(currentRuler.longitude, birthChart.ascendant.longitude, use13Signs),
     natalPosition: natalRuler,
     isInDomicile,
     isExalted,
@@ -319,16 +346,29 @@ export function calculatePersonalTransits(
   date: Date = new Date()
 ): PersonalTransit[] {
   const transits: PersonalTransit[] = [];
+  
+  // Guard against null/missing ascendant (can happen with incomplete birth charts)
+  if (!birthChart.ascendant || typeof birthChart.ascendant.longitude !== 'number') {
+    console.warn('[birthChartIntegration] Birth chart missing ascendant — skipping transit calculation');
+    return transits;
+  }
+  
   const ascendantDegree = birthChart.ascendant.longitude;
   const ascendantSign = birthChart.ascendant.sign;
+  
+  // Auto-detect 13-sign mode by checking for Ophiuchus in the data
+  const use13Signs = ascendantSign === 'ophiuchus' || 
+    Object.values(currentPositions).some(p => p.sign === 'ophiuchus') ||
+    Object.values(birthChart.planets).some(p => p.sign === 'ophiuchus');
   
   const chartRulerMap: Record<ZodiacSign, string> = {
     'aries': 'Mars', 'taurus': 'Venus', 'gemini': 'Mercury',
     'cancer': 'Moon', 'leo': 'Sun', 'virgo': 'Mercury',
     'libra': 'Venus', 'scorpio': 'Pluto', 'sagittarius': 'Jupiter',
-    'capricorn': 'Saturn', 'aquarius': 'Uranus', 'pisces': 'Neptune'
+    'capricorn': 'Saturn', 'aquarius': 'Uranus', 'pisces': 'Neptune',
+    'ophiuchus': 'Chiron'
   };
-  const chartRuler = chartRulerMap[ascendantSign];
+  const chartRuler = chartRulerMap[ascendantSign] || chartRulerMap['scorpio'];
   
   Object.entries(currentPositions).forEach(([transitingName, transitingPos]) => {
     Object.entries(birthChart.planets).forEach(([natalName, natalPos]) => {
@@ -338,7 +378,7 @@ export function calculatePersonalTransits(
       
       if (aspect) {
         const strength = calculateTransitStrength(transitingName, natalName, aspect, orb);
-        const natalHouse = getWholeSignHouse(natalPos.longitude, ascendantDegree);
+        const natalHouse = getWholeSignHouse(natalPos.longitude, ascendantDegree, use13Signs);
         
         if (strength >= 20) {
           transits.push({
@@ -348,7 +388,7 @@ export function calculatePersonalTransits(
             aspect,
             orb,
             strength,
-            activatedHouse: getWholeSignHouse(transitingPos.longitude, ascendantDegree),
+            activatedHouse: getWholeSignHouse(transitingPos.longitude, ascendantDegree, use13Signs),
             natalHouse,
             transitingSign: transitingPos.sign,
             natalSign: natalPos.sign,
@@ -433,7 +473,10 @@ function calculateTransitDuration(
 /**
  * Get current planetary positions using Swiss Ephemeris
  */
-export async function getCurrentPlanetaryPositions(date: Date = new Date()): Promise<Record<string, PlanetPosition>> {
+export async function getCurrentPlanetaryPositions(
+  date: Date = new Date(),
+  zodiacOptions?: { zodiacFrame?: 'tropical' | 'sidereal'; signCount?: 12 | 13 }
+): Promise<Record<string, PlanetPosition>> {
   try {
     // Import the Swiss Ephemeris engine dynamically to avoid circular dependencies
     const { calculateJulianDay, calculateAllPlanets } = await import('../astrology/services/swiss-ephemeris/engine');
@@ -445,13 +488,29 @@ export async function getCurrentPlanetaryPositions(date: Date = new Date()): Pro
       date.getUTCMinutes(),
       date.getUTCSeconds()
     );
-    const positions = calculateAllPlanets(jd);
+    // Pass zodiac options to the engine — accepts 'sidereal' | '12-sign' | '13-sign' as legacy string,
+    // or a CalcOptions object with zodiacFrame + signCount
+    const calcOpts = zodiacOptions?.zodiacFrame === 'sidereal'
+      ? 'sidereal'
+      : zodiacOptions?.signCount === 13
+        ? '13-sign'
+        : undefined;
+    const positions = calculateAllPlanets(jd, undefined, calcOpts);
     
     const result: Record<string, PlanetPosition> = {};
     
     for (const [planet, pos] of Object.entries(positions)) {
       // Handle different property names that might exist on CelestialBody
-      const celestialBody = pos as any;
+      interface ExtendedCelestialBody {
+        longitude: number;
+        sign?: string;
+        degreeInSign?: number;
+        minute?: number;
+        isRetrograde?: boolean;
+        retrograde?: boolean;
+        speed?: number;
+      }
+      const celestialBody = pos as unknown as ExtendedCelestialBody;
       result[planet] = {
         longitude: celestialBody.longitude,
         sign: (celestialBody.sign || 'aries').toLowerCase() as ZodiacSign,

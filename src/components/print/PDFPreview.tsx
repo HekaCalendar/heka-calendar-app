@@ -4,6 +4,7 @@
  */
 
 import React, { useState, useEffect, useRef, useCallback } from 'react';
+import { useTranslation } from 'react-i18next';
 import * as pdfjs from 'pdfjs-dist';
 import type { PrintJob } from './types';
 
@@ -23,6 +24,7 @@ export const PDFPreview: React.FC<PDFPreviewProps> = ({
   onPrint,
   onDownload
 }) => {
+  const { t } = useTranslation('print');
   const [pdf, setPdf] = useState<pdfjs.PDFDocumentProxy | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [scale, setScale] = useState(1.0);
@@ -45,8 +47,8 @@ export const PDFPreview: React.FC<PDFPreviewProps> = ({
         setPdf(loadedPdf);
         setNumPages(loadedPdf.numPages);
         setIsLoading(false);
-      } catch (err) {
-        setError('Failed to load PDF preview');
+      } catch {
+        setError(t('failedToLoadPDF'));
         setIsLoading(false);
       }
     };
@@ -89,7 +91,7 @@ export const PDFPreview: React.FC<PDFPreviewProps> = ({
         renderTaskRef.current = null;
       } catch (err) {
         if ((err as Error).message !== 'Rendering cancelled') {
-          setError('Failed to render page');
+          setError(t('failedToRenderPage'));
         }
       }
     };
@@ -129,7 +131,7 @@ export const PDFPreview: React.FC<PDFPreviewProps> = ({
         <div className="error-content">
           <span className="error-icon">⚠️</span>
           <p>{error}</p>
-          <button onClick={onClose}>Close</button>
+          <button onClick={onClose}>{t('close')}</button>
         </div>
       </div>
     );
@@ -141,26 +143,28 @@ export const PDFPreview: React.FC<PDFPreviewProps> = ({
       <div className="pdf-preview-header">
         <div className="header-left">
           <button className="header-btn" onClick={onClose}>
-            ✕ Close
+            ✕ {t('close')}
           </button>
           <span className="document-title">{printJob.filename}</span>
         </div>
         
         <div className="header-center">
-          <button 
-            className="nav-btn" 
+          <button
+            className="nav-btn"
             onClick={() => goToPage(currentPage - 1)}
             disabled={currentPage <= 1}
+            aria-label={t('previous')}
           >
             ‹
           </button>
           <span className="page-indicator">
-            Page {currentPage} of {numPages}
+            {t('pageOf', { current: currentPage, total: numPages })}
           </span>
-          <button 
-            className="nav-btn" 
+          <button
+            className="nav-btn"
             onClick={() => goToPage(currentPage + 1)}
             disabled={currentPage >= numPages}
+            aria-label={t('nextItem')}
           >
             ›
           </button>
@@ -168,15 +172,15 @@ export const PDFPreview: React.FC<PDFPreviewProps> = ({
         
         <div className="header-right">
           <div className="zoom-controls">
-            <button className="header-btn" onClick={zoomOut}>−</button>
+            <button className="header-btn" onClick={zoomOut} aria-label={t('zoomOut')}>−</button>
             <span className="zoom-level">{Math.round(scale * 100)}%</span>
-            <button className="header-btn" onClick={zoomIn}>+</button>
+            <button className="header-btn" onClick={zoomIn} aria-label={t('zoomIn')}>+</button>
           </div>
           <button className="header-btn secondary" onClick={onDownload}>
-            💾 Save
+            💾 {t('save')}
           </button>
           <button className="header-btn primary" onClick={onPrint}>
-            🖨️ Print
+            🖨️ {t('print')}
           </button>
         </div>
       </div>
@@ -186,7 +190,7 @@ export const PDFPreview: React.FC<PDFPreviewProps> = ({
         {isLoading ? (
           <div className="loading-state">
             <div className="spinner" />
-            <p>Loading PDF preview...</p>
+            <p>{t('loadingPDF')}</p>
           </div>
         ) : (
           <div className="canvas-container">

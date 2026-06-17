@@ -26,14 +26,18 @@ public class MainActivity extends BridgeActivity {
         settings.setJavaScriptEnabled(true);
         settings.setDomStorageEnabled(true);
         settings.setDatabaseEnabled(true);
-        settings.setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
+        settings.setMixedContentMode(WebSettings.MIXED_CONTENT_NEVER_ALLOW);
         
         // Set transparent background
         webView.setBackgroundColor(0x00000000);
         webView.setLayerType(WebView.LAYER_TYPE_HARDWARE, null);
         
-        // Clear WebView caches to ensure fresh content
-        webView.clearCache(true);
-        webView.clearHistory();
+        // NOTE: Do NOT clear WebView caches on every launch.
+        // clearCache(true) forces complete re-download of all JS/CSS/WASM assets
+        // on every startup, causing 500-1000ms of main-thread blocking and
+        // severe jank ("Skipped X frames!" / Davey warnings).
+        // Cache invalidation is handled by Vite's content-hashed filenames.
+        // webView.clearCache(true);
+        // webView.clearHistory();
     }
 }

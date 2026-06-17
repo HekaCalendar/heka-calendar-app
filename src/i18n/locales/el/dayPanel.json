@@ -1,0 +1,239 @@
+{
+  "celestialGuide": "Ουρανοδρόμιο",
+  "journal": "Ημερολόγιο",
+  "notes": "Σημειώσεις",
+  "events": "Εκδηλώσεις",
+  "tasks": "Εργασίες",
+  "transits": "Μεταφορές",
+  "mood": "Συναίσθημα",
+  "vibe": "Αύρα",
+  "energy": "Ενέργεια",
+  "hekaRune": "ΧΕΚΑ Ρουνί",
+  "celestialAffirmation": "Ουράνια Επιβεβαίωση",
+  "moodTracker": "Ακολουθητής Συναισθήματος",
+  "vibeColor": "Χρώμα Αύρας",
+  "addNote": "Προσθήκη σημείωσης...",
+  "addEvent": "Προσθήκη Εκδηλώσεως",
+  "addTask": "Προσθήκη Εργασίας",
+  "eventTitle": "Τίτλος Εκδηλώσεως",
+  "taskTitle": "Τίτλος Εργασίας",
+  "taskCompleted": "Ολοκληρωμένο",
+  "taskPending": "Εκκρεμεί",
+  "editNote": "Επεξεργασία Σημείωσης",
+  "deleteNote": "Διαγραφή Σημείωσης",
+  "notePlaceholder": "Γράψτε τις σκέψεις σας εδώ...",
+  "journalPlaceholder": "Καταγράψτε την ημέρα σας...",
+  "eventPlaceholder": "Τι συμβαίνει;",
+  "taskPlaceholder": "Τι χρειάζεται να γίνει;",
+  "addNewNote": "+ Νέα Σημείωση",
+  "addNewEvent": "+ Νέα Εκδηλώση",
+  "addNewTask": "+ Νέα Εργασία",
+  "noNotes": "Δεν υπάρχουν σημειώσεις για αυτήν την ημέρα",
+  "noEvents": "Δεν υπάρχουν εκδηλώσεις για αυτήν την ημέρα",
+  "noTasks": "Δεν υπάρχουν εργασίες για αυτήν την ημέρα",
+  "noJournal": "Δεν υπάρχει καταχώρηση ημερολογίου για αυτήν την ημέρα",
+  "transitProgress": "Πρόοδος Μεταφοράς",
+  "transitRemaining": "{{percent}}% απομένει",
+  "currentMood": "Τρέχον Συναίσθημα",
+  "selectMood": "Επιλέξτε το συναίσθημά σας",
+  "moods": {
+    "joyful": "Χαρούμενος",
+    "happy": "Ευτυχισμένος",
+    "content": "Κατάσταση ικανοποίησης",
+    "neutral": "Ουδέτερος",
+    "tired": "Κούραση",
+    "sad": "Λυπημένος",
+    "anxious": "Ανxious",
+    "frustrated": "Θυμωμένος",
+    "angry": "Θυμωμένος",
+    "inspired": "Ενθουσιασμένος",
+    "focused": "Συγκεντρωμένος",
+    "peaceful": "Ειρηνικός"
+  },
+  "runeCast": "Ρίψη runes...",
+  "runeReveal": "Αποκάλυψη Rune",
+  "runeBlessing": "Η ευλογία της ημέρας",
+  "runeWisdom": "Σοφία Rune",
+  "runeEnergy": "Δύναμη Rune",
+  "emptyState": "Επιλέξτε μια μέρα για να δείτε λεπτομέρειες",
+  "closePanel": "Κλείσιμο πίνακα",
+  "addTaskBtn": "+ Εργασία",
+  "header": {
+    "monthOf": "Μήνας {{month}} / 13",
+    "hekaYear": "Ετος HEKA {{year}}"
+  },
+  "moon": {
+    "calculating": "Υπολογισμός θέσης της σελήνης...",
+    "unavailable": "Δεδομένα φάσης της σελήνης μη διαθέσιμα",
+    "waxing": "Αύξηση",
+    "waning": "Μείωση",
+    "illuminated": "{{percent}}% φωτεινότητα",
+    "age": "Ηλικία: {{age}} ημέρες",
+    "swissEphemeris": "Ελβετική Επιθεώρηση",
+    "southernHemisphere": "Νότιο ημισφαίριο",
+    "northernHemisphere": "Βόρειο ημισφαίριο"
+  },
+  "holidays": {
+    "inLocation": "Πανηγύρεις σε {{location}}"
+  },
+  "astrology": {
+    "dailyCosmicGuidance": "Καθημερινή Κοσμική Οδηγία",
+    "personalizedFor": "Προσωποποιημένη για {{name}}",
+    "birthChartActive": "Δραστήριος Γενεθλιακός Χάρτης",
+    "calculatingTransits": "Υπολογισμός προσωπικών σας μετακινήσεων...",
+    "connectingCelestial": "Σύνδεση με την ουράνια νοημοσύνη...",
+    "unavailable": "Ουράνια καθοδήγηση μη διαθέσιμη. Ελέγξτε την ενότητα των Αστρικών για αναλυτική αστρολογία.",
+    "sunrise": "Ηλιόλουστρο: {{time}}",
+    "sunset": "Ηλιοβασίλεμα: {{time}}",
+    "planetaryHour": "Πλανητική Ώρα: {{planet}}",
+    "locationPin": "{{location}}",
+    "activeTransits": "Ενεργές Μετακινήσεις για εσάς σήμερα",
+    "moonIn": "Φεγγάρι στο {{sign}}",
+    "sunIn": "Ήλιος στο {{sign}}",
+    "todaysTheme": "Θέμα Σήμερα:",
+    "cosmicGuidance": "Κοσμική Οδηγία",
+    "reflection": "Αναφορά",
+    "affirmation": "Επικύρωση",
+    "birthChartCta": {
+      "title": "Θέλετε προσωποποιημένες μετακινήσεις;",
+      "description": "Προσθέστε το γενεθλιακό σας χάρτη στην ενότητα Αστέρια για να δείτε πώς η косμική καιρική σήμερα επηρεάζει άμεσα εσάς προσωπικά."
+    }
+  },
+  "lunarMansion": {
+    "title": "Λουnar Mansion",
+    "trueMode": "ΑΛΗΘΕΙΑΚΗ ΛΕΙΤΟΥΡΓΙΑ",
+    "calculating": "Υπολογισμός πλαγίου θέσης του σεληνίου...",
+    "totem": "Τοτემ",
+    "gift": "Δώρο",
+    "ruler": "Αρχηγός",
+    "quality": "Ποιότητα",
+    "quarter": "Τετράδα",
+    "sunTravelsThrough": "Ο Ήλιος ταξιδεύει μέσα από το {{name}}",
+    "quarters": {
+      "initiation": "Αρχή — το σπόρο φυτρώνει",
+      "deepening": "Βαθύνοντας — οι ρίζες κρατάνε",
+      "crisis": "Κρίση — η δοκιμή έρχεται",
+      "completion": "Ολοκλήρωση — το φρούτο μαραίνεται"
+    }
+  },
+  "solarReturn": {
+    "title": "Πραγματική Ηλιακή Επιστροφή",
+    "titleInDays": "Πραγματική Ηλιακή Επιστροφή σε {{count}} μέρα{{suffix}}",
+    "trueMode": "ΑΛΗΘΕΙΑΚΗ ΛΕΙΤΟΥΡΓΙΑ",
+    "today": "Ο Ήλιος επιστρέφει στην πλαγία γενεθλιακή σας μήκος σήμερα.",
+    "approaching": "Ο Ήλιος θα επιστρέψει στην πλαγία θέση σας {{sign}} στις {{date}}.",
+    "description": "Στην Αληθινή HEKA λειτουργία, η γενέθλιά σας καθορίζεται από τα αστέρια, όχι από το αστικό ημερολόγιο.",
+    "exactOrb": "Ακριβές μέχρι {{orb}} λεπτά."
+  },
+  "notesSection": {
+    "tasksAndNotes": "Εργασίες ({{tasks}}) · Σημειώσεις ({{notes}})",
+    "tasksOnly": "Εργασίες ({{count}})",
+    "notesAndTasks": "Σημειώσεις & Εργασίες ({{count}})",
+    "addNote": "+ Σημείωση",
+    "longHoldHint": "Παραμείνετε για επιλογές · Διπλό-κουβάλτε μια εργασία για επεξεργασία",
+    "noNotesOrTasks": "Καμία σημείωση ή εργασία για αυτήν την ημέρα.",
+    "createNoteHint": "Κάντε κλικ <0>+ Σημείωση</0> ή <1>⚡ Προσθήκη Εργασίας</1> παραπάνω για να δημιουργήσετε μια."
+  },
+  "noteEditor": {
+    "makeTask": "⚡ Κάντε αυτή μια εργασία",
+    "dueTime": "Χρόνος λήξης",
+    "remindMe": "Υπενθυμίστε μου",
+    "reminders": {
+      "atTime": "Στην ώρα της εργασίας",
+      "5min": "5 λεπτά πριν",
+      "10min": "10 λεπτά πριν",
+      "15min": "15 λεπτά πριν",
+      "30min": "30 λεπτά πριν",
+      "1hour": "1 ώρα πριν"
+    },
+    "howAreYouFeeling": "Πώς αισθάνεσαι;",
+    "taskPlaceholder": "Τι σκοπεύετε να επιτύχετε;",
+    "notePlaceholder": "Γράψτε την σημείωσή σας...",
+    "saveTask": "Αποθήκευση Εργασίας",
+    "saveNote": "Αποθήκευση Σημείωσης",
+    "cancel": "Ακύρωση"
+  },
+  "noteItem": {
+    "markComplete": "Σημείωσε ως ολοκληρωμένη",
+    "completed": "Ολοκληρωμένο",
+    "task": "Εργασία",
+    "delete": "Διαγραφή"
+  },
+  "selection": {
+    "selectedFromDays": "{{count}} επιλεγμένα από {{days}} μέρα{{suffix}}",
+    "done": "Έτοιμο",
+    "selectAll": "Επιλογή Όλων",
+    "duplicate": "Αντιγραφή...",
+    "delete": "Διαγραφή",
+    "manageDuplicates": "Διπλότυπα:",
+    "duplicateTo": "Αντιγραφή σε:",
+    "nextWeek": "Επόμενη Εβδομάδα",
+    "nextMonth": "Επόμενος Μήνας",
+    "everyDay": "Κάθε {{day}}",
+    "undoEveryDay": "Αναίρεση Κάθε {{day}}",
+    "specificDay": "Συγκεκριμένη Μέρα...",
+    "chooseDays": "Επιλογή Ημέρας/ΩΝ...",
+    "back": "Πίσω"
+  },
+  "dayPicker": {
+    "cancel": "Ακύρωση"
+  },
+  "multiDayPicker": {
+    "selectedCount": "{{count}} μέρα{{suffix}} επιλεγμένη",
+    "confirm": "Επιβεβαίωση",
+    "cancel": "Ακύρωση"
+  },
+  "confirmations": {
+    "deleteNote": "Διαγραφή αυτής της σημείωσης;",
+    "deleteSelected": "Διαγραφή {{count}} επιλεγμένων σημειώσεων από {{days}} μέρες;",
+    "duplicateEveryDay": "Αντιγραφή αυτών των {{count}} στοιχείων σε ΚΑΘΕ {{day}} για το υπόλοιπο του έτους;",
+    "undoDuplicates": "Αφαίρεση όλων των διπλότυπων των αυτών των {{count}} σημειώσεων;"
+  },
+  "alerts": {
+    "couldNotCalculateDate": "Δεν ήταν δυνατό να υπολογιστεί η ημερομηνία στόχος",
+    "duplicatedToNextWeek": "Αντιγράφηκαν {{items}} στην επόμενη εβδομάδα ({{month}} {{day}})",
+    "duplicatedToNextMonth": "Αντιγράφηκαν {{items}} στον επόμενο μήνα ({{month}} {{day}})",
+    "duplicatedToDays": "Αντιγράφηκε στα {{count}} {{day}}s",
+    "duplicatedNotes": "Διπλότυπα {{count}} σημείωση(εις)",
+    "removedDuplicates": "Αφαίρεση διπλότυπων σημειώσεων",
+    "duplicatedToMonth": "Διπλότυπα {{count}} σημείωση(εις) για το επόμενο μήνα",
+    "duplicatedToDaysCount": "Διπλότυπα {{count}} σημείωση(εις) για {{days}} μέρα(ες)",
+    "duplicatedSelectedItems": "Διπλότυπα επιλεγμένα στοιχεία για {{count}} μέρα(ες)",
+    "signInToSaveTasks": "Πρέπει να είστε συνδεδεμένος για να αποθηκεύετε εργασίες. Παρακαλώ ανοίξτε το μενού Λογαριασμού και συνδεθείτε ξανά.",
+    "unableToSaveTask": "Δεν είναι δυνατή η αποθήκευση της εργασίας. Σφάλμα: {{error}}"
+  },
+  "dow": {
+    "sunday": "Κυριακή",
+    "monday": "Δευτέρα",
+    "tuesday": "Τρίτη",
+    "wednesday": "Τετάρτη",
+    "thursday": "Πέμπτη",
+    "friday": "Παρασκευή",
+    "saturday": "Σάββατο",
+    "short": {
+      "sun": "Κυρ",
+      "mon": "Δευ",
+      "tue": "Τρ",
+      "wed": "Τε",
+      "thu": "Πεμ",
+      "fri": "Παρ",
+      "sat": "Σαβ"
+    }
+  },
+  "noteCategories": {
+    "personal": "Προσωπικά",
+    "work": "Εργασία",
+    "spiritual": "Πνευματικά",
+    "family": "Οικογένεια",
+    "health": "Υγεία",
+    "creative": "Δημιουργικά",
+    "general": "Γενικά"
+  },
+  "moodScale": {
+    "1": "Πολύ χαμηλό",
+    "2": "Χαμηλό",
+    "3": "Νεutraλ",
+    "4": "Καλή",
+    "5": "Εξαιρετική"
+  }
+}

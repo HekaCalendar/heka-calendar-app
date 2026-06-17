@@ -1,0 +1,49 @@
+{
+  "best": "Najlepšie: {{count}}",
+  "title": "Tvoja Cesta",
+  "close": "Zatvoriť",
+  "reset": "Resetovať Štatistiky",
+  "avgMood": "Priemerné Nálada",
+  "dayStreak": "Deňová Šprintánia",
+  "totalNotes": "Celkom Poznámok",
+  "wordsWritten": "Napísané Slová",
+  "achievements": "Úspechy ({{earned}}/{{total}})",
+  "resetConfirm": "Resetovať",
+  "progressRatio": "{{current}} / {{cieľ}}",
+  "monthlyTooltip": "{{month}} {{year}}: {{count}} poznámiek",
+  "notesByCategory": "Poznámky podľa Kategórie",
+  "monthlyActivity": "Mesačná Aktivita",
+  "mostActiveMonth": "Tvoje najaktívnejšie mesiac bol \u003cstrong\u003e{{month}}\u003c/strong\u003e s \u003cstrong\u003e{{count}}\u003c/strong\u003e poznámkami",
+  "categories": {
+    "work": "Práca",
+    "family": "Rodiak",
+    "health": "Zdravie",
+    "general": "Všeobecné",
+    "personal": "Osobné",
+    "creative": "Tvorca",
+    "spiritual": "Duchovné"
+  },
+  "progressToCentury": "Postup k Století klubu",
+  "resetConfirmTitle": "Resetovať Štatistiky",
+  "badges": {
+    "century": {
+      "name": "Století Klub"
+    },
+    "explorer": {
+      "name": "Prezývač"
+    },
+    "archivist": {
+      "name": "Archivár"
+    },
+    "first-note": {
+      "name": "Prvé Slová"
+    },
+    "week-streak": {
+      "name": "Týždeňový Bojovník"
+    },
+    "month-streak": {
+      "name": "Mesačný Majster"
+    }
+  },
+  "resetConfirmDescription": "Si si istý, že chceš resetovať všetky štatistiky? Toto nie je možné vrátiť späť."
+}

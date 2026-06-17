@@ -217,7 +217,6 @@ class LocalStoragePersistence implements PersistenceLayer {
       return;
     }
     
-    console.log(`[Persistence] Migrating from version ${version || 'none'} to ${CURRENT_VERSION}`);
     
     // Migrate from legacy storage
     await this.migrateFromLegacy();
@@ -228,23 +227,245 @@ class LocalStoragePersistence implements PersistenceLayer {
   // Migrate profiles and charts from legacy storage
   private async migrateFromLegacy(): Promise<void> {
     try {
-      // Check if we already have profiles in new system
       const existingProfiles = await this.getAllProfiles();
-      if (existingProfiles.length > 0) {
-        // New system has data, but still check for legacy charts that might be orphaned
+      const existingIds = new Set(existingProfiles.map(p => p.id));
+
+      // ── Migrate from Calendar Redux slice (heka-calendar-state) ──────────
+      await this.migrateFromCalendarSlice(existingIds);
+
+      // ── Migrate from old ProfileManager (celestial-profiles-v1) ──────────
+      await this.migrateFromOldProfileManager(existingIds);
+
+      // If new system is still empty, try very old legacy keys
+      if (existingProfiles.length === 0) {
+        await this.migrateFromVeryOldLegacy();
+      } else {
+        // New system has data, but still check for orphaned legacy charts
         await this.syncLegacyCharts();
-        return;
+      }
+    } catch (error) {
+      console.error('[Persistence] Migration failed:', error);
+    }
+  }
+
+  // Migrate from Calendar Redux slice stored in heka-calendar-state
+  private async migrateFromCalendarSlice(existingIds: Set<string>): Promise<void> {
+    try {
+      const stateJson = localStorage.getItem('heka-calendar-state');
+      if (!stateJson) return;
+
+      const state = JSON.parse(stateJson);
+      const calendarProfiles: Array<{
+        id: string; name: string; birthDate: string; birthTime: string;
+        birthTimeUnknown?: boolean; location: { name: string; latitude: number; longitude: number };
+        timezone: string; natalChart?: unknown; preferences?: Record<string, unknown>;
+        createdAt?: string; updatedAt?: string;
+      }> = state?.astroProfiles || [];
+
+      if (calendarProfiles.length === 0) return;
+
+      let migratedCount = 0;
+      for (const cp of calendarProfiles) {
+        if (existingIds.has(cp.id)) continue; // Already in new system
+
+        const now = Date.now() as unknown as import('../../types').Timestamp;
+        const profile: AstroProfile = {
+          id: cp.id as ProfileId,
+          name: cp.name,
+          birthData: {
+            name: cp.name,
+            birthDate: cp.birthDate,
+            birthTime: cp.birthTime || '12:00',
+            location: {
+              latitude: cp.location?.latitude ?? 0,
+              longitude: cp.location?.longitude ?? 0,
+              locationName: cp.location?.name,
+            },
+            timezone: cp.timezone || 'UTC',
+          },
+          createdAt: cp.createdAt ? (new Date(cp.createdAt).getTime() as unknown as import('../../types').Timestamp) : now,
+          updatedAt: cp.updatedAt ? (new Date(cp.updatedAt).getTime() as unknown as import('../../types').Timestamp) : now,
+          preferences: {
+            zodiacSystem: (cp.preferences?.zodiacSystem as any) || '12-sign',
+            zodiacFrame: (cp.preferences?.zodiacFrame as any) || 'tropical',
+            signCount: (cp.preferences?.signCount as 12 | 13) || 12,
+            houseSystem: (cp.preferences?.houseSystem as any) || 'placidus',
+            showAspects: true,
+            showMinorAspects: false,
+            showRetrogrades: true,
+            showDignities: false,
+            defaultChartView: 'wheel',
+            ayanamsa: null,
+            showNakshatras: false,
+            nakshatraSystem: 'none',
+          },
+          chartIds: []
+        };
+
+        await this.saveProfile(profile);
+        existingIds.add(cp.id);
+        migratedCount++;
+
+        // Migrate natalChart if present in calendar profile
+        if (cp.natalChart) {
+          const chartId = createChartId();
+          const migratedChart: NatalChart = {
+            ...(cp.natalChart as any),
+            id: chartId,
+            profileId: cp.id as ProfileId,
+            calculatedAt: Date.now() as unknown as import('../../types').Timestamp,
+            version: '2.0',
+            zodiacSystem: (cp.preferences?.zodiacSystem as any) || '12-sign',
+            zodiacFrame: (cp.preferences?.zodiacFrame as any) || 'tropical',
+            signCount: (cp.preferences?.signCount as 12 | 13) || 12,
+            houseSystem: (cp.preferences?.houseSystem as any) || 'placidus',
+          } as NatalChart;
+          await this.saveChart(migratedChart);
+          const updatedProfile: AstroProfile = {
+            ...profile,
+            updatedAt: Date.now() as unknown as import('../../types').Timestamp,
+            chartIds: [chartId as string]
+          };
+          await this.saveProfile(updatedProfile);
+        }
       }
 
-      // Migrate legacy profiles
+      if (migratedCount > 0) {
+        /* no-op */
+      }
+
+      // Migrate selected profile id if new system doesn't have one
+      const currentSelected = await this.getSelectedProfile();
+      if (!currentSelected && state?.selectedAstroProfileId) {
+        await this.setSelectedProfile(state.selectedAstroProfileId as ProfileId);
+      }
+    } catch (err) {
+      console.error('[Persistence] Calendar slice migration failed:', err);
+    }
+  }
+
+  // Migrate from old ProfileManager (celestial-profiles-v1)
+  private async migrateFromOldProfileManager(existingIds: Set<string>): Promise<void> {
+    try {
+      const profilesJson = localStorage.getItem('celestial-profiles-v1');
+      if (!profilesJson) return;
+
+      const oldProfiles: Array<{
+        id: string; name: string; createdAt: string; updatedAt: string;
+        isDefault?: boolean; tags?: string[]; notes?: string; avatar?: string;
+      }> = JSON.parse(profilesJson);
+
+      if (!Array.isArray(oldProfiles) || oldProfiles.length === 0) return;
+
+      let migratedCount = 0;
+      for (const op of oldProfiles) {
+        if (existingIds.has(op.id)) continue;
+
+        // Try to find birth data from old natal-chart-* keys
+        const chartKey = `natal-chart-${op.id}`;
+        const chartJson = localStorage.getItem(chartKey);
+        let birthData: import('../../types').BirthData = {
+          name: op.name,
+          birthDate: new Date().toISOString().split('T')[0],
+          birthTime: '12:00',
+          location: { latitude: 0, longitude: 0 },
+          timezone: 'UTC',
+        };
+
+        if (chartJson) {
+          const oldChart = JSON.parse(chartJson);
+          if (oldChart.birthData) {
+            birthData = {
+              name: op.name,
+              birthDate: oldChart.birthData.date || birthData.birthDate,
+              birthTime: oldChart.birthData.time || birthData.birthTime,
+              location: {
+                latitude: oldChart.birthData.latitude ?? 0,
+                longitude: oldChart.birthData.longitude ?? 0,
+                locationName: oldChart.birthData.locationName,
+              },
+              timezone: oldChart.birthData.timezone || 'UTC',
+            };
+          }
+        }
+
+        const profile: AstroProfile = {
+          id: op.id as ProfileId,
+          name: op.name,
+          birthData,
+          notes: op.notes,
+          tags: op.tags,
+          createdAt: new Date(op.createdAt).getTime() as unknown as import('../../types').Timestamp,
+          updatedAt: new Date(op.updatedAt).getTime() as unknown as import('../../types').Timestamp,
+          preferences: {
+            zodiacSystem: '12-sign',
+            zodiacFrame: 'tropical',
+            signCount: 12,
+            houseSystem: 'placidus',
+            showAspects: true,
+            showMinorAspects: false,
+            showRetrogrades: true,
+            showDignities: false,
+            defaultChartView: 'wheel',
+            ayanamsa: null,
+            showNakshatras: false,
+            nakshatraSystem: 'none',
+          },
+          chartIds: []
+        };
+
+        await this.saveProfile(profile);
+        existingIds.add(op.id);
+        migratedCount++;
+
+        // Migrate the old chart if it exists
+        if (chartJson) {
+          const oldChart = JSON.parse(chartJson);
+          const chartId = createChartId();
+          const migratedChart: NatalChart = {
+            ...oldChart,
+            id: chartId,
+            profileId: op.id as ProfileId,
+            calculatedAt: oldChart.calculatedAt || Date.now(),
+            version: '2.0',
+            zodiacSystem: oldChart.zodiacSystem || '12-sign',
+            zodiacFrame: oldChart.zodiacFrame || (oldChart.zodiacSystem === 'sidereal' ? 'sidereal' : 'tropical'),
+            signCount: oldChart.signCount || (oldChart.zodiacSystem === '13-sign' ? 13 : 12),
+            houseSystem: oldChart.houseSystem || 'placidus',
+          } as NatalChart;
+          await this.saveChart(migratedChart);
+          const updatedProfile: AstroProfile = {
+            ...profile,
+            updatedAt: Date.now() as unknown as import('../../types').Timestamp,
+            chartIds: [chartId as string]
+          };
+          await this.saveProfile(updatedProfile);
+        }
+      }
+
+      if (migratedCount > 0) {
+        /* no-op */
+      }
+
+      // Migrate active profile selection
+      const oldActiveId = localStorage.getItem('celestial-active-profile-id');
+      const currentSelected = await this.getSelectedProfile();
+      if (!currentSelected && oldActiveId && existingIds.has(oldActiveId)) {
+        await this.setSelectedProfile(oldActiveId as ProfileId);
+      }
+    } catch (err) {
+      console.error('[Persistence] Old ProfileManager migration failed:', err);
+    }
+  }
+
+  // Migrate from very old legacy keys (heka:profiles, heka:active-profile)
+  private async migrateFromVeryOldLegacy(): Promise<void> {
+    try {
       const legacyProfiles = this.getItem<Array<{id: string; name: string; birthData: unknown; isDefault?: boolean}>>(LEGACY_KEYS.PROFILES);
       
       if (legacyProfiles && legacyProfiles.length > 0) {
-        console.log(`[Persistence] Migrating ${legacyProfiles.length} legacy profiles`);
         
         for (const legacy of legacyProfiles) {
-          // Get birth data from legacy profile
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
           const legacyBirthData = (legacy as any).birthData || {
             date: new Date().toISOString().split('T')[0],
             time: '12:00',
@@ -279,16 +500,10 @@ class LocalStoragePersistence implements PersistenceLayer {
           
           await this.saveProfile(profile);
           
-          // Migrate chart for this profile
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
           const legacyChart = this.getItem<Record<string, any>>(`${LEGACY_KEYS.CHART_PREFIX}${legacy.id}`);
           if (legacyChart) {
-            // Create a chart ID for the migrated chart
             const chartId = createChartId();
-            
-            // Create a properly structured chart
             const migratedChart: NatalChart = {
-              // eslint-disable-next-line @typescript-eslint/no-explicit-any
               ...(legacyChart as any),
               id: chartId,
               profileId: legacy.id as ProfileId,
@@ -301,7 +516,6 @@ class LocalStoragePersistence implements PersistenceLayer {
             } as NatalChart;
             
             await this.saveChart(migratedChart);
-            // Update profile with chartIds by creating new profile object
             const updatedProfile: AstroProfile = {
               ...profile,
               updatedAt: Date.now() as unknown as import('../../types').Timestamp,
@@ -311,19 +525,17 @@ class LocalStoragePersistence implements PersistenceLayer {
           }
         }
         
-        // Migrate active profile selection
         const legacyActive = this.getItem<string>(LEGACY_KEYS.ACTIVE_PROFILE);
         if (legacyActive && legacyProfiles.find(p => p.id === legacyActive)) {
           await this.setSelectedProfile(legacyActive as ProfileId);
         }
         
-        console.log('[Persistence] Legacy migration complete');
-      } else {
-        // No legacy profiles, but check for orphaned charts
-        await this.syncLegacyCharts();
       }
+      
+      // Always sync orphaned charts
+      await this.syncLegacyCharts();
     } catch (error) {
-      console.error('[Persistence] Migration failed:', error);
+      console.error('[Persistence] Very old legacy migration failed:', error);
     }
   }
 
@@ -371,7 +583,7 @@ class LocalStoragePersistence implements PersistenceLayer {
       }
       
       if (syncedCount > 0) {
-        console.log(`[Persistence] Synced ${syncedCount} legacy charts`);
+        /* no-op */
       }
     } catch (error) {
       console.error('[Persistence] Chart sync failed:', error);
@@ -380,7 +592,11 @@ class LocalStoragePersistence implements PersistenceLayer {
 
   // Helper to get all charts (needed for sync)
   private async getAllCharts(): Promise<NatalChart[]> {
-    return this.getItem<NatalChart[]>(STORAGE_KEYS.CHARTS) || [];
+    const raw = this.getItem<NatalChart[] | Record<string, NatalChart>>(STORAGE_KEYS.CHARTS);
+    if (!raw) return [];
+    if (Array.isArray(raw)) return raw;
+    // Charts may be stored as a Record/map object — convert to array
+    return Object.values(raw);
   }
 
   // Clear all data

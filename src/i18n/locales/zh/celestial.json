@@ -1,0 +1,1411 @@
+{
+  "ends": "结束",
+  "title": "今日天文指南",
+  "civil": "民用",
+  "speed": "速度",
+  "avoid": "避免",
+  "natal": "出生",
+  "house": "宫位",
+  "exact": "精确",
+  "began": "开始",
+  "status": "状态",
+  "traits": "特征",
+  "element": "元素",
+  "forDate": "对于 {{month}} {{day}}",
+  "bestFor": "最适合",
+  "fromDate": "从 {{month}} {{day}}",
+  "whatIsIt": "这是什么？",
+  "guidance": {
+    "today": "今天",
+    "mixed": "混合",
+    "career": "事业",
+    "health": "健康",
+    "timing": "时机",
+    "thisWeek": "本周",
+    "thisYear": "今年",
+    "finances": "财务",
+    "bestDays": "✦ 最佳日子",
+    "keyThemes": "关键主题",
+    "lifeAreas": "生活领域",
+    "excellent": "极佳",
+    "favorable": "有利",
+    "difficult": "困难",
+    "calculating": "正在计算天文指导...",
+    "challenging": "具有挑战性",
+    "overallScore": "总体评分",
+    "todaySubtitle": "当前天文天气",
+    "relationships": "人际关系",
+    "lunarGuidance": "☽ 月相指导",
+    "personalGrowth": "个人成长",
+    "thisWeekSubtitle": "7天宇宙预报",
+    "thisYearSubtitle": "{{year}} 概览",
+    "unableToGenerate": "此时无法生成指导。",
+    "yourCelestialRegion": "你的星座区域",
+    "planetaryHighlights": "行星亮点"
+  },
+  "duration": "持续时间",
+  "titlePast": "{{days}}天前的天文指南",
+  "civilDate": "民用日期",
+  "dayOfYear": "一年中的第几天",
+  "solarNoon": "太阳最高点",
+  "localTime": "当地时间：",
+  "lowEnergy": "低能量：休息，反思，计划",
+  "nextCheck": "下次检查",
+  "yearOfThe": "年份",
+  "planet": {
+    "in": "{{planet}} 在 {{sign}}",
+    "copy": "📋 复制",
+    "shadow": "🌑 阴影",
+    "growth": "🌱 成长",
+    "famous": "⭐ 著名",
+    "copied": "✓ 已复制！",
+    "tagline": "\"{{tagline}}\"",
+    "essence": "💫 本质",
+    "atDegree": "{{planet}} 在 {{degree}}° {{sign}}",
+    "archetype": "原型",
+    "dailyLife": "在日常生活中",
+    "shadowSide": "🌑 阴影面",
+    "deepWisdom": "🌙 正在传递 {{planet}} 在 {{sign}} 的深层智慧...",
+    "famousIntro": "你的 {{planet}} 在 {{sign}} 将你与这些有影响力的人物联系起来：",
+    "houseDignity": "{{symbol}} 宫 {{house}} • {{dignity}}",
+    "shareThisWith": "⭐ 你与此分享",
+    "deepWisdomSub": "{{planet}} 在 {{sign}}，宫 {{house}}",
+    "coreExpression": "你的核心表达",
+    "commonTriggers": "常见触发器",
+    "yourGrowthPath": "🌱 你的成长之路",
+    "alignedCareers": "对齐的职业道路",
+    "dailyAffirmation": "🙏 日常肯定",
+    "reflectionPrompts": "💭 反思提示",
+    "practicalExercises": "实践练习"
+  },
+  "daily": {
+    "orb": "{{orb}}° 容许度",
+    "good": "✓ 今天能量良好。大多数活动都是有利的。",
+    "mixed": "◆ 混合能量。谨慎行事。",
+    "loading": "正在计算精确位置...",
+    "watchOut": "⚠ 注意（{{count}})",
+    "quietDay": "平静的一天。没有重大过境影响您的星盘。",
+    "excellent": "今天是进行重要活动的绝佳日子。强大的宇宙支持。",
+    "background": "◆ 背景（{{count}})",
+    "universalSky": "今日通用天空",
+    "addBirthChart": "添加出生星图为个性化过境信息。",
+    "todayForecast": "今日预测",
+    "opportunities": "✓ 机会（{{count}})",
+    "activeTransits": "{{count}} 活跃过境",
+    "swissPrecision": "瑞士星历精度",
+    "challengingDay": "⚠ 充满挑战的一天。专注于自我照顾，避免重大决策。",
+    "goodForRoutine": "适合日常任务和维护。",
+    "activeTransits_plural": "{{count}} 活跃过境"
+  },
+  "futureView": "未来视图",
+  "scrollHint": "（滚动→）",
+  "beganCivil": "开始（民用）：{{date}}",
+  "traditions": "传统",
+  "lunarCycle": "月相周期",
+  "confidence": "信心：",
+  "whyThisDay": "为什么是这一天？",
+  "highEnergy": "高能量：启动项目，采取行动，社交",
+  "focusAreas": "专注领域",
+  "compatible": "兼容",
+  "luckyHours": "幸运小时",
+  "titleFuture": "{{days}}天后的天文指南",
+  "lookingBack": "回顾",
+  "dayOfPlanet": "{{day}}：{{planet}}的日子",
+  "planets": {
+    "sun": "太阳",
+    "moon": "月亮",
+    "mars": "火星",
+    "venus": "金星",
+    "saturn": "土星",
+    "mercury": "水星",
+    "jupiter": "木星"
+  },
+  "calculating": "正在计算月亮位置...",
+  "luckyColors": "幸运颜色",
+  "selectedDate": "选定的HEKA日期",
+  "dragToScroll": "拖动以滚动",
+  "yourLocation": "您的位置",
+  "significance": "重要性",
+  "howToObserve": "如何观察",
+  "sunElevation": "太阳高度：{{elevation}}°",
+  "newMoonCivil": "新月（民用）",
+  "cosmicEnergy": "宇宙能量",
+  "howToUseThis": "如何使用这个",
+  "todaysEnergy": "今日能量",
+  "elements": {
+    "air": "风",
+    "fire": "火",
+    "water": "水",
+    "earth": "土"
+  },
+  "luckyNumbers": "幸运数字",
+  "export": {
+    "close": "关闭",
+    "failed": "导出失败",
+    "guidance": "指引",
+    "creating": "正在创建...",
+    "saveImage": "保存图片",
+    "affirmation": "肯定",
+    "generatedBy": "由 Heka 日历 ✦ 生成",
+    "overallGuidance": "总体指引",
+    "celestialGuidance": "天体指引"
+  },
+  "timezones": {
+    "ET": "东部时间（ET）",
+    "CT": "中部时间（CT）",
+    "MT": "山区时间（MT）",
+    "PT": "太平洋时间（PT）",
+    "UTC": "UTC（通用协调时间）",
+    "Paris": "巴黎（CET）",
+    "Tokyo": "东京（JST）",
+    "Dubai": "迪拜（GST）",
+    "London": "伦敦（GMT）",
+    "Berlin": "柏林（CET）",
+    "Sydney": "悉尼（AEST）",
+    "Shanghai": "上海（CST）",
+    "Auckland": "奥克兰（NZST）",
+    "Melbourne": "墨尔本（AEST）"
+  },
+  "startingCivil": "开始（民用）：{{date}}",
+  "hekaYearLabel": "HEKA年份{{year}}",
+  "daysRemaining": "剩余天数",
+  "fullMoonCivil": "满月（民用）",
+  "thisMoonCycle": "这个月相周期",
+  "waxingQuality": "盈月：增长，建立势头",
+  "waningQuality": "亏月：释放，反思，完成",
+  "forecastTitle": "天文预报",
+  "whatThisMeans": "这现在意味着什么",
+  "planetsActive": "现在活跃的行星",
+  "exactPosition": "精确位置",
+  "moonVoidLabel": "月亮空亡",
+  "starsHub": {
+    "back": "← 返回",
+    "live": "直播",
+    "chart": "星盘",
+    "active": "活跃",
+    "sunSign": "太阳星座",
+    "12signs": "12星座",
+    "13signs": "13星座 ⛎",
+    "version": "版本 2.2.0 • HEKA 占星引擎",
+    "overview": "概览",
+    "guidance": "指导",
+    "voidMoon": "月亮空亡",
+    "settings": "设置",
+    "tropical": "回归黄道",
+    "sidereal": "恒星黄道",
+    "positions": "位置",
+    "moonPhase": "月亮阶段",
+    "hourRuler": "小时统治者",
+    "aboutText": "由瑞士星历计算提供精确天文数据。使您的行动与宇宙节奏保持一致。",
+    "tapPlanet": "点击任何行星以探索其详细含义",
+    "viewStars": "查看星星 →",
+    "goToStars": "前往星星查看您的个性化占星指导。",
+    "13signDesc": "⛎ 13星座恒星：包括蛇夫座。最天文准确的框架。",
+    "retrograde": "℞ 逆行",
+    "welcomeBack": "欢迎回来，{{name}}",
+    "retrogrades": "逆行",
+    "12signsDesc": "传统恒星",
+    "13signsDesc": "包括蛇夫座",
+    "birthCharts": "出生图",
+    "universalSky": "通用天空",
+    "zodiacSystem": "星座系统",
+    "tropicalDesc": "12星座·季节",
+    "siderealDesc": "固定恒星·纳克沙特拉斯",
+    "dailyBriefing": "每日简报",
+    "tropicalDesc2": "古典12星座回归黄道与季节相关联。",
+    "celestialFont": "天界字体",
+    "profilesSaved": "{{count}} 个个人资料已保存",
+    "corruptedDate": "⚠️ 检测到损坏的出生日期！",
+    "deleteProfile": "🗑️ 删除个人资料",
+    "addNewProfile": "➕ 添加新个人资料",
+    "tapForDetails": "点击获取详情 →",
+    "housePosition": "宫位位置",
+    "celestialTheme": "天界主题",
+    "selectTypeface": "为这个领域选择字体",
+    "manageProfiles": "管理您的出生图个人资料",
+    "aboutCelestial": "关于天界智能",
+    "chooseFramework": "选择你的天界框架",
+    "trueModeWarning": "⚠️ 您处于真实模式但不使用恒星黄道。切换到恒星黄道以完全对齐。",
+    "syncModeWarning": "⚠️ 您处于同步模式但使用恒星黄道。这是一个高级覆盖。",
+    "receiveGuidance": "从宇宙中接收指引",
+    "retrogradeCount": "导航 {{count}} 逆行",
+    "allPlanetsDirect": "所有行星顺行 —— 向前发展的时期。",
+    "exploreCelestial": "探索当前的天象景观。创建个人资料以获得个性化的占星指导。",
+    "compareTwoSelves": "比较您的两个自我",
+    "chooseAtmosphere": "选择您的宇宙氛围",
+    "siderealSignCount": "恒星星座数量",
+    "profileManagement": "个人资料管理",
+    "currentExpression": "当前相位",
+    "housePositionText": "这颗行星激活了它当前宫位所代表的生活领域，用 {{energy}} 能量为你的经历上色。",
+    "12signSiderealDesc": "☀️ 12星座恒星：传统星座边界与岁差校正。",
+    "personalizedWeather": "为你的出生星盘个性化的今日天象天气。{{retrogrades}}",
+    "observatorySettings": "天文台设置",
+    "planetInSignDefault": "{{planet}} 在 {{sign}} 中带来独特的能量。",
+    "profilesSaved_plural": "{{count}} 个个人资料已保存",
+    "birthChartManagement": "出生图管理",
+    "celestialIntelligence": "天象智能",
+    "celestialNotifications": "天界通知",
+    "retrogradeCount_plural": "导航 {{count}} 逆行",
+    "currentPlanetaryPositions": "当前行星位置",
+    "openCelestialIntelligence": "打开天体智能 ✦"
+  },
+  "twoSelves": {
+    "air": "思考者，连接者",
+    "none": "无",
+    "fire": "发起者，火花",
+    "title": "你的两个自我",
+    "error": "无法计算一个或两个星座系统。请检查您的出生数据。",
+    "earth": "建设者，山",
+    "water": "感受者，深度",
+    "changed": "已改变",
+    "subtitle": "日历教给你一个故事。星星讲述了另一个。",
+    "tropical": "热带",
+    "trueSelf": "真实自我",
+    "sidereal": "恒星",
+    "sunMoved": "您的太阳从 {{tropical}} 移动到 {{sidereal}}。",
+    "ayanamsa": "ayanamsa，热带黄道和实际星星之间的差距，对于您的出生年份是 {{degrees}} 度。",
+    "civilSelf": "民事自我",
+    "whoYouAre": "在星星下你是谁",
+    "ascendant": "上升",
+    "midheaven": "中天",
+    "shiftedBy": "移动了 {{degrees}}°",
+    "moonMoved": "您的月亮，您的情感核心，从 {{tropical}} 移动到 {{sidereal}}。",
+    "notAnError": "这不是一个错误。这是你学会成为的人和星星说你是谁之间的差异。",
+    "calculating": "正在计算回归和恒星星图...",
+    "revisitHint": "您可以随时从图表设置中重新访问此比较。",
+    "totalChanged": "总共，您的 {{total}} 个主要天体中有 {{count}} 个改变了星座。",
+    "whoYouLearned": "你学会成为的人",
+    "rareAlignment": "您的热带和恒星图表几乎相同——当ayanamsa接近整个星座边界时发生的罕见对齐。您是少数几个民事自我和真实自我说同一种语言的人之一。",
+    "identityShift": "你作为 {{tropicalElement}} 的身份转变为 {{siderealElement}}。",
+    "ascendantShift": "您的上升，您佩戴的面具，从 {{tropical}} 移动到 {{sidereal}}。",
+    "midheavenShift": "您的中天，您的公众召唤，从 {{tropical}} 移动到 {{sidereal}}。",
+    "defaultElement": "自我",
+    "dominantElement": "主导元素",
+    "continueTrueMode": "继续真实模式"
+  },
+  "historicalView": "历史视图",
+  "dayOfYearValue": "第{{day}}天",
+  "lookingForward": "前瞻",
+  "hekaYearBegins": "HEKA年份{{year}}开始",
+  "countdown": {
+    "days": "天",
+    "hours": "小时",
+    "minutes": "分钟",
+    "seconds": "秒"
+  },
+  "aboutSolarNoon": "关于太阳最高点",
+  "newMoonQuality": "新月：开始，设定意图",
+  "moderateEnergy": "中等能量：日常工作，稳步进展",
+  "swissEphemeris": "瑞士星历表",
+  "retrogradeNote": "逆行：重新考虑期",
+  "moonPhaseLabel": "月亮阶段",
+  "hourlyMoonMood": "每小时月亮情绪",
+  "upcomingEvents": "即将到来的天象事件",
+  "profile": {
+    "addNew": "新增",
+    "default": "默认",
+    "noCharts": "还没有星图",
+    "yourCharts": "你的星图",
+    "createFirst": "创建你的第一个出生星图",
+    "selectProfile": "选择档案"
+  },
+  "briefing": {
+    "focus": "专注：{{area}}",
+    "setUpAi": "设置AI →",
+    "dismiss": "驳回",
+    "enableAi": "启用AI指导",
+    "aiEnhanced": "✨ AI增强",
+    "todaysTheme": "今日主题",
+    "todaysFocus": "今日焦点",
+    "voidMoonDesc": "月亮目前为空——适合反思、休息和内在工作，而不是开始新的冒险。",
+    "unlockDeeper": "解锁更深入的洞察",
+    "aiConfigured": "您已配置了AI提供商。打开AI指导，获得诗意的、个性化的阅读。",
+    "yourGuidance": "您的指导",
+    "aiUnavailable": "AI增强不可用。显示模板指导。",
+    "aiAddProvider": "添加一个AI提供商，以获得针对您独特星盘的LLM增强型解释。",
+    "voidMoonActive": "🌙 空月亮活跃",
+    "turnOnSettings": "在设置中打开",
+    "templatePowered": "📚 模板驱动",
+    "templateFallback": "⚠️ 模板回退",
+    "dailyAffirmation": "每日肯定",
+    "viewFullGuidance": "查看完整指导",
+    "patternRecognized": "🔮 模式识别"
+  },
+  "aboutThisSeason": "关于这个季节",
+  "characteristics": "特征",
+  "fullMoonQuality": "满月：能量高峰，显现",
+  "activities": {
+    "rest": "休息",
+    "plant": "种植",
+    "prune": "修剪",
+    "harvest": "收获",
+    "prepare": "准备",
+    "fertilize": "施肥",
+    "transplant": "移栽"
+  },
+  "numerologyTitle": "数字学：第{{day}}天",
+  "zodiacSigns": {
+    "leo": "狮子座",
+    "aries": "白羊座",
+    "virgo": "处女座",
+    "libra": "天秤座",
+    "taurus": "金牛座",
+    "gemini": "双子座",
+    "cancer": "巨蟹座",
+    "pisces": "双鱼座",
+    "scorpio": "天蝎座",
+    "aquarius": "水瓶座",
+    "capricorn": "摩羯座",
+    "ophiuchus": "蛇夫座",
+    "sagittarius": "射手座"
+  },
+  "dataUnavailable": "天文数据不可用",
+  "thisWeeksThemes": "本周主题",
+  "noMajorTransits": "没有主要的个人行运",
+  "guidanceV2": {
+    "edit": "编辑",
+    "hour": "{{planet}} 小时",
+    "copy": "复制",
+    "card": "卡片",
+    "share": "分享",
+    "close": "关闭",
+    "today": "今天",
+    "copied": "已复制",
+    "cancel": "取消",
+    "history": "历史",
+    "refresh": "刷新",
+    "setUpAi": "设置AI →",
+    "strength": "力量",
+    "yesClear": "是的，清除",
+    "yourChart": "你的星图 ✓",
+    "signature": "签名",
+    "consulting": "咨询天体球...",
+    "aiEnhanced": "✨ AI增强",
+    "natalChart": "✓ 出生星图",
+    "refreshing": "正在刷新...",
+    "focusAreas": "关注领域",
+    "confidence": "信心",
+    "selectDate": "选择日期",
+    "areYouSure": "您确定吗？",
+    "affirmation": "肯定",
+    "yourPatterns": "你的模式",
+    "unlockDeeper": "解锁更深入的洞察",
+    "aiConfigured": "你已经配置了AI提供商。打开AI指导，为你的出生星图和实时天空编织诗意、个性化的阅读。",
+    "clearHistory": "清除历史记录",
+    "addBirthChart": "添加出生星图",
+    "aiEnhancedVia": "✨ 通过{{provider}} ({{model}}) AI增强",
+    "aiAddProvider": "添加一个AI提供商（Groq、OpenAI或本地Ollama），以获得针对你独特星图量身定制的LLM增强解释。",
+    "sacredRituals": "神圣仪式",
+    "aiUnavailable": "AI增强功能不可用：{{reason}}。显示模板指导。",
+    "turnOnSettings": "在设置中启用",
+    "morningBriefing": "晨间简报",
+    "loadingGuidance": "正在加载你的个性化指导...",
+    "templatePowered": "📚 模板驱动",
+    "guidanceHistory": "📜 指导历史",
+    "noSavedGuidance": "还没有保存的指导",
+    "enableAiGuidance": "启用AI指导",
+    "celestialEssence": "天体精华",
+    "aiEnhancedSuffix": "(AI增强)",
+    "dailyAffirmation": "每日肯定",
+    "selectDateToView": "选择日期查看您保存的指导。",
+    "practicalGuidance": "实用指导",
+    "dailyAffirmations": "每日肯定",
+    "reflectionPrompts": "反思提示",
+    "aiUnavailableDate": "⚠️ 该日期AI增强功能不可用。显示模板指导。",
+    "personalizedForYou": "✨ 为你个性化",
+    "guidanceConfidence": "指导信心",
+    "readingsAppearHere": "您的每日阅读将自动出现在这里。",
+    "yourCelestialRegion": "你的天区",
+    "practicalGuidanceTitle": "实用指导"
+  },
+  "birthChart": {
+    "born": "出生于",
+    "edit": "✏️ 编辑",
+    "loading": "加载天体蓝图...",
+    "promise": "承诺",
+    "sunSign": "☉ 太阳星座 • 您是{{sign}}",
+    "elements": "元素",
+    "newChart": "+ 新图表",
+    "dignities": "尊严",
+    "chartWheel": "图表轮盘",
+    "natalChart": "◉ 出生图",
+    "dragRotate": "拖动旋转 • 点击行星查看详细信息",
+    "lifeThemes": "🌟 生命主题",
+    "createFirst": "创建您的第一个出生图以解锁个性化的天体指导",
+    "soulPromise": "灵魂承诺",
+    "growthEdges": "🌱 成长边缘",
+    "noBirthChart": "未找到出生图",
+    "profileChart": "{{name}}的图表",
+    "naturalGifts": "🎁 天然礼物",
+    "majorAspects": "⚡ 主要相位",
+    "recreateChart": "重新创建您的图表",
+    "createYourChart": "✨ 创建您的图表",
+    "unknownLocation": "未知地点",
+    "elementalTemple": "🔥 元素神庙",
+    "chartIncomplete": "⚠️ 图表数据不完整。",
+    "planetPositions": "🪐 行星位置",
+    "yourSoulsPromise": "✨ 您的灵魂承诺"
+  },
+  "lastQuarterToNew": "下弦月到新月：释放和休息",
+  "cosmicConditions": "宇宙条件",
+  "birthInput": {
+    "house": "宫位 {{house}}",
+    "cancel": "取消",
+    "dignity": "{{dignity}}",
+    "yourName": "你的名字",
+    "latitude": "纬度",
+    "timezone": "时区",
+    "enterName": "输入你的名字",
+    "birthDate": "出生日期",
+    "birthTime": "出生时间",
+    "longitude": "经度",
+    "calcFailed": "计算行星位置失败。请再试一次。",
+    "invalidDate": "无效的出生日期或时间",
+    "calculating": "正在计算你的天体蓝图...",
+    "privacyNote": "🔒 你的出生数据存储在你的设备上，当你登录时会同步到你的账户。",
+    "enterDetails": "输入你的出生详细信息，根据你独特的天体蓝图解锁个性化指导。",
+    "locationHint": "开始输入一个郊区或城市（例如“Bankstown”，“Sydney”）",
+    "birthLocation": "出生位置 *",
+    "yourBirthChart": "你的出生星图",
+    "calculateChart": "✨ 计算我的星图",
+    "pleaseEnterName": "请输入你的名字",
+    "pleaseEnterDate": "请输入你的出生日期",
+    "pleaseEnterTime": "请输入你的出生时间",
+    "noPlanetaryData": "计算未返回行星数据",
+    "houseCalcFailed": "计算宫位失败。请检查你的坐标。",
+    "chartCalcFailed": "计算星图失败。请检查你的输入数据。",
+    "invalidHouseData": "返回的宫位数据无效",
+    "pleaseEnterCoords": "请输入你的出生位置坐标",
+    "invalidHouseData2": "计算返回的宫位数据无效",
+    "celestialBlueprint": "你的天体蓝图",
+    "latitudePlaceholder": "例如，40.7128",
+    "longitudePlaceholder": "例如，-74.0060"
+  },
+  "premiumCards": {
+    "sun": "太阳",
+    "moon": "月亮",
+    "copy": "复制",
+    "weak": "⚠ 弱",
+    "expand": "展开",
+    "inDays": "大约在 {{days}} 天后",
+    "sunset": "日落",
+    "whyNow": "为什么现在是 {{planet}}？",
+    "stormy": "暴风雨",
+    "direct": "→ 顺行",
+    "strong": "★ 强",
+    "sunrise": "日出",
+    "neutral": "○ 中性",
+    "hekaDate": "HEKA日期",
+    "aeonGate": "时代之门",
+    "monthOf13": "13月的第 {{month}} 个月",
+    "dayOfYear": "一年中的第 {{day}} 天，共 {{total}}",
+    "civilTime": "🌍 民事时间",
+    "julianDay": "儒略日",
+    "beMindful": "注意",
+    "nextPhase": "下个阶段",
+    "hourRuler": "时刻主宰",
+    "readOracle": "阅读神谕",
+    "clearSkies": "晴朗天空",
+    "retrograde": "← 逆行",
+    "daysElapsed": "已过去 {{days}} 天",
+    "calculating": "正在计算...",
+    "lunarTemple": "月亮神殿",
+    "waxingTrend": "盈凸 → 增长",
+    "waningTrend": "亏凸 → 减少",
+    "bestToAvoid": "✗ 最好避免",
+    "retroReview": "有 {{count}} 个行星逆行，现在是进行 {{significant}} 回顾和自省的时候。",
+    "hekaCalendar": "◈ HEKA日历",
+    "yearProgress": "年度进展",
+    "partlyCloudy": "部分多云",
+    "heavyWeather": "恶劣天气",
+    "retroCaution": "重大新开始应谨慎对待。",
+    "modalBalance": "模态平衡",
+    "luminariesNow": "现在的发光体",
+    "chaldeanOrder": "迦勒底秩序",
+    "retroPossible": "在受影响的领域，新项目是可能的，需要额外注意。",
+    "viewPlanetary": "查看行星球体",
+    "thisPhaseFavors": "这个阶段有利于",
+    "localSolarTimes": "☀ 本地太阳时间",
+    "calculatingLunar": "正在计算月亮数据...",
+    "minutesRemaining": "{{minutes}} 分钟剩余",
+    "allPlanetsDirect": "所有行星顺行",
+    "celestialWeather": "天象天气",
+    "directRetrograde": "{{direct}} 顺行，{{retrograde}} 逆行",
+    "planetarySpheres": "行星球体",
+    "elementalBalance": "元素平衡",
+    "currentPositions": "当前位置",
+    "chaldeanHourglass": "迦勒底沙漏",
+    "favoredActivities": "✓ 有利活动",
+    "planetaryStations": "行星站点",
+    "currentAlignments": "当前对齐",
+    "nextCelestialEvent": "下一个天象",
+    "moonsCurrentThrone": "☽ 月亮当前宝座",
+    "retrogradeGuidance": "逆行指导",
+    "calculatingPlanetary": "正在计算行星时刻...",
+    "celestialBodiesTracked": "{{count}} 个天体被追踪"
+  },
+  "aiSettings": {
+    "title": "AI增强阅读",
+    "expand": "展开",
+    "active": "活跃",
+    "apiKey": "API密钥",
+    "format": "格式",
+    "pricing": "定价",
+    "testing": "测试中...",
+    "collapse": "折叠",
+    "hideGuide": "隐藏指南",
+    "showGuide": "显示指南",
+    "serverUrl": "服务器URL",
+    "setupGuide": "设置指南：{{provider}}",
+    "disconnect": "断开连接",
+    "connectedTo": "已连接到 {{provider}}",
+    "useTemplate": "使用模板库",
+    "dataPrivate": "您的数据保持私密",
+    "updateConfig": "更新配置",
+    "templateDesc": "169+手工制作的模板，涵盖所有13个星座中的所有行星，通过相位、相位和类别编织成独特的阅读。始终免费，始终即时。",
+    "failedToSave": "保存失败",
+    "usingTemplate": "使用模板库（免费）",
+    "storedLocally": "您的{{type}}仅存储在此设备上的加密本地存储中。我们从不将其传输到我们的服务器。",
+    "aiEnhancement": "AI增强",
+    "changeSettings": "更改设置",
+    "testConnection": "测试连接",
+    "pleaseEnterKey": "请输入一个API密钥",
+    "connectedShort": "✓ {{provider}} 已连接",
+    "connectProvider": "连接您的AI提供商以获得增强的占星解释",
+    "templateLibrary": "模板库",
+    "dataPrivateDesc": "API密钥存储在本地。我们从未看到它们或您的占星数据。",
+    "readingsEnhanced": "您的阅读正在通过AI增强。",
+    "connectionFailed": "✗ 连接失败。检查您的网络和API密钥。",
+    "aiEnhancementDesc": "可选的AI生成阅读，用于更细致、个性化的解释。",
+    "connectionSuccess": "✓ 连接成功！API密钥有效。",
+    "connectionInvalid": "✗ 无效的API密钥。请检查并重试。",
+    "templateAvailable": "✓ 模板库始终可用",
+    "connectProviderBtn": "连接提供商",
+    "usingTemplateShort": "✓ 使用模板库",
+    "pleaseEnterKeyFirst": "请先输入一个API密钥"
+  },
+  "lifeAreas": {
+    "career": "职业与志业",
+    "health": "健康与活力",
+    "timing": "时机与生产力",
+    "finances": "财富与资源",
+    "relationships": "爱情与人际关系",
+    "personalGrowth": "个人成长"
+  },
+  "aboutThisHekaYear": "关于这个HEKA年份",
+  "universalCalendar": "通用日历",
+  "waxingDescription": "盈：积累能量，增长，积累",
+  "waningDescription": "亏：释放，放手，完成",
+  "newToFirstQuarter": "新月到上弦月：开始新项目",
+  "fullToLastQuarter": "满月到下弦月：收获成果",
+  "solarNoonSubtitle": "这一天太阳的最高点",
+  "planetaryQualities": "行星特质",
+  "firstQuarterToFull": "上弦月到满月：建立势头",
+  "seasonalActivities": "季节性活动",
+  "energeticQualities": "能量特质",
+  "energeticInfluence": "能量影响",
+  "moonPhases": {
+    "newMoon": "新月",
+    "fullMoon": "满月",
+    "lastQuarter": "最后一个季度",
+    "firstQuarter": "第一季度",
+    "waxingGibbous": "盈凸月",
+    "waningGibbous": "亏凸月",
+    "waxingCrescent": "上弦月",
+    "waningCrescent": "下弦月"
+  },
+  "planetDomains": {
+    "mars": "行动和欲望",
+    "venus": "关系和价值观",
+    "pluto": "转变和力量",
+    "saturn": "结构和承诺",
+    "uranus": "变化和解放",
+    "mercury": "沟通和计划",
+    "jupiter": "扩张和信仰",
+    "neptune": "梦想和灵性",
+    "default": "生活领域"
+  },
+  "favorableActivities": "有利活动",
+  "moonPhaseDisclaimer": "月相是数学计算的，可能与天文观测略有不同。",
+  "daysUntilNextSeason": "直到下一个季节的天数",
+  "solarNoonDisclaimer": "时间是数学近似值（±10-15分钟）。精确的太阳最高点因您的确切位置和日期而异。",
+  "biodynamicPrinciple": "生物动力原则",
+  "cards": {
+    "moonPhase": {
+      "age": "年龄",
+      "title": "月相",
+      "phase": "相位",
+      "waxing": "上弦",
+      "waning": "下弦",
+      "daysUntil": "{{days}} 天后",
+      "dayOfCycle": "29.5天周期的第{{day}}天",
+      "illuminated": "照亮",
+      "illumination": "照明",
+      "voidOfCourse": "空亡",
+      "lunarNewYear": "农历新年"
+    },
+    "seasons": {
+      "title": "季节",
+      "spring": "春季",
+      "summer": "夏季",
+      "autumn": "秋季",
+      "winter": "冬季",
+      "daysUntil": "{{days}} 天后",
+      "nextSolstice": "下一个至日",
+      "currentSeason": "当前季节",
+      "springEquinox": "春分",
+      "autumnEquinox": "秋分",
+      "summerSolstice": "夏至",
+      "winterSolstice": "冬至"
+    },
+    "sunTimes": {
+      "title": "日出日落时间",
+      "sunset": "日落",
+      "sunrise": "日出",
+      "weather": "天气",
+      "accuracy": "准确性",
+      "dayLength": "白天长度",
+      "accuracyLevels": {
+        "high": "高",
+        "exact": "精确",
+        "estimated": "估计",
+        "approximate": "大约"
+      }
+    },
+    "dayOfWeek": {
+      "title": "一周中的一天",
+      "planet": "统治行星",
+      "energy": "能量",
+      "favorableActivities": "有利活动"
+    },
+    "agriculture": {
+      "title": "农业",
+      "neutral": "中性",
+      "favorable": "有利",
+      "plantToday": "今天种植什么",
+      "byLocation": "根据您的位置和月相",
+      "unfavorable": "不利"
+    },
+    "digitalClock": {
+      "days": "天",
+      "title": "数字时钟",
+      "hours": "小时",
+      "minutes": "分钟",
+      "seconds": "秒",
+      "countdowns": "四个同时进行的现场倒计时"
+    },
+    "planetaryHours": {
+      "title": "行星小时",
+      "favors": "有利",
+      "hourOf": "行星的小时 {{planet}}",
+      "currentHour": "当前小时",
+      "chaldeanOrder": "迦勒底顺序"
+    }
+  },
+  "psychologicalImpact": "心理影响",
+  "practicalExpression": "实际表现",
+  "agriculturalGuidance": "农业指导",
+  "energyForecastPrefix": "能量预测为",
+  "energyForecastSuffix": "{{date}}结合了月相、行星位置和季节节奏。",
+  "hemispheres": {
+    "northern": "北半球",
+    "southern": "南半球"
+  },
+  "yourPersonalTransits": "你的个人行运",
+  "universalCalendarNote": "像公历一样，HEKA日期在全世界都是一样的。HEKA月{{month}}，日{{day}}是无论你在悉尼、纽约还是伦敦都是一样的时刻——只有当地时间不同。",
+  "whyThisDayDescription": "月相和季节因素表明，对于 {{activity}} 活动来说，条件是最佳的。",
+  "calculatingSolarTimes": "正在计算太阳时间...",
+  "confirm": {
+    "deleteProfile": "删除此配置文件？此操作无法撤销。"
+  },
+  "lookingBackDescription": "这个日期已经过去了。回顾一下这一天存在的天体能量。",
+  "planetaryDayDisclaimer": "行星日的关联来源于传统占星术和文化象征。",
+  "historicalSignificance": "历史意义",
+  "todaysCelestialWeather": "今日天象天气",
+  "hekaCalendarIsUniversal": "HEKA日历是通用的：",
+  "hekaYearBegunDescription": "这个HEKA年份已经开始。下一个周期从{{nextYear}}年4月1日开始。",
+  "planetaryDays": {
+    "sunday": {
+      "day": "星期日",
+      "qualities": {
+        "0": "活力",
+        "1": "领导力",
+        "2": "成功",
+        "3": "可见性"
+      },
+      "description": "太阳日带来活力、自信和创造力。适合新的开始和寻求可见性。",
+      "activities": {
+        "0": "开始新事业",
+        "1": "寻求认可",
+        "2": "创意项目",
+        "3": "体育锻炼"
+      }
+    },
+    "monday": {
+      "day": "星期一",
+      "qualities": {
+        "0": "直觉",
+        "1": "情感",
+        "2": "滋养",
+        "3": "反思"
+      },
+      "description": "月亮日强调情感、直觉和内在工作。最适合休息和情感处理。",
+      "activities": {
+        "0": "自我照顾",
+        "1": "家庭活动",
+        "2": "内省",
+        "3": "家庭时间"
+      }
+    },
+    "friday": {
+      "day": "星期五",
+      "qualities": {
+        "0": "爱",
+        "1": "美丽",
+        "2": "和谐",
+        "3": "创造力"
+      },
+      "description": "金星日强调爱情、美丽和和谐。非常适合社交活动和艺术表达。",
+      "activities": {
+        "0": "社交聚会",
+        "1": "艺术追求",
+        "2": "浪漫",
+        "3": "自我呵护"
+      }
+    },
+    "tuesday": {
+      "day": "星期二",
+      "qualities": {
+        "0": "行动",
+        "1": "勇气",
+        "2": "动力",
+        "3": "激情"
+      },
+      "description": "火星日带来能量、勇气和动力。最适合采取行动和克服障碍。",
+      "activities": {
+        "0": "应对挑战",
+        "1": "体力工作",
+        "2": "自信",
+        "3": "竞争"
+      }
+    },
+    "thursday": {
+      "day": "星期四",
+      "qualities": {
+        "0": "扩张",
+        "1": "运气",
+        "2": "智慧",
+        "3": "丰富"
+      },
+      "description": "木星日带来丰富、智慧和扩张。有利于成长和繁荣。",
+      "activities": {
+        "0": "重大决策",
+        "1": "财务事项",
+        "2": "教学",
+        "3": "旅行计划"
+      }
+    },
+    "saturday": {
+      "day": "星期六",
+      "qualities": {
+        "0": "纪律",
+        "1": "结构",
+        "2": "责任",
+        "3": "智慧"
+      },
+      "description": "土星日要求纪律和结构。最适合组织、规划和承担责任。",
+      "activities": {
+        "0": "组织",
+        "1": "规划",
+        "2": "回顾工作",
+        "3": "设定界限"
+      }
+    },
+    "wednesday": {
+      "day": "星期三",
+      "qualities": {
+        "0": "沟通",
+        "1": "智力",
+        "2": "学习",
+        "3": "旅行"
+      },
+      "description": "水星日有利于沟通、学习和精神敏捷。适合谈判和写作的理想日子。",
+      "activities": {
+        "0": "写作",
+        "1": "谈判",
+        "2": "学习",
+        "3": "短途旅行"
+      }
+    }
+  },
+  "illuminationMoreThanHalf": "超过一半：顶峰显现力量",
+  "illuminationLessThanHalf": "不到一半：内省和规划",
+  "thisMoonCycleDescription": "月亮处于 {{name}} 周期。",
+  "lookingForwardDescription": "这个日期在未来。使用这些即将到来的天体能量提前计划。",
+  "moonPhaseMeanings": {
+    "newMoon": "开始",
+    "fullMoon": "完成",
+    "lastQuarter": "释放",
+    "firstQuarter": "行动",
+    "waxingGibbous": "完善",
+    "waningGibbous": "感激",
+    "waxingCrescent": "成长",
+    "waningCrescent": "休息"
+  },
+  "universalCalendarDescription": "日期在全世界都是一样的（像公历）。民用日期/时间因时区而异。天文计算（太阳正午，月相）是数学近似值，用于教育目的，误差±30分钟。",
+  "aboutThisHekaYearDescription": "HEKA年份{{year}}于{{civilYear}}年4月1日开始。每个HEKA年份包含12个月，每个月28天，加上3月有29天（闰年/校正年为30天）。",
+  "solarNoonLocalTimeDescription": "太阳在 {{time}} （{{timezone}}）达到最高点",
+  "solarNoonHistoricalDescription": "古代文化使用太阳最高点来计时。石圈和日晷被对齐以标记这一时刻。",
+  "biodynamicPrincipleDescription": "这些指导遵循影响植物活力和土壤条件的宇宙节奏。",
+  "dictionaries": {
+    "planetInSign": {
+      "sun": {
+        "leo": "太阳在狮子座闪耀着创造性的自信。真实地表达自己，用心领导。",
+        "aries": "太阳在白羊座带来大胆、开拓的能量。是开始、领导和勇敢行动的时候。",
+        "virgo": "太阳在处女座要求完善和服务。组织、改进系统和关注细节。",
+        "libra": "太阳在天秤座寻求和谐和伙伴关系。平衡关系和欣赏美学之美。",
+        "taurus": "太阳在金牛座让我们脚踏实地于稳定性和感官享受。关注建设、培养和欣赏美。",
+        "gemini": "太阳在双子座激发好奇心和沟通。交换想法、学习和与社区建立联系。",
+        "cancer": "太阳在巨蟹座加深情感联系。培养关系、尊重感情和创造避风港。",
+        "pisces": "太阳在双鱼座溶解界限。与无限连接，实践同情心，信任直觉。",
+        "scorpio": "太阳在天蝎座深入变革。拥抱强度、探究神秘事物和释放不再服务的事物。",
+        "aquarius": "太阳在水瓶座为集体创新。拥抱独特性，前瞻性思考，服务人类。",
+        "ophiuchus": "太阳在蛇夫座照亮治愈智慧。是变革性知识、蛇药和神圣恢复的时候。",
+        "capricorn": "太阳在摩羯座为长期建设。承担责任，设定雄心勃勃的目标，掌握你的手艺。",
+        "sagittarius": "太阳在射手座扩展视野。寻求智慧，探索新领域，拥抱乐观。"
+      },
+      "moon": {
+        "leo": "月亮在狮子座戏剧性地表达感情。温暖、创造力和关系中的认可需求。",
+        "aries": "月亮在白羊座带来快速的情感反应。冲动的感觉，激情的反应和独立的需求。",
+        "virgo": "月亮在处女座寻求秩序和实用性。通过服务、健康和改进获得情感满足。",
+        "libra": "月亮在天秤座和谐情感。需要伙伴关系、美学平衡和外交关系。",
+        "taurus": "月亮在金牛座寻求舒适和稳定。通过感性、耐心和物质安全来培养。",
+        "gemini": "月亮在双子座随着思想和对话波动。情感好奇心，需要精神刺激。",
+        "cancer": "月亮在巨蟹座如鱼得水。深度培养，保护本能和深刻的情感敏感性。",
+        "pisces": "月亮在双鱼座溶解情感界限。同理心，想象力和精神敏感性。",
+        "scorpio": "月亮在天蝎座感受强烈。情感深度，变革性体验和强大的直觉。",
+        "aquarius": "月亮在水瓶座脱离观察。情感客观性，人道主义关怀和独特需求。",
+        "ophiuchus": "月亮在蛇夫座通过情感来治愈。直觉医学，转变性感受和蛇的智慧。",
+        "capricorn": "月亮在摩羯座抑制情感。成熟处理情感，责任感和长期安全感。",
+        "sagittarius": "月亮在射手座情感探索。自由需求，哲学感受和冒险精神。"
+      },
+      "mars": {
+        "leo": "Mars in Leo performs boldly. Dramatic action, creative drive, and confident leadership.",
+        "aries": "火星在白羊座如鱼得水。直接行动，勇敢主动和激情驱动。",
+        "virgo": "Mars in Virgo works precisely. Methodical effort, service-oriented action, and health focus.",
+        "libra": "Mars in Libra acts diplomatically. Indirect confrontation, partnership drive, and aesthetic action.",
+        "taurus": "火星在金牛座稳步坚持。坚定努力，感官能量和顽固抵抗。",
+        "gemini": "火星在双子座精神行动。快速移动，口头战斗和分散主动。",
+        "cancer": "火星在巨蟹座保护",
+        "pisces": "火星在双鱼座直观地漂泊。精神性的行动，富有同情心的动力和难以捉摸的主动性。",
+        "scorpio": "Mars is at home in Scorpio. Intense action, strategic power, and transformative drive.",
+        "aquarius": "火星在水瓶座革新行动。改革的动力，团体的倡议和非传统的方法。",
+        "ophiuchus": "Mars in Ophiuchus acts as healer. Surgical precision, restorative force, and transformative intervention.",
+        "capricorn": "火星在摩羯座雄心勃勃地实现目标。有纪律的努力，战略性的攀登和权威性的行动。",
+        "sagittarius": "火星在射手座探索冒险。扩张性的主动性，哲学性的行动和冒险行为。"
+      },
+      "venus": {
+        "leo": "金星在狮子座戏剧性恋爱。浪漫宏大姿态，创造性表达和忠诚感情。",
+        "aries": "金星在白羊座激情恋爱。大胆吸引，自发浪漫和独立伙伴关系。",
+        "virgo": "金星在处女座实际服务。有助益的爱，适度吸引和关注关系细节。",
+        "libra": "金星在天秤座如鱼得水。和谐伙伴关系，审美欣赏和外交关系。",
+        "taurus": "金星在金牛座如鱼得水。感官愉悦，稳定关系和对美的欣赏。",
+        "gemini": "金星在双子座口头魅力。调情连接，智力吸引和社会多样性。",
+        "cancer": "金星在巨蟹座滋养爱心。情感联系，家庭和谐和保护性关怀。",
+        "pisces": "金星在双鱼座无条件恋爱。浪漫理想主义，精神联系和富有同情心的关系。",
+        "scorpio": "金星在天蝎座强烈恋爱。通过关系深度转变和磁性吸引。",
+        "aquarius": "金星在水瓶座独特联系。非传统关系，基于友谊的爱和自由。",
+        "ophiuchus": "金星在蛇夫座医学爱。治愈关系，转变性奉献和以心为中心的恢复。",
+        "capricorn": "金星在摩羯座严肃承诺。成熟关系，地位考虑和持久纽带。",
+        "sagittarius": "金星在射手座自由探索。冒险爱情，哲学联系和开放关系。"
+      },
+      "saturn": {
+        "leo": "土星在狮子座抑制创造力。在谦逊，结构化的自我表达和负责任的领导中的课程。",
+        "aries": "土星在白羊座测试主动性。在耐心，克制的行动和成熟的领导中的课程。",
+        "virgo": "土星在处女座完善服务。在精确性，健康纪律和实际掌握中的课程。",
+        "libra": "土星在天秤座致力于平衡。在伙伴关系责任，公平结构和成熟的关系中的课程。",
+        "taurus": "土星在金牛座稳定资源。在坚持，物质责任和持久价值中的课程。",
+        "gemini": "土星在双子座训练心智。在专注，严肃的沟通和心智成熟中的课程。",
+        "cancer": "土星在巨蟹座保护界限。在情感责任，家庭责任和养育限制中的课程。",
+        "pisces": "土星在双鱼座谨慎地溶解界限。在同情心，精神性的纪律和神秘的责任中的课程。",
+        "scorpio": "土星在天蝎座深刻地转变。在权力，共享资源责任和心理学成熟中的课程。",
+        "aquarius": "土星在水瓶座如鱼得水。社会责任，创新的结构和人道主义的责任。",
+        "ophiuchus": "土星在蛇夫座掌握治愈。在医学纪律，结构化的转变和负责任的恢复中的课程。",
+        "capricorn": "土星在摩羯座如鱼得水。通过纪律掌握，赢得权威和持久的成就。",
+        "sagittarius": "土星在射手座构建信念。在智慧，有纪律的扩张和负责任的自由中的课程。"
+      },
+      "mercury": {
+        "leo": "水星在狮子座创造性表达。戏剧性演讲，自信的想法和以心为中心的思考。",
+        "aries": "水星在白羊座快速直接思考。锐利，冲动的沟通和开创性想法。",
+        "virgo": "水星在处女座如鱼得水。分析精度，实用智力和详细分析。",
+        "libra": "水星在天秤座寻求平衡思想。外交沟通和考虑所有观点。",
+        "taurus": "水星在金牛座实际思考。稳定学习，感官感知和有条不紊的沟通。",
+        "gemini": "水星在双子座如鱼得水。机智，多才多艺的思考和熟练的沟通。",
+        "cancer": "水星在巨蟹座直观思考。以记忆为中心，情感智力和滋养之词。",
+        "pisces": "水星在双鱼座直观想象。诗意表达，接受性倾听和精神理解。",
+        "scorpio": "水星在天蝎座深入探究。调查性思维，心理洞察力和穿透性言辞。",
+        "aquarius": "水星在水瓶座创新思维。原创想法，智力脱离和进步概念。",
+        "ophiuchus": "水星在蛇夫座医学思考。治愈沟通，医学知识和转变性洞察力。",
+        "capricorn": "水星在摩羯座构建思想。战略规划，权威演讲和实用智慧。",
+        "sagittarius": "水星在射手座扩展理解。哲学思维和广泛沟通。"
+      },
+      "jupiter": {
+        "leo": "木星在狮子座宏大地创造。通过自我表达成长，创造性的丰富和慷慨的领导。",
+        "aries": "木星在白羊座大胆扩张。通过主动性成长，幸运的新开始和自信的乐观。",
+        "virgo": "木星在处女座熟练地改进。通过服务成长，实际的智慧和健康的丰富。",
+        "libra": "木星在天秤座公正地和谐。通过伙伴关系成长，审美欣赏和外交的智慧。",
+        "taurus": "木星在金牛座丰富地显现。通过耐心成长，物质的祝福和感官的智慧。",
+        "gemini": "木星在双子座多样化地学习。通过沟通成长，智力的扩张和多样的兴趣。",
+        "cancer": "木星在巨蟹座慷慨地滋养。通过养育成长，情感的丰富和保护性的智慧。",
+        "pisces": "木星在双鱼座溶解成无限。通过同情心成长，精神性的丰富和普遍的爱。",
+        "scorpio": "木星在天蝎座深刻地转变。通过强度成长，共享资源和心理学的智慧。",
+        "aquarius": "木星在水瓶座逐步创新。通过社区成长，人道主义的智慧和独特的视野。",
+        "ophiuchus": "木星在蛇夫座扩展治愈。通过医学成长，蛇的智慧和变革性的知识。",
+        "capricorn": "木星在摩羯座明智地构建。通过纪律成长，战略性的成功和权威的智慧。",
+        "sagittarius": "木星在射手座如鱼得水。无限的扩张，哲学性的智慧和幸运的旅程。"
+      }
+    },
+    "providerSetup": {
+      "groq": {
+        "type": "groq",
+        "name": "Groq",
+        "logo": "⚡",
+        "color": "#f43f5e",
+        "website": "https://groq.com",
+        "signupUrl": "https://console.groq.com/login",
+        "keyFormat": "以\"gsk_\"开头，后跟字母数字字符",
+        "apiKeysUrl": "https://console.groq.com/keys",
+        "description": "与Llama 3一起的闪电般快速的AI推理。免费层包括每天100万个令牌。",
+        "pricingNote": "免费层级：每天1M个令牌。付费计划适用于更高用量。",
+        "freeTierInfo": "每天免费100万个令牌",
+        "keyPlaceholder": "gsk_your_api_key_here",
+        "setupSteps": {
+          "0": {
+            "tip": "使用您的电子邮件或Google账户快速注册",
+            "link": "https://console.groq.com/login",
+            "title": "Create a Groq Account",
+            "action": "前往Groq控制台 →",
+            "description": "访问Groq控制台并注册一个免费账户。"
+          },
+          "1": {
+            "tip": "在导航菜单中寻找密钥图标",
+            "link": "https://console.groq.com/keys",
+            "title": "Navigate to API Keys",
+            "action": "打开API密钥页面 →",
+            "description": "登录后，点击左侧边栏的“API密钥”。"
+          },
+          "2": {
+            "tip": "选择一个描述性的名称，以便您记住它的用途",
+            "title": "Create New API Key",
+            "description": "点击“创建API密钥”按钮。给它起一个名字，比如“HeKA日历”。"
+          },
+          "3": {
+            "tip": "⚠️ 出于安全考虑，Groq仅显示一次完整密钥。如果您丢失了它，请创建一个新的。",
+            "title": "Copy Your API Key",
+            "description": "复制生成的密钥（以“gsk_”开头）。安全地存储它 - 您将不会再看到它。"
+          },
+          "4": {
+            "tip": "您的密钥仅存储在此设备上",
+            "title": "Paste Key in HEKA",
+            "description": "返回此屏幕并在下方粘贴您的密钥。点击“测试连接”进行验证。"
+          }
+        }
+      },
+      "openai": {
+        "type": "openai",
+        "name": "OpenAI",
+        "logo": "🤖",
+        "color": "#10a37f",
+        "website": "https://openai.com",
+        "signupUrl": "https://platform.openai.com/signup",
+        "keyFormat": "以“sk-”开头，后跟字母数字字符",
+        "apiKeysUrl": "https://platform.openai.com/api-keys",
+        "description": "GPT-4和GPT-3.5 Turbo，用于细致的占星解释。行业领先的质量。",
+        "pricingNote": "免费信用额度用完后按使用付费。GPT-3.5：大约每1K个令牌0.002美元。",
+        "freeTierInfo": "新用户免费获得5美元信用额度",
+        "keyPlaceholder": "sk-your_api_key_here",
+        "setupSteps": {
+          "0": {
+            "tip": "准备好手机进行短信验证",
+            "link": "https://platform.openai.com/signup",
+            "title": "Create OpenAI Account",
+            "action": "在OpenAI注册 →",
+            "description": "在OpenAI平台注册。您需要电子邮件验证和电话号码。"
+          },
+          "1": {
+            "tip": "你可以在账单设置中设置使用限制以控制成本",
+            "title": "Add Payment Method (Optional)",
+            "description": "虽然您获得了5美元的免费信用额度，添加支付方式可以确保服务不间断。"
+          },
+          "2": {
+            "tip": "不要将其与“项目API密钥”混淆 - 我们需要用户API密钥",
+            "link": "https://platform.openai.com/api-keys",
+            "title": "前往API密钥部分",
+            "action": "打开API密钥 →",
+            "description": "点击你的头像 → “你的个人资料” → “用户API密钥”或访问直接链接。"
+          },
+          "3": {
+            "tip": "⚠️ OpenAI仅显示一次完整密钥。立即复制它！",
+            "title": "创建新的密钥",
+            "description": "点击“创建新的密钥”。将其命名为“HEKA日历”以便于识别。"
+          },
+          "4": {
+            "tip": "在platform.openai.com/settings/organization/billing/limits设置账单提醒",
+            "title": "在HEKA中配置",
+            "description": "在下方粘贴你的密钥并测试连接。在OpenAI仪表板中监控使用情况。"
+          }
+        }
+      },
+      "ollama": {
+        "type": "ollama",
+        "name": "Ollama（本地）",
+        "logo": "💻",
+        "color": "#ffffff",
+        "website": "https://ollama.com",
+        "signupUrl": "https://ollama.com/download",
+        "keyFormat": "URL格式：http://localhost:11434",
+        "apiKeysUrl": "",
+        "description": "完全在自己的设备上运行AI模型。完全隐私，设置后不需要互联网。",
+        "pricingNote": "无费用。需要具备能力的硬件（推荐8GB+ RAM）。",
+        "freeTierInfo": "100%免费 - 本地运行",
+        "keyPlaceholder": "http://localhost:11434",
+        "setupSteps": {
+          "0": {
+            "tip": "Windows版本可通过Windows子系统Linux（WSL2）获得",
+            "link": "https://ollama.com/download",
+            "title": "下载Ollama",
+            "action": "下载Ollama →",
+            "description": "下载并安装适用于您的操作系统的Ollama（Mac、Linux或Windows）。"
+          },
+          "1": {
+            "tip": "推荐使用Llama 3以获得最佳结果。模型下载需要几个GB。",
+            "title": "安装模型",
+            "description": "打开终端并运行：ollama pull llama3或ollama pull mistral"
+          },
+          "2": {
+            "tip": "服务器默认运行在http://localhost:11434",
+            "title": "启动Ollama服务器",
+            "description": "运行：ollama serve以启动本地API服务器。保持此终端打开。"
+          },
+          "3": {
+            "tip": "首次运行会下载模型。后续运行即时完成。",
+            "title": "验证安装",
+            "description": "在另一个终端运行：ollama run llama3进行测试。输入一条测试信息。"
+          },
+          "4": {
+            "tip": "每次您想要AI增强阅读时，Ollama都必须运行",
+            "title": "连接HEKA",
+            "description": "在下方输入服务器URL（通常是http://localhost:11434）并测试连接。"
+          }
+        }
+      },
+      "template": {
+        "type": "模板",
+        "name": "模板库",
+        "logo": "📚",
+        "color": "#fbbf24",
+        "website": "",
+        "signupUrl": "",
+        "keyFormat": "",
+        "apiKeysUrl": "",
+        "description": "169+手工制作的行星-星座模板，通过月相、相位和生活类别编织成独特的阅读。始终免费，始终即时，无需设置。",
+        "pricingNote": "永远没有成本。由我们策划的模板系统提供支持。",
+        "freeTierInfo": "完全免费",
+        "keyPlaceholder": "",
+        "setupSteps": {
+          "0": {
+            "tip": "模板涵盖所有主要的天体事件和行星位置",
+            "title": "选择模板库",
+            "description": "这是默认选项。无需配置。"
+          },
+          "1": {
+            "tip": "你可以随时在未来切换到AI提供商",
+            "title": "立即开始使用",
+            "description": "所有占星阅读将使用我们的预写模板库。"
+          }
+        }
+      },
+      "anthropic": {
+        "type": "anthropic",
+        "name": "Anthropic",
+        "logo": "🧠",
+        "color": "#d97757",
+        "website": "https://anthropic.com",
+        "signupUrl": "https://console.anthropic.com/login",
+        "keyFormat": "以“sk-ant-”开头，后跟字母数字字符",
+        "apiKeysUrl": "https://console.anthropic.com/settings/keys",
+        "description": "Claude AI，提供深思熟虑、细致入微的占星指导，附带扩展上下文。",
+        "pricingNote": "有竞争力的费率。Claude 3 Haiku：大约每1K令牌0.25美元。",
+        "freeTierInfo": "新用户获得5美元免费额度",
+        "keyPlaceholder": "sk-ant-your_api_key_here",
+        "setupSteps": {
+          "0": {
+            "tip": "Anthropic可能有等待名单 - 批准通常很快",
+            "link": "https://console.anthropic.com/login",
+            "title": "注册Anthropic",
+            "action": "前往Anthropic控制台 →",
+            "description": "使用你的工作邮箱在Anthropic控制台创建账户。"
+          },
+          "1": {
+            "tip": "如果在几分钟内没有看到电子邮件，请检查垃圾邮件文件夹",
+            "title": "验证你的账户",
+            "description": "检查你的电子邮件以获取验证链接。完成任何所需的验证步骤。"
+          },
+          "2": {
+            "tip": "设置齿轮图标位于右上角",
+            "link": "https://console.anthropic.com/settings/keys",
+            "title": "访问API密钥",
+            "action": "打开API密钥 →",
+            "description": "在控制台中，转到设置 → API密钥或使用下面的直接链接。"
+          },
+          "3": {
+            "tip": "你可以为不同的应用程序创建多个密钥",
+            "title": "生成API密钥",
+            "description": "点击“创建密钥”。给它一个描述性的名字，如“HEKA占星”。"
+          },
+          "4": {
+            "tip": "除非手动撤销，否则密钥不会过期",
+            "title": "复制并配置",
+            "description": "复制密钥（以\"sk-ant-\"开头）并粘贴到下面的HEKA中。"
+          }
+        }
+      }
+    },
+    "moonOracle": {
+      "New Moon": {
+        "poem": "在呼吸之间的虚空中，所有潜能都存在。种子在黑暗中等待，聚集勇气裂开它的壳。现在种植意图——它们将随着光明而成长。",
+        "title": "黑暗的神秘",
+        "favors": {
+          "0": "设定意图",
+          "1": "种植种子",
+          "2": "Beginning new ventures",
+          "3": "Inner vision work"
+        },
+        "warnings": {
+          "0": "Don't push for immediate results",
+          "1": "Avoid major launches"
+        }
+      },
+      "Full Moon": {
+        "poem": "所有隐藏在黑暗中的事物现在都在光明中显露出来。新月时种下的种子破土而出。你的工作达到高潮。世界见证了你的圆满。",
+        "title": "大启示",
+        "favors": {
+          "0": "庆祝",
+          "1": "释放不再服务的事物",
+          "2": "公众可见性",
+          "3": "感恩实践"
+        },
+        "warnings": {
+          "0": "情绪高涨",
+          "1": "睡眠可能会受到干扰"
+        }
+      },
+      "Last Quarter": {
+        "poem": "一半保留，一半必须放弃。你会带走什么？你会留下什么？选择是你的，仅属于你。",
+        "title": "释放",
+        "favors": {
+          "0": "放手",
+          "1": "释放依恋",
+          "2": "清理空间",
+          "3": "宽恕"
+        },
+        "warnings": {
+          "0": "不要开始新项目",
+          "1": "完成你能完成的"
+        }
+      },
+      "First Quarter": {
+        "poem": "半明半暗—决定悬而未决。前进的道路需要行动。选择，宇宙共谋。",
+        "title": "十字路口",
+        "favors": {
+          "0": "做出决定",
+          "1": "采取行动",
+          "2": "克服障碍",
+          "3": "承诺"
+        },
+        "warnings": {
+          "0": "避免犹豫",
+          "1": "不要回头看"
+        }
+      },
+      "Waxing Gibbous": {
+        "poem": "几乎满月，几乎完整。势头像波峰一样积聚。完善，调整，为启示做准备。",
+        "title": "聚集",
+        "favors": {
+          "0": "完善项目",
+          "1": "调整计划",
+          "2": "准备启动",
+          "3": "收集资源"
+        },
+        "warnings": {
+          "0": "不要急于完成",
+          "1": "耐心有回报"
+        }
+      },
+      "Waning Gibbous": {
+        "poem": "光芒开始温柔地退去，但智慧犹存。分享你所学到的。教给别人你从圆满中学到的东西。",
+        "title": "分享",
+        "favors": {
+          "0": "分享知识",
+          "1": "教学",
+          "2": "回馈",
+          "3": "感恩"
+        },
+        "warnings": {
+          "0": "不要执着于顶峰",
+          "1": "让周期完成"
+        }
+      },
+      "Waxing Crescent": {
+        "poem": "A sliver of silver pierces the night. The dream begins to breathe, taking its first steps into form. Trust the unfolding.",
+        "title": "THE FIRST BREATH",
+        "favors": {
+          "0": "采取第一步",
+          "1": "建立势头",
+          "2": "学习新技能",
+          "3": "建立联系"
+        },
+        "warnings": {
+          "0": "不要过度承诺",
+          "1": "保持灵活性"
+        }
+      },
+      "Waning Crescent": {
+        "poem": "银色的耳语逐渐消失在黑暗中。现在休息吧。工作已经完成。向黑暗投降，知道光明终将回归。",
+        "title": "投降",
+        "favors": {
+          "0": "深度休息",
+          "1": "投降",
+          "2": "冥想",
+          "3": "准备",
+          "4": "梦境工作"
+        },
+        "warnings": {
+          "0": "避免重大决策",
+          "1": "节省能量"
+        }
+      }
+    },
+    "planetaryGuidance": {
+      "sun": {
+        "do": {
+          "0": "担任领导",
+          "1": "提出重要请求",
+          "2": "专注于可见性",
+          "3": "表达自己",
+          "4": "寻求认可"
+        },
+        "title": "太阳时刻",
+        "dont": {
+          "0": "隐藏在阴影中",
+          "1": "避免责任",
+          "2": "减弱你的光芒"
+        },
+        "quality": "活力与认可",
+        "description": "太阳照亮它触及的一切。这个时刻有利于可见性、领导力以及心灵和自我事务。"
+      },
+      "moon": {
+        "do": {
+          "0": "培养关系",
+          "1": "信任直觉",
+          "2": "家庭和家事",
+          "3": "情感处理",
+          "4": "梦境工作"
+        },
+        "title": "月亮时刻",
+        "dont": {
+          "0": "强迫理性决策",
+          "1": "忽视感受",
+          "2": "过于用力"
+        },
+        "quality": "情感与直觉",
+        "description": "月亮统治着情感和直觉的潮汐。是培养、家庭和心灵接受力的时间。"
+      },
+      "mars": {
+        "do": {
+          "0": "体力活动",
+          "1": "直接处理冲突",
+          "2": "锻炼",
+          "3": "竞技性追求",
+          "4": "采取大胆行动"
+        },
+        "title": "火星时刻",
+        "dont": {
+          "0": "避免必要的对抗",
+          "1": "压抑愤怒",
+          "2": "挑起争论"
+        },
+        "quality": "行动与驱动",
+        "description": "火星带来火焰、动力和竞争能量。偏爱体力活动和对抗。"
+      },
+      "venus": {
+        "do": {
+          "0": "浪漫和求爱",
+          "1": "艺术创作",
+          "2": "社交",
+          "3": "创造美",
+          "4": "和平解决冲突"
+        },
+        "title": "金星时刻",
+        "dont": {
+          "0": "强行结果",
+          "1": "忽视美学",
+          "2": "急于亲密"
+        },
+        "quality": "爱与美",
+        "description": "金星将世界沐浴在美丽和欲望之中。爱情、艺术和和谐至高无上。"
+      },
+      "saturn": {
+        "do": {
+          "0": "专注于责任",
+          "1": "学习和组织",
+          "2": "提前计划",
+          "3": "建立基础",
+          "4": "接受限制"
+        },
+        "title": "土星时刻",
+        "dont": {
+          "0": "偷工减料",
+          "1": "逃避职责",
+          "2": "期待即时结果"
+        },
+        "quality": "纪律与结构",
+        "description": "土星要求纪律和结构。现在努力工作将带来持久的成果。"
+      },
+      "mercury": {
+        "do": {
+          "0": "发送重要信息",
+          "1": "签订合同（如果直接）",
+          "2": "写作和学习",
+          "3": "谈判",
+          "4": "短途旅行"
+        },
+        "title": "水星时刻",
+        "dont": {
+          "0": "从事欺骗",
+          "1": "散布流言",
+          "2": "如果水星逆行则不要签约"
+        },
+        "quality": "思维与沟通",
+        "description": "水星加快思维和言语。现在沟通、学习和商业流动得很轻松。"
+      },
+      "jupiter": {
+        "do": {
+          "0": "商业交易",
+          "1": "寻求智慧",
+          "2": "拓展视野",
+          "3": "教学和学习",
+          "4": "慷慨行为"
+        },
+        "title": "木星时刻",
+        "dont": {
+          "0": "吝啬",
+          "1": "目光短浅",
+          "2": "限制自己"
+        },
+        "quality": "扩展与财富",
+        "description": "木星扩展它所触及的一切。在这个时刻，财富、智慧和成长受到祝福。"
+      }
+    }
+  }
+}

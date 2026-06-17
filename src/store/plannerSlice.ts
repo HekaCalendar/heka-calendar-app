@@ -132,18 +132,18 @@ export const selectPlannerTasks = (state: RootState) => state.planner.tasks;
 export const selectPlannerTasksForDay = (dayKey: string) =>
   createSelector([selectPlannerTasks], (tasks) => tasks[dayKey] || []);
 
-// Unified selector: merges calendar notes with planner tasks for a given day
+// Unified selector: merges calendar notes with planner tasks for a given day.
+// Only recomputes when the specific day's notes or tasks change.
 export const selectUnifiedDayItems = (dayKey: string) =>
   createSelector(
-    [(state: RootState) => (state.calendar as any).notes[dayKey] || [], selectPlannerTasks],
-    (notes, tasks) => {
-      const dayTasks = tasks[dayKey] || [];
-      const result = [...notes, ...dayTasks].sort(
+    [
+      (state: RootState) => state.calendar.notes[dayKey] || [],
+      (state: RootState) => state.planner.tasks[dayKey] || [],
+    ],
+    (notes, tasks) =>
+      [...notes, ...tasks].sort(
         (a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
-      );
-      console.log('[selectUnifiedDayItems] dayKey:', dayKey, 'notes:', notes.length, 'tasks:', dayTasks.length, 'total:', result.length);
-      return result;
-    }
+      )
   );
 
 export const selectPlannerPreferences = (state: RootState) => state.planner.preferences;

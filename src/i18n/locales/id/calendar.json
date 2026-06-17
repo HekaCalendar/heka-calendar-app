@@ -1,0 +1,166 @@
+{
+  "months": {
+    "0": "April",
+    "1": "Mei",
+    "2": "Juni",
+    "3": "Juli",
+    "4": "Agustus",
+    "5": "Agustus",
+    "6": "September",
+    "7": "Oktober",
+    "8": "November",
+    "9": "Desember",
+    "10": "Januari",
+    "11": "Februari",
+    "12": "Maret"
+  },
+  "monthShort": {
+    "0": "Apr",
+    "1": "Mei",
+    "2": "Jun",
+    "3": "Jul",
+    "4": "Agu",
+    "5": "Agu",
+    "6": "Sep",
+    "7": "Okt",
+    "8": "Nov",
+    "9": "Des",
+    "10": "Jan",
+    "11": "Feb",
+    "12": "Mar"
+  },
+  "civilMonths": {
+    "0": "Januari",
+    "1": "Februari",
+    "2": "Maret",
+    "3": "April",
+    "4": "Mei",
+    "5": "Juni",
+    "6": "Juli",
+    "7": "Agu",
+    "8": "September",
+    "9": "Okt",
+    "10": "November",
+    "11": "Des"
+  },
+  "days": {
+    "0": "Minggu",
+    "1": "Senin",
+    "2": "Selasa",
+    "3": "Rabu",
+    "4": "Kamis",
+    "5": "Jumat",
+    "6": "Sabtu"
+  },
+  "daysShort": {
+    "0": "Min",
+    "1": "Sen",
+    "2": "Sel",
+    "3": "Rab",
+    "4": "Kam",
+    "5": "Jum",
+    "6": "Sab"
+  },
+  "daysMin": {
+    "0": "Mi",
+    "1": "Se",
+    "2": "Sl",
+    "3": "Rb",
+    "4": "Km",
+    "5": "Jm",
+    "6": "Sb"
+  },
+  "arcs": {
+    "opening": "Pembukaan",
+    "core": "Inti",
+    "closing": "Penutup"
+  },
+  "arcSuffix": "Bulan",
+  "arcDescriptions": {
+    "opening": "Tahun bangun",
+    "core": "Tahun mekar",
+    "closing": "Tahun selesai"
+  },
+  "monthLabel": "Bulan {{month}}/13",
+  "hekaYear": "Tahun HEKA {{year}}",
+  "civilYear": "Tahun sipil {{year}}",
+  "dayOfYear": "Hari {{day}} dari {{total}}",
+  "week": "Minggu",
+  "quarter": "Kuartal",
+  "leapDay": "Hari Tambahan",
+  "leapDayDescription": "Sehari tambahan di bulan Maret, setiap 4 tahun",
+  "switchDarkMode": "Beralih ke mode gelap",
+  "switchLightMode": "Beralih ke mode terang",
+  "moreNotes": "+{{count}} lagi",
+  "holiday": "Hari Libur",
+  "note": "Catatan",
+  "task": "Tugas",
+  "moonPhase": "Fase Bulan",
+  "selectDay": "Pilih hari untuk melihat detail",
+  "navigation": {
+    "previousMonth": "Bulan sebelumnya",
+    "nextMonth": "Bulan berikutnya",
+    "goToToday": "Pergi ke hari ini",
+    "today": "Hari ini"
+  },
+  "print": {
+    "title": "Cetak kalender",
+    "label": "Cetak"
+  },
+  "expand": {
+    "shrinkHorizontal": "Ciutkan secara horizontal",
+    "expandHorizontal": "Perluas secara horizontal",
+    "shrinkVertical": "Ciutkan secara vertikal",
+    "expandVertical": "Perluas secara vertikal"
+  },
+  "year": {
+    "viewEntireYear": "Lihat tahun keseluruhan",
+    "label": "Tahun"
+  },
+  "search": {
+    "title": "Cari tanggal",
+    "label": "Cari"
+  },
+  "features": {
+    "astrologyHub": "Pusat Astrologi",
+    "stars": "Bintang",
+    "cosmicCircle": "Lingkaran Kosmik",
+    "circle": "Lingkaran",
+    "oracleJournal": "Jurnal Oracle",
+    "journal": "Jurnal",
+    "aboutHeka": "Tentang Kalender HEKA",
+    "about": "Tentang",
+    "yourStatistics": "Statistik Anda",
+    "stats": "Statistik",
+    "communityHolidays": "Libur komunitas",
+    "community": "Komunitas"
+  },
+  "toggles": {
+    "civilDates": "Beralih tanggal sipil",
+    "civil": "Sipil",
+    "moonPhases": "Beralih fase bulan",
+    "moon": "Bulan",
+    "holidays": "Beralih libur",
+    "holidayLabel": "Libur"
+  },
+  "prev": "Sebelumnya",
+  "next": "Berikutnya",
+  "printYear": "Cetak Tahun",
+  "close": "Tutup",
+  "quickNote": "Catatan Cepat",
+  "quickNoteTag": "catatan cepat",
+  "addingTo": "Menambahkan ke",
+  "typeYourNote": "Ketik catatan Anda...",
+  "saveNote": "Simpan Catatan",
+  "ctrlEnterToSave": "Ctrl + Enter untuk menyimpan • Esc untuk membatalkan",
+  "hekaPrefix": "HEKA:",
+  "civilPrefix": "Sipil:",
+  "moodPrefix": "Senyawa:",
+  "searchTips": {
+    "tip1": "\"31 januari\" atau \"hari ini\"",
+    "tip2": "\"heksa 15\" atau \"april 5\"",
+    "tip3": "Konten catatan atau kategori",
+    "tip4": "\"Natal\" atau \"Hari Australia\"",
+    "tip5": "\"2026-01-31\" (format ISO)"
+  }
+}

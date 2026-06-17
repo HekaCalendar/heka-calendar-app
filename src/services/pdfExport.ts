@@ -4,6 +4,7 @@
  */
 
 import type { DiaryEntry, JournalTheme, JournalFont } from '../oracle/diaryTypes';
+import { escapeHtml } from '../utils/htmlEscape';
 
 interface PDFExportOptions {
   title?: string;
@@ -28,7 +29,7 @@ export function generateDiaryPDF(
   // Group by month
   const grouped = sortedEntries.reduce((groups, entry) => {
     const date = new Date(entry.date);
-    const monthKey = date.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
+    const monthKey = date.toLocaleDateString(undefined, { month: 'long', year: 'numeric' });
     if (!groups[monthKey]) groups[monthKey] = [];
     groups[monthKey].push(entry);
     return groups;
@@ -77,7 +78,7 @@ export function generateDiaryPDF(
 
   // Format date
   const formatDate = (dateStr: string) => {
-    return new Date(dateStr).toLocaleDateString('en-US', {
+    return new Date(dateStr).toLocaleDateString(undefined, {
       weekday: 'long',
       year: 'numeric',
       month: 'long',
@@ -87,7 +88,7 @@ export function generateDiaryPDF(
 
   // Format time
   const formatTime = (timestamp: string) => {
-    return new Date(timestamp).toLocaleTimeString('en-US', {
+    return new Date(timestamp).toLocaleTimeString(undefined, {
       hour: 'numeric',
       minute: '2-digit',
       hour12: true,
@@ -306,19 +307,19 @@ export function generateDiaryPDF(
             </div>
             
             <div class="entry-content" style="${getThemeStyles(entry.theme || 'plain')} font-family: ${getFontFamily(entry.font || 'serif')}; font-size: 14px;">
-              ${entry.content.replace(/\n/g, '<br>')}
+              ${escapeHtml(entry.content).replace(/\n/g, '<br>')}
             </div>
             
             ${includeInsights && entry.insight ? `
               <div class="entry-insight">
                 <div class="entry-insight-label">✨ Celestial Guidance</div>
-                <p class="entry-insight-text">${entry.insight.text}</p>
+                <p class="entry-insight-text">${escapeHtml(entry.insight.text)}</p>
                 
                 ${entry.celestialContext ? `
                   <div class="entry-insight-context">
                     <div class="celestial-context">
                       ${entry.celestialContext.moonPhase ? `
-                        <span class="celestial-item">🌙 ${(entry.celestialContext.moonPhase as any).phase || entry.celestialContext.moonPhase}</span>
+                        <span class="celestial-item">🌙 ${escapeHtml(String(entry.celestialContext.moonPhase.phase || entry.celestialContext.moonPhase))}</span>
                       ` : ''}
                     </div>
                   </div>

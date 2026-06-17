@@ -1,0 +1,1411 @@
+{
+  "ends": "Eindigt",
+  "title": "Heden's Hemelse Gids",
+  "civil": "Burgerlijk",
+  "speed": "Snelheid",
+  "avoid": "Vermijd",
+  "natal": "Nataal",
+  "house": "Huis",
+  "exact": "Precies",
+  "began": "Begonnen",
+  "status": "Status",
+  "traits": "Kenmerken",
+  "element": "Element",
+  "forDate": "Voor {{month}} {{day}}",
+  "bestFor": "Het beste voor",
+  "fromDate": "Vanaf {{month}} {{day}}",
+  "whatIsIt": "Wat is het?",
+  "guidance": {
+    "today": "Vandaag",
+    "mixed": "Gemengd",
+    "career": "Carrière",
+    "health": "Gezondheid",
+    "timing": "Tijdig",
+    "thisWeek": "Deze Week",
+    "thisYear": "Dit Jaar",
+    "finances": "Financiën",
+    "bestDays": "✦ Beste Dagen",
+    "keyThemes": "Hoofdthema's",
+    "lifeAreas": "Levensgebieden",
+    "excellent": "Uitstekend",
+    "favorable": "Gunstig",
+    "difficult": "Moeilijk",
+    "calculating": "Berekening van hemelse leidraad...",
+    "challenging": "Uitdagend",
+    "overallScore": "Algehele Score",
+    "todaySubtitle": "Huidig hemels weer",
+    "relationships": "Relaties",
+    "lunarGuidance": "☽ Maanleidraad",
+    "personalGrowth": "Persoonlijke Groei",
+    "thisWeekSubtitle": "7-daagse kosmische voorspelling",
+    "thisYearSubtitle": "Overzicht van {{year}}",
+    "unableToGenerate": "Kan op dit moment geen leidraad genereren.",
+    "yourCelestialRegion": "Je Hemelse Regio",
+    "planetaryHighlights": "Planeet Hightlights"
+  },
+  "duration": "Duur",
+  "titlePast": "Hemelse Gids voor {{days}} dagen geleden",
+  "civilDate": "Burgerlijke Datum",
+  "dayOfYear": "Dag van het Jaar",
+  "solarNoon": "Zonnemiddag",
+  "localTime": "Lokale Tijd:",
+  "lowEnergy": "Lage energie: Rust, reflectie, planning",
+  "nextCheck": "Volgende controle",
+  "yearOfThe": "Jaar van de",
+  "planet": {
+    "in": "{{planet}} in {{sign}}",
+    "copy": "📋 Kopiëren",
+    "shadow": "🌑 Schaduw",
+    "growth": "🌱 Groei",
+    "famous": "⭐ Beroemd",
+    "copied": "✓ Gekopieerd!",
+    "tagline": "\"{{tagline}}\"",
+    "essence": "💫 Essentie",
+    "atDegree": "{{planet}} op {{degree}}° {{sign}}",
+    "archetype": "De Archegetyp",
+    "dailyLife": "In Dagelijks Leven",
+    "shadowSide": "🌑 De Schaduwzijde",
+    "deepWisdom": "🌙 Diepe wijsheid voor {{planet}} in {{sign}} wordt gecanonnieert...",
+    "famousIntro": "Je {{planet}} in {{sign}} verbindt je met deze invloedrijke figuren:",
+    "houseDignity": "{{symbol}} Huis {{house}} • {{dignity}}",
+    "shareThisWith": "⭐ Deel Dit Met",
+    "deepWisdomSub": "{{planet}} in {{sign}}, Huis {{house}}",
+    "coreExpression": "Je Kernexpressie",
+    "commonTriggers": "Gemeenschappelijke Triggers",
+    "yourGrowthPath": "🌱 Jouw Groeipad",
+    "alignedCareers": "Uitgerichte Carrièrepaden",
+    "dailyAffirmation": "🙏 Dagelijkse Bevestiging",
+    "reflectionPrompts": "💭 Reflectieprompts",
+    "practicalExercises": "Praktische Oefeningen"
+  },
+  "daily": {
+    "orb": "{{orb}}° orb",
+    "good": "✓ Goede energie vandaag. Gunstig voor de meeste activiteiten.",
+    "mixed": "◆ Gemengde energieën. Ga vooruit met bewustzijn.",
+    "loading": "Berekent nauwkeurige posities...",
+    "watchOut": "⚠ Pas Op ({{count}})",
+    "quietDay": "Rustige dag. Geen grote transits die uw kaart beïnvloeden.",
+    "excellent": "Uitstekend dag voor belangrijke activiteiten. Sterk kosmisch ondersteuning.",
+    "background": "◆ Achtergrond ({{count}})",
+    "universalSky": "Universele Hemel Vandaag",
+    "addBirthChart": "Voeg een geboortekaart toe voor gepersonaliseerde transit-informatie.",
+    "todayForecast": "Vandaag Voorspelling",
+    "opportunities": "✓ Kansen ({{count}})",
+    "activeTransits": "{{count}} actieve transit",
+    "swissPrecision": "Zwitsers Ephemeris precisie",
+    "challengingDay": "⚠ Uitdagend dag. Focus op zelfzorg en vermijd grote beslissingen.",
+    "goodForRoutine": "Goed voor routinetaken en onderhoud.",
+    "activeTransits_plural": "{{count}} actieve transits"
+  },
+  "futureView": "Toekomstige Weergave",
+  "scrollHint": "(scroll →)",
+  "beganCivil": "Begonnen (Burgerlijke): {{date}}",
+  "traditions": "Tradities",
+  "lunarCycle": "Maancyclus",
+  "confidence": "Vertrouwen:",
+  "whyThisDay": "Waarom Deze Dag?",
+  "highEnergy": "Hoge energie: Start projecten, neem actie, wees sociaal",
+  "focusAreas": "Focusgebieden",
+  "compatible": "Compatibel",
+  "luckyHours": "Gelukkige Uren",
+  "titleFuture": "Hemelse Gids in {{days}} dagen",
+  "lookingBack": "Terugkijken",
+  "dayOfPlanet": "{{day}}: Dag van {{planet}}",
+  "planets": {
+    "sun": "Zon",
+    "moon": "Maan",
+    "mars": "Mars",
+    "venus": "Venus",
+    "saturn": "Saturnus",
+    "mercury": "Mercurius",
+    "jupiter": "Jupiter"
+  },
+  "calculating": "Berekening van maanpositie...",
+  "luckyColors": "Gelukkige kleuren",
+  "selectedDate": "Geselecteerde HEKA Datum",
+  "dragToScroll": "Sleep om te scrollen",
+  "yourLocation": "Uw Locatie",
+  "significance": "Betekenis",
+  "howToObserve": "Hoe te Observeren",
+  "sunElevation": "Zonhoogte: {{elevation}}°",
+  "newMoonCivil": "Nieuwe Maan (Burgerlijk)",
+  "cosmicEnergy": "Kosmische Energie",
+  "howToUseThis": "Hoe dit te gebruiken",
+  "todaysEnergy": "Vandaag Energie",
+  "elements": {
+    "air": "Lucht",
+    "fire": "Vuur",
+    "water": "Water",
+    "earth": "Aarde"
+  },
+  "luckyNumbers": "Gelukkige nummers",
+  "export": {
+    "close": "Sluiten",
+    "failed": "Kon niet exporteren",
+    "guidance": "Leiden",
+    "creating": "Aanmaken...",
+    "saveImage": "Afbeelding Opslaan",
+    "affirmation": "Bevestiging",
+    "generatedBy": "Gegenereerd door Heka Kalender ✦",
+    "overallGuidance": "Algemene Leiding",
+    "celestialGuidance": "Hemelse Leiding"
+  },
+  "timezones": {
+    "ET": "Oosttij (ET)",
+    "CT": "Centraal Tijd (CT)",
+    "MT": "Bergtijd (MT)",
+    "PT": "Pacifisch Tijd (PT)",
+    "UTC": "UTC (Universeel)",
+    "Paris": "Parijs (CET)",
+    "Tokyo": "Tokio (JST)",
+    "Dubai": "Dubai (GST)",
+    "London": "Londen (GMT)",
+    "Berlin": "Berlijn (CET)",
+    "Sydney": "Sydney (AEST)",
+    "Shanghai": "Sjanghai (CST)",
+    "Auckland": "Auckland (NZST)",
+    "Melbourne": "Melbourne (AEST)"
+  },
+  "startingCivil": "Start (Burgerlijke): {{date}}",
+  "hekaYearLabel": "HEKA Jaar {{year}}",
+  "daysRemaining": "Dagen resterend",
+  "fullMoonCivil": "Volle Maan (Burgerlijk)",
+  "thisMoonCycle": "Deze Maancyclus",
+  "waxingQuality": "Wassende Maan: Groei, opbouw van momentum",
+  "waningQuality": "Afnemende Maan: Ontlasting, reflectie, voltooiing",
+  "forecastTitle": "Hemelse Weersvoorspelling",
+  "whatThisMeans": "Wat Dit Op Dit Moment Betekent",
+  "planetsActive": "Planeten Die Op Dit Moment Actief Zijn",
+  "exactPosition": "Precieze Positie",
+  "moonVoidLabel": "Maan Leeg",
+  "starsHub": {
+    "back": "← Terug",
+    "live": "Live",
+    "chart": "Diagram",
+    "active": "Actief",
+    "sunSign": "Zonnestekenteken",
+    "12signs": "12 Tekens",
+    "13signs": "13 Tekens ⛎",
+    "version": "Versie 2.2.0 • HEKA Astrologie Motor",
+    "overview": "Overzicht",
+    "guidance": "Begeleiding",
+    "voidMoon": "Maan Leeg",
+    "settings": "Instellingen",
+    "tropical": "Tropisch",
+    "sidereal": "Zijder",
+    "positions": "Posities",
+    "moonPhase": "Maanfase",
+    "hourRuler": "Uurheer",
+    "aboutText": "Aangedreven door Zwitserse ephemerisberekeningen voor nauwkeurige astronomische gegevens. Lijn je acties uit met de kosmische ritme.",
+    "tapPlanet": "Tik op een planeet om zijn gedetailleerde betekenis te verkennen",
+    "viewStars": "View Stars →",
+    "goToStars": "Go to Stars to see your personalized astrological guidance.",
+    "13signDesc": "⛎ 13-teken zijder: Ophiuchus inbegrepen. Het meest astronomisch nauwkeurige raamwerk.",
+    "retrograde": "℞ Retrograd",
+    "welcomeBack": "Welkom terug, {{name}}",
+    "retrogrades": "Retrogradaties",
+    "12signsDesc": "Traditioneel zijder",
+    "13signsDesc": "Ophiuchus inbegrepen",
+    "birthCharts": "Birth Charts",
+    "universalSky": "Universeel Hemel",
+    "zodiacSystem": "Tekenstelsel",
+    "tropicalDesc": "12 Tekens · Seizoenen",
+    "siderealDesc": "Vaste Sterren · Nakshatras",
+    "dailyBriefing": "Dagelijks Overzicht",
+    "tropicalDesc2": "Klassieke 12-teken tropische sterrenstelsel gekoppeld aan de seizoenen.",
+    "celestialFont": "Hemelse Lettertype",
+    "profilesSaved": "{{count}} profiel opgeslagen",
+    "corruptedDate": "⚠️ Beschadigde geboortedatum gedetecteerd!",
+    "deleteProfile": "🗑️ Profiel Verwijderen",
+    "addNewProfile": "➕ Nieuw Profiel Toevoegen",
+    "tapForDetails": "Tik voor details →",
+    "housePosition": "Huis Positie",
+    "celestialTheme": "Hemelse Thema",
+    "selectTypeface": "Selecteer het lettertype voor deze sfeer",
+    "manageProfiles": "Beheer je geboortediagramprofielen",
+    "aboutCelestial": "Over Hemelse Intelligentie",
+    "chooseFramework": "Kies je hemelse raamwerk",
+    "trueModeWarning": "⚠️ Je bent in TRUE modus maar niet met zijder. Schakel over naar Zijder voor volledige uitlijning.",
+    "syncModeWarning": "⚠️ Je bent in SYNC modus maar met zijder. Dit is een geavanceerde override.",
+    "receiveGuidance": "Ontvang leiding van het kosmos",
+    "retrogradeCount": "Navigate {{count}} retrograde",
+    "allPlanetsDirect": "Alle planeten direct - een tijd voor voorwaartse beweging.",
+    "exploreCelestial": "Verkennen van de huidige hemelse landschappen. Maak een profiel aan voor gepersonaliseerde astrologische begeleiding.",
+    "compareTwoSelves": "Vergelijk Je Twee Ik",
+    "chooseAtmosphere": "Kies je kosmische sfeer",
+    "siderealSignCount": "Zijder Teken Aantal",
+    "profileManagement": "Profielbeheer",
+    "currentExpression": "Huidige Expressie",
+    "housePositionText": "Deze planeet activeert het gebied van het leven dat wordt voorgesteld door zijn huidige huispositie, en kleurt je ervaringen met {{energy}}-energie.",
+    "12signSiderealDesc": "☀️ 12-teken zijder: Traditionele sterrenbeeldgrenzen met ayanamsa correctie.",
+    "personalizedWeather": "Huidige hemelse weer gepersonaliseerd voor uw nataalplaat. {{retrogrades}}",
+    "observatorySettings": "Sterrenwacht Instellingen",
+    "planetInSignDefault": "{{planet}} in {{sign}} brings unique energy.",
+    "profilesSaved_plural": "{{count}} profielen opgeslagen",
+    "birthChartManagement": "Birth Chart Management",
+    "celestialIntelligence": "Hemelse Intelligentie",
+    "celestialNotifications": "Hemelse Mededelingen",
+    "retrogradeCount_plural": "Navigate {{count}} retrogrades",
+    "currentPlanetaryPositions": "Huidige Planeetposities",
+    "openCelestialIntelligence": "Open Celestial Intelligence ✦"
+  },
+  "twoSelves": {
+    "air": "de denker, de verbindingsmaker",
+    "none": "Geen",
+    "fire": "de initiatiefnemer, de vonk",
+    "title": "Jouw Twee Zelfs",
+    "error": "Kan een of beide sterrenbeeldsystemen niet berekenen. Controleer uw geboortedata.",
+    "earth": "de bouwer, de berg",
+    "water": "de voeler, de diepte",
+    "changed": "Veranderd",
+    "subtitle": "De kalender leerde je een verhaal. De sterren vertellen een ander.",
+    "tropical": "Tropisch",
+    "trueSelf": "Echte Ik",
+    "sidereal": "Ziderisch",
+    "sunMoved": "Je Zon is verhuisd van {{tropical}} naar {{sidereal}}.",
+    "ayanamsa": "De ayanamsa, de kloof tussen het tropische sterrenbeeld en de werkelijke sterren, is {{degrees}} graden voor je geboortejaar.",
+    "civilSelf": "Burgerlijke Ik",
+    "whoYouAre": "Wie je onder de sterren bent",
+    "ascendant": "Ondergang",
+    "midheaven": "Midhemel",
+    "shiftedBy": "Verschuiving van {{degrees}}°",
+    "moonMoved": "Je Maan, je emotionele kern, is verhuisd van {{tropical}} naar {{sidereal}}.",
+    "notAnError": "Dit is geen fout. Dit is het verschil tussen wie je hebt geleerd te zijn en wie de sterren zeggen dat je bent.",
+    "calculating": "Berekening van tropische & sidereal platen...",
+    "revisitHint": "Je kunt deze vergelijking op elk gewenst moment opnieuw bekijken via de diagraminstellingen.",
+    "totalChanged": "In totaal zijn er {{count}} van je {{total}} belangrijke hemellichamen hun teken veranderd.",
+    "whoYouLearned": "Wie je hebt geleerd te zijn",
+    "rareAlignment": "Je tropische en ziderische horoscopen zijn bijna identiek - een zeldzame uitlijning die plaatsvindt wanneer de ayanamsa dicht bij een hele-tekengrens ligt. Jij bent een van de weinigen waarvan de burgerlijke ik en de ware ik dezelfde taal spreken.",
+    "identityShift": "De identiteit die je hebt geleerd als {{tropicalElement}} verandert in {{siderealElement}}.",
+    "ascendantShift": "Je Ondergang, het masker dat je draagt, is verhuisd van {{tropical}} naar {{sidereal}}.",
+    "midheavenShift": "Je Midhemel, je publieke beroeping, is verhuisd van {{tropical}} naar {{sidereal}}.",
+    "defaultElement": "de zelf",
+    "dominantElement": "Hersenelement",
+    "continueTrueMode": "Ga door in Ware Modus"
+  },
+  "historicalView": "Historisch Overzicht",
+  "dayOfYearValue": "Dag {{day}}",
+  "lookingForward": "Vooruitkijken",
+  "hekaYearBegins": "HEKA Jaar {{year}} Begin",
+  "countdown": {
+    "days": "dagen",
+    "hours": "uur",
+    "minutes": "min",
+    "seconds": "sec"
+  },
+  "aboutSolarNoon": "Over Zonnemiddag",
+  "newMoonQuality": "Nieuwe Maan: Begin, instellen van intenties",
+  "moderateEnergy": "Matige energie: Routine werk, voortdurend vooruitgang",
+  "swissEphemeris": "Zwitserse Ephemeride",
+  "retrogradeNote": "Retrograde: Heroverweegingsperiode",
+  "moonPhaseLabel": "Maanfase",
+  "hourlyMoonMood": "Uurlijkse Maanhumeur",
+  "upcomingEvents": "Aankomende Hemelse Evenementen",
+  "profile": {
+    "addNew": "Nieuw Toevoegen",
+    "default": "Standaard",
+    "noCharts": "Nog geen platen",
+    "yourCharts": "Jouw Plaatjes",
+    "createFirst": "Maak je eerste geboorteplaat",
+    "selectProfile": "Selecteer Profiel"
+  },
+  "briefing": {
+    "focus": "Focus: {{area}}",
+    "setUpAi": "Stel AI in →",
+    "dismiss": "Afwijzen",
+    "enableAi": "AI-Richtlijnen Inschakelen",
+    "aiEnhanced": "✨ AI-Verhoogd",
+    "todaysTheme": "Vandaag Thema",
+    "todaysFocus": "Vandaag Focus",
+    "voidMoonDesc": "De Maan is op dit moment leeg - ideaal voor reflectie, rust en innerlijke werk in plaats van het starten van nieuwe ondernemingen.",
+    "unlockDeeper": "Ontgrendel Dieper Inzichten",
+    "aiConfigured": "U hebt een AI-provider geconfigureerd. Schakel AI-richtlijnen in voor poëtische, gepersonaliseerde lezingen.",
+    "yourGuidance": "Uw Richtlijnen",
+    "aiUnavailable": "AI-verbeteringen niet beschikbaar. Sjabloonrichtlijnen worden getoond.",
+    "aiAddProvider": "Voeg een AI-provider toe om LLM-verhoogde interpretaties te ontvangen die zijn afgestemd op uw unieke sterrenkaart.",
+    "voidMoonActive": "🌙 Leegte Maan Actief",
+    "turnOnSettings": "Inschakelen in Instellingen",
+    "templatePowered": "📚 Sjabloon-Aangedreven",
+    "templateFallback": "⚠️ Sjabloon Terugval",
+    "dailyAffirmation": "Dagelijkse Bevestiging",
+    "viewFullGuidance": "Bekijk Volledige Richtlijnen",
+    "patternRecognized": "🔮 Patroon Herkend"
+  },
+  "aboutThisSeason": "Over dit seizoen",
+  "characteristics": "Kenmerken",
+  "fullMoonQuality": "Volle Maan: Piek energie, manifestatie",
+  "activities": {
+    "rest": "rusten",
+    "plant": "plant",
+    "prune": "besnoeien",
+    "harvest": "oogsten",
+    "prepare": "voorbereiden",
+    "fertilize": "bemesten",
+    "transplant": "herplanten"
+  },
+  "numerologyTitle": "Numerologie: Dag {{day}}",
+  "zodiacSigns": {
+    "leo": "Leeuw",
+    "aries": "Ram",
+    "virgo": "Maagd",
+    "libra": "Weegschaal",
+    "taurus": "Stier",
+    "gemini": "Tweelingen",
+    "cancer": "Kreeft",
+    "pisces": "Vissen",
+    "scorpio": "Schorpioen",
+    "aquarius": "Waterman",
+    "capricorn": "Steenbok",
+    "ophiuchus": "Ophiuchus",
+    "sagittarius": "Boogschutter"
+  },
+  "dataUnavailable": "Hemelsgegevens niet beschikbaar",
+  "thisWeeksThemes": "Deze Week's Thema's",
+  "noMajorTransits": "Geen Belangrijke Persoonlijke Transiten",
+  "guidanceV2": {
+    "edit": "Bewerken",
+    "hour": "{{planet}} Uur",
+    "copy": "Kopiëren",
+    "card": "Kaart",
+    "share": "Delen",
+    "close": "Sluiten",
+    "today": "Vandaag",
+    "copied": "Gekopieerd",
+    "cancel": "Annuleren",
+    "history": "Geschiedenis",
+    "refresh": "Verversen",
+    "setUpAi": "Stel AI op →",
+    "strength": "Kracht",
+    "yesClear": "Ja, wissen",
+    "yourChart": "Jouw Diagram ✓",
+    "signature": "Handtekening",
+    "consulting": "Consulting the celestial spheres...",
+    "aiEnhanced": "✨ AI-verbeterd",
+    "natalChart": "✓ Geboortediagram",
+    "refreshing": "Bijwerken...",
+    "focusAreas": "Focusgebieden",
+    "confidence": "Vertrouwen",
+    "selectDate": "Selecteer een datum",
+    "areYouSure": "Weet u het zeker?",
+    "affirmation": "Bevestiging",
+    "yourPatterns": "Jouw Patronen",
+    "unlockDeeper": "Ontgrendel diepere inzichten",
+    "aiConfigured": "Je hebt een AI-provider geconfigureerd. Schakel AI-richtlijnen in voor poëzie, gepersonaliseerde lezingen geweven uit je geboortediagram en de live lucht.",
+    "clearHistory": "Geschiedenis wissen",
+    "addBirthChart": "Geboortediagram toevoegen",
+    "aiEnhancedVia": "✨ AI-verbeterd via {{provider}} ({{model}})",
+    "aiAddProvider": "Voeg een AI-provider toe (Groq, OpenAI, of lokale Ollama) om LLM-verbeterde interpretaties te ontvangen aangepast aan je unieke diagram.",
+    "sacredRituals": "Heilige Rituelen",
+    "aiUnavailable": "AI-verbetering niet beschikbaar: {{reason}}. Sjabloonbegeleiding getoond.",
+    "turnOnSettings": "Inschakelen in Instellingen",
+    "morningBriefing": "Ochtendbrief",
+    "loadingGuidance": "Je gepersonaliseerde richtlijnen laden...",
+    "templatePowered": "📚 Sjabloon-gedreven",
+    "guidanceHistory": "📜 Richtlijnen Geschiedenis",
+    "noSavedGuidance": "Nog geen opgeslagen begeleiding",
+    "enableAiGuidance": "AI-richtlijnen inschakelen",
+    "celestialEssence": "Hemelse Essentie",
+    "aiEnhancedSuffix": "(AI-verbeterd)",
+    "dailyAffirmation": "Dagelijks Bevestigingswoord",
+    "selectDateToView": "Selecteer een datum om uw opgeslagen begeleiding te bekijken.",
+    "practicalGuidance": "Praktische Richtlijnen",
+    "dailyAffirmations": "Dagelijkse Bevestigingswoorden",
+    "reflectionPrompts": "Reflectieprompts",
+    "aiUnavailableDate": "⚠️ AI-verbetering was op deze datum niet beschikbaar. Sjabloonbegeleiding getoond.",
+    "personalizedForYou": "✨ Aangepaste voor jou",
+    "guidanceConfidence": "Richtlijn Betrouwbaarheid",
+    "readingsAppearHere": "Uw dagelijkse lezingen worden hier automatisch weergegeven.",
+    "yourCelestialRegion": "Je Hemelse Regio",
+    "practicalGuidanceTitle": "Praktische Begeleiding"
+  },
+  "birthChart": {
+    "born": "Geboorte",
+    "edit": "✏️ Bewerken",
+    "loading": "Hemelse blauwdruk laden...",
+    "promise": "Belofte",
+    "sunSign": "☉ Zonnestekenaar • U bent een {{sign}}",
+    "elements": "Elementen",
+    "newChart": "+ Nieuwe Kaart",
+    "dignities": "Waardigheden",
+    "chartWheel": "Kaartwiel",
+    "natalChart": "◉ Geboortekaart",
+    "dragRotate": "Sleep om te draaien • Klik op planeten voor details",
+    "lifeThemes": "🌟 Levensthema's",
+    "createFirst": "Maak uw eerste geboortekaart aan om persoonlijke hemelse begeleiding te ontgrendelen",
+    "soulPromise": "Zielbelofte",
+    "growthEdges": "🌱 Groeigrenzen",
+    "noBirthChart": "Geen Geboortekaart Gefundeerd",
+    "profileChart": "{{name}}'s Kaart",
+    "naturalGifts": "🎁 Natuurlijke Geschenken",
+    "majorAspects": "⚡ Belangrijke Aspecten",
+    "recreateChart": "Maak uw kaart opnieuw aan",
+    "createYourChart": "✨ Maak uw Kaart",
+    "unknownLocation": "Onbekende locatie",
+    "elementalTemple": "🔥 Elementair Tempel",
+    "chartIncomplete": "⚠️ Kaartgegevens onvolledig.",
+    "planetPositions": "🪐 Planeetposities",
+    "yourSoulsPromise": "✨ Uw Zielbelofte"
+  },
+  "lastQuarterToNew": "Laatste kwartier tot nieuwe maan: Loslaten en rusten",
+  "cosmicConditions": "Kosmische Omstandigheden",
+  "birthInput": {
+    "house": "Huis {{house}}",
+    "cancel": "Annuleren",
+    "dignity": "{{dignity}}",
+    "yourName": "Jouw Naam",
+    "latitude": "Breedtegraad",
+    "timezone": "Tijdzone",
+    "enterName": "Voer je naam in",
+    "birthDate": "Geboortedatum",
+    "birthTime": "Geboortetime",
+    "longitude": "Lengtegraad",
+    "calcFailed": "Mislukt om planetaire posities te berekenen. Probeer opnieuw.",
+    "invalidDate": "Ongeldige geboortedatum of tijd",
+    "calculating": "Bereken je hemelse blauwdruk...",
+    "privacyNote": "🔒 Jouw geboortegegevens worden opgeslagen op je apparaat en gesynchroniseerd met je account wanneer je aangemeld bent.",
+    "enterDetails": "Voer je geboortedetails in om gepersonaliseerde richtlijnen te ontgrendelen op basis van je unieke hemelse blauwdruk.",
+    "locationHint": "Begin met typen van een voorstad of stad (bijv. \"Bankstown\", \"Sydney\")",
+    "birthLocation": "Geboortelocatie *",
+    "yourBirthChart": "Jouw Geboorteplaat",
+    "calculateChart": "✨ Bereken Mijn Plaat",
+    "pleaseEnterName": "Gelieve je naam in te voeren",
+    "pleaseEnterDate": "Gelieve je geboortedatum in te voeren",
+    "pleaseEnterTime": "Gelieve je geboortetime in te voeren",
+    "noPlanetaryData": "Geen planetaire gegevens geretourneerd van berekening",
+    "houseCalcFailed": "Mislukt om huisposities te berekenen. Controleer je coördinaten.",
+    "chartCalcFailed": "Mislukt om plaat te berekenen. Controleer je invoergegevens.",
+    "invalidHouseData": "Ongeldige huisgegevens geretourneerd",
+    "pleaseEnterCoords": "Gelieve je geboortelocatiecoördinaten in te voeren",
+    "invalidHouseData2": "Ongeldige huisgegevens geretourneerd van berekening",
+    "celestialBlueprint": "Jouw Hemelse Blauwdruk",
+    "latitudePlaceholder": "bijv., 40.7128",
+    "longitudePlaceholder": "bijv., -74.0060"
+  },
+  "premiumCards": {
+    "sun": "Zon",
+    "moon": "Maan",
+    "copy": "Kopiëren",
+    "weak": "⚠ Zwak",
+    "expand": "Uitvouwen",
+    "inDays": "over ~{{days}} dagen",
+    "sunset": "Zonsondergang",
+    "whyNow": "WAAROM {{planet}} NU?",
+    "stormy": "Stormachtig",
+    "direct": "→ Direct",
+    "strong": "★ Sterk",
+    "sunrise": "Zonsopgang",
+    "neutral": "○ Neutraal",
+    "hekaDate": "HEKA DATUM",
+    "aeonGate": "DE AEON POORT",
+    "monthOf13": "Maand {{month}} van 13",
+    "dayOfYear": "Dag {{day}} van {{total}}",
+    "civilTime": "🌍 BURGERLIJKE TIJD",
+    "julianDay": "JULIAANSE DAG",
+    "beMindful": "LET OP VOOR",
+    "nextPhase": "VOLGENDE FASE",
+    "hourRuler": "Uurbeheer",
+    "readOracle": "Lees de Orakel",
+    "clearSkies": "Helder weer",
+    "retrograde": "← Retrograd",
+    "daysElapsed": "{{days}} dagen verstreken",
+    "calculating": "Berekening...",
+    "lunarTemple": "DE MAANTEMPEL",
+    "waxingTrend": "Zuigen → Groeiend",
+    "waningTrend": "Neven → Verminderend",
+    "bestToAvoid": "✗ BEST OM TE VERMIJDEN",
+    "retroReview": "Met {{count}} planeet{{plural}} retrograd, is dit een tijd voor {{significant}} beoordeling en introspectie.",
+    "hekaCalendar": "◈ HEKA KALENDER",
+    "yearProgress": "JAARVOORTGANG",
+    "partlyCloudy": "Gedeeltelijk bewolkt",
+    "heavyWeather": "Zwaar weer",
+    "retroCaution": "Belangrijke nieuwe beginnissen moeten met voorzichtigheid worden benaderd.",
+    "modalBalance": "MODAAL EVENWICHT",
+    "luminariesNow": "LUMINAIRES NU",
+    "chaldeanOrder": "De Chaldeeënse Volgorde",
+    "retroPossible": "Nieuwe projecten zijn mogelijk met extra zorg in de beïnvloede gebieden.",
+    "viewPlanetary": "Bekijk Planeetensferen",
+    "thisPhaseFavors": "DIT FASE GUNT VOOR",
+    "localSolarTimes": "☀ LOKALE ZONNE TIJDEN",
+    "calculatingLunar": "Berekening maandata...",
+    "minutesRemaining": "{{minutes}} minuten resterend",
+    "allPlanetsDirect": "Alle planeten direct",
+    "celestialWeather": "DE HIMMELBLIJKSE WEER",
+    "directRetrograde": "{{direct}} direct, {{retrograde}} retrograd",
+    "planetarySpheres": "DE PLANETENENSFEREN",
+    "elementalBalance": "ELEMENTAIR EVENWICHT",
+    "currentPositions": "HUIDIGE POSITIES",
+    "chaldeanHourglass": "DE CHALDEEËNSE UURGLAS",
+    "favoredActivities": "✓ GUNSTIGE ACTIVITEITEN",
+    "planetaryStations": "PLANEETOLOGIE STATIONS",
+    "currentAlignments": "HUIDIGE UITLIGNINGEN",
+    "nextCelestialEvent": "VOLGENDE HIMMELBLIJKSE GEBEURTENIS",
+    "moonsCurrentThrone": "☽ HUIDIGE TRONEN VAN DE MAAN",
+    "retrogradeGuidance": "RETROGRAD RAAD",
+    "calculatingPlanetary": "Berekening planeetuur...",
+    "celestialBodiesTracked": "{{count}} hemellichamen gevolgd"
+  },
+  "aiSettings": {
+    "title": "AI-VERZADIGDE LEZINGEN",
+    "expand": "Uitvouwen",
+    "active": "Actief",
+    "apiKey": "API-sleutel",
+    "format": "Formaat",
+    "pricing": "Prijzen",
+    "testing": "Testen...",
+    "collapse": "Inklappen",
+    "hideGuide": "Gids verbergen",
+    "showGuide": "Gids tonen",
+    "serverUrl": "Server URL",
+    "setupGuide": "Installatiegids: {{provider}}",
+    "disconnect": "Verbinding verbreken",
+    "connectedTo": "Verbonden met {{provider}}",
+    "useTemplate": "Gebruik Templatebibliotheek",
+    "dataPrivate": "Uw Gegevens Blijven Privé",
+    "updateConfig": "Configuratie bijwerken",
+    "templateDesc": "169+ handgemaakte templates die alle planeten in alle 13 tekens bedekken, verwerkt in unieke lezingen op fase, aspect en categorie. Altijd gratis, altijd onmiddellijk.",
+    "failedToSave": "Opslaan mislukt",
+    "usingTemplate": "Gebruikt Templatebibliotheek (Gratis)",
+    "storedLocally": "Uw {{type}} wordt alleen op dit apparaat opgeslagen in gecodeerde lokale opslag. We verzenden het nooit naar onze servers.",
+    "aiEnhancement": "AI-verzadiging",
+    "changeSettings": "Wijzig instellingen",
+    "testConnection": "Test verbinding",
+    "pleaseEnterKey": "Gelieve een API-sleutel in te voeren",
+    "connectedShort": "✓ {{provider}} verbonden",
+    "connectProvider": "Verbind uw AI-aanbieder voor verbeterde astrologische interpretaties",
+    "templateLibrary": "Templatebibliotheek",
+    "dataPrivateDesc": "API-sleutels worden lokaal opgeslagen. We zien ze nooit of uw astrologische gegevens.",
+    "readingsEnhanced": "Uw lezingen worden verbeterd met AI.",
+    "connectionFailed": "✗ Verbinding mislukt. Controleer uw internet en API-sleutel.",
+    "aiEnhancementDesc": "Optionele AI-gegenereerde lezingen voor meer gedetailleerde, gepersonaliseerde interpretaties.",
+    "connectionSuccess": "✓ Verbinding succesvol! API-sleutel is geldig.",
+    "connectionInvalid": "✗ Ongeldig API-sleutel. Controleer en probeer het opnieuw.",
+    "templateAvailable": "✓ Sjabloonbibliotheek is altijd beschikbaar",
+    "connectProviderBtn": "Aanbieder verbinden",
+    "usingTemplateShort": "✓ Sjabloonbibliotheek gebruiken",
+    "pleaseEnterKeyFirst": "Gelieve eerst een API-sleutel in te voeren"
+  },
+  "lifeAreas": {
+    "career": "Carrière & Beroep",
+    "health": "Gezondheid & Vitaliteit",
+    "timing": "Tijd & Productiviteit",
+    "finances": "Rijkdom & Hulpbronnen",
+    "relationships": "Liefde & Relaties",
+    "personalGrowth": "Persoonlijke Groei"
+  },
+  "aboutThisHekaYear": "Over Dit HEKA Jaar",
+  "universalCalendar": "Universele Kalender",
+  "waxingDescription": "Wassende maan: Bouwen van energie, groei, opbouw",
+  "waningDescription": "Afnemende maan: Ontbinding, loslaten, voltooiing",
+  "newToFirstQuarter": "Nieuwe maan tot eerste kwartier: Begin nieuwe projecten",
+  "fullToLastQuarter": "Volle maan tot laatste kwartier: Oogsten resultaten",
+  "solarNoonSubtitle": "Zon op hoogste punt op deze dag",
+  "planetaryQualities": "Planetaire kwaliteiten",
+  "firstQuarterToFull": "Eerste kwartier tot volle maan: Bouw momentum op",
+  "seasonalActivities": "Seizoensgebonden Activiteiten",
+  "energeticQualities": "Energetische Kwaliteiten",
+  "energeticInfluence": "Energetische Invloed",
+  "moonPhases": {
+    "newMoon": "Nieuwe Maan",
+    "fullMoon": "Volle Maan",
+    "lastQuarter": "Laatste Kwartiert",
+    "firstQuarter": "Eerste Kwartiert",
+    "waxingGibbous": "Tocrende Geveerde Maan",
+    "waningGibbous": "Afnemende Geveerde Maan",
+    "waxingCrescent": "Tocrende Maan",
+    "waningCrescent": "Afnemende Maan"
+  },
+  "planetDomains": {
+    "mars": "acties en verlangens",
+    "venus": "relaties en waarden",
+    "pluto": "transformatie en macht",
+    "saturn": "structuren en verbintenissen",
+    "uranus": "verandering en bevrijding",
+    "mercury": "communicatie en plannen",
+    "jupiter": "uitbreiding en overtuigingen",
+    "neptune": "dromen en geestelijkheid",
+    "default": "gebieden van het leven"
+  },
+  "favorableActivities": "Gunstige activiteiten",
+  "moonPhaseDisclaimer": "Maanfases worden mathematisch berekend en kunnen licht variëren van astronomische waarnemingen.",
+  "daysUntilNextSeason": "dagen tot volgende seizoen",
+  "solarNoonDisclaimer": "Tijden zijn wiskundige benaderingen (±10-15 min). Precise zonnemiddag varieert afhankelijk van uw exacte locatie en datum.",
+  "biodynamicPrinciple": "Biodynamisch Beginsel",
+  "cards": {
+    "moonPhase": {
+      "age": "Leeftijd",
+      "title": "Maanfase",
+      "phase": "Fase",
+      "waxing": "Opgaande",
+      "waning": "Afname",
+      "daysUntil": "{{days}} dagen tot",
+      "dayOfCycle": "Dag {{day}} van 29,5",
+      "illuminated": "geïllustreerd",
+      "illumination": "Beleuchting",
+      "voidOfCourse": "Leeg van Koers",
+      "lunarNewYear": "Lunar Nieuwjaar"
+    },
+    "seasons": {
+      "title": "Seizoenen",
+      "spring": "Lente",
+      "summer": "Zomer",
+      "autumn": "Herfst",
+      "winter": "Winter",
+      "daysUntil": "{{days}} dagen tot",
+      "nextSolstice": "Volgende Zonnewende",
+      "currentSeason": "Huidige Seizoen",
+      "springEquinox": "Lente Equinox",
+      "autumnEquinox": "Herfst Equinox",
+      "summerSolstice": "Zomer Solstis",
+      "winterSolstice": "Winter Solstis"
+    },
+    "sunTimes": {
+      "title": "Zontijden",
+      "sunset": "Zonsondergang",
+      "sunrise": "Zonsopgang",
+      "weather": "Weer",
+      "accuracy": "Nauwkeurigheid",
+      "dayLength": "Daglengte",
+      "accuracyLevels": {
+        "high": "Hoog",
+        "exact": "Exact",
+        "estimated": "Geschat",
+        "approximate": "Benaderd"
+      }
+    },
+    "dayOfWeek": {
+      "title": "Dag van de Week",
+      "planet": "Regeerster",
+      "energy": "Energie",
+      "favorableActivities": "Gunstige Activiteiten"
+    },
+    "agriculture": {
+      "title": "Landbouw",
+      "neutral": "Neutraal",
+      "favorable": "Gunstig",
+      "plantToday": "Wat te planten vandaag",
+      "byLocation": "Op basis van je locatie en maanfase",
+      "unfavorable": "Ongunstig"
+    },
+    "digitalClock": {
+      "days": "Dagen",
+      "title": "Digitaal Klok",
+      "hours": "Uren",
+      "minutes": "Minuten",
+      "seconds": "Seconden",
+      "countdowns": "Vier gelijktijdige live-aftelleringen"
+    },
+    "planetaryHours": {
+      "title": "Planetaire Uren",
+      "favors": "Favoriete",
+      "hourOf": "Uur van {{planet}}",
+      "currentHour": "Huidige Uur",
+      "chaldeanOrder": "Chaldeeënse Volgorde"
+    }
+  },
+  "psychologicalImpact": "Psychologische Impact",
+  "practicalExpression": "Praktische Uitdrukking",
+  "agriculturalGuidance": "Landbouwadvies",
+  "energyForecastPrefix": "De energievoorspelling voor",
+  "energyForecastSuffix": "{{date}} combineert maanfase, planeetposities en seizoensritmes.",
+  "hemispheres": {
+    "northern": "Noordelijke Hemisfeer",
+    "southern": "Zuidelijke Hemisfeer"
+  },
+  "yourPersonalTransits": "U Persoonlijke Transiten",
+  "universalCalendarNote": "Net als de Gregoriaanse kalender zijn HEKA datums wereldwijd hetzelfde. HEKA Maand {{month}}, Dag {{day}} is hetzelfde moment, of u nu in Sydney, New York of Londen bent - alleen de lokale burgerlijke tijd verschilt.",
+  "whyThisDayDescription": "De maanfase en seizoensfactoren wezen op optimale omstandigheden voor {{activity}} activiteiten.",
+  "calculatingSolarTimes": "Berekening van zontijden...",
+  "confirm": {
+    "deleteProfile": "Dit profiel verwijderen? Dit kan niet ongedaan worden gemaakt."
+  },
+  "lookingBackDescription": "Deze datum is voorbij. Bekijk welke hemelse energieën aanwezig waren op deze dag.",
+  "planetaryDayDisclaimer": "Planetaire dag associaties komen voort uit traditionele astrologie en culturele symboliek.",
+  "historicalSignificance": "Historische Betekenis",
+  "todaysCelestialWeather": "Huidige Hemelse Weer",
+  "hekaCalendarIsUniversal": "HEKA Kalender is Universeel:",
+  "hekaYearBegunDescription": "Dit HEKA jaar is begonnen. De volgende cyclus begint op 1 april, {{nextYear}.",
+  "planetaryDays": {
+    "sunday": {
+      "day": "Zondag",
+      "qualities": {
+        "0": "Vitamine",
+        "1": "Leiderschap",
+        "2": "Succes",
+        "3": "Zichtbaarheid"
+      },
+      "description": "De dag van de Zon brengt vitaliteit, zelfvertrouwen en creatieve energie. Ideaal voor nieuwe beginpunten en zichtbaarheid zoeken.",
+      "activities": {
+        "0": "Start nieuwe ondernemingen",
+        "1": "Zoek erkenning",
+        "2": "Creatieve projecten",
+        "3": "Fysieke oefening"
+      }
+    },
+    "monday": {
+      "day": "Maandag",
+      "qualities": {
+        "0": "Intuïtie",
+        "1": "Emoties",
+        "2": "Ondersteuning",
+        "3": "Reflectie"
+      },
+      "description": "De dag van de Maan benadrukt emoties, intuïtie en innerlijke werk. Perfect voor rust en emotionele verwerking.",
+      "activities": {
+        "0": "Zelfzorg",
+        "1": "Huisactiviteiten",
+        "2": "Introspectie",
+        "3": "Familietijd"
+      }
+    },
+    "friday": {
+      "day": "Vrijdag",
+      "qualities": {
+        "0": "Liefde",
+        "1": "Schoonheid",
+        "2": "Harmonie",
+        "3": "Creativiteit"
+      },
+      "description": "De dag van Venus benadrukt liefde, schoonheid en harmonie. Perfect voor sociëteit en artistieke expressie.",
+      "activities": {
+        "0": "Sociëteit",
+        "1": "Artistieke ondernemingen",
+        "2": "Romantiek",
+        "3": "Zelfverzorging"
+      }
+    },
+    "tuesday": {
+      "day": "Dinsdag",
+      "qualities": {
+        "0": "Actie",
+        "1": "Moeite",
+        "2": "Drijfveer",
+        "3": "Passie"
+      },
+      "description": "De dag van Mars brengt energie, moed en drijfveer. Het beste moment om actie te ondernemen en obstakels te overwinnen.",
+      "activities": {
+        "0": "Uitdagingen aanpakken",
+        "1": "Fysieke arbeid",
+        "2": "Zelfverzekerdheid",
+        "3": "Concurrentie"
+      }
+    },
+    "thursday": {
+      "day": "Donderdag",
+      "qualities": {
+        "0": "Uitbreiding",
+        "1": "Geluk",
+        "2": "Wijsheid",
+        "3": "Overvloed"
+      },
+      "description": "De dag van Jupiter brengt overvloed, wijsheid en uitbreiding. Gunstig voor groei en welvaart.",
+      "activities": {
+        "0": "Grote beslissingen",
+        "1": "Financiële aangelegenheden",
+        "2": "Onderwijs",
+        "3": "Reisplanning"
+      }
+    },
+    "saturday": {
+      "day": "Zaterdag",
+      "qualities": {
+        "0": "Discipline",
+        "1": "Structuur",
+        "2": "Verantwoordelijkheid",
+        "3": "Wijsheid"
+      },
+      "description": "De dag van Saturnus roept discipline en structuur op. Het beste voor organisatie, planning en verantwoordelijkheid.",
+      "activities": {
+        "0": "Organisatie",
+        "1": "Planning",
+        "2": "Werk beoordelen",
+        "3": "Grenzen stellen"
+      }
+    },
+    "wednesday": {
+      "day": "Woensdag",
+      "qualities": {
+        "0": "Communicatie",
+        "1": "Intelligentie",
+        "2": "Leernzaamheid",
+        "3": "Reizen"
+      },
+      "description": "De dag van Mercurius bevordert communicatie, leren en geestige vaardigheden. Ideaal voor onderhandelingen en schrijven.",
+      "activities": {
+        "0": "Schrijven",
+        "1": "Onderhandelingen",
+        "2": "Studie",
+        "3": "Korte reizen"
+      }
+    }
+  },
+  "illuminationMoreThanHalf": "Meer dan de helft: Piek manifestatie kracht",
+  "illuminationLessThanHalf": "Minder dan de helft: Introspeksie en planning",
+  "thisMoonCycleDescription": "De maan was in de {{name}} cyclus.",
+  "lookingForwardDescription": "Deze datum ligt in de toekomst. Plan met behulp van deze aankomende hemelse energieën.",
+  "moonPhaseMeanings": {
+    "newMoon": "Beginselen",
+    "fullMoon": "Voltooiing",
+    "lastQuarter": "Ontlasting",
+    "firstQuarter": "Actie",
+    "waxingGibbous": "Verfijning",
+    "waningGibbous": "Dankbaarheid",
+    "waxingCrescent": "Groei",
+    "waningCrescent": "Rust"
+  },
+  "universalCalendarDescription": "Datums zijn wereldwijd hetzelfde (zoals de Gregoriaanse kalender). Burgerlijke datums/tijden variëren per tijdzone. Hemelse berekeningen (zonnemiddag, maanfases) zijn wiskundige benaderingen ±30 min voor onderwijsdoeleinden.",
+  "aboutThisHekaYearDescription": "Het HEKA jaar {{year}} begint op 1 april, {{civilYear}}. Elk HEKA jaar bevat 12 maanden met 28 dagen, plus maart met 29 dagen (30 in schrikkel-/correctiejaren).",
+  "solarNoonLocalTimeDescription": "De zon bereikt zijn hoogste punt om {{time}} ({{timezone}})",
+  "solarNoonHistoricalDescription": "Oude culturen gebruikten zonnemiddag voor tijdkeeping. Steencirkels en zonnewijzers werden uitgelijnd om dit moment te markeren.",
+  "biodynamicPrincipleDescription": "Deze richtlijn volgt de kosmische ritmpjes die de vitaliteit van planten en bodemomstandigheden beïnvloeden.",
+  "dictionaries": {
+    "planetInSign": {
+      "sun": {
+        "leo": "De Zon in Leeuw schijnt met creatieve zelfvertrouwen. Geef jezelf authentiek uit en leid met hart.",
+        "aries": "De Zon in Ram brengt moedig, pionierend energie. Een tijd voor initiatie, leiderschap en dapper handelen.",
+        "virgo": "De Zon in Maagd roept tot verfijning en dienst. Organiseer, verbeter systemen en let op details.",
+        "libra": "De Zon in Weegschaal zoekt harmonie en partnerschap. Balanseer relaties en waardeer esthetische schoonheid.",
+        "taurus": "De Zon in Stier legt ons in stabiliteit en sensuele plezier. Focus op bouwen, verzorgen en waarderen van schoonheid.",
+        "gemini": "De Zon in Tweelingen ontketent nieuwsgierigheid en communicatie. Ruil ideeën uit, leer en verbind met je gemeenschap.",
+        "cancer": "De Zon in Kreeft dieper emotionele verbindingen. Verzorg relaties, eer gevoelens en creeer een toevluchtsoord.",
+        "pisces": "De Zon in Vissen doet grenzen oplossen. Verbind met het oneindige, beoefen compassie en vertrouw intuïtie.",
+        "scorpio": "De Zon in Skorpio duikt diep in transformatie. Embrace intensiteit, onderzoek geheimenissen en laat los wat niet langer dienst doet.",
+        "aquarius": "De Zon in Waterman innoveert voor het collectief. Embrace uniekheid, denk progressief en dien de menselijkheid.",
+        "ophiuchus": "De Zon in Ophiuchus verlicht genezende wijsheid. Een tijd voor transformatieve kennis, slangenmedicijn en heilige herstel.",
+        "capricorn": "De Zon in Steenbok bouwt voor de lange termijn. Neem verantwoordelijkheid, stel ambitieuze doelen en beheer je vak.",
+        "sagittarius": "De Zon in Boogschutter breidt horizonten uit. Zoek wijsheid, verken nieuwe gebieden en embrace optimisme."
+      },
+      "moon": {
+        "leo": "De Maan in Leeuw geeft gevoelens dramatisch uit. Warmte, creativiteit en behoefte aan erkenning in relaties.",
+        "aries": "De Maan in Ram brengt snelle emotionele reacties. Impulsieve gevoelens, gepassioneerde reacties en onafhankelijke behoeften.",
+        "virgo": "De Maan in Maag",
+        "libra": "The Moon in Libra harmonizes emotions. Needs partnership, aesthetic balance, and diplomatic relating.",
+        "taurus": "De Maan in Stier zoekt comfort en stabiliteit. Verzorging door sensuele, geduld en materiële veiligheid.",
+        "gemini": "De Maan in Tweelingen fluctueert met gedachten en gesprekken. Emotionele nieuwsgierigheid, mentale stimuleringsbehoeften.",
+        "cancer": "De Maan is thuis in Kreeft. Diepe verzorging, beschermende instincten en diepe emotionele gevoeligheid.",
+        "pisces": "De Maan in Pisces doet emotionele grenzen vervagen. Empathie, fantasie en spirituele gevoeligheid.",
+        "scorpio": "The Moon in Scorpio feels intensely. Emotional depth, transformative experiences, and powerful intuition.",
+        "aquarius": "De Maan in Aquarius ontkoppelt om te observeren. Emoties objectief bekijken, humanitaire bezorgdheden en unieke behoeften.",
+        "ophiuchus": "De Maan in Ophiuchus geneest door emotie. Intuïtieve geneeskunde, transformatieve gevoelens en slangenwijsheid.",
+        "capricorn": "De Maan in Capricorn beperkt emoties. Volwassen omgang met gevoelens, verantwoordelijkheid en langdurige zekerheid.",
+        "sagittarius": "De Maan in Sagittarius verkent emotioneel. Behoefte aan vrijheid, filosofische gevoelens en avontuurlijke geest."
+      },
+      "mars": {
+        "leo": "Mars in Leo performs boldly. Dramatic action, creative drive, and confident leadership.",
+        "aries": "Mars is at home in Aries. Direct action, courageous initiative, and passionate drive.",
+        "virgo": "Mars in Virgo works precisely. Methodical effort, service-oriented action, and health focus.",
+        "libra": "Mars in Libra acts diplomatically. Indirect confrontation, partnership drive, and aesthetic action.",
+        "taurus": "Mars in Taurus persists steadily. Determined effort, sensual energy, and stubborn resistance.",
+        "gemini": "Mars in Gemini acts mentally. Quick movements, verbal combat, and scattered initiatives.",
+        "cancer": "Mars in Cancer defends protectively. Emotional action, defensive aggression, and nurturing drive.",
+        "pisces": "Mars in Pisces drijft intuïtief. Spirituele actie, compassieuze drijfveer en vluchtige initiatief.",
+        "scorpio": "Mars is at home in Scorpio. Intense action, strategic power, and transformative drive.",
+        "aquarius": "Mars in Aquarius revolutioneert actie. Hernieuwende drijfveer, groepsinitiatieven en onconventionele methoden.",
+        "ophiuchus": "Mars in Ophiuchus acts as healer. Surgical precision, restorative force, and transformative intervention.",
+        "capricorn": "Mars in Capricorn bereikt ambitieus. Gedisciplineerde inspanning, strategisch klimmen en bevoegdheidsactie.",
+        "sagittarius": "Mars in Sagittarius verondervindert avontuurlijk. Uitbreidende initiatief, filosofische actie en risico nemen."
+      },
+      "venus": {
+        "leo": "Venus in Leeuw lieft dramatisch. Romantische grootse gebaartjes, creatieve expressie en loyale genegenheid.",
+        "aries": "Venus in Ram lieft met passie. Dapper aantrekkelijk, spontane romantiek en onafhankelijke relaties.",
+        "virgo": "Venus in Maagd dient praktisch. Hulpvaardige liefde, bescheiden aantrek en aandacht voor relatiedetails.",
+        "libra": "Venus is thuis in Weegschaal. Harmonische partnerschappen, est",
+        "taurus": "Venus is thuis in Stier. Sensuele plezier, stabiele relaties en waardering voor schoonheid.",
+        "gemini": "Venus in Tweelingen charmeert met woorden. Kokette verbindingen, intellectuele aantrek en sociaal variëren.",
+        "cancer": "Venus in Kreeft verzorgt liefdevol. Emotionele binding, huiselijke harmonie en beschermende zorg.",
+        "pisces": "Venus in Pisces loves unconditionally. Romantic idealism, spiritual connection, and compassionate relating.",
+        "scorpio": "Venus in Scorpio loves intensely. Deep transformation through relationships and magnetic attraction.",
+        "aquarius": "Venus in Aquarius connects uniquely. Unconventional relationships, friendship-based love, and freedom.",
+        "ophiuchus": "Venus in Ophiuchus loves as medicine. Healing relationships, transformative devotion, and heart-centered restoration.",
+        "capricorn": "Venus in Capricorn commits seriously. Mature relationships, status considerations, and lasting bonds.",
+        "sagittarius": "Venus in Sagittarius explores freely. Adventurous love, philosophical connection, and open relationships."
+      },
+      "saturn": {
+        "leo": "Saturnus in Leeuw tempert creativiteit. Lessen in bescheidenheid, gestructureerde zelfexpressie en verantwoordelijk leiderschap.",
+        "aries": "Saturnus in Ram test initiatief. Lessen in geduld, beperkte actie en volwassen leiderschap.",
+        "virgo": "Saturnus in Maagd perfectioneerd dienst. Lessen in precisie, gezondheidsdiscipline en praktische meesterschap.",
+        "libra": "Saturnus in Weegschaal verbindt tot balans. Lessen in partnerschap verantwoordelijkheid, eerlijke structuren en volwassen betrekkingen.",
+        "taurus": "Saturnus in Stier stabiliseert bronnen. Lessen in volharding, materiële verantwoordelijkheid en durende waarden.",
+        "gemini": "Saturnus in Tweeling disciplineert de geest. Lessen in focus, serieuze communicatie en geestelijke volwassenheid.",
+        "cancer": "Saturnus in Kreeft beschermt grenzen. Lessen in emotionele verantwoordelijkheid, familieplicht en verzorgende beperkingen.",
+        "pisces": "Saturn in Pisces dissolves boundaries carefully. Lessons in compassion, spiritual discipline, and mystical responsibility.",
+        "scorpio": "Saturn in Scorpio transforms deeply. Lessons in power, shared resource responsibility, and psychological maturity.",
+        "aquarius": "Saturn is at home in Aquarius. Social responsibility, innovative structures, and humanitarian duty.",
+        "ophiuchus": "Saturn in Ophiuchus masters healing. Lessons in medical discipline, structured transformation, and responsible restoration.",
+        "capricorn": "Saturn is at home in Capricorn. Mastery through discipline, authority earned, and lasting achievement.",
+        "sagittarius": "Saturn in Sagittarius structures beliefs. Lessons in wisdom, disciplined expansion, and responsible freedom."
+      },
+      "mercury": {
+        "leo": "Mercurius in Leeuw drukt creatief uit. Dramatische taalgebruik, zelfverzekerde ideeën en hartgerichte denken.",
+        "aries": "Mercurius in Ram staat snel en direct te denken. Scherpe, impulsieve communicatie en pionierideeën.",
+        "virgo": "Mercurius is thuis in Maagd. Analytische precisie, praktische intelligentie en gedetailleerde analyse.",
+        "libra": "Mercurius in Weegschaal zoekt gebalanceerde gedachten. Diplomatische communicatie en alle perspectieven overwegen.",
+        "taurus": "Mercurius in Stier denkt praktisch. Stevige leerprocessen, sensuele waarneming en methodische communicatie.",
+        "gemini": "Mercurius is thuis in Tweelingen. Snelle geest, veelzijdige denken en vaardige communicatie.",
+        "cancer": "Mercurius in Kreeft denkt intuïtief. Geheugen gecentreerd, emotionele intelligentie en verzorgende woorden.",
+        "pisces": "Mercurius in Visioen denkt intuïtief. Poëtische expressie, ontvangend luisteren en spiritueel begrip.",
+        "scorpio": "Mercurius in Skorpionen sondert diep. Onderzoekend denken, psychologische inzichten en doordringende woorden.",
+        "aquarius": "Mercurius in Waterman innoveert in denken. Originele ideeën, intellectuele afstand en progressieve concepten.",
+        "ophiuchus": "Mercurius in Ophiuchus denkt medisch. Genezende communicatie, medische kennis en transformatieve inzichten.",
+        "capricorn": "Mercurius in Steenbok structuurt gedachten. Strategisch plannen, geautoriseerd taalgebruik en praktische wijsheid.",
+        "sagittarius": "Mercurius in Boogschutter breidt begrip uit. Filosofisch denken en ruim communication."
+      },
+      "jupiter": {
+        "leo": "Jupiter in Leo creëert groots. Groei door zelfexpressie, creatieve overvloed en generieke leiderschap.",
+        "aries": "Jupiter in Aries breidt zich stout uit. Groei door initiatief, gelukzalige nieuwe beginpunten en zelfverzekerde optimisme.",
+        "virgo": "Jupiter in Virgo verbetert vaardig. Groei door dienst, praktische wijsheid en gezondheidsovertollige.",
+        "libra": "Jupiter in Libra harmoniseert gerechtvaardig. Groei door partnerschap, esthetische waardering en diplomatieke wijsheid.",
+        "taurus": "Jupiter in Taurus manifesteert overvloedig. Groei door geduld, materiële zegen en sensuele wijsheid.",
+        "gemini": "Jupiter in Gemini leert divers. Groei door communicatie, intellectuele uitbreiding en diverse interesses.",
+        "cancer": "Jupiter in Cancer voedt genereus. Groei door verzorging, emotionele overvloed en beschermende wijsheid.",
+        "pisces": "Jupiter in Pisces ontbindt zich in oneindigheid. Groei door compassie, spirituele overvloed en universele liefde.",
+        "scorpio": "Jupiter in Scorpio transformeert diep. Groei door intensiteit, gedeelde bronnen en psychologische wijsheid.",
+        "aquarius": "Jupiter in Aquarius innoveert progressief. Groei door gemeenschap, humanitaire wijsheid en unieke visie.",
+        "ophiuchus": "Jupiter in Ophiuchus breidt genezing uit. Groei door geneeskunde, wijsheid van de slang en transformatieve kennis.",
+        "capricorn": "Jupiter in Capricorn structureert wijs. Groei door discipline, strategisch succes en bevoegdheidswijsheid.",
+        "sagittarius": "Jupiter is thuis in Sagittarius. Onbegrensde uitbreiding, filosofische wijsheid en gelukzalige reizen."
+      }
+    },
+    "providerSetup": {
+      "groq": {
+        "type": "groq",
+        "name": "Groq",
+        "logo": "⚡",
+        "color": "#f43f5e",
+        "website": "https://groq.com",
+        "signupUrl": "https://console.groq.com/login",
+        "keyFormat": "Begint met \"gsk_\" gevolgd door alfanumerieke tekens",
+        "apiKeysUrl": "https://console.groq.com/keys",
+        "description": "Bliksemvlug AI-inferentie met Llama 3. Gratis laag bevat 1M tokens dagelijks.",
+        "pricingNote": "Gratis laag: 1M tokens/dag. Betaalde plannen beschikbaar voor hoger gebruik.",
+        "freeTierInfo": "1.000.000 tokens/dag gratis",
+        "keyPlaceholder": "gsk_je_api_sleutel_hier",
+        "setupSteps": {
+          "0": {
+            "tip": "Gebruik je e-mail of Google account voor snelle aanmelding",
+            "link": "https://console.groq.com/login",
+            "title": "Maak een Groq Account aan",
+            "action": "Ga naar Groq Console →",
+            "description": "Bezoek de Groq Console en meld je aan voor een gratis account."
+          },
+          "1": {
+            "tip": "Zoek naar het sleutelpictogram in het navigatiemenu",
+            "link": "https://console.groq.com/keys",
+            "title": "Navigeer naar API Keys",
+            "action": "Open API Keys Pagina →",
+            "description": "Zodra je bent ingelogd, klik op \"API Keys\" in de linker zijbalk."
+          },
+          "2": {
+            "tip": "Kies een beschrijvende naam zodat je weet waarvoor het is",
+            "title": "Maak Nieuwe API Key",
+            "description": "Klik op de knop \"Create API Key\". Geef het een naam zoals \"HEKA Calendar\"."
+          },
+          "3": {
+            "tip": "⚠️ Voor beveiliging toont Groq de volledige sleutel maar één keer. Als je het verliest, maak er een nieuwe aan.",
+            "title": "Kopieer Je API Key",
+            "description": "Kopieer de gegenereerde sleutel (begint met \"gsk_\"). Bewaar het op een veilige plaats - je zult het niet meer zien."
+          },
+          "4": {
+            "tip": "Je sleutel wordt alleen opgeslagen op dit apparaat",
+            "title": "Plak Sleutel in HEKA",
+            "description": "Keer terug naar dit scherm en plak je sleutel hieronder. Klik op \"Test Connection\" om te verifiëren."
+          }
+        }
+      },
+      "openai": {
+        "type": "openai",
+        "name": "OpenAI",
+        "logo": "🤖",
+        "color": "#10a37f",
+        "website": "https://openai.com",
+        "signupUrl": "https://platform.openai.com/signup",
+        "keyFormat": "Begint met \"sk-\" gevolgd door alfanumerieke karakters",
+        "apiKeysUrl": "https://platform.openai.com/api-keys",
+        "description": "GPT-4 en GPT-3.5 Turbo voor gedetailleerde astrologische interpretaties. Industrie-leider in kwaliteit.",
+        "pricingNote": "Na gratis tegoeden betalen per gebruik. GPT-3.5: ~$0.002 per 1K tokens.",
+        "freeTierInfo": "$5 in gratis tegoeden voor nieuwe gebruikers",
+        "keyPlaceholder": "sk-your_api_key_here",
+        "setupSteps": {
+          "0": {
+            "tip": "Houd je telefoon klaar voor SMS-verificatie",
+            "link": "https://platform.openai.com/signup",
+            "title": "Maak OpenAI Account aan",
+            "action": "Schrijf je in bij OpenAI →",
+            "description": "Schrijf je in bij de OpenAI Platform. Je hebt e-mailverificatie en een telefoonnummer nodig."
+          },
+          "1": {
+            "tip": "U kunt gebruikslimieten instellen om kosten te beheersen in Factuurinstellingen",
+            "title": "Voeg Betaalmethode toe (Optioneel)",
+            "description": "Alhoewel je $5 in gratis tegoeden krijgt, het toevoegen van een betaalmethode zorgt voor ononderbroken dienst."
+          },
+          "2": {
+            "tip": "Verward dit niet met \"Project API-sleutels\" - we hebben Gebruikers API-sleutels nodig",
+            "link": "https://platform.openai.com/api-keys",
+            "title": "Ga naar de API-sleutels sectie",
+            "action": "Open API-sleutels →",
+            "description": "Klik op je profielfoto → \"Jouw Profiel\" → \"Gebruikers API-sleutels\" of bezoek de directe link."
+          },
+          "3": {
+            "tip": "⚠️ OpenAI toont de volledige sleutel maar één keer. Kopieer het onmiddellijk!",
+            "title": "Maak Nieuwe Geheime Sleutel",
+            "description": "Klik op \"Maak nieuwe geheime sleutel\". Noem het \"HEKA Kalender\" voor gemakkelijke identificatie."
+          },
+          "4": {
+            "tip": "Stel factuurwaarschuwingen in op platform.openai.com/settings/organization/billing/limits",
+            "title": "Configureren in HEKA",
+            "description": "Plak je sleutel hieronder en test de verbinding. Houd gebruik in de gaten in het OpenAI dashboard."
+          }
+        }
+      },
+      "ollama": {
+        "type": "ollama",
+        "name": "Ollama (Local)",
+        "logo": "💻",
+        "color": "#ffffff",
+        "website": "https://ollama.com",
+        "signupUrl": "https://ollama.com/download",
+        "keyFormat": "URL format: http://localhost:11434",
+        "apiKeysUrl": "",
+        "description": "Run AI models entirely on your own device. Complete privacy, no internet needed after setup.",
+        "pricingNote": "No costs. Requires capable hardware (8GB+ RAM recommended).",
+        "freeTierInfo": "100% free - runs locally",
+        "keyPlaceholder": "http://localhost:11434",
+        "setupSteps": {
+          "0": {
+            "tip": "Windows version is available via Windows Subsystem for Linux (WSL2)",
+            "link": "https://ollama.com/download",
+            "title": "Download Ollama",
+            "action": "Download Ollama →",
+            "description": "Download and install Ollama for your operating system (Mac, Linux, or Windows)."
+          },
+          "1": {
+            "tip": "Llama 3 is recommended for best results. Models are several GB to download.",
+            "title": "Install a Model",
+            "description": "Open terminal and run: ollama pull llama3 or ollama pull mistral"
+          },
+          "2": {
+            "tip": "The server runs on http://localhost:11434 by default",
+            "title": "Start Ollama Server",
+            "description": "Run: ollama serve to start the local API server. Keep this terminal open."
+          },
+          "3": {
+            "tip": "First run downloads the model. Subsequent runs are instant.",
+            "title": "Verify Installation",
+            "description": "Test by running: ollama run llama3 in another terminal. Type a test message."
+          },
+          "4": {
+            "tip": "Ollama must be running whenever you want AI-enhanced readings",
+            "title": "Connect HEKA",
+            "description": "Enter the server URL (usually http://localhost:11434) below and test connection."
+          }
+        }
+      },
+      "template": {
+        "type": "sjabloon",
+        "name": "Sjabloonbibliotheek",
+        "logo": "📚",
+        "color": "#fbbf24",
+        "website": "",
+        "signupUrl": "",
+        "keyFormat": "",
+        "apiKeysUrl": "",
+        "description": "169+ handgemaakte planete-teken sjablonen, verwerkt in unieke lezingen op maanfase, aspect en levenscategorie. Altijd gratis, altijd onmiddellijk, geen instellen nodig.",
+        "pricingNote": "Geen kosten ooit. Aangedreven door ons gecureerde sjabloonsysteem.",
+        "freeTierInfo": "Volledig gratis",
+        "keyPlaceholder": "",
+        "setupSteps": {
+          "0": {
+            "tip": "Sjablonen dekken alle grote hemelse gebeurtenissen en planetaire posities",
+            "title": "Selecteer Sjabloonbibliotheek",
+            "description": "Dit is de standaardoptie. Geen configuratie nodig."
+          },
+          "1": {
+            "tip": "U kunt op elk moment in de toekomst overschakelen naar AI-aanbieders",
+            "title": "Onmiddellijk beginnen met gebruiken",
+            "description": "Alle astrologische lezingen zullen onze voorgeschreven sjabloonbibliotheek gebruiken."
+          }
+        }
+      },
+      "anthropic": {
+        "type": "anthropic",
+        "name": "Anthropic",
+        "logo": "🧠",
+        "color": "#d97757",
+        "website": "https://anthropic.com",
+        "signupUrl": "https://console.anthropic.com/login",
+        "keyFormat": "Begint met \"sk-ant-\" gevolgd door alfanumerieke karakters",
+        "apiKeysUrl": "https://console.anthropic.com/settings/keys",
+        "description": "Claude AI voor gedachtevoller, genuanceerde astrologieadvies met uitgebreide context.",
+        "pricingNote": "Concurrerende tarieven. Claude 3 Haiku: ~$0.25 per 1K tokens.",
+        "freeTierInfo": "$5 in gratis tegoeden voor nieuwe gebruikers",
+        "keyPlaceholder": "sk-ant-je_api_sleutel_hier",
+        "setupSteps": {
+          "0": {
+            "tip": "Anthropic kan een wachtlijst hebben - goedkeuring is meestal snel",
+            "link": "https://console.anthropic.com/login",
+            "title": "Aanmelden bij Anthropic",
+            "action": "Ga naar Anthropic Console →",
+            "description": "Maak een account aan bij Anthropic Console met je werk-e-mailadres."
+          },
+          "1": {
+            "tip": "Controleer de spammap als je de e-mail niet ziet binnen een paar minuten",
+            "title": "Verifieer Je Account",
+            "description": "Controleer je e-mail voor de verificatielink. Voltooi alle vereiste verificatiestappen."
+          },
+          "2": {
+            "tip": "Het instellingen tandwielpictogram bevindt zich in de rechterbovenhoek",
+            "link": "https://console.anthropic.com/settings/keys",
+            "title": "Toegang tot API-sleutels",
+            "action": "Open API-sleutels →",
+            "description": "Ga in de console naar Instellingen → API-sleutels of gebruik de directe link hieronder."
+          },
+          "3": {
+            "tip": "You can create multiple keys for different apps",
+            "title": "Genereer API-sleutel",
+            "description": "Klik op \"Maak sleutel\". Geef het een beschrijvende naam"
+          },
+          "4": {
+            "tip": "Keys never expire unless you revoke them manually",
+            "title": "Copy and Configure",
+            "description": "Copy the key (starts with \"sk-ant-\") and paste it below in HEKA."
+          }
+        }
+      }
+    },
+    "moonOracle": {
+      "New Moon": {
+        "poem": "In the void between breaths, all potential dwells. The seed waits in darkness, gathering courage to split its shell. Plant intentions now—they will grow with the light.",
+        "title": "THE DARK MYSTERY",
+        "favors": {
+          "0": "Setting intentions",
+          "1": "Planting seeds",
+          "2": "Beginning new ventures",
+          "3": "Inner vision work"
+        },
+        "warnings": {
+          "0": "Don't push for immediate results",
+          "1": "Avoid major launches"
+        }
+      },
+      "Full Moon": {
+        "poem": "Alles wat in het donker verborgen was, wordt nu in het licht onthuld. De zaad die bij de Nieuwe Maan geplant werd, breekt door de grond. Jouw werk culmineert. De wereld getuigt van je volheid.",
+        "title": "DE GROOTE ONTDEKKING",
+        "favors": {
+          "0": "Viering",
+          "1": "Wat niet meer van pas komt, loslaten",
+          "2": "Publieke zichtbaarheid",
+          "3": "Dankbaarheidsoefeningen"
+        },
+        "warnings": {
+          "0": "Emoties lopen hoog",
+          "1": "Slapen kan verstoord raken worden"
+        }
+      },
+      "Last Quarter": {
+        "poem": "Halve blijft, halve moet gaan. Wat zul je meenemen? Wat zul je achterlaten? De keuze is van jou, en alleen van jou.",
+        "title": "DE AFZEgging",
+        "favors": {
+          "0": "Loslaten",
+          "1": "Aanklevingen loslaten",
+          "2": "Ruimte vrijmaken",
+          "3": "Vergiffenis"
+        },
+        "warnings": {
+          "0": "Begin geen nieuwe projecten",
+          "1": "Voltooi wat je kunt"
+        }
+      },
+      "First Quarter": {
+        "poem": "Halve licht, halve schaduw—de beslissing hangt in evenwicht. Het pad voorwaarts vereist actie. Kies, en het universum compliceert.",
+        "title": "DE KRUISING",
+        "favors": {
+          "0": "Beslissingen nemen",
+          "1": "Actie ondernemen",
+          "2": "Door obstakels heenkomen",
+          "3": "Toewijding"
+        },
+        "warnings": {
+          "0": "Aarzeling vermijden",
+          "1": "Kijk niet terug"
+        }
+      },
+      "Waxing Gibbous": {
+        "poem": "Bijna vol, bijna voltooid. De impuls bouwt op zoals een golf pieker. Verfijn, pas aan, bereid je voor op de openbaring.",
+        "title": "DE VERZAMELING",
+        "favors": {
+          "0": "Projecten verfijnen",
+          "1": "Plannen aanpassen",
+          "2": "Voor lancering voorbereiden",
+          "3": "Middelen verzamelen"
+        },
+        "warnings": {
+          "0": "Niet te snel afronden",
+          "1": "Geduld beloont"
+        }
+      },
+      "Waning Gibbous": {
+        "poem": "Het licht begint zijn zachte terugtrekking, maar wijsheid blijft. Deel wat je hebt geleerd. Leer anderen wat de volheid je heeft geleerd.",
+        "title": "DE DELEN",
+        "favors": {
+          "0": "Kennis delen",
+          "1": "Onderwijzen",
+          "2": "Teruggeven",
+          "3": "Dankbaarheid"
+        },
+        "warnings": {
+          "0": "Klamp niet vast aan de piek",
+          "1": "Laat het cyclus voltooien"
+        }
+      },
+      "Waxing Crescent": {
+        "poem": "A sliver of silver pierces the night. The dream begins to breathe, taking its first steps into form. Trust the unfolding.",
+        "title": "THE FIRST BREATH",
+        "favors": {
+          "0": "De eerste stappen nemen",
+          "1": "Impuls opbouwen",
+          "2": "Nieuwe vaardigheden leren",
+          "3": "Verbindingen maken"
+        },
+        "warnings": {
+          "0": "Niet overbeladen",
+          "1": "Blijf flexibel"
+        }
+      },
+      "Waning Crescent": {
+        "poem": "Een zilveren fluister die in zwart vervaagt. Rust nu. Het werk is gedaan. Geef je over aan de duisternis, wetend dat licht zal terugkeren.",
+        "title": "DE OVERGAVE",
+        "favors": {
+          "0": "Diepe rust",
+          "1": "Overgave",
+          "2": "Meditatie",
+          "3": "Voorbereiding",
+          "4": "Droomwerk"
+        },
+        "warnings": {
+          "0": "Vermijd grote beslissingen",
+          "1": "Bewaar energie"
+        }
+      }
+    },
+    "planetaryGuidance": {
+      "sun": {
+        "do": {
+          "0": "Neem het leiderschap",
+          "1": "Maak belangrijke verzoeken",
+          "2": "Focus op zichtbaarheid",
+          "3": "Expresseer jezelf",
+          "4": "Zoek erkenning"
+        },
+        "title": "DE ZONNE-UUR",
+        "dont": {
+          "0": "Blijf in de schaduwen",
+          "1": "Vermijd verantwoordelijkheid",
+          "2": "Doe je licht niet kleiner"
+        },
+        "quality": "Vitamijn & Erkentenis",
+        "description": "De Zon verlicht alles wat het raakt. Dit uur bevordert zichtbaarheid, leiderschap en kwesties van het hart en ego."
+      },
+      "moon": {
+        "do": {
+          "0": "Verzorg relaties",
+          "1": "Vertrouw je intuïtie",
+          "2": "Huis en familiekwesties",
+          "3": "Emotionele verwerking",
+          "4": "Droomwerk"
+        },
+        "title": "DE MAAN-UUR",
+        "dont": {
+          "0": "Dwing rationele beslissingen op",
+          "1": "Negeer gevoelens",
+          "2": "Druk te hard"
+        },
+        "quality": "Emotion & Intuïtie",
+        "description": "De Maan regeert de getijde van emotie en intuïtie. Een tijd voor verzorging, thuis en psychische receptiviteit."
+      },
+      "mars": {
+        "do": {
+          "0": "Fysieke activiteit",
+          "1": "Directe conflicten aanpakken",
+          "2": "Oefenen",
+          "3": "Competitieve activiteiten",
+          "4": "Dapper optreden"
+        },
+        "title": "DE MARS-UUR",
+        "dont": {
+          "0": "Noodzakelijke confrontaties vermijden",
+          "1": "Boosheid onderdrukken",
+          "2": "Twisten beginnen"
+        },
+        "quality": "Actie & Drijfveer",
+        "description": "Mars brengt vuur, drijfveer en competitieve energie. Fysieke actie en confrontatie worden bevordert."
+      },
+      "venus": {
+        "do": {
+          "0": "Romantiek en hofmakerij",
+          "1": "Kunstcreatie",
+          "2": "Socialiseren",
+          "3": "Schoonheid creëren",
+          "4": "Conflicten vredig oplossen"
+        },
+        "title": "DE VENUSACHTIGE UUR",
+        "dont": {
+          "0": "Uitkomsten dwingen",
+          "1": "Esthetiek negeren",
+          "2": "Intimiteit haasten"
+        },
+        "quality": "Liefde & Schoonheid",
+        "description": "Venus badt de wereld in schoonheid en verlangen. Liefde, kunst en harmonie heersen op."
+      },
+      "saturn": {
+        "do": {
+          "0": "Focus op verantwoordelijkheden",
+          "1": "Studeren en organiseren",
+          "2": "Plannen vooruit",
+          "3": "Funderingen bouwen",
+          "4": "Beperkingen accepteren"
+        },
+        "title": "DE SATURNIJSE UUR",
+        "dont": {
+          "0": "Korten knippen",
+          "1": "Taken vermijden",
+          "2": "Directe resultaten verwachten"
+        },
+        "quality": "Discipline & Structuur",
+        "description": "Saturn eist discipline en structuur. Harde werk levert nu duurzame resultaten op."
+      },
+      "mercury": {
+        "do": {
+          "0": "Belangrijke berichten sturen",
+          "1": "Contracten ondertekenen (als direct)",
+          "2": "Schrijven en studeren",
+          "3": "Onderhandelen",
+          "4": "Korte afstanden reizen"
+        },
+        "title": "DE MERCURIALE UUR",
+        "dont": {
+          "0": "Bedrog pleiten",
+          "1": "Kletspraat verspreiden",
+          "2": "Ondertekenen als Mercurius retrogradeert"
+        },
+        "quality": "Geest & Communicatie",
+        "description": "Mercurius versnelt de geest en de tong. Communicatie, leren en handel vloeien nu gemakkelijk."
+      },
+      "jupiter": {
+        "do": {
+          "0": "Zaken doen",
+          "1": "Wijsheid zoeken",
+          "2": "Horizonten uitbreiden",
+          "3": "Leren en onderwijzen",
+          "4": "Weldaad bedrijven"
+        },
+        "title": "DE JOVIALE UUR",
+        "dont": {
+          "0": "Knijpzaadig zijn",
+          "1": "Klein denken",
+          "2": "Zelf beperken"
+        },
+        "quality": "Uitbreiding & Geluk",
+        "description": "Jupiter breidt alles uit wat het raakt. Geluk, wijsheid en groei zijn in deze uur zegenrijk."
+      }
+    }
+  }
+}

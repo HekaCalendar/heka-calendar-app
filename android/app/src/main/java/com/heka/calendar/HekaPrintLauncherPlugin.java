@@ -26,8 +26,18 @@ public class HekaPrintLauncherPlugin extends Plugin {
         }
         
         try {
-            // Convert file:// URI to actual file path
-            String path = filePath.replace("file:///storage/emulated/0/", "/storage/emulated/0/");
+            // Robust file path parsing: handle both file:// URIs and plain paths
+            String path;
+            if (filePath.startsWith("file://")) {
+                Uri uri = Uri.parse(filePath);
+                path = uri.getPath();
+                if (path == null || path.isEmpty()) {
+                    call.reject("Invalid file URI: " + filePath);
+                    return;
+                }
+            } else {
+                path = filePath;
+            }
             File file = new File(path);
             
             if (!file.exists()) {

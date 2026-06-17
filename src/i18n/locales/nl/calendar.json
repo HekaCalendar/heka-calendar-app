@@ -1,0 +1,166 @@
+{
+  "months": {
+    "0": "April",
+    "1": "Mei",
+    "2": "Juni",
+    "3": "Juli",
+    "4": "Augustus",
+    "5": "September",
+    "6": "Oktober",
+    "7": "November",
+    "8": "December",
+    "9": "Januari",
+    "10": "Februari",
+    "11": "Maart",
+    "12": "April"
+  },
+  "monthShort": {
+    "0": "Apr",
+    "1": "Mei",
+    "2": "Jun",
+    "3": "Jul",
+    "4": "Aug",
+    "5": "Sep",
+    "6": "Okt",
+    "7": "Nov",
+    "8": "Dec",
+    "9": "Jan",
+    "10": "Feb",
+    "11": "Mrt",
+    "12": "Apr"
+  },
+  "civilMonths": {
+    "0": "Jan",
+    "1": "Feb",
+    "2": "Mrt",
+    "3": "Apr",
+    "4": "Mei",
+    "5": "Jun",
+    "6": "Jul",
+    "7": "Aug",
+    "8": "Sep",
+    "9": "Okt",
+    "10": "Nov",
+    "11": "Dec"
+  },
+  "days": {
+    "0": "Zondag",
+    "1": "Maandag",
+    "2": "Dinsdag",
+    "3": "Woensdag",
+    "4": "Donderdag",
+    "5": "Vrijdag",
+    "6": "Zaterdag"
+  },
+  "daysShort": {
+    "0": "Zon",
+    "1": "Maa",
+    "2": "Din",
+    "3": "Woe",
+    "4": "Don",
+    "5": "Vri",
+    "6": "Zat"
+  },
+  "daysMin": {
+    "0": "Zo",
+    "1": "Ma",
+    "2": "Di",
+    "3": "Wo",
+    "4": "Do",
+    "5": "Vr",
+    "6": "Za"
+  },
+  "arcs": {
+    "opening": "Opening",
+    "core": "Core",
+    "closing": "Closing"
+  },
+  "arcSuffix": "Arc",
+  "arcDescriptions": {
+    "opening": "Het jaar ontwaakt",
+    "core": "Het jaar bloeit",
+    "closing": "Het jaar voltooit"
+  },
+  "monthLabel": "Maand {{month}}/13",
+  "hekaYear": "HEKA Jaar {{year}}",
+  "civilYear": "Burgerlijk Jaar {{year}}",
+  "dayOfYear": "Dag {{day}} van {{total}}",
+  "week": "Week",
+  "quarter": "Kwartaal",
+  "leapDay": "Schrikkel Dag",
+  "leapDayDescription": "Een extra dag in maart, elke 4 jaar",
+  "switchDarkMode": "Schakel naar donkere modus",
+  "switchLightMode": "Schakel naar lichte modus",
+  "moreNotes": "+{{count}} meer",
+  "holiday": "Vakantiedag",
+  "note": "Notitie",
+  "task": "Taak",
+  "moonPhase": "Fase van de maan",
+  "selectDay": "Selecteer een dag om details te bekijken",
+  "navigation": {
+    "previousMonth": "Vorige maand",
+    "nextMonth": "Volgende maand",
+    "goToToday": "Ga naar vandaag",
+    "today": "Vandaag"
+  },
+  "print": {
+    "title": "Afdrukkalender",
+    "label": "Afdrukken"
+  },
+  "expand": {
+    "shrinkHorizontal": "Horizontaal inklappen",
+    "expandHorizontal": "Horizontaal uitklappen",
+    "shrinkVertical": "Verticaal inklappen",
+    "expandVertical": "Verticaal uitklappen"
+  },
+  "year": {
+    "viewEntireYear": "Bekijk hele jaar",
+    "label": "Jaar"
+  },
+  "search": {
+    "title": "Datums zoeken",
+    "label": "Zoeken"
+  },
+  "features": {
+    "astrologyHub": "Astrologie Hub",
+    "stars": "Sterren",
+    "cosmicCircle": "Cosmisch Cirkel",
+    "circle": "Cirkel",
+    "oracleJournal": "Orakel Dagboek",
+    "journal": "Dagboek",
+    "aboutHeka": "Over HEKA Kalender",
+    "about": "Over",
+    "yourStatistics": "Uw statistieken",
+    "stats": "Stats",
+    "communityHolidays": "Gemeenschapsfeestdagen",
+    "community": "Gemeenschap"
+  },
+  "toggles": {
+    "civilDates": "Burgerlijke data aan/uit",
+    "civil": "Burgerlijk",
+    "moonPhases": "Maanfases aan/uit",
+    "moon": "Maan",
+    "holidays": "Feestdagen aan/uit",
+    "holidayLabel": "Feestdagen"
+  },
+  "prev": "Vorige",
+  "next": "Volgende",
+  "printYear": "Druk Jaar",
+  "close": "Sluiten",
+  "quickNote": "Snelle Notitie",
+  "quickNoteTag": "snelle notitie",
+  "addingTo": "Toevoegen aan",
+  "typeYourNote": "Typ je notitie...",
+  "saveNote": "Bewaar Notitie",
+  "ctrlEnterToSave": "Ctrl + Enter om op te slaan • Esc om te annuleren",
+  "hekaPrefix": "HEKA:",
+  "civilPrefix": "Burgerlijk:",
+  "moodPrefix": "Stemming:",
+  "searchTips": {
+    "tip1": "\"31ste van januari\" of \"vandaag\"",
+    "tip2": "\"hexa 15\" of \"april 5\"",
+    "tip3": "Notitie inhoud of categorie",
+    "tip4": "\"Kerstmis\" of \"Australië Dag\"",
+    "tip5": "\"2026-01-31\" (ISO formaat)"
+  }
+}

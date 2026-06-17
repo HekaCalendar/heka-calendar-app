@@ -1,0 +1,49 @@
+{
+  "best": "Najlepsze: {{count}}",
+  "title": "Twoja Podróże",
+  "close": "Zamknij",
+  "reset": "Zresetuj Statystyki",
+  "avgMood": "Średni Nastroj",
+  "dayStreak": "Dniowy Streak",
+  "totalNotes": "Razem Notatek",
+  "wordsWritten": "Napisanych Słów",
+  "achievements": "Osiągnięcia ({{earned}}/{{total}})",
+  "resetConfirm": "Zresetuj",
+  "progressRatio": "{{current}} / {{target}}",
+  "monthlyTooltip": "{{month}} {{year}}: {{count}} notatek",
+  "notesByCategory": "Notatki według Kategorii",
+  "monthlyActivity": "Miesięczna Aktywność",
+  "mostActiveMonth": "Najbardziej aktywny miesiąc to \u003cstrong\u003e{{month}}\u003c/strong\u003e z \u003cstrong\u003e{{count}}\u003c/strong\u003e notatkami",
+  "categories": {
+    "work": "Praca",
+    "family": "Rodzina",
+    "health": "Zdrowie",
+    "general": "Ogólne",
+    "personal": "Osobiste",
+    "creative": "Twórcze",
+    "spiritual": "Duchowe"
+  },
+  "progressToCentury": "Postęp do Klubu Stolu",
+  "resetConfirmTitle": "Zresetuj Statystyki",
+  "badges": {
+    "century": {
+      "name": "Klub Stolu"
+    },
+    "explorer": {
+      "name": "Eksplorator"
+    },
+    "archivist": {
+      "name": "Archiwista"
+    },
+    "first-note": {
+      "name": "Pierwsze Słowa"
+    },
+    "week-streak": {
+      "name": "Tygodniowy Wojownik"
+    },
+    "month-streak": {
+      "name": "Miesięczny Mistrz"
+    }
+  },
+  "resetConfirmDescription": "Czy na pewno chcesz zresetować wszystkie statystyki? Tego nie można cofnąć."
+}

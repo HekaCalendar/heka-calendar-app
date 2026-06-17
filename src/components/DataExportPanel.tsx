@@ -37,7 +37,7 @@ export const DataExportPanel: React.FC = () => {
     try {
       await downloadUserDataExport();
       showMessage('Data exported successfully! Check your downloads folder.', 'success');
-    } catch (error) {
+    } catch {
       showMessage('Failed to export data. Please try again.', 'error');
     } finally {
       setIsExporting(false);
@@ -49,7 +49,7 @@ export const DataExportPanel: React.FC = () => {
     try {
       await downloadHumanReadableExport();
       showMessage('Data exported successfully! Check your downloads folder.', 'success');
-    } catch (error) {
+    } catch {
       showMessage('Failed to export data. Please try again.', 'error');
     } finally {
       setIsExporting(false);
@@ -65,7 +65,7 @@ export const DataExportPanel: React.FC = () => {
       setTimeout(() => {
         window.location.reload();
       }, 2000);
-    } catch (error) {
+    } catch {
       showMessage('Failed to clear data. Please try again.', 'error');
       setIsClearing(false);
     }

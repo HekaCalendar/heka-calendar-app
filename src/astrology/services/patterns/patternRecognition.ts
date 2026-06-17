@@ -68,60 +68,6 @@ export interface PersonalPatternProfile {
 // PATTERN DEFINITIONS
 // ═══════════════════════════════════════════════════════════════════════════════
 
-// Pattern definitions for future use in advanced pattern matching
-// @ts-expect-error - Unused for now, will be used in future pattern matching
-const PATTERN_DEFINITIONS = {
-  // Transit patterns
-  'saturn-return': {
-    type: 'transit' as const,
-    match: (transits: Transit[]) => transits.some(t => 
-      t.transitingPlanet === 'saturn' && t.natalPlanet === 'saturn' && t.aspect === 'conjunction'
-    ),
-    description: 'Saturn Return - Major life restructuring',
-    theme: 'maturation',
-  },
-  'jupiter-expansion': {
-    type: 'transit' as const,
-    match: (transits: Transit[]) => transits.some(t => 
-      t.transitingPlanet === 'jupiter' && (t.aspect === 'conjunction' || t.aspect === 'trine')
-    ),
-    description: 'Jupiter blessing - Growth and opportunity',
-    theme: 'expansion',
-  },
-  'mercury-retrograde-breakthrough': {
-    type: 'combination' as const,
-    match: (snapshot: CelestialSnapshot) => 
-      snapshot.retrogrades.includes('mercury') && !snapshot.voidMoon?.isVoid,
-    description: 'Mercury Retrograde pattern',
-    theme: 'communication-review',
-  },
-  'void-moon-insight': {
-    type: 'voidMoon' as const,
-    match: (snapshot: CelestialSnapshot) => snapshot.voidMoon?.isVoid === true,
-    description: 'Void Moon - Internal processing time',
-    theme: 'integration',
-  },
-  'full-moon-culmination': {
-    type: 'moonPhase' as const,
-    match: (snapshot: CelestialSnapshot) => snapshot.moonPhase === 'full-moon',
-    description: 'Full Moon - Emotional peak and revelation',
-    theme: 'culmination',
-  },
-  'new-moon-seeding': {
-    type: 'moonPhase' as const,
-    match: (snapshot: CelestialSnapshot) => snapshot.moonPhase === 'new-moon',
-    description: 'New Moon - Fresh beginnings',
-    theme: 'initiation',
-  },
-  'water-moon-sensitivity': {
-    type: 'element' as const,
-    match: (snapshot: CelestialSnapshot) => 
-      ['cancer', 'scorpio', 'pisces'].includes(snapshot.moonSign),
-    description: 'Water Moon - Emotional depth',
-    theme: 'emotional-processing',
-  },
-};
-
 // ═══════════════════════════════════════════════════════════════════════════════
 // STORAGE KEYS
 // ═══════════════════════════════════════════════════════════════════════════════

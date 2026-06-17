@@ -4,6 +4,7 @@
  */
 
 import { useState, useEffect, useCallback, useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import type { RootState } from '../store';
 import { setAuthenticated, setUnauthenticated, setSyncing, setSyncError, setLastSync } from '../store';
@@ -15,9 +16,14 @@ import {
   type KnownAccount,
 } from '../services/accountManager';
 import { isFirebaseConfigured } from '../services/firebase';
-import { syncToCloud, loadFromCloud } from '../services/firebase';
+import { syncToCloud, loadFromCloud, loadAllAstroData, syncAllAstroData } from '../services/firebase';
+import { signInWithGoogleNative } from '../services/nativeAuth';
+import { persistence, DEFAULT_PROFILE_PREFERENCES } from '../astrology/services/persistence';
+import type { AstroProfile, NatalChart, ProfilePreferences } from '../astrology/types';
 import { tutorialService } from '../services/tutorialService';
-import { ONBOARDING_V2_STORAGE_KEY, ONBOARDING_V2_VERSION_KEY } from './onboarding/v2';
+import { getErrorMessage, getErrorCode } from '../utils/errorUtils';
+import { ConfirmDialog } from './ui/ConfirmDialog';
+
 
 interface AuthModalProps {
   isOpen: boolean;
@@ -69,6 +75,7 @@ const PasswordStrengthMeter = ({ password }: { password: string }) => {
 };
 
 export const AuthModalEnterprise: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
+  const { t } = useTranslation('auth');
   const dispatch = useDispatch();
   const auth = useSelector((state: RootState) => state.calendar.auth);
   const calendarState = useSelector((state: RootState) => state.calendar);
@@ -89,7 +96,8 @@ export const AuthModalEnterprise: React.FC<AuthModalProps> = ({ isOpen, onClose 
   const [showNewPassword, setShowNewPassword] = useState(false);
   const [passwordStrength, setPasswordStrength] = useState({ score: 0, isValid: false });
   const [deleteConfirm, setDeleteConfirm] = useState('');
-  
+  const [showDeleteConfirmDialog, setShowDeleteConfirmDialog] = useState(false);
+
   const modalRef = useRef<HTMLDivElement>(null);
   const modalContentRef = useRef<HTMLDivElement>(null);
   const firebaseConfigured = isFirebaseConfigured();
@@ -141,6 +149,7 @@ export const AuthModalEnterprise: React.FC<AuthModalProps> = ({ isOpen, onClose 
     dispatch(setSyncError(null));
     
     try {
+      // ── Calendar data sync ──────────────────────────────────────────────
       const cloudData = await loadFromCloud(userId);
       
       if (cloudData) {
@@ -170,10 +179,73 @@ export const AuthModalEnterprise: React.FC<AuthModalProps> = ({ isOpen, onClose 
           }
         });
       }
+
+      // ── Astrology data sync ─────────────────────────────────────────────
+      try {
+        const cloudAstro = await loadAllAstroData(userId);
+        const localProfiles = await persistence.getAllProfiles();
+        const localCharts = await Promise.all(
+          localProfiles.map(p => persistence.getChartsForProfile(p.id))
+        ).then(arr => arr.flat());
+
+        if (cloudAstro.profiles.length > 0 || cloudAstro.charts.length > 0) {
+          const cloudProfiles = cloudAstro.profiles as unknown as AstroProfile[];
+          const cloudCharts = cloudAstro.charts as unknown as NatalChart[];
+          const localProfileMap = new Map(localProfiles.map(p => [p.id, p]));
+          for (const cp of cloudProfiles) {
+            const local = localProfileMap.get(cp.id);
+            const cloudTime = new Date((cp as unknown as { _syncedAt?: string })._syncedAt || cp.updatedAt || 0).getTime();
+            const localTime = local ? new Date((local as unknown as { updatedAt?: string }).updatedAt || 0).getTime() : 0;
+            if (!local || cloudTime > localTime) {
+              await persistence.saveProfile(cp as unknown as AstroProfile);
+              localProfileMap.set(cp.id, cp as unknown as AstroProfile);
+            }
+          }
+          const localChartMap = new Map(localCharts.map(c => [c.id, c]));
+          for (const cc of cloudCharts) {
+            const local = localChartMap.get(cc.id);
+            const cloudTime = new Date((cc as unknown as { _syncedAt?: string })._syncedAt || cc.calculatedAt || 0).getTime();
+            const localTime = local ? new Date((local as unknown as { calculatedAt?: string }).calculatedAt || 0).getTime() : 0;
+            if (!local || cloudTime > localTime) {
+              await persistence.saveChart(cc as unknown as NatalChart);
+              localChartMap.set(cc.id, cc as unknown as NatalChart);
+            }
+          }
+          if (cloudAstro.preferences) {
+            const localP = await persistence.getPreferences();
+            const cloudTime = new Date((cloudAstro.preferences as unknown as { _syncedAt?: string })._syncedAt || 0).getTime();
+            const localTime = localP ? new Date((localP as unknown as { _syncedAt?: string })._syncedAt || 0).getTime() : 0;
+            if (!localP || cloudTime > localTime) {
+              await persistence.savePreferences(cloudAstro.preferences as unknown as ProfilePreferences);
+            }
+          }
+          if (cloudAstro.selectedProfileId) {
+            const localSel = await persistence.getSelectedProfile();
+            if (!localSel) await persistence.setSelectedProfile(cloudAstro.selectedProfileId as import('../astrology/types').ProfileId);
+          }
+        }
+
+        const finalProfiles = await persistence.getAllProfiles();
+        const finalCharts = await Promise.all(
+          finalProfiles.map(p => persistence.getChartsForProfile(p.id))
+        ).then(arr => arr.flat());
+        const finalPrefs = await persistence.getPreferences();
+        const finalSelected = await persistence.getSelectedProfile();
+        if (finalProfiles.length > 0) {
+          await syncAllAstroData(userId, {
+            profiles: finalProfiles,
+            charts: finalCharts,
+            preferences: finalPrefs || DEFAULT_PROFILE_PREFERENCES,
+            selectedProfileId: finalSelected,
+          });
+        }
+      } catch (astroErr) {
+        console.warn('[AuthModalEnterprise] Astrology sync failed:', astroErr);
+      }
       
       dispatch(setLastSync(new Date().toISOString()));
-    } catch (err: any) {
-      dispatch(setSyncError(err.message || 'Sync failed'));
+    } catch (err) {
+      dispatch(setSyncError(getErrorMessage(err, 'Sync failed')));
     } finally {
       dispatch(setSyncing(false));
     }
@@ -200,8 +272,37 @@ export const AuthModalEnterprise: React.FC<AuthModalProps> = ({ isOpen, onClose 
         setSuccess(null);
         setPassword('');
       }, 1000);
-    } catch (err: any) {
-      setError(err.message);
+    } catch (err) {
+      setError(getErrorMessage(err));
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleGoogleSignIn = async () => {
+    setError(null);
+    setIsLoading(true);
+    try {
+      const credential = await signInWithGoogleNative();
+      if (credential.user) {
+        saveKnownAccount({
+          uid: credential.user.uid,
+          email: credential.user.email || '',
+          displayName: credential.user.displayName,
+          photoURL: credential.user.photoURL,
+        });
+      }
+      setSuccess('Welcome!');
+      setTimeout(() => {
+        setView('profile');
+        setSuccess(null);
+      }, 1000);
+    } catch (err) {
+      if (getErrorCode(err) === 'auth/cancelled') {
+        // User cancelled — no error message needed
+      } else {
+        setError(getErrorMessage(err, 'Google Sign-In failed'));
+      }
     } finally {
       setIsLoading(false);
     }
@@ -213,7 +314,7 @@ export const AuthModalEnterprise: React.FC<AuthModalProps> = ({ isOpen, onClose 
     
     // Validate password match
     if (password !== confirmPassword) {
-      setError('Passwords do not match');
+      setError(t('passwordsDoNotMatch'));
       return;
     }
 
@@ -236,8 +337,8 @@ export const AuthModalEnterprise: React.FC<AuthModalProps> = ({ isOpen, onClose 
         setPassword('');
         setConfirmPassword('');
       }, 1000);
-    } catch (err: any) {
-      setError(err.message);
+    } catch (err) {
+      setError(getErrorMessage(err));
     } finally {
       setIsLoading(false);
     }
@@ -264,8 +365,8 @@ export const AuthModalEnterprise: React.FC<AuthModalProps> = ({ isOpen, onClose 
         setView('profile');
         setSuccess(null);
       }, 2000);
-    } catch (err: any) {
-      setError(err.message);
+    } catch (err) {
+      setError(getErrorMessage(err));
     } finally {
       setIsLoading(false);
     }
@@ -291,8 +392,8 @@ export const AuthModalEnterprise: React.FC<AuthModalProps> = ({ isOpen, onClose 
       setTimeout(() => {
         onClose();
       }, 1500);
-    } catch (err: any) {
-      setError(err.message);
+    } catch (err) {
+      setError(getErrorMessage(err));
     } finally {
       setIsLoading(false);
     }
@@ -306,8 +407,8 @@ export const AuthModalEnterprise: React.FC<AuthModalProps> = ({ isOpen, onClose 
     try {
       await enterpriseAuth.resetPassword(email);
       setSuccess('Password reset email sent! Check your inbox.');
-    } catch (err: any) {
-      setError(err.message);
+    } catch (err) {
+      setError(getErrorMessage(err));
     } finally {
       setIsLoading(false);
     }
@@ -329,8 +430,8 @@ export const AuthModalEnterprise: React.FC<AuthModalProps> = ({ isOpen, onClose 
       const accounts = getKnownAccounts();
       setKnownAccounts(accounts);
       setView(accounts.length > 0 ? 'account-picker' : 'login');
-    } catch (err: any) {
-      setError(err.message);
+    } catch (err) {
+      setError(getErrorMessage(err));
     } finally {
       setIsLoading(false);
     }
@@ -372,8 +473,8 @@ export const AuthModalEnterprise: React.FC<AuthModalProps> = ({ isOpen, onClose 
             <span className="auth-modal__logo">❦</span>
             <div>
               <h2 className="auth-modal__title">
-                {view === 'login' && 'Sign In'}
-                {view === 'signup' && 'Create Account'}
+                {view === 'login' && t('signIn')}
+                {view === 'signup' && t('signUp')}
                 {view === 'forgot' && 'Reset Password'}
                 {view === 'profile' && 'Account'}
                 {view === 'security' && 'Security Settings'}
@@ -386,7 +487,7 @@ export const AuthModalEnterprise: React.FC<AuthModalProps> = ({ isOpen, onClose 
               )}
             </div>
           </div>
-          <button className="auth-modal__close" onClick={onClose}>×</button>
+          <button className="auth-modal__close" onClick={onClose} aria-label={t('close')}>×</button>
         </div>
 
         {/* Content */}
@@ -446,6 +547,7 @@ export const AuthModalEnterprise: React.FC<AuthModalProps> = ({ isOpen, onClose 
                             switchView('login');
                           }
                         }}
+                        aria-label={t('common.delete')}
                         title="Forget this account"
                       >
                         ✕
@@ -472,26 +574,26 @@ export const AuthModalEnterprise: React.FC<AuthModalProps> = ({ isOpen, onClose 
           {view === 'login' && (
             <form onSubmit={handleLogin} className="auth-form">
               <div className="auth-form__group">
-                <label className="auth-form__label">Email</label>
+                <label className="auth-form__label">{t('email')}</label>
                 <input
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   className="auth-form__input"
-                  placeholder="your@email.com"
+                  placeholder={t('email')}
                   autoComplete="email"
                   required
                 />
               </div>
               <div className="auth-form__group">
-                <label className="auth-form__label">Password</label>
+                <label className="auth-form__label">{t('password')}</label>
                 <div className="auth-form__password-wrapper">
                   <input
                     type={showPassword ? 'text' : 'password'}
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     className="auth-form__input"
-                    placeholder="••••••••"
+                    placeholder={t('password')}
                     autoComplete="current-password"
                     required
                   />
@@ -509,15 +611,27 @@ export const AuthModalEnterprise: React.FC<AuthModalProps> = ({ isOpen, onClose 
                 className="auth-form__submit"
                 disabled={isLoading}
               >
-                {isLoading ? 'Signing in...' : 'Sign In'}
+                {isLoading ? t('signingIn') : t('signIn')}
+              </button>
+
+              <div className="auth-divider">{t('or')}</div>
+
+              <button
+                type="button"
+                className="auth-social-btn auth-social-btn--google"
+                onClick={handleGoogleSignIn}
+                disabled={isLoading}
+              >
+                <span className="auth-social-btn__icon">🔍</span>
+                {t('continueWithGoogle')}
               </button>
               
               <div className="auth-form__links">
                 <button type="button" className="auth-link" onClick={() => switchView('forgot')}>
-                  Forgot password?
+                  {t('forgotPassword')}
                 </button>
                 <button type="button" className="auth-link" onClick={() => switchView('signup')}>
-                  Create account
+                  {t('createAccount')}
                 </button>
               </div>
             </form>
@@ -527,38 +641,38 @@ export const AuthModalEnterprise: React.FC<AuthModalProps> = ({ isOpen, onClose 
           {view === 'signup' && (
             <form onSubmit={handleSignUp} className="auth-form">
               <div className="auth-form__group">
-                <label className="auth-form__label">Display Name</label>
+                <label className="auth-form__label">{t('displayName')}</label>
                 <input
                   type="text"
                   value={displayName}
                   onChange={(e) => setDisplayName(e.target.value)}
                   className="auth-form__input"
-                  placeholder="Your name"
+                  placeholder={t('displayName')}
                   autoComplete="name"
                   required
                 />
               </div>
               <div className="auth-form__group">
-                <label className="auth-form__label">Email</label>
+                <label className="auth-form__label">{t('email')}</label>
                 <input
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   className="auth-form__input"
-                  placeholder="your@email.com"
+                  placeholder={t('email')}
                   autoComplete="email"
                   required
                 />
               </div>
               <div className="auth-form__group">
-                <label className="auth-form__label">Password</label>
+                <label className="auth-form__label">{t('password')}</label>
                 <div className="auth-form__password-wrapper">
                   <input
                     type={showPassword ? 'text' : 'password'}
                     value={password}
                     onChange={(e) => checkPasswordStrength(e.target.value)}
                     className="auth-form__input"
-                    placeholder="••••••••"
+                    placeholder={t('password')}
                     autoComplete="new-password"
                     required
                   />
@@ -573,18 +687,18 @@ export const AuthModalEnterprise: React.FC<AuthModalProps> = ({ isOpen, onClose 
                 <PasswordStrengthMeter password={password} />
               </div>
               <div className="auth-form__group">
-                <label className="auth-form__label">Confirm Password</label>
+                <label className="auth-form__label">{t('confirmPassword')}</label>
                 <input
                   type={showPassword ? 'text' : 'password'}
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
                   className="auth-form__input"
-                  placeholder="••••••••"
+                  placeholder={t('passwordPlaceholder', 'Enter your password')}
                   autoComplete="new-password"
                   required
                 />
                 {confirmPassword && password !== confirmPassword && (
-                  <div className="auth-form__error">Passwords do not match</div>
+                  <div className="auth-form__error">{t('passwordsDoNotMatch')}</div>
                 )}
               </div>
               <button 
@@ -592,7 +706,19 @@ export const AuthModalEnterprise: React.FC<AuthModalProps> = ({ isOpen, onClose 
                 className="auth-form__submit"
                 disabled={isLoading || !passwordStrength.isValid}
               >
-                {isLoading ? 'Creating...' : 'Create Account'}
+                {isLoading ? t('creatingAccount') : t('signUp')}
+              </button>
+
+              <div className="auth-divider">or</div>
+
+              <button
+                type="button"
+                className="auth-social-btn auth-social-btn--google"
+                onClick={handleGoogleSignIn}
+                disabled={isLoading}
+              >
+                <span className="auth-social-btn__icon">🔍</span>
+                {t('continueWithGoogle')}
               </button>
               
               <div className="auth-form__links">
@@ -607,16 +733,16 @@ export const AuthModalEnterprise: React.FC<AuthModalProps> = ({ isOpen, onClose 
           {view === 'forgot' && (
             <form onSubmit={handleForgotPassword} className="auth-form">
               <p className="auth-form__text">
-                Enter your email and we'll send you a password reset link.
+                {t('forgotSubtitle')}
               </p>
               <div className="auth-form__group">
-                <label className="auth-form__label">Email</label>
+                <label className="auth-form__label">{t('email')}</label>
                 <input
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   className="auth-form__input"
-                  placeholder="your@email.com"
+                  placeholder={t('email')}
                   autoComplete="email"
                   required
                 />
@@ -626,7 +752,7 @@ export const AuthModalEnterprise: React.FC<AuthModalProps> = ({ isOpen, onClose 
                 className="auth-form__submit"
                 disabled={isLoading}
               >
-                {isLoading ? 'Sending...' : 'Send Reset Link'}
+                {isLoading ? t('sending') : t('sendResetLink')}
               </button>
               
               <div className="auth-form__links">
@@ -655,14 +781,14 @@ export const AuthModalEnterprise: React.FC<AuthModalProps> = ({ isOpen, onClose 
                 <div className="auth-profile__sync-status">
                   {auth.isSyncing ? (
                     <span className="sync-indicator sync-indicator--active">
-                      <span className="sync-spinner"></span> Syncing to cloud...
+                      <span className="sync-spinner"></span> {t('syncingToCloud')}
                     </span>
                   ) : auth.lastSync ? (
                     <span className="sync-indicator sync-indicator--success">
                       ✓ Last synced: {new Date(auth.lastSync).toLocaleString()}
                     </span>
                   ) : (
-                    <span className="sync-indicator">Not synced yet</span>
+                    <span className="sync-indicator">{t('notSyncedYet')}</span>
                   )}
                 </div>
                 
@@ -690,8 +816,8 @@ export const AuthModalEnterprise: React.FC<AuthModalProps> = ({ isOpen, onClose 
                     tutorialService.resetAllTutorials();
                     // Reset v2 onboarding
                     try {
-                      localStorage.removeItem(ONBOARDING_V2_STORAGE_KEY);
-                      localStorage.removeItem(ONBOARDING_V2_VERSION_KEY);
+                      localStorage.removeItem('heka-onboarding-v2-state');
+                      localStorage.removeItem('heka-onboarding-v2-version');
                     } catch {
                       // Non-fatal
                     }
@@ -709,14 +835,10 @@ export const AuthModalEnterprise: React.FC<AuthModalProps> = ({ isOpen, onClose 
                   <span>🎓</span> Restart Tutorial
                 </button>
                 <button 
-                  className="auth-profile__menu-item auth-profile__menu-item--danger" 
-                  onClick={() => {
-                    if (window.confirm('Are you sure you want to delete your account? This action cannot be undone.')) {
-                      switchView('delete-account');
-                    }
-                  }}
+                  className="auth-profile__menu-item auth-profile__menu-item--danger"
+                  onClick={() => setShowDeleteConfirmDialog(true)}
                 >
-                  <span>🗑️</span> Delete Account
+                  <span>🗑️</span> {t('deleteAccount')}
                 </button>
               </div>
 
@@ -725,7 +847,7 @@ export const AuthModalEnterprise: React.FC<AuthModalProps> = ({ isOpen, onClose 
                 onClick={handleLogout}
                 disabled={isLoading}
               >
-                {isLoading ? 'Signing out...' : 'Sign Out'}
+                {isLoading ? t('signingOut') : t('signOut')}
               </button>
             </div>
           )}
@@ -737,18 +859,18 @@ export const AuthModalEnterprise: React.FC<AuthModalProps> = ({ isOpen, onClose 
                 ← Back to Profile
               </button>
               
-              <h3 className="auth-security__title">Change Password</h3>
+              <h3 className="auth-security__title">{t('changePassword')}</h3>
               
               <form onSubmit={handlePasswordChange} className="auth-form">
                 <div className="auth-form__group">
-                  <label className="auth-form__label">Current Password</label>
+                  <label className="auth-form__label">{t('currentPassword')}</label>
                   <div className="auth-form__password-wrapper">
                     <input
                       type={showPassword ? 'text' : 'password'}
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
                       className="auth-form__input"
-                      placeholder="••••••••"
+                      placeholder={t('passwordPlaceholder', 'Enter your password')}
                       required
                     />
                     <button
@@ -762,7 +884,7 @@ export const AuthModalEnterprise: React.FC<AuthModalProps> = ({ isOpen, onClose 
                 </div>
                 
                 <div className="auth-form__group">
-                  <label className="auth-form__label">New Password</label>
+                  <label className="auth-form__label">{t('newPassword')}</label>
                   <div className="auth-form__password-wrapper">
                     <input
                       type={showNewPassword ? 'text' : 'password'}
@@ -772,7 +894,7 @@ export const AuthModalEnterprise: React.FC<AuthModalProps> = ({ isOpen, onClose 
                         setPasswordStrength(enterpriseAuth.validatePasswordStrength(e.target.value));
                       }}
                       className="auth-form__input"
-                      placeholder="••••••••"
+                      placeholder={t('passwordPlaceholder', 'Enter your password')}
                       required
                     />
                     <button
@@ -787,17 +909,17 @@ export const AuthModalEnterprise: React.FC<AuthModalProps> = ({ isOpen, onClose 
                 </div>
                 
                 <div className="auth-form__group">
-                  <label className="auth-form__label">Confirm New Password</label>
+                  <label className="auth-form__label">{t('confirmNewPassword')}</label>
                   <input
                     type={showNewPassword ? 'text' : 'password'}
                     value={confirmPassword}
                     onChange={(e) => setConfirmPassword(e.target.value)}
                     className="auth-form__input"
-                    placeholder="••••••••"
+                    placeholder={t('passwordPlaceholder', 'Enter your password')}
                     required
                   />
                   {confirmPassword && newPassword !== confirmPassword && (
-                    <div className="auth-form__error">Passwords do not match</div>
+                    <div className="auth-form__error">{t('passwordsDoNotMatch')}</div>
                   )}
                 </div>
                 
@@ -806,11 +928,24 @@ export const AuthModalEnterprise: React.FC<AuthModalProps> = ({ isOpen, onClose 
                   className="auth-form__submit"
                   disabled={isLoading || !passwordStrength.isValid || newPassword !== confirmPassword}
                 >
-                  {isLoading ? 'Updating...' : 'Change Password'}
+                  {isLoading ? t('updating') : t('changePassword')}
                 </button>
               </form>
             </div>
           )}
+
+          <ConfirmDialog
+            isOpen={showDeleteConfirmDialog}
+            onClose={() => setShowDeleteConfirmDialog(false)}
+            onConfirm={() => {
+              setShowDeleteConfirmDialog(false);
+              switchView('delete-account');
+            }}
+            title={t('deleteAccount')}
+            description={t('deleteConfirmPrompt', 'Are you sure you want to delete your account? This action cannot be undone.')}
+            confirmText={t('deleteAccount')}
+            variant="danger"
+          />
 
           {/* Delete Account View */}
           {view === 'delete-account' && (
@@ -821,22 +956,19 @@ export const AuthModalEnterprise: React.FC<AuthModalProps> = ({ isOpen, onClose 
               
               <div className="auth-delete__warning">
                 <div className="auth-delete__icon">⚠️</div>
-                <h3 className="auth-delete__title">Delete Account</h3>
-                <p className="auth-delete__text">
-                  This will permanently delete your account and all associated data. 
-                  This action cannot be undone.
-                </p>
+                <h3 className="auth-delete__title">{t('deleteTitle')}</h3>
+                <p className="auth-delete__text">{t('deleteWarning')}</p>
               </div>
               
               <form onSubmit={handleDeleteAccount} className="auth-form">
                 <div className="auth-form__group">
-                  <label className="auth-form__label">Enter your password</label>
+                  <label className="auth-form__label">{t('enterPasswordToConfirm')}</label>
                   <input
                     type="password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     className="auth-form__input"
-                    placeholder="••••••••"
+                    placeholder={t('passwordPlaceholder', 'Enter your password')}
                     required
                   />
                 </div>
@@ -860,7 +992,7 @@ export const AuthModalEnterprise: React.FC<AuthModalProps> = ({ isOpen, onClose 
                   className="auth-form__submit auth-form__submit--danger"
                   disabled={isLoading || deleteConfirm !== 'DELETE'}
                 >
-                  {isLoading ? 'Deleting...' : 'Permanently Delete Account'}
+                  {isLoading ? t('deleting') : t('deleteAccount')}
                 </button>
               </form>
             </div>
@@ -870,7 +1002,7 @@ export const AuthModalEnterprise: React.FC<AuthModalProps> = ({ isOpen, onClose 
           {view === 'not-configured' && (
             <div className="auth-not-configured">
               <div className="auth-not-configured__icon">☁️</div>
-              <h3 className="auth-not-configured__title">Cloud Sync Not Configured</h3>
+              <h3 className="auth-not-configured__title">{t('cloudSyncNotConfigured')}</h3>
               <p className="auth-not-configured__text">
                 Firebase authentication is not set up yet. The app works fully offline, 
                 but to enable cloud backup and sync across devices, Firebase needs to be configured.

@@ -3,6 +3,7 @@
  * Theme and font customization for the HEKA Diary
  */
 
+import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import type { RootState, AppDispatch } from '../store';
 import { 
@@ -14,11 +15,84 @@ import {
   updateJournalPreferences,
   clearAllDiaryEntries,
 } from '../store/diarySlice';
+import { updateNotificationPreferences, setNotificationMode } from '../store';
+import { useTranslation } from 'react-i18next';
 import { JOURNAL_THEMES, JOURNAL_FONTS, type JournalTheme, type JournalFont } from '../oracle/diaryTypes';
 import { MODULE_THEMES } from './oracle/config/themes';
 import { AISettingsPanel } from './AISettingsPanel';
 import { JournalNotificationSettings } from './notification/JournalNotificationSettings';
+import { ConfirmDialog } from './ui/ConfirmDialog';
 import '../styles/journal-settings.css';
+
+const JournalNotificationArea: React.FC = () => {
+  const { t } = useTranslation('journal');
+  const dispatch = useDispatch<AppDispatch>();
+  const mode = useSelector((state: RootState) => state.calendar.notificationPreferences.notificationMode);
+  const prefs = useSelector((state: RootState) => state.calendar.notificationPreferences.journal);
+  const globalEnabled = useSelector((state: RootState) => state.calendar.notificationPreferences.globalEnabled);
+
+  const allOn = prefs.reflectionReminders && prefs.dailyReflectionPrompt && prefs.celestialInsightAlert;
+
+  const toggleAll = () => {
+    const next = !allOn;
+    dispatch(updateNotificationPreferences({
+      section: 'journal',
+      prefs: { reflectionReminders: next, dailyReflectionPrompt: next, celestialInsightAlert: next }
+    }));
+  };
+
+  if (mode === 'unified') {
+    return (
+      <label style={{
+        display: 'flex',
+        alignItems: 'center',
+        gap: '12px',
+        padding: '12px 0',
+        cursor: globalEnabled ? 'pointer' : 'default',
+        opacity: globalEnabled ? 1 : 0.4,
+      }}>
+        <div style={{ flexShrink: 0 }}>
+          <div style={{
+            width: '40px', height: '22px', borderRadius: '11px',
+            background: allOn && globalEnabled ? '#c9a227' : 'rgba(255,255,255,0.15)',
+            position: 'relative', transition: 'all 0.2s',
+          }}>
+            <div style={{
+              width: '18px', height: '18px', borderRadius: '50%', background: '#fff',
+              position: 'absolute', top: '2px',
+              left: allOn && globalEnabled ? '20px' : '2px',
+              transition: 'all 0.2s',
+            }} />
+          </div>
+        </div>
+        <input
+          type="checkbox"
+          checked={allOn && globalEnabled}
+          onChange={toggleAll}
+          disabled={!globalEnabled}
+          style={{ position: 'absolute', opacity: 0, width: 0, height: 0 }}
+        />
+        <div>
+          <div style={{ fontSize: '14px', fontWeight: 500, color: '#e0e0e0' }}>{t('settings.journalNotifications')}</div>
+          <div style={{ fontSize: '12px', color: 'rgba(224,224,224,0.5)' }}>
+            {allOn ? t('settings.allAlertsEnabled') : t('settings.alertsPaused')}
+          </div>
+        </div>
+        <button
+          onClick={() => dispatch(setNotificationMode('custom'))}
+          style={{
+            marginLeft: 'auto', background: 'none', border: 'none',
+            color: 'rgba(201,162,39,0.7)', fontSize: '12px', cursor: 'pointer',
+          }}
+        >
+          {t('settings.customize')}
+        </button>
+      </label>
+    );
+  }
+
+  return <JournalNotificationSettings />;
+};
 
 interface JournalSettingsProps {
   isOpen: boolean;
@@ -29,8 +103,10 @@ interface JournalSettingsProps {
 }
 
 export const JournalSettings: React.FC<JournalSettingsProps> = ({ isOpen, onClose, theme = 'night', moduleTheme = 'cosmic', onModuleThemeChange }) => {
+  const { t } = useTranslation('journal');
   const dispatch = useDispatch<AppDispatch>();
   const preferences = useSelector((state: RootState) => state.diary.preferences);
+  const [showClearConfirm, setShowClearConfirm] = useState(false);
 
   if (!isOpen) return null;
 
@@ -46,26 +122,37 @@ export const JournalSettings: React.FC<JournalSettingsProps> = ({ isOpen, onClos
   };
 
   const handleClearAll = () => {
-    if (confirm('Delete ALL diary entries? This cannot be undone.')) {
-      dispatch(clearAllDiaryEntries());
-    }
+    setShowClearConfirm(true);
   };
 
   return (
+    <>
+      <ConfirmDialog
+        isOpen={showClearConfirm}
+        onClose={() => setShowClearConfirm(false)}
+        onConfirm={() => {
+          dispatch(clearAllDiaryEntries());
+          setShowClearConfirm(false);
+        }}
+        title={t('settings.deleteAllTitle', 'Delete all entries')}
+        description={t('settings.deleteAllConfirm')}
+        confirmText={t('settings.deleteAll', 'Delete All')}
+        variant="danger"
+      />
     <div className={`journal-settings-overlay journal-theme-${safeTheme}`} onClick={onClose}>
       <div className={`journal-settings-modal journal-theme-${safeTheme}`} onClick={(e) => e.stopPropagation()}>
         {/* Header */}
         <div className="journal-settings-header">
-          <h2 className="journal-settings-title">⚙️ Journal Settings</h2>
-          <button className="journal-settings-close" onClick={onClose}>×</button>
+          <h2 className="journal-settings-title">{t('settings.title')}</h2>
+          <button className="journal-settings-close" onClick={onClose} aria-label={t('editor.close')}>×</button>
         </div>
 
         <div className="journal-settings-content" style={{ fontSize: `${preferences.fontSize}px` }}>
           {/* Appearance — combined themes + font */}
           <section className="journal-settings-section">
-            <h3 className="journal-settings-section-title">🎨 Appearance</h3>
+            <h3 className="journal-settings-section-title">{t('settings.appearance')}</h3>
 
-            <div className="journal-settings-row-label">Atmosphere</div>
+            <div className="journal-settings-row-label">{t('settings.atmosphere')}</div>
             <div className="journal-themes-grid journal-themes-grid--compact">
               {MODULE_THEMES.map((t) => (
                 <button
@@ -80,7 +167,7 @@ export const JournalSettings: React.FC<JournalSettingsProps> = ({ isOpen, onClos
               ))}
             </div>
 
-            <div className="journal-settings-row-label" style={{ marginTop: '10px' }}>Page Theme</div>
+            <div className="journal-settings-row-label" style={{ marginTop: '10px' }}>{t('settings.pageTheme')}</div>
             <div className="journal-themes-grid journal-themes-grid--compact">
               {JOURNAL_THEMES.map((theme) => (
                 <button
@@ -98,9 +185,9 @@ export const JournalSettings: React.FC<JournalSettingsProps> = ({ isOpen, onClos
 
           {/* Typography */}
           <section className="journal-settings-section">
-            <h3 className="journal-settings-section-title">✒️ Typography</h3>
+            <h3 className="journal-settings-section-title">{t('settings.typography')}</h3>
 
-            <div className="journal-settings-row-label">Handwriting</div>
+            <div className="journal-settings-row-label">{t('settings.handwriting')}</div>
             <div className="journal-fonts-list">
               {JOURNAL_FONTS.map((font) => (
                 <button
@@ -116,14 +203,14 @@ export const JournalSettings: React.FC<JournalSettingsProps> = ({ isOpen, onClos
               ))}
             </div>
 
-            <div className="journal-settings-row-label" style={{ marginTop: '10px' }}>Size</div>
+            <div className="journal-settings-row-label" style={{ marginTop: '10px' }}>{t('settings.size')}</div>
             <div className="journal-font-size-control">
               <button
                 className="journal-font-size-btn"
                 onClick={() => dispatch(setFontSize(Math.max(12, preferences.fontSize - 2)))}
                 disabled={preferences.fontSize <= 12}
               >
-                A-
+                {t('settings.fontSizeDown')}
               </button>
               <span className="journal-font-size-value">{preferences.fontSize}px</span>
               <button
@@ -131,14 +218,14 @@ export const JournalSettings: React.FC<JournalSettingsProps> = ({ isOpen, onClos
                 onClick={() => dispatch(setFontSize(Math.min(24, preferences.fontSize + 2)))}
                 disabled={preferences.fontSize >= 24}
               >
-                A+
+                {t('settings.fontSizeUp')}
               </button>
             </div>
           </section>
 
           {/* Toggles — combined into one clean row */}
           <section className="journal-settings-section">
-            <h3 className="journal-settings-section-title">🔮 Oracle</h3>
+            <h3 className="journal-settings-section-title">{t('settings.oracle')}</h3>
 
             <label className="journal-toggle journal-toggle--compact">
               <input
@@ -148,15 +235,15 @@ export const JournalSettings: React.FC<JournalSettingsProps> = ({ isOpen, onClos
               />
               <span className="journal-toggle-slider"></span>
               <span className="journal-toggle-label">
-                Celestial insights
-                <small>Guidance based on your entries</small>
+                {t('settings.celestialInsights')}
+                <small>{t('settings.celestialInsightsDescription')}</small>
               </span>
             </label>
 
             {preferences.showInsights && (
               <div className="journal-threshold-control">
                 <div className="journal-threshold-header">
-                  <span>Strength threshold</span>
+                  <span>{t('settings.strengthThreshold')}</span>
                   <span className="journal-threshold-value">{preferences.insightThreshold}+</span>
                 </div>
                 <input
@@ -167,8 +254,8 @@ export const JournalSettings: React.FC<JournalSettingsProps> = ({ isOpen, onClos
                   onChange={(e) => dispatch(setInsightThreshold(Number(e.target.value)))}
                 />
                 <div className="journal-threshold-labels">
-                  <span>More</span>
-                  <span>Stronger</span>
+                  <span>{t('settings.more')}</span>
+                  <span>{t('settings.stronger')}</span>
                 </div>
               </div>
             )}
@@ -181,22 +268,22 @@ export const JournalSettings: React.FC<JournalSettingsProps> = ({ isOpen, onClos
               />
               <span className="journal-toggle-slider"></span>
               <span className="journal-toggle-label">
-                Auto-save
-                <small>Every {preferences.autoSaveInterval / 1000}s</small>
+                {t('settings.autoSave')}
+                <small>{t('settings.autoSaveInterval', { seconds: preferences.autoSaveInterval / 1000 })}</small>
               </span>
             </label>
           </section>
 
           {/* AI */}
           <section className="journal-settings-section">
-            <h3 className="journal-settings-section-title">🤖 AI</h3>
+            <h3 className="journal-settings-section-title">{t('settings.ai')}</h3>
             <AISettingsPanel highlightArea="journal" />
           </section>
 
           {/* Notifications */}
           <section className="journal-settings-section">
-            <h3 className="journal-settings-section-title">🔔 Notifications</h3>
-            <JournalNotificationSettings />
+            <h3 className="journal-settings-section-title">{t('settings.notifications')}</h3>
+            <JournalNotificationArea />
           </section>
 
           {/* Danger Zone */}
@@ -205,7 +292,7 @@ export const JournalSettings: React.FC<JournalSettingsProps> = ({ isOpen, onClos
               className="journal-danger-btn"
               onClick={handleClearAll}
             >
-              🗑️ Delete All Entries
+              {t('settings.deleteAllBtn')}
             </button>
           </section>
         </div>
@@ -213,11 +300,12 @@ export const JournalSettings: React.FC<JournalSettingsProps> = ({ isOpen, onClos
         {/* Footer */}
         <div className="journal-settings-footer">
           <button className="journal-settings-done" onClick={onClose}>
-            Done
+            {t('settings.done')}
           </button>
         </div>
       </div>
     </div>
+    </>
   );
 };
 

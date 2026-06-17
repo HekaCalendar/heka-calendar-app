@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import type { BirthChartData, EffectiveProfile, JournalStats } from '../types';
 
 interface OracleModeOracleProps {
@@ -6,7 +7,7 @@ interface OracleModeOracleProps {
   effectiveProfile: EffectiveProfile | null;
   birthChartData: BirthChartData | null;
   stats: JournalStats;
-  onSetMode: (mode: 'scribe' | 'celestial' | 'entries') => void;
+  onSetMode: (mode: 'scribe' | 'draw' | 'entries') => void;
   onNavigateToStars: () => void;
 }
 
@@ -18,6 +19,7 @@ export const OracleModeOracle: React.FC<OracleModeOracleProps> = ({
   onSetMode,
   onNavigateToStars,
 }) => {
+  const { t } = useTranslation('journal');
   return (
     <div className="oracle-mode-oracle">
       <div className={`oracle-hero-card ${hasBirthChart ? 'has-chart' : ''}`}>
@@ -42,13 +44,17 @@ export const OracleModeOracle: React.FC<OracleModeOracleProps> = ({
         <div className="hero-content">
           <h2>
             {hasBirthChart && effectiveProfile
-              ? `Welcome, ${effectiveProfile.name}`
-              : 'Begin Your Celestial Journey'}
+              ? t('hero.welcome', { name: effectiveProfile.name })
+              : t('hero.beginJourney')}
           </h2>
           <p>
             {hasBirthChart
-              ? `Your birth chart is active with ${Object.keys(birthChartData?.planets || {}).length} planetary positions. ${stats.majorTransits} major transit${stats.majorTransits !== 1 ? 's are' : ' is'} currently influencing your path.`
-              : 'Add your birth chart in the Celestial Guide to unlock personalized insights based on your unique cosmic signature.'}
+              ? t('hero.birthChartActive', {
+                  planetCount: Object.keys(birthChartData?.planets || {}).length,
+                  majorTransits: stats.majorTransits,
+                  transitSuffix: t(stats.majorTransits !== 1 ? 'hero.transitSuffixPlural' : 'hero.transitSuffix')
+                })
+              : t('hero.addBirthChartPrompt')}
           </p>
           
           {!hasBirthChart && (
@@ -56,7 +62,7 @@ export const OracleModeOracle: React.FC<OracleModeOracleProps> = ({
               className="hero-cta"
               onClick={onNavigateToStars}
             >
-              <span>Create Birth Chart</span>
+              <span>{t('hero.createBirthChart')}</span>
               <span className="cta-arrow">→</span>
             </button>
           )}
@@ -66,22 +72,22 @@ export const OracleModeOracle: React.FC<OracleModeOracleProps> = ({
       <div className="oracle-stats-grid">
         <div className="stat-card">
           <div className="stat-value">{stats.totalEntries}</div>
-          <div className="stat-label">Oracle Entries</div>
+          <div className="stat-label">{t('hero.oracleEntries')}</div>
           <div className="stat-icon">📜</div>
         </div>
         <div className="stat-card">
           <div className="stat-value">{stats.entriesWithInsights}</div>
-          <div className="stat-label">Insights</div>
+          <div className="stat-label">{t('hero.insights')}</div>
           <div className="stat-icon">🔮</div>
         </div>
         <div className="stat-card">
           <div className="stat-value">{stats.streak}</div>
-          <div className="stat-label">Day Streak</div>
+          <div className="stat-label">{t('hero.dayStreak')}</div>
           <div className="stat-icon">✦</div>
         </div>
         <div className="stat-card highlight">
           <div className="stat-value">{stats.activeTransits}</div>
-          <div className="stat-label">Active Transits</div>
+          <div className="stat-label">{t('hero.activeTransits')}</div>
           <div className="stat-icon">🪐</div>
         </div>
       </div>
@@ -89,15 +95,15 @@ export const OracleModeOracle: React.FC<OracleModeOracleProps> = ({
       <div className="oracle-quick-actions">
         <button className="action-card" onClick={() => onSetMode('scribe')}>
           <span className="action-icon">✍️</span>
-          <span className="action-label">New Entry</span>
+          <span className="action-label">{t('hero.newEntry')}</span>
         </button>
-        <button className="action-card" onClick={() => onSetMode('celestial')}>
+        <button className="action-card" onClick={() => onSetMode('draw')}>
           <span className="action-icon">✨</span>
-          <span className="action-label">View Transits</span>
+          <span className="action-label">{t('hero.dailyOracle')}</span>
         </button>
         <button className="action-card" onClick={() => onSetMode('entries')}>
           <span className="action-icon">📜</span>
-          <span className="action-label">Browse Entries</span>
+          <span className="action-label">{t('hero.browseEntries')}</span>
         </button>
       </div>
     </div>

@@ -1,81 +1,99 @@
 /**
  * Diary Timeline Component
  * Chronological view of diary entries with celestial context
+ * Uses lazy pagination for performance with large entry counts
  */
 
+import { useState, useCallback, useRef, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import type { RootState } from '../store';
 import { selectAllEntries } from '../store/diarySlice';
 import { getThemeStyles, getFontStyles } from '../oracle/diaryTypes';
+import i18n from '../i18n';
 import '../styles/diary-timeline.css';
 
 interface DiaryTimelineProps {
   onEntryClick?: (entryId: string) => void;
 }
 
+const PAGE_SIZE = 20;
+
 export const DiaryTimeline: React.FC<DiaryTimelineProps> = ({ onEntryClick }) => {
   const entries = useSelector((state: RootState) => selectAllEntries(state));
   const preferences = useSelector((state: RootState) => state.diary.preferences);
+  const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
+  const [isLoadingMore, setIsLoadingMore] = useState(false);
+  const observerRef = useRef<IntersectionObserver | null>(null);
+  const loadMoreRef = useRef<HTMLDivElement | null>(null);
 
   // Sort entries by date (newest first)
-  const sortedEntries = [...entries].sort(
-    (a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime()
-  );
+  const sortedEntries = entries; // Already sorted by selectAllEntries
 
   // Group entries by date
-  const groupedEntries = sortedEntries.reduce((groups, entry) => {
+  const groupedEntries = sortedEntries.slice(0, visibleCount).reduce((groups, entry) => {
     const date = entry.date;
     if (!groups[date]) groups[date] = [];
     groups[date].push(entry);
     return groups;
   }, {} as Record<string, typeof sortedEntries>);
 
-  // Format date for display
+  const hasMore = visibleCount < entries.length;
+
+  const loadMore = useCallback(() => {
+    if (isLoadingMore || !hasMore) return;
+    setIsLoadingMore(true);
+    // Simulate async load for smooth UX
+    requestAnimationFrame(() => {
+      setVisibleCount(prev => Math.min(prev + PAGE_SIZE, entries.length));
+      setIsLoadingMore(false);
+    });
+  }, [isLoadingMore, hasMore, entries.length]);
+
+  // IntersectionObserver for infinite scroll
+  useEffect(() => {
+    if (!loadMoreRef.current) return;
+    observerRef.current = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting) loadMore();
+      },
+      { rootMargin: '200px' }
+    );
+    observerRef.current.observe(loadMoreRef.current);
+    return () => observerRef.current?.disconnect();
+  }, [loadMore]);
+
   const formatDate = (dateStr: string) => {
     const date = new Date(dateStr);
     const today = new Date();
     const yesterday = new Date(today);
     yesterday.setDate(yesterday.getDate() - 1);
 
-    if (dateStr === today.toISOString().split('T')[0]) return 'Today';
-    if (dateStr === yesterday.toISOString().split('T')[0]) return 'Yesterday';
+    if (dateStr === today.toISOString().split('T')[0]) return i18n.t('common:today');
+    if (dateStr === yesterday.toISOString().split('T')[0]) return i18n.t('common:yesterday');
 
-    return date.toLocaleDateString('en-US', {
+    return new Intl.DateTimeFormat(i18n.language || 'en', {
       weekday: 'long',
       month: 'long',
       day: 'numeric',
-    });
+    }).format(date);
   };
 
-  // Format time
   const formatTime = (timestamp: string) => {
-    return new Date(timestamp).toLocaleTimeString('en-US', {
+    return new Intl.DateTimeFormat(i18n.language || 'en', {
       hour: 'numeric',
       minute: '2-digit',
       hour12: true,
-    });
+    }).format(new Date(timestamp));
   };
 
-  // Get moon phase icon
   const getMoonPhaseIcon = (phase?: string) => {
     if (!phase) return '🌙';
     const icons: Record<string, string> = {
-      'new': '🌑',
-      'waxing': '🌒',
-      'first': '🌓',
-      'gibbous': '🌔',
-      'full': '🌕',
-      'waning': '🌖',
-      'last': '🌗',
-      'crescent': '🌘',
-      'New Moon': '🌑',
-      'Waxing Crescent': '🌒',
-      'First Quarter': '🌓',
-      'Waxing Gibbous': '🌔',
-      'Full Moon': '🌕',
-      'Waning Gibbous': '🌖',
-      'Last Quarter': '🌗',
-      'Waning Crescent': '🌘',
+      'new': '🌑', 'waxing': '🌒', 'first': '🌓', 'gibbous': '🌔',
+      'full': '🌕', 'waning': '🌖', 'last': '🌗', 'crescent': '🌘',
+      'New Moon': '🌑', 'Waxing Crescent': '🌒', 'First Quarter': '🌓',
+      'Waxing Gibbous': '🌔', 'Full Moon': '🌕', 'Waning Gibbous': '🌖',
+      'Last Quarter': '🌗', 'Waning Crescent': '🌘',
     };
     return icons[phase] || '🌙';
   };
@@ -127,6 +145,11 @@ export const DiaryTimeline: React.FC<DiaryTimelineProps> = ({ onEntryClick }) =>
                       {getMoonPhaseIcon(entry.celestialContext.moonPhase.phase)}
                     </span>
                   )}
+                  {entry.tags && entry.tags.length > 0 && (
+                    <span className="diary-entry-tags">
+                      {entry.tags.map(t => <span key={t} className="diary-entry-tag">#{t}</span>)}
+                    </span>
+                  )}
                 </div>
 
                 {/* Entry Content Preview */}
@@ -144,7 +167,7 @@ export const DiaryTimeline: React.FC<DiaryTimelineProps> = ({ onEntryClick }) =>
                     <span className="insight-preview-text">
                       {entry.insight.text.slice(0, 80)}...
                     </span>
-                    <span 
+                    <span
                       className="insight-preview-score"
                       style={{ color: (entry.insight.strengthScore || 70) >= 70 ? '#22c55e' : '#eab308' }}
                     >
@@ -172,10 +195,23 @@ export const DiaryTimeline: React.FC<DiaryTimelineProps> = ({ onEntryClick }) =>
         </div>
       ))}
 
+      {/* Load more sentinel */}
+      {hasMore && (
+        <div ref={loadMoreRef} className="diary-timeline-load-more">
+          {isLoadingMore ? (
+            <span className="loading-spinner">✦ Loading more entries... ✦</span>
+          ) : (
+            <span>Scroll for more ✦</span>
+          )}
+        </div>
+      )}
+
       {/* End of Timeline */}
-      <div className="diary-timeline-end">
-        <span>✦ You've reached the beginning of your journey ✦</span>
-      </div>
+      {!hasMore && (
+        <div className="diary-timeline-end">
+          <span>✦ You've reached the beginning of your journey ✦</span>
+        </div>
+      )}
     </div>
   );
 };

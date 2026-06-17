@@ -1,0 +1,544 @@
+
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Code coverage report for astrology/services/guidance/templates/bodies/lilithTemplates.ts</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../../../../prettify.css" />
+    <link rel="stylesheet" href="../../../../../base.css" />
+    <link rel="shortcut icon" type="image/x-icon" href="../../../../../favicon.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../../../../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+    
+<body>
+<div class='wrapper'>
+    <div class='pad1'>
+        <h1><a href="../../../../../index.html">All files</a> / <a href="index.html">astrology/services/guidance/templates/bodies</a> lilithTemplates.ts</h1>
+        <div class='clearfix'>
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">0% </span>
+                <span class="quiet">Statements</span>
+                <span class='fraction'>0/153</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">0% </span>
+                <span class="quiet">Branches</span>
+                <span class='fraction'>0/1</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">0% </span>
+                <span class="quiet">Functions</span>
+                <span class='fraction'>0/1</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">0% </span>
+                <span class="quiet">Lines</span>
+                <span class='fraction'>0/153</span>
+            </div>
+        
+            
+        </div>
+        <p class="quiet">
+            Press <em>n</em> or <em>j</em> to go to the next uncovered block, <em>b</em>, <em>p</em> or <em>k</em> for the previous block.
+        </p>
+        <template id="filterTemplate">
+            <div class="quiet">
+                Filter:
+                <input type="search" id="fileSearch">
+            </div>
+        </template>
+    </div>
+    <div class='status-line low'></div>
+    <pre><table class="coverage">
+<tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
+<a name='L2'></a><a href='#L2'>2</a>
+<a name='L3'></a><a href='#L3'>3</a>
+<a name='L4'></a><a href='#L4'>4</a>
+<a name='L5'></a><a href='#L5'>5</a>
+<a name='L6'></a><a href='#L6'>6</a>
+<a name='L7'></a><a href='#L7'>7</a>
+<a name='L8'></a><a href='#L8'>8</a>
+<a name='L9'></a><a href='#L9'>9</a>
+<a name='L10'></a><a href='#L10'>10</a>
+<a name='L11'></a><a href='#L11'>11</a>
+<a name='L12'></a><a href='#L12'>12</a>
+<a name='L13'></a><a href='#L13'>13</a>
+<a name='L14'></a><a href='#L14'>14</a>
+<a name='L15'></a><a href='#L15'>15</a>
+<a name='L16'></a><a href='#L16'>16</a>
+<a name='L17'></a><a href='#L17'>17</a>
+<a name='L18'></a><a href='#L18'>18</a>
+<a name='L19'></a><a href='#L19'>19</a>
+<a name='L20'></a><a href='#L20'>20</a>
+<a name='L21'></a><a href='#L21'>21</a>
+<a name='L22'></a><a href='#L22'>22</a>
+<a name='L23'></a><a href='#L23'>23</a>
+<a name='L24'></a><a href='#L24'>24</a>
+<a name='L25'></a><a href='#L25'>25</a>
+<a name='L26'></a><a href='#L26'>26</a>
+<a name='L27'></a><a href='#L27'>27</a>
+<a name='L28'></a><a href='#L28'>28</a>
+<a name='L29'></a><a href='#L29'>29</a>
+<a name='L30'></a><a href='#L30'>30</a>
+<a name='L31'></a><a href='#L31'>31</a>
+<a name='L32'></a><a href='#L32'>32</a>
+<a name='L33'></a><a href='#L33'>33</a>
+<a name='L34'></a><a href='#L34'>34</a>
+<a name='L35'></a><a href='#L35'>35</a>
+<a name='L36'></a><a href='#L36'>36</a>
+<a name='L37'></a><a href='#L37'>37</a>
+<a name='L38'></a><a href='#L38'>38</a>
+<a name='L39'></a><a href='#L39'>39</a>
+<a name='L40'></a><a href='#L40'>40</a>
+<a name='L41'></a><a href='#L41'>41</a>
+<a name='L42'></a><a href='#L42'>42</a>
+<a name='L43'></a><a href='#L43'>43</a>
+<a name='L44'></a><a href='#L44'>44</a>
+<a name='L45'></a><a href='#L45'>45</a>
+<a name='L46'></a><a href='#L46'>46</a>
+<a name='L47'></a><a href='#L47'>47</a>
+<a name='L48'></a><a href='#L48'>48</a>
+<a name='L49'></a><a href='#L49'>49</a>
+<a name='L50'></a><a href='#L50'>50</a>
+<a name='L51'></a><a href='#L51'>51</a>
+<a name='L52'></a><a href='#L52'>52</a>
+<a name='L53'></a><a href='#L53'>53</a>
+<a name='L54'></a><a href='#L54'>54</a>
+<a name='L55'></a><a href='#L55'>55</a>
+<a name='L56'></a><a href='#L56'>56</a>
+<a name='L57'></a><a href='#L57'>57</a>
+<a name='L58'></a><a href='#L58'>58</a>
+<a name='L59'></a><a href='#L59'>59</a>
+<a name='L60'></a><a href='#L60'>60</a>
+<a name='L61'></a><a href='#L61'>61</a>
+<a name='L62'></a><a href='#L62'>62</a>
+<a name='L63'></a><a href='#L63'>63</a>
+<a name='L64'></a><a href='#L64'>64</a>
+<a name='L65'></a><a href='#L65'>65</a>
+<a name='L66'></a><a href='#L66'>66</a>
+<a name='L67'></a><a href='#L67'>67</a>
+<a name='L68'></a><a href='#L68'>68</a>
+<a name='L69'></a><a href='#L69'>69</a>
+<a name='L70'></a><a href='#L70'>70</a>
+<a name='L71'></a><a href='#L71'>71</a>
+<a name='L72'></a><a href='#L72'>72</a>
+<a name='L73'></a><a href='#L73'>73</a>
+<a name='L74'></a><a href='#L74'>74</a>
+<a name='L75'></a><a href='#L75'>75</a>
+<a name='L76'></a><a href='#L76'>76</a>
+<a name='L77'></a><a href='#L77'>77</a>
+<a name='L78'></a><a href='#L78'>78</a>
+<a name='L79'></a><a href='#L79'>79</a>
+<a name='L80'></a><a href='#L80'>80</a>
+<a name='L81'></a><a href='#L81'>81</a>
+<a name='L82'></a><a href='#L82'>82</a>
+<a name='L83'></a><a href='#L83'>83</a>
+<a name='L84'></a><a href='#L84'>84</a>
+<a name='L85'></a><a href='#L85'>85</a>
+<a name='L86'></a><a href='#L86'>86</a>
+<a name='L87'></a><a href='#L87'>87</a>
+<a name='L88'></a><a href='#L88'>88</a>
+<a name='L89'></a><a href='#L89'>89</a>
+<a name='L90'></a><a href='#L90'>90</a>
+<a name='L91'></a><a href='#L91'>91</a>
+<a name='L92'></a><a href='#L92'>92</a>
+<a name='L93'></a><a href='#L93'>93</a>
+<a name='L94'></a><a href='#L94'>94</a>
+<a name='L95'></a><a href='#L95'>95</a>
+<a name='L96'></a><a href='#L96'>96</a>
+<a name='L97'></a><a href='#L97'>97</a>
+<a name='L98'></a><a href='#L98'>98</a>
+<a name='L99'></a><a href='#L99'>99</a>
+<a name='L100'></a><a href='#L100'>100</a>
+<a name='L101'></a><a href='#L101'>101</a>
+<a name='L102'></a><a href='#L102'>102</a>
+<a name='L103'></a><a href='#L103'>103</a>
+<a name='L104'></a><a href='#L104'>104</a>
+<a name='L105'></a><a href='#L105'>105</a>
+<a name='L106'></a><a href='#L106'>106</a>
+<a name='L107'></a><a href='#L107'>107</a>
+<a name='L108'></a><a href='#L108'>108</a>
+<a name='L109'></a><a href='#L109'>109</a>
+<a name='L110'></a><a href='#L110'>110</a>
+<a name='L111'></a><a href='#L111'>111</a>
+<a name='L112'></a><a href='#L112'>112</a>
+<a name='L113'></a><a href='#L113'>113</a>
+<a name='L114'></a><a href='#L114'>114</a>
+<a name='L115'></a><a href='#L115'>115</a>
+<a name='L116'></a><a href='#L116'>116</a>
+<a name='L117'></a><a href='#L117'>117</a>
+<a name='L118'></a><a href='#L118'>118</a>
+<a name='L119'></a><a href='#L119'>119</a>
+<a name='L120'></a><a href='#L120'>120</a>
+<a name='L121'></a><a href='#L121'>121</a>
+<a name='L122'></a><a href='#L122'>122</a>
+<a name='L123'></a><a href='#L123'>123</a>
+<a name='L124'></a><a href='#L124'>124</a>
+<a name='L125'></a><a href='#L125'>125</a>
+<a name='L126'></a><a href='#L126'>126</a>
+<a name='L127'></a><a href='#L127'>127</a>
+<a name='L128'></a><a href='#L128'>128</a>
+<a name='L129'></a><a href='#L129'>129</a>
+<a name='L130'></a><a href='#L130'>130</a>
+<a name='L131'></a><a href='#L131'>131</a>
+<a name='L132'></a><a href='#L132'>132</a>
+<a name='L133'></a><a href='#L133'>133</a>
+<a name='L134'></a><a href='#L134'>134</a>
+<a name='L135'></a><a href='#L135'>135</a>
+<a name='L136'></a><a href='#L136'>136</a>
+<a name='L137'></a><a href='#L137'>137</a>
+<a name='L138'></a><a href='#L138'>138</a>
+<a name='L139'></a><a href='#L139'>139</a>
+<a name='L140'></a><a href='#L140'>140</a>
+<a name='L141'></a><a href='#L141'>141</a>
+<a name='L142'></a><a href='#L142'>142</a>
+<a name='L143'></a><a href='#L143'>143</a>
+<a name='L144'></a><a href='#L144'>144</a>
+<a name='L145'></a><a href='#L145'>145</a>
+<a name='L146'></a><a href='#L146'>146</a>
+<a name='L147'></a><a href='#L147'>147</a>
+<a name='L148'></a><a href='#L148'>148</a>
+<a name='L149'></a><a href='#L149'>149</a>
+<a name='L150'></a><a href='#L150'>150</a>
+<a name='L151'></a><a href='#L151'>151</a>
+<a name='L152'></a><a href='#L152'>152</a>
+<a name='L153'></a><a href='#L153'>153</a>
+<a name='L154'></a><a href='#L154'>154</a></td><td class="line-coverage quiet"><span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js"><span class="cstat-no" title="statement not covered" >import type { BodyTemplates } from './types';<span class="fstat-no" title="function not covered" ><span class="branch-0 cbranch-no" title="branch not covered" ></span></span></span>
+<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" >/**</span>
+<span class="cstat-no" title="statement not covered" > * ═══════════════════════════════════════════════════════════════════════════════</span>
+<span class="cstat-no" title="statement not covered" > * LILITH TEMPLATES — Wild feminine, repressed desire, primal instinct, shadow</span>
+<span class="cstat-no" title="statement not covered" > * ═══════════════════════════════════════════════════════════════════════════════</span>
+<span class="cstat-no" title="statement not covered" > */</span>
+<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" >export const lilithTemplates: BodyTemplates = {</span>
+<span class="cstat-no" title="statement not covered" >  aries: {</span>
+<span class="cstat-no" title="statement not covered" >    essence: 'Your wildness is a war cry — primal, immediate, and refusing to be tamed by any cage constructed by convention. Lilith in Aries teaches that desire is not shameful but sacred, that the instinct to claim what you want is not aggression but authenticity, and that the feminine force that society fears most is the one that acts without permission. You are here to embody desire as action, to refuse the waiting that has been demanded of you, to take what is yours before anyone offers it.',</span>
+<span class="cstat-no" title="statement not covered" >    element: 'fire', modality: 'cardinal', keywords: ['wild desire', 'primal action', 'untamed instinct', 'forbidden courage'],</span>
+<span class="cstat-no" title="statement not covered" >    careerAdvice: 'Your professional wildness demands leadership on your own terms. Entrepreneurship, competitive fields, emergency work, and any arena where hesitation is death suit your nature. You excel when you refuse to wait for permission. Beware the compulsion to destroy what you cannot have — true power is claiming, not demolishing. Build your own table rather than burning others\'.',</span>
+<span class="cstat-no" title="statement not covered" >    relationshipAdvice: 'Your relationships are battlegrounds of desire — you want what you want when you want it, and you will not apologise for the wanting. You attract partners who can handle your heat without trying to extinguish it. Beware the pattern of pursuing the unavailable — the chase is not love. True wildness includes the courage to want what is actually good for you.',</span>
+<span class="cstat-no" title="statement not covered" >    healthAdvice: 'Your head and adrenal system carry the voltage of unexpressed desire. Explosive movement, competitive sports, and assertive practices restore you. Beware the body\'s storage of rage — your migraines, your tension, your insomnia are the war cries you swallowed. Let them out before they turn inward.',</span>
+<span class="cstat-no" title="statement not covered" >    financesAdvice: 'Your financial wildness is impatient and decisive. You make money moves that others fear. High-risk, high-reward aligns with your nature. Beware impulsive destruction of what you have built in frustration. Your power is in creation, not demolition. Build wealth that funds your freedom, not your rebellion.',</span>
+<span class="cstat-no" title="statement not covered" >    growthAdvice: 'Your shadow is the destroyer — the wildness that, denied expression, becomes demolition. The gift of Lilith in Aries is the courage to want without shame. Growth asks you to distinguish between authentic desire and reactive aggression, to claim your power without destroying what others have built.',</span>
+<span class="cstat-no" title="statement not covered" >    bodyFocus: 'head, face, adrenal glands, motor cortex',</span>
+<span class="cstat-no" title="statement not covered" >    elementalResonance: 'Your wildness is sacred fire — the flame that needs no fuel but its own existence, that burns not to illuminate others but because burning is its nature, that cannot be extinguished, only temporarily contained.',</span>
+<span class="cstat-no" title="statement not covered" >  },</span>
+<span class="cstat-no" title="statement not covered" >  taurus: {</span>
+<span class="cstat-no" title="statement not covered" >    essence: 'Your wildness is sensual sovereignty — the body that knows its own pleasure, the desire that needs no justification, the instinct that refuses to be owned. Lilith in Taurus teaches that sensuality is power, that the body\'s cravings are holy instructions, and that the feminine force that society fears most is the one that enjoys without guilt. You are here to embody pleasure as resistance, to refuse the austerity that has been demanded of you, to possess yourself fully.',</span>
+<span class="cstat-no" title="statement not covered" >    element: 'earth', modality: 'fixed', keywords: ['sensual wildness', 'bodily sovereignty', 'pleasure power', 'forbidden enjoyment'],</span>
+<span class="cstat-no" title="statement not covered" >    careerAdvice: 'Your professional wildness is rooted in sensory mastery. The arts, gastronomy, bodywork, sustainable luxury, and any field that honours physical experience suit your nature. You excel when you refuse to separate work from pleasure. Beware the compulsion to hoard — true sensuality is generous, not grasping. Build wealth that nourishes, not just accumulates.',</span>
+<span class="cstat-no" title="statement not covered" >    relationshipAdvice: 'Your relationships are temples of touch — you express desire through the body, through presence, through the slow unfolding of sensory devotion. You attract partners who understand that love is physical sacrament. Beware the pattern of possessiveness — what you call love can become confinement. True wildness includes the freedom to let go.',</span>
+<span class="cstat-no" title="statement not covered" >    healthAdvice: 'Your throat, neck, and thyroid hold the tension of unexpressed sensuality. Vocal practices, sensual movement, and nature immersion restore you. Beware the body\'s storage of denied pleasure — your weight, your tension, your voicelessness are the desires you shamed. Reclaim them.',</span>
+<span class="cstat-no" title="statement not covered" >    financesAdvice: 'Your financial wildness is tactile and tangible. You invest in what you can touch, taste, experience. Real estate, art, natural resources align with your values. Beware using wealth as substitute for pleasure — money cannot buy what you refuse to feel. Build abundance that serves your senses.',</span>
+<span class="cstat-no" title="statement not covered" >    growthAdvice: 'Your shadow is the hoarder — the wildness that, denied pleasure, becomes possessive. The gift of Lilith in Taurus is the courage to enjoy without guilt. Growth asks you to distinguish between genuine sensuality and compensatory consumption, to possess yourself rather than your possessions.',</span>
+<span class="cstat-no" title="statement not covered" >    bodyFocus: 'throat, neck, thyroid, vocal cords',</span>
+<span class="cstat-no" title="statement not covered" >    elementalResonance: 'Your wildness is garden abundance — the lush, unapologetic growth that takes whatever space it needs, that produces without permission, that knows pleasure is the earth\'s first language.',</span>
+<span class="cstat-no" title="statement not covered" >  },</span>
+<span class="cstat-no" title="statement not covered" >  gemini: {</span>
+<span class="cstat-no" title="statement not covered" >    essence: 'Your wildness is word-magic — the voice that speaks what others whisper, the intellect that refuses to be contained by polite conversation, the curiosity that follows every forbidden thread. Lilith in Gemini teaches that knowledge is seduction, that the mind that questions everything is not dangerous but free, and that the feminine force that society fears most is the one that names what has been unnamed. You are here to embody truth as provocation.',</span>
+<span class="cstat-no" title="statement not covered" >    element: 'air', modality: 'mutable', keywords: ['intellectual wildness', 'forbidden speech', 'curious instinct', 'verbal seduction'],</span>
+<span class="cstat-no" title="statement not covered" >    careerAdvice: 'Your professional wildness is communicative and provocative. Writing, journalism, teaching, media, and any field that rewards saying the unsaid suit your nature. You excel when you refuse to censor yourself. Beware the compulsion to shock for its own sake — true power is in naming truth, not just disrupting comfort. Build a platform that outlasts the controversy.',</span>
+<span class="cstat-no" title="statement not covered" >    relationshipAdvice: 'Your relationships are dialogues of seduction — you connect through words, through wit, through the intellectual dance of mutual discovery. You attract partners who can match your mental agility. Beware the pattern of verbal combat as intimacy — argument is not connection. True wildness includes the courage to be silent together.',</span>
+<span class="cstat-no" title="statement not covered" >    healthAdvice: 'Your lungs, hands, and nervous system process your communicative voltage. Breathwork, writing therapy, and hand-focused practices restore you. Beware nervous exhaustion from constant mental stimulation — your body needs silence as much as it needs speech. Let the unsaid be as powerful as the spoken.',</span>
+<span class="cstat-no" title="statement not covered" >    financesAdvice: 'Your financial wildness is information-based. You spot what others miss, you trade on knowledge, you arbitrage insight. Intellectual property and communication ventures align with your nature. Beware scattered investment — your curiosity can lead to financial diffusion. Focus your mental energy.',</span>
+<span class="cstat-no" title="statement not covered" >    growthAdvice: 'Your shadow is the chaos-monger — the wildness that, denied expression, disrupts without purpose. The gift of Lilith in Gemini is the courage to speak without censorship. Growth asks you to distinguish between authentic truth-telling and compulsive disruption, to use your voice to illuminate rather than merely to disturb.',</span>
+<span class="cstat-no" title="statement not covered" >    bodyFocus: 'lungs, hands, nervous system, shoulders',</span>
+<span class="cstat-no" title="statement not covered" >    elementalResonance: 'Your wildness is whispered spell — the word that cannot be unsaid, the name that changes what it names, the voice that speaks in rooms where silence was demanded.',</span>
+<span class="cstat-no" title="statement not covered" >  },</span>
+<span class="cstat-no" title="statement not covered" >  cancer: {</span>
+<span class="cstat-no" title="statement not covered" >    essence: 'Your wildness is maternal fury — the protective instinct that destroys what threatens the young, the emotional current that drowns what cannot swim, the belonging that is not negotiable. Lilith in Cancer teaches that nurture is not gentle but fierce, that the feminine force that society fears most is the mother who will not apologise for her rage, and that home is not a place but a boundary you defend with tooth and claw.',</span>
+<span class="cstat-no" title="statement not covered" >    element: 'water', modality: 'cardinal', keywords: ['fierce nurture', 'emotional wildness', 'protective instinct', 'forbidden belonging'],</span>
+<span class="cstat-no" title="statement not covered" >    careerAdvice: 'Your professional wildness is protective and instinctive. Child advocacy, community defence, real estate, and any field that creates or protects sanctuary suit your nature. You excel when you refuse to compromise on safety. Beware the compulsion to mother everyone — your wildness is not your usefulness. Build structures that protect without possessing.',</span>
+<span class="cstat-no" title="statement not covered" >    relationshipAdvice: 'Your relationships are fortresses of feeling — you love with the depth of oceanic memory, you bond with the ferocity of tidal lock. You attract partners who understand that your love is not gentle. Beware the pattern of smothering — what you call protection can become confinement. True wildness includes the courage to let loved ones face their own storms.',</span>
+<span class="cstat-no" title="statement not covered" >    healthAdvice: 'Your stomach and lymphatic system hold the weight of unexpressed maternal rage. Water therapies, emotional release, and boundary work restore you. Beware the body\'s storage of what your heart could not defend — your digestive distress is the fury you swallowed. Let it out before it poisons you.',</span>
+<span class="cstat-no" title="statement not covered" >    financesAdvice: 'Your financial wildness is security-driven. You build resources to create safety, you invest in home, you protect what is yours. Family resources and real estate align with your nature. Beware using money as substitute for emotional security — wealth cannot replace the belonging you were denied.',</span>
+<span class="cstat-no" title="statement not covered" >    growthAdvice: 'Your shadow is the smotherer — the wildness that, denied safe belonging, becomes possessive. The gift of Lilith in Cancer is the courage to nurture without apology. Growth asks you to distinguish between protection and possession, to love fiercely without controlling, to build walls that keep danger out without keeping love in.',</span>
+<span class="cstat-no" title="statement not covered" >    bodyFocus: 'stomach, breasts, lymphatic system, womb',</span>
+<span class="cstat-no" title="statement not covered" >    elementalResonance: 'Your wildness is tidal surge — the current that returns to defend every shore it has ever called home, regardless of welcome, that knows belonging is not a gift to be given but a force to be claimed.',</span>
+<span class="cstat-no" title="statement not covered" >  },</span>
+<span class="cstat-no" title="statement not covered" >  leo: {</span>
+<span class="cstat-no" title="statement not covered" >    essence: 'Your wildness is creative conflagration — the performance that cannot be contained, the shine that blinds those who would dim you, the self-expression that is not optional but imperative. Lilith in Leo teaches that creativity is not hobby but necessity, that the feminine force that society fears most is the one that takes up space without shrinking, and that the stage is not a privilege but a birthright. You are here to embody radiance as rebellion.',</span>
+<span class="cstat-no" title="statement not covered" >    element: 'fire', modality: 'fixed', keywords: ['creative wildness', 'forbidden shine', 'theatrical instinct', 'radiant rebellion'],</span>
+<span class="cstat-no" title="statement not covered" >    careerAdvice: 'Your professional wildness is performative and commanding. Entertainment, design, leadership, and any field that rewards taking up space suit your nature. You excel when you refuse to shrink. Beware the compulsion to perform for approval — true radiance needs no audience. Build creative power that sustains itself.',</span>
+<span class="cstat-no" title="statement not covered" >    relationshipAdvice: 'Your relationships are stages of desire — you love with theatrical intensity, you demand to be seen, you give nothing less than your full brilliance. You attract partners who can handle your spotlight. Beware the pattern of performing love rather than feeling it — the grand gesture is not the daily presence. True wildness includes the courage to be offstage.',</span>
+<span class="cstat-no" title="statement not covered" >    healthAdvice: 'Your heart and spine are the engines of your creative wildness. Dance, performance, and heart-pumping practices restore you. Beware burnout from constant performance — even stars exhaust their fuel. Your body is not a stage but a sanctuary. Rest is not obscurity; it is regeneration.',</span>
+<span class="cstat-no" title="statement not covered" >    financesAdvice: 'Your financial wildness is creativity-based. You invest in your own expression, you fund your vision, you understand that wealth is the freedom to create. Creative ventures and self-directed enterprises align with your nature. Beware using money as applause — your worth is not your box office.',</span>
+<span class="cstat-no" title="statement not covered" >    growthAdvice: 'Your shadow is the attention addict — the wildness that, denied recognition, becomes desperate for witnesses. The gift of Lilith in Leo is the courage to shine without permission. Growth asks you to distinguish between authentic expression and performative rebellion, to create for the joy of it rather than the validation.',</span>
+<span class="cstat-no" title="statement not covered" >    bodyFocus: 'heart, spine, circulatory system, upper back',</span>
+<span class="cstat-no" title="statement not covered" >    elementalResonance: 'Your wildness is bonfire — the flame that consumes everything offered to it, that warms or destroys depending on distance, that needs no reason to burn beyond the fact of its own existence.',</span>
+<span class="cstat-no" title="statement not covered" >  },</span>
+<span class="cstat-no" title="statement not covered" >  virgo: {</span>
+<span class="cstat-no" title="statement not covered" >    essence: 'Your wildness is precision revolt — the exacting standard that rejects mediocrity, the analytical mind that sees through every deception, the service that refuses to be exploited. Lilith in Virgo teaches that perfectionism is not neurosis but discernment, that the feminine force that society fears most is the one that will not perform competence for free, and that the details matter because they are where the truth hides. You are here to embody excellence as resistance.',</span>
+<span class="cstat-no" title="statement not covered" >    element: 'earth', modality: 'mutable', keywords: ['analytical wildness', 'forbidden discernment', 'precise instinct', 'excellent rebellion'],</span>
+<span class="cstat-no" title="statement not covered" >    careerAdvice: 'Your professional wildness is meticulous and uncompromising. Healthcare, editing, research, quality assurance, and any field that rewards refusing to settle suit your nature. You excel when you demand the best. Beware the compulsion to fix everything — your wildness is not your usefulness. Build systems that honour your standards without consuming you.',</span>
+<span class="cstat-no" title="statement not covered" >    relationshipAdvice: 'Your relationships are laboratories of discernment — you see what others miss, you demand what others accept, you serve with precision that can feel like criticism. You attract partners who appreciate your competence. Beware the pattern of helpfulness as control — fixing is not loving. True wildness includes the courage to be imperfect together.',</span>
+<span class="cstat-no" title="statement not covered" >    healthAdvice: 'Your gut and nervous system process your perfectionist voltage. Clean food, regular schedules, and mind-body practices are essential. Beware hypochondria — the body scrutinised finds flaws. Your health is not a project to optimise but a living system to honour. Let some things be messy.',</span>
+<span class="cstat-no" title="statement not covered" >    financesAdvice: 'Your financial wildness is detail-oriented. You spot inefficiencies, you optimise relentlessly, you build wealth through precision. Systematic investments and quality-focused enterprises align with your nature. Beware analysis paralysis — the perfect plan never builds anything. Act on imperfect information.',</span>
+<span class="cstat-no" title="statement not covered" >    growthAdvice: 'Your shadow is the critic — the wildness that, denied expression, becomes judgmental. The gift of Lilith in Virgo is the courage to demand excellence without apology. Growth asks you to distinguish between authentic discernment and compulsive criticism, to serve without self-erasure, to be precise without being cruel.',</span>
+<span class="cstat-no" title="statement not covered" >    bodyFocus: 'digestive system, intestines, spleen, nervous system',</span>
+<span class="cstat-no" title="statement not covered" >    elementalResonance: 'Your wildness is surgical blade — the precision that cuts to truth, that removes what is diseased while preserving what is whole, that knows the power of a single exact gesture.',</span>
+<span class="cstat-no" title="statement not covered" >  },</span>
+<span class="cstat-no" title="statement not covered" >  libra: {</span>
+<span class="cstat-no" title="statement not covered" >    essence: 'Your wildness is the refusal to please — the boundary that says no, the desire that will not be negotiated away, the self that insists on being counted in every equation. Lilith in Libra teaches that harmony is not worth the price of self-erasure, that the feminine force that society fears most is the one that disrupts the peace, and that partnership without equality is not love but contract. You are here to embody fairness as ferocity.',</span>
+<span class="cstat-no" title="statement not covered" >    element: 'air', modality: 'cardinal', keywords: ['relational wildness', 'forbidden boundary', 'just instinct', 'equal rebellion'],</span>
+<span class="cstat-no" title="statement not covered" >    careerAdvice: 'Your professional wildness is diplomatic but unyielding. Law, design, mediation, and any field that requires balancing justice with beauty suit your nature. You excel when you refuse to compromise on fairness. Beware the compulsion to mediate everyone\'s conflicts — your wildness is not your peacemaking. Build a practice that honours truth over harmony.',</span>
+<span class="cstat-no" title="statement not covered" >    relationshipAdvice: 'Your relationships are negotiations of power — you demand equality, you refuse to be the accommodating half, you love with the ferocity of one who knows her own worth. You attract partners who respect your boundaries. Beware the pattern of conflict as intimacy — discord is not connection. True wildness includes the courage to be peaceful without being passive.',</span>
+<span class="cstat-no" title="statement not covered" >    healthAdvice: 'Your kidneys, skin, and lower back reflect your relational stress. Balance practices, dance, and beauty rituals restore you. Beware the stress of perpetual fairness — your body absorbs the power struggles you refuse to name. Learn to choose yourself, even at the cost of equilibrium.',</span>
+<span class="cstat-no" title="statement not covered" >    financesAdvice: 'Your financial wildness is justice-driven. You invest in fairness, you share resources equitably, you refuse to accumulate at others\' expense. Partnership investments and ethical enterprises align with your nature. Beware using money to create harmony that must come from honest communication.',</span>
+<span class="cstat-no" title="statement not covered" >    growthAdvice: 'Your shadow is the disruptor — the wildness that, denied equality, creates chaos. The gift of Lilith in Libra is the courage to demand fairness without apology. Growth asks you to distinguish between authentic boundary-setting and compulsive conflict, to fight for what is right without destroying what is good.',</span>
+<span class="cstat-no" title="statement not covered" >    bodyFocus: 'kidneys, skin, lower back, endocrine balance',</span>
+<span class="cstat-no" title="statement not covered" >    elementalResonance: 'Your wildness is scales in motion — the balance that tips when one side has taken too much, that knows justice is not a static state but a constant correction.',</span>
+<span class="cstat-no" title="statement not covered" >  },</span>
+<span class="cstat-no" title="statement not covered" >  scorpio: {</span>
+<span class="cstat-no" title="statement not covered" >    essence: 'Your wildness is underworld sovereignty — the sexuality that needs no justification, the power that fears no exposure, the transformation that consumes what cannot evolve. Lilith in Scorpio teaches that depth is not pathology but birthright, that the feminine force that society fears most is the one that owns her own darkness, and that the taboo is merely the truth that power has not yet controlled. You are here to embody shadow as strength.',</span>
+<span class="cstat-no" title="statement not covered" >    element: 'water', modality: 'fixed', keywords: ['sexual wildness', 'forbidden power', 'shadow instinct', 'deep rebellion'],</span>
+<span class="cstat-no" title="statement not covered" >    careerAdvice: 'Your professional wildness is intense and investigative. Depth psychology, crisis work, research, and any field that faces what others hide suit your nature. You excel when you refuse to look away. Beware the compulsion to probe — your wildness is not your insight into others\' secrets. Build power that transforms without destroying.',</span>
+<span class="cstat-no" title="statement not covered" >    relationshipAdvice: 'Your relationships are crucibles of desire — you love with the depth of ocean trenches, you demand total honesty, you transform through intimacy. You attract partners ready for alchemical love. Beware the pattern of intensity as intimacy — drama is not connection. True wildness includes the courage to be gentle in the depths.',</span>
+<span class="cstat-no" title="statement not covered" >    healthAdvice: 'Your reproductive and eliminative systems process your wild intensity. Deep therapeutic practices, energy work, and shadow integration restore you. Beware addictive patterns — your intensity seeks extremes. Moderation is not weakness but the discipline of power. Your body holds the wisdom of every transformation.',</span>
+<span class="cstat-no" title="statement not covered" >    financesAdvice: 'Your financial wildness is power-aligned. You understand wealth as energy, you invest in transformation, you control resources that others fear to touch. Shared resources and depth-oriented investments align with your nature. Beware using financial power as proxy for emotional control.',</span>
+<span class="cstat-no" title="statement not covered" >    growthAdvice: 'Your shadow is the destroyer — the wildness that, denied depth, becomes destructive. The gift of Lilith in Scorpio is the courage to own your darkness without shame. Growth asks you to distinguish between authentic power and compulsive control, to transform without annihilating, to be deep without being dangerous.',</span>
+<span class="cstat-no" title="statement not covered" >    bodyFocus: 'reproductive system, eliminative organs, pelvis, colon',</span>
+<span class="cstat-no" title="statement not covered" >    elementalResonance: 'Your wildness is underworld river — the current that carries what has died back toward life, that knows the darkness because it has travelled it, that emerges with treasures no surface dweller can claim.',</span>
+<span class="cstat-no" title="statement not covered" >  },</span>
+<span class="cstat-no" title="statement not covered" >  sagittarius: {</span>
+<span class="cstat-no" title="statement not covered" >    essence: 'Your wildness is philosophical freedom — the belief that refuses dogma, the journey that has no destination, the meaning that cannot be contained by any single truth. Lilith in Sagittarius teaches that wisdom is not possession but pilgrimage, that the feminine force that society fears most is the one who questions every answer, and that the horizon is not a goal but a promise that keeps receding to keep you moving.',</span>
+<span class="cstat-no" title="statement not covered" >    element: 'fire', modality: 'mutable', keywords: ['philosophical wildness', 'forbidden belief', 'expansive instinct', 'meaning rebellion'],</span>
+<span class="cstat-no" title="statement not covered" >    careerAdvice: 'Your professional wildness is expansive and belief-challenging. Publishing, travel, education, and any field that expands horizons suit your nature. You excel when you refuse to be contained by convention. Beware the compulsion to preach — your wildness is not your certainty. Build platforms that question rather than answer.',</span>
+<span class="cstat-no" title="statement not covered" >    relationshipAdvice: 'Your relationships are adventures of meaning — you connect through shared quests, through philosophical debate, through the mutual expansion of horizons. You attract partners who challenge your worldview. Beware the pattern of restlessness — not every horizon is worth chasing. True wildness includes the courage to find meaning in staying.',</span>
+<span class="cstat-no" title="statement not covered" >    healthAdvice: 'Your hips, thighs, and liver carry your expansive wildness. Outdoor movement, travel, and philosophical practice restore you. Beware excess — your wild nature applies to indulgence as well as inspiration. Your body needs grounding as much as it needs adventure.',</span>
+<span class="cstat-no" title="statement not covered" >    financesAdvice: 'Your financial wildness is vision-driven. You invest in meaning, in education, in the expansion of possibility. International investments and belief-aligned enterprises align with your nature. Beware overconfidence — not every vision is investable. Ground your philosophy in practical checks.',</span>
+<span class="cstat-no" title="statement not covered" >    growthAdvice: 'Your shadow is the dogmatist — the wildness that, denied freedom, becomes rigid in its rebellion. The gift of Lilith in Sagittarius is the courage to question without landing. Growth asks you to distinguish between authentic seeking and compulsive escape, to find depth in commitment without losing your love of the horizon.',</span>
+<span class="cstat-no" title="statement not covered" >    bodyFocus: 'hips, thighs, liver, sciatic nerve',</span>
+<span class="cstat-no" title="statement not covered" >    elementalResonance: 'Your wildness is horizon chase — the endless pursuit that knows the destination is not the point, that the meaning is in the movement, that the only sin is standing still.',</span>
+<span class="cstat-no" title="statement not covered" >  },</span>
+<span class="cstat-no" title="statement not covered" >  capricorn: {</span>
+<span class="cstat-no" title="statement not covered" >    essence: 'Your wildness is authoritative ambition — the drive to achieve that needs no justification, the power that is not given but taken, the structure that serves your vision rather than constraining it. Lilith in Capricorn teaches that ambition is not masculine but human, that the feminine force that society fears most is the one who builds empires without apology, and that mastery is not domination but self-determination.',</span>
+<span class="cstat-no" title="statement not covered" >    element: 'earth', modality: 'cardinal', keywords: ['ambitious wildness', 'forbidden authority', 'structural instinct', 'power rebellion'],</span>
+<span class="cstat-no" title="statement not covered" >    careerAdvice: 'Your professional wildness is commanding and structural. Executive leadership, institutional building, and any field that rewards climbing without permission suit your nature. You excel when you refuse to wait to be chosen. Beware the compulsion to achieve as proof of worth — your wildness is not your accomplishments. Build legacy, not just success.',</span>
+<span class="cstat-no" title="statement not covered" >    relationshipAdvice: 'Your relationships are partnerships of power — you demand respect, you offer loyalty, you build structures that endure. You attract partners who can handle your ambition. Beware the pattern of work as relationship — achievement is not intimacy. True wildness includes the courage to be vulnerable within authority.',</span>
+<span class="cstat-no" title="statement not covered" >    healthAdvice: 'Your bones, joints, and teeth reflect the weight of your ambition. Regular movement, structural alignment, and disciplined self-care are essential. Beware workaholism — the empire built by exhaustion serves no one. Your body is the foundation of every achievement; treat it as such.',</span>
+<span class="cstat-no" title="statement not covered" >    financesAdvice: 'Your financial wildness is legacy-building. You accumulate wealth not for display but for power, not for consumption but for control. Traditional investments and long-term holdings align with your nature. Beware using money as scorecard for worth — your value is not your net worth.',</span>
+<span class="cstat-no" title="statement not covered" >    growthAdvice: 'Your shadow is the tyrant — the wildness that, denied authority, becomes controlling. The gift of Lilith in Capricorn is the courage to claim power without apology. Growth asks you to distinguish between authentic leadership and compulsive dominance, to build structures that liberate rather than imprison.',</span>
+<span class="cstat-no" title="statement not covered" >    bodyFocus: 'bones, joints, teeth, knees, skeletal system',</span>
+<span class="cstat-no" title="statement not covered" >    elementalResonance: 'Your wildness is mountain summit — the peak that does not apologise for its height, that was not built to be climbed but to exist, that knows authority is not given but claimed.',</span>
+<span class="cstat-no" title="statement not covered" >  },</span>
+<span class="cstat-no" title="statement not covered" >  aquarius: {</span>
+<span class="cstat-no" title="statement not covered" >    essence: 'Your wildness is collective rebellion — the vision that refuses convention, the uniqueness that will not be normalised, the future that arrives before anyone is ready for it. Lilith in Aquarius teaches that difference is not defect but design, that the feminine force that society fears most is the one who invents new forms of connection, and that the tribe you belong to is the one you create, not the one you were born into.',</span>
+<span class="cstat-no" title="statement not covered" >    element: 'air', modality: 'fixed', keywords: ['collective wildness', 'forbidden vision', 'innovative instinct', 'difference rebellion'],</span>
+<span class="cstat-no" title="statement not covered" >    careerAdvice: 'Your professional wildness is innovative and collective. Technology, social reform, community building, and any field that creates the future suit your nature. You excel when you refuse to fit in. Beware the compulsion to rebel as identity — your wildness is not your difference. Build systems that include the outliers without homogenising them.',</span>
+<span class="cstat-no" title="statement not covered" >    relationshipAdvice: 'Your relationships challenge every convention — you love across boundaries, you connect through shared vision, you refuse the traditional structures that constrain others. You attract partners who understand your uniqueness. Beware the pattern of isolation — rejection can become a comfortable prison. True wildness includes the courage to be ordinary sometimes.',</span>
+<span class="cstat-no" title="statement not covered" >    healthAdvice: 'Your circulatory and nervous systems carry your electric wildness. Group practices, community wellness, and unconventional approaches restore you. Beware nervous exhaustion from collective anxiety — you feel what the group feels. Build boundaries that protect your energy without isolating you.',</span>
+<span class="cstat-no" title="statement not covered" >    financesAdvice: 'Your financial wildness is collective and innovative. You invest in the future, in technology, in social change. Cryptocurrency, social enterprise, and visionary ventures align with your nature. Beware the addiction to abstraction — even utopian economics must feed real people.',</span>
+<span class="cstat-no" title="statement not covered" >    growthAdvice: 'Your shadow is the exile — the wildness that, denied belonging, becomes isolated. The gift of Lilith in Aquarius is the courage to be different without apology. Growth asks you to distinguish between authentic uniqueness and reactive alienation, to build communities that honour difference without requiring it.',</span>
+<span class="cstat-no" title="statement not covered" >    bodyFocus: 'calves, ankles, circulatory system, nervous system',</span>
+<span class="cstat-no" title="statement not covered" >    elementalResonance: 'Your wildness is lightning storm — the electric disruption that illuminates what was hidden, that connects every point in the network simultaneously, that transforms the landscape in a single flash.',</span>
+<span class="cstat-no" title="statement not covered" >  },</span>
+<span class="cstat-no" title="statement not covered" >  pisces: {</span>
+<span class="cstat-no" title="statement not covered" >    essence: 'Your wildness is oceanic dissolution — the boundary that refuses to hold, the desire that merges with the divine, the instinct that knows no shore. Lilith in Pisces teaches that transcendence is not escape but expansion, that the feminine force that society fears most is the one who dissolves every limit, and that the self is not a fortress but a wave. You are here to embody surrender as sovereignty.',</span>
+<span class="cstat-no" title="statement not covered" >    element: 'water', modality: 'mutable', keywords: ['mystical wildness', 'forbidden transcendence', 'dissolving instinct', 'boundary rebellion'],</span>
+<span class="cstat-no" title="statement not covered" >    careerAdvice: 'Your professional wildness is spiritual and transcendent. The arts, healing, spiritual guidance, and any field that dissolves boundaries suit your nature. You excel when you refuse to be contained by material reality. Beware the compulsion to escape — your wildness is not your detachment. Build structures that ground your spirituality in service.',</span>
+<span class="cstat-no" title="statement not covered" >    relationshipAdvice: 'Your relationships are unions of dissolution — you merge completely, you feel everything, you love without limit. You attract partners who understand your depth. Beware the pattern of merger as intimacy — total dissolution is not connection but disappearance. True wildness includes the courage to be separate while together.',</span>
+<span class="cstat-no" title="statement not covered" >    healthAdvice: 'Your feet and immune system are your mystical anchors. Water therapies, dream work, and spiritual practices restore you. Beware escapism through substances or denial — your sensitivity is a gift that requires protection. Ground your transcendence in physical practice.',</span>
+<span class="cstat-no" title="statement not covered" >    financesAdvice: 'Your financial wildness is flow-based. You understand wealth as energy, you invest in spirit, you refuse the materialism that constrains others. Artistic and spiritual ventures align with your nature. Beware using mystical justification for financial avoidance — even mystics must eat.',</span>
+<span class="cstat-no" title="statement not covered" >    growthAdvice: 'Your shadow is the escape artist — the wildness that, denied transcendence, becomes dissociation. The gift of Lilith in Pisces is the courage to dissolve without disappearing. Growth asks you to distinguish between authentic mysticism and compulsive escape, to be oceanic without drowning, to be boundless without being lost.',</span>
+<span class="cstat-no" title="statement not covered" >    bodyFocus: 'feet, immune system, pineal gland, lymphatic system',</span>
+<span class="cstat-no" title="statement not covered" >    elementalResonance: 'Your wildness is oceanic tide — the wave that knows no boundary between self and other, between drop and sea, between the one who loves and the one who is loved, dissolving every distinction in its return to source.',</span>
+<span class="cstat-no" title="statement not covered" >  },</span>
+<span class="cstat-no" title="statement not covered" >  ophiuchus: {</span>
+<span class="cstat-no" title="statement not covered" >    essence: 'Your wildness is alchemical initiation — the transformation that turns poison into power, the healing that comes from the wound itself, the knowledge that is earned only through descent. Lilith in Ophiuchus teaches that the healer and the wounded are one, that the feminine force that society fears most is the one who has been to the underworld and returned with medicine, and that the serpent is not evil but wisdom coiled and waiting.',</span>
+<span class="cstat-no" title="statement not covered" >    element: 'ether', modality: 'fixed', keywords: ['alchemical wildness', 'forbidden healing', 'initiatory instinct', 'transformation rebellion'],</span>
+<span class="cstat-no" title="statement not covered" >    careerAdvice: 'Your professional wildness is healing and transformative. Medicine, psychology, energy work, and research into suppressed knowledge suit you. You excel when challenging what society calls incurable. Beware the wounded healer trap — your wildness is not your suffering. Build power that heals without consuming you.',</span>
+<span class="cstat-no" title="statement not covered" >    relationshipAdvice: 'Your relationships are initiations — every connection has the potential to transform both participants through the fire of honesty. You attract partners ready for depth. Beware the compulsion to heal instead of relate; your insight is a gift, but in love it can become a wall. True wildness is presence without prescription.',</span>
+<span class="cstat-no" title="statement not covered" >    healthAdvice: 'Your spinal column and nervous system regeneration are your wild frontier. Energy medicine, spinal alignment, and practices that work with subtle energies restore you. You are sensitive to environmental and collective energies — your body is a barometer for the world\'s wounds. Learn to filter what is not yours.',</span>
+<span class="cstat-no" title="statement not covered" >    financesAdvice: 'Your financial wildness mirrors your healing journey — non-linear, transformative, and often involving sudden shifts. Build financial models that accommodate your initiatory path. Beware rescuing others financially — true empowerment creates independence, not dependence.',</span>
+<span class="cstat-no" title="statement not covered" >    growthAdvice: 'Your shadow is the martyr — the wildness that, denied healing, becomes sacrifice. The gift of Lilith in Ophiuchus is the courage to transform without being destroyed. Growth asks you to distinguish between authentic alchemy and compulsive suffering, to be the healer who is also healed, the initiate who is also the master.',</span>
+<span class="cstat-no" title="statement not covered" >    bodyFocus: 'spinal column, nervous system regeneration, subtle energy channels, cellular renewal',</span>
+<span class="cstat-no" title="statement not covered" >    elementalResonance: 'Your wildness is serpent power — the coiled wisdom that waits in darkness, that transforms poison into medicine, that knows the healing is in the very wound that was forbidden.',</span>
+<span class="cstat-no" title="statement not covered" >  },</span>
+<span class="cstat-no" title="statement not covered" >};</span>
+&nbsp;</pre></td></tr></table></pre>
+
+                <div class='push'></div><!-- for sticky footer -->
+            </div><!-- /wrapper -->
+            <div class='footer quiet pad2 space-top1 center small'>
+                Code coverage generated by
+                <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
+                at 2026-05-21T20:28:33.284Z
+            </div>
+        <script src="../../../../../prettify.js"></script>
+        <script>
+            window.onload = function () {
+                prettyPrint();
+            };
+        </script>
+        <script src="../../../../../sorter.js"></script>
+        <script src="../../../../../block-navigation.js"></script>
+    </body>
+</html>
+    

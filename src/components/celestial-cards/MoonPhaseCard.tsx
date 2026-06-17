@@ -4,6 +4,8 @@
  */
 
 import { useState, useEffect, useMemo, memo } from 'react';
+import { useGlobalTimeInterval } from '../../hooks/useGlobalTime';
+import { useTranslation } from 'react-i18next';
 import type { LocationData } from '../../types';
 import { getNextLunarNewYear } from '../../services/astronomyService';
 import { getChineseZodiac } from '../../services/celestialInfoService';
@@ -53,6 +55,7 @@ function getSimplePhase(date: Date) {
 }
 
 const MoonPhaseCardComponent: React.FC<Props> = ({ date }) => {
+  const { t } = useTranslation('celestial');
   const [phase, setPhase] = useState<ReturnType<typeof getSimplePhase> | null>(null);
   const [zodiac, setZodiac] = useState<ReturnType<typeof getChineseZodiac> | null>(null);
   const [lny, setLny] = useState<ReturnType<typeof getNextLunarNewYear> | null>(null);
@@ -64,19 +67,14 @@ const MoonPhaseCardComponent: React.FC<Props> = ({ date }) => {
     voidQuality: string;
   } | null>(null);
   const [expanded, setExpanded] = useState(false);
-  const [now, setNow] = useState(new Date());
-
-  useEffect(() => {
-    const i = setInterval(() => setNow(new Date()), 60000);
-    return () => clearInterval(i);
-  }, []);
+  const now = useGlobalTimeInterval(60000);
 
   useEffect(() => {
     const fetch = async () => {
       try {
         const [sky, voidData] = await Promise.all([
           calculateCurrentSky(date),
-          calculateVoidMoonStatus().catch(() => ({ isVoid: false, qualityDescription: '' })),
+          calculateVoidMoonStatus(date).catch(() => ({ isVoid: false, qualityDescription: '' })),
         ]);
         const p = calculatePreciseMoonPhase(sky.positions.sun, sky.positions.moon);
         setPhase({ phase: p.name, glyph: p.emoji, illum: p.illumination, age: p.angle / 360 * 29.53, waxing: p.isWaxing });
@@ -117,12 +115,12 @@ const MoonPhaseCardComponent: React.FC<Props> = ({ date }) => {
 
   return (
     <div className={`heka-card ${expanded ? 'expanded' : ''}`}>
-      <div className="heka-card__header heka-card__header--enterprise" onClick={() => setExpanded(!expanded)}>
+      <div className="heka-card__header heka-card__header--enterprise" onClick={() => setExpanded(!expanded)} role="button" tabIndex={0} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setExpanded(!expanded); } }}>
         <span className="heka-card__icon">{phase.glyph}</span>
         <div className="heka-card__title-group">
           <span className="heka-card__title">{phase.phase}</span>
           <span className="heka-card__subtitle">
-            <span className="heka-chip heka-chip--accent">{Math.round(phase.illum)}% illuminated</span>
+            <span className="heka-chip heka-chip--accent">{Math.round(phase.illum)}% {t('cards.moonPhase.illuminated')}</span>
             <span className="heka-chip">Day {Math.round(phase.age)} of 29.5</span>
           </span>
         </div>
@@ -159,7 +157,7 @@ const MoonPhaseCardComponent: React.FC<Props> = ({ date }) => {
                 </div>
               </div>
               <span className="heka-epic-counter__title" style={{ color: elementColor }}>🎆 Until Lunar New Year</span>
-              <span style={{ fontSize: '10px', color: 'rgba(255,255,255,0.35)', marginTop: '6px' }}>
+              <span style={{ fontSize: '12px', color: 'rgba(255,255,255,0.35)', marginTop: '6px' }}>
                 {lny?.date.toLocaleDateString(undefined, { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' })}
                 {' • '}{zodiac.animal} Year
               </span>
@@ -168,7 +166,7 @@ const MoonPhaseCardComponent: React.FC<Props> = ({ date }) => {
 
           {/* Moon Intelligence Hero */}
           {moonDetails && (
-            <div className="heka-hero" style={{ marginBottom: '20px', borderColor: moonDetails.isVoid ? 'rgba(239,68,68,0.3)' : undefined }}>
+            <div className="heka-hero" style={{ marginBottom: '14px', borderColor: moonDetails.isVoid ? 'rgba(239,68,68,0.3)' : undefined }}>
               <span className="heka-hero__icon">☽</span>
               <div className="heka-hero__content">
                 <div className="heka-hero__title">{moonDetails.sign} {moonDetails.degree}°</div>
@@ -187,11 +185,11 @@ const MoonPhaseCardComponent: React.FC<Props> = ({ date }) => {
             <span className="heka-countdown__value" style={{ color: elementColor, textShadow: `0 0 30px ${elementColor}40` }}>
               {Math.round(phase.illum)}%
             </span>
-            <span className="heka-countdown__label">illuminated • Day {Math.round(phase.age)} of 29.5</span>
+            <span className="heka-countdown__label">{t('cards.moonPhase.illuminated')} • {t('cards.moonPhase.dayOfCycle', { day: Math.round(phase.age) })}</span>
           </div>
 
           {/* Phase Meaning */}
-          <div className="heka-section" style={{ marginTop: '16px' }}>
+          <div className="heka-section" style={{ marginTop: '12px' }}>
             <div className="heka-section__title">🌙 {info.meaning}</div>
             <p style={{ fontSize: '13px', color: 'rgba(255,255,255,0.7)', lineHeight: '1.5', margin: 0 }}>
               {info.energy}
@@ -216,7 +214,7 @@ const MoonPhaseCardComponent: React.FC<Props> = ({ date }) => {
                 <span className="heka-data-cell__value">{zodiac.yinYang}</span>
               </div>
             </div>
-            <div className="heka-tags" style={{ marginTop: '12px' }}>
+            <div className="heka-tags" style={{ marginTop: '8px' }}>
               {zodiac.characteristics.slice(0, 5).map((c, i) => (
                 <span key={i} className="heka-tag" style={{ borderColor: `${elementColor}30` }}>{c}</span>
               ))}

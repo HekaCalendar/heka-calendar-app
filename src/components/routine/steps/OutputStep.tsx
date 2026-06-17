@@ -5,6 +5,7 @@
  */
 
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import type { RoutineFile } from '../routineData';
 import { downloadRoutineFile } from '../routineData';
 import { durationLabel } from '../routineUtils';
@@ -17,6 +18,7 @@ interface Props {
 }
 
 export const OutputStep: React.FC<Props> = ({ routine, onApply, onRestart, onChange }) => {
+  const { t } = useTranslation();
   const [applied, setApplied] = useState(false);
 
 
@@ -71,7 +73,7 @@ export const OutputStep: React.FC<Props> = ({ routine, onApply, onRestart, onCha
             type="text"
             value={routine.name}
             onChange={e => onChange({ name: e.target.value })}
-            placeholder="e.g. 2026 Fitness Plan, Work Sprint Q3"
+            placeholder={t('outputNamePlaceholder', 'Output name...')}
           />
         </div>
 

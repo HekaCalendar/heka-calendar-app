@@ -1,0 +1,99 @@
+{
+  "title": "הישגים",
+  "streak": "דרך",
+  "days": "ימים",
+  "totalAchievements": "{{count}} הישגים",
+  "earned": "הרוויח",
+  "locked": "נעול",
+  "newAchievement": "הישג חדש!",
+  "categories": {
+    "calendar": "מבוגר לוח שנה",
+    "journal": "שמרן יומן",
+    "circle": "בונה מעגל",
+    "coach": "בוקר כוכבים",
+    "explorer": "מגלה"
+  },
+  "achievements": {
+    "firstStep": {
+      "name": "שלב ראשון",
+      "description": "פתח את הלוך שנה לראשונה"
+    },
+    "timeTraveler": {
+      "name": "מסעיר בזמן",
+      "description": "צפה בתאריך יותר מ-1 שנה"
+    },
+    "streak7": {
+      "name": "שבוע של אור",
+      "description": "שימוש בלוח שנה במשך 7 ימים ברצף"
+    },
+    "streak30": {
+      "name": "חודש של כוכבים",
+      "description": "שימוש בלוח שנה במשך 30 ימים ברצף"
+    },
+    "streak100": {
+      "name": "מאה של חכמה",
+      "description": "שימוש בלוח שנה במשך 100 ימים ברצף"
+    },
+    "journalFirst": {
+      "name": "מילים ראשונות",
+      "description": "כתובה כניסה ליומן הראשונה שלך"
+    },
+    "journal10": {
+      "name": "כותב צעיר",
+      "description": "כתובה 10 כניסות ליומן"
+    },
+    "journal50": {
+      "name": "סופר מוכר",
+      "description": "כתובה 50 כניסות ליומן"
+    },
+    "friendAdded": {
+      "name": "קשר ראשון",
+      "description": "הוספת חבר הראשון שלך"
+    },
+    "circle5": {
+      "name": "מעגל גדל",
+      "description": "יש לך 5 חברים במעגל שלך"
+    },
+    "aiAsked": {
+      "name": "מחפש חכמה",
+      "description": "שאל שאלה למומן האי"
+    },
+    "aiStreak7": {
+      "name": "הדרכה יומית",
+      "description": "ייעוץ עם מומן האי במשך 7 ימים"
+    },
+    "allMoonPhases": {
+      "name": "צופה לירח",
+      "description": "הצג את כל 8 שלבים הירח"
+    },
+    "allZodiac": {
+      "name": "מגלה של זודיאק",
+      "description": "הצג את כל 13 סימני הצו迪אק"
+    },
+    "printFirst": {
+      "name": "הדפסה הראשונה",
+      "description": "הדפס דף לוח השנה הראשון שלך"
+    }
+  },
+  "categoryLabels": {
+    "beginner": "מתחיל",
+    "intermediate": "מבוגר",
+    "advanced": "מתקדם",
+    "master": "מורה",
+    "special": "מיוחד",
+    "explorer": "מגלה",
+    "discoverer": "מגלה",
+    "engager": "מעורב"
+  },
+  "stats": {
+    "appOpens": "פתיחות אפליקציה",
+    "dayStreak": "שורה יומית",
+    "hoursSpent": "שעות שהושקעו",
+    "featuresFound": "תכונות שנמצאו"
+  },
+  "all": "כל",
+  "showHidden": "הצג חבויים",
+  "noAchievements": "לא נמצאו השגים בקטגוריה זו",
+  "hiddenAchievement": "השג חבוי",
+  "secret": "סוד"
+}

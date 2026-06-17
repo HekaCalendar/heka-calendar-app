@@ -1,0 +1,166 @@
+{
+  "months": {
+    "0": "Nisan",
+    "1": "Mayıs",
+    "2": "Haziran",
+    "3": "Temmuz",
+    "4": "Ağustos",
+    "5": "Eylül",
+    "6": "Ekim",
+    "7": "Kasım",
+    "8": "Aralık",
+    "9": "Ocak",
+    "10": "Şubat",
+    "11": "Mart",
+    "12": "Nisan"
+  },
+  "monthShort": {
+    "0": "Nis",
+    "1": "Mayıs",
+    "2": "Haz",
+    "3": "Tem",
+    "4": "Ağu",
+    "5": "Eyl",
+    "6": "Eki",
+    "7": "Kas",
+    "8": "Ara",
+    "9": "Oca",
+    "10": "Şub",
+    "11": "Mar",
+    "12": "Nis"
+  },
+  "civilMonths": {
+    "0": "Oca",
+    "1": "Şub",
+    "2": "Mart",
+    "3": "Nis",
+    "4": "Mayıs",
+    "5": "Haz",
+    "6": "Tem",
+    "7": "Ağu",
+    "8": "Eyl",
+    "9": "Eki",
+    "10": "Kas",
+    "11": "Ara"
+  },
+  "days": {
+    "0": "Pazar",
+    "1": "Pazartesi",
+    "2": "Salı",
+    "3": "Çarşamba",
+    "4": "Perşembe",
+    "5": "Cuma",
+    "6": "Cumartesi"
+  },
+  "daysShort": {
+    "0": "Paz",
+    "1": "Pzt",
+    "2": "Sal",
+    "3": "Çar",
+    "4": "Per",
+    "5": "Cum",
+    "6": "Cmt"
+  },
+  "daysMin": {
+    "0": "Pz",
+    "1": "Pt",
+    "2": "Sa",
+    "3": "Ça",
+    "4": "Pe",
+    "5": "Cu",
+    "6": "Ct"
+  },
+  "arcs": {
+    "opening": "Açılış",
+    "core": "Çekirdek",
+    "closing": "Kapanış"
+  },
+  "arcSuffix": "Yay",
+  "arcDescriptions": {
+    "opening": "Yıl uyanıyor",
+    "core": "Yıl gelişiyor",
+    "closing": "Yıl tamamlanıyor"
+  },
+  "monthLabel": "Ay {{month}}/13",
+  "hekaYear": "HEKA Yıl {{year}}",
+  "civilYear": "Sivil Yıl {{year}}",
+  "dayOfYear": "Yılın {{day}}. günü / {{total}}",
+  "week": "Hafta",
+  "quarter": "Çeyrek",
+  "leapDay": "Atılma Günü",
+  "leapDayDescription": "Mart'ta her 4 yılda bir fazladan bir gün",
+  "switchDarkMode": "Karana_lite moduna geç",
+  "switchLightMode": "Açık moduna geç",
+  "moreNotes": "+{{count}} daha fazla",
+  "holiday": "Bayram",
+  "note": "Not",
+  "task": "Görev",
+  "moonPhase": "Ay Aşama",
+  "selectDay": "Ayrıntıları görüntülemek için bir gün seçin",
+  "navigation": {
+    "previousMonth": "Önceki ay",
+    "nextMonth": "Sonraki ay",
+    "goToToday": "Bugüne git",
+    "today": "Bugün"
+  },
+  "print": {
+    "title": "Takvimi yazdır",
+    "label": "Yazdır"
+  },
+  "expand": {
+    "shrinkHorizontal": "Yatay daralt",
+    "expandHorizontal": "Yatay genişlet",
+    "shrinkVertical": "Dikey daralt",
+    "expandVertical": "Dikey genişlet"
+  },
+  "year": {
+    "viewEntireYear": "Tüm yılı görüntüle",
+    "label": "Yıl"
+  },
+  "search": {
+    "title": "Tarihleri ara",
+    "label": "Ara"
+  },
+  "features": {
+    "astrologyHub": "Astroloji Merkezi",
+    "stars": "Yıldızlar",
+    "cosmicCircle": "Kosmik Daire",
+    "circle": "Daire",
+    "oracleJournal": "Oracle Günlüğü",
+    "journal": "Günlük",
+    "aboutHeka": "HEKA Takvim Hakkında",
+    "about": "Hakkında",
+    "yourStatistics": "İstatistikleriniz",
+    "stats": "İstatistikler",
+    "communityHolidays": "Topluluk tatilleri",
+    "community": "Topluluk"
+  },
+  "toggles": {
+    "civilDates": "Sivil tarihleri değiştir",
+    "civil": "Sivil",
+    "moonPhases": "Ay aşamalarını değiştir",
+    "moon": "Ay",
+    "holidays": "Tatilleri değiştir",
+    "holidayLabel": "Tatiller"
+  },
+  "prev": "Önceki",
+  "next": "Sonraki",
+  "printYear": "Yılı Yazdır",
+  "close": "Kapat",
+  "quickNote": "Hızlı Not",
+  "quickNoteTag": "hızlı not",
+  "addingTo": "Ekleniyor",
+  "typeYourNote": "Notunuzu yazın...",
+  "saveNote": "Notu Kaydet",
+  "ctrlEnterToSave": "Kaydetmek için Ctrl + Enter • İptal etmek için Esc",
+  "hekaPrefix": "HEKA:",
+  "civilPrefix": "Sivil:",
+  "moodPrefix": "Ruh hali:",
+  "searchTips": {
+    "tip1": "\"31 Ocak\" veya \"bugün\"",
+    "tip2": "\"15 heka\" veya \"Nisan 5\"",
+    "tip3": "Not içeriği veya kategori",
+    "tip4": "\"Noel\" veya \"Avustralya Günü\"",
+    "tip5": "\"2026-01-31\" (ISO format)"
+  }
+}

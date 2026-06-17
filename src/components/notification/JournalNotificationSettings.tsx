@@ -3,11 +3,13 @@
  * Toggles for tracker reminders, reflection prompts, and celestial insights.
  */
 
+import { useTranslation } from 'react-i18next';
 import { useSelector, useDispatch } from 'react-redux';
 import type { RootState, AppDispatch } from '../../store';
 import { updateNotificationPreferences } from '../../store';
 
 export const JournalNotificationSettings: React.FC = () => {
+  const { t } = useTranslation('journal');
   const dispatch = useDispatch<AppDispatch>();
   const prefs = useSelector((state: RootState) => state.calendar.notificationPreferences.journal);
   const globalEnabled = useSelector((state: RootState) => state.calendar.notificationPreferences.globalEnabled);
@@ -62,7 +64,7 @@ export const JournalNotificationSettings: React.FC = () => {
           <span style={{ fontSize: '14px', fontWeight: 500, color: '#e0e0e0' }}>{label}</span>
           {tier && (
             <span style={{
-              fontSize: '10px',
+              fontSize: '12px',
               textTransform: 'uppercase',
               letterSpacing: '0.05em',
               padding: '2px 6px',
@@ -70,7 +72,7 @@ export const JournalNotificationSettings: React.FC = () => {
               background: tier === 'core' ? 'rgba(239,68,68,0.2)' : tier === 'standard' ? 'rgba(201,162,39,0.2)' : 'rgba(59,130,246,0.2)',
               color: tier === 'core' ? '#fca5a5' : tier === 'standard' ? '#fde68a' : '#93c5fd',
             }}>
-              {tier}
+              {t('notifications.tier' + tier.charAt(0).toUpperCase() + tier.slice(1))}
             </span>
           )}
         </div>
@@ -82,24 +84,24 @@ export const JournalNotificationSettings: React.FC = () => {
   return (
     <div className="journal-notification-settings">
       <Switch
-        checked={prefs.trackerReminders}
-        onChange={() => toggle('trackerReminders')}
-        label="Tracker Reminders"
-        description="Gentle nudges based on your active trackers (cycle, mood, sleep, energy...)"
+        checked={prefs.reflectionReminders}
+        onChange={() => toggle('reflectionReminders')}
+        label={t('notifications.reflectionReminders')}
+        description={t('notifications.reflectionRemindersDesc')}
         tier="standard"
       />
       <Switch
         checked={prefs.dailyReflectionPrompt}
         onChange={() => toggle('dailyReflectionPrompt')}
-        label="Daily Reflection Prompt"
-        description="Evening prompt to reflect and journal"
+        label={t('notifications.dailyReflectionPrompt')}
+        description={t('notifications.dailyReflectionPromptDesc')}
         tier="standard"
       />
       <Switch
         checked={prefs.celestialInsightAlert}
         onChange={() => toggle('celestialInsightAlert')}
-        label="Celestial Insight Alerts"
-        description="Notable transits that might inspire a journal entry"
+        label={t('notifications.celestialInsightAlerts')}
+        description={t('notifications.celestialInsightAlertsDesc')}
         tier="ambient"
       />
     </div>

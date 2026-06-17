@@ -1,5 +1,6 @@
 package com.heka.calendar;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.view.View;
@@ -12,6 +13,7 @@ import android.os.Environment;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.ParcelFileDescriptor;
+import android.provider.MediaStore;
 
 import android.print.PageRange;
 import android.print.PrintAttributes;
@@ -34,6 +36,7 @@ import android.webkit.WebViewClient;
 import androidx.core.content.FileProvider;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
+import androidx.core.content.ContextCompat;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -53,6 +56,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -66,6 +70,11 @@ import java.util.concurrent.atomic.AtomicBoolean;
 public class HekaPrintPlugin extends Plugin {
     private static final String TAG = "HekaPrint";
     private static final long PAGE_LOAD_TIMEOUT_MS = 30000;
+    
+    /** Runtime debug detection — works without BuildConfig import */
+    private boolean isDebug() {
+        return (getContext().getApplicationInfo().flags & android.content.pm.ApplicationInfo.FLAG_DEBUGGABLE) != 0;
+    }
     
     // Paper sizes in POINTS (72 DPI) - used for PDF page info
     private static final Map<String, PaperDimensions> PAPER_SIZES_POINTS = new HashMap<>();
@@ -99,7 +108,7 @@ public class HekaPrintPlugin extends Plugin {
 
     @PluginMethod
     public void generatePDF(PluginCall call) {
-        android.util.Log.d(TAG, "generatePDF called");
+        if (isDebug()) android.util.Log.d(TAG, "generatePDF called");
         try {
             PrintRequest request = parseRequest(call);
             
@@ -113,14 +122,14 @@ public class HekaPrintPlugin extends Plugin {
             });
             
         } catch (Exception e) {
-            android.util.Log.e(TAG, "Error in generatePDF", e);
+            if (isDebug()) android.util.Log.e(TAG, "Error in generatePDF", e);
             call.reject("Invalid print request: " + e.getMessage());
         }
     }
 
     @PluginMethod
     public void printPDF(PluginCall call) {
-        android.util.Log.d(TAG, "printPDF called");
+        if (isDebug()) android.util.Log.d(TAG, "printPDF called");
         try {
             String filePath = call.getString("filePath");
             String orientation = call.getString("orientation", "portrait");
@@ -146,14 +155,14 @@ public class HekaPrintPlugin extends Plugin {
             });
             
         } catch (Exception e) {
-            android.util.Log.e(TAG, "Error in printPDF", e);
+            if (isDebug()) android.util.Log.e(TAG, "Error in printPDF", e);
             call.reject("Print failed: " + e.getMessage());
         }
     }
 
     @PluginMethod
     public void sharePDF(PluginCall call) {
-        android.util.Log.d(TAG, "sharePDF called");
+        if (isDebug()) android.util.Log.d(TAG, "sharePDF called");
         try {
             String filePath = call.getString("filePath");
             String filename = call.getString("filename", "HEKA_Calendar.pdf");
@@ -187,14 +196,14 @@ public class HekaPrintPlugin extends Plugin {
             call.resolve();
             
         } catch (Exception e) {
-            android.util.Log.e(TAG, "Error in sharePDF", e);
+            if (isDebug()) android.util.Log.e(TAG, "Error in sharePDF", e);
             call.reject("Share failed: " + e.getMessage());
         }
     }
 
     @PluginMethod
     public void openPDF(PluginCall call) {
-        android.util.Log.d(TAG, "openPDF called");
+        if (isDebug()) android.util.Log.d(TAG, "openPDF called");
         try {
             String filePath = call.getString("filePath");
             
@@ -226,7 +235,7 @@ public class HekaPrintPlugin extends Plugin {
             call.resolve();
             
         } catch (Exception e) {
-            android.util.Log.e(TAG, "Error in openPDF", e);
+            if (isDebug()) android.util.Log.e(TAG, "Error in openPDF", e);
             call.reject("Open failed: " + e.getMessage());
         }
     }
@@ -244,19 +253,19 @@ public class HekaPrintPlugin extends Plugin {
      * Generate PDF using Android's PdfDocument with proper scaling
      */
     private void generatePDFFromHTML(PrintRequest req, PluginCall call) {
-        android.util.Log.d(TAG, "generatePDFFromHTML started with " + req.pages.size() + " pages");
+        if (isDebug()) android.util.Log.d(TAG, "generatePDFFromHTML started with " + req.pages.size() + " pages");
         
         // Create output file
         String timestamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.US).format(new Date());
         String filename = req.filename + "_" + timestamp + ".pdf";
         File outputDir = req.saveToDownloads
-            ? Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
+            ? getContext().getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS)
             : getContext().getCacheDir();
         if (!outputDir.exists()) {
             outputDir.mkdirs();
         }
         final File pdfFile = new File(outputDir, filename);
-        android.util.Log.d(TAG, "PDF will be saved to: " + pdfFile.getAbsolutePath() + " (saveToDownloads=" + req.saveToDownloads + ")");
+        if (isDebug()) android.util.Log.d(TAG, "PDF will be saved to: " + pdfFile.getAbsolutePath() + " (saveToDownloads=" + req.saveToDownloads + ")");
         
         // Process pages sequentially
         final int[] currentPage = {0};
@@ -274,7 +283,7 @@ public class HekaPrintPlugin extends Plugin {
                 }
                 
                 // Use dimensions from request (already calculated based on paper size and orientation)
-                android.util.Log.d(TAG, "Processing page with orientation: " + req.orientation);
+                if (isDebug()) android.util.Log.d(TAG, "Processing page with orientation: " + req.orientation);
                 int pixelWidth = req.pageWidth;   // 150 DPI for WebView
                 int pixelHeight = req.pageHeight;
                 
@@ -283,7 +292,7 @@ public class HekaPrintPlugin extends Plugin {
                 int pointWidth = req.orientation.equals("landscape") ? pointDims.height : pointDims.width;
                 int pointHeight = req.orientation.equals("landscape") ? pointDims.width : pointDims.height;
                 
-                android.util.Log.d(TAG, "Selected dimensions: pixels=" + pixelWidth + "x" + pixelHeight + 
+                if (isDebug()) android.util.Log.d(TAG, "Selected dimensions: pixels=" + pixelWidth + "x" + pixelHeight + 
                     ", points=" + pointWidth + "x" + pointHeight);
                 
                 renderPageToPdf(req.pages.get(currentPage[0]), pdfDocument, pixelWidth, pixelHeight, 
@@ -311,7 +320,7 @@ public class HekaPrintPlugin extends Plugin {
     
     private void renderPageToPdf(String html, PdfDocument pdfDocument, int pixelWidth, int pixelHeight, 
             int pointWidth, int pointHeight, PdfPageCallback callback) {
-        android.util.Log.d(TAG, "renderPageToPdf: pixels=" + pixelWidth + "x" + pixelHeight + 
+        if (isDebug()) android.util.Log.d(TAG, "renderPageToPdf: pixels=" + pixelWidth + "x" + pixelHeight + 
             ", points=" + pointWidth + "x" + pointHeight);
         WebView webView = createPrintWebView(pixelWidth, pixelHeight);
         final AtomicBoolean completed = new AtomicBoolean(false);
@@ -350,7 +359,7 @@ public class HekaPrintPlugin extends Plugin {
                     picture.endRecording();
                     
                     // Create PDF page at POINT dimensions (72 DPI)
-                    android.util.Log.d(TAG, "Creating PDF page: " + pointWidth + "x" + pointHeight);
+                    if (isDebug()) android.util.Log.d(TAG, "Creating PDF page: " + pointWidth + "x" + pointHeight);
                     PdfDocument.PageInfo pageInfo = new PdfDocument.PageInfo.Builder(
                         pointWidth, pointHeight, pdfDocument.getPages().size() + 1).create();
                     PdfDocument.Page page = pdfDocument.startPage(pageInfo);
@@ -362,7 +371,7 @@ public class HekaPrintPlugin extends Plugin {
                     // Calculate scale factor: points/pixels = 72/150 ≈ 0.48
                     float scaleX = (float) pointWidth / pixelWidth;
                     float scaleY = (float) pointHeight / pixelHeight;
-                    android.util.Log.d(TAG, "Drawing with scale: " + scaleX + "x" + scaleY);
+                    if (isDebug()) android.util.Log.d(TAG, "Drawing with scale: " + scaleX + "x" + scaleY);
                     
                     // Draw the Picture to PDF with scaling
                     canvas.save();
@@ -402,7 +411,7 @@ public class HekaPrintPlugin extends Plugin {
             tempFile.deleteOnExit();
             
         } catch (Exception e) {
-            android.util.Log.e(TAG, "Error creating temp file", e);
+            if (isDebug()) android.util.Log.e(TAG, "Error creating temp file", e);
             completed.set(true);
             destroyWebView(webView);
             callback.onRendered();
@@ -422,24 +431,25 @@ public class HekaPrintPlugin extends Plugin {
             result.put("filePath", pdfFile.getAbsolutePath());
             result.put("filename", pdfFile.getName());
             result.put("pageCount", pageCount);
-            android.util.Log.d(TAG, "PDF saved successfully: " + pdfFile.getAbsolutePath() + " (" + pageCount + " pages)");
+            if (isDebug()) android.util.Log.d(TAG, "PDF saved successfully: " + pdfFile.getAbsolutePath() + " (" + pageCount + " pages)");
             
             // Show download notification only when explicitly saving
             if (saveToDownloads) {
+                insertIntoMediaStore(pdfFile);
                 showDownloadNotification(pdfFile);
             }
             
             call.resolve(result);
             
         } catch (IOException e) {
-            android.util.Log.e(TAG, "Error writing PDF", e);
+            if (isDebug()) android.util.Log.e(TAG, "Error writing PDF", e);
             pdfDocument.close();
             call.reject("Failed to write PDF: " + e.getMessage());
         }
     }
 
     private WebView createPrintWebView(int pageWidth, int pageHeight) {
-        android.util.Log.d(TAG, "createPrintWebView: " + pageWidth + "x" + pageHeight);
+        if (isDebug()) android.util.Log.d(TAG, "createPrintWebView: " + pageWidth + "x" + pageHeight);
         WebView webView = new WebView(getContext());
         
         // Set layout params to exact page dimensions
@@ -447,7 +457,7 @@ public class HekaPrintPlugin extends Plugin {
         
         WebSettings settings = webView.getSettings();
         settings.setJavaScriptEnabled(true);
-        settings.setAllowFileAccess(true);
+        settings.setAllowFileAccess(false);
         settings.setDomStorageEnabled(true);
         // Disable viewport scaling to get exact pixel dimensions
         settings.setUseWideViewPort(false);
@@ -492,7 +502,7 @@ public class HekaPrintPlugin extends Plugin {
             call.resolve();
             
         } catch (Exception e) {
-            android.util.Log.e(TAG, "Print failed", e);
+            if (isDebug()) android.util.Log.e(TAG, "Print failed", e);
             call.reject("Print failed: " + e.getMessage());
         }
     }
@@ -525,8 +535,8 @@ public class HekaPrintPlugin extends Plugin {
         if (dimsPixels == null) throw new IllegalArgumentException("Invalid paper size: " + req.paperSize);
         
         req.orientation = call.getString("orientation", "portrait");
-        android.util.Log.d(TAG, "Parsed orientation: " + req.orientation);
-        android.util.Log.d(TAG, "Parsed paperSize: " + req.paperSize + " pixels=" + dimsPixels.width + "x" + dimsPixels.height);
+        if (isDebug()) android.util.Log.d(TAG, "Parsed orientation: " + req.orientation);
+        if (isDebug()) android.util.Log.d(TAG, "Parsed paperSize: " + req.paperSize + " pixels=" + dimsPixels.width + "x" + dimsPixels.height);
         if (req.orientation.equals("landscape")) {
             req.pageWidth = dimsPixels.height;
             req.pageHeight = dimsPixels.width;
@@ -556,6 +566,42 @@ public class HekaPrintPlugin extends Plugin {
                 ((android.view.ViewGroup) webView.getParent()).removeView(webView);
             }
             webView.destroy();
+        }
+    }
+
+    private void insertIntoMediaStore(File pdfFile) {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) return;
+        ContentValues values = new ContentValues();
+        values.put(MediaStore.Downloads.DISPLAY_NAME, pdfFile.getName());
+        values.put(MediaStore.Downloads.MIME_TYPE, "application/pdf");
+        values.put(MediaStore.Downloads.RELATIVE_PATH, Environment.DIRECTORY_DOWNLOADS + "/HEKA");
+        values.put(MediaStore.Downloads.IS_PENDING, 1);
+        Uri collection = MediaStore.Downloads.getContentUri(MediaStore.VOLUME_EXTERNAL_PRIMARY);
+        Uri itemUri = getContext().getContentResolver().insert(collection, values);
+        if (itemUri != null) {
+            OutputStream out = null;
+            try {
+                out = getContext().getContentResolver().openOutputStream(itemUri);
+            } catch (java.io.FileNotFoundException e) {
+                if (isDebug()) android.util.Log.e(TAG, "MediaStore openOutputStream failed", e);
+                return;
+            }
+            if (out == null) {
+                if (isDebug()) android.util.Log.e(TAG, "MediaStore openOutputStream returned null");
+                return;
+            }
+            try (OutputStream outStream = out;
+                 FileInputStream in = new FileInputStream(pdfFile)) {
+                byte[] buf = new byte[4096];
+                int len;
+                while ((len = in.read(buf)) > 0) outStream.write(buf, 0, len);
+            } catch (IOException e) {
+                if (isDebug()) android.util.Log.e(TAG, "MediaStore copy failed", e);
+                return;
+            }
+            values.clear();
+            values.put(MediaStore.Downloads.IS_PENDING, 0);
+            getContext().getContentResolver().update(itemUri, values, null, null);
         }
     }
 
@@ -596,10 +642,16 @@ public class HekaPrintPlugin extends Plugin {
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT);
             
             NotificationManagerCompat notificationManager = NotificationManagerCompat.from(getContext());
-            notificationManager.notify((int) System.currentTimeMillis(), builder.build());
+            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU ||
+                ContextCompat.checkSelfPermission(getContext(), android.Manifest.permission.POST_NOTIFICATIONS)
+                    == android.content.pm.PackageManager.PERMISSION_GRANTED) {
+                notificationManager.notify((int) System.currentTimeMillis(), builder.build());
+            } else {
+                if (isDebug()) android.util.Log.w(TAG, "POST_NOTIFICATIONS permission not granted — skipping download notification");
+            }
             
         } catch (Exception e) {
-            android.util.Log.e(TAG, "Failed to show notification", e);
+            if (isDebug()) android.util.Log.e(TAG, "Failed to show notification", e);
         }
     }
 

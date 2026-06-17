@@ -1,0 +1,239 @@
+{
+  "celestialGuide": "Göksel Rehber",
+  "journal": "Günlük",
+  "notes": "Notlar",
+  "events": "Etkinlikler",
+  "tasks": "Görevler",
+  "transits": "Geçişler",
+  "mood": "Ruh hali",
+  "vibe": "Yüzme",
+  "energy": "Enerji",
+  "hekaRune": "HEKA Ruhu",
+  "celestialAffirmation": "Göksel Onay",
+  "moodTracker": "Ruh Hali Takipçi",
+  "vibeColor": "Yüzme Rengi",
+  "addNote": "Bir not ekle...",
+  "addEvent": "Etkinlik Ekle",
+  "addTask": "Görev Ekle",
+  "eventTitle": "Etkinlik başlığı",
+  "taskTitle": "Görev başlığı",
+  "taskCompleted": "Tamamlandı",
+  "taskPending": "Beklemede",
+  "editNote": "Notu Düzenle",
+  "deleteNote": "Notu Sil",
+  "notePlaceholder": "Burada düşüncelerinizi yazın...",
+  "journalPlaceholder": "Günüğü kaydedin...",
+  "eventPlaceholder": "Ne oluyor?",
+  "taskPlaceholder": "Ne gerekiyor?",
+  "addNewNote": "+ Yeni Not",
+  "addNewEvent": "+ Yeni Etkinlik",
+  "addNewTask": "+ Yeni Görev",
+  "noNotes": "Bu gün için not yok",
+  "noEvents": "Bu gün için etkinlik yok",
+  "noTasks": "Bu gün için görev yok",
+  "noJournal": "Bu gün için günlük girdisi yok",
+  "transitProgress": "Geçiş İlerleme",
+  "transitRemaining": "{{percent}}% kaldı",
+  "currentMood": "Mevcut Ruh hali",
+  "selectMood": "Ruh halinizi seçin",
+  "moods": {
+    "joyful": "Sevinçli",
+    "happy": "Mutlu",
+    "content": "İçten Memnun",
+    "neutral": "Nötr",
+    "tired": "Yorgun",
+    "sad": "Üzgün",
+    "anxious": "Endişeli",
+    "frustrated": "Hayal Kırık",
+    "angry": "Kızgın",
+    "inspired": "Ilhamlı",
+    "focused": "Odaklanmış",
+    "peaceful": "Huzurlu"
+  },
+  "runeCast": "Rünler atılıyor...",
+  "runeReveal": "Rünü Göster",
+  "runeBlessing": "Bugünkü Barış",
+  "runeWisdom": "Rüya Bilinci",
+  "runeEnergy": "Rüya Enerjisi",
+  "emptyState": "Ayrıntıları görüntülemek için bir gün seçin",
+  "closePanel": "Paneli Kapat",
+  "addTaskBtn": "+ Görev",
+  "header": {
+    "monthOf": "Ay {{month}} / 13",
+    "hekaYear": "HEKA Yılı {{year}}"
+  },
+  "moon": {
+    "calculating": "Ayın konumu hesaplanıyor...",
+    "unavailable": "Ayın aydınlığı verileri kullanılamıyor",
+    "waxing": "Artan",
+    "waning": "Azalan",
+    "illuminated": "{{percent}}% aydınlatılmış",
+    "age": "Yaş: {{age}} gün",
+    "swissEphemeris": "İsviçre Efemeridesi",
+    "southernHemisphere": "Güney Yarımküre",
+    "northernHemisphere": "Kuzey Yarımküre"
+  },
+  "holidays": {
+    "inLocation": "Yerel Tatiller {{location}}"
+  },
+  "astrology": {
+    "dailyCosmicGuidance": "Günlük Kosmik Rehber",
+    "personalizedFor": "Kişiselleştirilmiş {{name}}",
+    "birthChartActive": "Doğum Grafiği Aktif",
+    "calculatingTransits": "Kişisel transitleriniz hesaplanıyor...",
+    "connectingCelestial": "Gökyüzü zekâsına bağlanılıyor...",
+    "unavailable": "Gökyüzü rehberliği kullanılamıyor. Detaylı burçlar için Yıldızlar bölümüne bakın.",
+    "sunrise": "Gün doğumu: {{time}}",
+    "sunset": "Gün batımı: {{time}}",
+    "planetaryHour": "Yıldızlı Saat: {{planet}}",
+    "locationPin": "{{location}}",
+    "activeTransits": "Bugünkü Aktif Transitler",
+    "moonIn": "Ayın {{sign}} içinde",
+    "sunIn": "Güneşin {{sign}} içinde",
+    "todaysTheme": "Bugünkü Tema:",
+    "cosmicGuidance": "Kosmik Rehberlik",
+    "reflection": "Yansıma",
+    "affirmation": "Onaylama",
+    "birthChartCta": {
+      "title": "Kişiselleştirilmiş geçişler mi istiyorsunuz?",
+      "description": "Günümüzün kozmik havasının sizi nasıl etkilediğini görmek için Doğum Çizelgenizi Yıldızlar bölümüne ekleyin."
+    }
+  },
+  "lunarMansion": {
+    "title": "Ay Konağı",
+    "trueMode": "GERÇEK Modu",
+    "calculating": "Sağlam ay konumu hesaplanıyor...",
+    "totem": "Totem",
+    "gift": "Hediye",
+    "ruler": "Hükümdar",
+    "quality": "Kalite",
+    "quarter": "Çeyrek",
+    "sunTravelsThrough": "Güneş {{name}} içinde seyahat ediyor",
+    "quarters": {
+      "initiation": "Başlangıç — tohum ekilir",
+      "deepening": "Derinleşme — kökler daha derinde",
+      "crisis": "Kriz — sınav var",
+      "completion": "Tamamlama — meyve olgunlaşıyor"
+    }
+  },
+  "solarReturn": {
+    "title": "Gerçek Güneş Dönüşü",
+    "titleInDays": "Gerçek Güneş Dönüşü {{count}} gün içinde {{suffix}}",
+    "trueMode": "GERÇEK Modu",
+    "today": "Güneş, doğduğunuz zaman dilimini bugün tekrar buluyor.",
+    "approaching": "Güneş, {{date}}'de doğduğunuz zaman dilimindeki {{sign}} konumunu tekrar bulacak.",
+    "description": "TRUE HEKA modunda, doğum gününuz yıldızlar tarafından belirlenir, sivil takvim değil.",
+    "exactOrb": "{{orb}} derecelik yuvarlak içinde tam."
+  },
+  "notesSection": {
+    "tasksAndNotes": "Görevler ({{tasks}}) · Notlar ({{notes}})",
+    "tasksOnly": "Görevler ({{count}})",
+    "notesAndTasks": "Notlar & Görevler ({{count}})",
+    "addNote": "+ Not",
+    "longHoldHint": "Seçenekler için uzun süre basılı tutun · Görevi düzenlemek için çift dokunun",
+    "noNotesOrTasks": "Bu gün için not veya görev yok.",
+    "createNoteHint": "Birini oluşturmak için <0>+ Not</0> veya <1>⚡ Görev Ekle</1> üzerine tıklayın."
+  },
+  "noteEditor": {
+    "makeTask": "⚡ Bunu bir görev yap",
+    "dueTime": "Son zaman",
+    "remindMe": "Bana hatırlat",
+    "reminders": {
+      "atTime": "Görevin zamanında",
+      "5min": "Görevin 5 dakika öncesi",
+      "10min": "10 dakika önce",
+      "15min": "15 dakika önce",
+      "30min": "30 dakika önce",
+      "1hour": "1 saat önce"
+    },
+    "howAreYouFeeling": "Nasıl hissediyorsun?",
+    "taskPlaceholder": "Ne yapmak istiyorsun?",
+    "notePlaceholder": "Notunu yazın...",
+    "saveTask": "Görevi Kaydet",
+    "saveNote": "Notu Kaydet",
+    "cancel": "İptal"
+  },
+  "noteItem": {
+    "markComplete": "Tamamla",
+    "completed": "Tamamlandı",
+    "task": "Görev",
+    "delete": "Sil"
+  },
+  "selection": {
+    "selectedFromDays": "{{count}} {{days}} günden seçildi{{suffix}}",
+    "done": "Bitti",
+    "selectAll": "Tümünü Seç",
+    "duplicate": "Çoğalt...",
+    "delete": "Sil",
+    "manageDuplicates": "Çoğaltılar yönet:",
+    "duplicateTo": "Şuraya Çoğalt:",
+    "nextWeek": "Gelecek Hafta",
+    "nextMonth": "Gelecek Ay",
+    "everyDay": "Her {{day}}",
+    "undoEveryDay": "Her {{day}} İşlemini Geri Al",
+    "specificDay": "Özel Gün...",
+    "chooseDays": "Gün(ler) Seç...",
+    "back": "Geri"
+  },
+  "dayPicker": {
+    "cancel": "İptal"
+  },
+  "multiDayPicker": {
+    "selectedCount": "{{count}} gün seçildi{{suffix}}",
+    "confirm": "Onayla",
+    "cancel": "İptal"
+  },
+  "confirmations": {
+    "deleteNote": "Bu notu silinsin mi?",
+    "deleteSelected": "{{days}} günden seçilen {{count}} notu silinsin mi?",
+    "duplicateEveryDay": "Bu {{count}} maddeyi HER {{day}} için yıl boyunca çoğalt?",
+    "undoDuplicates": "Bu {{count}} notun tüm çoğaltılmış örneklerini kaldır?"
+  },
+  "alerts": {
+    "couldNotCalculateDate": "Hedef tarihi hesaplanamadı",
+    "duplicatedToNextWeek": "{{items}} gelecek haftaya ({{month}} {{day}}) çoğaltıldı",
+    "duplicatedToNextMonth": "{{items}} gelecek aya ({{month}} {{day}}) çoğaltıldı",
+    "duplicatedToDays": "{{count}} {{day}} güne çoğaltıldı",
+    "duplicatedNotes": "Yinelenen {{count}} not(lar)",
+    "removedDuplicates": "Yinelenen notlar kaldırıldı",
+    "duplicatedToMonth": "Yinelenen {{count}} not(lar) bir sonraki aya kopyalandı",
+    "duplicatedToDaysCount": "Yinelenen {{count}} not(lar) {{days}} güne kopyalandı",
+    "duplicatedSelectedItems": "Seçilen öğeler {{count}} güne kopyalandı",
+    "signInToSaveTasks": "Görevleri kaydetmek için oturum açmanız gerekiyor. Lütfen Hesap menüsünü açın ve tekrar oturum açın.",
+    "unableToSaveTask": "Görev kaydedilemiyor. Hata: {{error}}"
+  },
+  "dow": {
+    "sunday": "Pazar",
+    "monday": "Pazartesi",
+    "tuesday": "Salı",
+    "wednesday": "Çarşamba",
+    "thursday": "Perşembe",
+    "friday": "Cuma",
+    "saturday": "Cumartesi",
+    "short": {
+      "sun": "Paz",
+      "mon": "Pzt",
+      "tue": "Sal",
+      "wed": "Çar",
+      "thu": "Per",
+      "fri": "Cum",
+      "sat": "Cts"
+    }
+  },
+  "noteCategories": {
+    "personal": "Kişisel",
+    "work": "İş",
+    "spiritual": "Manevi",
+    "family": "Aile",
+    "health": "Sağlık",
+    "creative": "Yaratıcılık",
+    "general": "Genel"
+  },
+  "moodScale": {
+    "1": "Çok Düşük",
+    "2": "Düşük",
+    "3": "Nötr",
+    "4": "İyi",
+    "5": "Mükemmel"
+  }
+}

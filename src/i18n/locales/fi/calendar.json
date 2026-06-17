@@ -1,0 +1,166 @@
+{
+  "months": {
+    "0": "Huhtikuu",
+    "1": "Toukokuu",
+    "2": "Kesäkuu",
+    "3": "Heinäkuu",
+    "4": "Elokuu",
+    "5": "Syyskuu",
+    "6": "Syyskuu",
+    "7": "Lokakuu",
+    "8": "Marraskuu",
+    "9": "Joulukuu",
+    "10": "Tammikuu",
+    "11": "Helmikuu",
+    "12": "Maaliskuu"
+  },
+  "monthShort": {
+    "0": "Huh",
+    "1": "Tou",
+    "2": "Kes",
+    "3": "Hei",
+    "4": "Elo",
+    "5": "Syy",
+    "6": "Syys",
+    "7": "Lok",
+    "8": "Mar",
+    "9": "Jou",
+    "10": "Tam",
+    "11": "Hel",
+    "12": "Maa"
+  },
+  "civilMonths": {
+    "0": "Tammikuu",
+    "1": "Helmikuu",
+    "2": "Maaliskuu",
+    "3": "Huhtikuu",
+    "4": "Toukokuu",
+    "5": "Kesäkuu",
+    "6": "Kesäkuu",
+    "7": "Heinäkuu",
+    "8": "Elokuu",
+    "9": "Syyskuu",
+    "10": "Lokakuu",
+    "11": "Marraskuu"
+  },
+  "days": {
+    "0": "Sunnuntai",
+    "1": "Maanantai",
+    "2": "Tiistai",
+    "3": "Keskiviikko",
+    "4": "Torstai",
+    "5": "Perjantai",
+    "6": "Lauantai"
+  },
+  "daysShort": {
+    "0": "Su",
+    "1": "Ma",
+    "2": "Ti",
+    "3": "Ke",
+    "4": "To",
+    "5": "Pe",
+    "6": "La"
+  },
+  "daysMin": {
+    "0": "Su",
+    "1": "Ma",
+    "2": "Ti",
+    "3": "Ke",
+    "4": "To",
+    "5": "Pe",
+    "6": "La"
+  },
+  "arcs": {
+    "opening": "Aloitus",
+    "core": "Ydin",
+    "closing": "Lopetus"
+  },
+  "arcSuffix": "Kaari",
+  "arcDescriptions": {
+    "opening": "Vuosi herää",
+    "core": "Vuosi kukoistaa",
+    "closing": "Vuosi päättyy"
+  },
+  "monthLabel": "Kuukausi {{month}}/13",
+  "hekaYear": "HEKA Vuosi {{year}}",
+  "civilYear": "Siviilivuosi {{year}}",
+  "dayOfYear": "Päivä {{day}}/{{total}}",
+  "week": "Viikko",
+  "quarter": "Neljännes",
+  "leapDay": "Ylipäivä",
+  "leapDayDescription": "Yksi ylimääräinen päivä maaliskuussa joka neljäs vuosi",
+  "switchDarkMode": "Vaihda tummaan tilaan",
+  "switchLightMode": "Vaihda valoisaan tilaan",
+  "moreNotes": "+{{count}} lisää",
+  "holiday": "Loma",
+  "note": "Huomio",
+  "task": "Tehtävä",
+  "moonPhase": "Kuukausiasema",
+  "selectDay": "Valitse päivä nähdäksesi tiedot",
+  "navigation": {
+    "previousMonth": "Edellinen kuukausi",
+    "nextMonth": "Seuraava kuukausi",
+    "goToToday": "Mene tänään",
+    "today": "Tänään"
+  },
+  "print": {
+    "title": "Tulosta kalenteri",
+    "label": "Tulosta"
+  },
+  "expand": {
+    "shrinkHorizontal": "Pienennä vaakasuunnassa",
+    "expandHorizontal": "Laajenna vaakasuunnassa",
+    "shrinkVertical": "Pienennä pystysuunnassa",
+    "expandVertical": "Laajenna pystysuunnassa"
+  },
+  "year": {
+    "viewEntireYear": "Näytä koko vuosi",
+    "label": "Vuosi"
+  },
+  "search": {
+    "title": "Etsi päivämäärät",
+    "label": "Etsi"
+  },
+  "features": {
+    "astrologyHub": "Astrologiakeskus",
+    "stars": "Tähdet",
+    "cosmicCircle": "Kosminen kehä",
+    "circle": "Kehä",
+    "oracleJournal": "Oracle-päiväkirja",
+    "journal": "Päiväkirja",
+    "aboutHeka": "Tietoa HEKA-kalenterista",
+    "about": "Tietoa",
+    "yourStatistics": "Sinun tilastot",
+    "stats": "Tilastot",
+    "communityHolidays": "Yhteisön lomat",
+    "community": "Yhteisö"
+  },
+  "toggles": {
+    "civilDates": "Vaihda siviilipäivämärät",
+    "civil": "Siviili",
+    "moonPhases": "Vaihda kuukausiasemat",
+    "moon": "Kuu",
+    "holidays": "Vaihda lomat",
+    "holidayLabel": "Lomat"
+  },
+  "prev": "Edellinen",
+  "next": "Seuraava",
+  "printYear": "Tulosta Vuosi",
+  "close": "Sulje",
+  "quickNote": "Nopea Muistio",
+  "quickNoteTag": "nopea muistio",
+  "addingTo": "Lisääminen",
+  "typeYourNote": "Kirjoita muistiosi...",
+  "saveNote": "Tallenna Muistio",
+  "ctrlEnterToSave": "Ctrl + Enter tallentaa • Esc peruuttaa",
+  "hekaPrefix": "HEKA:",
+  "civilPrefix": "Siviili:",
+  "moodPrefix": "Tunnelma:",
+  "searchTips": {
+    "tip1": "\"31. tammikuuta\" tai \"tänään\"",
+    "tip2": "\"hexa 15\" tai \"toukokuu 5\"",
+    "tip3": "Muistiinpanon sisältö tai kategoria",
+    "tip4": "\"Joulu\" tai \"Australia Day\"",
+    "tip5": "\"2026-01-31\" (ISO-muoto)"
+  }
+}

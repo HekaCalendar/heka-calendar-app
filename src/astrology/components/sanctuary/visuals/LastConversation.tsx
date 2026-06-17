@@ -10,6 +10,7 @@
  */
 
 import React from 'react';
+import i18n from '../../../../i18n';
 import { planetaryVoices, aspectConversations, generateVoidSignature } from '../content/voidNarratives';
 
 interface LastConversationProps {
@@ -32,11 +33,11 @@ export const LastConversation: React.FC<LastConversationProps> = ({
   const signature = generateVoidSignature(planet.toLowerCase(), aspect.toLowerCase());
   
   // Format the time
-  const timeString = exactTime.toLocaleTimeString('en-US', {
+  const timeString = new Intl.DateTimeFormat(i18n.language || 'en', {
     hour: 'numeric',
     minute: '2-digit',
     hour12: true,
-  });
+  }).format(exactTime);
   
   return (
     <div 

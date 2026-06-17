@@ -1,0 +1,544 @@
+
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Code coverage report for astrology/services/guidance/templates/bodies/marsTemplates.ts</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../../../../prettify.css" />
+    <link rel="stylesheet" href="../../../../../base.css" />
+    <link rel="shortcut icon" type="image/x-icon" href="../../../../../favicon.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../../../../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+    
+<body>
+<div class='wrapper'>
+    <div class='pad1'>
+        <h1><a href="../../../../../index.html">All files</a> / <a href="index.html">astrology/services/guidance/templates/bodies</a> marsTemplates.ts</h1>
+        <div class='clearfix'>
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">0% </span>
+                <span class="quiet">Statements</span>
+                <span class='fraction'>0/153</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">0% </span>
+                <span class="quiet">Branches</span>
+                <span class='fraction'>0/1</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">0% </span>
+                <span class="quiet">Functions</span>
+                <span class='fraction'>0/1</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">0% </span>
+                <span class="quiet">Lines</span>
+                <span class='fraction'>0/153</span>
+            </div>
+        
+            
+        </div>
+        <p class="quiet">
+            Press <em>n</em> or <em>j</em> to go to the next uncovered block, <em>b</em>, <em>p</em> or <em>k</em> for the previous block.
+        </p>
+        <template id="filterTemplate">
+            <div class="quiet">
+                Filter:
+                <input type="search" id="fileSearch">
+            </div>
+        </template>
+    </div>
+    <div class='status-line low'></div>
+    <pre><table class="coverage">
+<tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
+<a name='L2'></a><a href='#L2'>2</a>
+<a name='L3'></a><a href='#L3'>3</a>
+<a name='L4'></a><a href='#L4'>4</a>
+<a name='L5'></a><a href='#L5'>5</a>
+<a name='L6'></a><a href='#L6'>6</a>
+<a name='L7'></a><a href='#L7'>7</a>
+<a name='L8'></a><a href='#L8'>8</a>
+<a name='L9'></a><a href='#L9'>9</a>
+<a name='L10'></a><a href='#L10'>10</a>
+<a name='L11'></a><a href='#L11'>11</a>
+<a name='L12'></a><a href='#L12'>12</a>
+<a name='L13'></a><a href='#L13'>13</a>
+<a name='L14'></a><a href='#L14'>14</a>
+<a name='L15'></a><a href='#L15'>15</a>
+<a name='L16'></a><a href='#L16'>16</a>
+<a name='L17'></a><a href='#L17'>17</a>
+<a name='L18'></a><a href='#L18'>18</a>
+<a name='L19'></a><a href='#L19'>19</a>
+<a name='L20'></a><a href='#L20'>20</a>
+<a name='L21'></a><a href='#L21'>21</a>
+<a name='L22'></a><a href='#L22'>22</a>
+<a name='L23'></a><a href='#L23'>23</a>
+<a name='L24'></a><a href='#L24'>24</a>
+<a name='L25'></a><a href='#L25'>25</a>
+<a name='L26'></a><a href='#L26'>26</a>
+<a name='L27'></a><a href='#L27'>27</a>
+<a name='L28'></a><a href='#L28'>28</a>
+<a name='L29'></a><a href='#L29'>29</a>
+<a name='L30'></a><a href='#L30'>30</a>
+<a name='L31'></a><a href='#L31'>31</a>
+<a name='L32'></a><a href='#L32'>32</a>
+<a name='L33'></a><a href='#L33'>33</a>
+<a name='L34'></a><a href='#L34'>34</a>
+<a name='L35'></a><a href='#L35'>35</a>
+<a name='L36'></a><a href='#L36'>36</a>
+<a name='L37'></a><a href='#L37'>37</a>
+<a name='L38'></a><a href='#L38'>38</a>
+<a name='L39'></a><a href='#L39'>39</a>
+<a name='L40'></a><a href='#L40'>40</a>
+<a name='L41'></a><a href='#L41'>41</a>
+<a name='L42'></a><a href='#L42'>42</a>
+<a name='L43'></a><a href='#L43'>43</a>
+<a name='L44'></a><a href='#L44'>44</a>
+<a name='L45'></a><a href='#L45'>45</a>
+<a name='L46'></a><a href='#L46'>46</a>
+<a name='L47'></a><a href='#L47'>47</a>
+<a name='L48'></a><a href='#L48'>48</a>
+<a name='L49'></a><a href='#L49'>49</a>
+<a name='L50'></a><a href='#L50'>50</a>
+<a name='L51'></a><a href='#L51'>51</a>
+<a name='L52'></a><a href='#L52'>52</a>
+<a name='L53'></a><a href='#L53'>53</a>
+<a name='L54'></a><a href='#L54'>54</a>
+<a name='L55'></a><a href='#L55'>55</a>
+<a name='L56'></a><a href='#L56'>56</a>
+<a name='L57'></a><a href='#L57'>57</a>
+<a name='L58'></a><a href='#L58'>58</a>
+<a name='L59'></a><a href='#L59'>59</a>
+<a name='L60'></a><a href='#L60'>60</a>
+<a name='L61'></a><a href='#L61'>61</a>
+<a name='L62'></a><a href='#L62'>62</a>
+<a name='L63'></a><a href='#L63'>63</a>
+<a name='L64'></a><a href='#L64'>64</a>
+<a name='L65'></a><a href='#L65'>65</a>
+<a name='L66'></a><a href='#L66'>66</a>
+<a name='L67'></a><a href='#L67'>67</a>
+<a name='L68'></a><a href='#L68'>68</a>
+<a name='L69'></a><a href='#L69'>69</a>
+<a name='L70'></a><a href='#L70'>70</a>
+<a name='L71'></a><a href='#L71'>71</a>
+<a name='L72'></a><a href='#L72'>72</a>
+<a name='L73'></a><a href='#L73'>73</a>
+<a name='L74'></a><a href='#L74'>74</a>
+<a name='L75'></a><a href='#L75'>75</a>
+<a name='L76'></a><a href='#L76'>76</a>
+<a name='L77'></a><a href='#L77'>77</a>
+<a name='L78'></a><a href='#L78'>78</a>
+<a name='L79'></a><a href='#L79'>79</a>
+<a name='L80'></a><a href='#L80'>80</a>
+<a name='L81'></a><a href='#L81'>81</a>
+<a name='L82'></a><a href='#L82'>82</a>
+<a name='L83'></a><a href='#L83'>83</a>
+<a name='L84'></a><a href='#L84'>84</a>
+<a name='L85'></a><a href='#L85'>85</a>
+<a name='L86'></a><a href='#L86'>86</a>
+<a name='L87'></a><a href='#L87'>87</a>
+<a name='L88'></a><a href='#L88'>88</a>
+<a name='L89'></a><a href='#L89'>89</a>
+<a name='L90'></a><a href='#L90'>90</a>
+<a name='L91'></a><a href='#L91'>91</a>
+<a name='L92'></a><a href='#L92'>92</a>
+<a name='L93'></a><a href='#L93'>93</a>
+<a name='L94'></a><a href='#L94'>94</a>
+<a name='L95'></a><a href='#L95'>95</a>
+<a name='L96'></a><a href='#L96'>96</a>
+<a name='L97'></a><a href='#L97'>97</a>
+<a name='L98'></a><a href='#L98'>98</a>
+<a name='L99'></a><a href='#L99'>99</a>
+<a name='L100'></a><a href='#L100'>100</a>
+<a name='L101'></a><a href='#L101'>101</a>
+<a name='L102'></a><a href='#L102'>102</a>
+<a name='L103'></a><a href='#L103'>103</a>
+<a name='L104'></a><a href='#L104'>104</a>
+<a name='L105'></a><a href='#L105'>105</a>
+<a name='L106'></a><a href='#L106'>106</a>
+<a name='L107'></a><a href='#L107'>107</a>
+<a name='L108'></a><a href='#L108'>108</a>
+<a name='L109'></a><a href='#L109'>109</a>
+<a name='L110'></a><a href='#L110'>110</a>
+<a name='L111'></a><a href='#L111'>111</a>
+<a name='L112'></a><a href='#L112'>112</a>
+<a name='L113'></a><a href='#L113'>113</a>
+<a name='L114'></a><a href='#L114'>114</a>
+<a name='L115'></a><a href='#L115'>115</a>
+<a name='L116'></a><a href='#L116'>116</a>
+<a name='L117'></a><a href='#L117'>117</a>
+<a name='L118'></a><a href='#L118'>118</a>
+<a name='L119'></a><a href='#L119'>119</a>
+<a name='L120'></a><a href='#L120'>120</a>
+<a name='L121'></a><a href='#L121'>121</a>
+<a name='L122'></a><a href='#L122'>122</a>
+<a name='L123'></a><a href='#L123'>123</a>
+<a name='L124'></a><a href='#L124'>124</a>
+<a name='L125'></a><a href='#L125'>125</a>
+<a name='L126'></a><a href='#L126'>126</a>
+<a name='L127'></a><a href='#L127'>127</a>
+<a name='L128'></a><a href='#L128'>128</a>
+<a name='L129'></a><a href='#L129'>129</a>
+<a name='L130'></a><a href='#L130'>130</a>
+<a name='L131'></a><a href='#L131'>131</a>
+<a name='L132'></a><a href='#L132'>132</a>
+<a name='L133'></a><a href='#L133'>133</a>
+<a name='L134'></a><a href='#L134'>134</a>
+<a name='L135'></a><a href='#L135'>135</a>
+<a name='L136'></a><a href='#L136'>136</a>
+<a name='L137'></a><a href='#L137'>137</a>
+<a name='L138'></a><a href='#L138'>138</a>
+<a name='L139'></a><a href='#L139'>139</a>
+<a name='L140'></a><a href='#L140'>140</a>
+<a name='L141'></a><a href='#L141'>141</a>
+<a name='L142'></a><a href='#L142'>142</a>
+<a name='L143'></a><a href='#L143'>143</a>
+<a name='L144'></a><a href='#L144'>144</a>
+<a name='L145'></a><a href='#L145'>145</a>
+<a name='L146'></a><a href='#L146'>146</a>
+<a name='L147'></a><a href='#L147'>147</a>
+<a name='L148'></a><a href='#L148'>148</a>
+<a name='L149'></a><a href='#L149'>149</a>
+<a name='L150'></a><a href='#L150'>150</a>
+<a name='L151'></a><a href='#L151'>151</a>
+<a name='L152'></a><a href='#L152'>152</a>
+<a name='L153'></a><a href='#L153'>153</a>
+<a name='L154'></a><a href='#L154'>154</a></td><td class="line-coverage quiet"><span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js"><span class="cstat-no" title="statement not covered" >import type { BodyTemplates } from './types';<span class="fstat-no" title="function not covered" ><span class="branch-0 cbranch-no" title="branch not covered" ></span></span></span>
+<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" >/**</span>
+<span class="cstat-no" title="statement not covered" > * ═══════════════════════════════════════════════════════════════════════════════</span>
+<span class="cstat-no" title="statement not covered" > * MARS TEMPLATES — Drive, assertion, desire, courage</span>
+<span class="cstat-no" title="statement not covered" > * ═══════════════════════════════════════════════════════════════════════════════</span>
+<span class="cstat-no" title="statement not covered" > */</span>
+<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" >export const marsTemplates: BodyTemplates = {</span>
+<span class="cstat-no" title="statement not covered" >  aries: {</span>
+<span class="cstat-no" title="statement not covered" >    essence: 'Your drive is a war cry — immediate, fearless, and impossible to ignore. Mars in Aries is the warrior in his own territory, fighting not for conquest but because combat is his nature. You act before you think, strike before you hesitate, and move through obstacles as if they were merely suggestions. Your courage is your birthright; your challenge is knowing when the battle is worth the wound.',</span>
+<span class="cstat-no" title="statement not covered" >    element: 'fire', modality: 'cardinal', keywords: ['courage', 'impulse', 'leadership', 'combative'],</span>
+<span class="cstat-no" title="statement not covered" >    careerAdvice: 'Your professional drive is unmatched in competitive fields. Entrepreneurship, athletics, military, emergency services, and leadership roles suit your aggressive energy. You excel when first to act. Beware burning bridges — your temper is a weapon that wounds allies as easily as opponents. Channel your fight toward worthy causes, not every provocation.',</span>
+<span class="cstat-no" title="statement not covered" >    relationshipAdvice: 'Your desire is direct and passionate. You attract partners who can handle your intensity without being consumed by it. Beware impatience — not everyone meets conflict head-on. Practice softer approaches; vulnerability is not surrender. Your greatest strength in love is the courage to fight for the relationship, not just in it.',</span>
+<span class="cstat-no" title="statement not covered" >    healthAdvice: 'Your body is built for action — martial arts, competitive sports, and high-intensity training are essential outlets. Your head and adrenal system carry the stress of perpetual readiness. Beware burnout from constant combat readiness; even warriors need armour off. Learn to rest as fiercely as you fight.',</span>
+<span class="cstat-no" title="statement not covered" >    financesAdvice: 'Bold financial moves suit your nature, but impulsive risks drain reserves. Channel your competitive drive into calculated investments. Your courage opens doors; your discipline keeps them open. Beware using money as a scoreboard for dominance — wealth is a tool, not a trophy.',</span>
+<span class="cstat-no" title="statement not covered" >    growthAdvice: 'Your shadow is the belief that every obstacle requires force. The lesson of Mars in Aries is that true courage includes the wisdom to choose your battles. Growth asks you to distinguish between worthy fights and ego-driven conflicts, and to find the strength in restraint that rivals the strength in action.',</span>
+<span class="cstat-no" title="statement not covered" >    bodyFocus: 'head, eyes, adrenal system, muscular system',</span>
+<span class="cstat-no" title="statement not covered" >    elementalResonance: 'Your drive burns with the urgency of wildfire — clearing old growth, making space for what must come, relentless and transformative.',</span>
+<span class="cstat-no" title="statement not covered" >  },</span>
+<span class="cstat-no" title="statement not covered" >  taurus: {</span>
+<span class="cstat-no" title="statement not covered" >    essence: 'Your drive is a bulldozer — slow to start, impossible to stop, and capable of moving mountains through sheer persistence. Mars in Taurus does not rush; it endures. You are the marathon runner, the farmer who trusts the season, the builder who knows that foundations matter more than facades. Your strength is not speed but stamina — the quiet, relentless force that outlasts every flashier competitor.',</span>
+<span class="cstat-no" title="statement not covered" >    element: 'earth', modality: 'fixed', keywords: ['endurance', 'determination', 'physical strength', 'stubbornness'],</span>
+<span class="cstat-no" title="statement not covered" >    careerAdvice: 'Your professional drive is methodical and unshakeable. Agriculture, construction, finance, physical therapy, and fields requiring sustained effort suit you. You excel where persistence outlasts talent. Beware stubbornness — the refusal to change direction when the path is blocked becomes a prison, not perseverance. Know when persistence becomes obstinacy.',</span>
+<span class="cstat-no" title="statement not covered" >    relationshipAdvice: 'Your desire is physical, sensual, and deeply loyal. You attract partners who value reliability and tangible affection. Beware possessiveness — your territorial nature can become confinement. Trust that what is yours needs no guarding. Your strength in love is the constancy of your presence, not the intensity of your claim.',</span>
+<span class="cstat-no" title="statement not covered" >    healthAdvice: 'Your body is your primary asset — weight-bearing exercise, endurance training, and sensual movement restore your equilibrium. Your throat and neck carry tension from unexpressed desires. Beware comfort-seeking as avoidance; your body cruses useful work, not just soothing repetition. Movement is medicine; stagnation is poison.',</span>
+<span class="cstat-no" title="statement not covered" >    financesAdvice: 'Slow, steady accumulation builds your wealth. Real estate, tangible assets, and conservative investments align with your methodical drive. You understand that wealth is built one brick at a time. Beware hoarding; abundance flows when it circulates. Your financial strength is patience, not aggression.',</span>
+<span class="cstat-no" title="statement not covered" >    growthAdvice: 'Your shadow is the refusal to budge — the belief that changing course equals failure. The lesson of Mars in Taurus is that endurance without direction is merely exhaustion. Growth asks you to discern between worthy persistence and stubborn attachment, and to have the courage to release what no longer serves your journey.',</span>
+<span class="cstat-no" title="statement not covered" >    bodyFocus: 'throat, neck, thyroid, vocal cords',</span>
+<span class="cstat-no" title="statement not covered" >    elementalResonance: 'Your drive is forge-heat — sustained, shaping, transforming raw material through pressure and patience into form that endures.',</span>
+<span class="cstat-no" title="statement not covered" >  },</span>
+<span class="cstat-no" title="statement not covered" >  gemini: {</span>
+<span class="cstat-no" title="statement not covered" >    essence: 'Your drive is a fencer\'s blade — quick, agile, and dancing between multiple targets before opponents settle on one. Mars in Gemini does not commit to a single strategy; it improvises, adapts, and outmanoeuvres through sheer mental speed. You are the debater, the multi-tasker, the strategist who wins not by force but by being three moves ahead. Your battlefield is the mind.',</span>
+<span class="cstat-no" title="statement not covered" >    element: 'air', modality: 'mutable', keywords: ['agility', 'strategic', 'verbal combat', 'multitasking'],</span>
+<span class="cstat-no" title="statement not covered" >    careerAdvice: 'Your professional drive is intellectual and versatile. Journalism, sales, technology, communications, and strategy roles suit your agile mind. You excel when juggling multiple campaigns. Beware scattered focus — your greatest challenge is depth, not breadth. Choose 2-3 targets and strike them with precision rather than grazing ten.',</span>
+<span class="cstat-no" title="statement not covered" >    relationshipAdvice: 'Mental sparring is foreplay. You attract partners who can match your wit and respect your need for variety. Your desire is curious, playful, and easily bored. Beware emotional detachment — your mind races ahead of your heart. Practice staying present when the novelty fades; depth is the conquest you have not yet attempted.',</span>
+<span class="cstat-no" title="statement not covered" >    healthAdvice: 'Your nervous system carries the stress of perpetual motion. Breathwork, hand exercises, and varied movement restore equilibrium. Your lungs need expansion — singing, shouting, deep breathing. Beware restless energy without outlet; your body translates mental restlessness into physical tension. Channel your drive into diverse physical activities.',</span>
+<span class="cstat-no" title="statement not covered" >    financesAdvice: 'Multiple income streams and quick-turnaround investments suit your agile approach. Your research skills prevent reckless speculation. Beware analysis paralysis — overthinking prevents action. Set decision deadlines and honour them. Your financial power comes from speed of execution, not depth of analysis.',</span>
+<span class="cstat-no" title="statement not covered" >    growthAdvice: 'Your shadow is the fear that commitment means stagnation — that depth requires abandoning variety. The lesson of Mars in Gemini is that a single blade wielded masterfully outperforms ten held clumsily. Growth asks you to focus your formidable drive on what truly matters, trusting that mastery in one arena opens doors in all others.',</span>
+<span class="cstat-no" title="statement not covered" >    bodyFocus: 'lungs, hands, nervous system, shoulders',</span>
+<span class="cstat-no" title="statement not covered" >    elementalResonance: 'Your drive dances as flame-tongue — quick, bright, striking many points before any single target can brace for impact.',</span>
+<span class="cstat-no" title="statement not covered" >  },</span>
+<span class="cstat-no" title="statement not covered" >  cancer: {</span>
+<span class="cstat-no" title="statement not covered" >    essence: 'Your drive is a mother bear — protective, tenacious, and capable of extraordinary ferocity when those you love are threatened. Mars in Cancer does not fight for glory; it fights for home, for family, for the sanctuaries it has built. Your aggression is defensive, your courage rooted in loyalty rather than ego. You are the warrior who fights not to conquer but to preserve.',</span>
+<span class="cstat-no" title="statement not covered" >    element: 'water', modality: 'cardinal', keywords: ['protective', 'tenacious', 'defensive', 'emotionally driven'],</span>
+<span class="cstat-no" title="statement not covered" >    careerAdvice: 'Your professional drive is nurturing and protective. Real estate, caregiving, food, history, and community organising suit your defensive courage. You excel when defending something you believe in. Beware passive aggression — your indirect approach can undermine the very relationships you seek to protect. Practice direct communication, even when it feels unsafe.',</span>
+<span class="cstat-no" title="statement not covered" >    relationshipAdvice: 'You fight for love, not with it. You attract partners who value your protective nature. Beware emotional manipulation — your indirect aggression can wound deeply. Practice stating your needs directly. Your greatest strength in love is the courage to defend the relationship; your growth edge is the courage to be vulnerable within it.',</span>
+<span class="cstat-no" title="statement not covered" >    healthAdvice: 'Your stomach is your battleground — stress manifests as digestive distress. Water-based movement, emotional release practices, and nourishing food restore you. Beware comfort-eating as avoidance; your body needs to process feelings, not just food. Learn to feel anger without swallowing it.',</span>
+<span class="cstat-no" title="statement not covered" >    financesAdvice: 'Invest in home, family, and long-term security. Your financial decisions are emotionally driven — build reserves that create peace of mind. Beware using money to create emotional security that must come from within. Your protective drive serves you best when directed toward sustainable structures, not just immediate comfort.',</span>
+<span class="cstat-no" title="statement not covered" >    growthAdvice: 'Your shadow is the fear that direct confrontation will destroy the nest you have built. The lesson of Mars in Cancer is that protecting what you love sometimes requires facing threats head-on. Growth asks you to distinguish between genuine defence and defensive withdrawal, and to trust that your strength is sufficient for open conflict.',</span>
+<span class="cstat-no" title="statement not covered" >    bodyFocus: 'stomach, breasts, lymphatic system, womb',</span>
+<span class="cstat-no" title="statement not covered" >    elementalResonance: 'Your drive is tidal — pulled by invisible forces, ancient, returning to defend every shore it has ever called home.',</span>
+<span class="cstat-no" title="statement not covered" >  },</span>
+<span class="cstat-no" title="statement not covered" >  leo: {</span>
+<span class="cstat-no" title="statement not covered" >    essence: 'Your drive is a lion\'s roar — commanding, theatrical, and impossible to ignore. Mars in Leo fights for recognition, for creative expression, for the right to be seen in full magnificence. You do not merely compete; you perform. Your courage is showmanship, your strength is generosity, and your battlefield is any stage where your heart can shine.',</span>
+<span class="cstat-no" title="statement not covered" >    element: 'fire', modality: 'fixed', keywords: ['commanding', 'creative', 'generous', 'theatrical'],</span>
+<span class="cstat-no" title="statement not covered" >    careerAdvice: 'Your professional drive is charismatic and creative. Entertainment, design, education, leadership, and any field where your creative vision shapes the experience suit you. You excel when your work is celebrated. Beware the need for constant applause; your best work often happens when no one is watching. Build a career that satisfies your heart.',</span>
+<span class="cstat-no" title="statement not covered" >    relationshipAdvice: 'You pursue with the confidence of one who has never doubted their own desirability. You attract partners who bask in your warmth and reflect it back. Beware pride in vulnerability — asking for what you need is not weakness. Your greatest strength in love is the generosity of your devotion; your growth edge is the humility to receive.',</span>
+<span class="cstat-no" title="statement not covered" >    healthAdvice: 'Your heart and spine are your physical centres. Dance, theatrical movement, and heart-pumping exercise restore your vitality. Creative expression is not optional — it is medicine. Watch for burnout from overgiving; your light cannot illuminate if the wick is exhausted. Rest is part of the performance.',</span>
+<span class="cstat-no" title="statement not covered" >    financesAdvice: 'Invest in what makes you feel alive — and in yourself. Your confidence attracts abundance, but pride can lead to overspending on status. True wealth is the freedom to create without constraint. Build reserves that fund your vision, not your image. Beware gambling on ego — bet on skill, not reputation.',</span>
+<span class="cstat-no" title="statement not covered" >    growthAdvice: 'Your shadow is the fear that without an audience, your efforts are meaningless. The lesson of Mars in Leo is that true courage does not require witnesses. Growth asks you to fight for what matters even when no one is watching, and to trust that your worth exists independent of applause.',</span>
+<span class="cstat-no" title="statement not covered" >    bodyFocus: 'heart, spine, circulatory system, upper back',</span>
+<span class="cstat-no" title="statement not covered" >    elementalResonance: 'Your drive is bonfire-bright — central, warming all who gather, demanding to be seen and felt, refusing to be ignored.',</span>
+<span class="cstat-no" title="statement not covered" >  },</span>
+<span class="cstat-no" title="statement not covered" >  virgo: {</span>
+<span class="cstat-no" title="statement not covered" >    essence: 'Your drive is a surgeon\'s scalpel — precise, methodical, and directed toward improvement rather than conquest. Mars in Virgo does not fight for glory; it works, refines, and perfects. Your aggression is channelled into service, your courage expressed through competence. You are the warrior who wins not by force but by being indispensable — the one who sees what others miss and fixes what others accept.',</span>
+<span class="cstat-no" title="statement not covered" >    element: 'earth', modality: 'mutable', keywords: ['precision', 'service', 'analytical', 'disciplined'],</span>
+<span class="cstat-no" title="statement not covered" >    careerAdvice: 'Your professional drive is meticulous and service-oriented. Healthcare, editing, research, data analysis, and quality assurance suit your precision. You excel when trusted with complex systems. Beware perfectionism paralysis; done is better than perfect. Your best work serves real people, not abstract standards. Build a reputation for reliability.',</span>
+<span class="cstat-no" title="statement not covered" >    relationshipAdvice: 'You show desire through helpfulness — the problem solved, the detail remembered. You attract partners who appreciate your competence. Beware the critic — your discernment is a gift, but in intimacy it becomes a wound. Practice receiving care without earning it. Love is not a project to optimise.',</span>
+<span class="cstat-no" title="statement not covered" >    healthAdvice: 'Your gut is your primary indicator — stress manifests as digestive distress. Clean food, regular routines, and mind-body practices restore equilibrium. Beware workaholism disguised as service; your body needs rest as much as your mind needs problems to solve. Exercise is medicine when it is routine, not punishment.',</span>
+<span class="cstat-no" title="statement not covered" >    financesAdvice: 'Meticulous budgeting and detailed analysis are your strengths. You spot inefficiencies that cost others thousands. Invest in health, education, and tools that increase effectiveness. Beware miserliness; money is meant to circulate. Your financial peace comes from knowing every detail is accounted for.',</span>
+<span class="cstat-no" title="statement not covered" >    growthAdvice: 'Your shadow is the belief that your worth equals your usefulness — that you must produce to deserve presence. The lesson of Mars in Virgo is that service without self-care is martyrdom, not virtue. Growth asks you to fight for your own wellbeing with the same diligence you bring to others\', and to trust that you are enough without the doing.',</span>
+<span class="cstat-no" title="statement not covered" >    bodyFocus: 'digestive system, intestines, spleen, nervous system',</span>
+<span class="cstat-no" title="statement not covered" >    elementalResonance: 'Your drive is lantern-light — focused, practical, illuminating the path one careful step at a time, never wasting energy on empty space.',</span>
+<span class="cstat-no" title="statement not covered" >  },</span>
+<span class="cstat-no" title="statement not covered" >  libra: {</span>
+<span class="cstat-no" title="statement not covered" >    essence: 'Your drive is a duelist\'s grace — strategic, balanced, and capable of extraordinary force deployed with exquisite timing. Mars in Libra does not fight for dominance; it fights for fairness, for harmony, for the elegant solution that leaves all parties respected. Your aggression is diplomatic, your courage expressed through the willingness to confront what others avoid in the name of peace.',</span>
+<span class="cstat-no" title="statement not covered" >    element: 'air', modality: 'cardinal', keywords: ['strategic', 'diplomatic', 'fair', 'refined aggression'],</span>
+<span class="cstat-no" title="statement not covered" >    careerAdvice: 'Your professional drive is diplomatic and strategic. Law, design, mediation, public relations, and partnership-oriented fields suit your gift for balanced confrontation. You excel when bringing opposing sides to agreement. Beware avoiding necessary conflict — sometimes fairness requires disruption. Trust your strategic intuition.',</span>
+<span class="cstat-no" title="statement not covered" >    relationshipAdvice: 'You pursue with grace and strategy. You attract partners who value harmony and intellectual connection. Beware passive aggression — your need for peace can become a weapon when you withhold truth to avoid discord. Practice stating your needs directly, even when it disturbs the equilibrium you cherish.',</span>
+<span class="cstat-no" title="statement not covered" >    healthAdvice: 'Your kidneys, skin, and lower back reflect your stress levels. Balance is not just philosophical — it is physiological. Practices that restore equilibrium — tai chi, balanced nutrition, beauty rituals — are medicine. Avoid decision fatigue; your mind needs rest from constant weighing. Learn to act without perfect information.',</span>
+<span class="cstat-no" title="statement not covered" >    financesAdvice: 'Partnership investments and shared resources flourish under your strategic guidance. Your sense of fairness makes you a trusted advisor. Beware aesthetic impulse spending — beauty is worth investment, but not debt. Build wealth that supports a balanced life without compromising your peace.',</span>
+<span class="cstat-no" title="statement not covered" >    growthAdvice: 'Your shadow is the avoidance of conflict — the belief that aggression is always unkind. The lesson of Mars in Libra is that true harmony sometimes requires decisive action. Growth asks you to fight for what is right even when it disturbs the peace, knowing that a false harmony is worse than an honest discord.',</span>
+<span class="cstat-no" title="statement not covered" >    bodyFocus: 'kidneys, skin, lower back, endocrine balance',</span>
+<span class="cstat-no" title="statement not covered" >    elementalResonance: 'Your drive reflects — it is the sunlight on still water, striking with precision because it sees all angles before it acts.',</span>
+<span class="cstat-no" title="statement not covered" >  },</span>
+<span class="cstat-no" title="statement not covered" >  scorpio: {</span>
+<span class="cstat-no" title="statement not covered" >    essence: 'Your drive is a scorpion\'s sting — precise, devastating, and deployed only when necessary but utterly decisive when unleashed. Mars in Scorpio is the strategist who studies the battlefield for months before striking once at the perfect moment. You do not fight fair; you fight to win. Your courage is not showy — it is the quiet, relentless force that pursues its target through any obstacle, any darkness, any time.',</span>
+<span class="cstat-no" title="statement not covered" >    element: 'water', modality: 'fixed', keywords: ['intensity', 'strategic', 'relentless', 'transformative'],</span>
+<span class="cstat-no" title="statement not covered" >    careerAdvice: 'Your professional drive is intense and strategic. Research, investigation, psychology, crisis management, and fields involving power dynamics suit you. Your ability to see what others hide is your edge. Beware using your insight to manipulate; knowledge is power, but power without integrity is corruption. Build trust through transparency.',</span>
+<span class="cstat-no" title="statement not covered" >    relationshipAdvice: 'You pursue with obsessive focus. You attract partners who can handle depth without drowning. Beware jealousy and control — they poison the very intimacy you crave. True power in love is the courage to be vulnerable without guarantee. Your greatest strength is the depth of your devotion; your growth edge is the trust to release it.',</span>
+<span class="cstat-no" title="statement not covered" >    healthAdvice: 'Your reproductive and eliminative systems process what your drive cannot release. Deep therapeutic practices restore you. Beware addictive patterns — your intensity seeks extremes. Moderation is the true discipline of power. Your body speaks in symbols; learn its language without fear. Channel your drive into transformation, not destruction.',</span>
+<span class="cstat-no" title="statement not covered" >    financesAdvice: 'Your research skills prevent costly mistakes. Joint resources, investments, and other people\'s money are your domain. Beware financial secrecy — transparency builds trust that creates wealth. Invest in transformation, not control. Your financial power grows through strategic patience and thorough investigation.',</span>
+<span class="cstat-no" title="statement not covered" >    growthAdvice: 'Your shadow is the compulsion to control — the belief that power equals safety. The lesson of Mars in Scorpio is that true strength includes the courage to release. Growth asks you to distinguish between strategic pursuit and obsessive fixation, and to trust that some targets are not meant to be captured.',</span>
+<span class="cstat-no" title="statement not covered" >    bodyFocus: 'reproductive system, eliminative organs, pelvis, colon',</span>
+<span class="cstat-no" title="statement not covered" >    elementalResonance: 'Your drive is subterranean — dark, pressurised, capable of dissolving stone or carrying gold depending on what it touches.',</span>
+<span class="cstat-no" title="statement not covered" >  },</span>
+<span class="cstat-no" title="statement not covered" >  sagittarius: {</span>
+<span class="cstat-no" title="statement not covered" >    essence: 'Your drive is an arrow aimed at the horizon — restless, optimistic, and forever seeking the next conquest. Mars in Sagittarius does not fight for territory; it fights for meaning, for truth, for the expansion of possibility. You are the crusader, the adventurer, the warrior-philosopher who battles not enemies but limitations. Your courage is the willingness to explore where maps end.',</span>
+<span class="cstat-no" title="statement not covered" >    element: 'fire', modality: 'mutable', keywords: ['adventurous', 'philosophical', 'expansive', 'restless'],</span>
+<span class="cstat-no" title="statement not covered" >    careerAdvice: 'Your professional drive is expansive and visionary. Teaching, publishing, travel, international business, and outdoor industries suit your nature. You excel when sharing adventure with others. Beware overcommitment — your optimism can lead to promising more than you can deliver. Build systems that ground your vision in executable steps.',</span>
+<span class="cstat-no" title="statement not covered" >    relationshipAdvice: 'You pursue with the enthusiasm of an explorer discovering new land. You attract partners who share your hunger for meaning and adventure. Your desire is generous, honest, and freedom-loving. Beware restlessness — the grass is not always greener. Commitment does not cage the adventurer; it gives them a home to return to.',</span>
+<span class="cstat-no" title="statement not covered" >    healthAdvice: 'Your hips, thighs, and liver carry your wanderlust. Outdoor movement restores your vitality. Beware excess — your expansive nature applies to indulgence as well as exploration. Your body needs movement, but it also needs rest between journeys. Moderation is the adventure you have not yet taken.',</span>
+<span class="cstat-no" title="statement not covered" >    financesAdvice: 'Long-term growth investments and educational opportunities align with your vision. Your optimism attracts abundance, but overconfidence leads to risky speculation. Build wealth that funds your adventures without chaining you to them. Beware the get-rich-quick scheme — your fortune grows through wisdom, not luck.',</span>
+<span class="cstat-no" title="statement not covered" >    growthAdvice: 'Your shadow is the fear that commitment means the end of adventure. The lesson of Mars in Sagittarius is that the greatest journey is inward. Growth asks you to find expansion in depth, to discover that commitment to one path can contain more worlds than fleeting encounters with many.',</span>
+<span class="cstat-no" title="statement not covered" >    bodyFocus: 'hips, thighs, liver, sciatic nerve',</span>
+<span class="cstat-no" title="statement not covered" >    elementalResonance: 'Your drive is wildfire-spread — not contained but catalytic, igniting new terrain and refusing to be bounded by old maps.',</span>
+<span class="cstat-no" title="statement not covered" >  },</span>
+<span class="cstat-no" title="statement not covered" >  capricorn: {</span>
+<span class="cstat-no" title="statement not covered" >    essence: 'Your drive is a mountain climber — disciplined, patient, and capable of extraordinary feats through sheer persistence. Mars in Capricorn does not fight for glory; it climbs because the summit exists. Your aggression is channeled into ambition, your courage expressed through the willingness to do what others avoid. You are the warrior who wins not by force but by outlasting every opponent.',</span>
+<span class="cstat-no" title="statement not covered" >    element: 'earth', modality: 'cardinal', keywords: ['disciplined', 'ambitious', 'patient', 'strategic'],</span>
+<span class="cstat-no" title="statement not covered" >    careerAdvice: 'Your professional drive is disciplined and strategic. Executive leadership, management, and fields requiring long-term commitment suit you. You excel where persistence outlasts talent. Beware workaholism — achievement without joy is a hollow crown. Build a legacy, but remember to live in the structure you create.',</span>
+<span class="cstat-no" title="statement not covered" >    relationshipAdvice: 'You pursue with the patience of one playing a long game. You attract partners who value loyalty and shared goals. Your desire is reserved but deeply committed. Beware emotional austerity — your competence is impressive, but your warmth is what makes you unforgettable. Let your partner see the human beneath the executive.',</span>
+<span class="cstat-no" title="statement not covered" >    healthAdvice: 'Your bones, joints, and teeth reflect the weight you carry. Structural health is your foundation. Regular weight-bearing exercise and calcium-rich nutrition are essential. Beware somatising responsibility — your body absorbs what your mind refuses to delegate. Rest is not laziness; it is structural maintenance.',</span>
+<span class="cstat-no" title="statement not covered" >    financesAdvice: 'Conservative, structured, long-term wealth-building is your financial language. Real estate, retirement planning, and legacy investments align with your values. You understand that wealth is built one brick at a time. Beware using money as a scorecard for worth — your value is not your net worth.',</span>
+<span class="cstat-no" title="statement not covered" >    growthAdvice: 'Your shadow is the fear of failure — the belief that one mistake undermines the entire structure you have built. The lesson of Mars in Capricorn is that authority includes the courage to be wrong. Growth asks you to risk the appearance of competence for the reality of learning, knowing that true mastery includes the wisdom of mistakes.',</span>
+<span class="cstat-no" title="statement not covered" >    bodyFocus: 'bones, joints, teeth, knees, skeletal system',</span>
+<span class="cstat-no" title="statement not covered" >    elementalResonance: 'Your drive is forge-heat — not warm but transformative, shaping raw material through sustained pressure and patience into something that endures.',</span>
+<span class="cstat-no" title="statement not covered" >  },</span>
+<span class="cstat-no" title="statement not covered" >  aquarius: {</span>
+<span class="cstat-no" title="statement not covered" >    essence: 'Your drive is a revolutionary spark — sudden, illuminating, and capable of igniting movements that outlast the individual. Mars in Aquarius does not fight for personal glory; it fights for the collective, for the future, for the liberation of minds still trapped in old paradigms. Your aggression is intellectual, your courage expressed through the willingness to be different.',</span>
+<span class="cstat-no" title="statement not covered" >    element: 'air', modality: 'fixed', keywords: ['innovative', 'humanitarian', 'rebellious', 'intellectual'],</span>
+<span class="cstat-no" title="statement not covered" >    careerAdvice: 'Your professional drive is innovative and collective. Technology, social reform, scientific research, and group-oriented fields suit your vision. You excel when given freedom to challenge conventions. Beware detachment — your ideas change the world only when you stay engaged long enough to implement them. Build networks, not just concepts.',</span>
+<span class="cstat-no" title="statement not covered" >    relationshipAdvice: 'Friendship forms the foundation of your desire. You attract partners who respect your independence and share your ideals. Your passion is loyal but unconventional — you need space to breathe and think. Beware emotional distance — intellect is your comfort zone, but intimacy requires feeling. The right partner will evolve beside you.',</span>
+<span class="cstat-no" title="statement not covered" >    healthAdvice: 'Your circulatory and nervous systems carry your electric energy. Unconventional health practices may appeal. Beware nervous exhaustion from overstimulation. Your body needs grounding as much as your mind needs stimulation. Regular digital detox is not optional — it is survival. Community wellness restores you.',</span>
+<span class="cstat-no" title="statement not covered" >    financesAdvice: 'Innovative investments — technology, social enterprise, cryptocurrency — align with your vision. Beware detachment from financial reality; even revolutionaries must pay rent. Build wealth that funds your ideals without compromising them. Your financial power comes from networks, not solo genius.',</span>
+<span class="cstat-no" title="statement not covered" >    growthAdvice: 'Your shadow is the belief that emotions compromise revolution — that feeling makes you conventional. The lesson of Mars in Aquarius is that true change includes human need. Growth asks you to feel without being overwhelmed, to fight for people as passionately as you fight for ideas, and to build intimacy that honours both connection and independence.',</span>
+<span class="cstat-no" title="statement not covered" >    bodyFocus: 'calves, ankles, circulatory system, nervous system',</span>
+<span class="cstat-no" title="statement not covered" >    elementalResonance: 'Your drive is lightning — not warm but illuminating, striking suddenly and changing the landscape permanently.',</span>
+<span class="cstat-no" title="statement not covered" >  },</span>
+<span class="cstat-no" title="statement not covered" >  pisces: {</span>
+<span class="cstat-no" title="statement not covered" >    essence: 'Your drive is a current — fluid, powerful, and capable of wearing away stone through persistence rather than force. Mars in Pisces does not fight head-on; it flows around obstacles, dissolves barriers, and reaches its destination through paths others cannot see. Your aggression is channeled into creativity, your courage expressed through the willingness to feel what others avoid.',</span>
+<span class="cstat-no" title="statement not covered" >    element: 'water', modality: 'mutable', keywords: ['fluid', 'creative', 'compassionate', 'elusive'],</span>
+<span class="cstat-no" title="statement not covered" >    careerAdvice: 'Your professional drive is creative and compassionate. Healing arts, film, music, spiritual guidance, and compassionate service suit your gifts. You excel when work feels like devotion. Beware martyrdom — sacrifice without boundaries breeds resentment, not grace. Build structures that protect your sensitivity while allowing your gifts to flow.',</span>
+<span class="cstat-no" title="statement not covered" >    relationshipAdvice: 'You pursue with the depth of the ocean itself. You attract partners who value emotional and spiritual connection. Beware saviour dynamics — you cannot heal someone who refuses to heal. True love is two whole beings choosing to swim together. Practice directness; your indirect approach can create confusion that wounds.',</span>
+<span class="cstat-no" title="statement not covered" >    healthAdvice: 'Your feet and immune system are your anchors. Water-based therapies, dream work, and creative expression are essential medicine. Beware escapism — your sensitivity seeks relief in substances, screens, or denial. Sleep is your sanctuary; guard it as sacred. Your body is a barometer for collective health; protect it vigilantly.',</span>
+<span class="cstat-no" title="statement not covered" >    financesAdvice: 'Intuitive guidance can lead to surprising financial insights. Creative investments may flourish. Beware escapist spending — retail therapy does not fill the void. Build financial boundaries as carefully as emotional ones. Trust your intuition, but verify with practical checks. Charge for your gifts; they are more valuable than you believe.',</span>
+<span class="cstat-no" title="statement not covered" >    growthAdvice: 'Your shadow is the tendency to dissolve rather than confront — to flow away from conflict rather than through it. The lesson of Mars in Pisces is that water can wear away stone, but it must first commit to the direction of flow. Growth asks you to direct your formidable creative drive with intention, knowing that your gentleness is strength when it is chosen, not default.',</span>
+<span class="cstat-no" title="statement not covered" >    bodyFocus: 'feet, immune system, pineal gland, lymphatic system',</span>
+<span class="cstat-no" title="statement not covered" >    elementalResonance: 'Your drive has become current — fluid, persistent, capable of wearing away stone through persistence rather than force, finding paths invisible to direct assault.',</span>
+<span class="cstat-no" title="statement not covered" >  },</span>
+<span class="cstat-no" title="statement not covered" >  ophiuchus: {</span>
+<span class="cstat-no" title="statement not covered" >    essence: 'Your drive is the serpent rising — kundalini, latent power, the force that heals by destroying what no longer serves. Mars in Ophiuchus does not fight conventional battles; it wages war on disease, on stagnation, on the patterns that keep souls trapped in cycles of suffering. Your aggression is alchemical — it transforms rather than destroys, heals rather than wounds, and serves a purpose larger than personal victory.',</span>
+<span class="cstat-no" title="statement not covered" >    element: 'ether', modality: 'fixed', keywords: ['healing', 'transmutation', 'kundalini', 'sacrificial'],</span>
+<span class="cstat-no" title="statement not covered" >    careerAdvice: 'Your professional drive is healing and transformative. Medicine, psychology, energy work, crisis intervention, and research into the taboo suit you. You excel where transformation is required and others turn away. Your ability to see what is hidden is your edge. Beware the wounded healer trap — you cannot heal what you refuse to feel in yourself. Build a career on empowerment, not rescue.',</span>
+<span class="cstat-no" title="statement not covered" >    relationshipAdvice: 'Your desire is initiatory — every intimate connection has the potential to transform. You attract partners who are ready to evolve. Beware the tendency to heal instead of relate; your insight is a gift, but in love it can become a wall when used to diagnose rather than connect. Practice presence without analysis. True intimacy is two wholes choosing to overlap.',</span>
+<span class="cstat-no" title="statement not covered" >    healthAdvice: 'Your spinal column and nervous system regeneration are your focuses. Energy medicine, spinal alignment, and subtle body practices restore your vitality. You are sensitive to environmental energies — your body is a barometer for collective health. Beware absorbing others\' illnesses; your healing gift requires energetic hygiene. Rest is regeneration, not weakness.',</span>
+<span class="cstat-no" title="statement not covered" >    financesAdvice: 'Your financial path is non-linear — sudden insights lead to unexpected gains or necessary losses. Investments in healing, transformation, and regenerative enterprises align with your values. Build flexibility into your financial structures. Beware rescuing others financially; true help empowers independence, not dependence.',</span>
+<span class="cstat-no" title="statement not covered" >    growthAdvice: 'Your shadow is the compulsion to sacrifice — the belief that your pain is acceptable if it spares someone else\'s. The lesson of Mars in Ophiuchus is that the healer must also be healed. Growth asks you to fight for your own wellbeing with the same ferocity you bring to others\', and to trust that your wholeness serves the world more than your depletion.',</span>
+<span class="cstat-no" title="statement not covered" >    bodyFocus: 'spinal column, nervous system regeneration, subtle energy channels, cellular renewal',</span>
+<span class="cstat-no" title="statement not covered" >    elementalResonance: 'Your drive is alchemical flame — it does not warm or illuminate in the ordinary sense, but transforms base substance into something that transcends its origins.',</span>
+<span class="cstat-no" title="statement not covered" >  },</span>
+<span class="cstat-no" title="statement not covered" >};</span>
+&nbsp;</pre></td></tr></table></pre>
+
+                <div class='push'></div><!-- for sticky footer -->
+            </div><!-- /wrapper -->
+            <div class='footer quiet pad2 space-top1 center small'>
+                Code coverage generated by
+                <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
+                at 2026-05-21T20:28:33.284Z
+            </div>
+        <script src="../../../../../prettify.js"></script>
+        <script>
+            window.onload = function () {
+                prettyPrint();
+            };
+        </script>
+        <script src="../../../../../sorter.js"></script>
+        <script src="../../../../../block-navigation.js"></script>
+    </body>
+</html>
+    

@@ -315,3 +315,13 @@ input:focus, select:focus, textarea:focus {
   border-color: var(--color-gold);
   color: var(--color-gold-light);
 }
+
+
+/* ── RTL Overrides ── */
+[dir="rtl"] .day-cell__note-preview {
+    border-right-color: var(--color-accent-1)
+}
+
+[dir="rtl"] .day-panel {
+    border-right: 1px solid var(--color-border)
+}

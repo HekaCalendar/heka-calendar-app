@@ -279,7 +279,7 @@ export function generatePersonalForecast(
   }
   
   // Build guidance
-  let guidance = '';
+  let guidance: string;
   if (current.length === 0) {
     guidance = 'A quiet period. Rest and integrate recent experiences.';
   } else if (current.some(e => e.energyImpact === 'high' && e.daysToExact <= 1)) {
@@ -413,7 +413,7 @@ function analyzeWeather(aspects: SkyAspect[], moonPhase: string): { dominantEner
   }
   
   // Build advice
-  let advice = '';
+  let advice: string;
   if (challenging > harmonious) {
     advice = 'Challenges arise today. Face them with courage.';
   } else if (harmonious > challenging) {

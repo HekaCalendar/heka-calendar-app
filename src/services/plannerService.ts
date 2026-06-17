@@ -18,7 +18,9 @@ import {
 import { db, auth, getCurrentUser, refreshAuthToken, withTemporaryFirestore } from './firebase';
 import { cancelTaskReminder, scheduleTaskReminder, reconcileTaskNotifications } from './notificationService';
 import { store } from '../store';
+import { getErrorMessage, getErrorCode } from '../utils/errorUtils';
 import { eventBus } from './eventBus';
+import { offlineSyncEngine } from './offlineSyncEngine';
 import {
   syncPlannerTasks,
   addPlannerTask,
@@ -39,8 +41,6 @@ import { evaluateAndProtectStreak } from './streakProtectionService';
 
 function getUserId(): string | null {
   const firebaseUid = getCurrentUser()?.uid || null;
-  const reduxUid = store.getState().calendar.auth.userId || null;
-  console.log('[plannerService/getUserId] firebaseUid:', firebaseUid, 'reduxUid:', reduxUid, 'reduxAuthenticated:', store.getState().calendar.auth.isAuthenticated);
   return firebaseUid;
 }
 
@@ -82,6 +82,11 @@ function getPendingTasksCount(): number {
 function getTodayCompletedTasksCount(): number {
   const today = new Date().toISOString().split('T')[0];
   return getAllTasks().filter((t) => t.isCompleted && t.completedAt?.startsWith(today)).length;
+}
+
+function isNetworkError(err: unknown): boolean {
+  const msg = getErrorMessage(err).toLowerCase();
+  return msg.includes('network') || msg.includes('offline') || msg.includes('unavailable') || msg.includes('failed to fetch');
 }
 
 function inferPreferredTaskTime(dueTime?: string): 'morning' | 'afternoon' | 'evening' | 'night' | 'unknown' {
@@ -252,41 +257,31 @@ export async function createPlannerTask(input: CreateTaskInput): Promise<Planner
   };
 
   // Optimistic Redux update FIRST so the UI always shows the task immediately
-  console.log('[createPlannerTask] Dispatching addPlannerTask — task.id:', task.id, 'dayKey:', task.dayKey);
   store.dispatch(addPlannerTask(task));
-  console.log('[createPlannerTask] addPlannerTask dispatched');
 
   // Then attempt Firestore write
-  console.log('[createPlannerTask] Writing to Firestore — task.dayKey:', task.dayKey);
   let firestoreSuccess = false;
   try {
     await setDoc(taskRef, stripUndefined(task));
-    console.log('[createPlannerTask] Firestore write complete');
     firestoreSuccess = true;
-  } catch (writeErr: any) {
-    const isPermissionError = writeErr?.code === 'permission-denied' || writeErr?.message?.includes('Missing or insufficient permissions');
-    console.error('[createPlannerTask] Firestore write failed:', writeErr?.code, writeErr?.message, 'isPermissionError:', isPermissionError);
+  } catch (writeErr) {
+    const isPermissionError = getErrorCode(writeErr) === 'permission-denied' || getErrorMessage(writeErr).includes('Missing or insufficient permissions');
+    console.error('[createPlannerTask] Firestore write failed:', getErrorCode(writeErr), getErrorMessage(writeErr), 'isPermissionError:', isPermissionError);
     if (isPermissionError) {
-      console.log('[createPlannerTask] Attempting auth token refresh...');
       const newToken = await refreshAuthToken(true);
-      console.log('[createPlannerTask] Token refresh result:', newToken ? 'success' : 'failed');
       if (newToken && auth?.currentUser) {
         try {
           await auth.currentUser.reload();
-          console.log('[createPlannerTask] User reloaded, waiting for token propagation...');
           await new Promise((resolve) => setTimeout(resolve, 800));
 
           // Create a completely fresh Firestore instance via temporary app to avoid stale auth connection
-          console.log('[createPlannerTask] Creating fresh Firestore instance for retry...');
           await withTemporaryFirestore(async (tempDb) => {
             const retryRef = doc(tempDb, 'users', uid, 'plannerTasks', taskRef.id);
-            console.log('[createPlannerTask] Retrying Firestore write with fresh instance...');
             await setDoc(retryRef, stripUndefined(task));
-            console.log('[createPlannerTask] Firestore retry write complete');
           });
           firestoreSuccess = true;
-        } catch (retryErr: any) {
-          console.error('[createPlannerTask] Retry failed:', retryErr?.code, retryErr?.message);
+        } catch (retryErr) {
+          console.error('[createPlannerTask] Retry failed:', getErrorCode(retryErr), getErrorMessage(retryErr));
         }
       }
     }
@@ -352,7 +347,7 @@ export async function updatePlannerTaskDoc(
     if (updates.isCompleted) {
       patch.completedAt = new Date().toISOString();
     } else {
-      (patch as any).completedAt = deleteField();
+      (patch as unknown as Record<string, unknown>).completedAt = deleteField();
     }
   }
   if (updates.energyScore !== undefined) patch.energyScore = updates.energyScore;
@@ -368,11 +363,24 @@ export async function updatePlannerTaskDoc(
       civilDate.setHours(hours, minutes, 0, 0);
       patch.dueDateTime = civilDate.toISOString();
     } else {
-      (patch as any).dueDateTime = deleteField();
+      (patch as unknown as Record<string, unknown>).dueDateTime = deleteField();
     }
   }
 
-  await updateDoc(taskRef, stripUndefined(patch));
+  try {
+    await updateDoc(taskRef, stripUndefined(patch));
+  } catch (err) {
+    if (isNetworkError(err)) {
+      offlineSyncEngine.enqueue({
+        type: 'plannerTask',
+        entityId: taskId,
+        action: 'update',
+        payload: stripUndefined(patch),
+        localVersion: Date.now(),
+      });
+    }
+    throw err;
+  }
 
   // Handle notification lifecycle
   const current = store.getState().planner.tasks[dayKey]?.find((t) => t.id === taskId);

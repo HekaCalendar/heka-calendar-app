@@ -1,0 +1,365 @@
+/* ============================================================
+   CALENDAR PAGE STYLES
+   ============================================================ */
+
+/* ============================================================
+   THE 13 MONTHS SECTION
+   ============================================================ */
+.months-visual {
+  display: grid;
+  grid-template-columns: repeat(13, 1fr);
+  gap: 0.5rem;
+  margin: 3rem 0;
+}
+
+.month-pillar {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.month-bar {
+  width: 100%;
+  border-radius: 8px 8px 4px 4px;
+  position: relative;
+  transition: all 0.4s ease;
+  cursor: default;
+}
+
+.month-bar.opening {
+  height: 80px;
+  background: linear-gradient(to top, rgba(220,38,38,0.3), rgba(220,38,38,0.1));
+  border: 1px solid rgba(220,38,38,0.3);
+}
+
+.month-bar.core {
+  height: 160px;
+  background: linear-gradient(to top, rgba(22,163,74,0.3), rgba(22,163,74,0.1));
+  border: 1px solid rgba(22,163,74,0.3);
+}
+
+.month-bar.closing {
+  height: 120px;
+  background: linear-gradient(to top, rgba(124,58,237,0.3), rgba(124,58,237,0.1));
+  border: 1px solid rgba(124,58,237,0.3);
+}
+
+.month-bar.march {
+  height: 100px;
+  background: linear-gradient(to top, rgba(124,58,237,0.4), rgba(124,58,237,0.15));
+  border: 1px solid rgba(124,58,237,0.4);
+}
+
+.month-bar .days-label {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(-90deg);
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  color: var(--text-secondary);
+  white-space: nowrap;
+  opacity: 0.7;
+}
+
+.month-bar:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+}
+
+.month-name-label {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  color: var(--text-tertiary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  text-align: center;
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  transform: rotate(180deg);
+}
+
+.month-name-label.hexa {
+  color: var(--gold);
+  font-weight: 500;
+}
+
+.equation {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 2rem;
+  padding: 1.5rem;
+  border-radius: 12px;
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+}
+
+.equation .term {
+  color: var(--text-secondary);
+}
+
+.equation .operator {
+  color: var(--text-tertiary);
+}
+
+.equation .result {
+  color: var(--gold);
+  font-weight: 500;
+}
+
+/* ============================================================
+   ARC SECTIONS
+   ============================================================ */
+.arc-section {
+  border-radius: 24px;
+  padding: 4rem;
+  margin: 2rem 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.arc-section::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  opacity: 0.08;
+  pointer-events: none;
+}
+
+.arc-section.opening-arc {
+  background: linear-gradient(135deg, rgba(220,38,38,0.08), transparent);
+  border: 1px solid rgba(220,38,38,0.15);
+}
+
+.arc-section.opening-arc::before {
+  background: radial-gradient(circle at 80% 20%, rgba(220,38,38,0.3), transparent 70%);
+}
+
+.arc-section.core-arc {
+  background: linear-gradient(135deg, rgba(22,163,74,0.08), transparent);
+  border: 1px solid rgba(22,163,74,0.15);
+}
+
+.arc-section.core-arc::before {
+  background: radial-gradient(circle at 20% 80%, rgba(22,163,74,0.3), transparent 70%);
+}
+
+.arc-section.closing-arc {
+  background: linear-gradient(135deg, rgba(124,58,237,0.08), transparent);
+  border: 1px solid rgba(124,58,237,0.15);
+}
+
+.arc-section.closing-arc::before {
+  background: radial-gradient(circle at 50% 50%, rgba(124,58,237,0.3), transparent 70%);
+}
+
+.arc-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.4rem 1rem;
+  border-radius: 100px;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  margin-bottom: 1.5rem;
+}
+
+.arc-badge.opening {
+  background: rgba(220,38,38,0.15);
+  color: #fca5a5;
+  border: 1px solid rgba(220,38,38,0.3);
+}
+
+.arc-badge.core {
+  background: rgba(22,163,74,0.15);
+  color: #86efac;
+  border: 1px solid rgba(22,163,74,0.3);
+}
+
+.arc-badge.closing {
+  background: rgba(124,58,237,0.15);
+  color: #c4b5fd;
+  border: 1px solid rgba(124,58,237,0.3);
+}
+
+.arc-months-list {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  margin-top: 1.5rem;
+}
+
+.arc-month-tag {
+  padding: 0.4rem 0.9rem;
+  border-radius: 6px;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  color: var(--text-secondary);
+}
+
+/* ============================================================
+   MECHANICS SECTION
+   ============================================================ */
+.mechanics-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2rem;
+  margin-top: 3rem;
+}
+
+.mechanic-card {
+  padding: 2.5rem;
+  border-radius: 20px;
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  backdrop-filter: blur(10px);
+  transition: all 0.4s ease;
+}
+
+.mechanic-card:hover {
+  border-color: rgba(212,175,55,0.2);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+}
+
+.mechanic-card .icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  margin-bottom: 1.25rem;
+  background: var(--gold-muted);
+  border: 1px solid rgba(212,175,55,0.2);
+}
+
+.mechanic-card h4 {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  color: var(--text-primary);
+  margin-bottom: 0.75rem;
+}
+
+.mechanic-card p {
+  font-size: 0.9rem;
+  margin-bottom: 0;
+}
+
+.mechanic-card .detail {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--glass-border);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--text-tertiary);
+}
+
+/* ============================================================
+   LEAP TIME SECTION
+   ============================================================ */
+.leap-comparison {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2rem;
+  margin-top: 3rem;
+}
+
+.leap-card {
+  padding: 2.5rem;
+  border-radius: 20px;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.4s ease;
+}
+
+.leap-card:hover {
+  transform: translateY(-4px);
+}
+
+.leap-card.sync {
+  background: linear-gradient(135deg, rgba(14,165,233,0.08), transparent);
+  border: 1px solid rgba(14,165,233,0.2);
+}
+
+.leap-card.true {
+  background: linear-gradient(135deg, rgba(245,158,11,0.08), transparent);
+  border: 1px solid rgba(245,158,11,0.2);
+}
+
+.leap-card .mode-label {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  margin-bottom: 0.5rem;
+}
+
+.leap-card.sync .mode-label { color: #7dd3fc; }
+.leap-card.true .mode-label { color: #fcd34d; }
+
+.leap-card h4 {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  color: var(--text-primary);
+  margin-bottom: 1rem;
+}
+
+.leap-card p {
+  font-size: 0.9rem;
+  margin-bottom: 1.5rem;
+}
+
+.leap-rule {
+  padding: 1rem;
+  border-radius: 10px;
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+}
+
+.leap-rule strong {
+  color: var(--text-primary);
+}
+
+/* ============================================================
+   CALENDAR RESPONSIVE
+   ============================================================ */
+@media (max-width: 900px) {
+  .mechanics-grid,
+  .leap-comparison {
+    grid-template-columns: 1fr;
+  }
+
+  .months-visual {
+    grid-template-columns: repeat(7, 1fr);
+    gap: 0.35rem;
+  }
+
+  .month-name-label {
+    writing-mode: horizontal-tb;
+    transform: none;
+    font-size: 0.5rem;
+  }
+
+  .arc-section {
+    padding: 2.5rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .months-visual {
+    grid-template-columns: repeat(5, 1fr);
+  }
+}

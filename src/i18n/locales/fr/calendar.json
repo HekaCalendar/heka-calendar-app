@@ -1,0 +1,166 @@
+{
+  "months": {
+    "0": "avril",
+    "1": "mai",
+    "2": "juin",
+    "3": "juillet",
+    "4": "août",
+    "5": "septembre",
+    "6": "octobre",
+    "7": "novembre",
+    "8": "décembre",
+    "9": "janvier",
+    "10": "février",
+    "11": "mars",
+    "12": "avril"
+  },
+  "monthShort": {
+    "0": "avr",
+    "1": "mai",
+    "2": "juin",
+    "3": "juil",
+    "4": "août",
+    "5": "sept",
+    "6": "oct",
+    "7": "nov",
+    "8": "déc",
+    "9": "janv",
+    "10": "févr",
+    "11": "mars",
+    "12": "avr"
+  },
+  "civilMonths": {
+    "0": "janv",
+    "1": "févr",
+    "2": "mars",
+    "3": "avril",
+    "4": "mai",
+    "5": "juin",
+    "6": "juillet",
+    "7": "août",
+    "8": "sept",
+    "9": "oct",
+    "10": "nov",
+    "11": "déc"
+  },
+  "days": {
+    "0": "dimanche",
+    "1": "lundi",
+    "2": "Mardi",
+    "3": "Mercredi",
+    "4": "Jeudi",
+    "5": "Vendredi",
+    "6": "Samedi"
+  },
+  "daysShort": {
+    "0": "Dim",
+    "1": "Lun",
+    "2": "Mar",
+    "3": "Mer",
+    "4": "Jeu",
+    "5": "Ven",
+    "6": "Sam"
+  },
+  "daysMin": {
+    "0": "Di",
+    "1": "Lu",
+    "2": "Ma",
+    "3": "Me",
+    "4": "Je",
+    "5": "Ve",
+    "6": "Sa"
+  },
+  "arcs": {
+    "opening": "Ouverture",
+    "core": "Cœur",
+    "closing": "Fermeture"
+  },
+  "arcSuffix": "Arc",
+  "arcDescriptions": {
+    "opening": "L'année se réveille",
+    "core": "L'année fleurit",
+    "closing": "L'année s'achève"
+  },
+  "monthLabel": "Mois {{month}}/13",
+  "hekaYear": "Année HEKA {{year}}",
+  "civilYear": "Année civile {{year}}",
+  "dayOfYear": "Jour {{day}} sur {{total}}",
+  "week": "Semaine",
+  "quarter": "Trimestre",
+  "leapDay": "Jour intercalaire",
+  "leapDayDescription": "Un jour supplémentaire en mars, tous les 4 ans",
+  "switchDarkMode": "Basculer en mode sombre",
+  "switchLightMode": "Basculer en mode clair",
+  "moreNotes": "+{{count}} de plus",
+  "holiday": "Vacances",
+  "note": "Note",
+  "task": "Tâche",
+  "moonPhase": "Phase de Lune",
+  "selectDay": "Sélectionnez un jour pour afficher les détails",
+  "navigation": {
+    "previousMonth": "Mois précédent",
+    "nextMonth": "Mois suivant",
+    "goToToday": "Aller à aujourd'hui",
+    "today": "Aujourd'hui"
+  },
+  "print": {
+    "title": "Imprimer le calendrier",
+    "label": "Imprimer"
+  },
+  "expand": {
+    "shrinkHorizontal": "Réduire horizontalement",
+    "expandHorizontal": "Étendre horizontalement",
+    "shrinkVertical": "Réduire verticalement",
+    "expandVertical": "Étendre verticalement"
+  },
+  "year": {
+    "viewEntireYear": "Voir toute l'année",
+    "label": "Année"
+  },
+  "search": {
+    "title": "Rechercher des dates",
+    "label": "Rechercher"
+  },
+  "features": {
+    "astrologyHub": "Centre d'Astrologie",
+    "stars": "Étoiles",
+    "cosmicCircle": "Cercle Cosmique",
+    "circle": "Cercle",
+    "oracleJournal": "Journal Oracle",
+    "journal": "Journal",
+    "aboutHeka": "À propos du Calendrier HEKA",
+    "about": "À propos",
+    "yourStatistics": "Vos statistiques",
+    "stats": "Stats",
+    "communityHolidays": "Vacances communautaires",
+    "community": "Communauté"
+  },
+  "toggles": {
+    "civilDates": "Basculer les dates civiles",
+    "civil": "Civil",
+    "moonPhases": "Basculer les phases de lune",
+    "moon": "Lune",
+    "holidays": "Basculer les vacances",
+    "holidayLabel": "Vacances"
+  },
+  "prev": "Précédent",
+  "next": "Suivant",
+  "printYear": "Imprimer Année",
+  "close": "Fermer",
+  "quickNote": "Note rapide",
+  "quickNoteTag": "note rapide",
+  "addingTo": "Ajout à",
+  "typeYourNote": "Tapez votre note...",
+  "saveNote": "Enregistrer la note",
+  "ctrlEnterToSave": "Ctrl + Entrée pour enregistrer • Esc pour annuler",
+  "hekaPrefix": "HEKA :",
+  "civilPrefix": "Civil :",
+  "moodPrefix": "Humeur :",
+  "searchTips": {
+    "tip1": "\"31 janvier\" ou \"aujourd'hui\"",
+    "tip2": "\"hexa 15\" ou \"5 avril\"",
+    "tip3": "Contenu de la note ou catégorie",
+    "tip4": "\"Noël\" ou \"Fête nationale de l'Australie\"",
+    "tip5": "\"2026-01-31\" (format ISO)"
+  }
+}

@@ -9,8 +9,8 @@ android {
         applicationId "com.heka.calendar"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 221
-        versionName "2.2.1"
+        versionCode 272
+        versionName "2.2.23"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         androidResources {
             ignoreAssetsPattern = '!.svn:!.git:!.ds_store:!*.scc:.*:!CVS:!thumbs.db:!picasa.ini:!*~'
@@ -52,7 +52,7 @@ android {
     }
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             // Only enforce release keystore when actually building a release APK.
             // During debug builds and Android Studio sync, fall back to debug signing.
@@ -61,10 +61,14 @@ android {
             } else {
                 def isReleaseBuild = gradle.startParameter.taskNames.any { it.toLowerCase().contains('release') }
                 if (isReleaseBuild) {
-                    throw new GradleException("Release keystore not configured. Create android/app/key.properties for Play Store builds.")
+                    throw new GradleException("Release keystore not configured. Create android/key.properties for Play Store builds.")
                 }
                 signingConfig signingConfigs.debug
                 println "Warning: Using debug signing for release build type. Create key.properties for Play Store."
+            }
+            // Include native debug symbols for Play Console crash de-obfuscation
+            ndk {
+                debugSymbolLevel 'FULL'
             }
         }
         debug {
@@ -100,6 +104,9 @@ dependencies {
     
     // Firebase Firestore (for cloud sync)
     implementation 'com.google.firebase:firebase-firestore'
+    
+    // Firebase Cloud Messaging (for push notifications)
+    implementation 'com.google.firebase:firebase-messaging'
 }
 
 apply from: 'capacitor.build.gradle'

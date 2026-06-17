@@ -129,10 +129,6 @@ const ELEMENT_MODALITY: Record<string, Record<string, string>> = {
   },
 };
 
-// Aspect pattern themes for future use
-// @ts-expect-error - Reserved for future pattern detection integration
-const _ASPECT_PATTERN_THEMES = {};
-
 // ═══════════════════════════════════════════════════════════════════════════════
 // MAIN GENERATOR FUNCTION
 // ═══════════════════════════════════════════════════════════════════════════════

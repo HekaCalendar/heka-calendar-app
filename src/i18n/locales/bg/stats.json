@@ -1,0 +1,49 @@
+{
+  "best": "Най-добро: {{count}}",
+  "title": "Твоя пътешествие",
+  "close": "Затвори",
+  "reset": "Нулиране на статистика",
+  "avgMood": "Средно настроение",
+  "dayStreak": "Дневна серия",
+  "totalNotes": "Общо бележки",
+  "wordsWritten": "Написани думи",
+  "achievements": "Достижения ({{earned}}/{{total}})",
+  "resetConfirm": "Нулиране",
+  "progressRatio": "{{current}} / {{target}}",
+  "monthlyTooltip": "{{month}} {{year}}: {{count}} бележки",
+  "notesByCategory": "Бележки по категория",
+  "monthlyActivity": "Месечна активност",
+  "mostActiveMonth": "Най-активният ти месец беше \u003cstrong\u003e{{month}}\u003c/strong\u003e с \u003cstrong\u003e{{count}}\u003c/strong\u003e бележки",
+  "categories": {
+    "work": "Работно",
+    "family": "Семейство",
+    "health": "Здраве",
+    "general": "Общо",
+    "personal": "Лично",
+    "creative": "Творческо",
+    "spiritual": "Духовно"
+  },
+  "progressToCentury": "Напредък към Клуба на вековците",
+  "resetConfirmTitle": "Нулиране на статистика",
+  "badges": {
+    "century": {
+      "name": "Клуб на вековците"
+    },
+    "explorer": {
+      "name": "Изследовател"
+    },
+    "archivist": {
+      "name": "Архивист"
+    },
+    "first-note": {
+      "name": "Първи думи"
+    },
+    "week-streak": {
+      "name": "Седмично войско"
+    },
+    "month-streak": {
+      "name": "Месечен майстор"
+    }
+  },
+  "resetConfirmDescription": "Сигурни ли сте, че искате да нулирате всички статистически данни? Това не може да бъде отменено."
+}

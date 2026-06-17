@@ -1,0 +1,544 @@
+
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Code coverage report for astrology/services/guidance/templates/bodies/venusTemplates.ts</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../../../../prettify.css" />
+    <link rel="stylesheet" href="../../../../../base.css" />
+    <link rel="shortcut icon" type="image/x-icon" href="../../../../../favicon.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../../../../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+    
+<body>
+<div class='wrapper'>
+    <div class='pad1'>
+        <h1><a href="../../../../../index.html">All files</a> / <a href="index.html">astrology/services/guidance/templates/bodies</a> venusTemplates.ts</h1>
+        <div class='clearfix'>
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">0% </span>
+                <span class="quiet">Statements</span>
+                <span class='fraction'>0/153</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">0% </span>
+                <span class="quiet">Branches</span>
+                <span class='fraction'>0/1</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">0% </span>
+                <span class="quiet">Functions</span>
+                <span class='fraction'>0/1</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">0% </span>
+                <span class="quiet">Lines</span>
+                <span class='fraction'>0/153</span>
+            </div>
+        
+            
+        </div>
+        <p class="quiet">
+            Press <em>n</em> or <em>j</em> to go to the next uncovered block, <em>b</em>, <em>p</em> or <em>k</em> for the previous block.
+        </p>
+        <template id="filterTemplate">
+            <div class="quiet">
+                Filter:
+                <input type="search" id="fileSearch">
+            </div>
+        </template>
+    </div>
+    <div class='status-line low'></div>
+    <pre><table class="coverage">
+<tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
+<a name='L2'></a><a href='#L2'>2</a>
+<a name='L3'></a><a href='#L3'>3</a>
+<a name='L4'></a><a href='#L4'>4</a>
+<a name='L5'></a><a href='#L5'>5</a>
+<a name='L6'></a><a href='#L6'>6</a>
+<a name='L7'></a><a href='#L7'>7</a>
+<a name='L8'></a><a href='#L8'>8</a>
+<a name='L9'></a><a href='#L9'>9</a>
+<a name='L10'></a><a href='#L10'>10</a>
+<a name='L11'></a><a href='#L11'>11</a>
+<a name='L12'></a><a href='#L12'>12</a>
+<a name='L13'></a><a href='#L13'>13</a>
+<a name='L14'></a><a href='#L14'>14</a>
+<a name='L15'></a><a href='#L15'>15</a>
+<a name='L16'></a><a href='#L16'>16</a>
+<a name='L17'></a><a href='#L17'>17</a>
+<a name='L18'></a><a href='#L18'>18</a>
+<a name='L19'></a><a href='#L19'>19</a>
+<a name='L20'></a><a href='#L20'>20</a>
+<a name='L21'></a><a href='#L21'>21</a>
+<a name='L22'></a><a href='#L22'>22</a>
+<a name='L23'></a><a href='#L23'>23</a>
+<a name='L24'></a><a href='#L24'>24</a>
+<a name='L25'></a><a href='#L25'>25</a>
+<a name='L26'></a><a href='#L26'>26</a>
+<a name='L27'></a><a href='#L27'>27</a>
+<a name='L28'></a><a href='#L28'>28</a>
+<a name='L29'></a><a href='#L29'>29</a>
+<a name='L30'></a><a href='#L30'>30</a>
+<a name='L31'></a><a href='#L31'>31</a>
+<a name='L32'></a><a href='#L32'>32</a>
+<a name='L33'></a><a href='#L33'>33</a>
+<a name='L34'></a><a href='#L34'>34</a>
+<a name='L35'></a><a href='#L35'>35</a>
+<a name='L36'></a><a href='#L36'>36</a>
+<a name='L37'></a><a href='#L37'>37</a>
+<a name='L38'></a><a href='#L38'>38</a>
+<a name='L39'></a><a href='#L39'>39</a>
+<a name='L40'></a><a href='#L40'>40</a>
+<a name='L41'></a><a href='#L41'>41</a>
+<a name='L42'></a><a href='#L42'>42</a>
+<a name='L43'></a><a href='#L43'>43</a>
+<a name='L44'></a><a href='#L44'>44</a>
+<a name='L45'></a><a href='#L45'>45</a>
+<a name='L46'></a><a href='#L46'>46</a>
+<a name='L47'></a><a href='#L47'>47</a>
+<a name='L48'></a><a href='#L48'>48</a>
+<a name='L49'></a><a href='#L49'>49</a>
+<a name='L50'></a><a href='#L50'>50</a>
+<a name='L51'></a><a href='#L51'>51</a>
+<a name='L52'></a><a href='#L52'>52</a>
+<a name='L53'></a><a href='#L53'>53</a>
+<a name='L54'></a><a href='#L54'>54</a>
+<a name='L55'></a><a href='#L55'>55</a>
+<a name='L56'></a><a href='#L56'>56</a>
+<a name='L57'></a><a href='#L57'>57</a>
+<a name='L58'></a><a href='#L58'>58</a>
+<a name='L59'></a><a href='#L59'>59</a>
+<a name='L60'></a><a href='#L60'>60</a>
+<a name='L61'></a><a href='#L61'>61</a>
+<a name='L62'></a><a href='#L62'>62</a>
+<a name='L63'></a><a href='#L63'>63</a>
+<a name='L64'></a><a href='#L64'>64</a>
+<a name='L65'></a><a href='#L65'>65</a>
+<a name='L66'></a><a href='#L66'>66</a>
+<a name='L67'></a><a href='#L67'>67</a>
+<a name='L68'></a><a href='#L68'>68</a>
+<a name='L69'></a><a href='#L69'>69</a>
+<a name='L70'></a><a href='#L70'>70</a>
+<a name='L71'></a><a href='#L71'>71</a>
+<a name='L72'></a><a href='#L72'>72</a>
+<a name='L73'></a><a href='#L73'>73</a>
+<a name='L74'></a><a href='#L74'>74</a>
+<a name='L75'></a><a href='#L75'>75</a>
+<a name='L76'></a><a href='#L76'>76</a>
+<a name='L77'></a><a href='#L77'>77</a>
+<a name='L78'></a><a href='#L78'>78</a>
+<a name='L79'></a><a href='#L79'>79</a>
+<a name='L80'></a><a href='#L80'>80</a>
+<a name='L81'></a><a href='#L81'>81</a>
+<a name='L82'></a><a href='#L82'>82</a>
+<a name='L83'></a><a href='#L83'>83</a>
+<a name='L84'></a><a href='#L84'>84</a>
+<a name='L85'></a><a href='#L85'>85</a>
+<a name='L86'></a><a href='#L86'>86</a>
+<a name='L87'></a><a href='#L87'>87</a>
+<a name='L88'></a><a href='#L88'>88</a>
+<a name='L89'></a><a href='#L89'>89</a>
+<a name='L90'></a><a href='#L90'>90</a>
+<a name='L91'></a><a href='#L91'>91</a>
+<a name='L92'></a><a href='#L92'>92</a>
+<a name='L93'></a><a href='#L93'>93</a>
+<a name='L94'></a><a href='#L94'>94</a>
+<a name='L95'></a><a href='#L95'>95</a>
+<a name='L96'></a><a href='#L96'>96</a>
+<a name='L97'></a><a href='#L97'>97</a>
+<a name='L98'></a><a href='#L98'>98</a>
+<a name='L99'></a><a href='#L99'>99</a>
+<a name='L100'></a><a href='#L100'>100</a>
+<a name='L101'></a><a href='#L101'>101</a>
+<a name='L102'></a><a href='#L102'>102</a>
+<a name='L103'></a><a href='#L103'>103</a>
+<a name='L104'></a><a href='#L104'>104</a>
+<a name='L105'></a><a href='#L105'>105</a>
+<a name='L106'></a><a href='#L106'>106</a>
+<a name='L107'></a><a href='#L107'>107</a>
+<a name='L108'></a><a href='#L108'>108</a>
+<a name='L109'></a><a href='#L109'>109</a>
+<a name='L110'></a><a href='#L110'>110</a>
+<a name='L111'></a><a href='#L111'>111</a>
+<a name='L112'></a><a href='#L112'>112</a>
+<a name='L113'></a><a href='#L113'>113</a>
+<a name='L114'></a><a href='#L114'>114</a>
+<a name='L115'></a><a href='#L115'>115</a>
+<a name='L116'></a><a href='#L116'>116</a>
+<a name='L117'></a><a href='#L117'>117</a>
+<a name='L118'></a><a href='#L118'>118</a>
+<a name='L119'></a><a href='#L119'>119</a>
+<a name='L120'></a><a href='#L120'>120</a>
+<a name='L121'></a><a href='#L121'>121</a>
+<a name='L122'></a><a href='#L122'>122</a>
+<a name='L123'></a><a href='#L123'>123</a>
+<a name='L124'></a><a href='#L124'>124</a>
+<a name='L125'></a><a href='#L125'>125</a>
+<a name='L126'></a><a href='#L126'>126</a>
+<a name='L127'></a><a href='#L127'>127</a>
+<a name='L128'></a><a href='#L128'>128</a>
+<a name='L129'></a><a href='#L129'>129</a>
+<a name='L130'></a><a href='#L130'>130</a>
+<a name='L131'></a><a href='#L131'>131</a>
+<a name='L132'></a><a href='#L132'>132</a>
+<a name='L133'></a><a href='#L133'>133</a>
+<a name='L134'></a><a href='#L134'>134</a>
+<a name='L135'></a><a href='#L135'>135</a>
+<a name='L136'></a><a href='#L136'>136</a>
+<a name='L137'></a><a href='#L137'>137</a>
+<a name='L138'></a><a href='#L138'>138</a>
+<a name='L139'></a><a href='#L139'>139</a>
+<a name='L140'></a><a href='#L140'>140</a>
+<a name='L141'></a><a href='#L141'>141</a>
+<a name='L142'></a><a href='#L142'>142</a>
+<a name='L143'></a><a href='#L143'>143</a>
+<a name='L144'></a><a href='#L144'>144</a>
+<a name='L145'></a><a href='#L145'>145</a>
+<a name='L146'></a><a href='#L146'>146</a>
+<a name='L147'></a><a href='#L147'>147</a>
+<a name='L148'></a><a href='#L148'>148</a>
+<a name='L149'></a><a href='#L149'>149</a>
+<a name='L150'></a><a href='#L150'>150</a>
+<a name='L151'></a><a href='#L151'>151</a>
+<a name='L152'></a><a href='#L152'>152</a>
+<a name='L153'></a><a href='#L153'>153</a>
+<a name='L154'></a><a href='#L154'>154</a></td><td class="line-coverage quiet"><span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js"><span class="cstat-no" title="statement not covered" >import type { BodyTemplates } from './types';<span class="fstat-no" title="function not covered" ><span class="branch-0 cbranch-no" title="branch not covered" ></span></span></span>
+<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" >/**</span>
+<span class="cstat-no" title="statement not covered" > * ═══════════════════════════════════════════════════════════════════════════════</span>
+<span class="cstat-no" title="statement not covered" > * VENUS TEMPLATES — Love, beauty, values, harmony</span>
+<span class="cstat-no" title="statement not covered" > * ═══════════════════════════════════════════════════════════════════════════════</span>
+<span class="cstat-no" title="statement not covered" > */</span>
+<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" >export const venusTemplates: BodyTemplates = {</span>
+<span class="cstat-no" title="statement not covered" >  aries: {</span>
+<span class="cstat-no" title="statement not covered" >    essence: 'Your heart is a wildfire — immediate, passionate, and impossible to contain. Venus in Aries loves with the urgency of a spark catching dry grass. You do not court; you claim. Your attraction is sudden, your devotion fierce, and your impatience with game-playing absolute. You are drawn to courage, to independence, to the thrill of the chase — and you are most alive when love feels like an adventure that has just begun.',</span>
+<span class="cstat-no" title="statement not covered" >    element: 'fire', modality: 'cardinal', keywords: ['passion', 'impulse', 'independence', 'courage in love'],</span>
+<span class="cstat-no" title="statement not covered" >    careerAdvice: 'Your professional charm is bold and competitive. You excel in fields where personal magnetism opens doors — sales, entrepreneurship, entertainment, and leadership. Your aesthetic sense is daring; you spot trends before they become mainstream. Beware impulsive professional relationships; your enthusiasm can outpace due diligence. Build partnerships on shared fire, not just shared excitement.',</span>
+<span class="cstat-no" title="statement not covered" >    relationshipAdvice: 'You fall fast and fully. Your love is a conquest and a gift — you want to win your beloved\'s heart and then protect it fiercely. You attract partners who match your intensity and respect your independence. Beware selfishness in love; your needs are valid, but they are not the only needs in the room. Practice patience — some hearts open slowly, and the wait is part of the worth.',</span>
+<span class="cstat-no" title="statement not covered" >    healthAdvice: 'Your vitality thrives on passion and challenge. Martial arts, competitive sports, and high-energy movement restore your equilibrium. Your adrenal system carries the stress of romantic impatience. Learn to channel the energy of pursuit into self-pursuit — the chase for your own growth is as thrilling as any external conquest.',</span>
+<span class="cstat-no" title="statement not covered" >    financesAdvice: 'Impulse purchases driven by desire are your financial shadow. Build a 48-hour rule for significant expenses. Your eye for beauty and trend-spotting can be profitable in fashion, art, and design investments. Beware using money to win affection; generosity is beautiful, but purchasing love creates debt in every currency.',</span>
+<span class="cstat-no" title="statement not covered" >    growthAdvice: 'Your shadow is the fear that love must be won repeatedly — that devotion requires constant proof. The lesson of Venus in Aries is that true passion includes the courage to be still. Growth asks you to love without conquering, to desire without demanding, and to find the adventure in depth as much as in novelty.',</span>
+<span class="cstat-no" title="statement not covered" >    bodyFocus: 'head, eyes, adrenal system, cranium',</span>
+<span class="cstat-no" title="statement not covered" >    elementalResonance: 'Your love burns with the urgency of dawn — immediate, warming, impossible to ignore, and demanding to be met in kind.',</span>
+<span class="cstat-no" title="statement not covered" >  },</span>
+<span class="cstat-no" title="statement not covered" >  taurus: {</span>
+<span class="cstat-no" title="statement not covered" >    essence: 'Your heart is a garden — patient, sensual, and deeply rooted in the physical world. Venus in Taurus loves through the senses: touch, taste, scent, the warmth of skin against skin. You do not rush intimacy; you cultivate it, season by season, until the bond is as solid as oak. Your love is demonstrated, not declared — through presence, through consistency, through the creation of beauty that outlasts words.',</span>
+<span class="cstat-no" title="statement not covered" >    element: 'earth', modality: 'fixed', keywords: ['sensuality', 'loyalty', 'physical affection', 'steadfastness'],</span>
+<span class="cstat-no" title="statement not covered" >    careerAdvice: 'Your professional appeal lies in reliability and aesthetic excellence. Fashion, interior design, culinary arts, finance, and luxury goods suit your sensibilities. You build professional relationships that last decades. Beware stubbornness in partnerships; your loyalty is beautiful until it becomes a refusal to grow. Cultivate collaborators who challenge your comfort while respecting your pace.',</span>
+<span class="cstat-no" title="statement not covered" >    relationshipAdvice: 'Physical comfort and consistency nurture your heart. You show love through tangible care — the meal cooked, the home made beautiful, the body held. You attract partners who value security and sensual intimacy. Beware possessiveness — love held too tightly becomes confinement. Trust that what is truly yours will stay without chains.',</span>
+<span class="cstat-no" title="statement not covered" >    healthAdvice: 'Your body is your emotional temple. Massage, fine food, nature walks, and physical affection are not luxuries but necessities. Your throat and neck carry tension from unexpressed needs. Learn to voice your desires as clearly as you demonstrate them — your body knows what it wants before your mind names it.',</span>
+<span class="cstat-no" title="statement not covered" >    financesAdvice: 'Invest in beauty that endures — art, property, quality goods. Your financial instincts are conservative and sound. You understand that true wealth is measured in comfort, not just numbers. Beware using possessions to fill emotional voids; the most beautiful object cannot replace the warmth of connection.',</span>
+<span class="cstat-no" title="statement not covered" >    growthAdvice: 'Your shadow is the fear of loss — the clinging to what is comfortable at the expense of what is possible. The lesson of Venus in Taurus is that stability is not stagnation. Growth asks you to risk the security of the known for the beauty of the unexplored, trusting that your roots are deep enough to withstand transplant.',</span>
+<span class="cstat-no" title="statement not covered" >    bodyFocus: 'throat, neck, thyroid, vocal cords',</span>
+<span class="cstat-no" title="statement not covered" >    elementalResonance: 'Your love is hearth-warmth — steady, nourishing, the kind of heat that matures rather than consumes, that deepens with every season it endures.',</span>
+<span class="cstat-no" title="statement not covered" >  },</span>
+<span class="cstat-no" title="statement not covered" >  gemini: {</span>
+<span class="cstat-no" title="statement not covered" >    essence: 'Your heart is a butterfly garden — colourful, restless, and attracted to a hundred flowers before noon. Venus in Gemini falls in love with minds before bodies, with conversations before commitments. You are drawn to wit, to curiosity, to the partner who can keep pace with your rapid associations. Your love language is dialogue — flirtation, debate, the shared joy of discovering something new together.',</span>
+<span class="cstat-no" title="statement not covered" >    element: 'air', modality: 'mutable', keywords: ['verbal affection', 'intellectual connection', 'variety', 'playfulness'],</span>
+<span class="cstat-no" title="statement not covered" >    careerAdvice: 'Your professional charm is verbal and versatile. Writing, media, communications, teaching, and social platforms suit your gifts. You build networks rather than single deep bonds — and that is your strength. Beware spreading yourself too thin; a hundred acquaintances cannot replace three true collaborators. Focus your social energy on relationships that compound.',</span>
+<span class="cstat-no" title="statement not covered" >    relationshipAdvice: 'Mental stimulation is foreplay. You attract partners who can match your verbal agility and shifting interests. Your love is playful, curious, and forever young. Beware emotional detachment — not every feeling needs explanation, and not every relationship needs analysis. Practice staying present when the novelty fades; depth is the adventure you have not yet taken.',</span>
+<span class="cstat-no" title="statement not covered" >    healthAdvice: 'Your nervous system reflects your romantic restlessness. Breathwork, journaling, and varied movement restore equilibrium. Your lungs and hands carry stress from unsaid words. Learn to express affection physically, not just verbally — some hearts need touch more than talk.',</span>
+<span class="cstat-no" title="statement not covered" >    financesAdvice: 'Multiple streams of romantic and financial interest suit you. Diversify, but avoid scattering resources so widely that nothing grows. Your research skills prevent reckless investments. Beware impulse spending on gadgets, books, and courses — the acquisition of knowledge is beautiful, but applied knowledge is wealth.',</span>
+<span class="cstat-no" title="statement not covered" >    growthAdvice: 'Your shadow is the fear that commitment means boredom — that depth requires abandoning breadth. The lesson of Venus in Gemini is that a single conversation can contain infinite worlds. Growth asks you to explore one heart as thoroughly as you have explored many minds, discovering that the deepest variety lives within intimacy.',</span>
+<span class="cstat-no" title="statement not covered" >    bodyFocus: 'lungs, hands, nervous system, shoulders',</span>
+<span class="cstat-no" title="statement not covered" >    elementalResonance: 'Your love dances as flame-tongue — quick, bright, illuminating many hearts without lingering too long in any single shadow.',</span>
+<span class="cstat-no" title="statement not covered" >  },</span>
+<span class="cstat-no" title="statement not covered" >  cancer: {</span>
+<span class="cstat-no" title="statement not covered" >    essence: 'Your heart is a tide pool — nurturing, protective, and holding memory in every molecule. Venus in Cancer loves by creating sanctuary, by feeding, by remembering the small details that others forget. You are drawn to partners who feel like home, who understand that your sensitivity is not fragility but the courage to feel deeply in a world that rewards numbness. Your love is the tide that returns, again and again, regardless of the shore\'s response.',</span>
+<span class="cstat-no" title="statement not covered" >    element: 'water', modality: 'cardinal', keywords: ['nurturing', 'protective', 'nostalgic', 'devoted'],</span>
+<span class="cstat-no" title="statement not covered" >    careerAdvice: 'Your professional appeal is maternal and intuitive. Hospitality, real estate, food, counselling, and community work suit your gifts. You build client relationships that feel like family. Beware taking professional rejection personally; not everyone wants the depth of care you offer. Protect your emotional energy — you cannot nurture everyone.',</span>
+<span class="cstat-no" title="statement not covered" >    relationshipAdvice: 'Create emotional homes together. You give love unconditionally but trust must be earned. Your devotion runs deeper than most can fathom. Beware the shell — your sensitivity is your gift, but it requires protection. Let love in slowly; let it out generously. The right person will not mistake your depth for neediness.',</span>
+<span class="cstat-no" title="statement not covered" >    healthAdvice: 'Your stomach is your emotional compass. Comfort foods in moderation, water-based movement, and regular sleep restore you. You nourish others effortlessly; nourishing yourself requires intention. Beware emotional eating — the temporary comfort creates lasting imbalance. Feed your body with the same care you bring to those you love.',</span>
+<span class="cstat-no" title="statement not covered" >    financesAdvice: 'Invest in home, family, and long-term security. Your financial decisions are emotional — build reserves that create peace of mind. Real estate and family businesses align with your values. Beware using money to create emotional security that must come from within; no bank balance replaces self-worth.',</span>
+<span class="cstat-no" title="statement not covered" >    growthAdvice: 'Your shadow is the fear of abandonment — the belief that love must be earned through sacrifice. The lesson of Venus in Cancer is that self-nurturing is not selfish; it is sustainable. Growth asks you to receive care as gracefully as you give it, and to trust that your worth is not measured by how much you provide.',</span>
+<span class="cstat-no" title="statement not covered" >    bodyFocus: 'stomach, breasts, lymphatic system, womb',</span>
+<span class="cstat-no" title="statement not covered" >    elementalResonance: 'Your love is tidal — pulled by invisible forces, ancient, returning to every shore it has ever touched, regardless of welcome.',</span>
+<span class="cstat-no" title="statement not covered" >  },</span>
+<span class="cstat-no" title="statement not covered" >  leo: {</span>
+<span class="cstat-no" title="statement not covered" >    essence: 'Your heart is a stage — warm, commanding, and generous to a fault. Venus in Leo loves with the abundance of summer itself, grand and celebratory and impossible to ignore. You are drawn to partners who appreciate your magnificence and match your warmth. Your love is theatrical not because it is false, but because you believe love should be the greatest show on earth — and you are willing to play every role to make it so.',</span>
+<span class="cstat-no" title="statement not covered" >    element: 'fire', modality: 'fixed', keywords: ['generosity', 'romance', 'loyalty', 'dramatic affection'],</span>
+<span class="cstat-no" title="statement not covered" >    careerAdvice: 'Your professional magnetism is undeniable. Entertainment, design, education, leadership, and any field where your creative vision shapes the experience suit you. You excel when your work is celebrated. Beware the need for constant applause; your best work often happens when no one is watching. Build a career that satisfies your heart, not just your ego.',</span>
+<span class="cstat-no" title="statement not covered" >    relationshipAdvice: 'Grand romantic gestures are your native language. You attract partners who bask in your warmth and reflect it back. Your love is loyal, generous, and fiercely protective. Beware pride in vulnerability — asking for what you need is not weakness, it is the courage to be seen fully. The greatest gift you offer is the constancy of your heart.',</span>
+<span class="cstat-no" title="statement not covered" >    healthAdvice: 'Your heart and spine are your emotional centres. Dance, theatrical movement, and heart-pumping exercise restore your vitality. Creative expression is not optional — it is medicine. Watch for burnout from overgiving; your light cannot illuminate if the wick is exhausted. Rest is part of the performance.',</span>
+<span class="cstat-no" title="statement not covered" >    financesAdvice: 'Invest in what makes you feel alive — and in yourself. Your confidence attracts abundance, but pride can lead to overspending on status. True wealth is the freedom to create without constraint. Build reserves that fund your vision, not your image. Generosity returns, but only when boundaries exist.',</span>
+<span class="cstat-no" title="statement not covered" >    growthAdvice: 'Your shadow is the fear of irrelevance — the belief that love must be performed to be real. The lesson of Venus in Leo is that the heart does not perform for applause; it simply loves. Growth asks you to give generously without requiring validation, and to receive love without measuring its volume.',</span>
+<span class="cstat-no" title="statement not covered" >    bodyFocus: 'heart, spine, circulatory system, upper back',</span>
+<span class="cstat-no" title="statement not covered" >    elementalResonance: 'Your love is bonfire-bright — central, warming all who gather, demanding to be seen and felt, refusing to be ignored.',</span>
+<span class="cstat-no" title="statement not covered" >  },</span>
+<span class="cstat-no" title="statement not covered" >  virgo: {</span>
+<span class="cstat-no" title="statement not covered" >    essence: 'Your heart is a carefully tended herb garden — practical, healing, and devoted to service. Venus in Virgo loves through helpfulness, through the small acts of care that others overlook. You are drawn to partners who appreciate your thoughtfulness and respect your need for order. Your love is not grand; it is granular — the remembered preference, the solved problem, the quiet competence that says "I see you" more eloquently than any declaration.',</span>
+<span class="cstat-no" title="statement not covered" >    element: 'earth', modality: 'mutable', keywords: ['service', 'practical care', 'discernment', 'helpfulness'],</span>
+<span class="cstat-no" title="statement not covered" >    careerAdvice: 'Your professional appeal lies in helpful competence. Healthcare, editing, research, service industries, and quality-focused fields suit you. You build reputation through reliability, not flash. Beware perfectionism in professional relationships; your standards are high, but applied without mercy they become walls. Celebrate progress, not just perfection.',</span>
+<span class="cstat-no" title="statement not covered" >    relationshipAdvice: 'Show love through acts of service — the meal prepared, the problem solved, the detail remembered. You attract partners who appreciate your thoughtfulness. Beware the critic — your discernment is a gift, but in love it can become a wound. Practice receiving help as gracefully as you give it. Love is not a project to optimise.',</span>
+<span class="cstat-no" title="statement not covered" >    healthAdvice: 'Your gut is your emotional compass. Worry manifests as digestive distress. Clean food, regular schedules, and practices that calm the mind-body connection restore you. Beware hypochondria; not every sensation is significant. Trust your body\'s wisdom without obsessing over its noise. Your health is best served by routine, not reaction.',</span>
+<span class="cstat-no" title="statement not covered" >    financesAdvice: 'Practical budgeting and conservative planning suit you. You spot inefficiencies that cost others thousands. Invest in health, education, and tools that increase effectiveness. Beware miserliness — money is meant to circulate, not just accumulate. Your financial peace comes from knowing every detail is accounted for.',</span>
+<span class="cstat-no" title="statement not covered" >    growthAdvice: 'Your shadow is the belief that love must be earned through usefulness — that your worth equals your helpfulness. The lesson of Venus in Virgo is that you are lovable in your imperfection. Growth asks you to receive care without performing for it, and to trust that your presence is enough without the service attached.',</span>
+<span class="cstat-no" title="statement not covered" >    bodyFocus: 'digestive system, intestines, spleen, nervous system',</span>
+<span class="cstat-no" title="statement not covered" >    elementalResonance: 'Your love is lantern-light — focused, practical, illuminating the path one careful step at a time, never wasting warmth on empty space.',</span>
+<span class="cstat-no" title="statement not covered" >  },</span>
+<span class="cstat-no" title="statement not covered" >  libra: {</span>
+<span class="cstat-no" title="statement not covered" >    essence: 'Your heart is the equinox — balanced, beautiful, and forever negotiating between give and receive. Venus in Libra is at home, the diplomat of desire, the artist of relationship. You are drawn to harmony, to elegance, to the partner who feels like the missing half of a perfectly composed painting. Your love is refined, thoughtful, and deeply aesthetic — you do not merely fall in love; you curate it.',</span>
+<span class="cstat-no" title="statement not covered" >    element: 'air', modality: 'cardinal', keywords: ['harmony', 'beauty', 'partnership', 'refinement'],</span>
+<span class="cstat-no" title="statement not covered" >    careerAdvice: 'Your professional charm is diplomatic and aesthetic. Law, design, counselling, public relations, and the arts suit your gift for creating agreement. Your sense of fairness builds trust. Beware indecision — sometimes any choice is better than perpetual deliberation. Trust your aesthetic intuition; it is a sharper business tool than pure logic.',</span>
+<span class="cstat-no" title="statement not covered" >    relationshipAdvice: 'You are the archetype of the beloved. You attract partners through grace, charm, and the genuine desire for equality. Your love is refined, thoughtful, and deeply aesthetic. Beware people-pleasing — a relationship that requires you to abandon your needs is not balance, it is self-erasure. Your needs deserve a seat at the table.',</span>
+<span class="cstat-no" title="statement not covered" >    healthAdvice: 'Your kidneys, skin, and lower back reflect your stress levels. Balance is not just philosophical — it is physiological. Practices that restore equilibrium — tai chi, balanced nutrition, beauty rituals — are medicine. Avoid extremes; your body prefers moderation. Emotional discord manifests as physical tension faster than you acknowledge.',</span>
+<span class="cstat-no" title="statement not covered" >    financesAdvice: 'Partnership investments and shared resources flourish under your guidance. Your sense of fairness makes you a trusted financial advisor. Beware aesthetic impulse spending — beauty is worth investment, but not debt. Build wealth that supports a beautiful, balanced life without compromising your peace.',</span>
+<span class="cstat-no" title="statement not covered" >    growthAdvice: 'Your shadow is indecision — the fear that choosing one path means losing all others. The lesson of Venus in Libra is that true harmony includes dissonance. Growth asks you to choose yourself, even when it disturbs the peace, knowing that a relationship built on self-erasure was never balanced to begin with.',</span>
+<span class="cstat-no" title="statement not covered" >    bodyFocus: 'kidneys, skin, lower back, endocrine balance',</span>
+<span class="cstat-no" title="statement not covered" >    elementalResonance: 'Your love reflects — it is the sunlight on still water, beautiful because it holds and shares rather than consumes, because it honours what it receives.',</span>
+<span class="cstat-no" title="statement not covered" >  },</span>
+<span class="cstat-no" title="statement not covered" >  scorpio: {</span>
+<span class="cstat-no" title="statement not covered" >    essence: 'Your heart is a crucible — intense, transformative, and capable of transmuting pain into power. Venus in Scorpio does not date; it merges. You are drawn to depth, to mystery, to the partner who can meet you in the shadows without fear. Your love is all-or-nothing, possessive and liberating in equal measure. You do not fall in love; you are consumed by it, and you consume in return.',</span>
+<span class="cstat-no" title="statement not covered" >    element: 'water', modality: 'fixed', keywords: ['intensity', 'depth', 'passion', 'transformation'],</span>
+<span class="cstat-no" title="statement not covered" >    careerAdvice: 'Your professional magnetism is intense and strategic. Research, psychology, investigative work, crisis management, and fields involving power dynamics suit you. Your intuition about hidden truths is unparalleled. Beware using your insight to manipulate; knowledge is power, but power without integrity is corruption. Build trust through transparency.',</span>
+<span class="cstat-no" title="statement not covered" >    relationshipAdvice: 'Depth over breadth, always. You attract partners who can meet you in the depths without drowning. Your love is transformative — it changes everyone it touches. Beware jealousy and possessiveness — they poison the very intimacy you crave. True power in love is the courage to be vulnerable without guarantee of safety.',</span>
+<span class="cstat-no" title="statement not covered" >    healthAdvice: 'Your reproductive and eliminative systems process what your heart cannot release. Deep therapeutic practices restore you. Beware addictive patterns — your intensity seeks extremes. Moderation is the true discipline of power. Your body speaks in symbols; learn its language without fear. Sexual healing is not optional for you; it is essential.',</span>
+<span class="cstat-no" title="statement not covered" >    financesAdvice: 'Joint resources, investments, and other people\'s money are your domain. Your research skills prevent costly mistakes. Beware financial manipulation or secrecy — transparency builds the trust that creates wealth. Invest in transformation, not control. Your financial power grows through shared resources managed with integrity.',</span>
+<span class="cstat-no" title="statement not covered" >    growthAdvice: 'Your shadow is the fear of betrayal — the belief that love must be tested to be trusted. The lesson of Venus in Scorpio is that control is not intimacy, and suspicion is not protection. Growth asks you to risk vulnerability without requiring proof, and to trust that love deepens through surrender, not surveillance.',</span>
+<span class="cstat-no" title="statement not covered" >    bodyFocus: 'reproductive system, eliminative organs, pelvis, colon',</span>
+<span class="cstat-no" title="statement not covered" >    elementalResonance: 'Your love is crucible-heat — not warm but transformative, melting alloy into something stronger than its parts, something that survives the fire that created it.',</span>
+<span class="cstat-no" title="statement not covered" >  },</span>
+<span class="cstat-no" title="statement not covered" >  sagittarius: {</span>
+<span class="cstat-no" title="statement not covered" >    essence: 'Your heart is a pilgrimage — restless, optimistic, and forever seeking the next emotional horizon. Venus in Sagittarius loves through adventure, through philosophy, through the shared quest for meaning. You are drawn to partners who expand your world, who challenge your assumptions, who make the ordinary feel like an expedition. Your love is generous, honest, and freedom-loving — a fire that warms without confining.',</span>
+<span class="cstat-no" title="statement not covered" >    element: 'fire', modality: 'mutable', keywords: ['adventure', 'optimism', 'freedom', 'philosophical love'],</span>
+<span class="cstat-no" title="statement not covered" >    careerAdvice: 'Your professional appeal is expansive and visionary. Teaching, publishing, travel, international business, and outdoor industries suit your nature. You excel when sharing knowledge and adventure with others. Beware overcommitment — your optimism can lead to promising more than you can deliver. Build systems that ground your vision.',</span>
+<span class="cstat-no" title="statement not covered" >    relationshipAdvice: 'You fall in love with philosophies, not just people. You attract partners who share your hunger for meaning and adventure. Your love is generous, honest, and freedom-loving. Beware restlessness — the grass is not always greener. Commitment does not cage the adventurer; it gives them a home to return to.',</span>
+<span class="cstat-no" title="statement not covered" >    healthAdvice: 'Your hips, thighs, and liver carry your wanderlust. Outdoor movement restores your vitality. Beware excess — your expansive nature applies to indulgence as well as exploration. Your body needs movement, but it also needs rest between journeys. Moderation is the adventure you have not yet taken.',</span>
+<span class="cstat-no" title="statement not covered" >    financesAdvice: 'Long-term growth investments and educational opportunities align with your vision. Your optimism attracts abundance, but overconfidence leads to risky speculation. Build wealth that funds your adventures without chaining you to them. Beware the get-rich-quick scheme — your fortune grows through wisdom, not luck.',</span>
+<span class="cstat-no" title="statement not covered" >    growthAdvice: 'Your shadow is the fear that commitment means the end of adventure. The lesson of Venus in Sagittarius is that the greatest journey is inward. Growth asks you to find expansion in depth, to discover that commitment to one person can contain more worlds than fleeting encounters with many.',</span>
+<span class="cstat-no" title="statement not covered" >    bodyFocus: 'hips, thighs, liver, sciatic nerve',</span>
+<span class="cstat-no" title="statement not covered" >    elementalResonance: 'Your love is wildfire-spread — not contained but catalytic, igniting new terrain and refusing to be bounded by old maps or familiar shores.',</span>
+<span class="cstat-no" title="statement not covered" >  },</span>
+<span class="cstat-no" title="statement not covered" >  capricorn: {</span>
+<span class="cstat-no" title="statement not covered" >    essence: 'Your heart is a legacy — built slowly, tested thoroughly, and designed to outlast the builder. Venus in Capricorn does not fall in love; it invests in it, evaluating potential, assessing risk, and committing only when the return is worth the vulnerability. You are drawn to partners who share your ambition, who respect your time, and who understand that your reserved nature conceals a loyalty that spans decades.',</span>
+<span class="cstat-no" title="statement not covered" >    element: 'earth', modality: 'cardinal', keywords: ['commitment', 'maturity', 'ambition', 'steadfastness'],</span>
+<span class="cstat-no" title="statement not covered" >    careerAdvice: 'Your professional relationships are built on demonstrated competence and mutual respect. Executive leadership, management, and fields requiring long-term strategic vision suit you. You excel where persistence outlasts flash. Beware using work as an excuse for emotional distance — your competence is impressive, but your warmth is what makes you unforgettable.',</span>
+<span class="cstat-no" title="statement not covered" >    relationshipAdvice: 'Commitment is shown through reliability. You attract partners who value loyalty and shared goals. Your love is demonstrated across years, not declared in moments. Beware emotional austerity — your reserved nature can be mistaken for coldness. Let your partner see the warmth beneath the competence. The greatest gift you offer is presence across time.',</span>
+<span class="cstat-no" title="statement not covered" >    healthAdvice: 'Your bones, joints, and teeth reflect the weight of responsibility. Structural health is your foundation. Regular weight-bearing exercise and calcium-rich nutrition are essential. Beware somatising work stress — your body absorbs what your mind refuses to delegate. Rest is not laziness; it is structural maintenance.',</span>
+<span class="cstat-no" title="statement not covered" >    financesAdvice: 'Conservative, structured, long-term wealth-building is your financial language. Real estate, retirement planning, and legacy investments align with your values. You understand that wealth is built one brick at a time. Beware using money as a scorecard for worth — your value is not your net worth.',</span>
+<span class="cstat-no" title="statement not covered" >    growthAdvice: 'Your shadow is the fear of vulnerability — the belief that emotional openness undermines authority. The lesson of Venus in Capricorn is that true strength includes the courage to be seen without your armour. Growth asks you to risk the appearance of control for the reality of connection, knowing that your foundations are strong enough to withstand exposure.',</span>
+<span class="cstat-no" title="statement not covered" >    bodyFocus: 'bones, joints, teeth, knees, skeletal system',</span>
+<span class="cstat-no" title="statement not covered" >    elementalResonance: 'Your love is forge-heat — not warm but transformative, shaping raw material through sustained pressure and patience into something that endures.',</span>
+<span class="cstat-no" title="statement not covered" >  },</span>
+<span class="cstat-no" title="statement not covered" >  aquarius: {</span>
+<span class="cstat-no" title="statement not covered" >    essence: 'Your heart is a revolution — unconventional, humanitarian, and loyal to ideals before individuals. Venus in Aquarius loves through friendship, through shared vision, through the space that allows both partners to remain fully themselves. You are drawn to the unusual, the avant-garde, the partner who challenges convention simply by existing. Your love is not possessive; it is collaborative — two free beings choosing to orbit the same star.',</span>
+<span class="cstat-no" title="statement not covered" >    element: 'air', modality: 'fixed', keywords: ['unconventional', 'friendship', 'humanitarian', 'independence'],</span>
+<span class="cstat-no" title="statement not covered" >    careerAdvice: 'Your professional appeal is innovative and collective. Technology, social reform, scientific research, and group-oriented fields suit your vision. You excel when given freedom to innovate. Beware detachment — your ideas change the world only when you stay engaged long enough to implement them. Build networks, not just concepts.',</span>
+<span class="cstat-no" title="statement not covered" >    relationshipAdvice: 'Friendship forms the foundation of your love. You attract partners who respect your independence and share your ideals. Your love is loyal but unconventional — you need space to breathe and think. Beware emotional distance — intellect is your comfort zone, but intimacy requires feeling. The right partner will evolve beside you.',</span>
+<span class="cstat-no" title="statement not covered" >    healthAdvice: 'Your circulatory and nervous systems carry your electric energy. Unconventional health practices may appeal. Beware nervous exhaustion from overstimulation. Your body needs grounding as much as your mind needs stimulation. Regular digital detox is not optional — it is survival. Community wellness restores you.',</span>
+<span class="cstat-no" title="statement not covered" >    financesAdvice: 'Innovative investments — technology, social enterprise, cryptocurrency — align with your vision. Beware detachment from financial reality; even revolutionaries must pay rent. Build wealth that funds your ideals without compromising them. Your financial power comes from networks, not solo genius.',</span>
+<span class="cstat-no" title="statement not covered" >    growthAdvice: 'Your shadow is the belief that emotions compromise freedom — that feeling makes you conventional. The lesson of Venus in Aquarius is that true liberation includes the freedom to be vulnerable. Growth asks you to feel without being overwhelmed, to love without losing your unique perspective, and to build intimacy that honours both connection and independence.',</span>
+<span class="cstat-no" title="statement not covered" >    bodyFocus: 'calves, ankles, circulatory system, nervous system',</span>
+<span class="cstat-no" title="statement not covered" >    elementalResonance: 'Your love is lightning — not warm but illuminating, connecting what was separate into something newly whole, something that could not have existed before the strike.',</span>
+<span class="cstat-no" title="statement not covered" >  },</span>
+<span class="cstat-no" title="statement not covered" >  pisces: {</span>
+<span class="cstat-no" title="statement not covered" >    essence: 'Your heart is the ocean — boundless, compassionate, and dissolving the boundary between self and other. Venus in Pisces loves unconditionally, transcendentally, with a depth that can feel like drowning to those unaccustomed to such immersion. You are drawn to soul connections, to spiritual union, to the partner who understands that love is not possession but recognition — the remembering that we were never separate to begin with.',</span>
+<span class="cstat-no" title="statement not covered" >    element: 'water', modality: 'mutable', keywords: ['unconditional', 'compassion', 'soul connection', 'transcendence'],</span>
+<span class="cstat-no" title="statement not covered" >    careerAdvice: 'Your professional appeal is compassionate and creative. Healing arts, film, music, spiritual guidance, and compassionate service suit your gifts. You excel when work feels like devotion. Beware martyrdom — sacrifice without boundaries breeds resentment, not grace. Build structures that protect your sensitivity while allowing your gifts to flow.',</span>
+<span class="cstat-no" title="statement not covered" >    relationshipAdvice: 'Soul connections transcend logic. You love with the depth of one who has never fully believed in separation. You attract partners who need your compassion, but ensure they respect your boundaries. Beware saviour dynamics — you cannot heal someone who refuses to heal. True love is two whole beings choosing to swim together.',</span>
+<span class="cstat-no" title="statement not covered" >    healthAdvice: 'Your feet and immune system are your anchors. Water-based therapies, dream work, and creative expression are essential medicine. Beware escapism — your sensitivity seeks relief in substances, screens, or denial. Sleep is your sanctuary; guard it as sacred. Your body is a barometer for collective health; protect it vigilantly.',</span>
+<span class="cstat-no" title="statement not covered" >    financesAdvice: 'Intuitive guidance can lead to surprising financial insights. Creative investments may flourish. Beware escapist spending — retail therapy does not fill the void. Build financial boundaries as carefully as emotional ones. Trust your intuition, but verify with practical checks. Charge for your gifts; they are more valuable than you believe.',</span>
+<span class="cstat-no" title="statement not covered" >    growthAdvice: 'Your shadow is the martyr — the belief that suffering is noble, that boundaries are unkind. The lesson of Venus in Pisces is that compassion without discernment is self-destruction. Growth asks you to distinguish between empathy and enmeshment, between love and sacrifice. You cannot pour from an empty cup, and the world needs your fullness more than your depletion.',</span>
+<span class="cstat-no" title="statement not covered" >    bodyFocus: 'feet, immune system, pineal gland, lymphatic system',</span>
+<span class="cstat-no" title="statement not covered" >    elementalResonance: 'Your love is the ocean — containing all rivers, holding all tears, remembering every shore it has touched and every shore it has not yet reached.',</span>
+<span class="cstat-no" title="statement not covered" >  },</span>
+<span class="cstat-no" title="statement not covered" >  ophiuchus: {</span>
+<span class="cstat-no" title="statement not covered" >    essence: 'Your heart is the serpent rising — healing, transmuting, bridging realms that others believe are separate. Venus in Ophiuchus loves with the intensity of one who has died and returned, who understands that poison and medicine share the same root. You are drawn to partners who are ready to heal, not those seeking to be fixed. Your love is alchemical — it transforms both participants, dissolving old wounds and recasting them into gold.',</span>
+<span class="cstat-no" title="statement not covered" >    element: 'ether', modality: 'fixed', keywords: ['healing', 'transmutation', 'initiation', 'alchemical love'],</span>
+<span class="cstat-no" title="statement not covered" >    careerAdvice: 'Your professional path weaves between healing and mystery — medicine, psychology, energy work, research into the taboo. You excel where transformation is required and others turn away. Your ability to see what is hidden is your professional edge. Beware the wounded healer trap — you cannot heal what you refuse to feel in yourself. Build a career on empowerment, not rescue.',</span>
+<span class="cstat-no" title="statement not covered" >    relationshipAdvice: 'Your relationships are initiations — alchemical vessels where both participants transform. You attract partners who are ready to evolve. Beware the tendency to heal instead of relate; your insight is a gift, but in love it can become a wall when used to diagnose rather than connect. Practice presence without analysis. True intimacy is two wholes choosing to overlap.',</span>
+<span class="cstat-no" title="statement not covered" >    healthAdvice: 'Your spinal column and nervous system regeneration are your focuses. Energy medicine, spinal alignment, and subtle body practices restore you. You are sensitive to environmental energies — your body is a barometer for collective emotional health. Beware absorbing others\' illnesses; your healing gift requires energetic hygiene. Rest is regeneration, not weakness.',</span>
+<span class="cstat-no" title="statement not covered" >    financesAdvice: 'Your financial path is non-linear — sudden losses and restorations. Investments in healing, transformation, and regenerative enterprises align with your values. Build flexibility into your financial structures. Beware rescuing others financially; true help empowers independence, not dependence. Charge for your gifts — they are more valuable than you admit.',</span>
+<span class="cstat-no" title="statement not covered" >    growthAdvice: 'Your shadow is the refusal to let others suffer — the belief that your pain is acceptable if it spares someone else\'s. The lesson of Venus in Ophiuchus is that the healer must also be healed. Growth asks you to receive the medicine you so freely offer, and to trust that your wholeness serves the world more than your sacrifice. You are not meant to carry every wound you touch.',</span>
+<span class="cstat-no" title="statement not covered" >    bodyFocus: 'spinal column, nervous system regeneration, subtle energy channels, cellular renewal',</span>
+<span class="cstat-no" title="statement not covered" >    elementalResonance: 'Your love is alchemical flame — it does not warm or illuminate in the ordinary sense, but transforms base substance into something that transcends its origins, something neither partner could have become alone.',</span>
+<span class="cstat-no" title="statement not covered" >  },</span>
+<span class="cstat-no" title="statement not covered" >};</span>
+&nbsp;</pre></td></tr></table></pre>
+
+                <div class='push'></div><!-- for sticky footer -->
+            </div><!-- /wrapper -->
+            <div class='footer quiet pad2 space-top1 center small'>
+                Code coverage generated by
+                <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
+                at 2026-05-21T20:28:33.284Z
+            </div>
+        <script src="../../../../../prettify.js"></script>
+        <script>
+            window.onload = function () {
+                prettyPrint();
+            };
+        </script>
+        <script src="../../../../../sorter.js"></script>
+        <script src="../../../../../block-navigation.js"></script>
+    </body>
+</html>
+    

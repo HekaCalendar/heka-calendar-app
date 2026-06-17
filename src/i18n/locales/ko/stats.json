@@ -1,0 +1,49 @@
+{
+  "best": "최고: {{count}}",
+  "title": "당신의 여정",
+  "close": "닫기",
+  "reset": "통계 초기화",
+  "avgMood": "평균 기분",
+  "dayStreak": "일 연속",
+  "totalNotes": "총 노트",
+  "wordsWritten": "작성된 단어",
+  "achievements": "업적 ({{earned}}/{{total}})",
+  "resetConfirm": "초기화",
+  "progressRatio": "{{current}} / {{target}}",
+  "monthlyTooltip": "{{month}} {{year}}: {{count}} 노트",
+  "notesByCategory": "카테고리별 노트",
+  "monthlyActivity": "월별 활동",
+  "mostActiveMonth": "가장 활동적인 달은 \u003cstrong\u003e{{month}}\u003c/strong\u003e로 \u003cstrong\u003e{{count}}\u003c/strong\u003e 노트가 작성되었습니다",
+  "categories": {
+    "work": "작업",
+    "family": "가족",
+    "health": "건강",
+    "general": "일반",
+    "personal": "개인",
+    "creative": "창의적",
+    "spiritual": "정신적"
+  },
+  "progressToCentury": "세기 클럽 진척",
+  "resetConfirmTitle": "통계 초기화",
+  "badges": {
+    "century": {
+      "name": "세기 클럽"
+    },
+    "explorer": {
+      "name": "탐험가"
+    },
+    "archivist": {
+      "name": "기록 관리자"
+    },
+    "first-note": {
+      "name": "첫 글자"
+    },
+    "week-streak": {
+      "name": "주간 전사"
+    },
+    "month-streak": {
+      "name": "월간 마스터"
+    }
+  },
+  "resetConfirmDescription": "모든 통계를 초기화하시겠습니까? 이 작업은 취소할 수 없습니다."
+}

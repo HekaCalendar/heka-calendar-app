@@ -3,6 +3,8 @@
  * Run this in the browser console to reset tutorial state for testing
  */
 
+/* global localStorage, console */
+
 // Clear all tutorial-related localStorage keys
 const keysToClear = [
   'heka-tutorial-state-v2',

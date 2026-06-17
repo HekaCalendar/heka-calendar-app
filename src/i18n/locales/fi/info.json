@@ -1,0 +1,322 @@
+{
+  "infoModal": {
+    "hero": {
+      "title": "HEKA — Kalenteri, joka on suunniteltu ajatuksille",
+      "subtitleLine1": "Tuhansia kuukausia.",
+      "subtitleLine2": "Jokainen neljä viikkoa. Yksi selvä vuosi."
+    },
+    "guideComplete": "Oppaamine suorituskyky",
+    "spotlight": {
+      "title": "Tieditkö?",
+      "facts": [
+        "Gregoriaanisen kalenterin epäsäännölliset kuukaudet johtuvat suurelta osin roomalaisesta politiikasta ja keisarien egoista.",
+        "HEKA: n kolmetoista kahdeksankymmentäviikkoista kuukautta luo täydet neljännesvuodet ja ennustettavissa olevat palkkausjaksot.",
+        "TRUE-tilassa HEKA noudattaa 128-vuotiaan hyppypäiväsääntöä pitkän aikavälin astronomisen tarkkuuden vuoksi.",
+        "Siviilin ylikayraus antaa sinun nähdä Gregoriaanisen päivämäärät HEKA: n rinnalla, joten et koskaan menetä koordinaatiota.",
+        "Päiväkirjamerkinnät pysyvät paikallisesti oletusarvoisesti ja synkronoivat vain kun valitset kirjautua sisään."
+      ]
+    },
+    "home": "Koti",
+    "backToHome": "Takaisin kotiin",
+    "deeperQuestions": "Syvempää kysymyksiä",
+    "chapters": {
+      "home": {
+        "num": "0",
+        "chip": "ALOITA",
+        "title": "Tervetuloa",
+        "hook": "Erilainen tapa asua vuodessa.",
+        "teaser": "Aloita tästä."
+      },
+      "ch1": {
+        "num": "0",
+        "chip": "PERUSTA",
+        "title": "Kalenteri",
+        "hook": "Tuhansia kuukausia. Jokainen neljä viikkoa. Yksi selvä vuosi.",
+        "teaser": "Mikä HEKA on ja miksi se tuntuu erilaiselta."
+      },
+      "ch2": {
+        "num": "02",
+        "chip": "RAKENNUS",
+        "title": "Vuoden kaari",
+        "hook": "Avaus, ydin ja päätös: vuosi, jolla on tarinallinen muoto.",
+        "teaser": "Kuinka kuukaudet virtaavat helmikuulta maaliskuuhun."
+      },
+      "ch3": {
+        "num": "03",
+        "chip": "TYÖKALUT",
+        "title": "Päivittäinen kumppanisi",
+        "hook": "Päiväkirja, kuu, tähdet ja siviilin ylikayraus — kaikki sinun.",
+        "teaser": "Ominaisuudet, jotka tekevät HEKA: sta käytettävän."
+      },
+      "ch4": {
+        "num": "04",
+        "chip": "TILA",
+        "title": "SYNC vs TOSI",
+        "hook": "Kaksi tapaa käsitellä hyppypäivää. Valitse oma oikeutus.",
+        "teaser": "Tunnustettu koordinaatio tai astronominen puhdistus."
+      },
+      "ch5": {
+        "num": "05",
+        "chip": "HISTORIA",
+        "title": "Miksi kalenterit uivat",
+        "hook": "Perittyä kaaosta, poliittisia korjauksia ja uudelleensuunnittelun mahdollisuutta.",
+        "teaser": "Kertomus kalenterista, jonka sinulle annettiin."
+      },
+      "ch6": {
+        "num": "06",
+        "chip": "JOHTAMINEN",
+        "title": "Aloita elämä sisältä",
+        "hook": "Kolme pientä askelta tehdä HEKA:sta oletusnäkymäsi.",
+        "teaser": "Kuinka aloittaa ilman elämäsi häirintä."
+      },
+      "ch7": {
+        "num": "07",
+        "chip": "MERKITYS",
+        "title": "Aika toiminnaksi",
+        "hook": "Selkeys, ritmi ja valinta käyttää parempaa työkalua.",
+        "teaser": "Miksi ajan rakenteen rakenne on tärkeää."
+      }
+    },
+    "chapterLeads": {
+      "home": "Tämä opas on silta. Yksittä se omalla omalla tahdillasi.",
+      "ch1": "HEKA ei ole mukauttaminen Gregoriaaniseen kalenteriin. Se on korvaaja, joka on rakennettu ensisijaisista periaatteista.",
+      "ch2": "Vuosi on muotoinen, kun sen rakenne heijastaa toiminta- ja lepo-rytmiä.",
+      "ch3": "Kalenteri on vain hyödyllinen, jos se integroituu elämään, jonka jo elät.",
+      "ch4": "Sama rakenne voi palvella erilaisia tarpeita. Valitsemasi tila on mieltymys, ei dogiikkaa.",
+      "ch5": "Nykyisen kalenterin alkuperän ymmärtäminen helpottaa vikojaan anteeksiantoa - ja helpottaa pois pääsemistä.",
+      "ch6": "Käyttöönotto tapahtuu pienillä askelilla. Sinun ei tarvitse luvan tai julistuksen.",
+      "ch7": "Ajan säiliö muokkaa elämän sisältöä. Valitse sellainen, joka on tarkoituksellisempi."
+    },
+    "cardsByChapter": {
+      "ch1": [
+        {
+          "h": "Ongelma, jonka tunnet",
+          "b": "Säännöttömät kuukaudet. Hajaantunut lomapäiviä. Vuosi, joka taputtaa tammikuusta joulukuuhun ilman alun, keski- tai lopun tunnetta. Tunnet tämän kitkan. HEKA poistaa sen."
+        },
+        {
+          "h": "Ratkaisemme Rakennus",
+          "b": "Tirteen kuukautta. Kaksikymmentäkahdeksalla on kaksikymmentäkahdeksan päivää täydellisen symmetrianneen. Maaliskuu, päättävä kuukausi, kantaa ylitsepäivän. Neljä täyttä viikkoa kuukaudessa. Vuosi, joka virtaa: huhtikuun avautuminen, toukokuun kautta joulukuun muodosttavat vakavan ytimen, tammi- ja maaliskuu täydentävät sen."
+        },
+        {
+          "h": "Maailmasi Jatkuu",
+          "b": "HEKA ei häiritse elämääsi. Siviilikalenteri pysyy näkyisenä. Soittolistasi, sitoumukstesi ja oikeudelliset velvoitteesi pysyvät täsmälleen siellä, missä olet toivonut. Saadat vain selkeämmän linssin."
+        }
+      ],
+      "ch2": [
+        {
+          "h": "Aloituskaari",
+          "b": "Huhtikuu on kynnysma. Vuosi ei ala talvinen väsymyksestä, vaan kevätenergiasta. Uutta kasvua. Uusia hankkeita. Aloitus ilmoittaa: jotain alkaa."
+        },
+        {
+          "h": "Ydinkaari",
+          "b": "Toukokuu kautta joulukuu on pitkä, vakava kes"
+        },
+        {
+          "h": "Lopetuskaari",
+          "b": "Tammikuu kautta maaliskuu vievät vuoden päätökseen. Päätä aloittamasi. Kerää kasvattamasi. Lopetus luo tilaa jälleenkatsomiselle ja valmistelee sinut seuraavaan avaukseen."
+        }
+      ],
+      "ch3": [
+        {
+          "h": "Sivistyskielikorvaajasi pysyvät",
+          "b": "Vaihda sivistynyt päälle ja katso Gregoriaaniset päivämäärät HEKAn rinnalla. Hammaslääkärin sopimus, äitisi syntymäpäivä, verokaudensi päättymispäivä — kaikki pysyvät täsmälleen odotetussa paikassa."
+        },
+        {
+          "h": "Päiväkirjasi",
+          "b": "Päivittäiset merkinnät muutoshistorian kanssa — enintään 50 versiota pidetään automaattisesti. Koko tekstin haku kaiken läpi. Paikkallinen oletuksena; pilvarikoskirjaus kirjautuessasi."
+        },
+        {
+          "h": "Kuusi ja Tähdet",
+          "b": "Kuun vaiheet, planeettojen asemat ja liikkeet ovat helposti nähtävissä. Valinnaisia ja tarkkaita. Lisää syntymähoroscopeesi henkilökohtaisia lukuja Oraclen kautta."
+        }
+      ],
+      "ch4": [
+        {
+          "h": "SYNC-tila: Tuntuva polku",
+          "b": "Maalis saa ylimääräisen päivän Gregoriaanisen kalenterin määrittelyn mukaan. Tämä on päivittäisen koordinoinnin siviilimaan kanssa tilanne. Sama rakenne. Tuttu aikataulu."
+        },
+        {
+          "h": "TODENNA Mode: Rehevä Polku",
+          "b": "HEKA noudattaa omaa korjaussääntöään: joka neljäs vuosi on 30 päivän maalis, paitsi joka 128. vuosi ei ole. Tämä on astronomista tarkkautta. Tämä on pitkän aikavälin eheys."
+        },
+        {
+          "h": "Vaihda Milloin Tahansa",
+          "b": "Kuukaudet eivät muutu. Viikko ei muutu. Vain korjauskohde siirtyy. Kokeile. Huomaa, mikä tila sopisi tarpeitasi parhaiten. Et ole lukittu yhteen."
+        }
+      ],
+      "ch5": [
+        {
+          "h": "Perintö, Ei Suunnittelua",
+          "b": "Nykyinen kalenterimme on historiallisten onnettomuuksien pinostuma. Roomalaiset poliittiset päätökset. Uskonnolliset neuvottelut. Astronomisia korjauksia lisätty vuosisatajen ajan. Se ei koskaan suunniteltu järjestelmänä."
+        },
+        {
+          "h": "Gregoriaaninen Korjaus",
+          "b": "1582: Päpa Gregorius korjasi kierron ongelman. Mutta hän säilytti epäsäännölliset kuukaudet, hajallaan oleva rakenne, perittyä kaaosta. Tarpeellinen korjaus, mutta ei kokonaisratkaisu."
+        },
+        {
+          "h": "HEKA:n Vastaus",
+          "b": "Säilytimme sen, mikä toimii: seitsemän päivän viikot, vuodenajan tasapaino, aurinkovuoden seuranta. Suunnittelimme uudelleen sen, mikä ei toimi: kuukausirakenne, vuoden virtaus, korjauspaikan sijoittelu. Rakennettu ajattelulle, joka ajattelee."
+        }
+      ],
+      "ch6": [
+        {
+          "h": "Vaihe Yksi: Ota Kattavuus Käyttöön",
+          "b": "Ota siviilipäivät käyttöön. Nyt näet molemmet järjestelmät samanaikaisesti. HEKA-päivämääräsi ja Gregoriaaninen päivämääräsi. Silta on rakennettu. Käykää sitä yli, milloin tarvitset."
+        },
+        {
+          "h": "Vaihe Kaksi: Valitse Tila",
+          "b": "Aloita SYNC:llä, jos haluat tuttuutta. Vaihda TRUE:en, jos haluat puhdasta. Voit muuttaa mieltäsi. Kalenteri sopeutuu sinuun, ei päinvastoin."
+        },
+        {
+          "h": "Vaihe Kolme: Elä Sisällä",
+          "b": "Käytä HEKA:ta päänäkökerta. Suunnittele kuukautesi. Merkitse päiväsi. Tunne erilaisen vuoden, jolla on todellinen rakenne. Siviilimaa ei tarvitse tietää. Sinä tiedät."
+        }
+      ],
+      "ch7": [
+        {
+          "h": "Friktion Kustannukset Energiaa",
+          "b": "Joka kerta kun mietit, kuinka monta päivää tässä kuussa on, maksat pienen veron. Jokainen epäsäännöllisyys vie huomiota. HEKA poistaa nämä verot. Säätät energiaasi siihen, mikä on tärkeää."
+        },
+        {
+          "h": "Rytmi Luo Rauhaa",
+          "b": "Kun rakenne on ennustettavissa, mieli rentoutuu. Tiedät missä olet vuodessa. Tunnet avautumisen, ytimen, sulkeutumisen. Aika muuttuu tilaksi, jossa asut, ei kaaoksesta, josta selviytyt."
+        },
+        {
+          "h": "Ajasta valta",
+          "b": "Et valinnut Gregoriaanista kalenterista. Se annettiin sinulle. HEKA on valinta. Käytä työkalua, joka on suunniteltu selkeyteen. Vahvista valtaa päiväsi rakenteen yli. Tämä on sinun kalenterisi."
+        }
+      ]
+    },
+    "gatesByChapter": {
+      "ch1": [
+        {
+          "t": "Onko tämä uskonto tai liike?",
+          "tag": "SELKEYSYY",
+          "b": "Kumpikaan. HEKA on työkalu. Kuten parempi vasara tai selkeämpi kartta. Jäsenyyttä ei tarvita. Uskomuksia ei tarvitse hyväksyä. Vain kalenteri, joka toimii paremmin kuin peritty kalenteri."
+        },
+        {
+          "t": "Miksi kolmetoista kuukautta?",
+          "tag": "LOOGIKKA",
+          "b": "Kaksentoista kuukautta epäsäännöllisellä pituudella pakottaa tekemään henkistä acrobatiikkaa. Kolmetoista kuukautta neljän viikon kerrallaan luo täydellisen säännön. 13 × 28 = 364. Plus yksi erityinen päivä. Matematiikka on puhdasta. Kokemus on puhtaampi."
+        },
+        {
+          "t": "Taitako tämä sekoittamaan muita ihmisiä?",
+          "tag": "TODELLISUUS",
+          "b": "Sinä näet HEKA-päivämääriä. He näkevät siviilipäivämääriä. Kun sanot \"15. maaliskuuta\", tarkoitat samaa päivää kuin hekin tekevät. Siviilin päällekirjoitus varmistaa, että et koskaan menetä koordinaatiota. Saadet selkeyttä. He eivät menetä mitään."
+        }
+      ],
+      "ch2": [
+        {
+          "t": "Miksi vuosi alkaa huhtikuussa?",
+          "tag": "SYMBOLI",
+          "b": "Kevät on universaali avaus. Kasvu alkaa. Energia nousee. Aloittaa vuoden huhtikuussa koordinoi kalenterin tunteelliseen kokemukseen uudesta alkavasta. Tammikuu alkaa talvinen väsymys. Huhtikuu alkaa kevätmahdollisuus."
+        },
+        {
+          "t": "Mitkä ovat kuukausien nimet?",
+          "tag": "JÄRJESTYS",
+          "b": "Huhtikuu, toukokuu, kesäkuu, heinäkuu, elokuu, Hexa, syyskuu, lokakuu, marraskuu, joulukuu, tammikuu, helmikuu, maaliskuu. Hexa — kuudes kuukausi — täyttää aukon. Loput ovat jo tuntemiasi. Vain niiden paikat muuttuvat."
+        },
+        {
+          "t": "Kuinka korjaus käsitellään?",
+          "tag": "TARKKUUS",
+          "b": "Jokainen aurinkokalenteri tarvitsee korjausta. HEKA sijoittaa sen kaikki maaliskuuhun, vuoden lopuksi. Maaliskuu on 29 päivän pituinen tai 30 huomattaville vuosille. Muut kaksitoista kuukautta ovat täydellisesti, pysyvästi säännöllisiä. Korjaus on sisältävää, ei hajallaan."
+        }
+      ],
+      "ch3": [
+        {
+          "t": "Voiko tulostaa HEKA-kalentereita?",
+          "tag": "FYSISEN",
+          "b": "Kyllä. Tulosta kuukausittomat tai koko vuoden näkymät. Puhtaasti, ei sekavuuksia, suunniteltu paperille. Kiinnitä ne seinille. Siirrä ne muistiinpanoihin. Digitaalinen helppous ja fyysisen esineen molemmat."
+        },
+        {
+          "t": "Entä juhlat?",
+          "tag": "MUUTOS",
+          "b": "Valitse juhlajoukot alueellesi. Tai jätä ne huomiotta. HEKA ei pakota omia juhliaan — se auttaa sinua seuraamaan niitä, jotka ovat sinulle tärkeitä, päälle selkeämmän rakenteen."
+        },
+        {
+          "t": "Missä minun datani asuu?",
+          "tag": "LUOTTAMUS",
+          "b": "Oletusarvoisesti kaikki pysyy laitteessasi — muistiinpanot, päiväkirja, asetukset. Jos luot tilin, datasi varmuuskopioidaan salattuna pilviin. Voit viedä kaiken milloin tahansa. Sinulla on hallinta."
+        },
+        {
+          "t": "Mitä päiväkirja voi tehdä?",
+          "tag": "KYKY",
+          "b": "Päivittäiset merkinnät automaattisen tarkistushistorian kanssa. Koko tekstin haku koko arkistosta. Kaikki paikallisten oletuksena; synkronoi pilveen kirjautuessasi."
+        }
+      ],
+      "ch4": [
+        {
+          "t": "Mikä tila on \"oikein\"?",
+          "tag": "VALINTA",
+          "b": "Molemmat. SYNC on oikein koordinoimaan siviilimaan. TRUE on oikein taivaalliseen tarkkuuteen. Tarpeet määrittävät, mikä oikeutus on sinulle tärkeämpi tällä hetkellä."
+        },
+        {
+          "t": "Eroaaako TRUE-tila siviilipäiville?",
+          "tag": "ERONNUTUMINEN",
+          "b": "Hidasti, kyllä. TRUE-tila noudattaa omaa huomataislisääntöään, ei Gregorianoa. Vuosien myötä ero huomioi. Arkisessa elämässä ero on huomaamaton. Pitkällä aikavälillä puhdas muoto on tärkeää."
+        },
+        {
+          "t": "Voiko laitokset adoptoida HEKA:n?",
+          "tag": "SKAALA",
+          "b": "Lopulta, ehkä. Mutta laitoksia ei tarvitse muuttaa sinua hyötyäksesi. HEKA toimii täydellisenä henkilökohtaisena päällekkäisenä. Aloita siitä. Antakaa työkalu osoittaa itsensä."
+        }
+      ],
+      "ch5": [
+        {
+          "t": "Miksi kuukaudet ovat erilaisia pituisia?",
+          "tag": "HISTORIA",
+          "b": "Romalainen politiikka. Julius Caesar ja Augustus tarvitsivat kuukausia nimeltänsä. Kalenteri mukautettiin antamaan tilaa egoille. Nämä epäsäännöllisyydet kivettyivät \"perinneeksi.\" Perunne"
+        },
+        {
+          "t": "Oliko Gregoriusmuutos riittävä?",
+          "tag": "ARVIOINTI",
+          "b": "Se korjasi virran. Se ei korjannut rakennetta. Kuukaudet pysyivät epäsäännöllisinä, neliöt tasapainottomina, vuosi ilman tarinallista muotoa. Välttämätön korjaus, mutta ei perustavanlaatuinen uudelleensuunnittelu."
+        },
+        {
+          "t": "Onko muita yrittäneet kalenterin uudistamista?",
+          "tag": "YRITET",
+          "b": "Monet. Ranskan tasavaltalainen kalenteri. Maailmankalenteri. Kansainvälinen kiinteä kalenteri. Osa niistä oli loistavia, kaikki kuitenkin epäonnistuivat poliittisesti. HEKA oppii heistä: yhteensopivuus siviilikalenterin kanssa on välttämätöntä. Vallankumous kehityksen kautta."
+        }
+      ],
+      "ch6": [
+        {
+          "t": "Kuinka selitän tämän muille?",
+          "tag": "KESKUSTELU",
+          "b": "Et tarvitse. Käytä sitä. Jos kysytään, sano: \"Löysin kalenterin, joka auttaa minua suunnittelemaan paremmin.\" Näytä heille. Antakaa heidän nähdä selkeys. Vastustus tapahtuu esimerkin kautta, ei julistuksen kautta."
+        },
+        {
+          "t": "Mikäli haluan lopettaa sen käytön?",
+          "tag": "VAPAUTEEN",
+          "b": "Lopeta. Siviilipäivämääräsi jäävät. Tapaamisesi pysyvät missä ne ovat. Ei sidontaa. Ei sunken cost -ongelmia. HEKA:n on ansaittava paikkansa elämässäsi joka päivä, tai se ei配有留在那儿。"
+        },
+        {
+          "t": "Mistä aloitetaan nyt?",
+          "tag": "TOIMENPIDÄ",
+          "b": "Avaa asetukset. Ota käyttöön siviilipäällekirjoitus. Katso tänään molemmissa järjestelmissä. Se on ensimmäinen askel. Olet jo tehnyt sen avaten tämän opasikan."
+        },
+        {
+          "t": "Mikä on Oraakkeli?",
+          "tag": "ÄLYKKYYS",
+          "b": "Taivaallinen äly, joka lukee planeettojen asemista mihin tahansa päivämäärään valitsemasi ja tarjoaa ohjeita. Valinnainen. Lisää syntymäsijaasi saadaksesi henkilökohtaisia siirtymiä ja syvemmän näkemyksen."
+        }
+      ],
+      "ch7": [
+        {
+          "t": "Vaikuttaako kalenteri todella mieltä?",
+          "tag": "PSYKOLOGIA",
+          "b": "Syvällisesti. Ajattelemme rakenteissa, joissa asumme. Säännöttömät kuukaudet aiheuttavat alhaisen kogniittiset kitkan. Säännölliset kuukaudet aiheuttavat kogniitiivisen virran. Et ehkä huomaa kitkaa ennen kuin se on poissa. Sitten et voi olla huomaamatta sitä."
+        },
+        {
+          "t": "Entä kulttuuriset kiintymykset?",
+          "tag": "KUNNIANNOSTO",
+          "b": "Pidä niistä. Syntymäpäiväsi. Uudenvuodenostosijut. Kausijuhlasi. HEKA ei tyhjennä kulttuuria - se tarjoaa selkeämmän säiliön sille. Sisältö säilyy. Säiliö paranee."
+        },
+        {
+          "t": "Miksi tämä on tärkeää rakentaa?",
+          "tag": "TEHTÄVÄ",
+          "b": "Koska aika on elämän alusta. Koska me ansaitsemme työkalut, jotka on suunniteltu mielille, emmekä peritty ne onnettomuuksista. Koska joku pitäisi yrittää rakentaa jotain parempaa. Me teimme sen. Olet täällä."
+        }
+      ]
+    }
+  }
+}

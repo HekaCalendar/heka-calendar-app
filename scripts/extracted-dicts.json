@@ -1,0 +1,575 @@
+{
+  "dictionaries": {
+    "planetInSign": {
+      "sun": {
+        "aries": "The Sun in Aries brings bold, pioneering energy. A time for initiation, leadership, and courageous action.",
+        "taurus": "The Sun in Taurus grounds us in stability and sensory pleasure. Focus on building, nurturing, and appreciating beauty.",
+        "gemini": "The Sun in Gemini sparks curiosity and communication. Exchange ideas, learn, and connect with your community.",
+        "cancer": "The Sun in Cancer deepens emotional connections. Nurture relationships, honor feelings, and create sanctuary.",
+        "leo": "The Sun in Leo shines with creative confidence. Express yourself authentically and lead with heart.",
+        "virgo": "The Sun in Virgo calls for refinement and service. Organize, improve systems, and attend to details.",
+        "libra": "The Sun in Libra seeks harmony and partnership. Balance relationships and appreciate aesthetic beauty.",
+        "scorpio": "The Sun in Scorpio dives deep into transformation. Embrace intensity, investigate mysteries, and release what no longer serves.",
+        "ophiuchus": "The Sun in Ophiuchus illuminates healing wisdom. A time for transformative knowledge, serpent medicine, and sacred restoration.",
+        "sagittarius": "The Sun in Sagittarius expands horizons. Seek wisdom, explore new territories, and embrace optimism.",
+        "capricorn": "The Sun in Capricorn builds for the long term. Take responsibility, set ambitious goals, and master your craft.",
+        "aquarius": "The Sun in Aquarius innovates for the collective. Embrace uniqueness, think progressively, and serve humanity.",
+        "pisces": "The Sun in Pisces dissolves boundaries. Connect with the infinite, practice compassion, and trust intuition."
+      },
+      "moon": {
+        "aries": "The Moon in Aries brings quick emotional responses. Impulsive feelings, passionate reactions, and independent needs.",
+        "taurus": "The Moon in Taurus seeks comfort and stability. Nurturing through sensuality, patience, and material security.",
+        "gemini": "The Moon in Gemini fluctuates with thoughts and conversations. Emotional curiosity, mental stimulation needs.",
+        "cancer": "The Moon is at home in Cancer. Deep nurturing, protective instincts, and profound emotional sensitivity.",
+        "leo": "The Moon in Leo expresses feelings dramatically. Warmth, creativity, and need for recognition in relationships.",
+        "virgo": "The Moon in Virgo seeks order and usefulness. Emotional satisfaction through service, health, and improvement.",
+        "libra": "The Moon in Libra harmonizes emotions. Needs partnership, aesthetic balance, and diplomatic relating.",
+        "scorpio": "The Moon in Scorpio feels intensely. Emotional depth, transformative experiences, and powerful intuition.",
+        "ophiuchus": "The Moon in Ophiuchus heals through emotion. Intuitive medicine, transformative feeling, and serpent wisdom.",
+        "sagittarius": "The Moon in Sagittarius explores emotionally. Freedom needs, philosophical feelings, and adventurous spirit.",
+        "capricorn": "The Moon in Capricorn restrains emotions. Mature handling of feelings, responsibility, and long-term security.",
+        "aquarius": "The Moon in Aquarius detaches to observe. Emotional objectivity, humanitarian concerns, and unique needs.",
+        "pisces": "The Moon in Pisces dissolves emotional boundaries. Empathy, imagination, and spiritual sensitivity."
+      },
+      "mercury": {
+        "aries": "Mercury in Aries thinks quickly and directly. Sharp, impulsive communication and pioneering ideas.",
+        "taurus": "Mercury in Taurus thinks practically. Steady learning, sensual perception, and methodical communication.",
+        "gemini": "Mercury is at home in Gemini. Quick wit, versatile thinking, and skillful communication.",
+        "cancer": "Mercury in Cancer thinks intuitively. Memory-focused, emotional intelligence, and nurturing words.",
+        "leo": "Mercury in Leo expresses creatively. Dramatic speech, confident ideas, and heart-centered thinking.",
+        "virgo": "Mercury is at home in Virgo. Analytical precision, practical intelligence, and detailed analysis.",
+        "libra": "Mercury in Libra seeks balanced thought. Diplomatic communication and considering all perspectives.",
+        "scorpio": "Mercury in Scorpio probes deeply. Investigative thinking, psychological insight, and penetrating words.",
+        "ophiuchus": "Mercury in Ophiuchus thinks medicinally. Healing communication, medical knowledge, and transformative insight.",
+        "sagittarius": "Mercury in Sagittarius expands understanding. Philosophical thinking and broad communication.",
+        "capricorn": "Mercury in Capricorn structures thought. Strategic planning, authoritative speech, and practical wisdom.",
+        "aquarius": "Mercury in Aquarius innovates thinking. Original ideas, intellectual detachment, and progressive concepts.",
+        "pisces": "Mercury in Pisces imagines intuitively. Poetic expression, receptive listening, and spiritual understanding."
+      },
+      "venus": {
+        "aries": "Venus in Aries loves passionately. Bold attraction, spontaneous romance, and independent partnerships.",
+        "taurus": "Venus is at home in Taurus. Sensual pleasure, stable relationships, and appreciation of beauty.",
+        "gemini": "Venus in Gemini charms verbally. Flirtatious connections, intellectual attraction, and social variety.",
+        "cancer": "Venus in Cancer nurtures lovingly. Emotional bonding, domestic harmony, and protective care.",
+        "leo": "Venus in Leo loves dramatically. Romantic grand gestures, creative expression, and loyal affection.",
+        "virgo": "Venus in Virgo serves practically. Helpful love, modest attraction, and attention to relationship details.",
+        "libra": "Venus is at home in Libra. Harmonious partnerships, aesthetic appreciation, and diplomatic relating.",
+        "scorpio": "Venus in Scorpio loves intensely. Deep transformation through relationships and magnetic attraction.",
+        "ophiuchus": "Venus in Ophiuchus loves as medicine. Healing relationships, transformative devotion, and heart-centered restoration.",
+        "sagittarius": "Venus in Sagittarius explores freely. Adventurous love, philosophical connection, and open relationships.",
+        "capricorn": "Venus in Capricorn commits seriously. Mature relationships, status considerations, and lasting bonds.",
+        "aquarius": "Venus in Aquarius connects uniquely. Unconventional relationships, friendship-based love, and freedom.",
+        "pisces": "Venus in Pisces loves unconditionally. Romantic idealism, spiritual connection, and compassionate relating."
+      },
+      "mars": {
+        "aries": "Mars is at home in Aries. Direct action, courageous initiative, and passionate drive.",
+        "taurus": "Mars in Taurus persists steadily. Determined effort, sensual energy, and stubborn resistance.",
+        "gemini": "Mars in Gemini acts mentally. Quick movements, verbal combat, and scattered initiatives.",
+        "cancer": "Mars in Cancer defends protectively. Emotional action, defensive aggression, and nurturing drive.",
+        "leo": "Mars in Leo performs boldly. Dramatic action, creative drive, and confident leadership.",
+        "virgo": "Mars in Virgo works precisely. Methodical effort, service-oriented action, and health focus.",
+        "libra": "Mars in Libra acts diplomatically. Indirect confrontation, partnership drive, and aesthetic action.",
+        "scorpio": "Mars is at home in Scorpio. Intense action, strategic power, and transformative drive.",
+        "ophiuchus": "Mars in Ophiuchus acts as healer. Surgical precision, restorative force, and transformative intervention.",
+        "sagittarius": "Mars in Sagittarius explores adventurously. Expansive initiative, philosophical action, and risk-taking.",
+        "capricorn": "Mars in Capricorn achieves ambitiously. Disciplined effort, strategic climbing, and authoritative action.",
+        "aquarius": "Mars in Aquarius revolutionizes action. Reforming drive, group initiatives, and unconventional methods.",
+        "pisces": "Mars in Pisces drifts intuitively. Spiritual action, compassionate drive, and elusive initiative."
+      },
+      "jupiter": {
+        "aries": "Jupiter in Aries expands boldly. Growth through initiative, fortunate new beginnings, and confident optimism.",
+        "taurus": "Jupiter in Taurus abundantly manifests. Growth through patience, material blessings, and sensual wisdom.",
+        "gemini": "Jupiter in Gemini learns diversely. Growth through communication, intellectual expansion, and varied interests.",
+        "cancer": "Jupiter in Cancer nourishes generously. Growth through nurturing, emotional abundance, and protective wisdom.",
+        "leo": "Jupiter in Leo creates grandly. Growth through self-expression, creative abundance, and generous leadership.",
+        "virgo": "Jupiter in Virgo improves skillfully. Growth through service, practical wisdom, and health abundance.",
+        "libra": "Jupiter in Libra harmonizes justly. Growth through partnership, aesthetic appreciation, and diplomatic wisdom.",
+        "scorpio": "Jupiter in Scorpio transforms deeply. Growth through intensity, shared resources, and psychological wisdom.",
+        "ophiuchus": "Jupiter in Ophiuchus expands healing. Growth through medicine, wisdom of the serpent, and transformative knowledge.",
+        "sagittarius": "Jupiter is at home in Sagittarius. Boundless expansion, philosophical wisdom, and fortunate journeys.",
+        "capricorn": "Jupiter in Capricorn structures wisely. Growth through discipline, strategic success, and authoritative wisdom.",
+        "aquarius": "Jupiter in Aquarius innovates progressively. Growth through community, humanitarian wisdom, and unique vision.",
+        "pisces": "Jupiter in Pisces dissolves into infinity. Growth through compassion, spiritual abundance, and universal love."
+      },
+      "saturn": {
+        "aries": "Saturn in Aries tests initiative. Lessons in patience, restrained action, and mature leadership.",
+        "taurus": "Saturn in Taurus stabilizes resources. Lessons in persistence, material responsibility, and enduring values.",
+        "gemini": "Saturn in Gemini disciplines the mind. Lessons in focus, serious communication, and mental maturity.",
+        "cancer": "Saturn in Cancer protects boundaries. Lessons in emotional responsibility, family duty, and nurturing limits.",
+        "leo": "Saturn in Leo tempers creativity. Lessons in humility, structured self-expression, and responsible leadership.",
+        "virgo": "Saturn in Virgo perfects service. Lessons in precision, health discipline, and practical mastery.",
+        "libra": "Saturn in Libra commits to balance. Lessons in partnership responsibility, fair structures, and mature relating.",
+        "scorpio": "Saturn in Scorpio transforms deeply. Lessons in power, shared resource responsibility, and psychological maturity.",
+        "ophiuchus": "Saturn in Ophiuchus masters healing. Lessons in medical discipline, structured transformation, and responsible restoration.",
+        "sagittarius": "Saturn in Sagittarius structures beliefs. Lessons in wisdom, disciplined expansion, and responsible freedom.",
+        "capricorn": "Saturn is at home in Capricorn. Mastery through discipline, authority earned, and lasting achievement.",
+        "aquarius": "Saturn is at home in Aquarius. Social responsibility, innovative structures, and humanitarian duty.",
+        "pisces": "Saturn in Pisces dissolves boundaries carefully. Lessons in compassion, spiritual discipline, and mystical responsibility."
+      }
+    },
+    "moonOracle": {
+      "New Moon": {
+        "title": "THE DARK MYSTERY",
+        "poem": "In the void between breaths, all potential dwells. The seed waits in darkness, gathering courage to split its shell. Plant intentions now—they will grow with the light.",
+        "favors": [
+          "Setting intentions",
+          "Planting seeds",
+          "Beginning new ventures",
+          "Inner vision work"
+        ],
+        "warnings": [
+          "Don't push for immediate results",
+          "Avoid major launches"
+        ]
+      },
+      "Waxing Crescent": {
+        "title": "THE FIRST BREATH",
+        "poem": "A sliver of silver pierces the night. The dream begins to breathe, taking its first steps into form. Trust the unfolding.",
+        "favors": [
+          "Taking first steps",
+          "Building momentum",
+          "Learning new skills",
+          "Making connections"
+        ],
+        "warnings": [
+          "Don't overcommit",
+          "Stay flexible"
+        ]
+      },
+      "First Quarter": {
+        "title": "THE CROSSROADS",
+        "poem": "Half light, half shadow—decision hangs in the balance. The path forward requires action. Choose, and the universe conspires.",
+        "favors": [
+          "Making decisions",
+          "Taking action",
+          "Pushing through obstacles",
+          "Committing"
+        ],
+        "warnings": [
+          "Avoid hesitation",
+          "Don't look back"
+        ]
+      },
+      "Waxing Gibbous": {
+        "title": "THE GATHERING",
+        "poem": "Almost full, almost complete. The momentum builds like a wave cresting. Refine, adjust, prepare for the revelation.",
+        "favors": [
+          "Refining projects",
+          "Adjusting plans",
+          "Preparing for launch",
+          "Gathering resources"
+        ],
+        "warnings": [
+          "Don't rush to completion",
+          "Patience rewards"
+        ]
+      },
+      "Full Moon": {
+        "title": "THE GREAT REVEALING",
+        "poem": "All that was hidden in darkness is now revealed in light. The seed planted at the New Moon breaks through soil. Your work culminates. The world witnesses your fullness.",
+        "favors": [
+          "Celebration",
+          "Releasing what no longer serves",
+          "Public visibility",
+          "Gratitude practices"
+        ],
+        "warnings": [
+          "Emotions run high",
+          "Sleep may be disturbed"
+        ]
+      },
+      "Waning Gibbous": {
+        "title": "THE SHARING",
+        "poem": "The light begins its gentle retreat, but wisdom remains. Share what you have learned. Teach others what the fullness taught you.",
+        "favors": [
+          "Sharing knowledge",
+          "Teaching",
+          "Giving back",
+          "Gratitude"
+        ],
+        "warnings": [
+          "Don't cling to the peak",
+          "Let the cycle complete"
+        ]
+      },
+      "Last Quarter": {
+        "title": "THE RELEASING",
+        "poem": "Half remains, half must go. What will you carry forward? What will you leave behind? The choice is yours, and yours alone.",
+        "favors": [
+          "Letting go",
+          "Releasing attachments",
+          "Clearing space",
+          "Forgiveness"
+        ],
+        "warnings": [
+          "Don't start new projects",
+          "Complete what you can"
+        ]
+      },
+      "Waning Crescent": {
+        "title": "THE SURRENDER",
+        "poem": "A silver whisper fading into black. Rest now. The work is done. Surrender to the darkness, knowing light will return.",
+        "favors": [
+          "Deep rest",
+          "Surrender",
+          "Meditation",
+          "Preparation",
+          "Dream work"
+        ],
+        "warnings": [
+          "Avoid major decisions",
+          "Conserve energy"
+        ]
+      }
+    },
+    "planetaryGuidance": {
+      "sun": {
+        "title": "THE SOLAR HOUR",
+        "description": "The Sun illuminates all it touches. This hour favors visibility, leadership, and matters of the heart and ego.",
+        "do": [
+          "Take leadership",
+          "Make important requests",
+          "Focus on visibility",
+          "Express yourself",
+          "Seek recognition"
+        ],
+        "dont": [
+          "Hide in the shadows",
+          "Avoid responsibility",
+          "Dim your light"
+        ],
+        "quality": "Vitality & Recognition"
+      },
+      "moon": {
+        "title": "THE LUNAR HOUR",
+        "description": "The Moon rules the tides of emotion and intuition. A time for nurturing, home, and psychic receptivity.",
+        "do": [
+          "Nurture relationships",
+          "Trust intuition",
+          "Home and family matters",
+          "Emotional processing",
+          "Dream work"
+        ],
+        "dont": [
+          "Force rational decisions",
+          "Ignore feelings",
+          "Push too hard"
+        ],
+        "quality": "Emotion & Intuition"
+      },
+      "mars": {
+        "title": "THE MARTIAN HOUR",
+        "description": "Mars brings fire, drive, and competitive energy. Physical action and confrontation are favored.",
+        "do": [
+          "Physical activity",
+          "Handle conflicts directly",
+          "Exercise",
+          "Competitive pursuits",
+          "Take bold action"
+        ],
+        "dont": [
+          "Avoid necessary confrontation",
+          "Repress anger",
+          "Start arguments"
+        ],
+        "quality": "Action & Drive"
+      },
+      "mercury": {
+        "title": "THE MERCURIAL HOUR",
+        "description": "Mercury quickens the mind and tongue. Communication, learning, and commerce flow easily now.",
+        "do": [
+          "Send important messages",
+          "Sign contracts (if direct)",
+          "Write and study",
+          "Negotiate",
+          "Travel short distances"
+        ],
+        "dont": [
+          "Engage in deception",
+          "Spread gossip",
+          "Sign if Mercury retrograde"
+        ],
+        "quality": "Mind & Communication"
+      },
+      "jupiter": {
+        "title": "THE JOVIAN HOUR",
+        "description": "Jupiter expands all it touches. Fortune, wisdom, and growth are blessed in this hour.",
+        "do": [
+          "Business dealings",
+          "Seek wisdom",
+          "Expand horizons",
+          "Teach and learn",
+          "Acts of generosity"
+        ],
+        "dont": [
+          "Be miserly",
+          "Think small",
+          "Limit yourself"
+        ],
+        "quality": "Expansion & Fortune"
+      },
+      "venus": {
+        "title": "THE VENUSIAN HOUR",
+        "description": "Venus bathes the world in beauty and desire. Love, art, and harmony reign supreme.",
+        "do": [
+          "Romance and courtship",
+          "Artistic creation",
+          "Socialize",
+          "Create beauty",
+          "Resolve conflicts peacefully"
+        ],
+        "dont": [
+          "Force outcomes",
+          "Ignore aesthetics",
+          "Rush intimacy"
+        ],
+        "quality": "Love & Beauty"
+      },
+      "saturn": {
+        "title": "THE SATURNINE HOUR",
+        "description": "Saturn demands discipline and structure. Hard work now yields lasting results.",
+        "do": [
+          "Focus on responsibilities",
+          "Study and organize",
+          "Plan ahead",
+          "Build foundations",
+          "Accept limitations"
+        ],
+        "dont": [
+          "Cut corners",
+          "Avoid duties",
+          "Expect instant results"
+        ],
+        "quality": "Discipline & Structure"
+      }
+    },
+    "providerSetup": {
+      "template": {
+        "type": "template",
+        "name": "Template Library",
+        "description": "169+ hand-crafted planet-sign templates, woven into unique readings by moon phase, aspect, and life category. Always free, always instant, no setup required.",
+        "website": "",
+        "signupUrl": "",
+        "apiKeysUrl": "",
+        "freeTierInfo": "Completely free",
+        "keyPlaceholder": "",
+        "keyFormat": "",
+        "logo": "📚",
+        "color": "#fbbf24",
+        "pricingNote": "No costs ever. Powered by our curated template system.",
+        "setupSteps": [
+          {
+            "number": 1,
+            "title": "Select Template Library",
+            "description": "This is the default option. No configuration needed.",
+            "tip": "Templates cover all major celestial events and planetary positions"
+          },
+          {
+            "number": 2,
+            "title": "Start Using Immediately",
+            "description": "All astrological readings will use our pre-written template library.",
+            "tip": "You can switch to AI providers anytime in the future"
+          }
+        ]
+      },
+      "groq": {
+        "type": "groq",
+        "name": "Groq",
+        "description": "Lightning-fast AI inference with Llama 3. Free tier includes 1M tokens daily.",
+        "website": "https://groq.com",
+        "signupUrl": "https://console.groq.com/login",
+        "apiKeysUrl": "https://console.groq.com/keys",
+        "freeTierInfo": "1,000,000 tokens/day free",
+        "keyPlaceholder": "gsk_your_api_key_here",
+        "keyFormat": "Starts with \"gsk_\" followed by alphanumeric characters",
+        "logo": "⚡",
+        "color": "#f43f5e",
+        "pricingNote": "Free tier: 1M tokens/day. Paid plans available for higher usage.",
+        "setupSteps": [
+          {
+            "number": 1,
+            "title": "Create a Groq Account",
+            "description": "Visit the Groq Console and sign up for a free account.",
+            "action": "Go to Groq Console →",
+            "link": "https://console.groq.com/login",
+            "tip": "Use your email or Google account for quick signup"
+          },
+          {
+            "number": 2,
+            "title": "Navigate to API Keys",
+            "description": "Once logged in, click \"API Keys\" in the left sidebar.",
+            "action": "Open API Keys Page →",
+            "link": "https://console.groq.com/keys",
+            "tip": "Look for the key icon in the navigation menu"
+          },
+          {
+            "number": 3,
+            "title": "Create New API Key",
+            "description": "Click the \"Create API Key\" button. Give it a name like \"HEKA Calendar\".",
+            "tip": "Choose a descriptive name so you remember what it's for"
+          },
+          {
+            "number": 4,
+            "title": "Copy Your API Key",
+            "description": "Copy the generated key (starts with \"gsk_\"). Store it securely - you won't see it again.",
+            "tip": "⚠️ For security, Groq only shows the full key once. If you lose it, create a new one."
+          },
+          {
+            "number": 5,
+            "title": "Paste Key in HEKA",
+            "description": "Return to this screen and paste your key below. Click \"Test Connection\" to verify.",
+            "tip": "Your key is stored only on this device"
+          }
+        ]
+      },
+      "openai": {
+        "type": "openai",
+        "name": "OpenAI",
+        "description": "GPT-4 and GPT-3.5 Turbo for nuanced astrological interpretations. Industry-leading quality.",
+        "website": "https://openai.com",
+        "signupUrl": "https://platform.openai.com/signup",
+        "apiKeysUrl": "https://platform.openai.com/api-keys",
+        "freeTierInfo": "$5 in free credits for new users",
+        "keyPlaceholder": "sk-your_api_key_here",
+        "keyFormat": "Starts with \"sk-\" followed by alphanumeric characters",
+        "logo": "🤖",
+        "color": "#10a37f",
+        "pricingNote": "Pay-per-use after free credits. GPT-3.5: ~$0.002 per 1K tokens.",
+        "setupSteps": [
+          {
+            "number": 1,
+            "title": "Create OpenAI Account",
+            "description": "Sign up at OpenAI Platform. You'll need email verification and a phone number.",
+            "action": "Sign Up at OpenAI →",
+            "link": "https://platform.openai.com/signup",
+            "tip": "Have your phone ready for SMS verification"
+          },
+          {
+            "number": 2,
+            "title": "Add Payment Method (Optional)",
+            "description": "While you get $5 in free credits, adding a payment method ensures uninterrupted service.",
+            "tip": "You can set usage limits to control costs in Billing Settings"
+          },
+          {
+            "number": 3,
+            "title": "Go to API Keys Section",
+            "description": "Click your profile picture → \"Your Profile\" → \"User API Keys\" or visit the direct link.",
+            "action": "Open API Keys →",
+            "link": "https://platform.openai.com/api-keys",
+            "tip": "Don't confuse this with \"Project API Keys\" - we need User API Keys"
+          },
+          {
+            "number": 4,
+            "title": "Create New Secret Key",
+            "description": "Click \"Create new secret key\". Name it \"HEKA Calendar\" for easy identification.",
+            "tip": "⚠️ OpenAI only shows the full key once. Copy it immediately!"
+          },
+          {
+            "number": 5,
+            "title": "Configure in HEKA",
+            "description": "Paste your key below and test the connection. Monitor usage in OpenAI dashboard.",
+            "tip": "Set up billing alerts at platform.openai.com/settings/organization/billing/limits"
+          }
+        ]
+      },
+      "anthropic": {
+        "type": "anthropic",
+        "name": "Anthropic",
+        "description": "Claude AI for thoughtful, nuanced astrological guidance with extended context.",
+        "website": "https://anthropic.com",
+        "signupUrl": "https://console.anthropic.com/login",
+        "apiKeysUrl": "https://console.anthropic.com/settings/keys",
+        "freeTierInfo": "$5 in free credits for new users",
+        "keyPlaceholder": "sk-ant-your_api_key_here",
+        "keyFormat": "Starts with \"sk-ant-\" followed by alphanumeric characters",
+        "logo": "🧠",
+        "color": "#d97757",
+        "pricingNote": "Competitive rates. Claude 3 Haiku: ~$0.25 per 1K tokens.",
+        "setupSteps": [
+          {
+            "number": 1,
+            "title": "Sign Up for Anthropic",
+            "description": "Create an account at Anthropic Console using your work email.",
+            "action": "Go to Anthropic Console →",
+            "link": "https://console.anthropic.com/login",
+            "tip": "Anthropic may have a waitlist - approval is usually quick"
+          },
+          {
+            "number": 2,
+            "title": "Verify Your Account",
+            "description": "Check your email for verification link. Complete any required verification steps.",
+            "tip": "Check spam folder if you don't see the email within a few minutes"
+          },
+          {
+            "number": 3,
+            "title": "Access API Keys",
+            "description": "In the console, go to Settings → API Keys or use the direct link below.",
+            "action": "Open API Keys →",
+            "link": "https://console.anthropic.com/settings/keys",
+            "tip": "The settings gear icon is in the top-right corner"
+          },
+          {
+            "number": 4,
+            "title": "Generate API Key",
+            "description": "Click \"Create Key\". Give it a descriptive name like \"HEKA Astrology\".",
+            "tip": "You can create multiple keys for different apps"
+          },
+          {
+            "number": 5,
+            "title": "Copy and Configure",
+            "description": "Copy the key (starts with \"sk-ant-\") and paste it below in HEKA.",
+            "tip": "Keys never expire unless you revoke them manually"
+          }
+        ]
+      },
+      "ollama": {
+        "type": "ollama",
+        "name": "Ollama (Local)",
+        "description": "Run AI models entirely on your own device. Complete privacy, no internet needed after setup.",
+        "website": "https://ollama.com",
+        "signupUrl": "https://ollama.com/download",
+        "apiKeysUrl": "",
+        "freeTierInfo": "100% free - runs locally",
+        "keyPlaceholder": "http://localhost:11434",
+        "keyFormat": "URL format: http://localhost:11434",
+        "logo": "💻",
+        "color": "#ffffff",
+        "pricingNote": "No costs. Requires capable hardware (8GB+ RAM recommended).",
+        "setupSteps": [
+          {
+            "number": 1,
+            "title": "Download Ollama",
+            "description": "Download and install Ollama for your operating system (Mac, Linux, or Windows).",
+            "action": "Download Ollama →",
+            "link": "https://ollama.com/download",
+            "tip": "Windows version is available via Windows Subsystem for Linux (WSL2)"
+          },
+          {
+            "number": 2,
+            "title": "Install a Model",
+            "description": "Open terminal and run: ollama pull llama3 or ollama pull mistral",
+            "tip": "Llama 3 is recommended for best results. Models are several GB to download."
+          },
+          {
+            "number": 3,
+            "title": "Start Ollama Server",
+            "description": "Run: ollama serve to start the local API server. Keep this terminal open.",
+            "tip": "The server runs on http://localhost:11434 by default"
+          },
+          {
+            "number": 4,
+            "title": "Verify Installation",
+            "description": "Test by running: ollama run llama3 in another terminal. Type a test message.",
+            "tip": "First run downloads the model. Subsequent runs are instant."
+          },
+          {
+            "number": 5,
+            "title": "Connect HEKA",
+            "description": "Enter the server URL (usually http://localhost:11434) below and test connection.",
+            "tip": "Ollama must be running whenever you want AI-enhanced readings"
+          }
+        ]
+      }
+    }
+  }
+}

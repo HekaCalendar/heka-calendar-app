@@ -4,6 +4,7 @@
  */
 
 import { memo } from 'react';
+import { useTranslation } from 'react-i18next';
 import type { AstrologySectionProps } from './types';
 
 export const AstrologySection = memo(({
@@ -17,17 +18,19 @@ export const AstrologySection = memo(({
   currentPlanetaryHour,
   locationName,
 }: AstrologySectionProps) => {
+  const { t } = useTranslation('dayPanel');
+
   if (isLoading) {
     return (
       <div className="day-panel__section day-panel__astrology">
         <div className="day-panel__section-title">
           <span>{hasBirthChart ? '✦' : '✨'}</span>
-          {hasBirthChart ? `Personalized for ${birthChartName}` : 'Daily Cosmic Guidance'}
-          {hasBirthChart && <span className="astro-personalized-badge">Birth Chart Active</span>}
+          {hasBirthChart ? t('astrology.personalizedFor', { name: birthChartName }) : t('astrology.dailyCosmicGuidance')}
+          {hasBirthChart && <span className="astro-personalized-badge">{t('astrology.birthChartActive')}</span>}
         </div>
         <div className="day-panel__astrology-loading">
           <span className="spinner"></span>
-          <span>{hasBirthChart ? 'Calculating your personal transits...' : 'Connecting to celestial intelligence...'}</span>
+          <span>{hasBirthChart ? t('astrology.calculatingTransits') : t('astrology.connectingCelestial')}</span>
         </div>
       </div>
     );
@@ -37,10 +40,10 @@ export const AstrologySection = memo(({
     return (
       <div className="day-panel__section day-panel__astrology">
         <div className="day-panel__section-title">
-          <span>✨</span> Daily Cosmic Guidance
+          <span>✨</span> {t('astrology.dailyCosmicGuidance')}
         </div>
         <div className="day-panel__astrology-empty">
-          Celestial guidance unavailable. Check the Stars section for detailed astrology.
+          {t('astrology.unavailable')}
         </div>
       </div>
     );
@@ -50,8 +53,8 @@ export const AstrologySection = memo(({
     <div className="day-panel__section day-panel__astrology">
       <div className="day-panel__section-title">
         <span>{hasBirthChart ? '✦' : '✨'}</span>
-        {hasBirthChart ? `Personalized for ${birthChartName}` : 'Daily Cosmic Guidance'}
-        {hasBirthChart && <span className="astro-personalized-badge">Birth Chart Active</span>}
+        {hasBirthChart ? t('astrology.personalizedFor', { name: birthChartName }) : t('astrology.dailyCosmicGuidance')}
+        {hasBirthChart && <span className="astro-personalized-badge">{t('astrology.birthChartActive')}</span>}
       </div>
 
       {/* Location-Aware Sun Times & Planetary Hour */}
@@ -60,29 +63,29 @@ export const AstrologySection = memo(({
           {sunriseTime && (
             <div className="astro-time-badge">
               <span className="astro-time-icon">🌅</span>
-              <span className="astro-time-label">Sunrise: {sunriseTime}</span>
+              <span className="astro-time-label">{t('astrology.sunrise', { time: sunriseTime })}</span>
             </div>
           )}
           {sunsetTime && (
             <div className="astro-time-badge">
               <span className="astro-time-icon">🌇</span>
-              <span className="astro-time-label">Sunset: {sunsetTime}</span>
+              <span className="astro-time-label">{t('astrology.sunset', { time: sunsetTime })}</span>
             </div>
           )}
           {currentPlanetaryHour && (
             <div className="astro-time-badge astro-planetary-hour">
               <span className="astro-time-icon">{currentPlanetaryHour.symbol}</span>
-              <span className="astro-time-label">Planetary Hour: {currentPlanetaryHour.planet}</span>
+              <span className="astro-time-label">{t('astrology.planetaryHour', { planet: currentPlanetaryHour.planet })}</span>
             </div>
           )}
-          <div className="astro-location-name">📍 {locationName}</div>
+          <div className="astro-location-name">📍 {t('astrology.locationPin', { location: locationName })}</div>
         </div>
       )}
 
       {/* Personal Transits - Only if birth chart exists */}
       {hasBirthChart && personalTransits.length > 0 && (
         <div className="astro-transits-section">
-          <div className="astro-transits-title">🌟 Active Transits for You Today</div>
+          <div className="astro-transits-title">🌟 {t('astrology.activeTransits')}</div>
           {personalTransits.map((transit, idx) => (
             <div key={idx} className={`astro-transit-item strength-${Math.floor(transit.strength / 20)}`}>
               <span className="astro-transit-planets">
@@ -115,7 +118,7 @@ export const AstrologySection = memo(({
         <div className="astro-card__info">
           <div className="astro-card__title">{dailyAstrology.moonPhase.name}</div>
           <div className="astro-card__detail">
-            {Math.round(dailyAstrology.moonPhase.illumination)}% illuminated
+            {t('moon.illuminated', { percent: Math.round(dailyAstrology.moonPhase.illumination) })}
           </div>
         </div>
       </div>
@@ -124,36 +127,36 @@ export const AstrologySection = memo(({
       <div className="astro-row">
         <div className="astro-badge">
           <span className="astro-badge__icon">☽</span>
-          <span className="astro-badge__label">Moon in {dailyAstrology.moonSign}</span>
+          <span className="astro-badge__label">{t('astrology.moonIn', { sign: dailyAstrology.moonSign })}</span>
         </div>
         <div className="astro-badge">
           <span className="astro-badge__icon">☉</span>
-          <span className="astro-badge__label">Sun in {dailyAstrology.sunSign}</span>
+          <span className="astro-badge__label">{t('astrology.sunIn', { sign: dailyAstrology.sunSign })}</span>
         </div>
       </div>
 
       {/* Daily Theme */}
       <div className="astro-theme">
-        <span className="astro-theme__label">Today&apos;s Theme:</span>
+        <span className="astro-theme__label">{t('astrology.todaysTheme')}</span>
         <span className="astro-theme__value">{dailyAstrology.dailyTheme}</span>
       </div>
 
       {/* Guidance */}
-      <div className="astro-guidance">
-        <div className="astro-guidance__label">🌟 Cosmic Guidance</div>
-        <div className="astro-guidance__text">{dailyAstrology.guidance}</div>
+      <div className="astro-content-card astro-content-card--guidance">
+        <div className="astro-content-card__label">🌟 {t('astrology.cosmicGuidance')}</div>
+        <div className="astro-content-card__text">{dailyAstrology.guidance}</div>
       </div>
 
       {/* Journal Prompt */}
-      <div className="astro-prompt">
-        <div className="astro-prompt__label">📝 Reflection</div>
-        <div className="astro-prompt__text">{dailyAstrology.journalPrompt}</div>
+      <div className="astro-content-card astro-content-card--prompt">
+        <div className="astro-content-card__label">📝 {t('astrology.reflection')}</div>
+        <div className="astro-content-card__text">{dailyAstrology.journalPrompt}</div>
       </div>
 
       {/* Affirmation */}
-      <div className="astro-affirmation">
-        <div className="astro-affirmation__label">💫 Affirmation</div>
-        <div className="astro-affirmation__text">&quot;{dailyAstrology.affirmation}&quot;</div>
+      <div className="astro-content-card astro-content-card--affirmation">
+        <div className="astro-content-card__label">💫 {t('astrology.affirmation')}</div>
+        <div className="astro-content-card__text">&quot;{dailyAstrology.affirmation}&quot;</div>
       </div>
 
       {/* Power Moment - Location Aware */}
@@ -167,8 +170,8 @@ export const AstrologySection = memo(({
       {/* Add Birth Chart CTA if not present */}
       {!hasBirthChart && (
         <div className="astro-birthchart-cta">
-          <p>✨ <strong>Want personalized transits?</strong></p>
-          <p>Add your birth chart in the Stars section to see how today&apos;s cosmic weather affects you personally.</p>
+          <p>✨ <strong>{t('astrology.birthChartCta.title')}</strong></p>
+          <p>{t('astrology.birthChartCta.description')}</p>
         </div>
       )}
     </div>

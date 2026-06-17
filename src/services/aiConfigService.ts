@@ -121,7 +121,7 @@ export interface AIUserContext {
 
 export interface UnifiedAIConfig {
   version: number;
-  provider: 'template' | 'groq' | 'openai' | 'anthropic' | 'ollama';
+  provider: 'template' | 'groq' | 'openai' | 'anthropic' | 'ollama' | 'proxy';
   /** In-memory only — never persisted to localStorage plaintext */
   apiKey?: string;
   model?: string;
@@ -218,7 +218,7 @@ class AIConfigService {
 
   private async hydrateApiKey(): Promise<void> {
     const config = this.getConfig();
-    if (config.provider !== 'template') {
+    if (config.provider !== 'template' && config.provider !== 'proxy') {
       const key = await secureKeyStore.get(`heka-ai-${config.provider}`);
       if (key && this.cached) {
         this.cached = { ...this.cached, apiKey: key };
@@ -340,13 +340,11 @@ class AIConfigService {
 
   setProvider(provider: UnifiedAIConfig['provider']): void {
     this.updateConfig({ provider });
-    // Hydrate key for new provider
-    void this.hydrateApiKey();
   }
 
   async setApiKey(apiKey: string): Promise<void> {
     const config = this.getConfig();
-    if (config.provider !== 'template') {
+    if (config.provider !== 'template' && config.provider !== 'proxy') {
       await secureKeyStore.set(`heka-ai-${config.provider}`, apiKey);
     }
     this.updateConfig({ apiKey });
@@ -354,7 +352,7 @@ class AIConfigService {
 
   async clearApiKey(): Promise<void> {
     const config = this.getConfig();
-    if (config.provider !== 'template') {
+    if (config.provider !== 'template' && config.provider !== 'proxy') {
       await secureKeyStore.remove(`heka-ai-${config.provider}`);
     }
     this.updateConfig({ apiKey: undefined });
@@ -387,6 +385,12 @@ class AIConfigService {
     const config = this.getConfig();
     if (!config.globalEnabled) return false;
     return Object.values(config.areas).some(Boolean);
+  }
+
+  isRealProviderConfigured(): boolean {
+    const config = this.getConfig();
+    if (config.provider === 'proxy') return true;
+    return config.provider !== 'template' && !!config.apiKey;
   }
 
   subscribe(listener: ConfigListener): () => void {

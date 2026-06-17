@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta id="heka-viewport" name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="description" content="HEKA Calendar v2.2.23 - The 13-month calendar aligned with celestial rhythms" />
+  <meta name="theme-color" content="#0c0c0f" />
+  
+  <!-- NO CACHE -->
+  <meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
+  
+  <link rel="preload" as="script" href="./assets/translations-en-fVrv3Rbv.js" crossorigin="anonymous" />
+  <title>HEKA Calendar v2.2.23</title>
+  
+  <!-- INLINE KILL SWITCH - Cannot be cached separately -->
+  <script>
+    (function() {
+      var VERSION = '2.2.23';
+      var KEY = 'heka-v220-loaded';
+      
+      // Check if we already loaded this version
+      if (sessionStorage.getItem(KEY)) {
+        return; // Already processed
+      }
+      
+      var storedVersion = localStorage.getItem('heka-version');
+      console.log('[KILL] Version check:', storedVersion, '->', VERSION);
+      
+      if (storedVersion !== VERSION) {
+        console.log('[KILL] Clearing caches...');
+        
+        // Unregister SWs (push subscriptions will be restored on next load)
+        if ('serviceWorker' in navigator) {
+          navigator.serviceWorker.getRegistrations().then(function(regs) {
+            regs.forEach(function(r) { r.unregister(); });
+          });
+        }
+        
+        // Clear caches
+        if ('caches' in window) {
+          caches.keys().then(function(names) {
+            names.forEach(function(n) { caches.delete(n); });
+          });
+        }
+        
+        // Update version
+        localStorage.setItem('heka-version', VERSION);
+        sessionStorage.setItem(KEY, 'true');
+        
+        // Flag that push subscriptions need to be re-registered after reload
+        localStorage.setItem('heka-push-needs-refresh', 'true');
+        
+        // Reload with cache busting
+        var url = new URL(window.location.href);
+        url.searchParams.set('v', VERSION);
+        url.searchParams.set('_cb', Date.now());
+        window.location.replace(url.toString());
+      } else {
+        sessionStorage.setItem(KEY, 'true');
+      }
+    })();
+  </script>
+  
+  <!-- ═══════════════════════════════════════════════════════════════════════
+       HEKA Viewport Scale Guard — Narrow-Phone Safety Net
+       ─────────────────────────────────────────────────────────────────────
+       Large modern phones (Pixel 10 Pro XL, iPhone 15+, etc.) render the
+       app natively — unchanged, unscaled, exactly as designed.
+       
+       Narrower screens (iPhone SE, budget Androids, small foldables
+       folded, etc.) render at a 390px baseline and scale down
+       proportionally. Same layout, same proportions, same spacing — just
+       slightly smaller. Nothing gets cut off.
+       
+       390px is just below flagship widths (412–480px) but above the
+       narrowest active devices (360px). A 360px phone scales to ~0.923.
+       ───────────────────────────────────────────────────────────────────── -->
+  <script>
+    (function() {
+      var DESIGN_BASELINE = 390;
+
+      function updateViewport() {
+        var innerW  = window.innerWidth || 0;
+        var innerH  = window.innerHeight || 0;
+        // Use the smaller dimension to determine if we're on a small phone.
+        // This avoids landscape width (800px+) from disabling the scale.
+        var minDim = Math.min(innerW, innerH);
+
+        var vp = document.getElementById('heka-viewport');
+        if (!vp) return;
+
+        if (minDim < DESIGN_BASELINE) {
+          var scale = (minDim / DESIGN_BASELINE).toFixed(3);
+          vp.setAttribute('content',
+            'width=' + DESIGN_BASELINE + ', initial-scale=' + scale + ', maximum-scale=' + scale + ', user-scalable=no, viewport-fit=cover');
+        } else {
+          vp.setAttribute('content',
+            'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover');
+        }
+      }
+
+      updateViewport();
+
+      // Use resize instead of orientationchange — fires reliably on Android WebView
+      var resizeTimer;
+      window.addEventListener('resize', function() {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(updateViewport, 200);
+      });
+    })();
+  </script>
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  
+  <!-- Icons -->
+  <link rel="icon" type="image/png" href="/icon-192.png" />
+  
+  <!-- PWA manifest -->
+  <link rel="manifest" href="/manifest.json" />
+  
+  <!-- Apple touch icon -->
+  <link rel="apple-touch-icon" href="/icon-192.png" />
+  
+  <style>
+    html, body { 
+      background-color: #0c0c0f; 
+      margin: 0;
+      font-family: system-ui, -apple-system, sans-serif;
+    }
+    #root { min-height: 100vh; }
+    .loading {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      color: #f5f5f5;
+      background: #0c0c0f;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    .loading::after {
+      content: '';
+      width: 40px;
+      height: 40px;
+      border: 3px solid rgba(255,255,255,0.1);
+      border-top-color: #caa24a;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .version-badge {
+      position: fixed;
+      bottom: 8px;
+      right: 8px;
+      font-size: 12px;
+      color: rgba(255,255,255,0.5);
+      font-family: monospace;
+      background: rgba(201, 162, 39, 0.2);
+      padding: 4px 10px;
+      border-radius: 4px;
+      border: 1px solid rgba(201, 162, 39, 0.3);
+    }
+  </style>
+  <script type="module" crossorigin src="/assets/index-qNYB_2lw.js"></script>
+  <link rel="modulepreload" crossorigin href="/assets/vendor-capacitor-CV0-Oade.js">
+  <link rel="modulepreload" crossorigin href="/assets/vendor-dates-1xAZDGzG.js">
+  <link rel="modulepreload" crossorigin href="/assets/vendor-firebase-BXTpPYSq.js">
+  <link rel="stylesheet" crossorigin href="/assets/index-DsYCpfhV.css">
+</head>
+<body>
+  <div id="root">
+    <div id="heka-loading" class="loading">HEKA v2.2.23</div>
+  </div>
+
+  <script>
+    (function() {
+      var META = {
+        en: { title: 'HEKA Calendar v2.2.23', desc: 'HEKA Calendar v2.2.23 - The 13-month calendar aligned with celestial rhythms', loading: 'HEKA v2.2.23' },
+        es: { title: 'HEKA Calendar v2.2.23', desc: 'HEKA Calendar v2.2.23 - El calendario de 13 meses alineado con los ritmos celestiales', loading: 'HEKA v2.2.23' },
+        fr: { title: 'HEKA Calendrier v2.2.23', desc: 'HEKA Calendrier v2.2.23 - Le calendrier de 13 mois aligné avec les rythmes célestes', loading: 'HEKA v2.2.23' },
+        de: { title: 'HEKA Kalender v2.2.23', desc: 'HEKA Kalender v2.2.23 - Der 13-monatige Kalender, der den himmlischen Rhythmen entspricht.', loading: 'HEKA v2.2.23' },
+        it: { title: 'HEKA Calendar v2.2.23', desc: 'HEKA Calendar v2.2.23 - Il calendario di 13 mesi allineato ai ritmi celesti', loading: 'HEKA v2.2.23' },
+        pt: { title: 'Calendário HEKA v2.2.23', desc: 'HEKA Calendário v2.2.23 - O calendário de 13 meses alinhado com os ritmos celestiais', loading: 'HEKA v2.2.23' },
+        zh: { title: 'HEKA 日历 v2.2.23', desc: 'HEKA日历v2.2.23 - 与天体节奏对齐的13个月日历', loading: 'HEKA v2.2.23' },
+        ja: { title: 'HEKA カレンダー v2.2.23', desc: 'HEKA カレンダー v2.2.23 - 天体リズムに合った13ヶ月カレンダー', loading: 'HEKA v2.2.23' },
+        ko: { title: 'HEKA 캘린더 v2.2.23', desc: 'HEKA 캘린더 v2.2.23 - 천체 리듬과 맞춘 13개월 캘린더', loading: 'HEKA v2.2.23' },
+        ar: { title: 'HEKA التقويم v2.2.23', desc: 'HEKA التقويم v2.2.23 - التقويم الذي يحتوي على 13 شهرًا متناغمًا مع الإيقاع السماوي', loading: 'HEKA v2.2.23' },
+        hi: { title: 'HEKA कैलेंडर v2.2.23', desc: 'HEKA कैलेंडर v2.2.23 - स्वर्गीय लयों के साथ संरेखित 13 महीने का कैलेंडर', loading: 'HEKA v2.2.23' },
+        ru: { title: 'HEKA Календарь v2.2.23', desc: 'HEKA Календарь v2.2.23 - 13-месячный календарь, согласованный с небесными ритмами', loading: 'HEKA v2.2.23' },
+        tr: { title: 'HEKA Takvim v2.2.23', desc: 'HEKA Takvim v2.2.23 - Gök cisimleriyle uyumlu 13 aylık takvim', loading: 'HEKA v2.2.23' },
+        pl: { title: 'Kalendarz HEKA v2.2.23', desc: 'HEKA Kalendarz v2.2.23 - 13-miesięczny kalendarz dostosowany do rytmiów niebios', loading: 'HEKA v2.2.23' },
+        nl: { title: 'HEKA Agenda v2.2.23', desc: 'HEKA Kalender v2.2.23 - De 13-maanden kalender uitgelijnd met hemelse ritmpjes', loading: 'HEKA v2.2.23' },
+        sv: { title: 'HEKA Kalender v2.2.23', desc: 'HEKA Kalender v2.2.23 - Den 13-månaderskalender som är anpassad till himlakropars rytm', loading: 'HEKA v2.2.23' },
+        el: { title: 'Ημερολόγιο HEKA v2.2.23', desc: 'ΗKA Ημερολόγιο v2.2.23 - Το 13-μηνο ημερολόγιο που συντονίζεται με τους ουρανίους ρυθμούς', loading: 'HEKA v2.2.23' },
+        he: { title: 'לוח שנה HEKA v2.2.23', desc: 'לוח שנה HEKA v2.2.23 - לוח השנה ה-13 חולק עם ריטמים שמיים', loading: 'HEKA v2.2.23' },
+        th: { title: 'ปฏิทิน HEKA v2.2.23', desc: 'HEKA ปฏิทิน v2.2.23 - ปฏิทิน 13 เดือนที่จัดเต็มกับจังหวะของดาราจักร', loading: 'HEKA v2.2.23' },
+        vi: { title: 'Lịch HEKA phiên bản v2.2.23', desc: 'Lịch HEKA v2.2.23 - Lịch 13 tháng được canh lề với nhịp đập của các vì sao chưởng', loading: 'HEKA v2.2.23' },
+        id: { title: 'Kalender HEKA v2.2.23', desc: 'HEKA Kalender v2.2.23 - Kalender 13 bulan yang sejalan dengan ritme langit', loading: 'HEKA v2.2.23' },
+        uk: { title: 'КАлендар HEKA версії v2.2.23', desc: 'HEKA Календар v2.2.23 - 13-місячний календар, що вирівнюється з небесними ритмами', loading: 'HEKA v2.2.23' },
+        ro: { title: 'HEKA Calendar v2.2.23', desc: 'HEKA Calendar v2.2.23 - Calendarul de 13 luni aliniat cu ritmurile cereşti', loading: 'HEKA v2.2.23' },
+        cs: { title: 'HEKA Kalendář v2.2.23', desc: 'HEKA Kalendář v2.2.23 - 13měsíční kalendář zarovnaný s nebeskými rytmy', loading: 'HEKA v2.2.23' },
+        hu: { title: 'HEKA Naptár v2.2.23', desc: 'HEKA Naptár v2.2.23 - A 13 hónapos naptár, amely az égi ritmusokkal összhangban van', loading: 'HEKA v2.2.23' },
+        da: { title: 'HEKA Kalender v2.2.23', desc: 'HEKA Kalender v2.2.23 - Den 13-måneders kalender, der er afstemt efter himmelige rytmer', loading: 'HEKA v2.2.23' },
+        fi: { title: 'HEKA Kalenteri v2.2.23', desc: 'HEKA Kalenteri v2.2.23 - 13 kuukautta pitkä kalenteri, joka on suunniteltu tärmätahtiin mukautumaan', loading: 'HEKA v2.2.23' },
+        no: { title: 'HEKA Kalender v2.2.23', desc: 'HEKA Kalender v2.2.23 - Den 13-måneders kalender som er i samklang med himmelrytmer', loading: 'HEKA v2.2.23' },
+        sk: { title: 'HEKA Kalendár v2.2.23', desc: 'HEKA Kalendár v2.2.23 - 13-mesičný kalendár zarovnávaný s nebeskými rytmy', loading: 'HEKA v2.2.23' },
+        bg: { title: 'HEKA Календар v2.2.23', desc: 'HEKA Календар v2.2.23 - 13-месечен календар, подравнен с небесни ритми', loading: 'HEKA v2.2.23' }
+      };
+      var lang = 'en';
+      try {
+        var setup = JSON.parse(localStorage.getItem('heka-setup-v1') || '{}');
+        if (setup.language) {
+          lang = setup.language;
+        } else {
+          var navLang = (navigator.language || navigator.userLanguage || 'en');
+          lang = navLang.split('-')[0];
+        }
+      } catch (e) { /* ignore */ }
+      var meta = META[lang] || META.en;
+      var loadingEl = document.getElementById('heka-loading');
+      if (loadingEl) loadingEl.textContent = meta.loading;
+      document.title = meta.title;
+      var descMeta = document.querySelector('meta[name="description"]');
+      if (descMeta) descMeta.setAttribute('content', meta.desc);
+    })();
+  </script>
+
+  <!-- Android Scroll Fix -->
+  <script src="/scroll-fix.js"></script>
+
+  <!-- Main script -->
+</body>
+</html>

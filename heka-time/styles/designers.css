@@ -1,0 +1,50 @@
+/* ============================================================
+   DESIGNERS PAGE STYLES
+   ============================================================ */
+
+/* ============================================================
+   CTA SECTION
+   ============================================================ */
+.cta-section {
+  text-align: center;
+  padding: 10rem 2rem;
+}
+
+.cta-section h2 {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+.cta-section p {
+  max-width: 520px;
+  margin: 0 auto 2.5rem;
+  font-size: 1.1rem;
+}
+
+.cta-glow {
+  display: inline-block;
+  position: relative;
+}
+
+.cta-glow::before {
+  content: '';
+  position: absolute;
+  inset: -20px;
+  background: radial-gradient(circle, rgba(212,175,55,0.15), transparent 70%);
+  z-index: -1;
+  animation: ctaBreath 4s ease-in-out infinite;
+}
+
+@keyframes ctaBreath {
+  0%, 100% { opacity: 0.5; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.1); }
+}
+
+/* ============================================================
+   DESIGNERS RESPONSIVE
+   ============================================================ */
+@media (max-width: 600px) {
+  .cta-section h2 {
+    font-size: 2rem;
+  }
+}

@@ -358,7 +358,7 @@ export class PersonalizedGuidanceEngine {
     // Generate guidance for focus area
     let aiFallbackReason: string | undefined;
     const relevantPlanet = this.getPlanetForLifeArea(focusArea);
-    let guidance = await this.generateReading({
+    const guidance = await this.generateReading({
       planet: relevantPlanet,
       sign: positions[relevantPlanet]?.sign || 'aries',
       moonPhase: moonPhase.phase,

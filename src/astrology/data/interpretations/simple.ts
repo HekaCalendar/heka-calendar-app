@@ -35,6 +35,7 @@ const SIGN_QUALITIES: Record<string, string> = {
   capricorn: 'ambitious, disciplined, and practical',
   aquarius: 'innovative, independent, and humanitarian',
   pisces: 'intuitive, compassionate, and imaginative',
+  ophiuchus: 'transformative, healing, and bridging realms',
 };
 
 export function getPlanetInSignMeaning(planet: PlanetId, sign: ZodiacSign): string {

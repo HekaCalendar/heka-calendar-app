@@ -3,6 +3,7 @@
  */
 
 import React, { useState, useCallback } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import type { RootState } from '../../../store';
 import type { CreateProfileInput } from '../../types';
@@ -134,6 +135,7 @@ export const BirthChartForm: React.FC<BirthChartFormProps> = ({
   onCancel,
   initialData,
 }) => {
+  const { t } = useTranslation();
   const [name, setName] = useState(initialData?.name || '');
   const [birthDate, setBirthDate] = useState(initialData?.birthData?.birthDate || '');
   const [birthTime, setBirthTime] = useState(initialData?.birthData?.birthTime || '12:00');
@@ -220,7 +222,7 @@ export const BirthChartForm: React.FC<BirthChartFormProps> = ({
           type="text"
           value={name}
           onChange={(e) => setName(e.target.value)}
-          placeholder="Enter name"
+          placeholder={t('birthChart.namePlaceholder', 'Enter your name')}
           style={{...styles.input, ...(errors.name ? styles.inputError : {})}}
         />
         {errors.name && <span style={styles.error}>{errors.name}</span>}
@@ -299,7 +301,7 @@ export const BirthChartForm: React.FC<BirthChartFormProps> = ({
             <option value={13}>13 Signs ⛎</option>
           </select>
           {zodiacFrame === 'tropical' && (
-            <span style={{ fontSize: '11px', color: '#888', marginTop: '4px', display: 'block' }}>
+            <span style={{ fontSize: '12px', color: '#888', marginTop: '4px', display: 'block' }}>
               Tropical always uses 12 signs
             </span>
           )}

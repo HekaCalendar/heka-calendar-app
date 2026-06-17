@@ -1,0 +1,99 @@
+{
+  "title": "Succès",
+  "streak": "Série",
+  "days": "Jours",
+  "totalAchievements": "{{count}} succès",
+  "earned": "Gagnés",
+  "locked": "Verrouillés",
+  "newAchievement": "Nouveau succès !",
+  "categories": {
+    "calendar": "Maître du calendrier",
+    "journal": "Gardien de journal",
+    "circle": "Constructeur de cercle",
+    "coach": "Astrologue",
+    "explorer": "Explorateur"
+  },
+  "achievements": {
+    "firstStep": {
+      "name": "Premier pas",
+      "description": "Ouvrir le calendrier pour la première fois"
+    },
+    "timeTraveler": {
+      "name": "Voyageur dans le temps",
+      "description": "Voir une date à plus de 1 an"
+    },
+    "streak7": {
+      "name": "Semaine de lumière",
+      "description": "Utiliser le calendrier pendant 7 jours consécutifs"
+    },
+    "streak30": {
+      "name": "Mois d'étoiles",
+      "description": "Utiliser le calendrier pendant 30 jours consécutifs"
+    },
+    "streak100": {
+      "name": "Siècle de sagesse",
+      "description": "Utiliser le calendrier pendant 100 jours consécutifs"
+    },
+    "journalFirst": {
+      "name": "Premières paroles",
+      "description": "Écrire votre première entrée de journal"
+    },
+    "journal10": {
+      "name": "Écrivain en herbe",
+      "description": "Écrire 10 entrées de journal"
+    },
+    "journal50": {
+      "name": "Scribe expérimenté",
+      "description": "Écrire 50 entrées de journal"
+    },
+    "friendAdded": {
+      "name": "Premier lien",
+      "description": "Ajouter votre premier ami"
+    },
+    "circle5": {
+      "name": "Cercle en expansion",
+      "description": "Avoir 5 amis dans votre cercle"
+    },
+    "aiAsked": {
+      "name": "Chercheur de sagesse",
+      "description": "Poser une question à l'entraîneur IA"
+    },
+    "aiStreak7": {
+      "name": "Guidance quotidienne",
+      "description": "Consulter l'entraîneur IA pendant 7 jours"
+    },
+    "allMoonPhases": {
+      "name": "Observateur lunaire",
+      "description": "Voir toutes les 8 phases de la lune"
+    },
+    "allZodiac": {
+      "name": "Explorateur du zodiaque",
+      "description": "Voir tous les 13 signes du zodiaque"
+    },
+    "printFirst": {
+      "name": "Première impression",
+      "description": "Imprimez votre première page de calendrier"
+    }
+  },
+  "categoryLabels": {
+    "beginner": "Débutant",
+    "intermediate": "Intermédiaire",
+    "advanced": "Avancé",
+    "master": "Maître",
+    "special": "Spécial",
+    "explorer": "Explorateur",
+    "discoverer": "Découvreur",
+    "engager": "Engageant"
+  },
+  "stats": {
+    "appOpens": "Ouverture d'application",
+    "dayStreak": "Série de jours",
+    "hoursSpent": "Heures passées",
+    "featuresFound": "Fonctionnalités trouvées"
+  },
+  "all": "Tous",
+  "showHidden": "Afficher caché",
+  "noAchievements": "Aucune réalisation trouvée dans cette catégorie",
+  "hiddenAchievement": "Réussite cachée",
+  "secret": "SECRET"
+}
